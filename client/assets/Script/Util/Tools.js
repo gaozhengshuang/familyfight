@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import moment from 'moment';
+let _ = require('lodash');
+let moment = require('moment');
 
 let Tools = {
     GetRandomInt: function (min, max) {
@@ -60,6 +60,21 @@ let Tools = {
     },
     GetMilliSecond: function () {
         return moment().unix() * 1000 + moment().milliseconds();
+    },
+    GetPercent: function (start, end, value) {
+        return (value - start) / (end - start);
+    },
+    AutoFit: function (canvas) {
+        let designResolution = canvas.designResolution
+        var viewSize = cc.view.getFrameSize()
+        if (viewSize.width / viewSize.height > designResolution.width / designResolution.height) {
+            canvas.fitHeight = true;
+            canvas.fitWidth = false;
+        }
+        else {
+            canvas.fitHeight = false;
+            canvas.fitWidth = true
+        }
     }
 }
 

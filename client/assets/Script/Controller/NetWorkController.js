@@ -1,11 +1,12 @@
-import _ from 'lodash';
-import moment from 'moment';
+let _ = require('lodash');
+let moment = require('moment');
 
-import Define from '../Util/Define';
-import Tools from '../Util/Tools';
-import ConfigController from './ConfigController';
-import ProtoMsg from '../Util/ProtoMsg';
-import { stringify } from 'querystring';
+let Define = require('../Util/Define');
+let Tools = require('../Util/Tools');
+let ConfigController = require('./ConfigController');
+let NotificationController = require('./NotificationController');
+let ProtoMsg = require('../Util/ProtoMsg');
+let { stringify } = require('querystring');
 
 var NetWorkController = function () {
     this.sock = null;
@@ -71,7 +72,7 @@ NetWorkController.prototype.Send = function (name, obj, cb) {
     console.log('发送 ' + name + ' 消息');
     info.set(head, 0);
     info.set(msg, 4);
-    this.sock.send(info);
+    this.sock.send(info.buffer);
     Tools.InvokeCallback(cb, null);
 };
 
@@ -84,7 +85,7 @@ NetWorkController.prototype.Close = function (cb) {
     this.sock.close();
 }
 
-NetWorkController.prototype.AddListener = function (name, cb) {
+NetWorkController.prototype.AddListener = function (name, caller, handler) {
     if (this.protoIndexByName[name] == null) {
         return '没找到消息 ' + name;
     }
@@ -94,19 +95,19 @@ NetWorkController.prototype.AddListener = function (name, cb) {
         listenerlist = [];
         this.listeners[id] = listenerlist;
     }
-    listenerlist.push(cb);
+    listenerlist.push({ caller, handler });
     return null;
 }
 
-NetWorkController.prototype.RemoveListener = function (name, cb) {
+NetWorkController.prototype.RemoveListener = function (name, caller, handler) {
     if (this.protoIndexByName[name] == null) {
         return '没找到消息 ' + name;
     }
     let id = this.protoIndexByName[name];
     let listenerlist = this.listeners[id];
     if (listenerlist != null) {
-        _.remove(listenerlist, function (listen) {
-            return cb == listen;
+        _.remove(listenerlist, function (h) {
+            return h.caller == caller && h.handler == handler;
         })
     }
     return null;
@@ -114,40 +115,15 @@ NetWorkController.prototype.RemoveListener = function (name, cb) {
 
 //事件函数
 NetWorkController.prototype.onMessage = function (obj) {
-    let reader = new FileReader();
-    reader.readAsArrayBuffer(obj.data);
-    reader.onload = function () {
-        var uint8View = new Uint8Array(reader.result);
-        let length = (uint8View[0] & 0xff) + (uint8View[1] << 8);
-        let msgid = (uint8View[2] & 0xff) + (uint8View[3] << 8);
-        var msg = uint8View.subarray(4);
-        if (length != uint8View.length) {
-            console.log('长度不匹配 包体长度 : ' + uint8View.length + ' 消息长度 : ' + length);
-        } else {
-            let protoName = this.protoIndexById[msgid];
-            if (protoName == null) {
-                console.log('没有消息类型 : ' + msgid);
-                return;
-            }
-            //解析proto数据
-            let proto = Tools.GetValueInObj(ProtoMsg, protoName);
-            if (proto == null) {
-                console.log('没有消息体 : ' + protoName);
-                return;
-            }
-            let message = proto.decode(msg);
-            let obj = proto.toObject(message);
-            console.log('收到 ' + protoName + ' 消息');
-            //调用监听函数
-            let listenerlist = this.listeners[msgid];
-            if (listenerlist != null) {
-                for (let i = 0; i < listenerlist.length; i++) {
-                    let listener = listenerlist[i];
-                    Tools.InvokeCallback(listener, msgid, obj);
-                }
-            }
-        }
-    }.bind(this);
+    if (cc.sys.platform == cc.sys.WECHAT_GAME) {
+        this.handleArrayBuffer(obj.data);
+    } else {
+        let reader = new FileReader();
+        reader.readAsArrayBuffer(obj.data);
+        reader.onload = function () {
+            this.handleArrayBuffer(reader.result)
+        }.bind(this);
+    }
 }
 
 NetWorkController.prototype.onClose = function () {
@@ -155,20 +131,53 @@ NetWorkController.prototype.onClose = function () {
     this.sock = null;
     Tools.InvokeCallback(this.closeedCallback);
     this.closeedCallback = null;
-    cc.systemEvent.dispatchEvent(new cc.Event.EventCustom(Define.EVENT_KEY.NET_CLOSE));
+    NotificationController.Emit(Define.EVENT_KEY.NET_CLOSE);
 }
 
 NetWorkController.prototype.onOpen = function (info) {
     console.log(new Date() + '[网络消息] socket opend ' + stringify(info));
     Tools.InvokeCallback(this.connectedCallback);
     this.connectedCallback = null;
-    cc.systemEvent.dispatchEvent(new cc.Event.EventCustom(Define.EVENT_KEY.NET_OPEN));
+    NotificationController.Emit(Define.EVENT_KEY.NET_OPEN);
 }
 
 NetWorkController.prototype.onError = function (err) {
     console.log(new Date() + '[网络消息] socket error ' + err);
     this.connectedCallback = null;
-    cc.systemEvent.dispatchEvent(new cc.Event.EventCustom(Define.EVENT_KEY.NET_CLOSE));
+    NotificationController.Emit(Define.EVENT_KEY.NET_CLOSE);
+}
+
+NetWorkController.prototype.handleArrayBuffer = function (buffer) {
+    var uint8View = new Uint8Array(buffer);
+    let length = (uint8View[0] & 0xff) + (uint8View[1] << 8);
+    let msgid = (uint8View[2] & 0xff) + (uint8View[3] << 8);
+    var msg = uint8View.subarray(4);
+    if (length != uint8View.length) {
+        console.log('长度不匹配 包体长度 : ' + uint8View.length + ' 消息长度 : ' + length);
+    } else {
+        let protoName = this.protoIndexById[msgid];
+        if (protoName == null) {
+            console.log('没有消息类型 : ' + msgid);
+            return;
+        }
+        //解析proto数据
+        let proto = Tools.GetValueInObj(ProtoMsg, protoName);
+        if (proto == null) {
+            console.log('没有消息体 : ' + protoName);
+            return;
+        }
+        let message = proto.decode(msg);
+        let obj = proto.toObject(message);
+        console.log('收到 ' + protoName + ' 消息');
+        //调用监听函数
+        let listenerlist = this.listeners[msgid];
+        if (listenerlist != null) {
+            for (let i = 0; i < listenerlist.length; i++) {
+                let handler = listenerlist[i];
+                handler.handler.call(handler.caller, msgid, obj);
+            }
+        }
+    }
 }
 
 module.exports = new NetWorkController();

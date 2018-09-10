@@ -1,10 +1,11 @@
-import async from 'async';
+let async = require('async');
 
-import NetWorkController from './NetWorkController';
-import Tools from "../Util/Tools";
-import moment from "moment/moment";
-import Define from "../Util/Define";
-import Platform from '../Util/Platform';
+let NetWorkController = require('./NetWorkController');
+let NotificationController = require('./NotificationController');
+let Tools = require("../Util/Tools");
+let moment = require("moment/moment");
+let Define = require("../Util/Define");
+let PlatformDefine = require('../Util/PlatformDefine');
 
 var LoginController = function () {
     this.sendHeartBeatTime = 0;
@@ -18,16 +19,16 @@ var LoginController = function () {
 }
 
 LoginController.prototype.Init = function (cb) {
-    NetWorkController.AddListener('msg.GW2C_HeartBeat', this.onGW2C_HeartBeat.bind(this));
-    NetWorkController.AddListener('msg.L2C_RetLogin', this.onL2C_RetLogin.bind(this));
-    cc.systemEvent.on(Define.EVENT_KEY.CONNECT_TO_GATESERVER, this.onLoginedToGate, this);
-    cc.systemEvent.on(Define.EVENT_KEY.NET_OPEN, this.onNetOpen, this);
-    cc.systemEvent.on(Define.EVENT_KEY.NET_CLOSE, this.onNetClose, this);
+    NetWorkController.AddListener('msg.GW2C_HeartBeat', this, this.onGW2C_HeartBeat);
+    NetWorkController.AddListener('msg.L2C_RetLogin', this, this.onL2C_RetLogin);
+    NotificationController.On(Define.EVENT_KEY.CONNECT_TO_GATESERVER, this, this.onLoginedToGate);
+    NotificationController.On(Define.EVENT_KEY.NET_OPEN, this, this.onNetOpen);
+    NotificationController.On(Define.EVENT_KEY.NET_CLOSE, this, this.onNetClose);
     Tools.InvokeCallback(cb, null);
 }
 
 LoginController.prototype.ConnectToLoginServer = function (cb) {
-    let url = 'ws://' + Platform.LoginHost + ':' + Platform.LoginPort + '/' + Platform.LoginSuffix;
+    let url = PlatformDefine.WSPrefix + PlatformDefine.LoginHost + '/' + PlatformDefine.LoginSuffix;
     this.loginServerUrl = url;
     NetWorkController.Connect(url, cb);
 }
@@ -40,8 +41,10 @@ LoginController.prototype.onGW2C_HeartBeat = function (msgid, data) {
 
 LoginController.prototype.onL2C_RetLogin = function (msgid, data) {
     //连接gate server
+    console.log(data);
     let UserModel = require('../Model/User');
-    let url = 'ws://' + data.gatehost.ip + ':' + data.gatehost.port + '/ws_handler';
+    let url = PlatformDefine.WSPrefix + data.host + '/ws_handler';
+    console.log('onL2c_RetLogin url : ' + url);
     async.waterfall([
         function (anext) {
             //第一步断开websocket
@@ -54,9 +57,10 @@ LoginController.prototype.onL2C_RetLogin = function (msgid, data) {
         function (anext) {
             //第三步 发送登录消息
             NetWorkController.Send('msg.C2GW_ReqLogin', {
-                account: UserModel.getAccount(),
+                account: UserModel.GetAccount(),
                 verifykey: data.verifykey,
-                token: UserModel.loginInfo.token
+                token: UserModel.loginInfo.token,
+                face: ''
             }, function (err) {
                 anext(err);
             })
@@ -70,7 +74,7 @@ LoginController.prototype.onL2C_RetLogin = function (msgid, data) {
 
 LoginController.prototype.onLoginedToGate = function (event) {
     let UserModel = require('../Model/User');
-    this.userid = UserModel.getUserId();
+    this.userid = UserModel.GetUserId();
     this.loginedToGate = true;
     this.reconnecting = false;
     this.revHeartBeat = moment().unix();
@@ -87,7 +91,7 @@ LoginController.prototype.onNetClose = function (event) {
     }
 }
 
-LoginController.prototype.update = function (dt) {
+LoginController.prototype.Update = function (dt) {
     let curTime = moment().unix();
     let UserModel = require('../Model/User');
     if (this.loginedToGate) {
