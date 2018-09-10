@@ -9,7 +9,7 @@ cc.Class({
     },
 
     start() {
-        AudioController.playAudio('Bg');
+        
     },
 
     update(dt) {
