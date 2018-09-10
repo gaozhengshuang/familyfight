@@ -39,6 +39,6 @@ cc.Class({
     },
 
     onLoginComplete() {
-        cc.director.loadScene("StartScene");
+        cc.director.loadScene("GameScene");
     },
 });
