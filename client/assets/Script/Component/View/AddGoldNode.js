@@ -3,8 +3,8 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        btn_shop: { default: null, type: cc.Button },
-        node_maid: { default: null, type: cc.Node},
+        gold_img: { default: null, type: cc.Sprite },
+        gold_txt: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -21,11 +21,7 @@ cc.Class({
     onDestroy() {
     },
 
-    initView() {
+    initView: function () {
 
-    },
-
-    onOpenShopView(event) {
-        event.stopPropagationImmediate();
     },
 });

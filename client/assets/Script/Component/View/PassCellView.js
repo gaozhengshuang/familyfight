@@ -12,8 +12,6 @@ cc.Class({
     },
 
     init: function (index, data, reload, group) {
-        console.log(index);
-
         this._target = data.target;
         this._data = data.array[index];
     },
