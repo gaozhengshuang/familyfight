@@ -1,5 +1,3 @@
-
-
 cc.Class({
     extends: cc.Component,
 
@@ -22,7 +20,7 @@ cc.Class({
     onDestroy() {
     },
 
-    initView: function () {
+    initView() {
 
     },
 });
