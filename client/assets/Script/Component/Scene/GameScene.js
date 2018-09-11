@@ -6,6 +6,7 @@ cc.Class({
     },
 
     onLoad() {
+
     },
 
     start() {
