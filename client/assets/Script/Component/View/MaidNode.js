@@ -72,12 +72,17 @@ cc.Class({
         }
 
         if (targetX >= this.moveMinX && targetX <= this.moveMaxX && targetY >= this.moveMinY && targetY <= this.moveMaxY) {
+            if (targetX >= this.node.x) {
+                this.maid_img.node.scaleX = 1;
+            } else {
+                this.maid_img.node.scaleX = -1;
+            }
             this.node.runAction(cc.sequence([
                 cc.moveTo(this.intervalTime/2, targetX, targetY),
                 cc.scaleTo(0.1, 1, 0.8),
                 cc.scaleTo(0.1, 1, 1),
                 cc.callFunc(function () {
-                    
+                    this.addgold_Node.playGoldAni();
                 }, this)
             ]));
         } else {
