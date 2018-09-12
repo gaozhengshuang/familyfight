@@ -86,6 +86,9 @@ cc.Class({
         this.node.y = this.moveMinY + Math.floor(Math.random() * (this.moveMaxY - this.moveMinY + 1));
 
         this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel",data);
+        if (this.maidBase) {
+            this.addgold_Node.updateGold(this.maidBase.Reward);
+        }
         Game.ResController.SetSprite(this.maid_img, this.maidBase.Path);
     },
 

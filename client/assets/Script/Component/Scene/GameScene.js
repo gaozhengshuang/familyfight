@@ -7,10 +7,12 @@ cc.Class({
         btn_shop: { default: null, type: cc.Button },
         node_maid: { default: null, type: cc.Node },
         prefab_player: { default: null, type: cc.Prefab },
+        txt_gold: { default: null, type: cc.Label },
     },
 
     onLoad() {
         this.initData();
+        this.initNotification();
         this.initView();
     },
 
@@ -21,10 +23,14 @@ cc.Class({
     },
 
     onDestroy() {
+        Game.NotificationController.Off(Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
     },
 
     initData() {
+    },
 
+    initNotification() {
+        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
     },
 
     initView() {
@@ -44,4 +50,8 @@ cc.Class({
     onOpenShopView(event) {
         event.stopPropagationImmediate();
     },
+
+    updateGold(gold) {
+        this.txt_gold.string = `${gold}`;
+    }
 });

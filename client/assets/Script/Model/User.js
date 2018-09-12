@@ -54,8 +54,14 @@ UserModel.prototype.GetUser = function (cb) {
     }
 }
 
+UserModel.prototype.AddGold = function (gold) {
+    let value = this.GetGold() + gold;
+    this.SetGold(value);
+}
+
 UserModel.prototype.SetGold = function (gold) {
-    this.userInfo.gold += gold;
+    Tools.SetValueInObj(this.userInfo, 'base.gold', gold)
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, gold);
 }
 
 UserModel.prototype.GetGold = function () {
@@ -88,8 +94,7 @@ UserModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
 
 UserModel.prototype.onGW2C_UpdateGold = function (msgid, data) {
     let value = data.num || 0;
-    Tools.SetValueInObj(this.userInfo, 'base.gold', value)
-    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, value);
+    this.SetGold(value)
 }
 
 module.exports = new UserModel();

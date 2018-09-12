@@ -988,6 +988,9 @@
     },
     "prefab_player": {
       "__uuid__": "996f9f27-59ba-416d-8417-69615d2edff6"
+    },
+    "txt_gold": {
+      "__id__": 7
     }
   }
 ]

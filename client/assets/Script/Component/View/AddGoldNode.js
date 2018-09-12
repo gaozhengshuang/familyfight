@@ -1,3 +1,5 @@
+import Game from '../../Game';
+
 cc.Class({
     extends: cc.Component,
 
@@ -22,11 +24,17 @@ cc.Class({
 
     initData() {
         this.initY = 0;
+        this.gold = 0;
     },
 
     initView() {
         this.initY = this.node.y;
         this.node.active = false;
+    },
+
+    updateGold(gold) {
+        this.gold = gold;
+        this.gold_txt.string = `+${this.gold}`;
     },
 
     playGoldAni() {
@@ -38,5 +46,7 @@ cc.Class({
                 this.node.active = false;
             }, this)
         ]));
+
+        Game.UserModel.AddGold(this.gold*2);
     }
 });
