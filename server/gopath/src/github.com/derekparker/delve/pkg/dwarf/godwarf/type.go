@@ -25,7 +25,6 @@ const (
 	AttrGoKey           dwarf.Attr = 0x2901
 	AttrGoElem          dwarf.Attr = 0x2902
 	AttrGoEmbeddedField dwarf.Attr = 0x2903
-	AttrGoRuntimeType   dwarf.Attr = 0x2904
 )
 
 // Basic type encodings -- the value for AttrEncoding in a TagBaseType Entry.
@@ -626,16 +625,16 @@ func readType(d *dwarf.Data, name string, r *dwarf.Reader, off dwarf.Offset, typ
 						break
 					}
 					b := util.MakeBuf(d, util.UnknownFormat{}, "location", 0, loc)
-					op_ := op.Opcode(b.Uint8())
+					op_ := b.Uint8()
 					switch op_ {
-					case op.DW_OP_plus_uconst:
+					case op.DW_OP_plus_uconsts:
 						// Handle opcode sequence [DW_OP_plus_uconst <uleb128>]
 						f.ByteOffset = int64(b.Uint())
 						b.AssertEmpty()
 					case op.DW_OP_consts:
 						// Handle opcode sequence [DW_OP_consts <sleb128> DW_OP_plus]
 						f.ByteOffset = b.Int()
-						op_ = op.Opcode(b.Uint8())
+						op_ = b.Uint8()
 						if op_ != op.DW_OP_plus {
 							err = dwarf.DecodeError{name, kid.Offset, fmt.Sprintf("unexpected opcode 0x%x", op_)}
 							goto Error

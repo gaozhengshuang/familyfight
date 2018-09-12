@@ -1,2 +1,0 @@
-#!/bin/bash
-dlv exec ./testudp -- -daemon=true -client=1

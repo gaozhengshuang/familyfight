@@ -4,7 +4,6 @@ package native
 // #include "proc_darwin.h"
 import "C"
 import (
-	"errors"
 	"fmt"
 	"unsafe"
 
@@ -28,7 +27,7 @@ type OSSpecificDetails struct {
 // be continued.
 var ErrContinueThread = fmt.Errorf("could not continue thread")
 
-func (t *Thread) stop() (err error) {
+func (t *Thread) halt() (err error) {
 	kret := C.thread_suspend(t.os.threadAct)
 	if kret != C.KERN_SUCCESS {
 		errStr := C.GoString(C.mach_error_string(C.mach_error_t(kret)))
@@ -70,6 +69,7 @@ func (t *Thread) singleStep() error {
 }
 
 func (t *Thread) resume() error {
+	t.running = true
 	// TODO(dp) set flag for ptrace stops
 	var err error
 	t.dbp.execPtraceFunc(func() { err = PtraceCont(t.dbp.pid, 0) })
@@ -102,9 +102,7 @@ func (t *Thread) Blocked() bool {
 	}
 }
 
-// Stopped returns whether the thread is stopped at
-// the operating system level.
-func (t *Thread) Stopped() bool {
+func (t *Thread) stopped() bool {
 	return C.thread_blocked(t.os.threadAct) > C.int(0)
 }
 
@@ -144,8 +142,4 @@ func (t *Thread) ReadMemory(buf []byte, addr uintptr) (int, error) {
 		return 0, fmt.Errorf("could not read memory")
 	}
 	return len(buf), nil
-}
-
-func (t *Thread) restoreRegisters(sr *savedRegisters) error {
-	return errors.New("not implemented")
 }

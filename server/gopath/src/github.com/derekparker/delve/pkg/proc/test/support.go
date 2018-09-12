@@ -3,7 +3,6 @@ package test
 import (
 	"crypto/rand"
 	"encoding/hex"
-	"flag"
 	"fmt"
 	"os"
 	"os/exec"
@@ -12,13 +11,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
-
-	"github.com/derekparker/delve/pkg/goversion"
 )
-
-var EnableRace = flag.Bool("racetarget", false, "Enables race detector on inferior process")
-
-var runningWithFixtures bool
 
 // Fixture is a test binary.
 type Fixture struct {
@@ -30,13 +23,8 @@ type Fixture struct {
 	Source string
 }
 
-type FixtureKey struct {
-	Name  string
-	Flags BuildFlags
-}
-
-// Fixtures is a map of fixtureKey{ Fixture.Name, buildFlags } to Fixture.
-var Fixtures map[FixtureKey]Fixture = make(map[FixtureKey]Fixture)
+// Fixtures is a map of Fixture.Name to Fixture.
+var Fixtures map[string]Fixture = make(map[string]Fixture)
 
 func FindFixturesDir() string {
 	parent := ".."
@@ -53,24 +41,12 @@ func FindFixturesDir() string {
 type BuildFlags uint32
 
 const (
-	LinkStrip BuildFlags = 1 << iota
-	EnableCGOOptimization
-	EnableInlining
-	EnableOptimization
-	EnableDWZCompression
+	LinkStrip = 1 << iota
 )
 
 func BuildFixture(name string, flags BuildFlags) Fixture {
-	if !runningWithFixtures {
-		panic("RunTestsWithFixtures not called")
-	}
-	fk := FixtureKey{name, flags}
-	if f, ok := Fixtures[fk]; ok {
+	if f, ok := Fixtures[name]; ok && flags == 0 {
 		return f
-	}
-
-	if flags&EnableCGOOptimization == 0 {
-		os.Setenv("CGO_CFLAGS", "-O0 -g")
 	}
 
 	fixturesDir := FindFixturesDir()
@@ -88,25 +64,14 @@ func BuildFixture(name string, flags BuildFlags) Fixture {
 	tmpfile := filepath.Join(os.TempDir(), fmt.Sprintf("%s.%s", name, hex.EncodeToString(r)))
 
 	buildFlags := []string{"build"}
-	if ver, _ := goversion.Parse(runtime.Version()); runtime.GOOS == "windows" && ver.Major > 0 && !ver.AfterOrEqual(goversion.GoVersion{1, 9, -1, 0, 0, ""}) {
+	if runtime.GOOS == "windows" {
 		// Work-around for https://github.com/golang/go/issues/13154
 		buildFlags = append(buildFlags, "-ldflags=-linkmode internal")
 	}
 	if flags&LinkStrip != 0 {
 		buildFlags = append(buildFlags, "-ldflags=-s")
 	}
-	gcflagsv := []string{}
-	if flags&EnableInlining == 0 {
-		gcflagsv = append(gcflagsv, "-l")
-	}
-	if flags&EnableOptimization == 0 {
-		gcflagsv = append(gcflagsv, "-N")
-	}
-	gcflags := "-gcflags=" + strings.Join(gcflagsv, " ")
-	buildFlags = append(buildFlags, gcflags, "-o", tmpfile)
-	if *EnableRace {
-		buildFlags = append(buildFlags, "-race")
-	}
+	buildFlags = append(buildFlags, "-gcflags=-N -l", "-o", tmpfile)
 	if path != "" {
 		buildFlags = append(buildFlags, name+".go")
 	}
@@ -121,31 +86,22 @@ func BuildFixture(name string, flags BuildFlags) Fixture {
 		os.Exit(1)
 	}
 
-	if flags&EnableDWZCompression != 0 {
-		cmd := exec.Command("dwz", tmpfile)
-		if out, err := cmd.CombinedOutput(); err != nil {
-			fmt.Printf("Error running dwz on %s: %s\n", tmpfile, err)
-			fmt.Printf("%s\n", string(out))
-			os.Exit(1)
-		}
-	}
-
 	source, _ := filepath.Abs(path)
 	source = filepath.ToSlash(source)
 
 	fixture := Fixture{Name: name, Path: tmpfile, Source: source}
 
-	Fixtures[fk] = fixture
-	return Fixtures[fk]
+	if flags != 0 {
+		return fixture
+	}
+
+	Fixtures[name] = fixture
+	return Fixtures[name]
 }
 
 // RunTestsWithFixtures will pre-compile test fixtures before running test
 // methods. Test binaries are deleted before exiting.
 func RunTestsWithFixtures(m *testing.M) int {
-	runningWithFixtures = true
-	defer func() {
-		runningWithFixtures = false
-	}()
 	status := m.Run()
 
 	// Remove the fixtures.

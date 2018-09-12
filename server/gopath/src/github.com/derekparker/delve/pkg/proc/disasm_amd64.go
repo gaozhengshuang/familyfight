@@ -1,6 +1,7 @@
 package proc
 
 import (
+	"debug/gosym"
 	"encoding/binary"
 
 	"golang.org/x/arch/x86/x86asm"
@@ -34,7 +35,7 @@ func patchPCRel(pc uint64, inst *x86asm.Inst) {
 	}
 }
 
-func (inst *AsmInstruction) Text(flavour AssemblyFlavour, bi *BinaryInfo) string {
+func (inst *AsmInstruction) Text(flavour AssemblyFlavour) string {
 	if inst.Inst == nil {
 		return "?"
 	}
@@ -43,13 +44,15 @@ func (inst *AsmInstruction) Text(flavour AssemblyFlavour, bi *BinaryInfo) string
 
 	switch flavour {
 	case GNUFlavour:
-		text = x86asm.GNUSyntax(x86asm.Inst(*inst.Inst), inst.Loc.PC, bi.symLookup)
-	case GoFlavour:
-		text = x86asm.GoSyntax(x86asm.Inst(*inst.Inst), inst.Loc.PC, bi.symLookup)
+		text = x86asm.GNUSyntax(x86asm.Inst(*inst.Inst))
 	case IntelFlavour:
 		fallthrough
 	default:
-		text = x86asm.IntelSyntax(x86asm.Inst(*inst.Inst), inst.Loc.PC, bi.symLookup)
+		text = x86asm.IntelSyntax(x86asm.Inst(*inst.Inst))
+	}
+
+	if inst.IsCall() && inst.DestLoc != nil && inst.DestLoc.Fn != nil {
+		text += " " + inst.DestLoc.Fn.Name
 	}
 
 	return text
@@ -136,16 +139,13 @@ func init() {
 	}
 }
 
-// firstPCAfterPrologueDisassembly returns the address of the first
-// instruction after the prologue for function fn by disassembling fn and
-// matching the instructions against known split-stack prologue patterns.
-// If sameline is set firstPCAfterPrologueDisassembly will always return an
-// address associated with the same line as fn.Entry
-func firstPCAfterPrologueDisassembly(p Process, fn *Function, sameline bool) (uint64, error) {
+// FirstPCAfterPrologue returns the address of the first instruction after the prologue for function fn
+// If sameline is set FirstPCAfterPrologue will always return an address associated with the same line as fn.Entry
+func FirstPCAfterPrologue(p Process, fn *gosym.Func, sameline bool) (uint64, error) {
 	var mem MemoryReadWriter = p.CurrentThread()
 	breakpoints := p.Breakpoints()
 	bi := p.BinInfo()
-	text, err := disassemble(mem, nil, breakpoints, bi, fn.Entry, fn.End, false)
+	text, err := disassemble(mem, nil, breakpoints, bi, fn.Entry, fn.End)
 	if err != nil {
 		return fn.Entry, err
 	}

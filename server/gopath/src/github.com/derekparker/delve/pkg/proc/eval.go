@@ -2,6 +2,7 @@ package proc
 
 import (
 	"bytes"
+	"debug/dwarf"
 	"encoding/binary"
 	"errors"
 	"fmt"
@@ -11,7 +12,6 @@ import (
 	"go/printer"
 	"go/token"
 	"reflect"
-	"strconv"
 
 	"github.com/derekparker/delve/pkg/dwarf/godwarf"
 	"github.com/derekparker/delve/pkg/dwarf/reader"
@@ -87,7 +87,7 @@ func (scope *EvalScope) evalToplevelTypeCast(t ast.Expr, cfg LoadConfig) (*Varia
 			return nil, converr
 		}
 		for i, ch := range []byte(constant.StringVal(argv.Value)) {
-			e := scope.newVariable("", argv.Addr+uintptr(i), targetType.(*godwarf.SliceType).ElemType, argv.mem)
+			e := scope.newVariable("", argv.Addr+uintptr(i), targetType.(*godwarf.SliceType).ElemType)
 			e.loaded = true
 			e.Value = constant.MakeInt64(int64(ch))
 			v.Children = append(v.Children, *e)
@@ -101,7 +101,7 @@ func (scope *EvalScope) evalToplevelTypeCast(t ast.Expr, cfg LoadConfig) (*Varia
 			return nil, converr
 		}
 		for i, ch := range constant.StringVal(argv.Value) {
-			e := scope.newVariable("", argv.Addr+uintptr(i), targetType.(*godwarf.SliceType).ElemType, argv.mem)
+			e := scope.newVariable("", argv.Addr+uintptr(i), targetType.(*godwarf.SliceType).ElemType)
 			e.loaded = true
 			e.Value = constant.MakeInt64(int64(ch))
 			v.Children = append(v.Children, *e)
@@ -183,18 +183,9 @@ func (scope *EvalScope) evalAST(t ast.Expr) (*Variable, error) {
 				}
 				return scope.Gvar.clone(), nil
 			} else if maybePkg.Name == "runtime" && node.Sel.Name == "frameoff" {
-				return newConstant(constant.MakeInt64(scope.frameOffset), scope.Mem), nil
-			} else if v, err := scope.findGlobal(maybePkg.Name + "." + node.Sel.Name); err == nil {
+				return newConstant(constant.MakeInt64(scope.CFA-int64(scope.StackHi)), scope.Mem), nil
+			} else if v, err := scope.packageVarAddr(maybePkg.Name + "." + node.Sel.Name); err == nil {
 				return v, nil
-			}
-		}
-		// try to accept "package/path".varname syntax for package variables
-		if maybePkg, ok := node.X.(*ast.BasicLit); ok && maybePkg.Kind == token.STRING {
-			pkgpath, err := strconv.Unquote(maybePkg.Value)
-			if err == nil {
-				if v, err := scope.findGlobal(pkgpath + "." + node.Sel.Name); err == nil {
-					return v, nil
-				}
 			}
 		}
 		// if it's not a package variable then it must be a struct member access
@@ -295,7 +286,7 @@ func (scope *EvalScope) evalTypeCast(node *ast.CallExpr) (*Variable, error) {
 
 		n, _ := constant.Int64Val(argv.Value)
 
-		v.Children = []Variable{*(scope.newVariable("", uintptr(n), ttyp.Type, scope.Mem))}
+		v.Children = []Variable{*(scope.newVariable("", uintptr(n), ttyp.Type))}
 		return v, nil
 
 	case *godwarf.UintType:
@@ -521,7 +512,7 @@ func complexBuiltin(args []*Variable, nodeargs []ast.Expr) (*Variable, error) {
 
 	typ := &godwarf.ComplexType{BasicType: godwarf.BasicType{CommonType: godwarf.CommonType{ByteSize: int64(sz / 8), Name: fmt.Sprintf("complex%d", sz)}, BitSize: sz, BitOffset: 0}}
 
-	r := realev.newVariable("", 0, typ, nil)
+	r := realev.newVariable("", 0, typ)
 	r.Value = constant.BinaryOp(realev.Value, token.ADD, constant.MakeImag(imagev.Value))
 	return r, nil
 }
@@ -573,7 +564,7 @@ func (scope *EvalScope) evalIdent(node *ast.Ident) (*Variable, error) {
 		return nilVariable, nil
 	}
 
-	vars, err := scope.Locals()
+	vars, err := scope.variablesByTag(dwarf.TagVariable, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -582,10 +573,20 @@ func (scope *EvalScope) evalIdent(node *ast.Ident) (*Variable, error) {
 			return vars[i], nil
 		}
 	}
+	args, err := scope.variablesByTag(dwarf.TagFormalParameter, nil)
+	if err != nil {
+		return nil, err
+	}
+	for i := range args {
+		if args[i].Name == node.Name {
+			return args[i], nil
+		}
+	}
 
 	// if it's not a local variable then it could be a package variable w/o explicit package name
-	if scope.Fn != nil {
-		if v, err := scope.findGlobal(scope.Fn.PackageName() + "." + node.Name); err == nil {
+	_, _, fn := scope.BinInfo.PCToLine(scope.PC)
+	if fn != nil {
+		if v, err := scope.packageVarAddr(fn.PackageName() + "." + node.Name); err == nil {
 			v.Name = node.Name
 			return v, nil
 		}
@@ -646,27 +647,12 @@ func (scope *EvalScope) evalIndex(node *ast.IndexExpr) (*Variable, error) {
 		return nil, xev.Unreadable
 	}
 
-	xev = xev.maybeDereference()
-
 	idxev, err := scope.evalAST(node.Index)
 	if err != nil {
 		return nil, err
 	}
 
-	cantindex := fmt.Errorf("expression \"%s\" (%s) does not support indexing", exprToString(node.X), xev.TypeString())
-
 	switch xev.Kind {
-	case reflect.Ptr:
-		if xev == nilVariable {
-			return nil, cantindex
-		}
-		_, isarrptr := xev.RealType.(*godwarf.PtrType).Type.(*godwarf.ArrayType)
-		if !isarrptr {
-			return nil, cantindex
-		}
-		xev = xev.maybeDereference()
-		fallthrough
-
 	case reflect.Slice, reflect.Array, reflect.String:
 		if xev.Base == 0 {
 			return nil, fmt.Errorf("can not index \"%s\"", exprToString(node.X))
@@ -684,7 +670,8 @@ func (scope *EvalScope) evalIndex(node *ast.IndexExpr) (*Variable, error) {
 		}
 		return xev.mapAccess(idxev)
 	default:
-		return nil, cantindex
+		return nil, fmt.Errorf("expression \"%s\" (%s) does not support indexing", exprToString(node.X), xev.TypeString())
+
 	}
 }
 
@@ -736,9 +723,9 @@ func (scope *EvalScope) evalReslice(node *ast.SliceExpr) (*Variable, error) {
 			return nil, fmt.Errorf("second slice argument must be empty for maps")
 		}
 		xev.mapSkip += int(low)
-		xev.mapIterator() // reads map length
-		if int64(xev.mapSkip) >= xev.Len {
-			return nil, fmt.Errorf("map index out of bounds")
+		xev.loadValue(loadFullValue)
+		if xev.Unreadable != nil {
+			return nil, xev.Unreadable
 		}
 		return xev, nil
 	default:
@@ -785,7 +772,7 @@ func (scope *EvalScope) evalAddrOf(node *ast.UnaryExpr) (*Variable, error) {
 	xev.OnlyAddr = true
 
 	typename := "*" + xev.DwarfType.Common().Name
-	rv := scope.newVariable("", 0, &godwarf.PtrType{CommonType: godwarf.CommonType{ByteSize: int64(scope.BinInfo.Arch.PtrSize()), Name: typename}, Type: xev.DwarfType}, scope.Mem)
+	rv := scope.newVariable("", 0, &godwarf.PtrType{CommonType: godwarf.CommonType{ByteSize: int64(scope.BinInfo.Arch.PtrSize()), Name: typename}, Type: xev.DwarfType})
 	rv.Children = []Variable{*xev}
 	rv.loaded = true
 
@@ -850,7 +837,7 @@ func (scope *EvalScope) evalUnary(node *ast.UnaryExpr) (*Variable, error) {
 		return nil, err
 	}
 	if xv.DwarfType != nil {
-		r := xv.newVariable("", 0, xv.DwarfType, scope.Mem)
+		r := xv.newVariable("", 0, xv.DwarfType)
 		r.Value = rc
 		return r, nil
 	}
@@ -931,28 +918,19 @@ func (scope *EvalScope) evalBinary(node *ast.BinaryExpr) (*Variable, error) {
 	if err != nil {
 		return nil, err
 	}
-	xv.loadValue(loadFullValue)
-	if xv.Unreadable != nil {
-		return nil, xv.Unreadable
-	}
-
-	// short circuits logical operators
-	switch node.Op {
-	case token.LAND:
-		if !constant.BoolVal(xv.Value) {
-			return newConstant(xv.Value, xv.mem), nil
-		}
-	case token.LOR:
-		if constant.BoolVal(xv.Value) {
-			return newConstant(xv.Value, xv.mem), nil
-		}
-	}
 
 	yv, err := scope.evalAST(node.Y)
 	if err != nil {
 		return nil, err
 	}
+
+	xv.loadValue(loadFullValue)
 	yv.loadValue(loadFullValue)
+
+	if xv.Unreadable != nil {
+		return nil, xv.Unreadable
+	}
+
 	if yv.Unreadable != nil {
 		return nil, yv.Unreadable
 	}
@@ -1002,7 +980,7 @@ func (scope *EvalScope) evalBinary(node *ast.BinaryExpr) (*Variable, error) {
 			return newConstant(rc, xv.mem), nil
 		}
 
-		r := xv.newVariable("", 0, typ, scope.Mem)
+		r := xv.newVariable("", 0, typ)
 		r.Value = rc
 		if r.Kind == reflect.String {
 			r.Len = xv.Len + yv.Len
@@ -1011,7 +989,7 @@ func (scope *EvalScope) evalBinary(node *ast.BinaryExpr) (*Variable, error) {
 	}
 }
 
-// Compares xv to yv using operator op
+// Comapres xv to yv using operator op
 // Both xv and yv must be loaded and have a compatible type (as determined by negotiateType)
 func compareOp(op token.Token, xv *Variable, yv *Variable) (bool, error) {
 	switch xv.Kind {
@@ -1024,14 +1002,6 @@ func compareOp(op token.Token, xv *Variable, yv *Variable) (bool, error) {
 	case reflect.Float32, reflect.Float64, reflect.Complex64, reflect.Complex128:
 		return constantCompare(op, xv.Value, yv.Value)
 	case reflect.String:
-		if xv.Len != yv.Len {
-			switch op {
-			case token.EQL:
-				return false, nil
-			case token.NEQ:
-				return true, nil
-			}
-		}
 		if int64(len(constant.StringVal(xv.Value))) != xv.Len || int64(len(constant.StringVal(yv.Value))) != yv.Len {
 			return false, fmt.Errorf("string too long for comparison")
 		}
@@ -1076,7 +1046,7 @@ func compareOp(op token.Token, xv *Variable, yv *Variable) (bool, error) {
 			return false, nil
 		}
 		if int64(len(xv.Children)) != xv.Len || int64(len(yv.Children)) != yv.Len {
-			return false, fmt.Errorf("structure too deep for comparison")
+			return false, fmt.Errorf("sturcture too deep for comparison")
 		}
 		eql, err = equalChildren(xv, yv, false)
 	case reflect.Slice, reflect.Map, reflect.Func, reflect.Chan:
@@ -1223,11 +1193,7 @@ func (v *Variable) sliceAccess(idx int) (*Variable, error) {
 	if idx < 0 || int64(idx) >= v.Len {
 		return nil, fmt.Errorf("index out of bounds")
 	}
-	mem := v.mem
-	if v.Kind != reflect.Array {
-		mem = DereferenceMemory(mem)
-	}
-	return v.newVariable("", v.Base+uintptr(int64(idx)*v.stride), v.fieldType, mem), nil
+	return v.newVariable("", v.Base+uintptr(int64(idx)*v.stride), v.fieldType), nil
 }
 
 func (v *Variable) mapAccess(idx *Variable) (*Variable, error) {
@@ -1281,12 +1247,7 @@ func (v *Variable) reslice(low int64, high int64) (*Variable, error) {
 		typ = fakeSliceType(v.fieldType)
 	}
 
-	mem := v.mem
-	if v.Kind != reflect.Array {
-		mem = DereferenceMemory(mem)
-	}
-
-	r := v.newVariable("", 0, typ, mem)
+	r := v.newVariable("", 0, typ)
 	r.Cap = len
 	r.Len = len
 	r.Base = base

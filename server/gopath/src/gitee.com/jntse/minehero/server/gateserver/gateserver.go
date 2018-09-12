@@ -11,7 +11,7 @@ import (
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
-	"gitee.com/jntse/minehero/server/tbl/excel"
+    "gitee.com/jntse/minehero/server/tbl/excel"
 	"gitee.com/jntse/minehero/server/def"
 	pb "github.com/gogo/protobuf/proto"
 	"github.com/go-redis/redis"
@@ -61,8 +61,7 @@ type GateServer struct {
 	quit_graceful 	bool
 	runtimestamp	int64
 	hourmonitor		*util.IntHourMonitorPool
-	namebase        []*table.TNameDefine
-	gameroommgr		GameRoomSvrManager
+    namebase        []*table.TNameDefine
 }
 
 var g_GateServer *GateServer = nil
@@ -145,7 +144,7 @@ func (this *GateServer) OnClose(session network.IBaseNetSession) {
 		this.usermgr.OnMatchServerClose()
 	case "TaskRoom":
 		log.Info("sid[%d] 和RoomServer连接断开", sid)
-		this.roomsvrmgr.OnClose(sid)
+		//this.roomsvrmgr.OnClose(sid)
 		break
 	case "TaskClient":
 		log.Info("sid[%d] 和客户端连接断开", sid)
@@ -207,7 +206,6 @@ func (this *GateServer) Init(fileconf string) bool {
 	this.usermgr.Init()
 	this.waitpool.Init()
 	this.roomsvrmgr.Init()
-	this.gameroommgr.Init()
 	//this.countmgr.Init()
 	//this.gamemgr.Init()
 	this.ticker1m = util.NewGameTicker(60 * time.Second, this.Handler1mTick)
@@ -216,9 +214,9 @@ func (this *GateServer) Init(fileconf string) bool {
 	this.ticker1m.Start()
 	this.ticker1s.Start()
 	this.ticker100ms.Start()
-	this.runtimestamp = 0
-	this.namebase = make([]*table.TNameDefine,0)
-	for _, v := range tbl.NameBase.TNameById { this.namebase = append(this.namebase, v) }
+    this.runtimestamp = 0
+    this.namebase = make([]*table.TNameDefine,0)
+    for _, v := range tbl.NameBase.TNameById { this.namebase = append(this.namebase, v) }
 	return true
 }
 
@@ -232,11 +230,11 @@ func (this *GateServer) Handler1sTick(now int64) {
 func (this *GateServer) Handler100msTick(now int64) {
 	this.waitpool.Tick(now)
 
-	this.gameroommgr.Tick(now)
 	// 
 	if this.quit_graceful && this.usermgr.Amount() == 0 {
 		g_KeyBordInput.Insert("quit")
 	}
+    this.roomsvrmgr.Tick(now)
 }
 
 func (this *GateServer) InitMsgHandler() {
@@ -408,7 +406,7 @@ func (this *GateServer) RegistToMatchServer() {
 
 func (this *GateServer) RegistRoomServer(agent *RoomAgent) {
 	this.roomsvrmgr.AddRoom(agent)
-	log.Info("注册房间服 id=%d [%s] 当前总数:%d", agent.Id(), agent.name, this.roomsvrmgr.Num())
+	log.Info("注册房间服 id=%d 当前总数:%d", agent.Id(), this.roomsvrmgr.Num())
 }
 
 //func (this *GateServer) GetUserBySession(session network.IBaseNetSession) *GateUser {
@@ -471,19 +469,15 @@ func IntHourClockCallback(now int64) {
 }
 
 func (this *GateServer) GetRandNickName() string {
-	lenlist := int32(len(this.namebase))
-	if lenlist <= 0 {
-		return "穿靴子的猫"
-	}
-	rnd := util.RandBetween(0, lenlist-1)
-	if rnd >= 0 && rnd < lenlist {
-		return this.namebase[rnd].Name
-	}
-	return "穿靴子的猫"
-}
-
-func GameRoomSvrMgr() *GameRoomSvrManager {
-	return &GateSvr().gameroommgr
+    lenlist := int32(len(this.namebase))
+    if lenlist <= 0 {
+        return "穿靴子的猫"
+    }
+    rnd := util.RandBetween(0, lenlist-1)
+    if rnd >= 0 && rnd < lenlist {
+        return this.namebase[rnd].Name
+    }
+    return "穿靴子的猫"
 }
 
 

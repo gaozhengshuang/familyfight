@@ -21,12 +21,10 @@ type Client interface {
 	// Restarts program.
 	Restart() ([]api.DiscardedBreakpoint, error)
 	// Restarts program from the specified position.
-	RestartFrom(pos string, resetArgs bool, newArgs []string) ([]api.DiscardedBreakpoint, error)
+	RestartFrom(pos string) ([]api.DiscardedBreakpoint, error)
 
 	// GetState returns the current debugger state.
 	GetState() (*api.DebuggerState, error)
-	// GetStateNonBlocking returns the current debugger state, returning immediately if the target is already running.
-	GetStateNonBlocking() (*api.DebuggerState, error)
 
 	// Continue resumes process execution.
 	Continue() <-chan *api.DebuggerState
@@ -38,8 +36,6 @@ type Client interface {
 	Step() (*api.DebuggerState, error)
 	// StepOut continues to the return address of the current function
 	StepOut() (*api.DebuggerState, error)
-	// Call resumes process execution while making a function call.
-	Call(expr string) (*api.DebuggerState, error)
 
 	// SingleStep will step a single cpu instruction.
 	StepInstruction() (*api.DebuggerState, error)
@@ -98,7 +94,7 @@ type Client interface {
 	ListGoroutines() ([]*api.Goroutine, error)
 
 	// Returns stacktrace
-	Stacktrace(goroutineID int, depth int, readDefers bool, cfg *api.LoadConfig) ([]api.Stackframe, error)
+	Stacktrace(int, int, *api.LoadConfig) ([]api.Stackframe, error)
 
 	// Returns whether we attached to a running process or not
 	AttachedToExistingProcess() bool
@@ -131,14 +127,4 @@ type Client interface {
 	ListCheckpoints() ([]api.Checkpoint, error)
 	// ClearCheckpoint removes a checkpoint
 	ClearCheckpoint(id int) error
-
-	// SetReturnValuesLoadConfig sets the load configuration for return values.
-	SetReturnValuesLoadConfig(*api.LoadConfig)
-
-	// IsMulticlien returns true if the headless instance is multiclient.
-	IsMulticlient() bool
-
-	// Disconnect closes the connection to the server without sending a Detach request first.
-	// If cont is true a continue command will be sent instead.
-	Disconnect(cont bool) error
 }

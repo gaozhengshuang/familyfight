@@ -41,20 +41,16 @@ func (this* GW2CMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.GW2C_RemovePackageItem{}, on_GW2C_RemovePackageItem)
 	this.msgparser.RegistProtoMsg(msg.GW2C_UpdateYuanbao{}, on_GW2C_UpdateYuanbao)
 	this.msgparser.RegistProtoMsg(msg.GW2C_UpdateGold{}, on_GW2C_UpdateGold)
-	this.msgparser.RegistProtoMsg(msg.GW2C_UpdateDiamond{}, on_GW2C_UpdateDiamond)
+	this.msgparser.RegistProtoMsg(msg.GW2C_UpdateCoupon{}, on_GW2C_UpdateCoupon)
 	this.msgparser.RegistProtoMsg(msg.Sync_BigRewardPickNum{}, on_Sync_BigRewardPickNum)
 	this.msgparser.RegistProtoMsg(msg.GW2C_Ret7DayReward{}, on_GW2C_Ret7DayReward)
 	this.msgparser.RegistProtoMsg(msg.GW2C_UpdateFreeStep{}, on_GW2C_UpdateFreeStep)
 	this.msgparser.RegistProtoMsg(msg.GW2C_LuckyDrawHit{}, on_GW2C_LuckyDrawHit)
 	this.msgparser.RegistProtoMsg(msg.GW2C_SendDeliveryAddressList{}, on_GW2C_SendDeliveryAddressList)
-	this.msgparser.RegistProtoMsg(msg.GW2C_SendLuckyDrawRecord{}, on_GW2C_SendLuckyDrawRecord)
-	this.msgparser.RegistProtoMsg(msg.GW2C_UpdateItemPos{}, on_GW2C_UpdateItemPos)
-	this.msgparser.RegistProtoMsg(msg.GW2C_SendShowImage{}, on_GW2C_SendShowImage)
-	this.msgparser.RegistProtoMsg(msg.GW2C_RetChangeImageSex{}, on_GW2C_RetChangeImageSex)
 
 	// 收room消息
 	this.msgparser.RegistProtoMsg(msg.BT_GameInit{}, on_BT_GameInit)
-	//this.msgparser.RegistProtoMsg(msg.BT_SendBattleUser{}, on_BT_SendBattleUser)
+	this.msgparser.RegistProtoMsg(msg.BT_SendBattleUser{}, on_BT_SendBattleUser)
 	this.msgparser.RegistProtoMsg(msg.BT_GameStart{}, on_BT_GameStart)
 	this.msgparser.RegistProtoMsg(msg.BT_GameOver{}, on_BT_GameOver)
 	this.msgparser.RegistProtoMsg(msg.BT_PickItem{}, on_BT_PickItem)
@@ -68,13 +64,6 @@ func (this* GW2CMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.C2GW_StartLuckyDraw{})
 	this.msgparser.RegistSendProto(msg.C2GW_ReqDeliveryGoods{})
 	this.msgparser.RegistSendProto(msg.C2GW_ChangeDeliveryAddress{})
-	this.msgparser.RegistSendProto(msg.C2GW_PlatformRechargeDone{})
-
-	//this.msgparser.RegistSendProto(msg.C2GW_GoldExchange{})
-	this.msgparser.RegistSendProto(msg.C2GW_BuyClothes{})
-	this.msgparser.RegistSendProto(msg.C2GW_DressClothes{})
-	this.msgparser.RegistSendProto(msg.C2GW_UnDressClothes{})
-	this.msgparser.RegistSendProto(msg.C2GW_ChangeImageSex{})
 
 	// 发room消息
 	this.msgparser.RegistSendProto(msg.BT_ReqEnterRoom{})
@@ -82,34 +71,34 @@ func (this* GW2CMsgHandler) Init() {
 
 }
 
-func on_GW2C_UpdateDiamond(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.GW2C_UpdateDiamond)
+func on_GW2C_UpdateCoupon(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.GW2C_UpdateCoupon)
 	//log.Info(reflect.TypeOf(tmsg).String())
-	log.Info("%+v", tmsg)
+	log.Info("%#v", tmsg)
 }
 
 func on_GW2C_UpdateYuanbao(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.GW2C_UpdateYuanbao)
 	//log.Info(reflect.TypeOf(tmsg).String())
-	log.Info("%+v", tmsg)
+	log.Info("%#v", tmsg)
 }
 
 func on_GW2C_UpdateGold(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.GW2C_UpdateGold)
 	//log.Info(reflect.TypeOf(tmsg).String())
-	log.Info("%+v", tmsg)
+	log.Info("%#v", tmsg)
 }
 
 func on_GW2C_RemovePackageItem(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.GW2C_RemovePackageItem)
 	//log.Info(reflect.TypeOf(tmsg).String())
-	log.Info("%+v", tmsg)
+	log.Info("%#v", tmsg)
 }
 
 func on_GW2C_AddPackageItem(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.GW2C_AddPackageItem)
 	//log.Info(reflect.TypeOf(tmsg).String())
-	log.Info("%+v", tmsg)
+	log.Info("%#v", tmsg)
 }
 
 func on_GW2C_MsgNotify(session network.IBaseNetSession, message interface{}) {
@@ -218,42 +207,12 @@ func on_Sync_BigRewardPickNum(session network.IBaseNetSession, message interface
 func on_GW2C_LuckyDrawHit(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.GW2C_LuckyDrawHit)
 	//log.Info(reflect.TypeOf(tmsg).String())
-	log.Info("%+v", tmsg)
+	log.Info("%#v", tmsg)
 }
 
 func on_GW2C_SendDeliveryAddressList(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.GW2C_SendDeliveryAddressList)
 	//log.Info(reflect.TypeOf(tmsg).String())
-	log.Info("%+v", tmsg)
-}
-
-func on_GW2C_SendLuckyDrawRecord(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.GW2C_SendLuckyDrawRecord)
-	//log.Info(reflect.TypeOf(tmsg).String())
 	log.Info("%#v", tmsg)
-}
-
-func on_GW2C_UpdateItemPos(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.GW2C_UpdateItemPos)
-	//log.Info(reflect.TypeOf(tmsg).String())
-	log.Info("%+v", tmsg)
-}
-
-func on_GW2C_SendShowImage(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.GW2C_SendShowImage)
-	//log.Info(reflect.TypeOf(tmsg).String())
-	log.Info("%+v", tmsg)
-}
-
-func on_GW2C_RetChangeImageSex(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.GW2C_RetChangeImageSex)
-	//log.Info(reflect.TypeOf(tmsg).String())
-	client, ok := session.UserDefData().(*User)
-	if ok == false {
-		panic("没有为Session设置UserDefData")
-	}
-	client.SetSex(tmsg.GetSex())
-
-	log.Info("%+v", tmsg)
 }
 

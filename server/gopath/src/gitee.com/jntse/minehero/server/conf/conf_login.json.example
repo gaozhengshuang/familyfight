@@ -11,11 +11,11 @@
 			"name": "GateListener",
 			"parser": "GW2LS_MsgParser",
 			"host": {
-				"ip": "192.168.30.202", "port": 7001
+				"ip": "192.168.30.202",
+				"port": 7010
 			},
             "verify": 0,
-            "svrchannel":true,
-            "disable_eventqueue": false
+            "svrchannel":true
 		}
 	],
 	"wslistens": [
@@ -23,33 +23,28 @@
 			"name": "ClientListener",
 			"parser": "C2LS_MsgParser",
 			"host": {
-				"ip": "192.168.30.202", "port": 7002
+				"ip": "192.168.30.202",
+				"port": 7020
 			},
             "verify": 1,
-            "svrchannel":false,
-            "https": false,
-            "cert":"../cert/https/https-server-214801457430415.pem",
-            "certkey":"../cert/https/https-server-214801457430415.key",
-            "disable_eventqueue": false
+            "svrchannel":false
 		}
 	],
     "httplistens": [
 		{
 			"name": "TestHttpListener1",
 			"host": {
-				"ip": "192.168.30.202", "port": 7003
-			},
-            "https": false,
-            "cert":"../cert/https/https-server-214801457430415.pem",
-            "certkey":"../cert/https/https-server-214801457430415.key",
-            "disable_eventqueue": false
+				"ip": "192.168.30.202",
+				"port": 18000
+			}
 		}
     ],
     "redis": {
         "passwd": "",
         "db": 0,
         "host": {
-            "ip": "192.168.30.202", "port": 6379
+            "ip": "192.168.30.202",
+            "port": 6379
         }
     }
 }

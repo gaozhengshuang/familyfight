@@ -52,8 +52,5 @@ TEXT ·fputestsetup(SB),$0-48
 	// XMM8 = XMM2 + XMM5 = { f32d+f32b, f32c+f32a, f32b+f32d, f32a+f32c } = { 3.4, 3.2, 3.4, 3.2 }
 	MOVAPS X2, X8
 	ADDPS X5, X8
-
-	MOVAPS X1, X9
-	MOVAPS X2, X10
-
+	
 	RET

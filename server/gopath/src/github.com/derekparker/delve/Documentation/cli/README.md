@@ -5,7 +5,6 @@ Command | Description
 [args](#args) | Print function arguments.
 [break](#break) | Sets a breakpoint.
 [breakpoints](#breakpoints) | Print out info for active breakpoints.
-[call](#call) | Resumes process, injecting a function call (EXPERIMENTAL!!!)
 [check](#check) | Creates a checkpoint at the current position.
 [checkpoints](#checkpoints) | Print out info for existing checkpoints.
 [clear](#clear) | Deletes breakpoint.
@@ -15,10 +14,8 @@ Command | Description
 [config](#config) | Changes configuration parameters.
 [continue](#continue) | Run until breakpoint or program termination.
 [disassemble](#disassemble) | Disassembler.
-[down](#down) | Move the current frame down.
-[edit](#edit) | Open where you are in $DELVE_EDITOR or $EDITOR
 [exit](#exit) | Exit the debugger.
-[frame](#frame) | Set the current frame, or execute command on a different frame.
+[frame](#frame) | Executes command on a different frame.
 [funcs](#funcs) | Print list of functions.
 [goroutine](#goroutine) | Shows or changes current goroutine
 [goroutines](#goroutines) | List program goroutines.
@@ -42,7 +39,6 @@ Command | Description
 [threads](#threads) | Print out info for every traced thread.
 [trace](#trace) | Set tracepoint.
 [types](#types) | Print list of types
-[up](#up) | Move the current frame up.
 [vars](#vars) | Print package variables.
 [whatis](#whatis) | Prints type of an expression.
 
@@ -70,30 +66,9 @@ Print out info for active breakpoints.
 
 Aliases: bp
 
-## call
-Resumes process, injecting a function call (EXPERIMENTAL!!!)
-	
-Current limitations:
-- can only call package-level functions, no function pointers nor methods.
-- only things that have an address can be used as arguments (no literal
-  constants or results of evaluating some expressions).
-- only pointers to stack-allocated objects can be passed as argument.
-- no automatic type conversions are supported, including automatically
-  converting to an interface type.
-- functions can only be called on running goroutines that are not
-  executing the runtime.
-- the current goroutine needs to have at least 256 bytes of free space on
-  the stack.
-- functions can only be called when the goroutine is stopped at a safe
-  point.
-- calling a function will resume execution of all goroutines.
-- only supported on linux's native backend.
-
-
-
 ## check
 Creates a checkpoint at the current position.
-
+			
 	checkpoint [where]
 
 Aliases: checkpoint
@@ -110,7 +85,7 @@ Deletes breakpoint.
 
 ## clear-checkpoint
 Deletes checkpoint.
-
+			
 	clear-checkpoint <id>
 
 Aliases: clearcheck
@@ -119,7 +94,7 @@ Aliases: clearcheck
 Deletes multiple breakpoints.
 
 	clearall [<linespec>]
-
+	
 If called with the linespec argument it will delete all the breakpoints matching the linespec. If linespec is omitted all breakpoints are deleted.
 
 
@@ -127,16 +102,16 @@ If called with the linespec argument it will delete all the breakpoints matching
 Set breakpoint condition.
 
 	condition <breakpoint name or id> <boolean expression>.
-
+	
 Specifies that the breakpoint or tracepoint should break only if the boolean expression is true.
 
 Aliases: cond
 
 ## config
 Changes configuration parameters.
-
+		
 	config -list
-
+	
 Show all configuration parameters.
 
 	config -save
@@ -144,17 +119,17 @@ Show all configuration parameters.
 Saves the configuration file to disk, overwriting the current configuration file.
 
 	config <parameter> <value>
-
+	
 Changes the value of a configuration parameter.
 
-	config substitute-path <from> <to>
-	config substitute-path <from>
-
-Adds or removes a path substitution rule.
+	config subistitute-path <from> <to>
+	config subistitute-path <from>
+	
+Adds or removes a path subistitution rule.
 
 	config alias <command> <alias>
 	config alias <alias>
-
+	
 Defines <alias> as an alias to <command> or removes an alias.
 
 
@@ -169,43 +144,21 @@ Disassembler.
 	[goroutine <n>] [frame <m>] disassemble [-a <start> <end>] [-l <locspec>]
 
 If no argument is specified the function being executed in the selected stack frame will be executed.
-
+	
 	-a <start> <end>	disassembles the specified address range
 	-l <locspec>		disassembles the specified function
 
 Aliases: disass
 
-## down
-Move the current frame down.
-
-  down [<m>]
-  down [<m>] <command>
-
-Move the current frame down by <m>. The second form runs the command on the given frame.
-
-
-## edit
-Open where you are in $DELVE_EDITOR or $EDITOR
-
-Aliases: ed
-
 ## exit
 Exit the debugger.
-		
-	exit [-c]
-	
-When connected to a headless instance started with the --accept-multiclient, pass -c to resume the execution of the target process before disconnecting.
 
 Aliases: quit q
 
 ## frame
-Set the current frame, or execute command on a different frame.
+Executes command on a different frame.
 
-  frame <m>
-  frame <m> <command>
-
-The first form sets frame used by subsequent commands such as "print" or "set".
-The second form runs the command on the given frame.
+	frame <frame index> <command>.
 
 
 ## funcs
@@ -231,16 +184,14 @@ Called with more arguments it will execute a command on the specified goroutine.
 ## goroutines
 List program goroutines.
 
-	goroutines [-u (default: user location)|-r (runtime location)|-g (go statement location)|-s (start location)] [ -t (stack trace)]
+	goroutines [-u (default: user location)|-r (runtime location)|-g (go statement location)]
 
 Print out info for every goroutine. The flag controls what information is shown along with each goroutine:
 
 	-u	displays location of topmost stackframe in user code
 	-r	displays location of topmost stackframe (including frames inside private runtime functions)
 	-g	displays location of go instruction that created the goroutine
-	-s	displays location of the start function
-	-t	displays stack trace of goroutine
-
+	
 If no flag is specified the default is -u.
 
 
@@ -248,7 +199,7 @@ If no flag is specified the default is -u.
 Prints the help message.
 
 	help [command]
-
+	
 Type "help" followed by the name of a command for more information about it.
 
 Aliases: h
@@ -260,7 +211,7 @@ Show source code.
 
 Show source around current point or provided linespec.
 
-Aliases: ls l
+Aliases: ls
 
 ## locals
 Print local variables.
@@ -281,7 +232,7 @@ Aliases: n
 Executes a command when a breakpoint is hit.
 
 	on <breakpoint name or id> <command>.
-
+	
 Supported commands: print, stack and goroutine)
 
 
@@ -298,14 +249,14 @@ Aliases: p
 Print contents of CPU registers.
 
 	regs [-a]
-
+	
 Argument -a shows more registers.
 
 
 ## restart
 Restart process from a checkpoint or event.
-
-  restart [event number or checkpoint id]
+	
+	restart [event number or checkpoint id]
 
 Aliases: r
 
@@ -339,11 +290,9 @@ If regex is specified only the source files matching it will be returned.
 ## stack
 Print stack trace.
 
-	[goroutine <n>] [frame <m>] stack [<depth>] [-full] [-g] [-s] [-offsets]
+	[goroutine <n>] [frame <m>] stack [<depth>] [-full]
 
-	-full		every stackframe is decorated with the value of its local variables and arguments.
-	-offsets	prints frame offset of each frame
-
+If -full is specified every stackframe will be decorated by the value of its local variables and function arguments.
 
 Aliases: bt
 
@@ -376,7 +325,7 @@ Print out info for every traced thread.
 Set tracepoint.
 
 	trace [name] <linespec>
-
+	
 A tracepoint is a breakpoint that does not stop the execution of the program, instead when the tracepoint is hit a notification is displayed. See [Documentation/cli/locspec.md](//github.com/derekparker/delve/tree/master/Documentation/cli/locspec.md) for the syntax of linespec.
 
 See also: "help on", "help cond" and "help clear"
@@ -391,15 +340,6 @@ Print list of types
 If regex is specified only the types matching it will be returned.
 
 
-## up
-Move the current frame up.
-
-  up [<m>]
-  up [<m>] <command>
-
-Move the current frame up by <m>. The second form runs the command on the given frame.
-
-
 ## vars
 Print package variables.
 
@@ -410,7 +350,7 @@ If regex is specified only package variables with a name matching it will be ret
 
 ## whatis
 Prints type of an expression.
-
+		
 		whatis <expression>.
 
 

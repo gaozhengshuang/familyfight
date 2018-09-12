@@ -14,9 +14,6 @@ message SimpleCounter {
     optional int64 givestep = 2;
     optional int64 money_cost = 3;
     optional int64 money_cost_reset = 4;
-    optional int32 registcash = 5;
-    optional int32 winscore = 6;
-    optional int32 sharetime = 7;
 }
 
 // 免费赠送金币
@@ -33,13 +30,12 @@ message UserWechat {
 // 玩家任务
 message UserTask {
     repeated TaskData tasks = 1;
-    optional int32  tasktime = 2;
 }
 
 message TaskData {
-    optional int32 id = 1;          // 任务id
-    optional int32 progress = 2;    // 本次完成进度
-    optional int32 state = 3;       // 状态 见define下taskstate
+    optional int32 id = 1;         // 任务id
+    optional int32 progress = 2;   // 本次完成进度
+    optional int32 completed = 3;  // 完成标记
 }
 
 // 抽奖历史记录
@@ -49,27 +45,15 @@ message LuckyDrawItem {
     optional int32 num = 3;
     optional int32 worth = 4;
 }
-message LuckyDrawRecord {
-    repeated LuckyDrawItem drawlist = 1;    // 历史记录列表
-    optional int64 totalvalue = 2;          // 总价值
-}
-
-// 形象信息
-message ImageData {
-    optional int32 sex = 1;
-    repeated ItemData clothes = 2;
-}
-
-// 个人形象
-message PersonalImage {
-    repeated ImageData lists = 2;
+message LuckyDrawHistory {
+    repeated LuckyDrawItem drawlist = 1;
 }
 
 message UserBase {
     optional uint32     level   = 1;
     optional uint32     exp     = 2;
-    optional uint32     gold    = 3;    // 金币
-    optional uint32     diamond = 4;    // 钻石
+    optional uint32     money   = 3;    // 
+    optional uint32     coupon  = 4;    // 代金卷
     optional uint32     yuanbao = 5;    // 元宝
     optional int64      tmlogin  = 6;   // 登陆时间
     optional int64      tmlogout = 7;   // 离线时间
@@ -82,16 +66,20 @@ message UserBase {
     optional UserWechat wechat = 14;
     optional string     invitationcode = 15;    // 邀请码
     optional FreePresentMoney freepresent = 16;
-    optional UserTask   task = 17;          // 任务
-    optional LuckyDrawRecord luckydraw = 18;   // 抽奖
-    optional uint32     total_recharge = 19; // 总充值
-    optional PersonalImage images = 20;     // 个人形象
+    optional UserTask   task = 17;      // 任务
+    optional LuckyDrawHistory luckydraw = 18;   // 抽奖
 }
 
 message UserAddress {
     optional string receiver = 1;
     optional string phone = 2;
     optional string address = 3;
+}
+
+// 道具位置
+enum ItemPos {
+    Bag = 0;     // 背包
+    Storage = 1; // 仓库
 }
 
 message ItemData {
