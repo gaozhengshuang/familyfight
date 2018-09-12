@@ -14,11 +14,11 @@ message IpHost {
 // 道具id规则 = 类型 * 1000 + id
 enum ItemId {
     YuanBao = 6001;         // 元宝
-    Coupon = 6002;          // 人民币
+    Diamond = 6002;         // 钻石
     Gold = 6003;            // 金币
     FreeStep = 6005;        // 免费步数
-    Diamond = 10001;        // 钻石
-    DiamondParts = 10002;   // 钻石碎片
+    RedDiamond = 10001;        // 红包钻石
+    RedDiamondParts = 10002;   // 红包钻石碎片
 }
 
 enum ItemType {
@@ -31,7 +31,8 @@ enum ItemType {
     CarAccessory    = 7;    // 汽车用品
     Advertisement   = 8;    // 广告
     Smallware       = 9;    // 小商品
-    DiamondItem     = 10;  // 钻石道具
+    DiamondItem     = 10;   // 钻石道具
+    ClothesItem     = 11;   // 时装
 }
 
 message PairNumItem {
@@ -40,9 +41,46 @@ message PairNumItem {
 }
 
 enum TaskId {
-    RegistAccount       = 1001; // 注册账户
+    RegistAccount       = 1001; // 自己注册账户(服务器使用)
     RegisterTopScore    = 1002; // 达到目标分数
     InviteeTopScore     = 1003; // 被邀请人达到目标分数
+    InviteRegist        = 1004; // 邀请注册
 }
 
+// 道具位置定义
+enum ItemPos {
+    Bag = 0;        // 默认背包
+    Helmet = 1;     // 头部
+    Clothes = 2;    // 衣服
+    Pants = 3;      // 裤子
+    Shoe = 4;       // 鞋子
+    Hand = 5;       // 手持装饰
+    Wing = 6;       // 翅膀
+    Suit = 7;       // 套装
+    LongClothes = 8;    // 裙子/长衣
+}
+
+
+enum Sex {
+    Female = 0;
+    Male = 1;
+    Neutral = 2;
+}
+
+enum MoneyType {
+    _Gold = 1;
+    _Diamond = 2;
+}
+
+//排行榜定义
+enum SortType {
+    WinScore = 0;       //赚钱榜
+}
+
+//任务状态
+enum TaskState {
+    Doing           = 0;    //进行中
+    Finish          = 1;    //完成
+    GetReward       = 2;    //领取完
+}
 

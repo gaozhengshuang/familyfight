@@ -85,4 +85,14 @@ message C2GW_SendWechatAuthCode {
     optional string code = 1;
 }
 
+// 钻石兑换金币
+message C2GW_GoldExchange {
+    optional uint64 userid = 1;
+    optional uint32 diamonds = 2;
+}
+
+// 返回
+message GW2C_RetGoldExchange {
+    optional uint32 gold = 1;       // 增量
+}
 

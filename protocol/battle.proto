@@ -4,11 +4,11 @@
 import "serialize.proto";
 package msg;
 
-message BattleUser {
-    optional uint64 userid = 1;
-    optional int32  gold = 2;
-    optional int32  stepindex = 3;
-}
+//message BattleUser {
+//    optional uint64 userid = 1;
+//    optional int32  gold = 2;
+//    optional int32  stepindex = 3;
+//}
 
 
 message GridItem {
@@ -39,20 +39,21 @@ message BT_GameInit {
     optional int64  roomid = 1;
     optional uint64 ownerid = 2;
     optional int32  gamekind = 3;
+    optional uint32 diamond = 4;
+    optional uint32 gold = 5;
     //repeated GridItem listitem = 4;
 }
 
 
 // 同步玩家数据
-message BT_SendBattleUser {
-    //optional int64  roomid = 1;
-    optional uint64 ownerid = 2;
-    optional uint32 gold = 3;           // 红包金币
-    optional uint32 coupon = 4;         // 代金卷
-    optional uint32 yuanbao = 5;        // 元宝
-    optional uint32 level = 6;          // 等级
-    optional int32 freestep = 7;        // 免费步数，免费场
-}
+//message BT_SendBattleUser {
+//    optional uint64 ownerid = 2;
+//    optional uint32 gold = 3;           // 红包金币
+//    optional uint32 coupon = 4;         // 代金卷
+//    optional uint32 yuanbao = 5;        // 元宝
+//    optional uint32 level = 6;          // 等级
+//    optional int32 freestep = 7;        // 免费步数，免费场
+//}
 
 
 // 游戏开始
@@ -78,6 +79,7 @@ message BT_GameOver {
 message BT_ReqQuitGameRoom {
     optional int64 roomid = 1;
     optional uint64 userid = 2;
+    optional uint32 gold = 3;
 }
 
 // R2C 获得道具
@@ -86,11 +88,61 @@ message BT_PickItem {
     optional GridItem item = 2;
 }
 
-// C2R 更新money
-message BT_UpdateMoney {
+// C2R 更新gold
+//message BT_UpdateMoney {
+//    optional uint64 userid = 1;
+//    optional int64  roomid = 2;
+//    optional uint64 gold  = 3;
+//}
+
+// C2R 请求发送子弹
+message BT_ReqLaunchBullet {
     optional uint64 userid = 1;
-    optional int64  roomid = 2;
-    optional uint64 money  = 3;
+}
+
+// R2C 返回
+message BT_RetLaunchBullet {
+    optional int64 bulletid = 1;
+    optional int64 energy = 2;
+    optional string errmsg = 3;
+}
+
+// C2R 客户端通知踩到炸弹
+message BT_StepOnBomb {
+    optional uint64 userid = 1;
+}
+
+message BT_RetStepOnBomb {
+}
+
+
+// C2R 子弹获取金币
+message BT_BulletEarnMoney {
+    optional uint64 userid = 1;
+    optional int64 bulletid = 2;
+    optional uint32 gold = 3;
+}
+
+// C2R 使用大招
+message BT_UseUltimateSkil {
+    optional uint64 userid = 1;
+    optional uint32 gold = 2;
+}
+
+// R2C 通知客户端充钱到账
+//message BT_SynUserRechargeMoney {
+//    optional uint64 userid = 1;
+//    optional uint32 diamond = 2;    // 增量
+//}
+
+// C2R 击中超级砖块
+message BT_ReqCrushSuperBrick {
+    optional uint64 userid = 1;
+}
+
+// C2R 击中超级砖块
+message BT_RetCrushSuperBrick {
+    optional string errmsg = 1;
 }
 
 
