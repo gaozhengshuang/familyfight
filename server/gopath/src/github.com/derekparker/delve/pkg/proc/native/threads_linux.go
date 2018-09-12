@@ -2,8 +2,6 @@ package native
 
 import (
 	"fmt"
-	"syscall"
-	"unsafe"
 
 	sys "golang.org/x/sys/unix"
 
@@ -16,21 +14,23 @@ type WaitStatus sys.WaitStatus
 // process details.
 type OSSpecificDetails struct {
 	registers sys.PtraceRegs
-	running   bool
 }
 
-func (t *Thread) stop() (err error) {
+func (t *Thread) halt() (err error) {
 	err = sys.Tgkill(t.dbp.pid, t.ID, sys.SIGSTOP)
 	if err != nil {
-		err = fmt.Errorf("stop err %s on thread %d", err, t.ID)
+		err = fmt.Errorf("halt err %s on thread %d", err, t.ID)
+		return
+	}
+	_, _, err = t.dbp.waitFast(t.ID)
+	if err != nil {
+		err = fmt.Errorf("wait err %s on thread %d", err, t.ID)
 		return
 	}
 	return
 }
 
-// Stopped returns whether the thread is stopped at
-// the operating system level.
-func (t *Thread) Stopped() bool {
+func (t *Thread) stopped() bool {
 	state := status(t.ID, t.dbp.os.comm)
 	return state == StatusTraceStop || state == StatusTraceStopT
 }
@@ -40,7 +40,7 @@ func (t *Thread) resume() error {
 }
 
 func (t *Thread) resumeWithSig(sig int) (err error) {
-	t.os.running = true
+	t.running = true
 	t.dbp.execPtraceFunc(func() { err = PtraceCont(t.ID, sig) })
 	return
 }
@@ -82,26 +82,18 @@ func (t *Thread) Blocked() bool {
 	return false
 }
 
-func (t *Thread) restoreRegisters(sr *savedRegisters) error {
-	var restoreRegistersErr error
-	t.dbp.execPtraceFunc(func() {
-		restoreRegistersErr = sys.PtraceSetRegs(t.ID, &sr.regs)
-		if restoreRegistersErr != nil {
-			return
-		}
-		if sr.fpregs.Xsave != nil {
-			iov := sys.Iovec{Base: &sr.fpregs.Xsave[0], Len: uint64(len(sr.fpregs.Xsave))}
-			_, _, restoreRegistersErr = syscall.Syscall6(syscall.SYS_PTRACE, sys.PTRACE_SETREGSET, uintptr(t.ID), _NT_X86_XSTATE, uintptr(unsafe.Pointer(&iov)), 0, 0)
-			return
-		}
-
-		_, _, restoreRegistersErr = syscall.Syscall6(syscall.SYS_PTRACE, sys.PTRACE_SETFPREGS, uintptr(t.ID), uintptr(0), uintptr(unsafe.Pointer(&sr.fpregs.PtraceFpRegs)), 0, 0)
-		return
-	})
-	if restoreRegistersErr == syscall.Errno(0) {
-		restoreRegistersErr = nil
+func (t *Thread) saveRegisters() (proc.Registers, error) {
+	var err error
+	t.dbp.execPtraceFunc(func() { err = sys.PtraceGetRegs(t.ID, &t.os.registers) })
+	if err != nil {
+		return nil, fmt.Errorf("could not save register contents")
 	}
-	return restoreRegistersErr
+	return &Regs{&t.os.registers, nil}, nil
+}
+
+func (t *Thread) restoreRegisters() (err error) {
+	t.dbp.execPtraceFunc(func() { err = sys.PtraceSetRegs(t.ID, &t.os.registers) })
+	return
 }
 
 func (t *Thread) WriteMemory(addr uintptr, data []byte) (written int, err error) {
@@ -123,8 +115,5 @@ func (t *Thread) ReadMemory(data []byte, addr uintptr) (n int, err error) {
 		return
 	}
 	t.dbp.execPtraceFunc(func() { _, err = sys.PtracePeekData(t.ID, addr, data) })
-	if err == nil {
-		n = len(data)
-	}
 	return
 }

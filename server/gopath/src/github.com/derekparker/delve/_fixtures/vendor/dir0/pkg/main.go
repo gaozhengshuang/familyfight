@@ -1,7 +1,5 @@
 package pkg
 
-var A = 0
-
 type SomeType struct {
 	X float64
 }
@@ -15,7 +13,3 @@ func (s *SomeType) AnotherMethod(x int) int {
 }
 
 var SomeVar SomeType
-
-const (
-	SomeConst int = 2
-)

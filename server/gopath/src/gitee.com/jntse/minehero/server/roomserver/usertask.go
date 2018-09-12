@@ -2,12 +2,12 @@ package main
 
 import (
 	"strings"
-	"strconv"
+	_"strconv"
 	pb "github.com/gogo/protobuf/proto"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/minehero/server/tbl"
-	"gitee.com/jntse/minehero/server/def"
+	_"gitee.com/jntse/minehero/server/def"
 )
 
 type UserTask struct {
@@ -39,14 +39,14 @@ func (this *UserTask) PackBin(bin *msg.Serialize) {
 func (this *UserTask) TaskFinish(id int32) {	
 	task, find := this.tasks[id]
 	if find == false {
-		task = &msg.TaskData{Id:pb.Int32(id), Progress:pb.Int32(0), State:pb.Int32(1)}
+		task = &msg.TaskData{Id:pb.Int32(id), Progress:pb.Int32(0), Completed:pb.Int32(1)}
 		this.tasks[id] = task
 	}else {
-		if task.GetState() == 1 {
+		if task.GetCompleted() == 1 {
 			log.Info("玩家[%s %d] 重复完成任务[%d]", this.owner.Name(), this.owner.Id(), id)
 			return
 		}
-		task.State = pb.Int32(1)
+		task.Completed = pb.Int32(1)
 	}
 	this.GiveTaskReward(id)
 	log.Info("玩家[%s %d] 完成任务[%d]", this.owner.Name(), this.owner.Id(), id)
@@ -57,12 +57,12 @@ func (this *UserTask) SendTaskList() {
 	for _, task := range this.tasks {
 		send.Tasks = append(send.Tasks, task)
 	}
-	this.owner.SendClientMsg(send)
+	this.owner.SendMsg(send)
 }
 
 func (this *UserTask) IsTaskFinish(id int32) bool {
 	task, find := this.tasks[id]
-	if find && task.GetState() == 1 {
+	if find && task.GetCompleted() == 1 {
 		return true
 	}
 	return false
@@ -70,7 +70,7 @@ func (this *UserTask) IsTaskFinish(id int32) bool {
 
 
 func (this *UserTask) GiveTaskReward(id int32) {
-	taskbase, find := tbl.TaskBase.TTaskById[int32(id)]
+	taskbase, find := tbl.TaskBase.TTaskById[uint32(id)]
 	if find == false {
 		log.Error("玩家[%s %d] 找不到任务配置[%d]", this.owner.Name(), this.owner.Id(), id)
 		return
@@ -83,11 +83,11 @@ func (this *UserTask) GiveTaskReward(id int32) {
 		return
 	}
 	//reward, _ := strconv.ParseInt(rewardpair[0], 10, 32)
-	count,  _ := strconv.ParseInt(rewardpair[1], 10, 32)
+	//count,  _ := strconv.ParseInt(rewardpair[1], 10, 32)
 
 	// 
 	if id == int32(msg.TaskId_RegistAccount) || id == int32(msg.TaskId_RegisterTopScore) || id == int32(msg.TaskId_InviteeTopScore) {
-		def.HttpWechatCompanyPay(this.owner.OpenId(), count, taskbase.Desc)
+		//def.HttpWechatCompanyPay(this.owner.WechatOpenId(), count)
 	}
 }
 

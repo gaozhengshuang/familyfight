@@ -11,31 +11,32 @@
 			"name": "MatchConnector",
 			"parser": "MS2RS_MsgParser",
 			"host": {
-				"ip": "192.168.30.202", "port": 8002
+				"ip": "192.168.30.202",
+				"port": 7120
 			},
             "interval": 3,
             "svrchannel":true,
-            "disable": 0,
-            "disable_eventqueue": false
+            "disable": 0
 		},
 		{
 			"name": "GateConnector",
 			"parser": "GW2RS_MsgParser",
 			"host": {
-				"ip": "", "port": 0
+				"ip": "",
+				"port": 0
             },
             "interval": 1,
             "svrchannel":true,
             "disable": 1,
-            "disreconnect":1,
-            "disable_eventqueue": false
+            "disreconnect":1
 		}
 	],
     "redis": {
         "passwd": "",
         "db": 0,
         "host": {
-            "ip": "192.168.30.202", "port": 6379
+            "ip": "192.168.30.202",
+            "port": 6379
         }
     }
 }

@@ -251,34 +251,8 @@ func (this *User) RegistAccount() {
 
 // 请求登陆验证
 func (this *User) SendLogin() {
-	//this.SendLoginMsg(this.NewReqLoginMsg())
-	this.SendLoginMsg(this.NewReqLoginWechatMsg())
+	this.SendLoginMsg(this.NewReqLoginMsg())
 }
-
-// 请求登陆验证
-func (this *User) HttpWetchatLogin() {
-
-	//
-	url := "http://192.168.30.203:7003"
-	//url := "http://210.73.214.68:7003"
-	body := fmt.Sprintf(`{"gmcmd":"wx_login", "tempauthcode":"%s"}`, this.Account())
-	resp, err := network.HttpPost(url, body)
-
-	//url := "https://tantanle-service7003.giantfun.cn/"
-	//body := fmt.Sprintf(`{"gmcmd":"wx_login", "tempauthcode":"%s"}`, this.Account())
-	//caCert := "../cert/wechat/cacert.pem"
-	//certFile := "../cert/https/https-server-214801457430415.pem"
-	//certKey := "../cert/https/https-server-214801457430415.key"
-	//resp, err := network.HttpsPost(url, caCert, certFile, certKey, body)
-
-	if err != nil {
-		log.Error("HttpWetchatLogin 接口返回报错 err[%s]", err)
-		return
-	}
-
-	log.Info("HttpWetchatLogin 服务器返回信息Code[%d] Body[%s]", resp.Code, resp.Body)
-}
-
 
 func (this *User) StartGame() {
 	this.SendGateMsg(&msg.C2GW_ReqStartGame{Gamekind:pb.Int32(30)})
@@ -309,11 +283,6 @@ func (this *User) Recharge() {
 	this.SendGateMsg(send)
 }
 
-func (this *User) RechargeDone() {
-	send := &msg.C2GW_PlatformRechargeDone{ Userid:pb.Uint64(this.Id())}
-	this.SendGateMsg(send)
-}
-
 // 抽奖
 func (this *User) LuckyDraw() {
 	send := &msg.C2GW_StartLuckyDraw{ Userid:pb.Uint64(this.Id())}
@@ -324,34 +293,6 @@ func (this *User) LuckyDraw() {
 func (this *User) ChangeDeliveryAddress() {
 	addr := &msg.UserAddress{Receiver:pb.String("机器人"), Phone:pb.String("188888888"), Address:pb.String("中国上海闵行区新龙路1333弄28号31栋901")}
 	send := &msg.C2GW_ChangeDeliveryAddress{ Index:pb.Uint32(0), Info:addr }
-	this.SendGateMsg(send)
-}
-
-// 购买服饰
-func (this *User) BuyClothes() {
-	send := &msg.C2GW_BuyClothes{ItemList:make([]int32, 0)}
-	send.ItemList = append(send.ItemList, 101)
-	//send.ItemList = append(send.ItemList, 201)
-	//send.ItemList = append(send.ItemList, 701)
-	this.SendGateMsg(send)
-}
-
-// 穿戴
-func (this *User) DressClothes() {
-	send := &msg.C2GW_DressClothes{Pos:pb.Int32(1), Itemid:pb.Int32(101) }
-	this.SendGateMsg(send)
-}
-
-// 脱下
-func (this *User) UnDressClothes() {
-	send := &msg.C2GW_UnDressClothes{Pos:pb.Int32(1)}
-	this.SendGateMsg(send)
-}
-
-func (this *User) ChangeSex() {
-	newsex := int32(msg.Sex_Female)
-	if this.Sex() == int32(msg.Sex_Female) { newsex = int32(msg.Sex_Male) }
-	send := &msg.C2GW_ChangeImageSex{ Sex:pb.Int32(newsex) }
 	this.SendGateMsg(send)
 }
 
@@ -368,8 +309,6 @@ func (this *User) DoInputCmd(cmd string) {
 	switch cmd {
 	case "reg":
 		this.RegistAccount()
-	case "wxlogin":
-		this.HttpWetchatLogin()
 	case "login":
 		this.SendLogin()
 	case "start":
@@ -390,16 +329,6 @@ func (this *User) DoInputCmd(cmd string) {
 		this.LuckyDraw()
 	case "address":
 		this.ChangeDeliveryAddress()
-	case "buyc":
-		this.BuyClothes()
-	case "dress":
-		this.DressClothes()
-	case "undress":
-		this.UnDressClothes()
-	case "sex":
-		this.ChangeSex()
-	case "rechargedone":
-		this.RechargeDone()
 	}
 }
 

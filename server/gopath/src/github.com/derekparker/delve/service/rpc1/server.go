@@ -29,23 +29,19 @@ func (s *RPCServer) ProcessPid(arg1 interface{}, pid *int) error {
 }
 
 func (s *RPCServer) Detach(kill bool, ret *int) error {
-	err := s.debugger.Detach(kill)
-	if s.config.DisconnectChan != nil {
-		close(s.config.DisconnectChan)
-	}
-	return err
+	return s.debugger.Detach(kill)
 }
 
 func (s *RPCServer) Restart(arg1 interface{}, arg2 *int) error {
 	if s.config.AttachPid != 0 {
 		return errors.New("cannot restart process Delve did not create")
 	}
-	_, err := s.debugger.Restart("", false, nil)
+	_, err := s.debugger.Restart("")
 	return err
 }
 
 func (s *RPCServer) State(arg interface{}, state *api.DebuggerState) error {
-	st, err := s.debugger.State(false)
+	st, err := s.debugger.State()
 	if err != nil {
 		return err
 	}
@@ -87,7 +83,7 @@ func (s *RPCServer) StacktraceGoroutine(args *StacktraceGoroutineArgs, locations
 	if args.Full {
 		loadcfg = &defaultLoadConfig
 	}
-	locs, err := s.debugger.Stacktrace(args.Id, args.Depth, false, loadcfg)
+	locs, err := s.debugger.Stacktrace(args.Id, args.Depth, loadcfg)
 	if err != nil {
 		return err
 	}
@@ -158,7 +154,7 @@ func (s *RPCServer) GetThread(id int, thread *api.Thread) error {
 }
 
 func (s *RPCServer) ListPackageVars(filter string, variables *[]api.Variable) error {
-	state, err := s.debugger.State(false)
+	state, err := s.debugger.State()
 	if err != nil {
 		return err
 	}
@@ -199,7 +195,7 @@ func (s *RPCServer) ListThreadPackageVars(args *ThreadListArgs, variables *[]api
 }
 
 func (s *RPCServer) ListRegisters(arg interface{}, registers *string) error {
-	state, err := s.debugger.State(false)
+	state, err := s.debugger.State()
 	if err != nil {
 		return err
 	}

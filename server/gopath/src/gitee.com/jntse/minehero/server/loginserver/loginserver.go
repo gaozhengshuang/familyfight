@@ -14,7 +14,7 @@ import (
 	_"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
 	"github.com/go-redis/redis"
-	pb "github.com/gogo/protobuf/proto"
+	pb "github.com/golang/protobuf/proto"
 )
 
 
@@ -49,10 +49,12 @@ type MsgProcess struct {
 type LoginServer struct {
 	net				*network.NetWork
 	netconf			*network.NetConf
+	//sessions		map[int]network.IBaseNetSession		// 及时删除，没有任何地方引用golang才会GC
 	hredis      	*redis.Client
+	mutex			sync.Mutex
 	gatemgr			GateManager
-	checkinset		map[string]*CheckInAccount			// 正在登陆中的账户(不是在线)
-	checkinlocker	sync.Mutex
+	//usermgr		UserManager
+	login_now		map[string]*ClientAccount			// 正在登陆中的账户(不是在线)
 	msghandlers		[]network.IBaseMsgHandler
 	tblloader		*tbl.TblLoader
 	runtimestamp    int64
@@ -111,7 +113,7 @@ func (this *LoginServer) OnClose(session network.IBaseNetSession) {
 	switch session.Name() {
 	case "TaskClient":
 		log.Info("和客户端连接断开 sid[%d]", sid)
-		this.CheckInSetRemove(sid)
+		this.DelAuthenAccount(sid)
 	case "TaskGate":
 		log.Info("和GateServer连接断开 sid[%d]", sid)
 		this.gatemgr.OnClose(sid)
@@ -196,9 +198,9 @@ func (this *LoginServer) Init(fileconf string) bool {
 	this.ticker1ms.Start()
 	this.gatemgr.Init()
 	//this.sessions = make(map[int]network.IBaseNetSession)
-	this.checkinset = make(map[string]*CheckInAccount)
+	this.login_now = make(map[string]*ClientAccount)
 	this.runtimestamp = 0
-	this.asynev.Start(1,10000)
+	this.asynev.Start(1,1000000)	// 队列不能太小
 
 	return true
 }
@@ -218,7 +220,7 @@ func (this *LoginServer) StartRedis() bool {
 		return false
 	}
 
-	log.Info("连接Redis[%s]成功", this.netconf.Redis.Host.String())
+	log.Info("连接Redis成功")
 	return true
 }
 
@@ -287,39 +289,39 @@ func (this* LoginServer) Run() {
 }
 
 func (this *LoginServer) Handler10msTick(now int64) {
-	this.CheckInSetTick(now)
+	this.TickAuthenAccount(now)
 	this.asynev.Dispatch()
 }
 
 // 添加正在登陆的账户
-func (this *LoginServer) CheckInSetAdd(ac string, session network.IBaseNetSession)	{
-	client := &CheckInAccount{session:session, account:ac, tm_login:util.CURTIMEMS()}
-	this.checkinset[ac] = client
+func (this *LoginServer) AddAuthenAccount(acc string, session network.IBaseNetSession)	{
+	client := &ClientAccount{session:session, account:acc, tm_login:util.CURTIMEMS()}
+	this.login_now[acc] = client
 }
 
 // 删除正在登陆的账户
-func (this *LoginServer) CheckInSetRemove(sid int)	{
-	for k, v := range this.checkinset {
+func (this *LoginServer) DelAuthenAccount(sid int)	{
+	for k, v := range this.login_now {
 		if v.session.Id() != sid { continue }
-		delete(this.checkinset, k)
+		delete(this.login_now, k)
 		return
 	}
 }
 
 // 查找正在登陆的账户
-func (this *LoginServer) CheckInSetFind(ac string) bool {
-	_, ok := this.checkinset[ac];
+func (this *LoginServer) FindAuthenAccount(acc string) bool {
+	_, ok := this.login_now[acc];
 	return ok
 }
 
 // 检查超时，客户端session长时间不断开会话或服务器没有收到断开
-func (this *LoginServer) CheckInSetTick(now int64)	{
+func (this *LoginServer) TickAuthenAccount(now int64)	{
 	var timeout int64 = 10000
-	for k, v := range this.checkinset {
+	for k, v := range this.login_now {
 		if now > v.tm_login + timeout {		// 超过30秒
 			log.Error("账户[%s] sid[%d] 长时间[%dms]与loginserver未断开，服务器主动断开", v.account, v.session.Id(), timeout)
 			v.session.Close()
-			delete(this.checkinset, k)
+			delete(this.login_now, k)
 		}
 	}
 }
@@ -333,7 +335,7 @@ func (this *LoginServer) AsynEventInsert(event eventque.IEvent) {
 func GenerateUserId() (userid uint64, errcode string ) {
 	key := "genuserid"
 	id, err := Redis().Incr(key).Result()
-	var idstart uint64 = 1000
+	var idstart uint64 = 1000000
 	if err != nil {
 		log.Error("生成userid redis报错, err: %s", err)
 		return 0, "redis不可用"

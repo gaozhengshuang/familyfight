@@ -30,8 +30,6 @@ const (
 
 	hashTophashEmpty = 0 // used by map reading code, indicates an empty bucket
 	hashMinTopHash   = 4 // used by map reading code, indicates minimum value of tophash that isn't empty or evacuated
-
-	maxFramePrefetchSize = 1 * 1024 * 1024 // Maximum prefetch size for a stack frame
 )
 
 type FloatSpecial uint8
@@ -56,12 +54,6 @@ const (
 	// VariableShadowed is set for local variables that are shadowed by a
 	// variable with the same name in another scope
 	VariableShadowed
-	// VariableConstant means this variable is a constant value
-	VariableConstant
-	// VariableArgument means this variable is a function argument
-	VariableArgument
-	// VariableReturnArgument means this variable is a function return value
-	VariableReturnArgument
 )
 
 // Variable represents a variable. It contains the address, name,
@@ -101,9 +93,6 @@ type Variable struct {
 
 	loaded     bool
 	Unreadable error
-
-	LocationExpr string // location expression
-	DeclLine     int64  // line number of this variable's declaration
 }
 
 type LoadConfig struct {
@@ -141,17 +130,12 @@ type G struct {
 	ID         int    // Goroutine ID
 	PC         uint64 // PC of goroutine when it was parked.
 	SP         uint64 // SP of goroutine when it was parked.
-	BP         uint64 // BP of goroutine when it was parked (go >= 1.7).
 	GoPC       uint64 // PC of 'go' statement that created this goroutine.
-	StartPC    uint64 // PC of the first function run on this goroutine.
 	WaitReason string // Reason for goroutine being parked.
 	Status     uint64
 	stkbarVar  *Variable // stkbar field of g struct
 	stkbarPos  int       // stkbarPos field of g struct
 	stackhi    uint64    // value of stack.hi
-	stacklo    uint64    // value of stack.lo
-
-	SystemStack bool // SystemStack is true if this goroutine is currently executing on a system stack.
 
 	// Information on goroutine location
 	CurrentLoc Location
@@ -165,15 +149,12 @@ type G struct {
 // EvalScope is the scope for variable evaluation. Contains the thread,
 // current location (PC), and canonical frame address.
 type EvalScope struct {
-	Location
-	Regs    op.DwarfRegisters
+	PC      uint64           // Current instruction of the evaluation frame
+	CFA     int64            // Stack address of the evaluation frame
 	Mem     MemoryReadWriter // Target's memory
 	Gvar    *Variable
 	BinInfo *BinaryInfo
-
-	frameOffset int64
-
-	aordr *dwarf.Reader // extra reader to load DW_AT_abstract_origin entries, do not initialize
+	StackHi uint64
 }
 
 // IsNilErr is returned when a variable is nil.
@@ -185,20 +166,16 @@ func (err *IsNilErr) Error() string {
 	return fmt.Sprintf("%s is nil", err.name)
 }
 
-func globalScope(bi *BinaryInfo, mem MemoryReadWriter) *EvalScope {
-	return &EvalScope{Location: Location{}, Regs: op.DwarfRegisters{}, Mem: mem, Gvar: nil, BinInfo: bi, frameOffset: 0}
-}
-
-func (scope *EvalScope) newVariable(name string, addr uintptr, dwarfType godwarf.Type, mem MemoryReadWriter) *Variable {
-	return newVariable(name, addr, dwarfType, scope.BinInfo, mem)
+func (scope *EvalScope) newVariable(name string, addr uintptr, dwarfType godwarf.Type) *Variable {
+	return newVariable(name, addr, dwarfType, scope.BinInfo, scope.Mem)
 }
 
 func newVariableFromThread(t Thread, name string, addr uintptr, dwarfType godwarf.Type) *Variable {
 	return newVariable(name, addr, dwarfType, t.BinInfo(), t)
 }
 
-func (v *Variable) newVariable(name string, addr uintptr, dwarfType godwarf.Type, mem MemoryReadWriter) *Variable {
-	return newVariable(name, addr, dwarfType, v.bi, mem)
+func (v *Variable) newVariable(name string, addr uintptr, dwarfType godwarf.Type) *Variable {
+	return newVariable(name, addr, dwarfType, v.bi, v.mem)
 }
 
 func newVariable(name string, addr uintptr, dwarfType godwarf.Type, bi *BinaryInfo, mem MemoryReadWriter) *Variable {
@@ -220,9 +197,6 @@ func newVariable(name string, addr uintptr, dwarfType godwarf.Type, bi *BinaryIn
 		}
 	case *godwarf.ChanType:
 		v.Kind = reflect.Chan
-		if v.Addr != 0 {
-			v.loadChanInfo()
-		}
 	case *godwarf.MapType:
 		v.Kind = reflect.Map
 	case *godwarf.StringType:
@@ -310,7 +284,6 @@ func newConstant(val constant.Value, mem MemoryReadWriter) *Variable {
 		v.Kind = reflect.String
 		v.Len = int64(len(constant.StringVal(val)))
 	}
-	v.Flags |= VariableConstant
 	return v
 }
 
@@ -356,7 +329,7 @@ func (v *Variable) toField(field *godwarf.StructField) (*Variable, error) {
 			name = fmt.Sprintf("%s.%s", v.Name, field.Name)
 		}
 	}
-	return v.newVariable(name, uintptr(int64(v.Addr)+field.ByteOffset), field.Type, v.mem), nil
+	return v.newVariable(name, uintptr(int64(v.Addr)+field.ByteOffset), field.Type), nil
 }
 
 // DwarfReader returns the DwarfReader containing the
@@ -365,9 +338,20 @@ func (scope *EvalScope) DwarfReader() *reader.Reader {
 	return scope.BinInfo.DwarfReader()
 }
 
+// Type returns the Dwarf type entry at `offset`.
+func (scope *EvalScope) Type(offset dwarf.Offset) (godwarf.Type, error) {
+	return godwarf.ReadType(scope.BinInfo.dwarf, offset, scope.BinInfo.typeCache)
+}
+
 // PtrSize returns the size of a pointer.
 func (scope *EvalScope) PtrSize() int {
 	return scope.BinInfo.Arch.PtrSize()
+}
+
+// ChanRecvBlocked returns whether the goroutine is blocked on
+// a channel read operation.
+func (g *G) ChanRecvBlocked() bool {
+	return (g.Thread == nil) && (g.WaitReason == chanRecv)
 }
 
 // NoGError returned when a G could not be found
@@ -413,30 +397,16 @@ func (gvar *Variable) parseG() (*G, error) {
 	schedVar := gvar.fieldVariable("sched")
 	pc, _ := constant.Int64Val(schedVar.fieldVariable("pc").Value)
 	sp, _ := constant.Int64Val(schedVar.fieldVariable("sp").Value)
-	var bp int64
-	if bpvar := schedVar.fieldVariable("bp"); bpvar != nil && bpvar.Value != nil {
-		bp, _ = constant.Int64Val(bpvar.Value)
-	}
 	id, _ := constant.Int64Val(gvar.fieldVariable("goid").Value)
 	gopc, _ := constant.Int64Val(gvar.fieldVariable("gopc").Value)
-	startpc, _ := constant.Int64Val(gvar.fieldVariable("startpc").Value)
 	waitReason := ""
 	if wrvar := gvar.fieldVariable("waitreason"); wrvar.Value != nil {
-		switch wrvar.Kind {
-		case reflect.String:
-			waitReason = constant.StringVal(wrvar.Value)
-		case reflect.Uint:
-			waitReason = wrvar.ConstDescr()
-		}
-
+		waitReason = constant.StringVal(wrvar.Value)
 	}
-	var stackhi, stacklo uint64
+	var stackhi uint64
 	if stackVar := gvar.fieldVariable("stack"); stackVar != nil {
 		if stackhiVar := stackVar.fieldVariable("hi"); stackhiVar != nil {
 			stackhi, _ = constant.Uint64Val(stackhiVar.Value)
-		}
-		if stackloVar := stackVar.fieldVariable("lo"); stackloVar != nil {
-			stacklo, _ = constant.Uint64Val(stackloVar.Value)
 		}
 	}
 
@@ -452,10 +422,8 @@ func (gvar *Variable) parseG() (*G, error) {
 	g := &G{
 		ID:         int(id),
 		GoPC:       uint64(gopc),
-		StartPC:    uint64(startpc),
 		PC:         uint64(pc),
 		SP:         uint64(sp),
-		BP:         uint64(bp),
 		WaitReason: waitReason,
 		Status:     uint64(status),
 		CurrentLoc: Location{PC: uint64(pc), File: f, Line: l, Fn: fn},
@@ -463,7 +431,6 @@ func (gvar *Variable) parseG() (*G, error) {
 		stkbarVar:  stkbarVar,
 		stkbarPos:  int(stkbarPos),
 		stackhi:    stackhi,
-		stacklo:    stacklo,
 	}
 	return g, nil
 }
@@ -489,18 +456,29 @@ func (v *Variable) fieldVariable(name string) *Variable {
 	return nil
 }
 
-// Defer returns the top-most defer of the goroutine.
-func (g *G) Defer() *Defer {
+// PC of entry to top-most deferred function.
+func (g *G) DeferPC() uint64 {
 	if g.variable.Unreadable != nil {
-		return nil
+		return 0
 	}
-	dvar := g.variable.fieldVariable("_defer").maybeDereference()
-	if dvar.Addr == 0 {
-		return nil
+	d := g.variable.fieldVariable("_defer").maybeDereference()
+	if d.Addr == 0 {
+		return 0
 	}
-	d := &Defer{variable: dvar}
-	d.load()
-	return d
+	d.loadValue(LoadConfig{false, 1, 64, 0, -1})
+	if d.Unreadable != nil {
+		return 0
+	}
+	fnvar := d.fieldVariable("fn").maybeDereference()
+	if fnvar.Addr == 0 {
+		return 0
+	}
+	fnvar.loadValue(LoadConfig{false, 1, 64, 0, -1})
+	if fnvar.Unreadable != nil {
+		return 0
+	}
+	deferPC, _ := constant.Int64Val(fnvar.fieldVariable("fn").Value)
+	return uint64(deferPC)
 }
 
 // From $GOROOT/src/runtime/traceback.go:597
@@ -533,22 +511,8 @@ func (g *G) UserCurrent() Location {
 // Go returns the location of the 'go' statement
 // that spawned this goroutine.
 func (g *G) Go() Location {
-	pc := g.GoPC
-	if fn := g.variable.bi.PCToFunc(pc); fn != nil {
-		// Backup to CALL instruction.
-		// Mimics runtime/traceback.go:677.
-		if g.GoPC > fn.Entry {
-			pc -= 1
-		}
-	}
-	f, l, fn := g.variable.bi.PCToLine(pc)
+	f, l, fn := g.variable.bi.goSymTable.PCToLine(g.GoPC)
 	return Location{PC: g.GoPC, File: f, Line: l, Fn: fn}
-}
-
-// StartLoc returns the starting location of the goroutine.
-func (g *G) StartLoc() Location {
-	f, l, fn := g.variable.bi.PCToLine(g.StartPC)
-	return Location{PC: g.StartPC, File: f, Line: l, Fn: fn}
 }
 
 // Returns the list of saved return addresses used by stack barriers
@@ -624,40 +588,22 @@ func (scope *EvalScope) SetVariable(name, value string) error {
 	return xv.setValue(yv)
 }
 
-// LocalVariables returns all local variables from the current function scope.
-func (scope *EvalScope) LocalVariables(cfg LoadConfig) ([]*Variable, error) {
-	vars, err := scope.Locals()
+func (scope *EvalScope) extractVariableFromEntry(entry *dwarf.Entry) (*Variable, error) {
+	v, err := scope.extractVarInfoFromEntry(entry)
 	if err != nil {
 		return nil, err
 	}
-	vars = filterVariables(vars, func(v *Variable) bool {
-		return (v.Flags & (VariableArgument | VariableReturnArgument)) == 0
-	})
-	loadValues(vars, cfg)
-	return vars, nil
+	return v, nil
+}
+
+// LocalVariables returns all local variables from the current function scope.
+func (scope *EvalScope) LocalVariables(cfg LoadConfig) ([]*Variable, error) {
+	return scope.variablesByTag(dwarf.TagVariable, &cfg)
 }
 
 // FunctionArguments returns the name, value, and type of all current function arguments.
 func (scope *EvalScope) FunctionArguments(cfg LoadConfig) ([]*Variable, error) {
-	vars, err := scope.Locals()
-	if err != nil {
-		return nil, err
-	}
-	vars = filterVariables(vars, func(v *Variable) bool {
-		return (v.Flags & (VariableArgument | VariableReturnArgument)) != 0
-	})
-	loadValues(vars, cfg)
-	return vars, nil
-}
-
-func filterVariables(vars []*Variable, pred func(v *Variable) bool) []*Variable {
-	r := make([]*Variable, 0, len(vars))
-	for i := range vars {
-		if pred(vars[i]) {
-			r = append(r, vars[i])
-		}
-	}
-	return r
+	return scope.variablesByTag(dwarf.TagFormalParameter, &cfg)
 }
 
 // PackageVariables returns the name, value, and type of all package variables in the application.
@@ -681,7 +627,7 @@ func (scope *EvalScope) PackageVariables(cfg LoadConfig) ([]*Variable, error) {
 		}
 
 		// Ignore errors trying to extract values
-		val, err := scope.extractVarInfoFromEntry(entry)
+		val, err := scope.extractVariableFromEntry(entry)
 		if err != nil {
 			continue
 		}
@@ -692,48 +638,16 @@ func (scope *EvalScope) PackageVariables(cfg LoadConfig) ([]*Variable, error) {
 	return vars, nil
 }
 
-func (scope *EvalScope) findGlobal(name string) (*Variable, error) {
-	for _, pkgvar := range scope.BinInfo.packageVars {
-		if pkgvar.name == name || strings.HasSuffix(pkgvar.name, "/"+name) {
+func (scope *EvalScope) packageVarAddr(name string) (*Variable, error) {
+	for n, off := range scope.BinInfo.packageVars {
+		if n == name || strings.HasSuffix(n, "/"+name) {
 			reader := scope.DwarfReader()
-			reader.Seek(pkgvar.offset)
+			reader.Seek(off)
 			entry, err := reader.Next()
 			if err != nil {
 				return nil, err
 			}
 			return scope.extractVarInfoFromEntry(entry)
-		}
-	}
-	for _, fn := range scope.BinInfo.Functions {
-		if fn.Name == name || strings.HasSuffix(fn.Name, "/"+name) {
-			//TODO(aarzilli): convert function entry into a function type?
-			r := scope.newVariable(fn.Name, uintptr(fn.Entry), &godwarf.FuncType{}, scope.Mem)
-			r.Value = constant.MakeString(fn.Name)
-			r.Base = uintptr(fn.Entry)
-			r.loaded = true
-			return r, nil
-		}
-	}
-	for offset, ctyp := range scope.BinInfo.consts {
-		for _, cval := range ctyp.values {
-			if cval.fullName == name || strings.HasSuffix(cval.fullName, "/"+name) {
-				t, err := scope.BinInfo.Type(offset)
-				if err != nil {
-					return nil, err
-				}
-				v := scope.newVariable(name, 0x0, t, scope.Mem)
-				switch v.Kind {
-				case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-					v.Value = constant.MakeInt64(cval.value)
-				case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
-					v.Value = constant.MakeUint64(uint64(cval.value))
-				default:
-					return nil, fmt.Errorf("unsupported constant kind %v", v.Kind)
-				}
-				v.Flags |= VariableConstant
-				v.loaded = true
-				return v, nil
-			}
 		}
 	}
 	return nil, fmt.Errorf("could not find symbol value for %s", name)
@@ -742,16 +656,6 @@ func (scope *EvalScope) findGlobal(name string) (*Variable, error) {
 func (v *Variable) structMember(memberName string) (*Variable, error) {
 	if v.Unreadable != nil {
 		return v.clone(), nil
-	}
-	switch v.Kind {
-	case reflect.Chan:
-		v = v.clone()
-		v.RealType = resolveTypedef(&(v.RealType.(*godwarf.ChanType).TypedefType))
-	case reflect.Interface:
-		v.loadInterface(0, false, LoadConfig{})
-		if len(v.Children) > 0 {
-			v = &v.Children[0]
-		}
 	}
 	structVar := v.maybeDereference()
 	structVar.Name = v.Name
@@ -808,57 +712,43 @@ func (v *Variable) structMember(memberName string) (*Variable, error) {
 	}
 }
 
-func readVarEntry(varEntry *dwarf.Entry, bi *BinaryInfo) (entry reader.Entry, name string, typ godwarf.Type, err error) {
-	entry, _ = reader.LoadAbstractOrigin(varEntry, bi.dwarfReader)
+// Extracts the name and type of a variable from a dwarf entry
+// then executes the instructions given in the  DW_AT_location attribute to grab the variable's address
+func (scope *EvalScope) extractVarInfoFromEntry(entry *dwarf.Entry) (*Variable, error) {
+	if entry == nil {
+		return nil, fmt.Errorf("invalid entry")
+	}
 
-	name, ok := entry.Val(dwarf.AttrName).(string)
+	if entry.Tag != dwarf.TagFormalParameter && entry.Tag != dwarf.TagVariable {
+		return nil, fmt.Errorf("invalid entry tag, only supports FormalParameter and Variable, got %s", entry.Tag.String())
+	}
+
+	n, ok := entry.Val(dwarf.AttrName).(string)
 	if !ok {
-		return nil, "", nil, fmt.Errorf("malformed variable DIE (name)")
+		return nil, fmt.Errorf("type assertion failed")
 	}
 
 	offset, ok := entry.Val(dwarf.AttrType).(dwarf.Offset)
 	if !ok {
-		return nil, "", nil, fmt.Errorf("malformed variable DIE (offset)")
+		return nil, fmt.Errorf("type assertion failed")
 	}
 
-	typ, err = bi.Type(offset)
-	if err != nil {
-		return nil, "", nil, err
-	}
-
-	return entry, name, typ, nil
-}
-
-// Extracts the name and type of a variable from a dwarf entry
-// then executes the instructions given in the  DW_AT_location attribute to grab the variable's address
-func (scope *EvalScope) extractVarInfoFromEntry(varEntry *dwarf.Entry) (*Variable, error) {
-	if varEntry == nil {
-		return nil, fmt.Errorf("invalid entry")
-	}
-
-	if varEntry.Tag != dwarf.TagFormalParameter && varEntry.Tag != dwarf.TagVariable {
-		return nil, fmt.Errorf("invalid entry tag, only supports FormalParameter and Variable, got %s", varEntry.Tag.String())
-	}
-
-	entry, n, t, err := readVarEntry(varEntry, scope.BinInfo)
+	t, err := scope.Type(offset)
 	if err != nil {
 		return nil, err
 	}
 
-	addr, pieces, descr, err := scope.BinInfo.Location(entry, dwarf.AttrLocation, scope.PC, scope.Regs)
-	mem := scope.Mem
-	if pieces != nil {
-		addr = fakeAddress
-		mem = newCompositeMemory(scope.Mem, scope.Regs, pieces)
+	instructions, ok := entry.Val(dwarf.AttrLocation).([]byte)
+	if !ok {
+		return nil, fmt.Errorf("type assertion failed")
 	}
 
-	v := scope.newVariable(n, uintptr(addr), t, mem)
-	v.LocationExpr = descr
-	v.DeclLine, _ = entry.Val(dwarf.AttrDeclLine).(int64)
+	addr, err := op.ExecuteStackProgram(scope.CFA, instructions)
 	if err != nil {
-		v.Unreadable = err
+		return nil, err
 	}
-	return v, nil
+
+	return scope.newVariable(n, uintptr(addr), t), nil
 }
 
 // If v is a pointer a new variable is returned containing the value pointed by v.
@@ -870,7 +760,7 @@ func (v *Variable) maybeDereference() *Variable {
 	switch t := v.RealType.(type) {
 	case *godwarf.PtrType:
 		ptrval, err := readUintRaw(v.mem, uintptr(v.Addr), t.ByteSize)
-		r := v.newVariable("", uintptr(ptrval), t.Type, DereferenceMemory(v.mem))
+		r := v.newVariable("", uintptr(ptrval), t.Type)
 		if err != nil {
 			r.Unreadable = err
 		}
@@ -878,12 +768,6 @@ func (v *Variable) maybeDereference() *Variable {
 		return r
 	default:
 		return v
-	}
-}
-
-func loadValues(vars []*Variable, cfg LoadConfig) {
-	for i := range vars {
-		vars[i].loadValueInternal(0, cfg)
 	}
 }
 
@@ -933,7 +817,7 @@ func (v *Variable) loadValueInternal(recurseLevel int, cfg LoadConfig) {
 
 	case reflect.String:
 		var val string
-		val, v.Unreadable = readStringValue(DereferenceMemory(v.mem), v.Base, v.Len, cfg)
+		val, v.Unreadable = readStringValue(v.mem, v.Base, v.Len, cfg)
 		v.Value = constant.MakeString(val)
 
 	case reflect.Slice, reflect.Array:
@@ -1058,10 +942,6 @@ func readStringInfo(mem MemoryReadWriter, arch Arch, addr uintptr) (uintptr, int
 }
 
 func readStringValue(mem MemoryReadWriter, addr uintptr, strlen int64, cfg LoadConfig) (string, error) {
-	if strlen == 0 {
-		return "", nil
-	}
-
 	count := strlen
 	if count > int64(cfg.MaxStringLen) {
 		count = int64(cfg.MaxStringLen)
@@ -1124,67 +1004,6 @@ func (v *Variable) loadSliceInfo(t *godwarf.SliceType) {
 	}
 }
 
-// loadChanInfo loads the buffer size of the channel and changes the type of
-// the buf field from unsafe.Pointer to an array of the correct type.
-func (v *Variable) loadChanInfo() {
-	chanType, ok := v.RealType.(*godwarf.ChanType)
-	if !ok {
-		v.Unreadable = errors.New("bad channel type")
-		return
-	}
-	sv := v.clone()
-	sv.RealType = resolveTypedef(&(chanType.TypedefType))
-	sv = sv.maybeDereference()
-	if sv.Unreadable != nil || sv.Addr == 0 {
-		return
-	}
-	v.Base = sv.Addr
-	structType, ok := sv.DwarfType.(*godwarf.StructType)
-	if !ok {
-		v.Unreadable = errors.New("bad channel type")
-		return
-	}
-
-	lenAddr, _ := sv.toField(structType.Field[1])
-	lenAddr.loadValue(loadSingleValue)
-	if lenAddr.Unreadable != nil {
-		v.Unreadable = fmt.Errorf("unreadable length: %v", lenAddr.Unreadable)
-		return
-	}
-	chanLen, _ := constant.Uint64Val(lenAddr.Value)
-
-	newStructType := &godwarf.StructType{}
-	*newStructType = *structType
-	newStructType.Field = make([]*godwarf.StructField, len(structType.Field))
-
-	for i := range structType.Field {
-		field := &godwarf.StructField{}
-		*field = *structType.Field[i]
-		if field.Name == "buf" {
-			stride := chanType.ElemType.Common().ByteSize
-			atyp := &godwarf.ArrayType{
-				CommonType: godwarf.CommonType{
-					ReflectKind: reflect.Array,
-					ByteSize:    int64(chanLen) * stride,
-					Name:        fmt.Sprintf("[%d]%s", chanLen, chanType.ElemType.String())},
-				Type:          chanType.ElemType,
-				StrideBitSize: stride * 8,
-				Count:         int64(chanLen)}
-
-			field.Type = pointerTo(atyp, v.bi.Arch)
-		}
-		newStructType.Field[i] = field
-	}
-
-	v.RealType = &godwarf.ChanType{
-		TypedefType: godwarf.TypedefType{
-			CommonType: chanType.TypedefType.CommonType,
-			Type:       pointerTo(newStructType, v.bi.Arch),
-		},
-		ElemType: chanType.ElemType,
-	}
-}
-
 func (v *Variable) loadArrayValues(recurseLevel int, cfg LoadConfig) {
 	if v.Unreadable != nil {
 		return
@@ -1206,13 +1025,8 @@ func (v *Variable) loadArrayValues(recurseLevel int, cfg LoadConfig) {
 
 	errcount := 0
 
-	mem := v.mem
-	if v.Kind != reflect.Array {
-		mem = DereferenceMemory(mem)
-	}
-
 	for i := int64(0); i < count; i++ {
-		fieldvar := v.newVariable("", uintptr(int64(v.Base)+(i*v.stride)), v.fieldType, mem)
+		fieldvar := v.newVariable("", uintptr(int64(v.Base)+(i*v.stride)), v.fieldType)
 		fieldvar.loadValueInternal(recurseLevel+1, cfg)
 
 		if fieldvar.Unreadable != nil {
@@ -1240,8 +1054,8 @@ func (v *Variable) readComplex(size int64) {
 
 	ftyp := &godwarf.FloatType{BasicType: godwarf.BasicType{CommonType: godwarf.CommonType{ByteSize: fs, Name: fmt.Sprintf("float%d", fs)}, BitSize: fs * 8, BitOffset: 0}}
 
-	realvar := v.newVariable("real", v.Addr, ftyp, v.mem)
-	imagvar := v.newVariable("imaginary", v.Addr+uintptr(fs), ftyp, v.mem)
+	realvar := v.newVariable("real", v.Addr, ftyp)
+	imagvar := v.newVariable("imaginary", v.Addr+uintptr(fs), ftyp)
 	realvar.loadValue(loadSingleValue)
 	imagvar.loadValue(loadSingleValue)
 	v.Value = constant.BinaryOp(realvar.Value, token.ADD, constant.MakeImag(imagvar.Value))
@@ -1389,7 +1203,7 @@ func (v *Variable) readFunctionPtr() {
 	}
 
 	v.Base = uintptr(binary.LittleEndian.Uint64(val))
-	fn := v.bi.PCToFunc(uint64(v.Base))
+	fn := v.bi.goSymTable.PCToFunc(uint64(v.Base))
 	if fn == nil {
 		v.Unreadable = fmt.Errorf("could not find function for %#v", v.Base)
 		return
@@ -1422,7 +1236,7 @@ func (v *Variable) loadMap(recurseLevel int, cfg LoadConfig) {
 		if it.values.fieldType.Size() > 0 {
 			val = it.value()
 		} else {
-			val = v.newVariable("", it.values.Addr, it.values.fieldType, DereferenceMemory(v.mem))
+			val = v.newVariable("", it.values.Addr, it.values.fieldType)
 		}
 		key.loadValueInternal(recurseLevel+1, cfg)
 		val.loadValueInternal(recurseLevel+1, cfg)
@@ -1675,7 +1489,8 @@ func mapEvacuated(b *Variable) bool {
 }
 
 func (v *Variable) loadInterface(recurseLevel int, loadData bool, cfg LoadConfig) {
-	var _type, data *Variable
+	var _type, typestring, data *Variable
+	var typ godwarf.Type
 	var err error
 	isnil := false
 
@@ -1704,6 +1519,8 @@ func (v *Variable) loadInterface(recurseLevel int, loadData bool, cfg LoadConfig
 	// and sets the go17 flag when the 'string' field can not be found
 	// but the str field was found
 
+	go17 := false
+
 	v.mem = cacheMemory(v.mem, v.Addr, int(v.RealType.Size()))
 
 	ityp := resolveTypedef(&v.RealType.(*godwarf.InterfaceType).TypedefType).(*godwarf.StructType)
@@ -1720,12 +1537,24 @@ func (v *Variable) loadInterface(recurseLevel int, loadData bool, cfg LoadConfig
 					v.Unreadable = fmt.Errorf("invalid interface type: %v", err)
 					return
 				}
+				typestring, err = _type.structMember("_string")
+				if err == nil {
+					typestring = typestring.maybeDereference()
+				} else {
+					go17 = true
+				}
 			}
 		case "_type": // for runtime.eface
 			_type, _ = v.toField(f)
 			_type = _type.maybeDereference()
 			isnil = _type.Addr == 0
 			if !isnil {
+				typestring, err = _type.structMember("_string")
+				if err == nil {
+					typestring = typestring.maybeDereference()
+				} else {
+					go17 = true
+				}
 			}
 		case "data":
 			data, _ = v.toField(f)
@@ -1747,10 +1576,49 @@ func (v *Variable) loadInterface(recurseLevel int, loadData bool, cfg LoadConfig
 		return
 	}
 
-	typ, kind, err := runtimeTypeToDIE(_type, data.Addr)
-	if err != nil {
-		v.Unreadable = err
-		return
+	var kind int64
+
+	if go17 {
+		// No 'string' field use 'str' and 'runtime.firstmoduledata' to
+		// find out what the concrete type is
+		_type = _type.maybeDereference()
+
+		var typename string
+		typename, kind, err = nameOfRuntimeType(_type)
+		if err != nil {
+			v.Unreadable = fmt.Errorf("invalid interface type: %v", err)
+			return
+		}
+
+		typ, err = v.bi.findType(typename)
+		if err != nil {
+			v.Unreadable = fmt.Errorf("interface type %q not found for %#x: %v", typename, data.Addr, err)
+			return
+		}
+	} else {
+		if typestring == nil || typestring.Addr == 0 || typestring.Kind != reflect.String {
+			v.Unreadable = fmt.Errorf("invalid interface type")
+			return
+		}
+		typestring.loadValue(LoadConfig{false, 0, 512, 0, 0})
+		if typestring.Unreadable != nil {
+			v.Unreadable = fmt.Errorf("invalid interface type: %v", typestring.Unreadable)
+			return
+		}
+
+		typename := constant.StringVal(typestring.Value)
+
+		t, err := parser.ParseExpr(typename)
+		if err != nil {
+			v.Unreadable = fmt.Errorf("invalid interface type, unparsable data type: %v", err)
+			return
+		}
+
+		typ, err = v.bi.findTypeExpr(t)
+		if err != nil {
+			v.Unreadable = fmt.Errorf("interface type %q not found for %#x: %v", typename, data.Addr, err)
+			return
+		}
 	}
 
 	deref := false
@@ -1762,7 +1630,7 @@ func (v *Variable) loadInterface(recurseLevel int, loadData bool, cfg LoadConfig
 		}
 	}
 
-	data = data.newVariable("data", data.Addr, typ, data.mem)
+	data = data.newVariable("data", data.Addr, typ)
 	if deref {
 		data = data.maybeDereference()
 		data.Name = "data"
@@ -1774,100 +1642,6 @@ func (v *Variable) loadInterface(recurseLevel int, loadData bool, cfg LoadConfig
 	} else {
 		v.Children[0].OnlyAddr = true
 	}
-}
-
-// ConstDescr describes the value of v using constants.
-func (v *Variable) ConstDescr() string {
-	if v.bi == nil || (v.Flags&VariableConstant != 0) {
-		return ""
-	}
-	ctyp := v.bi.consts.Get(v.DwarfType)
-	if ctyp == nil {
-		return ""
-	}
-	if typename := v.DwarfType.Common().Name; strings.Index(typename, ".") < 0 || strings.HasPrefix(typename, "C.") {
-		// only attempt to use constants for user defined type, otherwise every
-		// int variable with value 1 will be described with os.SEEK_CUR and other
-		// similar problems.
-		return ""
-	}
-
-	switch v.Kind {
-	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-		fallthrough
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
-		n, _ := constant.Int64Val(v.Value)
-		return ctyp.describe(n)
-	}
-	return ""
-}
-
-// popcnt is the number of bits set to 1 in x.
-// It's the same as math/bits.OnesCount64, copied here so that we can build
-// on versions of go that don't have math/bits.
-func popcnt(x uint64) int {
-	const m0 = 0x5555555555555555 // 01010101 ...
-	const m1 = 0x3333333333333333 // 00110011 ...
-	const m2 = 0x0f0f0f0f0f0f0f0f // 00001111 ...
-	const m = 1<<64 - 1
-	x = x>>1&(m0&m) + x&(m0&m)
-	x = x>>2&(m1&m) + x&(m1&m)
-	x = (x>>4 + x) & (m2 & m)
-	x += x >> 8
-	x += x >> 16
-	x += x >> 32
-	return int(x) & (1<<7 - 1)
-}
-
-func (cm constantsMap) Get(typ godwarf.Type) *constantType {
-	ctyp := cm[typ.Common().Offset]
-	if ctyp == nil {
-		return nil
-	}
-	typepkg := packageName(typ.String()) + "."
-	if !ctyp.initialized {
-		ctyp.initialized = true
-		sort.Sort(constantValuesByValue(ctyp.values))
-		for i := range ctyp.values {
-			if strings.HasPrefix(ctyp.values[i].name, typepkg) {
-				ctyp.values[i].name = ctyp.values[i].name[len(typepkg):]
-			}
-			if popcnt(uint64(ctyp.values[i].value)) == 1 {
-				ctyp.values[i].singleBit = true
-			}
-		}
-	}
-	return ctyp
-}
-
-func (ctyp *constantType) describe(n int64) string {
-	for _, val := range ctyp.values {
-		if val.value == n {
-			return val.name
-		}
-	}
-
-	if n == 0 {
-		return ""
-	}
-
-	// If all the values for this constant only have one bit set we try to
-	// represent the value as a bitwise or of constants.
-
-	fields := []string{}
-	for _, val := range ctyp.values {
-		if !val.singleBit {
-			continue
-		}
-		if n&val.value != 0 {
-			fields = append(fields, val.name)
-			n = n & ^val.value
-		}
-	}
-	if n == 0 {
-		return strings.Join(fields, "|")
-	}
-	return ""
 }
 
 type variablesByDepth struct {
@@ -1885,35 +1659,28 @@ func (v *variablesByDepth) Swap(i int, j int) {
 }
 
 // Fetches all variables of a specific type in the current function scope
-func (scope *EvalScope) Locals() ([]*Variable, error) {
-	if scope.Fn == nil {
-		return nil, errors.New("unable to find function context")
+func (scope *EvalScope) variablesByTag(tag dwarf.Tag, cfg *LoadConfig) ([]*Variable, error) {
+	off, err := scope.BinInfo.findFunctionDebugInfo(scope.PC)
+	if err != nil {
+		return nil, err
 	}
 
 	var vars []*Variable
 	var depths []int
-	varReader := reader.Variables(scope.BinInfo.dwarf, scope.Fn.offset, scope.PC, scope.Line, true)
+	varReader := reader.Variables(scope.BinInfo.dwarf, off, scope.PC, tag == dwarf.TagVariable)
 	hasScopes := false
 	for varReader.Next() {
 		entry := varReader.Entry()
-		val, err := scope.extractVarInfoFromEntry(entry)
+		if entry.Tag != tag {
+			continue
+		}
+		val, err := scope.extractVariableFromEntry(entry)
 		if err != nil {
 			// skip variables that we can't parse yet
 			continue
 		}
 		vars = append(vars, val)
 		depth := varReader.Depth()
-		if entry.Tag == dwarf.TagFormalParameter {
-			if depth <= 1 {
-				depth = 0
-			}
-			isret, _ := entry.Val(dwarf.AttrVarParam).(bool)
-			if isret {
-				val.Flags |= VariableReturnArgument
-			} else {
-				val.Flags |= VariableArgument
-			}
-		}
 		depths = append(depths, depth)
 		if depth > 1 {
 			hasScopes = true
@@ -1932,14 +1699,41 @@ func (scope *EvalScope) Locals() ([]*Variable, error) {
 		sort.Stable(&variablesByDepth{vars, depths})
 	}
 
+	// prefetch the whole chunk of memory relative to these variables
+
+	minaddr := vars[0].Addr
+	var maxaddr uintptr
+	var size int64
+
+	for _, v := range vars {
+		if v.Addr < minaddr {
+			minaddr = v.Addr
+		}
+
+		size += v.DwarfType.Size()
+
+		if end := v.Addr + uintptr(v.DwarfType.Size()); end > maxaddr {
+			maxaddr = end
+		}
+	}
+
+	// check that we aren't trying to cache too much memory: we shouldn't
+	// exceed the real size of the variables by more than the number of
+	// variables times the size of an architecture pointer (to allow for memory
+	// alignment).
+	if int64(maxaddr-minaddr)-size <= int64(len(vars))*int64(scope.PtrSize()) {
+		mem := cacheMemory(vars[0].mem, minaddr, int(maxaddr-minaddr))
+
+		for _, v := range vars {
+			v.mem = mem
+		}
+	}
+
 	lvn := map[string]*Variable{} // lvn[n] is the last variable we saw named n
 
 	for i, v := range vars {
 		if name := v.Name; len(name) > 1 && name[0] == '&' {
 			v = v.maybeDereference()
-			if v.Addr == 0 {
-				v.Unreadable = fmt.Errorf("no address for escaped variable")
-			}
 			v.Name = name[1:]
 			v.Flags |= VariableEscaped
 			vars[i] = v
@@ -1950,13 +1744,10 @@ func (scope *EvalScope) Locals() ([]*Variable, error) {
 			}
 			lvn[v.Name] = v
 		}
+		if cfg != nil {
+			v.loadValue(*cfg)
+		}
 	}
 
 	return vars, nil
 }
-
-type constantValuesByValue []constantValue
-
-func (v constantValuesByValue) Len() int               { return len(v) }
-func (v constantValuesByValue) Less(i int, j int) bool { return v[i].value < v[j].value }
-func (v constantValuesByValue) Swap(i int, j int)      { v[i], v[j] = v[j], v[i] }

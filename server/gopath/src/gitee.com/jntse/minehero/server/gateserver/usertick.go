@@ -60,18 +60,11 @@ func (this *GateUser) OnTicker10ms(now int64) {
 }
 
 func (this *GateUser) OnTicker100ms(now int64) {
-	if len(this.broadcastbuffer) != 0 {
-		uuid := this.broadcastbuffer[0]
-		msg  := UserMgr().PickBroadcastMsg(uuid)
-		if msg != nil { this.SendMsg(msg) }
-		this.broadcastbuffer= this.broadcastbuffer[1:]
-	}
 	this.CheckOffline(now)
 	this.CheckDisconnectTimeOut(now)
 }
 
 func (this *GateUser) OnTicker1s(now int64) {
-	this.task.Timer()
 }
 
 func (this *GateUser) OnTicker5s(now int64) {
@@ -112,7 +105,7 @@ func (this *GateUser) CheckRechargeOrders() {
 		return
 	}
 
-	this.AddYuanbao(uint32(amount), "充值获得", true)
+	this.AddYuanbao(uint32(amount), "充值获得")
 }
 
 // 心跳,毫秒
@@ -122,7 +115,7 @@ func (this *GateUser) SetHeartBeat(now int64) {
 	this.tm_heartbeat = now
 	if tm_delay < 1000 {
 		//log.Warn("玩家[%s %d] 心跳太过频繁[%d ms]", this.Name(), this.Id(), tm_delay)
-	}else if tm_delay > 20000 {
+	}else if tm_delay > 15000 {
 		log.Warn("玩家[%s %d] 心跳延迟了[%d ms]，网络不好?", this.Name(), this.Id(), tm_delay)
 	}
 }

@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
-	"strconv"
 	"strings"
 	"unicode"
 )
@@ -16,10 +15,6 @@ import (
 // Record uses rr to record the execution of the specified program and
 // returns the trace directory's path.
 func Record(cmd []string, wd string, quiet bool) (tracedir string, err error) {
-	if err := checkRRAvailabe(); err != nil {
-		return "", err
-	}
-
 	rfd, wfd, err := os.Pipe()
 	if err != nil {
 		return "", err
@@ -54,17 +49,13 @@ func Record(cmd []string, wd string, quiet bool) (tracedir string, err error) {
 // Replay starts an instance of rr in replay mode, with the specified trace
 // directory, and connects to it.
 func Replay(tracedir string, quiet bool) (*Process, error) {
-	if err := checkRRAvailabe(); err != nil {
-		return nil, err
-	}
-
 	rrcmd := exec.Command("rr", "replay", "--dbgport=0", tracedir)
 	rrcmd.Stdout = os.Stdout
 	stderr, err := rrcmd.StderrPipe()
 	if err != nil {
 		return nil, err
 	}
-	rrcmd.SysProcAttr = sysProcAttr(false)
+	rrcmd.SysProcAttr = backgroundSysProcAttr()
 
 	initch := make(chan rrInit)
 	go rrStderrParser(stderr, initch, quiet)
@@ -77,7 +68,7 @@ func Replay(tracedir string, quiet bool) (*Process, error) {
 	init := <-initch
 	if init.err != nil {
 		rrcmd.Process.Kill()
-		return nil, init.err
+		return nil, err
 	}
 
 	p := New(rrcmd.Process)
@@ -89,33 +80,6 @@ func Replay(tracedir string, quiet bool) (*Process, error) {
 	}
 
 	return p, nil
-}
-
-// ErrPerfEventParanoid is the error returned by Reply and Record if
-// /proc/sys/kernel/perf_event_paranoid is greater than 1.
-type ErrPerfEventParanoid struct {
-	actual int
-}
-
-func (err ErrPerfEventParanoid) Error() string {
-	return fmt.Sprintf("rr needs /proc/sys/kernel/perf_event_paranoid <= 1, but it is %d", err.actual)
-}
-
-func checkRRAvailabe() error {
-	if _, err := exec.LookPath("rr"); err != nil {
-		return &ErrBackendUnavailable{}
-	}
-
-	// Check that /proc/sys/kernel/perf_event_paranoid doesn't exist or is <= 1.
-	buf, err := ioutil.ReadFile("/proc/sys/kernel/perf_event_paranoid")
-	if err == nil {
-		perfEventParanoid, _ := strconv.Atoi(strings.TrimSpace(string(buf)))
-		if perfEventParanoid > 1 {
-			return ErrPerfEventParanoid{perfEventParanoid}
-		}
-	}
-
-	return nil
 }
 
 type rrInit struct {
@@ -178,7 +142,7 @@ func rrParseGdbCommand(line string) rrInit {
 			arg := fields[i+1]
 
 			if !strings.HasPrefix(arg, targetCmd) {
-				continue
+				return rrInit{err: &ErrMalformedRRGdbCommand{line, "contents of -ex argument unexpected"}}
 			}
 
 			port = arg[len(targetCmd):]

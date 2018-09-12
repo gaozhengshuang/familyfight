@@ -1,7 +1,7 @@
 package main
 import (
 	"reflect"
-	"fmt"
+	_"fmt"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/minehero/pbmsg"
@@ -51,31 +51,24 @@ func (this* RS2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.BT_UploadGameUser{})
 	this.msgparser.RegistSendProto(msg.BT_ReqEnterRoom{})
 	this.msgparser.RegistSendProto(msg.BT_ReqQuitGameRoom{})
-	//this.msgparser.RegistSendProto(msg.BT_UpdateMoney{})
+	this.msgparser.RegistSendProto(msg.BT_UpdateMoney{})
 	this.msgparser.RegistSendProto(msg.C2GW_StartLuckyDraw{})
-	this.msgparser.RegistSendProto(msg.C2GW_PlatformRechargeDone{})
-	this.msgparser.RegistSendProto(msg.C2GW_GoldExchange{})
-	this.msgparser.RegistSendProto(msg.BT_ReqLaunchBullet{})
-	this.msgparser.RegistSendProto(msg.BT_StepOnBomb{})
-	this.msgparser.RegistSendProto(msg.BT_BulletEarnMoney{})
-	this.msgparser.RegistSendProto(msg.BT_UseUltimateSkil{})
-	this.msgparser.RegistSendProto(msg.BT_ReqCrushSuperBrick{})
 }
 
 func on_RS2GW_ReqRegist(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.RS2GW_ReqRegist)
+	//tmsg := message.(*msg.RS2GW_ReqRegist)
 	//log.Info(reflect.TypeOf(tmsg).String())
 
 	// TODO: 重复注册服务器为了第一时间发现问题使用了panic
-	name := tmsg.GetAgentname()
-	if RoomSvrMgr().IsRegisted(name) == true {
-		log.Fatal(fmt.Sprintf("重复注册房间服务器 %s", name))
-		session.SendCmd(&msg.GW2RS_RetRegist{Errcode: pb.String("重复注册房间服务器"), Agentname:pb.String(GateSvr().Name())})
-		return
-	}
+	//name := tmsg.GetAgentname()
+	//if RoomSvrMgr().IsRegisted(name) == true {
+	//	log.Fatal(fmt.Sprintf("重复注册房间服务器 %s", name))
+	//	session.SendCmd(&msg.GW2RS_RetRegist{Errcode: pb.String("重复注册房间服务器"), Agentname:pb.String(GateSvr().Name())})
+	//	return
+	//}
 
-	RoomSvrMgr().AddNew(session, name)
-	session.SendCmd(&msg.GW2RS_RetRegist{Agentname:pb.String(GateSvr().Name())})
+	//RoomSvrMgr().AddNew(session, name)
+	//session.SendCmd(&msg.GW2RS_RetRegist{Agentname:pb.String(GateSvr().Name())})
 }
 
 func on_GW2C_MsgNotify(session network.IBaseNetSession, message interface{}) {
@@ -95,15 +88,15 @@ func on_BT_GameInit(session network.IBaseNetSession, message interface{}) {
 	user.SendMsg(tmsg)
 }
 
-//func on_BT_SendBattleUser(session network.IBaseNetSession, message interface{}) {
-//	tmsg := message.(*msg.BT_SendBattleUser)
-//	user := UserMgr().FindById(tmsg.GetOwnerid())
-//	if user == nil {
-//		log.Error("BT_SendBattleUser 找不到玩家[%d]", tmsg.GetOwnerid())
-//		return
-//	}
-//	user.SendMsg(tmsg)
-//}
+func on_BT_SendBattleUser(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.BT_SendBattleUser)
+	user := UserMgr().FindById(tmsg.GetOwnerid())
+	if user == nil {
+		log.Error("BT_SendBattleUser 找不到玩家[%d]", tmsg.GetOwnerid())
+		return
+	}
+	user.SendMsg(tmsg)
+}
 
 func on_BT_GameStart(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.BT_GameStart)
@@ -123,7 +116,7 @@ func on_BT_GameEnd(session network.IBaseNetSession, message interface{}) {
 		return
 	}
 	if user.IsOnline() { user.SendMsg(&msg.BT_GameOver{Roomid:tmsg.Roomid}) }
-	user.GameEnd(tmsg.GetBin(), tmsg.GetReason())
+	//user.GameEnd(tmsg.GetBin(), tmsg.GetReason())
 	log.Info("房间[%d] BT_GameEnd 游戏结束，Owner[%d]", tmsg.GetRoomid(), tmsg.GetOwnerid())
 }
 

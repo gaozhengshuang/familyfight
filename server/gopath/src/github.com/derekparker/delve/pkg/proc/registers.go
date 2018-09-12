@@ -23,45 +23,32 @@ type Registers interface {
 	// GAddr returns the address of the G variable if it is known, 0 and false otherwise
 	GAddr() (uint64, bool)
 	Get(int) (uint64, error)
+	SetPC(Thread, uint64) error
 	Slice() []Register
-	// Save saves a copy of this object that will survive restarts
-	Save() SavedRegisters
 }
 
 type Register struct {
 	Name  string
-	Bytes []byte
 	Value string
-}
-
-type SavedRegisters interface {
 }
 
 // AppendWordReg appends a word (16 bit) register to regs.
 func AppendWordReg(regs []Register, name string, value uint16) []Register {
-	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, value)
-	return append(regs, Register{name, buf.Bytes(), fmt.Sprintf("%#04x", value)})
+	return append(regs, Register{name, fmt.Sprintf("%#04x", value)})
 }
 
 // AppendDwordReg appends a double word (32 bit) register to regs.
 func AppendDwordReg(regs []Register, name string, value uint32) []Register {
-	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, value)
-	return append(regs, Register{name, buf.Bytes(), fmt.Sprintf("%#08x", value)})
+	return append(regs, Register{name, fmt.Sprintf("%#08x", value)})
 }
 
 // AppendQwordReg appends a quad word (64 bit) register to regs.
 func AppendQwordReg(regs []Register, name string, value uint64) []Register {
-	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, value)
-	return append(regs, Register{name, buf.Bytes(), fmt.Sprintf("%#016x", value)})
+	return append(regs, Register{name, fmt.Sprintf("%#016x", value)})
 }
 
 func appendFlagReg(regs []Register, name string, value uint64, descr flagRegisterDescr, size int) []Register {
-	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, value)
-	return append(regs, Register{name, buf.Bytes()[:size], descr.Describe(value, size)})
+	return append(regs, Register{name, descr.Describe(value, size)})
 }
 
 // AppendEflagReg appends EFLAG register to regs.
@@ -127,11 +114,7 @@ func AppendX87Reg(regs []Register, index int, exponent uint16, mantissa uint64) 
 		f = sign * math.Ldexp(significand, int(exponent-_EXP_BIAS))
 	}
 
-	var buf bytes.Buffer
-	binary.Write(&buf, binary.LittleEndian, exponent)
-	binary.Write(&buf, binary.LittleEndian, mantissa)
-
-	return append(regs, Register{fmt.Sprintf("ST(%d)", index), buf.Bytes(), fmt.Sprintf("%#04x%016x\t%g", exponent, mantissa, f)})
+	return append(regs, Register{fmt.Sprintf("ST(%d)", index), fmt.Sprintf("%#04x%016x\t%g", exponent, mantissa, f)})
 }
 
 // AppendSSEReg appends a 256 bit SSE register to regs.
@@ -168,7 +151,7 @@ func AppendSSEReg(regs []Register, name string, xmm []byte) []Register {
 	}
 	fmt.Fprintf(&out, "\tv4_float={ %g %g %g %g }", v4[0], v4[1], v4[2], v4[3])
 
-	return append(regs, Register{name, xmm, out.String()})
+	return append(regs, Register{name, out.String()})
 }
 
 var UnknownRegisterError = errors.New("unknown register")
@@ -270,8 +253,7 @@ type PtraceFpRegs struct {
 // Manual, Volume 1: Basic Architecture.
 type LinuxX86Xstate struct {
 	PtraceFpRegs
-	Xsave    []byte // raw xsave area
-	AvxState bool   // contains AVX state
+	AvxState bool // contains AVX state
 	YmmSpace [256]byte
 }
 

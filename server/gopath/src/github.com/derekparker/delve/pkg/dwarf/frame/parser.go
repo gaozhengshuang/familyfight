@@ -45,18 +45,11 @@ func cieEntry(data []byte) bool {
 }
 
 func parselength(ctx *parseContext) parsefunc {
-	binary.Read(ctx.buf, binary.LittleEndian, &ctx.length)
+	var data = ctx.buf.Next(8)
 
-	if ctx.length == 0 {
-		// ZERO terminator
-		return parselength
-	}
+	ctx.length = binary.LittleEndian.Uint32(data[:4]) - 4 // take off the length of the CIE id / CIE pointer.
 
-	var data = ctx.buf.Next(4)
-
-	ctx.length -= 4 // take off the length of the CIE id / CIE pointer.
-
-	if cieEntry(data) {
+	if cieEntry(data[4:]) {
 		ctx.common = &CommonInformationEntry{Length: ctx.length}
 		return parseCIE
 	}
