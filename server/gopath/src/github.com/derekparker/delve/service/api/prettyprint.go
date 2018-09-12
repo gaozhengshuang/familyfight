@@ -49,7 +49,7 @@ func (v *Variable) writeTo(buf io.Writer, top, newlines, includeType bool, inden
 	case reflect.Array:
 		v.writeArrayTo(buf, newlines, includeType, indent)
 	case reflect.Ptr:
-		if v.Type == "" {
+		if v.Type == "" || len(v.Children) == 0 {
 			fmt.Fprint(buf, "nil")
 		} else if v.Children[0].OnlyAddr && v.Children[0].Addr != 0 {
 			fmt.Fprintf(buf, "(%s)(0x%x)", v.Type, v.Children[0].Addr)
@@ -58,7 +58,11 @@ func (v *Variable) writeTo(buf io.Writer, top, newlines, includeType bool, inden
 			v.Children[0].writeTo(buf, false, newlines, includeType, indent)
 		}
 	case reflect.UnsafePointer:
-		fmt.Fprintf(buf, "unsafe.Pointer(0x%x)", v.Children[0].Addr)
+		if len(v.Children) == 0 {
+			fmt.Fprintf(buf, "unsafe.Pointer(nil)")
+		} else {
+			fmt.Fprintf(buf, "unsafe.Pointer(0x%x)", v.Children[0].Addr)
+		}
 	case reflect.String:
 		v.writeStringTo(buf)
 	case reflect.Chan:
@@ -74,6 +78,12 @@ func (v *Variable) writeTo(buf io.Writer, top, newlines, includeType bool, inden
 	case reflect.Struct:
 		v.writeStructTo(buf, newlines, includeType, indent)
 	case reflect.Interface:
+		if v.Addr == 0 {
+			// an escaped interface variable that points to nil, this shouldn't
+			// happen in normal code but can happen if the variable is out of scope.
+			fmt.Fprintf(buf, "nil")
+			return
+		}
 		if includeType {
 			if v.Children[0].Kind == reflect.Invalid {
 				fmt.Fprintf(buf, "%s ", v.Type)

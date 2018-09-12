@@ -37,7 +37,7 @@ if os.path.exists('./bin') == False:
 # 编译函数
 def compile(server):
     os.chdir(server)
-    print subprocess.check_output('''go build -gcflags "-N -l" -i -v''', shell=True)
+    print subprocess.check_output('''go build -gcflags=all="-N -l" -v''', shell=True)
     print "copy %s -> ../bin/ " % server
     dstfile = '../bin/' + server
     if os.path.isfile(dstfile) == True: os.remove(dstfile)

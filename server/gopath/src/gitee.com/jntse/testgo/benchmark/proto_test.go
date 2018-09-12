@@ -41,7 +41,7 @@ func UnPackGoProto(buff []byte , protomsg pb.Message) {
 func BenchmarkGolangProtobufMarshal(b *testing.B) {
 	userinfo := &msg.Serialize {
 		Entity : &msg.EntityBase{ Id:pb.Uint64(1000001), Name:pb.String("测试proto"), Face:pb.String(""), Account:pb.String("") },
-		Base : &msg.UserBase{Money: pb.Uint32(0), Coupon:pb.Uint32(0), Yuanbao:pb.Uint32(0), Level:pb.Uint32(1)},
+		Base : &msg.UserBase{Gold: pb.Uint32(0), Diamond:pb.Uint32(0), Yuanbao:pb.Uint32(0), Level:pb.Uint32(1)},
 		Item : &msg.ItemBin{Items:make([]*msg.ItemData,0)},
 	}
 
@@ -54,7 +54,7 @@ func BenchmarkGolangProtobufUnMarshal(b *testing.B) {
 	b.StopTimer()
 	userinfo := &msg.Serialize {
 		Entity : &msg.EntityBase{ Id:pb.Uint64(1000001), Name:pb.String("测试proto"), Face:pb.String(""), Account:pb.String("") },
-		Base : &msg.UserBase{Money: pb.Uint32(0), Coupon:pb.Uint32(0), Yuanbao:pb.Uint32(0), Level:pb.Uint32(1)},
+		Base : &msg.UserBase{Gold: pb.Uint32(0), Diamond:pb.Uint32(0), Yuanbao:pb.Uint32(0), Level:pb.Uint32(1)},
 		Item : &msg.ItemBin{Items:make([]*msg.ItemData,0)},
 	}
 	buff,_ := PackGoProto(userinfo)
@@ -89,7 +89,7 @@ func UnPackGofastProto(buff []byte , protomsg gopb.Message) {
 func BenchmarkGofastProtobufMarshal(b *testing.B) {
 	userinfo := &msg.Serialize {
 		Entity : &msg.EntityBase{ Id:gopb.Uint64(1000001), Name:gopb.String("测试proto"), Face:gopb.String(""), Account:gopb.String("") },
-		Base : &msg.UserBase{Money: gopb.Uint32(0), Coupon:gopb.Uint32(0), Yuanbao:gopb.Uint32(0), Level:gopb.Uint32(1)},
+		Base : &msg.UserBase{Gold: gopb.Uint32(0), Diamond:gopb.Uint32(0), Yuanbao:gopb.Uint32(0), Level:gopb.Uint32(1)},
 		Item : &msg.ItemBin{Items:make([]*msg.ItemData,0)},
 	}
 
@@ -102,7 +102,7 @@ func BenchmarkGofastProtobufUnMarshal(b *testing.B) {
 	b.StopTimer()
 	userinfo := &msg.Serialize {
 		Entity : &msg.EntityBase{ Id:gopb.Uint64(1000001), Name:gopb.String("测试proto"), Face:gopb.String(""), Account:gopb.String("") },
-		Base : &msg.UserBase{Money: gopb.Uint32(0), Coupon:gopb.Uint32(0), Yuanbao:gopb.Uint32(0), Level:gopb.Uint32(1)},
+		Base : &msg.UserBase{Gold: gopb.Uint32(0), Diamond:gopb.Uint32(0), Yuanbao:gopb.Uint32(0), Level:gopb.Uint32(1)},
 		Item : &msg.ItemBin{Items:make([]*msg.ItemData,0)},
 	}
 	buff,_ := PackGofastProto(userinfo)

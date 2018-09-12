@@ -33,58 +33,104 @@ func (this *RechargeCheckEvent) Feedback() {
 }
 
 
-// 扣除平台金币
-type RemovePlatformCoinsEventHandle func(amount int32, desc string) bool
-type RemovePlatformCoinsFeedback func(removeok bool, amount int32)
+// --------------------------------------------------------------------------
+/// @brief 扣除平台金币
+///
+/// @param 
+/// @param 
+/// @param string
+/// @param int64
+///
+/// @return 
+// --------------------------------------------------------------------------
+type RemovePlatformCoinsEventHandle func(amount int64) (balance int64, errmsg string)
+type RemovePlatformCoinsFeedback func(balance int64, errmsg string, amount int64)
 type RemovePlatformCoinsEvent struct {
-	room *GameRoom
-	amount int32
-	desc string
 	handler RemovePlatformCoinsEventHandle
+	amount int64
 
-	removeok bool
 	feedback RemovePlatformCoinsFeedback
+	balance int64
+	errmsg string
 }
 
-func NewRemovePlatformCoinsEvent(room *GameRoom, amount int32, desc string, handler RemovePlatformCoinsEventHandle, 
-																feedback RemovePlatformCoinsFeedback) *RemovePlatformCoinsEvent {
-	return &RemovePlatformCoinsEvent{room, amount, desc, handler, false, feedback}
+func NewRemovePlatformCoinsEvent(amount int64, h RemovePlatformCoinsEventHandle, fb RemovePlatformCoinsFeedback) *RemovePlatformCoinsEvent {
+	return &RemovePlatformCoinsEvent{h, amount, fb, 0, ""}
 }
 
 func (this *RemovePlatformCoinsEvent) Process(ch_fback chan eventque.IEvent) {
 	tm1 := util.CURTIMEMS()
-	this.removeok = this.handler(this.amount, this.desc)
-	log.Trace("[异步事件] 房间[%d] 玩家[%d] QueryPlatformCoinsEvent 本次消耗 %dms", this.room.Id(), this.room.ownerid, util.CURTIMEMS() - tm1)
+	this.balance, this.errmsg = this.handler(this.amount)
 	ch_fback <- this
+	log.Trace("[异步事件] QueryPlatformCoinsEvent 本次消耗 %dms", util.CURTIMEMS() - tm1)
 }
 
 func (this *RemovePlatformCoinsEvent) Feedback() {
-	this.feedback(this.removeok, this.amount)
+	if this.feedback != nil { this.feedback(this.balance, this.errmsg, this.amount) }
 }
 
 
-// 同步平台金币
-type QueryPlatformCoinsEventHandle func()
-type QueryPlatformCoinsFeedback func()
+// --------------------------------------------------------------------------
+/// @brief 同步平台金币
+///
+/// @param 
+/// @param 
+/// @param string
+///
+/// @return 
+// --------------------------------------------------------------------------
+type QueryPlatformCoinsEventHandle func() (balance, amt_save int64, errmsg string)
+type QueryPlatformCoinsFeedback func(balance, amt_save int64, errmsg string)
 type QueryPlatformCoinsEvent struct {
 	handler QueryPlatformCoinsEventHandle
 	feedback QueryPlatformCoinsFeedback
-	user *RoomUser
-	coins int32
-	diamonds int32
+	balance int64
+	amt_save int64
+	errmsg string
 }
 
-func NewQueryPlatformCoinsEvent(user *RoomUser, handler QueryPlatformCoinsEventHandle) *QueryPlatformCoinsEvent {
-	return &QueryPlatformCoinsEvent{handler:handler, feedback:nil, user:user}
+func NewQueryPlatformCoinsEvent(handler QueryPlatformCoinsEventHandle, feedback QueryPlatformCoinsFeedback) *QueryPlatformCoinsEvent {
+	return &QueryPlatformCoinsEvent{handler:handler, feedback:feedback}
 }
 
 func (this *QueryPlatformCoinsEvent) Process(ch_fback chan eventque.IEvent) {
 	tm1 := util.CURTIMEMS()
-	this.handler()
-	log.Trace("[异步事件] 房间[%d] 玩家[%d] QueryPlatformCoinsEvent 本次消耗 %dms", this.user.roomid, this.user.Id(), util.CURTIMEMS() - tm1)
+	this.balance, this.amt_save,  this.errmsg = this.handler()
+	ch_fback <- this
+	log.Trace("[异步事件] QueryPlatformCoinsEvent 本次消耗 %dms", util.CURTIMEMS() - tm1)
 }
 
 func (this *QueryPlatformCoinsEvent) Feedback() {
+	if this.feedback != nil { this.feedback(this.balance, this.amt_save, this.errmsg) }
 }
 
+
+// --------------------------------------------------------------------------
+/// @brief 添加平台金币
+// --------------------------------------------------------------------------
+type AddPlatformCoinsEventHandle func(amount int64) (balance int64, errmsg string)
+type AddPlatformCoinsFeedback func(balance int64, errmsg string, amount int64)
+type AddPlatformCoinsEvent struct {
+	handler AddPlatformCoinsEventHandle
+	amount int64
+
+	feedback AddPlatformCoinsFeedback
+	balance int64
+	errmsg string
+}
+
+func NewAddPlatformCoinsEvent(amount int64, h AddPlatformCoinsEventHandle, fb AddPlatformCoinsFeedback) *AddPlatformCoinsEvent {
+	return &AddPlatformCoinsEvent{h, amount, fb, 0, ""}
+}
+
+func (this *AddPlatformCoinsEvent) Process(ch_fback chan eventque.IEvent) {
+	tm1 := util.CURTIMEMS()
+	this.balance, this.errmsg = this.handler(this.amount)
+	ch_fback <- this
+	log.Trace("[异步事件] QueryPlatformCoinsEvent 本次消耗 %dms", util.CURTIMEMS() - tm1)
+}
+
+func (this *AddPlatformCoinsEvent) Feedback() {
+	if this.feedback != nil { this.feedback(this.balance, this.errmsg, this.amount) }
+}
 

@@ -13,9 +13,9 @@ type moduleData struct {
 
 func loadModuleData(bi *BinaryInfo, mem MemoryReadWriter) (err error) {
 	bi.loadModuleDataOnce.Do(func() {
-		scope := &EvalScope{0, 0, mem, nil, bi, 0}
+		scope := globalScope(bi, mem)
 		var md *Variable
-		md, err = scope.packageVarAddr("runtime.firstmoduledata")
+		md, err = scope.findGlobal("runtime.firstmoduledata")
 		if err != nil {
 			return
 		}
@@ -56,8 +56,7 @@ func loadModuleData(bi *BinaryInfo, mem MemoryReadWriter) (err error) {
 	return
 }
 
-func resolveTypeOff(bi *BinaryInfo, typeAddr uintptr, off uintptr, mem MemoryReadWriter) (*Variable, error) {
-	// See runtime.(*_type).typeOff in $GOROOT/src/runtime/type.go
+func findModuleDataForType(bi *BinaryInfo, typeAddr uintptr, mem MemoryReadWriter) (*moduleData, error) {
 	if err := loadModuleData(bi, mem); err != nil {
 		return nil, err
 	}
@@ -67,6 +66,16 @@ func resolveTypeOff(bi *BinaryInfo, typeAddr uintptr, off uintptr, mem MemoryRea
 		if typeAddr >= bi.moduleData[i].types && typeAddr < bi.moduleData[i].etypes {
 			md = &bi.moduleData[i]
 		}
+	}
+
+	return md, nil
+}
+
+func resolveTypeOff(bi *BinaryInfo, typeAddr uintptr, off uintptr, mem MemoryReadWriter) (*Variable, error) {
+	// See runtime.(*_type).typeOff in $GOROOT/src/runtime/type.go
+	md, err := findModuleDataForType(bi, typeAddr, mem)
+	if err != nil {
+		return nil, err
 	}
 
 	rtyp, err := bi.findType("runtime._type")
@@ -81,7 +90,7 @@ func resolveTypeOff(bi *BinaryInfo, typeAddr uintptr, off uintptr, mem MemoryRea
 		}
 		v.loadValue(LoadConfig{false, 1, 0, 0, -1})
 		addr, _ := constant.Int64Val(v.Value)
-		return v.newVariable(v.Name, uintptr(addr), rtyp), nil
+		return v.newVariable(v.Name, uintptr(addr), rtyp, mem), nil
 	}
 
 	if t, _ := md.typemapVar.mapAccess(newConstant(constant.MakeUint64(uint64(off)), mem)); t != nil {
@@ -119,8 +128,8 @@ func resolveNameOff(bi *BinaryInfo, typeAddr uintptr, off uintptr, mem MemoryRea
 }
 
 func reflectOffsMapAccess(bi *BinaryInfo, off uintptr, mem MemoryReadWriter) (*Variable, error) {
-	scope := &EvalScope{0, 0, mem, nil, bi, 0}
-	reflectOffs, err := scope.packageVarAddr("runtime.reflectOffs")
+	scope := globalScope(bi, mem)
+	reflectOffs, err := scope.findGlobal("runtime.reflectOffs")
 	if err != nil {
 		return nil, err
 	}
@@ -149,7 +158,7 @@ func loadName(bi *BinaryInfo, addr uintptr, mem MemoryReadWriter) (name, tag str
 		return "", "", 0, err
 	}
 
-	namelen := uint16(namedata[1]<<8) | uint16(namedata[2])
+	namelen := uint16(namedata[1])<<8 | uint16(namedata[2])
 
 	rawstr := make([]byte, int(namelen))
 	_, err = mem.ReadMemory(rawstr, off)
@@ -167,7 +176,7 @@ func loadName(bi *BinaryInfo, addr uintptr, mem MemoryReadWriter) (name, tag str
 		if err != nil {
 			return "", "", 0, err
 		}
-		taglen := uint16(taglendata[0]<<8) | uint16(taglendata[1])
+		taglen := uint16(taglendata[0])<<8 | uint16(taglendata[1])
 
 		rawstr := make([]byte, int(taglen))
 		_, err = mem.ReadMemory(rawstr, off)

@@ -78,7 +78,7 @@ func evalVariable(p proc.Process, symbol string, cfg proc.LoadConfig) (*proc.Var
 		var frame proc.Stackframe
 		frame, err = findFirstNonRuntimeFrame(p)
 		if err == nil {
-			scope = proc.FrameToScope(p, frame)
+			scope = proc.FrameToScope(p.BinInfo(), p.CurrentThread(), nil, frame)
 		}
 	} else {
 		scope, err = proc.GoroutineScope(p.CurrentThread())
@@ -112,9 +112,9 @@ func withTestProcess(name string, t *testing.T, fn func(p proc.Process, fixture 
 	var tracedir string
 	switch testBackend {
 	case "native":
-		p, err = native.Launch([]string{fixture.Path}, ".")
+		p, err = native.Launch([]string{fixture.Path}, ".", false)
 	case "lldb":
-		p, err = gdbserial.LLDBLaunch([]string{fixture.Path}, ".")
+		p, err = gdbserial.LLDBLaunch([]string{fixture.Path}, ".", false)
 	case "rr":
 		protest.MustHaveRecordingAllowed(t)
 		t.Log("recording")
@@ -128,7 +128,6 @@ func withTestProcess(name string, t *testing.T, fn func(p proc.Process, fixture 
 	}
 
 	defer func() {
-		p.Halt()
 		p.Detach(true)
 		if tracedir != "" {
 			protest.SafeRemoveAll(tracedir)
@@ -405,7 +404,7 @@ func TestLocalVariables(t *testing.T) {
 				var frame proc.Stackframe
 				frame, err = findFirstNonRuntimeFrame(p)
 				if err == nil {
-					scope = proc.FrameToScope(p, frame)
+					scope = proc.FrameToScope(p.BinInfo(), p.CurrentThread(), nil, frame)
 				}
 			} else {
 				scope, err = proc.GoroutineScope(p.CurrentThread())
@@ -534,7 +533,7 @@ func TestEvalExpression(t *testing.T) {
 		{"*p3", false, "", "", "int", fmt.Errorf("nil pointer dereference")},
 
 		// channels
-		{"ch1", true, "chan int 0/2", "chan int 0/2", "chan int", nil},
+		{"ch1", true, "chan int 4/10", "chan int 4/10", "chan int", nil},
 		{"chnil", true, "chan int nil", "chan int nil", "chan int", nil},
 		{"ch1+1", false, "", "", "", fmt.Errorf("can not convert 1 constant to chan int")},
 
@@ -552,6 +551,8 @@ func TestEvalExpression(t *testing.T) {
 		{"err2", true, "error(*main.bstruct) *{a: main.astruct {A: 1, B: 2}}", "error(*main.bstruct) 0x…", "error", nil},
 		{"errnil", true, "error nil", "error nil", "error", nil},
 		{"iface1", true, "interface {}(*main.astruct) *{A: 1, B: 2}", "interface {}(*main.astruct) 0x…", "interface {}", nil},
+		{"iface1.A", false, "1", "1", "int", nil},
+		{"iface1.B", false, "2", "2", "int", nil},
 		{"iface2", true, "interface {}(string) \"test\"", "interface {}(string) \"test\"", "interface {}", nil},
 		{"iface3", true, "interface {}(map[string]go/constant.Value) []", "interface {}(map[string]go/constant.Value) []", "interface {}", nil},
 		{"iface4", true, "interface {}([]go/constant.Value) [4]", "interface {}([]go/constant.Value) [...]", "interface {}", nil},
@@ -614,6 +615,7 @@ func TestEvalExpression(t *testing.T) {
 		{"c1.pb.a != *(c1.sa[0])", false, "false", "false", "", nil},
 		{"c1.pb.a == *(c1.sa[1])", false, "false", "false", "", nil},
 		{"c1.pb.a != *(c1.sa[1])", false, "true", "true", "", nil},
+		{`longstr == "not this"`, false, "false", "false", "", nil},
 
 		// builtins
 		{"cap(parr)", false, "4", "4", "", nil},
@@ -626,8 +628,8 @@ func TestEvalExpression(t *testing.T) {
 		{"len(s3)", false, "0", "0", "", nil},
 		{"cap(nilslice)", false, "0", "0", "", nil},
 		{"len(nilslice)", false, "0", "0", "", nil},
-		{"cap(ch1)", false, "2", "2", "", nil},
-		{"len(ch1)", false, "0", "0", "", nil},
+		{"cap(ch1)", false, "10", "10", "", nil},
+		{"len(ch1)", false, "4", "4", "", nil},
 		{"cap(chnil)", false, "0", "0", "", nil},
 		{"len(chnil)", false, "0", "0", "", nil},
 		{"len(m1)", false, "41", "41", "", nil},
@@ -727,6 +729,19 @@ func TestEvalExpression(t *testing.T) {
 		{"string(runeslice)", false, `"tèst"`, `""`, "string", nil},
 		{"[]byte(string(runeslice))", false, `[]uint8 len: 5, cap: 5, [116,195,168,115,116]`, `[]uint8 len: 0, cap: 0, nil`, "[]uint8", nil},
 		{"*(*[5]byte)(uintptr(&byteslice[0]))", false, `[5]uint8 [116,195,168,115,116]`, `[5]uint8 [...]`, "[5]uint8", nil},
+
+		// access to channel field members
+		{"ch1.qcount", false, "4", "4", "uint", nil},
+		{"ch1.dataqsiz", false, "10", "10", "uint", nil},
+		{"ch1.buf", false, `*[10]int [1,4,3,2,0,0,0,0,0,0]`, `(*[10]int)(…`, "*[10]int", nil},
+		{"ch1.buf[0]", false, "1", "1", "int", nil},
+
+		// shortcircuited logical operators
+		{"nilstruct != nil && nilstruct.A == 1", false, "false", "false", "", nil},
+		{"nilstruct == nil || nilstruct.A == 1", false, "true", "true", "", nil},
+
+		{"afunc", true, `main.afunc`, `main.afunc`, `func()`, nil},
+		{"main.afunc2", true, `main.afunc2`, `main.afunc2`, `func()`, nil},
 	}
 
 	ver, _ := goversion.Parse(runtime.Version())
@@ -908,6 +923,9 @@ func TestPackageRenames(t *testing.T) {
 		{"astruct", true, `interface {}(*struct { A github.com/derekparker/delve/_fixtures/vendor/dir1/pkg.SomeType; B github.com/derekparker/delve/_fixtures/vendor/dir0/pkg.SomeType }) *{A: github.com/derekparker/delve/_fixtures/vendor/dir1/pkg.SomeType {X: 1, Y: 2}, B: github.com/derekparker/delve/_fixtures/vendor/dir0/pkg.SomeType {X: 3}}`, "", "interface {}", nil},
 		{"astruct2", true, `interface {}(*struct { github.com/derekparker/delve/_fixtures/vendor/dir1/pkg.SomeType; X int }) *{SomeType: github.com/derekparker/delve/_fixtures/vendor/dir1/pkg.SomeType {X: 1, Y: 2}, X: 10}`, "", "interface {}", nil},
 		{"iface2iface", true, `interface {}(*interface { AMethod(int) int; AnotherMethod(int) int }) **github.com/derekparker/delve/_fixtures/vendor/dir0/pkg.SomeType {X: 4}`, "", "interface {}", nil},
+
+		{`"dir0/pkg".A`, false, "0", "", "int", nil},
+		{`"dir1/pkg".A`, false, "1", "", "int", nil},
 	}
 
 	ver, _ := goversion.Parse(runtime.Version())
@@ -937,6 +955,59 @@ func TestPackageRenames(t *testing.T) {
 				if tc.err.Error() != err.Error() {
 					t.Fatalf("Unexpected error. Expected %s got %s", tc.err.Error(), err.Error())
 				}
+			}
+		}
+	})
+}
+
+func TestConstants(t *testing.T) {
+	testcases := []varTest{
+		{"a", true, "constTwo", "", "main.ConstType", nil},
+		{"b", true, "constThree", "", "main.ConstType", nil},
+		{"c", true, "bitZero|bitOne", "", "main.BitFieldType", nil},
+		{"d", true, "33", "", "main.BitFieldType", nil},
+		{"e", true, "10", "", "main.ConstType", nil},
+		{"f", true, "0", "", "main.BitFieldType", nil},
+		{"bitZero", true, "1", "", "main.BitFieldType", nil},
+		{"bitOne", true, "2", "", "main.BitFieldType", nil},
+		{"constTwo", true, "2", "", "main.ConstType", nil},
+		{"pkg.SomeConst", true, "2", "", "int", nil},
+	}
+	ver, _ := goversion.Parse(runtime.Version())
+	if ver.Major > 0 && !ver.AfterOrEqual(goversion.GoVersion{1, 10, -1, 0, 0, ""}) {
+		// Not supported on 1.9 or earlier
+		t.Skip("constants added in go 1.10")
+	}
+	withTestProcess("consts", t, func(p proc.Process, fixture protest.Fixture) {
+		assertNoError(proc.Continue(p), t, "Continue")
+		for _, testcase := range testcases {
+			variable, err := evalVariable(p, testcase.name, pnormalLoadConfig)
+			assertNoError(err, t, fmt.Sprintf("EvalVariable(%s)", testcase.name))
+			assertVariable(t, variable, testcase)
+		}
+	})
+}
+
+func setFunctionBreakpoint(p proc.Process, fname string) (*proc.Breakpoint, error) {
+	addr, err := proc.FindFunctionLocation(p, fname, true, 0)
+	if err != nil {
+		return nil, err
+	}
+	return p.SetBreakpoint(addr, proc.UserBreakpoint, nil)
+}
+
+func TestIssue1075(t *testing.T) {
+	withTestProcess("clientdo", t, func(p proc.Process, fixture protest.Fixture) {
+		_, err := setFunctionBreakpoint(p, "net/http.(*Client).Do")
+		assertNoError(err, t, "setFunctionBreakpoint")
+		assertNoError(proc.Continue(p), t, "Continue()")
+		for i := 0; i < 10; i++ {
+			scope, err := proc.GoroutineScope(p.CurrentThread())
+			assertNoError(err, t, fmt.Sprintf("GoroutineScope (%d)", i))
+			vars, err := scope.LocalVariables(pnormalLoadConfig)
+			assertNoError(err, t, fmt.Sprintf("LocalVariables (%d)", i))
+			for _, v := range vars {
+				api.ConvertVar(v).SinglelineString()
 			}
 		}
 	})

@@ -11,12 +11,14 @@
 			"name": "LoginConnector",
 			"parser": "LS2C_MsgParser",
 			"host": {
-				"ip": "192.168.30.203", "port": 7001
+				"ip": "210.73.214.71", "port": 7002
 			},
             "interval": 1,
             "svrchannel":false,
             "disable": 1,
-            "disreconnect":1
+            "disreconnect":1,
+            "https":false,
+            "disable_eventqueue": false
 		},
 		{
 			"name": "GateConnector",
@@ -27,7 +29,9 @@
             "interval": 1,
             "svrchannel":false,
             "disable": 1,
-            "disreconnect":1
+            "disreconnect":1,
+            "https":false,
+            "disable_eventqueue": false
 		}
 	]
 }

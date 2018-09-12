@@ -14,10 +14,10 @@ import (
 
 // Client is a RPC service.Client.
 type RPCClient struct {
-	addr       string
-	client     *rpc.Client
-	haltMu     sync.Mutex
-	haltReq    bool
+	addr    string
+	client  *rpc.Client
+	haltMu  sync.Mutex
+	haltReq bool
 }
 
 var unsupportedApiError = errors.New("unsupported")
@@ -110,6 +110,12 @@ func (c *RPCClient) Next() (*api.DebuggerState, error) {
 func (c *RPCClient) Step() (*api.DebuggerState, error) {
 	state := new(api.DebuggerState)
 	err := c.call("Command", &api.DebuggerCommand{Name: api.Step}, state)
+	return state, err
+}
+
+func (c *RPCClient) Call(expr string) (*api.DebuggerState, error) {
+	state := new(api.DebuggerState)
+	err := c.call("Command", &api.DebuggerCommand{Name: api.Call, Expr: expr}, state)
 	return state, err
 }
 

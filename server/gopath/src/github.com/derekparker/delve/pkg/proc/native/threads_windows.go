@@ -18,16 +18,6 @@ type OSSpecificDetails struct {
 	hThread syscall.Handle
 }
 
-func (t *Thread) halt() (err error) {
-	// Ignore the request to halt. On Windows, all threads are halted
-	// on return from WaitForDebugEvent.
-	return nil
-
-	// TODO - This may not be correct in all usages of dbp.Halt.  There
-	// are some callers who use dbp.Halt() to stop the process when it is not
-	// already broken on a debug event.
-}
-
 func (t *Thread) singleStep() error {
 	context := newCONTEXT()
 	context.ContextFlags = _CONTEXT_ALL
@@ -96,7 +86,6 @@ func (t *Thread) singleStep() error {
 }
 
 func (t *Thread) resume() error {
-	t.running = true
 	var err error
 	t.dbp.execPtraceFunc(func() {
 		//TODO: Note that we are ignoring the thread we were asked to continue and are continuing the
@@ -126,9 +115,9 @@ func (t *Thread) Blocked() bool {
 	}
 }
 
-func (t *Thread) stopped() bool {
-	// TODO: We are assuming that threads are always stopped
-	// during command execution.
+// Stopped returns whether the thread is stopped at the operating system
+// level. On windows this always returns true.
+func (t *Thread) Stopped() bool {
 	return true
 }
 
@@ -159,4 +148,8 @@ func (t *Thread) ReadMemory(buf []byte, addr uintptr) (int, error) {
 		err = ErrShortRead
 	}
 	return int(count), err
+}
+
+func (t *Thread) restoreRegisters(sr *savedRegisters) error {
+	return errors.New("not implemented")
 }

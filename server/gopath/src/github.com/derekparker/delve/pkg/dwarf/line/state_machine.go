@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
+	"io"
 
 	"github.com/derekparker/delve/pkg/dwarf/util"
 )
@@ -17,22 +18,42 @@ type Location struct {
 }
 
 type StateMachine struct {
-	dbl             *DebugLineInfo
-	file            string
-	line            int
-	address         uint64
-	column          uint
-	isStmt          bool
-	basicBlock      bool
-	endSeq          bool
-	lastWasStandard bool
-	lastDelta       int
+	dbl           *DebugLineInfo
+	file          string
+	line          int
+	address       uint64
+	column        uint
+	isStmt        bool
+	basicBlock    bool
+	endSeq        bool
+	lastDelta     int
+	prologueEnd   bool
+	epilogueBegin bool
 	// valid is true if the current value of the state machine is the address of
 	// an instruction (using the terminology used by DWARF spec the current
 	// value of the state machine should be appended to the matrix representing
 	// the compilation unit)
 	valid bool
+
+	started bool
+
+	buf     *bytes.Buffer // remaining instructions
+	opcodes []opcodefn
+
+	definedFiles []*FileEntry // files defined with DW_LINE_define_file
+
+	lastAddress uint64
+	lastFile    string
+	lastLine    int
 }
+
+type opcodeKind uint8
+
+const (
+	specialOpcode opcodeKind = iota
+	standardOpcode
+	extendedOpcode
+)
 
 type opcodefn func(*StateMachine, *bytes.Buffer)
 
@@ -47,6 +68,8 @@ const (
 	DW_LNS_set_basic_block  = 7
 	DW_LNS_const_add_pc     = 8
 	DW_LNS_fixed_advance_pc = 9
+	DW_LNS_prologue_end     = 10
+	DW_LNS_epilogue_begin   = 11
 )
 
 // Extended opcodes
@@ -66,6 +89,8 @@ var standardopcodes = map[byte]opcodefn{
 	DW_LNS_set_basic_block:  setbasicblock,
 	DW_LNS_const_add_pc:     constaddpc,
 	DW_LNS_fixed_advance_pc: fixedadvancepc,
+	DW_LNS_prologue_end:     prologueend,
+	DW_LNS_epilogue_begin:   epiloguebegin,
 }
 
 var extendedopcodes = map[byte]opcodefn{
@@ -74,41 +99,38 @@ var extendedopcodes = map[byte]opcodefn{
 	DW_LINE_define_file:  definefile,
 }
 
-func newStateMachine(dbl *DebugLineInfo) *StateMachine {
-	return &StateMachine{dbl: dbl, file: dbl.FileNames[0].Name, line: 1}
+func newStateMachine(dbl *DebugLineInfo, instructions []byte) *StateMachine {
+	opcodes := make([]opcodefn, len(standardopcodes)+1)
+	opcodes[0] = execExtendedOpcode
+	for op := range standardopcodes {
+		opcodes[op] = standardopcodes[op]
+	}
+	sm := &StateMachine{dbl: dbl, file: dbl.FileNames[0].Path, line: 1, buf: bytes.NewBuffer(instructions), opcodes: opcodes, isStmt: dbl.Prologue.InitialIsStmt == uint8(1)}
+	return sm
 }
 
 // Returns all PCs for a given file/line. Useful for loops where the 'for' line
 // could be split amongst 2 PCs.
-func (dbl *DebugLines) AllPCsForFileLine(f string, l int) (pcs []uint64) {
+func (lineInfo *DebugLineInfo) AllPCsForFileLine(f string, l int) (pcs []uint64) {
+	if lineInfo == nil {
+		return nil
+	}
+
 	var (
-		foundFile bool
-		lastAddr  uint64
-		lineInfo  = dbl.GetLineInfo(f)
-		sm        = newStateMachine(lineInfo)
-		buf       = bytes.NewBuffer(lineInfo.Instructions)
+		lastAddr uint64
+		sm       = newStateMachine(lineInfo, lineInfo.Instructions)
 	)
 
-	for b, err := buf.ReadByte(); err == nil; b, err = buf.ReadByte() {
-		findAndExecOpcode(sm, buf, b)
-		if foundFile && sm.file != f {
-			return
+	for {
+		if err := sm.next(); err != nil {
+			if lineInfo.Logf != nil {
+				lineInfo.Logf("AllPCsForFileLine error: %v", err)
+			}
+			break
 		}
-		if sm.line == l && sm.file == f && sm.address != lastAddr {
-			foundFile = true
-			if sm.valid {
-				pcs = append(pcs, sm.address)
-			}
-			line := sm.line
-			// Keep going until we're on a different line. We only care about
-			// when a line comes back around (i.e. for loop) so get to next line,
-			// and try to find the line we care about again.
-			for b, err := buf.ReadByte(); err == nil; b, err = buf.ReadByte() {
-				findAndExecOpcode(sm, buf, b)
-				if line < sm.line {
-					break
-				}
-			}
+		if sm.line == l && sm.file == f && sm.address != lastAddr && sm.isStmt && sm.valid {
+			pcs = append(pcs, sm.address)
+			lastAddr = sm.address
 		}
 	}
 	return
@@ -116,27 +138,32 @@ func (dbl *DebugLines) AllPCsForFileLine(f string, l int) (pcs []uint64) {
 
 var NoSourceError = errors.New("no source available")
 
-func (dbl *DebugLines) AllPCsBetween(begin, end uint64, filename string) ([]uint64, error) {
-	lineInfo := dbl.GetLineInfo(filename)
+// AllPCsBetween returns all PC addresses between begin and end (including both begin and end) that have the is_stmt flag set and do not belong to excludeFile:excludeLine
+func (lineInfo *DebugLineInfo) AllPCsBetween(begin, end uint64, excludeFile string, excludeLine int) ([]uint64, error) {
 	if lineInfo == nil {
 		return nil, NoSourceError
 	}
+
 	var (
 		pcs      []uint64
 		lastaddr uint64
-		sm       = newStateMachine(lineInfo)
-		buf      = bytes.NewBuffer(lineInfo.Instructions)
+		sm       = newStateMachine(lineInfo, lineInfo.Instructions)
 	)
 
-	for b, err := buf.ReadByte(); err == nil; b, err = buf.ReadByte() {
-		findAndExecOpcode(sm, buf, b)
+	for {
+		if err := sm.next(); err != nil {
+			if lineInfo.Logf != nil {
+				lineInfo.Logf("AllPCsBetween error: %v", err)
+			}
+			break
+		}
 		if !sm.valid {
 			continue
 		}
 		if sm.address > end {
 			break
 		}
-		if sm.address >= begin && sm.address > lastaddr {
+		if (sm.address >= begin && sm.address > lastaddr) && sm.isStmt && ((sm.file != excludeFile) || (sm.line != excludeLine)) {
 			lastaddr = sm.address
 			pcs = append(pcs, sm.address)
 		}
@@ -144,15 +171,183 @@ func (dbl *DebugLines) AllPCsBetween(begin, end uint64, filename string) ([]uint
 	return pcs, nil
 }
 
-func findAndExecOpcode(sm *StateMachine, buf *bytes.Buffer, b byte) {
-	switch {
-	case b == 0:
-		execExtendedOpcode(sm, b, buf)
-	case b < sm.dbl.Prologue.OpcodeBase:
-		execStandardOpcode(sm, b, buf)
-	default:
+// copy returns a copy of this state machine, running the returned state
+// machine will not affect sm.
+func (sm *StateMachine) copy() *StateMachine {
+	var r StateMachine
+	r = *sm
+	r.buf = bytes.NewBuffer(sm.buf.Bytes())
+	return &r
+}
+
+func (lineInfo *DebugLineInfo) stateMachineForEntry(basePC uint64) (sm *StateMachine) {
+	sm = lineInfo.stateMachineCache[basePC]
+	if sm == nil {
+		sm = newStateMachine(lineInfo, lineInfo.Instructions)
+		sm.PCToLine(basePC)
+		lineInfo.stateMachineCache[basePC] = sm
+	}
+	sm = sm.copy()
+	return
+}
+
+// PCToLine returns the filename and line number associated with pc.
+// If pc isn't found inside lineInfo's table it will return the filename and
+// line number associated with the closest PC address preceding pc.
+// basePC will be used for caching, it's normally the entry point for the
+// function containing pc.
+func (lineInfo *DebugLineInfo) PCToLine(basePC, pc uint64) (string, int) {
+	if lineInfo == nil {
+		return "", 0
+	}
+	if basePC > pc {
+		panic(fmt.Errorf("basePC after pc %#x %#x", basePC, pc))
+	}
+
+	var sm *StateMachine
+	if basePC == 0 {
+		sm = newStateMachine(lineInfo, lineInfo.Instructions)
+	} else {
+		// Try to use the last state machine that we used for this function, if
+		// there isn't one or it's already past pc try to clone the cached state
+		// machine stopped at the entry point of the function.
+		// As a last resort start from the start of the debug_line section.
+		sm = lineInfo.lastMachineCache[basePC]
+		if sm == nil || sm.lastAddress > pc {
+			sm = lineInfo.stateMachineForEntry(basePC)
+			lineInfo.lastMachineCache[basePC] = sm
+		}
+	}
+
+	file, line, _ := sm.PCToLine(pc)
+	return file, line
+}
+
+func (sm *StateMachine) PCToLine(pc uint64) (string, int, bool) {
+	if !sm.started {
+		if err := sm.next(); err != nil {
+			if sm.dbl.Logf != nil {
+				sm.dbl.Logf("PCToLine error: %v", err)
+			}
+			return "", 0, false
+		}
+	}
+	if sm.lastAddress > pc {
+		return "", 0, false
+	}
+	for {
+		if sm.valid {
+			if sm.address > pc {
+				return sm.lastFile, sm.lastLine, true
+			}
+			if sm.address == pc {
+				return sm.file, sm.line, true
+			}
+		}
+		if err := sm.next(); err != nil {
+			if sm.dbl.Logf != nil {
+				sm.dbl.Logf("PCToLine error: %v", err)
+			}
+			break
+		}
+	}
+	if sm.valid {
+		return sm.file, sm.line, true
+	}
+	return "", 0, false
+}
+
+// LineToPC returns the first PC address associated with filename:lineno.
+func (lineInfo *DebugLineInfo) LineToPC(filename string, lineno int) uint64 {
+	if lineInfo == nil {
+		return 0
+	}
+
+	sm := newStateMachine(lineInfo, lineInfo.Instructions)
+
+	// if no instruction marked is_stmt is found fallback to the first
+	// instruction assigned to the filename:line.
+	var fallbackPC uint64
+
+	for {
+		if err := sm.next(); err != nil {
+			if lineInfo.Logf != nil && err != io.EOF {
+				lineInfo.Logf("LineToPC error: %v", err)
+			}
+			break
+		}
+		if sm.line == lineno && sm.file == filename && sm.valid {
+			if sm.isStmt {
+				return sm.address
+			} else if fallbackPC == 0 {
+				fallbackPC = sm.address
+			}
+		}
+	}
+	return fallbackPC
+}
+
+// PrologueEndPC returns the first PC address marked as prologue_end in the half open interval [start, end)
+func (lineInfo *DebugLineInfo) PrologueEndPC(start, end uint64) (pc uint64, file string, line int, ok bool) {
+	sm := lineInfo.stateMachineForEntry(start)
+	for {
+		if sm.valid {
+			if sm.address >= end {
+				return 0, "", 0, false
+			}
+			if sm.prologueEnd {
+				return sm.address, sm.file, sm.line, true
+			}
+		}
+		if err := sm.next(); err != nil {
+			if lineInfo.Logf != nil {
+				lineInfo.Logf("PrologueEnd error: %v", err)
+			}
+			return 0, "", 0, false
+		}
+	}
+}
+
+func (sm *StateMachine) next() error {
+	sm.started = true
+	if sm.valid {
+		sm.lastAddress, sm.lastFile, sm.lastLine = sm.address, sm.file, sm.line
+
+		// valid is set by either a special opcode or a DW_LNS_copy, in both cases
+		// we need to reset basic_block, prologue_end and epilogue_begin
+		sm.basicBlock = false
+		sm.prologueEnd = false
+		sm.epilogueBegin = false
+	}
+	if sm.endSeq {
+		sm.endSeq = false
+		sm.file = sm.dbl.FileNames[0].Path
+		sm.line = 1
+		sm.column = 0
+		sm.isStmt = sm.dbl.Prologue.InitialIsStmt == uint8(1)
+		sm.basicBlock = false
+	}
+	b, err := sm.buf.ReadByte()
+	if err != nil {
+		return err
+	}
+	if b < sm.dbl.Prologue.OpcodeBase {
+		if int(b) < len(sm.opcodes) {
+			sm.valid = false
+			sm.opcodes[b](sm, sm.buf)
+		} else {
+			// unimplemented standard opcode, read the number of arguments specified
+			// in the prologue and do nothing with them
+			opnum := sm.dbl.Prologue.StdOpLengths[b-1]
+			for i := 0; i < int(opnum); i++ {
+				util.DecodeSLEB128(sm.buf)
+			}
+			fmt.Printf("unknown opcode\n")
+		}
+	} else {
 		execSpecialOpcode(sm, b)
 	}
+	return nil
 }
 
 func execSpecialOpcode(sm *StateMachine, instr byte) {
@@ -161,44 +356,21 @@ func execSpecialOpcode(sm *StateMachine, instr byte) {
 		decoded = opcode - sm.dbl.Prologue.OpcodeBase
 	)
 
-	if sm.dbl.Prologue.InitialIsStmt == uint8(1) {
-		sm.isStmt = true
-	}
-
 	sm.lastDelta = int(sm.dbl.Prologue.LineBase + int8(decoded%sm.dbl.Prologue.LineRange))
 	sm.line += sm.lastDelta
 	sm.address += uint64(decoded/sm.dbl.Prologue.LineRange) * uint64(sm.dbl.Prologue.MinInstrLength)
-	sm.basicBlock = false
-	sm.lastWasStandard = false
 	sm.valid = true
 }
 
-func execExtendedOpcode(sm *StateMachine, instr byte, buf *bytes.Buffer) {
+func execExtendedOpcode(sm *StateMachine, buf *bytes.Buffer) {
 	_, _ = util.DecodeULEB128(buf)
 	b, _ := buf.ReadByte()
-	fn, ok := extendedopcodes[b]
-	if !ok {
-		panic(fmt.Sprintf("Encountered unknown extended opcode %#v\n", b))
+	if fn, ok := extendedopcodes[b]; ok {
+		fn(sm, buf)
 	}
-	sm.lastWasStandard = false
-	sm.valid = false
-
-	fn(sm, buf)
-}
-
-func execStandardOpcode(sm *StateMachine, instr byte, buf *bytes.Buffer) {
-	fn, ok := standardopcodes[instr]
-	if !ok {
-		panic(fmt.Sprintf("Encountered unknown standard opcode %#v\n", instr))
-	}
-	sm.lastWasStandard = true
-	sm.valid = false
-
-	fn(sm, buf)
 }
 
 func copyfn(sm *StateMachine, buf *bytes.Buffer) {
-	sm.basicBlock = false
 	sm.valid = true
 }
 
@@ -215,7 +387,16 @@ func advanceline(sm *StateMachine, buf *bytes.Buffer) {
 
 func setfile(sm *StateMachine, buf *bytes.Buffer) {
 	i, _ := util.DecodeULEB128(buf)
-	sm.file = sm.dbl.FileNames[i-1].Name
+	if i-1 < uint64(len(sm.dbl.FileNames)) {
+		sm.file = sm.dbl.FileNames[i-1].Path
+	} else {
+		j := (i - 1) - uint64(len(sm.dbl.FileNames))
+		if j < uint64(len(sm.definedFiles)) {
+			sm.file = sm.definedFiles[j].Path
+		} else {
+			sm.file = ""
+		}
+	}
 }
 
 func setcolumn(sm *StateMachine, buf *bytes.Buffer) {
@@ -256,12 +437,14 @@ func setaddress(sm *StateMachine, buf *bytes.Buffer) {
 }
 
 func definefile(sm *StateMachine, buf *bytes.Buffer) {
-	var (
-		_, _ = util.ParseString(buf)
-		_, _ = util.DecodeULEB128(buf)
-		_, _ = util.DecodeULEB128(buf)
-		_, _ = util.DecodeULEB128(buf)
-	)
+	entry := readFileEntry(sm.dbl, sm.buf, false)
+	sm.definedFiles = append(sm.definedFiles, entry)
+}
 
-	// Don't do anything here yet.
+func prologueend(sm *StateMachine, buf *bytes.Buffer) {
+	sm.prologueEnd = true
+}
+
+func epiloguebegin(sm *StateMachine, buf *bytes.Buffer) {
+	sm.epilogueBegin = true
 }

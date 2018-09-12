@@ -11,21 +11,23 @@
 			"name": "LoginConnector",
 			"parser": "LS2GW_MsgParser",
 			"host": {
-				"ip": "192.168.30.203", "port": 7001
+				"ip": "192.168.30.202", "port": 7001
 			},
             "interval": 3,
             "svrchannel":true,
-            "disable": 0
+            "disable": 0,
+            "disable_eventqueue": false
 		},
 		{
 			"name": "MatchConnector",
 			"parser": "MS2GW_MsgParser",
 			"host": {
-				"ip": "192.168.30.203", "port": 8001
+				"ip": "192.168.30.202", "port": 8001
 			},
             "interval": 3,
             "svrchannel":true,
-            "disable": 0
+            "disable": 0,
+            "disable_eventqueue": false
 		}
 	],
 	"listens": [
@@ -33,10 +35,11 @@
 			"name": "RoomListener",
 			"parser": "RS2GW_MsgParser",
 			"host": {
-				"ip": "192.168.30.203", "port": 6001
+				"ip": "192.168.30.202", "port": 6001
 			},
             "verify": 0,
-            "svrchannel":true
+            "svrchannel":true,
+            "disable_eventqueue": false
 		}
     ],
 	"wslistens": [
@@ -44,17 +47,21 @@
 			"name": "ClientListener",
 			"parser": "C2GW_MsgParser",
 			"host": {
-				"ip": "192.168.30.203", "port": 6100
+				"ip": "192.168.30.202", "port": 6101
 			},
             "verify": 1,
-            "svrchannel":false
+            "svrchannel":false,
+            "https": false,
+            "cert":"../cert/https/https-server-214801457430415.pem",
+            "certkey":"../cert/https/https-server-214801457430415.key",
+            "disable_eventqueue": false
 		}
     ],
     "redis": {
         "passwd": "",
         "db": 0,
         "host": {
-            "ip": "192.168.30.203", "port": 6377
+            "ip": "192.168.30.202", "port": 6379
         }
     }
 }

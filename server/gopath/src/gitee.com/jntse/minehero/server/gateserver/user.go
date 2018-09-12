@@ -11,8 +11,8 @@ import (
 	"gitee.com/jntse/minehero/server/tbl"
 	_"gitee.com/jntse/minehero/server/def"
 	pb "github.com/gogo/protobuf/proto"
-	//"gitee.com/jntse/minehero/server/def"
-	_"github.com/go-redis/redis"
+	"gitee.com/jntse/minehero/server/def"
+	"github.com/go-redis/redis"
 	"strconv"
 	_"strings"
 	_"time"
@@ -48,26 +48,30 @@ func (this *RoomBase) Reset() {
 /// @brief db数据管理
 // --------------------------------------------------------------------------
 type DBUserData struct {
-	bin           *msg.Serialize // db二进制数据
-	tm_login      int64
-	tm_logout     int64
-	money         uint32
-	coupon        uint32
-	yuanbao		  uint32
-	level		  uint32
-	exp			  uint32
-	continuelogin uint32
-	nocountlogin  uint32
-	signreward	  uint32
-	signtime	  uint32
-	addrlist	  []*msg.UserAddress
-	freestep	  int32
-	givestep	  int64
-	wechatopenid  string
-	presentcount  int32
-	presentrecord int64
-	invitationcode string
-	luckydraw	  []*msg.LuckyDrawItem
+	bin           	*msg.Serialize // db二进制数据
+	tm_login      	int64
+	tm_logout     	int64
+	gold		  	uint32
+	diamond			uint32
+	yuanbao			uint32
+	level		  	uint32
+	exp			  	uint32
+	continuelogin 	uint32
+	nocountlogin  	uint32
+	signreward	  	uint32
+	signtime	  	uint32
+	addrlist	  	[]*msg.UserAddress
+	freestep	  	int32
+	givestep	  	int64
+	wechatopenid  	string
+	presentcount  	int32
+	presentrecord 	int64
+	invitationcode 	string
+	luckydraw	  	[]*msg.LuckyDrawItem
+	luckydrawtotal 	int64
+	totalrecharge	uint32		// 总充值
+	registcash		int32
+	winscore		int32	
 }
 
 // --------------------------------------------------------------------------
@@ -80,7 +84,8 @@ type GateUser struct {
 	verifykey		string
 	online			bool
 	tickers			UserTicker
-	bag				UserBag // 背包
+	bag				UserBag 	// 背包
+	image			UserImage	// 换装
 	task			UserTask
 	tm_disconnect	int64
 	tm_heartbeat	int64    	// 心跳时间
@@ -91,12 +96,18 @@ type GateUser struct {
 	token			string		// token
 	asynev			eventque.AsynEventQueue	// 异步事件处理
 	broadcastbuffer []uint64	// 广播消息缓存
+	synbalance		bool		// 充值中
+	roomid			int64
+	gameflag		bool
+	cmnrewardmap	map[int32]int32
+	sharetime		int32
 }
 
 func NewGateUser(account, key, token string) *GateUser {
 	u := &GateUser{account: account, verifykey: key}
 	u.bag.Init(u)
 	u.task.Init(u)
+	u.image.Init(u)
 	u.tickers.Init(u.OnTicker10ms, u.OnTicker100ms, u.OnTicker1s, u.OnTicker5s, u.OnTicker1m)
 	u.cleanup = false
 	u.tm_disconnect = 0
@@ -105,6 +116,10 @@ func NewGateUser(account, key, token string) *GateUser {
 	u.savedone = false
 	u.token = token
 	u.broadcastbuffer = make([]uint64,0)
+	u.roomid = 0
+	u.gameflag = false
+	u.cmnrewardmap = make(map[int32]int32)
+	u.sharetime = 0
 	return u
 }
 
@@ -134,6 +149,14 @@ func (this *GateUser) Face() string {
 
 func (this *GateUser) SetFace(f string) {
 	this.EntityBase().Face = pb.String(f)
+}
+
+func (this *GateUser) Sex() int32 {
+	return this.EntityBase().GetSex()
+}
+
+func (this *GateUser) SetSex(sex int32) {
+	this.EntityBase().Sex = pb.Int32(sex)
 }
 
 func (this *GateUser) Sid() int {
@@ -232,11 +255,11 @@ func (this *GateUser) IsRoomCloseTimeOut() bool {
 	return util.CURTIMEMS() > (this.roomdata.tm_closing + 10000)
 }
 
-func (this *GateUser) SetWechatOpenId(id string)  {
+func (this *GateUser) SetOpenId(id string)  {
 	this.wechatopenid = id
 }
 
-func (this *GateUser) WechatOpenId() string {
+func (this *GateUser) OpenId() string {
 	return this.wechatopenid
 }
 
@@ -259,25 +282,34 @@ func (this *GateUser) Inviter() uint64 {
 	return 0
 }
 
-func (this *GateUser) GetMoneyCost() int64 {
+func (this *GateUser) GetDiamondCost() int64 {
 	userbase := this.UserBase()
 	return userbase.GetScounter().GetMoneyCost()
 }
 
-func (this *GateUser) GetMoneyCostReset() int64 {
+func (this *GateUser) GetDiamondCostReset() int64 {
 	userbase := this.UserBase()
 	return userbase.GetScounter().GetMoneyCostReset()
 }
 
-func (this *GateUser) SetMoneyCost(cost int64) {
+func (this *GateUser) SetDiamondCost(cost int64) {
 	userbase := this.UserBase()
 	userbase.GetScounter().MoneyCost = pb.Int64(cost)
 }
 
-func (this *GateUser) SetMoneyCostReset(reset int64) {
+func (this *GateUser) SetDiamondCostReset(reset int64) {
 	userbase := this.UserBase()
 	userbase.GetScounter().MoneyCostReset = pb.Int64(reset)
 }
+
+func (this *GateUser) TotalRecharge() uint32 {
+	return this.totalrecharge
+}
+
+func (this *GateUser) SetTotalRecharge(r uint32) {
+	this.totalrecharge = r
+}
+
 
 func (this *GateUser) IsCleanUp() bool {
 	return this.cleanup
@@ -353,7 +385,8 @@ func (this *GateUser) OnLoadDB(way string) {
 	if this.bin.Base.Addrlist == nil { this.bin.Base.Addrlist = make([]*msg.UserAddress,0) }
 	if this.bin.Base.Freepresent == nil { this.bin.Base.Freepresent = &msg.FreePresentMoney{} }
 	if this.bin.Base.Task == nil { this.bin.Base.Task = &msg.UserTask{} }
-	if this.bin.Base.Luckydraw == nil { this.bin.Base.Luckydraw = &msg.LuckyDrawHistory{ Drawlist:make([]*msg.LuckyDrawItem,0) } }
+	if this.bin.Base.Luckydraw == nil { this.bin.Base.Luckydraw = &msg.LuckyDrawRecord{ Drawlist:make([]*msg.LuckyDrawItem,0) } }
+	if this.bin.Base.Images == nil { this.bin.Base.Images = &msg.PersonalImage{ Lists:make([]*msg.ImageData,0) } }
 
 	// 加载二进制
 	this.LoadBin()
@@ -382,8 +415,8 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase := bin.GetBase()
 	userbase.Tmlogin = pb.Int64(this.tm_login)
 	userbase.Tmlogout = pb.Int64(this.tm_logout)
-	userbase.Money = pb.Uint32(this.money)
-	userbase.Coupon = pb.Uint32(this.coupon)
+	userbase.Gold = pb.Uint32(this.gold)
+	userbase.Diamond = pb.Uint32(this.diamond)
 	userbase.Yuanbao = pb.Uint32(this.yuanbao)
 	userbase.Level = pb.Uint32(this.level)
 	userbase.Exp = pb.Uint32(this.exp)
@@ -394,13 +427,18 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase.Addrlist = this.addrlist[:]
 	userbase.GetScounter().Freestep = pb.Int32(this.freestep)
 	userbase.GetScounter().Givestep = pb.Int64(this.givestep)
+	userbase.GetScounter().Registcash = pb.Int32(this.registcash)
+	userbase.GetScounter().Winscore = pb.Int32(this.winscore)
+	userbase.GetScounter().Sharetime = pb.Int32(this.sharetime)
 	userbase.Wechat.Openid = pb.String(this.wechatopenid)
 	userbase.GetFreepresent().Count = pb.Int32(this.presentcount)
 	userbase.GetFreepresent().Tmrecord = pb.Int64(this.presentrecord)
 	userbase.Invitationcode = pb.String(this.invitationcode)
+	userbase.TotalRecharge =  pb.Uint32(this.totalrecharge)
 
 	// 幸运抽奖
 	userbase.Luckydraw.Drawlist = make([]*msg.LuckyDrawItem,0)
+	userbase.Luckydraw.Totalvalue = pb.Int64(this.luckydrawtotal)
 	for _, v := range this.luckydraw {
 		userbase.Luckydraw.Drawlist = append(userbase.Luckydraw.Drawlist, v)
 	}
@@ -408,6 +446,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	// 道具信息
 	this.bag.PackBin(bin)
 	this.task.PackBin(bin)
+	this.image.PackBin(bin)
 
 	//
 	return bin
@@ -422,8 +461,8 @@ func (this *GateUser) LoadBin() {
 	userbase := this.bin.GetBase()
 	this.tm_login = userbase.GetTmlogin()
 	this.tm_logout = userbase.GetTmlogout()
-	this.money = userbase.GetMoney()
-	this.coupon = userbase.GetCoupon()
+	this.gold = userbase.GetGold()
+	this.diamond = userbase.GetDiamond()
 	this.yuanbao = userbase.GetYuanbao()
 	this.level = userbase.GetLevel()
 	this.exp  = userbase.GetExp()
@@ -434,12 +473,18 @@ func (this *GateUser) LoadBin() {
 	this.addrlist = userbase.GetAddrlist()[:]
 	this.freestep = userbase.GetScounter().GetFreestep()
 	this.givestep = userbase.GetScounter().GetGivestep()
+	this.registcash = userbase.GetScounter().GetRegistcash()
+	this.winscore = userbase.GetScounter().GetWinscore()
+	this.sharetime = userbase.GetScounter().GetSharetime()
 	this.wechatopenid = userbase.GetWechat().GetOpenid()
 	this.presentcount = userbase.GetFreepresent().GetCount()
 	this.presentrecord = userbase.GetFreepresent().GetTmrecord()
 	this.invitationcode = userbase.GetInvitationcode()
+	this.totalrecharge = userbase.GetTotalRecharge()
 
 	// 幸运抽奖
+	this.luckydraw = make([]*msg.LuckyDrawItem,0)
+	this.luckydrawtotal = userbase.Luckydraw.GetTotalvalue()
 	for _, v := range userbase.Luckydraw.Drawlist {
 		this.luckydraw = append(this.luckydraw, v)
 	}
@@ -451,6 +496,9 @@ func (this *GateUser) LoadBin() {
 	// 任务
 	this.task.LoadBin(this.bin)
 
+	// 换装信息
+	this.image.Clean()
+	this.image.LoadBin(this.bin)
 }
 
 // TODO: 存盘可以单独协程
@@ -494,14 +542,17 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 	this.roomdata.Reset()
 	log.Info("Sid[%d] 账户[%s] 玩家[%d] 名字[%s] 登录成功", this.Sid(), this.account, this.Id(), this.Name())
 
-	// 免费赠送金币
-	this.CheckFreePresentMoney(false)
+	// 免费赠送钻石
+	//this.CheckFreePresentDiamond(false)
 
 	// 上线任务检查
-	this.OnlineTaskCheck()
+	//this.OnlineTaskCheck()
 
 	// 同步数据到客户端
 	this.Syn()
+
+	// 同步midas平台充值金额
+	//this.SynMidasBalance()
 
 	return true
 }
@@ -511,7 +562,9 @@ func (this *GateUser) Syn(){
 	this.SendSign()
 	//this.CheckGiveFreeStep(util.CURTIME(), "上线跨整点")
 	this.CheckHaveCompensation()
-	this.SyncBigRewardPickNum()
+	this.SyncTime()
+	this.SendShareTime()
+	//this.SyncBigRewardPickNum()
 	//this.QueryPlatformCoins()
 }
 
@@ -578,6 +631,7 @@ func (this *GateUser) CheckDisconnectTimeOut(now int64) {
 
 // 真下线(存盘，从Gate清理玩家数据)
 func (this *GateUser) Logout() {
+	GameRoomSvrMgr().LeaveGame(this)
 	this.online = false
 	this.tm_logout = util.CURTIME()
 	this.cleanup = true
@@ -738,15 +792,173 @@ func (this *GateUser) AsynEventInsert(event eventque.IEvent) {
 
 // 上线任务检查
 func (this *GateUser) OnlineTaskCheck() {
-	// 账户注册任务
+	// 自己注册任务
 	if this.task.IsTaskFinish(int32(msg.TaskId_RegistAccount)) == false {
 		this.task.TaskFinish(int32(msg.TaskId_RegistAccount))
 	}
 
 	// 被自己邀请人达成积分任务
-	keyinviter := fmt.Sprintf("TaskInviteeTopScoreFinish_%d", this.Id())
-	sumfinish, _ := Redis().SCard(keyinviter).Result()
+	key_inviter := fmt.Sprintf("task_invitee_topscorefinish_%d", this.Id())
+	sumfinish, _ := Redis().SCard(key_inviter).Result()
 	if sumfinish != 0 && this.task.IsTaskFinish(int32(msg.TaskId_InviteeTopScore)) == false {
 		this.task.TaskFinish(int32(msg.TaskId_InviteeTopScore))
 	}
+
+	// 邀请注册任务
+	invite_count_key := fmt.Sprintf("user_%d_invite_regist_count", this.Id())
+	invite_count, errget := Redis().Get(invite_count_key).Int64()
+	if errget != nil && errget != redis.Nil {
+		log.Error("玩家[%s %d] 上线获取邀请注册任务计数失败 redis err[%s]", this.Name(), this.Id(), errget)
+	}
+	if invite_count != 0 {
+		//this.task.SetTaskProgress(int32(msg.TaskId_InviteRegist), int32(invite_count))
+	}
+
 }
+
+// 获取平台金币
+func (this *GateUser) SynMidasBalance() {
+  event := NewQueryPlatformCoinsEvent(this.DoSynMidasBalance, this.DoSynMidasBalanceResult)
+  this.AsynEventInsert(event)
+}
+
+// 同步midas余额
+func (this *GateUser) DoSynMidasBalance() (balance, amt_save int64, errmsg string) {
+	return def.HttpWechatMiniGameGetBalance(Redis(), this.OpenId())
+}
+
+// 同步midas余额
+func (this *GateUser) DoSynMidasBalanceResult(balance, amt_save int64, errmsg string) {
+	this.synbalance = false
+	if errmsg != "" {
+		log.Error("玩家[%s %d %s] 同步midas余额失败,errmsg:%s", this.Name(), this.Id(), this.OpenId(), errmsg)
+		return
+	}
+
+	log.Info("玩家[%s %d] 同步midas支付数据成功 当前充值[%d] 累计充值[%d]", this.Name(), this.Id(), this.TotalRecharge(), amt_save)
+
+	// 同步客户端本次充值金额,增量
+	//this.SetTotalRecharge(0)
+	if uint32(amt_save) > this.TotalRecharge()  {
+		recharge := uint32(amt_save) - this.TotalRecharge()
+		this.SetTotalRecharge(uint32(amt_save))
+		this.AddYuanbao(recharge * 10, "充值获得", true)
+		//this.AddDiamond(recharge, "充值获得", true)
+		//this.SetDiamondCost(this.GetDiamondCost() + int64(recharge))
+	}
+}
+
+// 从midas服务器扣除金币
+func (this *GateUser) SynRemoveMidsMoney(amount int64, reason string) {
+	event := NewRemovePlatformCoinsEvent(amount, this.DoRemoveMidasMoney, this.DoRemoveMidasMoneyResult)
+	this.AsynEventInsert(event)
+	log.Info("玩家[%s %d] 推送同步扣除midas金币 amount:%d reason:%s", this.Name(), this.Id(), amount, reason)
+}
+
+func (this* GateUser) DoRemoveMidasMoney(amount int64) (balance int64, errmsg string) {
+	return def.HttpWechatMiniGamePayMoney(Redis(), this.OpenId(), amount)
+}
+
+func (this* GateUser) DoRemoveMidasMoneyResult(balance int64, errmsg string, amount int64) {
+	if errmsg != "" {
+		log.Error("玩家[%s %d] midas扣钱返回失败 errmsg:%s", this.Name(), this.Id(), errmsg)
+	}
+}
+
+// 从midas服务器添加金币
+func (this *GateUser) SynAddMidsMoney(amount int64, reason string) {
+	event := NewAddPlatformCoinsEvent(amount, this.DoAddMidasMoney, this.DoAddMidasMoneyResult)
+	this.AsynEventInsert(event)
+	log.Info("玩家[%s %d] 推送同步添加midas金币 amount:%d reason:%s", this.Name(), this.Id(), amount, reason)
+}
+
+func (this* GateUser) DoAddMidasMoney(amount int64) (balance int64, errmsg string) {
+	return def.HttpWechatMiniGamePresentMoney(Redis(), this.OpenId(), amount)
+}
+
+func (this* GateUser) DoAddMidasMoneyResult(balance int64, errmsg string, amount int64) {
+	if errmsg != "" {
+		log.Error("玩家[%s %d] midas加钱返回失败 errmsg:%s", this.Name(), this.Id(), errmsg)
+	}
+}
+
+func (this* GateUser) UpdateSortScore(sorttype int32, score int32) {
+	this.winscore += score
+	log.Info("用户[%d] 增加比分[%d]总比分[%d]", this.Id(), score, this.winscore)
+	key := fmt.Sprintf("gamesort_%d", sorttype)
+	err := Redis().ZAdd(key, redis.Z{Score:float64(this.winscore), Member:string(strconv.Itoa(int(this.Id())))}).Err()
+	if nil != err {
+		log.Error("用户%d 更新比分失败", this.Id())
+	}
+}
+
+func (this* GateUser) SendSortInfo(sorttype int32, begin int32, end int32) {
+	if end < begin || end - begin > 20{
+		return
+	}
+
+	key := fmt.Sprintf("gamesort_%d", sorttype)
+	vals, err:= Redis().ZRevRangeWithScores(key, int64(begin), int64(end)).Result()
+	if nil != err {
+		log.Error("获取排行榜%d数据失败", sorttype)
+		return
+	}
+
+	send := &msg.GW2C_RetSort{}
+	send.Type = pb.Int32(sorttype)
+	send.Myrank = pb.Int32(int32(Redis().ZRevRank(key, string(strconv.Itoa(int(this.Id())))).Val()))
+	send.Myscore = pb.Int32(this.winscore)
+	rank := begin + 1
+	for _, v := range vals {
+		struserid := v.Member.(string)
+		userid ,_ := strconv.ParseInt(struserid, 10, 32)
+		keyname := fmt.Sprintf("charbase_%d_name", userid)
+		name := Redis().Get(keyname).Val();
+		keyface := fmt.Sprintf("charbase_%d_face", userid)
+		face := Redis().Get(keyface).Val();
+		send.List = append(send.List, &msg.SortInfo{Uid: pb.Int64(int64(userid)), 
+			Name:pb.String(name), 
+			Face:pb.String(face), 
+			Score:pb.Int32(int32(v.Score)),
+			Rank:pb.Int32(int32(rank))})
+		rank++
+	}
+	this.SendMsg(send)
+}
+
+func (this* GateUser) GetRegistCash(num int32) {
+	err := def.HttpWechatCompanyPay(this.OpenId(), int64(num), "新用户返现")
+	if err != "" {
+		log.Error("玩家[%d]领取新用户返现失败", this.Id())
+		return
+	}
+	send := &msg.C2GW_RetGetCash{}
+	send.Num = pb.Int32(num)
+	this.SendMsg(send)
+}
+
+func (this* GateUser) SyncTime(){
+	this.SendMsg(&msg.GW2C_HeartBeat{
+		Uid: pb.Int64(int64(this.Id())),
+		Time: pb.Int64(util.CURTIMEUS()),
+	})
+}
+
+func (this* GateUser) ClearReward() {
+	this.cmnrewardmap = make(map[int32]int32)
+}
+
+func (this* GateUser) NotifyReward() {
+	send := &msg.GW2C_CmnRewardInfo{}
+	for k, v := range this.cmnrewardmap {
+		send.List = append(send.List, &msg.CmnRewardInfo{Itemid:pb.Int32(k), Num:pb.Int32(v)})
+	}
+	this.SendMsg(send)
+}
+
+func (this* GateUser) SendShareTime() {
+	send := &msg.GW2C_ShareTime{}
+	send.Nexttime = pb.Int32(this.sharetime)
+	this.SendMsg(send)
+}
+

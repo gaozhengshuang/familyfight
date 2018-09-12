@@ -49,12 +49,10 @@ type MsgProcess struct {
 type LoginServer struct {
 	net				*network.NetWork
 	netconf			*network.NetConf
-	//sessions		map[int]network.IBaseNetSession		// 及时删除，没有任何地方引用golang才会GC
 	hredis      	*redis.Client
-	mutex			sync.Mutex
 	gatemgr			GateManager
-	//usermgr		UserManager
-	login_now		map[string]*ClientAccount			// 正在登陆中的账户(不是在线)
+	checkinset		map[string]*CheckInAccount			// 正在登陆中的账户(不是在线)
+	checkinlocker	sync.Mutex
 	msghandlers		[]network.IBaseMsgHandler
 	tblloader		*tbl.TblLoader
 	runtimestamp    int64
@@ -113,7 +111,7 @@ func (this *LoginServer) OnClose(session network.IBaseNetSession) {
 	switch session.Name() {
 	case "TaskClient":
 		log.Info("和客户端连接断开 sid[%d]", sid)
-		this.DelAuthenAccount(sid)
+		this.CheckInSetRemove(sid)
 	case "TaskGate":
 		log.Info("和GateServer连接断开 sid[%d]", sid)
 		this.gatemgr.OnClose(sid)
@@ -198,7 +196,7 @@ func (this *LoginServer) Init(fileconf string) bool {
 	this.ticker1ms.Start()
 	this.gatemgr.Init()
 	//this.sessions = make(map[int]network.IBaseNetSession)
-	this.login_now = make(map[string]*ClientAccount)
+	this.checkinset = make(map[string]*CheckInAccount)
 	this.runtimestamp = 0
 	this.asynev.Start(1,10000)
 
@@ -289,39 +287,39 @@ func (this* LoginServer) Run() {
 }
 
 func (this *LoginServer) Handler10msTick(now int64) {
-	this.TickAuthenAccount(now)
+	this.CheckInSetTick(now)
 	this.asynev.Dispatch()
 }
 
 // 添加正在登陆的账户
-func (this *LoginServer) AddAuthenAccount(acc string, session network.IBaseNetSession)	{
-	client := &ClientAccount{session:session, account:acc, tm_login:util.CURTIMEMS()}
-	this.login_now[acc] = client
+func (this *LoginServer) CheckInSetAdd(ac string, session network.IBaseNetSession)	{
+	client := &CheckInAccount{session:session, account:ac, tm_login:util.CURTIMEMS()}
+	this.checkinset[ac] = client
 }
 
 // 删除正在登陆的账户
-func (this *LoginServer) DelAuthenAccount(sid int)	{
-	for k, v := range this.login_now {
+func (this *LoginServer) CheckInSetRemove(sid int)	{
+	for k, v := range this.checkinset {
 		if v.session.Id() != sid { continue }
-		delete(this.login_now, k)
+		delete(this.checkinset, k)
 		return
 	}
 }
 
 // 查找正在登陆的账户
-func (this *LoginServer) FindAuthenAccount(acc string) bool {
-	_, ok := this.login_now[acc];
+func (this *LoginServer) CheckInSetFind(ac string) bool {
+	_, ok := this.checkinset[ac];
 	return ok
 }
 
 // 检查超时，客户端session长时间不断开会话或服务器没有收到断开
-func (this *LoginServer) TickAuthenAccount(now int64)	{
+func (this *LoginServer) CheckInSetTick(now int64)	{
 	var timeout int64 = 10000
-	for k, v := range this.login_now {
+	for k, v := range this.checkinset {
 		if now > v.tm_login + timeout {		// 超过30秒
 			log.Error("账户[%s] sid[%d] 长时间[%dms]与loginserver未断开，服务器主动断开", v.account, v.session.Id(), timeout)
 			v.session.Close()
-			delete(this.login_now, k)
+			delete(this.checkinset, k)
 		}
 	}
 }

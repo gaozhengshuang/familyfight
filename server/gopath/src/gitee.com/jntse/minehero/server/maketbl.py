@@ -44,7 +44,7 @@ pbindex_path = './tools/gen_pbindex'
 if os.path.isfile(pbindex_path+'/gen_pbindex') == False:
     curdir = os.getcwd()
     os.chdir(pbindex_path)
-    ExecShellCmd("gob", True)
+    ExecShellCmd('''go build -gcflags=all="-N -l" -v''', True)
     os.chdir(curdir)
 
 cmd_genpb = '%s/gen_pbindex -root=%s -output=%s/proto_index.xlsx' % (pbindex_path, PROTOCOL_PATH, TBL_EXCEL)
@@ -221,6 +221,9 @@ gen.maketbl_excel('TbirckInfobase', 'birckinfobase', 'TBirckInfo.xlsx')
 gen.maketbl_excel('TBallGiftbase', 'ballgiftbase', 'TBallGift.xlsx')
 gen.maketbl_excel('GiftProBase', 'giftprobase', 'TGiftPro.xlsx')
 gen.maketbl_excel('TaskBase', 'taskbase', 'TTask.xlsx')
+gen.maketbl_excel('TEquipBase', 'equipbase', 'TEquip.xlsx')
+gen.maketbl_excel('TSkillpBase', 'skillbase', 'TSkill.xlsx')
+gen.maketbl_excel('Question', 'question', 'TQuestion.xlsx')
 
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')

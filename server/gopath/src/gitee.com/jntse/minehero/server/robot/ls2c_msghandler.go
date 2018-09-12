@@ -37,6 +37,7 @@ func (this* LS2CMsgHandler) Init() {
 
 	// 发
 	this.msgparser.RegistSendProto(msg.C2L_ReqLogin{})
+	this.msgparser.RegistSendProto(msg.C2L_ReqLoginWechat{})
 	this.msgparser.RegistSendProto(msg.C2L_ReqRegistAccount{})
 	this.msgparser.RegistSendProto(msg.C2L_ReqRegistAuthCode{})
 }
