@@ -24,6 +24,8 @@ cc.Class({
             this.mainTime = 0;
             this.updatePosAndAni();
         }
+
+        this.node.setLocalZOrder(-this.node.y);
     },
 
     onDestroy() {
@@ -64,6 +66,8 @@ cc.Class({
 
     touchEnd(event) {
         this.updateEvent(false);
+
+        Game.NotificationController.Emit(Game.Define.EVENT_KEY.MERGE_PLAYER, this.node);
     },
 
     touchCancel(event) {
@@ -85,11 +89,15 @@ cc.Class({
         this.node.x = this.moveMinX + Math.floor(Math.random() * (this.moveMaxX - this.moveMinX + 1));
         this.node.y = this.moveMinY + Math.floor(Math.random() * (this.moveMaxY - this.moveMinY + 1));
 
-        this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel",data);
+        this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel", data);
         if (this.maidBase) {
             this.addgold_Node.updateGold(this.maidBase.Reward);
         }
         Game.ResController.SetSprite(this.maid_img, this.maidBase.Path);
+    },
+
+    getMaidBase() {
+        return this.maidBase;
     },
 
     updateEvent(isClick) {

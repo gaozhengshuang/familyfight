@@ -23,28 +23,31 @@ cc.Class({
     },
 
     onDestroy() {
-        Game.NotificationController.Off(Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
     },
 
     initData() {
+        this._maidList = [];
     },
 
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
     },
 
     initView() {
-        let _view = cc.instantiate(this.prefab_player);
-        this.node_maid.addChild(_view);
+        for (let i = 0; i < 20; i ++) {
+            let _view1 = cc.instantiate(this.prefab_player);
+            this.node_maid.addChild(_view1);
+            let xx1 = _view1.getComponent('MaidNode');
+            xx1.setParentAndData(this.node_maid, 1);
+            this._maidList.push(xx1);
+        }
+    },
 
-        let xx = _view.getComponent('MaidNode');
-        xx.setParentAndData(this.node_maid, 1);
-
-        _view = cc.instantiate(this.prefab_player);
-        this.node_maid.addChild(_view);
-
-        xx = _view.getComponent('MaidNode');
-        xx.setParentAndData(this.node_maid, 1);
+    findPlayerAndMerge(player) {
+        
     },
 
     onOpenShopView(event) {

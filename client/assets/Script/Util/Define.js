@@ -7,6 +7,8 @@ var Define = {
         CHANGE_GAMESTATE: '0',
         LOADED_COMPLETE: '5',
 
+        MERGE_PLAYER: '10',
+
         CONNECT_TO_GATESERVER: '100',
 
         USERINFO_UPDATECOINS: '200',
@@ -22,7 +24,7 @@ var Define = {
         MUSIC_CHANGE: '500',
         EFFECT_CHANGE: '501',
 
-        USERINFO_UPDATEGOLD: '600'
+        USERINFO_UPDATEGOLD: '600',
     },
     DATA_KEY: {
         HISTORY_PHONE: '1',
