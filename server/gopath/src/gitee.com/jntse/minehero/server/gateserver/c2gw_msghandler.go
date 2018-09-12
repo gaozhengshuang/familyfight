@@ -53,10 +53,6 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_HeartBeat{}, on_C2GW_HeartBeat)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqDeliveryDiamond{}, on_C2GW_ReqDeliveryDiamond)
 
-    //答题 收
-    this.msgparser.RegistProtoMsg(msg.C2GW_JoinGame{}, on_C2GW_JoinGame)
-    this.msgparser.RegistProtoMsg(msg.C2GW_Answer{}, on_C2GW_Answer)
-
 	// 发
 	this.msgparser.RegistSendProto(msg.GW2C_HeartBeat{})
 	this.msgparser.RegistSendProto(msg.GW2C_MsgNotice{})
@@ -80,15 +76,6 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.GW2C_LuckyDrawHit{})
 	this.msgparser.RegistSendProto(msg.GW2C_SendDeliveryAddressList{})
 	this.msgparser.RegistSendProto(msg.GW2C_FreePresentNotify{})
-
-    //答题 发
-    this.msgparser.RegistSendProto(msg.GW2C_UpdateRoomInfo{})
-    this.msgparser.RegistSendProto(msg.GW2C_StartGame{})
-    this.msgparser.RegistSendProto(msg.GW2C_QuestionInfo{})
-    this.msgparser.RegistSendProto(msg.GW2C_AnswerInfo{})
-    this.msgparser.RegistSendProto(msg.GW2C_GameOver{})
-    this.msgparser.RegistSendProto(msg.GW2C_JoinOk{})
-    this.msgparser.RegistSendProto(msg.GW2C_AnswerOk{})
 
 	// Room
 	this.msgparser.RegistSendProto(msg.BT_GameInit{})
@@ -230,30 +217,6 @@ func on_C2GW_ReqDeliveryDiamond(session network.IBaseNetSession, message interfa
 	//	event := NewDeliveryGoodsEvent(tmsg.GetList(), tmsg.GetToken(), user.DeliveryDiamond)
 	//	user.AsynEventInsert(event)
 	//}
-}
-
-func on_C2GW_JoinGame(session network.IBaseNetSession, message interface{}) {
-    tmsg := message.(*msg.C2GW_JoinGame)
-    user := ExtractSessionUser(session)
-    if user == nil {
-        log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
-        session.Close()
-        return
-    }
-    user.SetToken(tmsg.GetToken())
-    RoomSvrMgr().JoinGame(user, tmsg.GetType())    
-}
-
-func on_C2GW_Answer(session network.IBaseNetSession, message interface{}) {
-    tmsg := message.(*msg.C2GW_Answer)
-    user := ExtractSessionUser(session)
-    if user == nil {
-        log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
-        session.Close()
-        return
-    }
-    user.SetToken(tmsg.GetToken())
-    RoomSvrMgr().AnswerQuestion(user, tmsg.GetAnswer())
 }
 
 
