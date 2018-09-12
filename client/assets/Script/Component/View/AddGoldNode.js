@@ -34,7 +34,7 @@ cc.Class({
 
     updateGold(gold) {
         this.gold = gold;
-        this.gold_txt.string = `+${this.gold}`;
+        this.gold_txt.string = `+${this.gold*2}`;
     },
 
     playGoldAni() {
