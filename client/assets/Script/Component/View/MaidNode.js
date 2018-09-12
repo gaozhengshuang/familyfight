@@ -67,7 +67,7 @@ cc.Class({
     touchEnd(event) {
         this.updateEvent(false);
 
-        Game.NotificationController.Emit(Game.Define.EVENT_KEY.MERGE_PLAYER, this.node);
+        Game.NotificationController.Emit(Game.Define.EVENT_KEY.MERGE_PLAYER, this);
     },
 
     touchCancel(event) {
@@ -77,6 +77,14 @@ cc.Class({
     initView() {
         //创建金币动画
         this.addgold_Node = this.addgold_Prefab.getComponent('AddGoldNode');
+    },
+
+    updateView(id) {
+        this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel", id);
+        if (this.maidBase) {
+            this.addgold_Node.updateGold(this.maidBase.Reward);
+        }
+        Game.ResController.SetSprite(this.maid_img, this.maidBase.Path);
     },
 
     setParentAndData(parentNode, data) {
@@ -89,15 +97,15 @@ cc.Class({
         this.node.x = this.moveMinX + Math.floor(Math.random() * (this.moveMaxX - this.moveMinX + 1));
         this.node.y = this.moveMinY + Math.floor(Math.random() * (this.moveMaxY - this.moveMinY + 1));
 
-        this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel", data);
-        if (this.maidBase) {
-            this.addgold_Node.updateGold(this.maidBase.Reward);
-        }
-        Game.ResController.SetSprite(this.maid_img, this.maidBase.Path);
+        this.updateView(data);
     },
 
-    getMaidBase() {
-        return this.maidBase;
+    levelUp() {
+        this.updateView(this.maidBase.NextID);
+    },
+
+    getPlayerId() {
+        return this.maidBase.Id;
     },
 
     updateEvent(isClick) {
