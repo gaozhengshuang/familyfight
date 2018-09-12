@@ -2,7 +2,6 @@ package api
 
 import (
 	"bytes"
-	"debug/gosym"
 	"go/constant"
 	"go/printer"
 	"go/token"
@@ -65,8 +64,8 @@ func ConvertThread(th proc.Thread) *Thread {
 
 	var bp *Breakpoint
 
-	if b, active, _ := th.Breakpoint(); active {
-		bp = ConvertBreakpoint(b)
+	if b := th.Breakpoint(); b.Active {
+		bp = ConvertBreakpoint(b.Breakpoint)
 	}
 
 	if g, _ := proc.GetG(th); g != nil {
@@ -122,6 +121,9 @@ func ConvertVar(v *proc.Variable) *Variable {
 		Cap:      v.Cap,
 		Flags:    VariableFlags(v.Flags),
 		Base:     v.Base,
+
+		LocationExpr: v.LocationExpr,
+		DeclLine:     v.DeclLine,
 	}
 
 	r.Type = prettyTypeName(v.DwarfType)
@@ -140,7 +142,10 @@ func ConvertVar(v *proc.Variable) *Variable {
 		case reflect.String, reflect.Func:
 			r.Value = constant.StringVal(v.Value)
 		default:
-			r.Value = v.Value.String()
+			r.Value = v.ConstDescr()
+			if r.Value == "" {
+				r.Value = v.Value.String()
+			}
 		}
 	}
 
@@ -149,30 +154,43 @@ func ConvertVar(v *proc.Variable) *Variable {
 		r.Children = make([]Variable, 2)
 		r.Len = 2
 
-		real, _ := constant.Float64Val(constant.Real(v.Value))
-		imag, _ := constant.Float64Val(constant.Imag(v.Value))
-
 		r.Children[0].Name = "real"
 		r.Children[0].Kind = reflect.Float32
-		r.Children[0].Value = strconv.FormatFloat(real, 'f', -1, 32)
 
 		r.Children[1].Name = "imaginary"
 		r.Children[1].Kind = reflect.Float32
-		r.Children[1].Value = strconv.FormatFloat(imag, 'f', -1, 32)
+
+		if v.Value != nil {
+			real, _ := constant.Float64Val(constant.Real(v.Value))
+			r.Children[0].Value = strconv.FormatFloat(real, 'f', -1, 32)
+
+			imag, _ := constant.Float64Val(constant.Imag(v.Value))
+			r.Children[1].Value = strconv.FormatFloat(imag, 'f', -1, 32)
+		} else {
+			r.Children[0].Value = "nil"
+			r.Children[1].Value = "nil"
+		}
+
 	case reflect.Complex128:
 		r.Children = make([]Variable, 2)
 		r.Len = 2
 
-		real, _ := constant.Float64Val(constant.Real(v.Value))
-		imag, _ := constant.Float64Val(constant.Imag(v.Value))
-
 		r.Children[0].Name = "real"
 		r.Children[0].Kind = reflect.Float64
-		r.Children[0].Value = strconv.FormatFloat(real, 'f', -1, 64)
 
 		r.Children[1].Name = "imaginary"
 		r.Children[1].Kind = reflect.Float64
-		r.Children[1].Value = strconv.FormatFloat(imag, 'f', -1, 64)
+
+		if v.Value != nil {
+			real, _ := constant.Float64Val(constant.Real(v.Value))
+			r.Children[0].Value = strconv.FormatFloat(real, 'f', -1, 64)
+
+			imag, _ := constant.Float64Val(constant.Imag(v.Value))
+			r.Children[1].Value = strconv.FormatFloat(imag, 'f', -1, 64)
+		} else {
+			r.Children[0].Value = "nil"
+			r.Children[1].Value = "nil"
+		}
 
 	default:
 		r.Children = make([]Variable, len(v.Children))
@@ -187,16 +205,21 @@ func ConvertVar(v *proc.Variable) *Variable {
 
 // ConvertFunction converts from gosym.Func to
 // api.Function.
-func ConvertFunction(fn *gosym.Func) *Function {
+func ConvertFunction(fn *proc.Function) *Function {
 	if fn == nil {
 		return nil
 	}
 
+	// fn here used to be a *gosym.Func, the fields Type and GoType below
+	// corresponded to the homonymous field of gosym.Func. Since the contents of
+	// those fields is not documented their value was replaced with 0 when
+	// gosym.Func was replaced by debug_info entries.
 	return &Function{
-		Name:   fn.Name,
-		Type:   fn.Type,
-		Value:  fn.Value,
-		GoType: fn.GoType,
+		Name_:     fn.Name,
+		Type:      0,
+		Value:     fn.Entry,
+		GoType:    0,
+		Optimized: fn.Optimized(),
 	}
 }
 
@@ -212,6 +235,7 @@ func ConvertGoroutine(g *proc.G) *Goroutine {
 		CurrentLoc:     ConvertLocation(g.CurrentLoc),
 		UserCurrentLoc: ConvertLocation(g.UserCurrent()),
 		GoStatementLoc: ConvertLocation(g.Go()),
+		StartLoc:       ConvertLocation(g.StartLoc()),
 		ThreadID:       tid,
 	}
 }

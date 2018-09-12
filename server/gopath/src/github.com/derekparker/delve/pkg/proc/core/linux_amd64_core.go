@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"debug/elf"
 	"encoding/binary"
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -237,10 +236,6 @@ func (r *LinuxCoreRegisters) Get(n int) (uint64, error) {
 	return 0, proc.UnknownRegisterError
 }
 
-func (r *LinuxCoreRegisters) SetPC(proc.Thread, uint64) error {
-	return errors.New("not supported")
-}
-
 // readCore reads a core file from corePath corresponding to the executable at
 // exePath. For details on the Linux ELF core format, see:
 // http://www.gabriel.urdhr.fr/2015/05/29/core-file/,
@@ -256,16 +251,23 @@ func readCore(corePath, exePath string) (*Core, error) {
 	if err != nil {
 		return nil, err
 	}
+	exeELF, err := elf.NewFile(exe)
+	if err != nil {
+		return nil, err
+	}
 
 	if coreFile.Type != elf.ET_CORE {
 		return nil, fmt.Errorf("%v is not a core file", coreFile)
+	}
+	if exeELF.Type != elf.ET_EXEC {
+		return nil, fmt.Errorf("%v is not an exe file", exeELF)
 	}
 
 	notes, err := readNotes(coreFile)
 	if err != nil {
 		return nil, err
 	}
-	memory := buildMemory(coreFile, exe, notes)
+	memory := buildMemory(coreFile, exeELF, exe, notes)
 
 	core := &Core{
 		MemoryReader: memory,
@@ -277,7 +279,7 @@ func readCore(corePath, exePath string) (*Core, error) {
 		switch note.Type {
 		case elf.NT_PRSTATUS:
 			t := note.Desc.(*LinuxPrStatus)
-			lastThread = &Thread{t, nil, nil}
+			lastThread = &Thread{t, nil, nil, proc.CommonThread{}}
 			core.Threads[int(t.Pid)] = lastThread
 		case NT_X86_XSTATE:
 			if lastThread != nil {
@@ -417,7 +419,7 @@ func skipPadding(r io.ReadSeeker, pad int64) error {
 	return nil
 }
 
-func buildMemory(core *elf.File, exe io.ReaderAt, notes []*Note) proc.MemoryReader {
+func buildMemory(core, exeELF *elf.File, exe io.ReaderAt, notes []*Note) proc.MemoryReader {
 	memory := &SplicedMemory{}
 
 	// For now, assume all file mappings are to the exe.
@@ -434,16 +436,21 @@ func buildMemory(core *elf.File, exe io.ReaderAt, notes []*Note) proc.MemoryRead
 
 		}
 	}
-	for _, prog := range core.Progs {
-		if prog.Type == elf.PT_LOAD {
-			if prog.Filesz == 0 {
-				continue
+
+	// Load memory segments from exe and then from the core file,
+	// allowing the corefile to overwrite previously loaded segments
+	for _, elfFile := range []*elf.File{exeELF, core} {
+		for _, prog := range elfFile.Progs {
+			if prog.Type == elf.PT_LOAD {
+				if prog.Filesz == 0 {
+					continue
+				}
+				r := &OffsetReaderAt{
+					reader: prog.ReaderAt,
+					offset: uintptr(prog.Vaddr),
+				}
+				memory.Add(r, uintptr(prog.Vaddr), uintptr(prog.Filesz))
 			}
-			r := &OffsetReaderAt{
-				reader: prog.ReaderAt,
-				offset: uintptr(prog.Vaddr),
-			}
-			memory.Add(r, uintptr(prog.Vaddr), uintptr(prog.Filesz))
 		}
 	}
 	return memory

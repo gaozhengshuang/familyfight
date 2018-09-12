@@ -199,7 +199,7 @@ func (this *GameRoom) OnStart() {
 		return
 	}
 
-	log.Info("房间[%d] 游戏开始，模式[%d]", this.Id(), this.Kind())
+	log.Info("房间[%d] 游戏开始，模式[%d] 玩家金币[%d]", this.Id(), this.Kind(), this.owner.GetGold())
 	this.tm_start = util.CURTIME()
 
 
@@ -208,12 +208,14 @@ func (this *GameRoom) OnStart() {
 		Roomid:pb.Int64(this.Id()), 
 		Ownerid:pb.Uint64(this.ownerid),
 		Gamekind:pb.Int32(this.Kind()), 
+		Gold:pb.Uint32(this.owner.GetGold()),
+		Diamond:pb.Uint32(this.owner.GetDiamond()),
 	}
 	this.SendClientMsg(msginit)
 
 
 	// 同步玩家数据
-	this.owner.SendBattleUser()
+	//this.owner.SendBattleUser()
 
 	// 游戏开始
 	msgstart := &msg.BT_GameStart{Roomid:pb.Int64(this.Id()), Ownerid:pb.Uint64(this.ownerid)}
@@ -229,10 +231,11 @@ func (this *GameRoom) LoadUser(bin *msg.Serialize, gate network.IBaseNetSession)
 
 	// 
 	user := UserMgr().CreateRoomUser(this.id, bin, gate, this.roomkind)
+	user.InitEquipSkills()
 	this.owner = user
 
 	// 
-	log.Info("房间[%d] 玩家[%s %d] 加载个人数据 Step:%d", this.id, user.Name(), user.Id(), this.totalcost)
+	log.Info("房间[%d] 玩家[%s %d] 加载个人数据，最大能量%d", this.id, user.Name(), user.Id(), user.MaxEnergy())
 }
 
 // 玩家进房间，开始游戏
@@ -253,10 +256,20 @@ func (this *GameRoom) UserEnter(userid uint64, token string) {
 }
 
 // 玩家正常离开
-func (this *GameRoom) UserLeave(userid uint64) {
+func (this *GameRoom) UserLeave(userid uint64, money uint32) {
 	this.tm_end = util.CURTIME()
 	this.close_reason = "玩家退出房间"
-	log.Info("房间[%d] 玩家[%d]退出房间，准备删除房间", this.id, userid)
+	if owner := this.owner; owner != nil {
+		if money > owner.GetGold() + 10000 {
+			log.Warn("[玩家[%s %d] 退出房间同步金币差距过大 old[%d] new[%d]", owner.Name(), owner.Id(), owner.GetGold(), money)
+		}else {
+			if owner.GetGold() < money {
+				addmoney := money - owner.GetGold()
+				owner.AddGold(addmoney, "退出房间同步", false)
+			}
+		}
+	}
+	log.Info("房间[%d] 玩家[%d]退出房间，同步money[%d]，准备删除房间", this.id, userid, money)
 }
 
 // 玩家断开连接

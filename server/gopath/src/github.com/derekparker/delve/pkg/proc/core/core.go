@@ -144,16 +144,17 @@ func (r *OffsetReaderAt) ReadMemory(buf []byte, addr uintptr) (n int, err error)
 type Process struct {
 	bi                proc.BinaryInfo
 	core              *Core
-	breakpoints       map[uint64]*proc.Breakpoint
+	breakpoints       proc.BreakpointMap
 	currentThread     *Thread
 	selectedGoroutine *proc.G
-	allGCache         []*proc.G
+	common            proc.CommonProcess
 }
 
 type Thread struct {
 	th     *LinuxPrStatus
 	fpregs []proc.Register
 	p      *Process
+	common proc.CommonThread
 }
 
 var ErrWriteCore = errors.New("can not to core process")
@@ -167,7 +168,7 @@ func OpenCore(corePath, exePath string) (*Process, error) {
 	}
 	p := &Process{
 		core:        core,
-		breakpoints: make(map[uint64]*proc.Breakpoint),
+		breakpoints: proc.NewBreakpointMap(),
 		bi:          proc.NewBinaryInfo("linux", "amd64"),
 	}
 	for _, thread := range core.Threads {
@@ -222,8 +223,8 @@ func (t *Thread) Location() (*proc.Location, error) {
 	return &proc.Location{PC: t.th.Reg.Rip, File: f, Line: l, Fn: fn}, nil
 }
 
-func (t *Thread) Breakpoint() (*proc.Breakpoint, bool, error) {
-	return nil, false, nil
+func (t *Thread) Breakpoint() proc.BreakpointState {
+	return proc.BreakpointState{}
 }
 
 func (t *Thread) ThreadID() int {
@@ -236,6 +237,10 @@ func (t *Thread) Registers(floatingPoint bool) (proc.Registers, error) {
 		r.fpregs = t.fpregs
 	}
 	return r, nil
+}
+
+func (t *Thread) RestoreRegisters(proc.SavedRegisters) error {
+	return errors.New("not supported")
 }
 
 func (t *Thread) Arch() proc.Arch {
@@ -258,8 +263,20 @@ func (t *Thread) SetCurrentBreakpoint() error {
 	return nil
 }
 
-func (p *Process) Breakpoints() map[uint64]*proc.Breakpoint {
-	return p.breakpoints
+func (t *Thread) Common() *proc.CommonThread {
+	return &t.common
+}
+
+func (t *Thread) SetPC(uint64) error {
+	return errors.New("not supported")
+}
+
+func (t *Thread) SetSP(uint64) error {
+	return errors.New("not supported")
+}
+
+func (p *Process) Breakpoints() *proc.BreakpointMap {
+	return &p.breakpoints
 }
 
 func (p *Process) ClearBreakpoint(addr uint64) (*proc.Breakpoint, error) {
@@ -282,7 +299,7 @@ func (p *Process) RequestManualStop() error {
 	return nil
 }
 
-func (p *Process) ManualStopRequested() bool {
+func (p *Process) CheckAndClearManualStopRequest() bool {
 	return false
 }
 
@@ -294,20 +311,12 @@ func (p *Process) Detach(bool) error {
 	return nil
 }
 
-func (p *Process) Exited() bool {
-	return false
+func (p *Process) Valid() (bool, error) {
+	return true, nil
 }
 
-func (p *Process) AllGCache() *[]*proc.G {
-	return &p.allGCache
-}
-
-func (p *Process) Halt() error {
-	return nil
-}
-
-func (p *Process) Kill() error {
-	return nil
+func (p *Process) Common() *proc.CommonProcess {
+	return &p.common
 }
 
 func (p *Process) Pid() int {
@@ -411,4 +420,8 @@ func (r *Registers) Slice() []proc.Register {
 	}
 	out = append(out, r.fpregs...)
 	return out
+}
+
+func (r *Registers) Save() proc.SavedRegisters {
+	return r
 }

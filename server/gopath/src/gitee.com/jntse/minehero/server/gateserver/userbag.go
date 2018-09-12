@@ -5,13 +5,17 @@ import pb "github.com/gogo/protobuf/proto"
 import "gitee.com/jntse/minehero/server/tbl"
 import "gitee.com/jntse/minehero/server/tbl/excel"
 
-
 // --------------------------------------------------------------------------
 /// @brief 道具
 // --------------------------------------------------------------------------
 type Item struct {
 	bin *msg.ItemData
 	base *table.ItemBaseDataDefine
+	equipbase *table.EquipDefine
+}
+
+func (t *Item) Bin() *msg.ItemData {
+	return t.bin
 }
 
 func (t *Item) Id() uint32 {
@@ -43,6 +47,14 @@ func (t *Item) Dec(num uint32) {
 	t.bin.Num = pb.Uint32(t.Num() - num)
 }
 
+func (t *Item) SetPos(pos int32) {
+	t.bin.Pos = pb.Int32(pos)
+}
+
+func (t *Item) EquipBase() *table.EquipDefine {
+	return t.equipbase
+}
+
 func NewItem(data *msg.ItemData) *Item {
 	base := FindItemBase(data.GetId())
 	if base == nil { 
@@ -53,6 +65,7 @@ func NewItem(data *msg.ItemData) *Item {
 	item := new(Item)
 	item.bin = data
 	item.base = base
+	item.equipbase = FindEquipBase(data.GetId())
 	return item
 }
 
@@ -64,6 +77,11 @@ func NewItemData(id uint32, num uint32, pos int32) *msg.ItemData {
 func FindItemBase(id uint32) *table.ItemBaseDataDefine {
 	return tbl.ItemBase.ItemBaseDataById[id]
 }
+
+func FindEquipBase(id uint32) *table.EquipDefine {
+	return tbl.TEquipBase.EquipById[int32(id)]
+}
+
 
 // --------------------------------------------------------------------------
 /// @brief 背包
@@ -84,7 +102,7 @@ func (this *UserBag) LoadBin(bin *msg.Serialize) {
 	itembin := bin.GetItem();
 	if itembin == nil { return }
 	for _, data := range itembin.GetItems() {
-		if data.GetPos() != int32(msg.ItemPos_Bag) { continue }
+		//if data.GetPos() != int32(msg.ItemPos_Bag) { continue }
 		item := NewItem(data)
 		if item != nil {  this.LoadItemObj(item) }
 	}
@@ -104,6 +122,13 @@ func (this *UserBag) FindById(id uint32) *Item {
 
 func (this *UserBag) FindByName(name string) *Item {
 	return this.names[name]
+}
+
+func (this *UserBag) FindByPos(pos int32) *Item {
+	for _, item := range this.items {
+		if item.Pos() == pos { return item }
+	}
+	return nil
 }
 
 func (this *UserBag) LoadItemObj(item *Item) {
@@ -171,3 +196,58 @@ func (this *UserBag) Clean() {
 	this.items = make(map[uint32]*Item)
 	this.names = make(map[string]*Item)
 }
+
+/*
+// 穿戴服装
+func (this *UserBag) DressClothes(pos int32, itemid int32) {
+	newEquip := this.FindById(uint32(itemid))
+	if newEquip == nil {
+		this.owner.SendNotify("找不到穿戴的服装")
+		return
+	}
+
+	equipbase := newEquip.EquipBase()
+	if equipbase == nil {
+		this.owner.SendNotify("只能穿戴服装道具")
+		return 
+	}
+
+	if equipbase.Pos != pos {
+		this.owner.SendNotify("不能穿戴这个位置")
+		return
+	}
+
+	// 
+	newEquip.SetPos(pos)
+
+	send := &msg.GW2C_UpdateItemPos{Items:make([]*msg.ItemData,0)}
+	//send.Items = append(send.Items, newEquip.Bin())
+	send.Items = append(send.Items, pb.Clone(newEquip.Bin()).(*msg.ItemData))
+	this.owner.SendMsg(send)
+}
+
+// 脱下服装
+func (this *UserBag) UnDressClothes(pos int32) {
+	item := this.FindByPos(pos)
+	if item != nil { 
+		item.SetPos(int32(msg.ItemPos_Bag)) 
+
+		send := &msg.GW2C_UpdateItemPos{Items:make([]*msg.ItemData,0)}
+		//send.Items = append(send.Items, item.Bin())
+		send.Items = append(send.Items, pb.Clone(item.Bin()).(*msg.ItemData))
+		this.owner.SendMsg(send)
+	}
+}
+
+func (this *UserBag) UnDressAll() {
+	send := &msg.GW2C_UpdateItemPos{Items:make([]*msg.ItemData,0)}
+	for _, item := range this.items {
+		if item.Pos() == int32(msg.ItemPos_Bag) { continue }
+		item.SetPos(int32(msg.ItemPos_Bag)) 
+		//send.Items = append(send.Items, item.Bin())
+		send.Items = append(send.Items, pb.Clone(item.Bin()).(*msg.ItemData))
+	}
+	this.owner.SendMsg(send)
+}
+*/
+

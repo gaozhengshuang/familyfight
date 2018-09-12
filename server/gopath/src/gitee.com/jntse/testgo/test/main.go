@@ -11,6 +11,7 @@ import (
 	"gitee.com/jntse/gotoolkit/log"
 	_"path/filepath"
 	_"os"
+	"net/url"
 )
 
 // --------------------------------------------------------------------------
@@ -26,7 +27,7 @@ func ProcessPanic(data interface{}) {
 
 func tests(args ...string) {
 	for i, v := range args {
-		fmt.Println(i, "----", v)
+		log.Info("%d----%s", i, v)
 	}
 }
 
@@ -44,6 +45,33 @@ func main() {
 	g_KeyBordInput.Init()
 	g_KeyBordInput.Start()
 	log.Info("初始键盘输入完成")
+	
+
+	fmt.Println(time.Now().Format("20060102"))
+	// TODO: 通道传入slice是引用
+	//TrSlice := func(ch_slice chan interface{}) {
+	//	for ;; {
+	//		data , open := <-ch_slice
+	//		if open == false { return }
+	//		passin := data.(*util.KeyBordInput)
+	//		log.Info("ch_slice recv %v %#v", &*passin, data)
+	//	}
+	//}
+	//ch_slice := make(chan interface{}, 1)
+	//passin := new(util.KeyBordInput)
+	//passin.C = make(chan string)
+	//ch_slice <- passin
+	//log.Info("ch_slice send %v %#v", &*passin, passin)
+	//go TrSlice(ch_slice)
+
+
+	// url 解析
+	testurl := "https://api.weixin.qq.com/cgi-bin/midas/sandbox/pay?access_token="
+	u, err := url.Parse(testurl)
+	if err == nil { 
+		log.Info(u.Hostname())
+		log.Info(u.RequestURI())
+	}
 
 
 	// 特殊符合检查
@@ -51,10 +79,14 @@ func main() {
 	util.ContainsSpecialCharacter("[~!@#$%^&*()/\\|,.<>?\"'();:_+-={} ")
 	util.ContainsSpecialCharacter("①⑴㈠")
 
+	//
+	log.Info(util.MD5("md5测试"))
+	log.Info(util.SHA256("md5测试"))
+	log.Info(util.HMAC_SHA256("this is key","md5测试"))
 
 	//
 	var reflectvar interface{} = "reflect test"
-	fmt.Printf("reflectvar=%v kind=%s\n", reflectvar, reflect.TypeOf(reflectvar).String())
+	log.Info("reflectvar=%v kind=%s\n", reflectvar, reflect.TypeOf(reflectvar).String())
 
 
 	//
@@ -62,20 +94,20 @@ func main() {
 	s1 := make([]int32,3)
 	for i:= 0; i < 10; i++ {
 		rd := util.RandBetween(-10, 10)
-		fmt.Println(rd)
+		log.Info("%d",rd)
 
 		rd = util.SelectByWeightSlice([]int32{1,8,1})
 		s1[rd] = s1[rd] + 1
 	}
-	fmt.Println(s1)
+	log.Info("%v",s1)
 
 
 	//
 	now := util.CURTIME()
-	fmt.Println(util.GetDayStart())
-	fmt.Println(now)
-	fmt.Println(util.FloorIntClock(now))
-	fmt.Println(util.CeilIntClock(now))
+	log.Info("%d",util.GetDayStart())
+	log.Info("%d",now)
+	log.Info("%d",util.FloorIntClock(now))
+	log.Info("%d",util.CeilIntClock(now))
 
 
 	//

@@ -5,6 +5,45 @@ This project adheres to Semantic Versioning.
 
 All changes mention the author, unless contributed by me (@derekparker).
 
+## [1.0.0] 2018-02-19
+
+### Added
+
+- Print DWARF location expression with `whatis` (@aarzilli)
+- Use `DW_AT_producer` to warn about optimized code (@aarzilli)
+- Use constants to describe variable value (@aarzilli)
+- Use `DW_AT_decl_line` to determine variable visibility (@aarzilli)
+- `-offsets` flag for `stack` command (@aarzilli)
+- Support CGO stacktraces (@aarzilli)
+- Disable optimizations in C compiler (@aarzilli)
+- `--output` flag to configure output binary (@Carpetsmoker)
+- Support `DW_OP_piece`, `DW_OP_regX`, `DW_OP_fbreg` (@aarzilli)
+- Support `DW_LNE_define_file` (@aarzilli)
+- Support more type casts (@aarzilli)
+
+### Fixed
+
+- Disable file path case normalization on OSX (@aarzilli)
+- Support Mozilla RR 5.1.0 (@aarzilli)
+- Terminal no longer crashes when process exits during `next` (@aarzilli)
+- Fix TestCoreFPRegisters on Go 1.9 (@aarzilli)
+- Avoid scanning system stack if it's not executing CGO (@aarzilli)
+- Locspec "+0" should always evaluate to the current PC (@aarzilli)
+- Handle `DW_LNE_end_of_sequence` correctly (@aarzilli)
+- Top level interface variables may have 0 address (@aarzilli)
+- Handle `DW_TAG_subprogram` with a nochildren abbrev (@aarzilli)
+- StepBreakpoint handling (@aarzilli)
+
+### Changed
+
+- Documentation improvements (@grahamking)
+- Removed limitation of exit notifications (@dlsniper)
+- Use `go env GOPATH` for install path
+- Disable test caching (@aarzilli)
+- Disable `-a` and use `all=` for Go 1.10 building (@aarzilli)
+- Automatically deref interfaces on member access (@aarzilli)
+- Replace all uses of `gosymtab/gopclntab` with `.debug_line` section (@aarzilli)
+
 ## [1.0.0-rc.2] 2017-10-16
 
 ### Added
@@ -32,7 +71,7 @@ All changes mention the author, unless contributed by me (@derekparker).
 - Store the correct concrete value for interface variables (previously we would always have a pointer type, even when the concrete value was not a pointer) (@aarzilli)
 - Fix interface and slice equality with nil (@aarzilli)
 - Fix file:line location specs when relative paths are in .debug_line (@hyangah)
-- Fix behavior of next/step/stepout in several edge-cases (invalid return addresses, no courrent goroutine, after process exists, inside unknown code, inside assembly files) (@aarzilli)
+- Fix behavior of next/step/stepout in several edge-cases (invalid return addresses, no current goroutine, after process exists, inside unknown code, inside assembly files) (@aarzilli)
 - Make sure the debugged executable we generated is deleted after exit (@alexbrainman)
 - Make sure rr trace directories are deleted when we delete the executable and after tests (@aarzilli)
 - Return errors for commands sent after the target process exited instead of panicing (@derekparker)
@@ -96,7 +135,7 @@ All changes mention the author, unless contributed by me (@derekparker).
 ### Changed
 
 - Optimized 'trace' functionality (@aarzilli)
-- Internal refactoring to support mutliple backends, core dumps, and more (@aarzilli) [Still ongoing]
+- Internal refactoring to support multiple backends, core dumps, and more (@aarzilli) [Still ongoing]
 - Improve stacktraces (@aarzilli)
 - Improved documentation for passing flags to debugged process (@njason)
 
@@ -128,7 +167,7 @@ All changes mention the author, unless contributed by me (@derekparker).
 
 - Pretty printing: type of elements of interface slices are printed.
 - Improvements in internal operation of "step" command.
-- Allow quouting in build flags argument.
+- Allow quoting in build flags argument.
 - "h" as alias for "help" command. (@stmuk)
 
 ### Fixed
@@ -253,7 +292,7 @@ All changes mention the author, unless contributed by me (@derekparker).
 
 - Deprecate 'run' subcommand in favor of 'debug'. The 'run' subcommand now simply prints a warning, instructing the user to use the 'debug' command instead.
 - All 'info' subcommands have been promoted to the top level. You can now simply run 'funcs', or 'sources' instead of 'info funcs', etc...
-- Any command taking a location expression (i.e. break/trace/list) now support an updated linespec implementation. This allows you to describe the location you would like a breakpoint (etc..) set at in a more convienant way (@aarzilli).
+- Any command taking a location expression (i.e. break/trace/list) now support an updated linespec implementation. This allows you to describe the location you would like a breakpoint (etc..) set at in a more convenient way (@aarzilli).
 
 ### Fixed
 

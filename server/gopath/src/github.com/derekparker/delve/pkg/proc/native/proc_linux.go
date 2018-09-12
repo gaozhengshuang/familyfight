@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"os/signal"
 	"path/filepath"
 	"regexp"
 	"strconv"
@@ -18,6 +19,7 @@ import (
 	sys "golang.org/x/sys/unix"
 
 	"github.com/derekparker/delve/pkg/proc"
+	"github.com/mattn/go-isatty"
 )
 
 // Process statuses
@@ -43,7 +45,7 @@ type OSProcessDetails struct {
 // Launch creates and begins debugging a new process. First entry in
 // `cmd` is the program to run, and then rest are the arguments
 // to be supplied to that process. `wd` is working directory of the program.
-func Launch(cmd []string, wd string) (*Process, error) {
+func Launch(cmd []string, wd string, foreground bool) (*Process, error) {
 	var (
 		process *exec.Cmd
 		err     error
@@ -52,13 +54,25 @@ func Launch(cmd []string, wd string) (*Process, error) {
 	if fi, staterr := os.Stat(cmd[0]); staterr == nil && (fi.Mode()&0111) == 0 {
 		return nil, proc.NotExecutableErr
 	}
+
+	if !isatty.IsTerminal(os.Stdin.Fd()) {
+		// exec.(*Process).Start will fail if we try to send a process to
+		// foreground but we are not attached to a terminal.
+		foreground = false
+	}
+
 	dbp := New(0)
+	dbp.common = proc.NewCommonProcess(true)
 	dbp.execPtraceFunc(func() {
 		process = exec.Command(cmd[0])
 		process.Args = cmd
 		process.Stdout = os.Stdout
 		process.Stderr = os.Stderr
-		process.SysProcAttr = &syscall.SysProcAttr{Ptrace: true, Setpgid: true}
+		process.SysProcAttr = &syscall.SysProcAttr{Ptrace: true, Setpgid: true, Foreground: foreground}
+		if foreground {
+			signal.Ignore(syscall.SIGTTOU, syscall.SIGTTIN)
+			process.Stdin = os.Stdin
+		}
 		if wd != "" {
 			process.Dir = wd
 		}
@@ -79,6 +93,7 @@ func Launch(cmd []string, wd string) (*Process, error) {
 // Attach to an existing process with the given PID.
 func Attach(pid int) (*Process, error) {
 	dbp := New(pid)
+	dbp.common = proc.NewCommonProcess(true)
 
 	var err error
 	dbp.execPtraceFunc(func() { err = PtraceAttach(dbp.pid) })
@@ -98,8 +113,8 @@ func Attach(pid int) (*Process, error) {
 	return dbp, nil
 }
 
-// Kill kills the target process.
-func (dbp *Process) Kill() (err error) {
+// kill kills the target process.
+func (dbp *Process) kill() (err error) {
 	if dbp.exited {
 		return nil
 	}
@@ -194,6 +209,10 @@ func findExecutable(path string, pid int) string {
 }
 
 func (dbp *Process) trapWait(pid int) (*Thread, error) {
+	return dbp.trapWaitInternal(pid, false)
+}
+
+func (dbp *Process) trapWaitInternal(pid int, halt bool) (*Thread, error) {
 	for {
 		wpid, status, err := dbp.wait(pid, 0)
 		if err != nil {
@@ -230,9 +249,15 @@ func (dbp *Process) trapWait(pid int) (*Thread, error) {
 			if err != nil {
 				if err == sys.ESRCH {
 					// thread died while we were adding it
+					delete(dbp.threads, int(cloned))
 					continue
 				}
 				return nil, err
+			}
+			if halt {
+				th.os.running = false
+				dbp.threads[int(wpid)].os.running = false
+				return nil, nil
 			}
 			if err = th.Continue(); err != nil {
 				if err == sys.ESRCH {
@@ -253,16 +278,8 @@ func (dbp *Process) trapWait(pid int) (*Thread, error) {
 			// Sometimes we get an unknown thread, ignore it?
 			continue
 		}
-		dbp.haltMu.Lock()
-		halt := dbp.halt
-		dbp.haltMu.Unlock()
-		if status.StopSignal() == sys.SIGTRAP && halt {
-			th.running = false
-			dbp.halt = false
-			return th, nil
-		}
-		if status.StopSignal() == sys.SIGTRAP {
-			th.running = false
+		if (halt && status.StopSignal() == sys.SIGSTOP) || (status.StopSignal() == sys.SIGTRAP) {
+			th.os.running = false
 			return th, nil
 		}
 		if th != nil {
@@ -367,24 +384,12 @@ func (dbp *Process) wait(pid, options int) (int, *sys.WaitStatus, error) {
 	}
 }
 
-func (dbp *Process) setCurrentBreakpoints(trapthread *Thread) error {
-	for _, th := range dbp.threads {
-		if th.CurrentBreakpoint == nil {
-			err := th.SetCurrentBreakpoint()
-			if err != nil {
-				return err
-			}
-		}
-	}
-	return nil
-}
-
 func (dbp *Process) exitGuard(err error) error {
 	if err != sys.ESRCH {
 		return err
 	}
 	if status(dbp.pid, dbp.os.comm) == StatusZombie {
-		_, err := dbp.trapWait(-1)
+		_, err := dbp.trapWaitInternal(-1, false)
 		return err
 	}
 
@@ -394,17 +399,59 @@ func (dbp *Process) exitGuard(err error) error {
 func (dbp *Process) resume() error {
 	// all threads stopped over a breakpoint are made to step over it
 	for _, thread := range dbp.threads {
-		if thread.CurrentBreakpoint != nil {
+		if thread.CurrentBreakpoint.Breakpoint != nil {
 			if err := thread.StepInstruction(); err != nil {
 				return err
 			}
-			thread.CurrentBreakpoint = nil
+			thread.CurrentBreakpoint.Clear()
 		}
 	}
 	// everything is resumed
 	for _, thread := range dbp.threads {
 		if err := thread.resume(); err != nil && err != sys.ESRCH {
 			return err
+		}
+	}
+	return nil
+}
+
+// stop stops all running threads threads and sets breakpoints
+func (dbp *Process) stop(trapthread *Thread) (err error) {
+	if dbp.exited {
+		return &proc.ProcessExitedError{Pid: dbp.Pid()}
+	}
+	for _, th := range dbp.threads {
+		if !th.Stopped() {
+			if err := th.stop(); err != nil {
+				return dbp.exitGuard(err)
+			}
+		}
+	}
+
+	// wait for all threads to stop
+	for {
+		allstopped := true
+		for _, th := range dbp.threads {
+			if th.os.running {
+				allstopped = false
+				break
+			}
+		}
+		if allstopped {
+			break
+		}
+		_, err := dbp.trapWaitInternal(-1, true)
+		if err != nil {
+			return err
+		}
+	}
+
+	// set breakpoints on all threads
+	for _, th := range dbp.threads {
+		if th.CurrentBreakpoint.Breakpoint == nil {
+			if err := th.SetCurrentBreakpoint(); err != nil {
+				return err
+			}
 		}
 	}
 	return nil

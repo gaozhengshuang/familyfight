@@ -33,7 +33,7 @@ func withTestClient1(name string, t *testing.T, fn func(c *rpc1.RPCClient)) {
 		Listener:    listener,
 		ProcessArgs: []string{protest.BuildFixture(name, 0).Path},
 		Backend:     testBackend,
-	}, false)
+	})
 	if err := server.Run(); err != nil {
 		t.Fatal(err)
 	}
@@ -61,7 +61,7 @@ func Test1RunWithInvalidPath(t *testing.T) {
 		Listener:    listener,
 		ProcessArgs: []string{"invalid_path"},
 		Backend:     testBackend,
-	}, false)
+	})
 	if err := server.Run(); err == nil {
 		t.Fatal("Expected Run to return error for invalid program path")
 	}
@@ -150,7 +150,7 @@ func Test1Restart_attachPid(t *testing.T) {
 		Listener:  nil,
 		AttachPid: 999,
 		Backend:   testBackend,
-	}, false)
+	})
 	if err := server.Restart(); err == nil {
 		t.Fatal("expected error on restart after attaching to pid but got none")
 	}
@@ -623,7 +623,7 @@ func Test1ClientServer_FindLocations(t *testing.T) {
 		findLocationHelper(t, c, "locationsUpperCase.go:6", false, 1, 0)
 
 		// Fully qualified path
-		path := protest.Fixtures["locationsUpperCase"].Source
+		path := protest.Fixtures[protest.FixtureKey{"locationsUpperCase", 0}].Source
 		findLocationHelper(t, c, path+":6", false, 1, 0)
 		bp, err := c.CreateBreakpoint(&api.Breakpoint{File: path, Line: 6})
 		if err != nil {
@@ -732,7 +732,7 @@ func Test1ClientServer_FullStacktrace(t *testing.T) {
 				if frame.Function == nil {
 					continue
 				}
-				if frame.Function.Name != "main.agoroutine" {
+				if frame.Function.Name() != "main.agoroutine" {
 					continue
 				}
 				t.Logf("frame %d: %v", i, frame)
@@ -887,7 +887,7 @@ func Test1Disasm(t *testing.T) {
 		// look for static call to afunction() on line 29
 		found := false
 		for i := range d3 {
-			if d3[i].Loc.Line == 29 && strings.HasPrefix(d3[i].Text, "call") && d3[i].DestLoc != nil && d3[i].DestLoc.Function != nil && d3[i].DestLoc.Function.Name == "main.afunction" {
+			if d3[i].Loc.Line == 29 && strings.HasPrefix(d3[i].Text, "call") && d3[i].DestLoc != nil && d3[i].DestLoc.Function != nil && d3[i].DestLoc.Function.Name() == "main.afunction" {
 				found = true
 				break
 			}
@@ -937,7 +937,7 @@ func Test1Disasm(t *testing.T) {
 				if curinstr.DestLoc == nil || curinstr.DestLoc.Function == nil {
 					t.Fatalf("Call instruction does not have destination: %v", curinstr)
 				}
-				if curinstr.DestLoc.Function.Name != "main.afunction" {
+				if curinstr.DestLoc.Function.Name() != "main.afunction" {
 					t.Fatalf("Call instruction destination not main.afunction: %v", curinstr)
 				}
 				break

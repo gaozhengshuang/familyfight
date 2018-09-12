@@ -9,6 +9,7 @@ import (
 	"gitee.com/jntse/gotoolkit/util"
 
 	"gitee.com/jntse/minehero/server/tbl"
+	"gitee.com/jntse/minehero/pbmsg"
 )
 
 
@@ -76,3 +77,18 @@ func SendSms(phone string) (authcode string) {
 	return authcode
 }
 
+// 有效的装备位置
+func IsValidEquipPos(pos int32) bool {
+	if pos >= int32(msg.ItemPos_Helmet) && pos <= int32(msg.ItemPos_LongClothes) {
+		return true
+	}
+	return false
+}
+
+// 有效的道具位置
+func IsValidItemPos(pos int32) bool {
+	if IsValidEquipPos(pos) || pos == int32(msg.ItemPos_Bag) {
+		return true
+	}
+	return false
+}

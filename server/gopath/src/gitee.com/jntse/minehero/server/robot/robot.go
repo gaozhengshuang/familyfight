@@ -109,17 +109,17 @@ func (this *Robot) BroadCastCmd(cmd string) {
 	}
 }
 
-// --------------------------------------------------------------------------
-/// @brief TODO: session is nil
-// --------------------------------------------------------------------------
-func (this *Robot) OnClose(session network.IBaseNetSession) {
-	panic("Robot.OnClose callback should't be used")
-}
-
-// --------------------------------------------------------------------------
-/// @brief 
-// --------------------------------------------------------------------------
-func (this *Robot) OnConnect(session network.IBaseNetSession)	{
-	panic("Robot.OnConnect callback should't be used")
-}
+//// --------------------------------------------------------------------------
+///// @brief TODO: session is nil
+//// --------------------------------------------------------------------------
+//func (this *Robot) OnClose(session network.IBaseNetSession) {
+//	panic("Robot.OnClose callback should't be used")
+//}
+//
+//// --------------------------------------------------------------------------
+///// @brief 
+//// --------------------------------------------------------------------------
+//func (this *Robot) OnConnect(session network.IBaseNetSession)	{
+//	panic("Robot.OnConnect callback should't be used")
+//}
 

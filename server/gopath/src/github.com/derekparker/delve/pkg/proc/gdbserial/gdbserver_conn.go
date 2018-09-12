@@ -16,7 +16,9 @@ import (
 	"sync"
 	"time"
 
+	"github.com/derekparker/delve/pkg/logflags"
 	"github.com/derekparker/delve/pkg/proc"
+	"github.com/sirupsen/logrus"
 )
 
 type gdbConn struct {
@@ -42,6 +44,8 @@ type gdbConn struct {
 	maxTransmitAttempts   int  // maximum number of transmit or receive attempts when bad checksums are read
 	threadSuffixSupported bool // thread suffix supported by stub
 	isDebugserver         bool // true if the stub is debugserver
+
+	log *logrus.Entry
 }
 
 const (
@@ -632,8 +636,8 @@ func (conn *gdbConn) parseStopPacket(resp []byte, threadID string, tu *threadUpd
 		}
 		sp.sig = uint8(sig)
 
-		if logGdbWire && logGdbWireFullStopPacket {
-			fmt.Fprintf(os.Stderr, "full stop packet: %s\n", string(resp))
+		if logflags.GdbWire() && gdbWireFullStopPacket {
+			conn.log.Debugf("full stop packet: %s", string(resp))
 		}
 
 		buf := resp[3:]
@@ -704,9 +708,7 @@ const ctrlC = 0x03 // the ASCII character for ^C
 
 // executes a ctrl-C on the line
 func (conn *gdbConn) sendCtrlC() error {
-	if logGdbWire {
-		fmt.Println("<- interrupt")
-	}
+	conn.log.Debug("<- interrupt")
 	_, err := conn.conn.Write([]byte{ctrlC})
 	return err
 }
@@ -991,11 +993,11 @@ func (conn *gdbConn) send(cmd []byte) error {
 
 	attempt := 0
 	for {
-		if logGdbWire {
-			if len(cmd) > logGdbWireMaxLen {
-				fmt.Printf("<- %s...\n", string(cmd[:logGdbWireMaxLen]))
+		if logflags.GdbWire() {
+			if len(cmd) > gdbWireMaxLen {
+				conn.log.Debugf("<- %s...", string(cmd[:gdbWireMaxLen]))
 			} else {
-				fmt.Printf("<- %s\n", string(cmd))
+				conn.log.Debugf("<- %s", string(cmd))
 			}
 		}
 		_, err := conn.conn.Write(cmd)
@@ -1032,21 +1034,21 @@ func (conn *gdbConn) recv(cmd []byte, context string, binary bool) (resp []byte,
 		if err != nil {
 			return nil, err
 		}
-		if logGdbWire {
+		if logflags.GdbWire() {
 			out := resp
 			partial := false
 			if idx := bytes.Index(out, []byte{'\n'}); idx >= 0 {
 				out = resp[:idx]
 				partial = true
 			}
-			if len(out) > logGdbWireMaxLen {
-				out = out[:logGdbWireMaxLen]
+			if len(out) > gdbWireMaxLen {
+				out = out[:gdbWireMaxLen]
 				partial = true
 			}
 			if !partial {
-				fmt.Printf("-> %s%s\n", string(resp), string(conn.inbuf[:2]))
+				conn.log.Debugf("-> %s%s", string(resp), string(conn.inbuf[:2]))
 			} else {
-				fmt.Printf("-> %s...\n", string(out))
+				conn.log.Debugf("-> %s...", string(out))
 			}
 		}
 
@@ -1097,9 +1099,7 @@ func (conn *gdbConn) readack() bool {
 	if err != nil {
 		return false
 	}
-	if logGdbWire {
-		fmt.Printf("-> %s\n", string(b))
-	}
+	conn.log.Debugf("-> %s", string(b))
 	return b == '+'
 }
 
@@ -1109,9 +1109,7 @@ func (conn *gdbConn) sendack(c byte) {
 		panic(fmt.Errorf("sendack(%c)", c))
 	}
 	conn.conn.Write([]byte{c})
-	if logGdbWire {
-		fmt.Printf("<- %s\n", string(c))
-	}
+	conn.log.Debugf("<- %s", string(c))
 }
 
 // escapeXor is the value mandated by the specification to escape characters
@@ -1148,7 +1146,7 @@ func wiredecode(in, buf []byte) (newbuf, msg []byte) {
 			}
 		case '#': // end of packet
 			return buf, buf[start:]
-		case '*': // runlenght encoding marker
+		case '*': // runlength encoding marker
 			if i+1 >= len(in) || i == 0 {
 				buf = append(buf, ch)
 			} else {

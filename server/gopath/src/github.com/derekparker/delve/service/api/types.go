@@ -15,6 +15,8 @@ var NotExecutableErr = proc.NotExecutableErr
 
 // DebuggerState represents the current context of the debugger.
 type DebuggerState struct {
+	// Running is true if the process is running and no other information can be collected.
+	Running bool
 	// CurrentThread is the currently selected debugger thread.
 	CurrentThread *Thread `json:"currentThread,omitempty"`
 	// SelectedGoroutine is the currently selected goroutine
@@ -106,7 +108,10 @@ type Thread struct {
 	// Breakpoint this thread is stopped at
 	Breakpoint *Breakpoint `json:"breakPoint,omitempty"`
 	// Informations requested by the current breakpoint
-	BreakpointInfo *BreakpointInfo `json:"breakPointInfo,omitrempty"`
+	BreakpointInfo *BreakpointInfo `json:"breakPointInfo,omitempty"`
+
+	// ReturnValues contains the return values of the function we just stepped out of
+	ReturnValues []Variable
 }
 
 type Location struct {
@@ -118,10 +123,22 @@ type Location struct {
 
 type Stackframe struct {
 	Location
-	Locals      []Variable
-	Arguments   []Variable
-	FrameOffset int64
-	Err         string
+	Locals    []Variable
+	Arguments []Variable
+
+	FrameOffset        int64
+	FramePointerOffset int64
+
+	Defers []Defer
+
+	Err string
+}
+
+type Defer struct {
+	DeferredLoc Location // deferred function
+	DeferLoc    Location // location of the defer statement
+	SP          uint64   // value of SP when the function was deferred
+	Unreadable  string
 }
 
 func (frame *Stackframe) Var(name string) *Variable {
@@ -141,10 +158,19 @@ func (frame *Stackframe) Var(name string) *Variable {
 // Function represents thread-scoped function information.
 type Function struct {
 	// Name is the function name.
-	Name   string `json:"name"`
+	Name_  string `json:"name"`
 	Value  uint64 `json:"value"`
 	Type   byte   `json:"type"`
 	GoType uint64 `json:"goType"`
+	// Optimized is true if the function was optimized
+	Optimized bool `json:"optimized"`
+}
+
+func (fn *Function) Name() string {
+	if fn == nil {
+		return "???"
+	}
+	return fn.Name_
 }
 
 // VariableFlags is the type of the Flags field of Variable.
@@ -162,6 +188,15 @@ const (
 	// VariableShadowed is set for local variables that are shadowed by a
 	// variable with the same name in another scope
 	VariableShadowed = VariableFlags(proc.VariableShadowed)
+
+	// VariableConstant means this variable is a constant value
+	VariableConstant
+
+	// VariableArgument means this variable is a function argument
+	VariableArgument
+
+	// VariableReturnArgument means this variable is a function return value
+	VariableReturnArgument
 )
 
 // Variable describes a variable.
@@ -193,7 +228,7 @@ type Variable struct {
 	// Array and slice elements, member fields of structs, key/value pairs of maps, value of complex numbers
 	// The Name field in this slice will always be the empty string except for structs (when it will be the field name) and for complex numbers (when it will be "real" and "imaginary")
 	// For maps each map entry will have to items in this slice, even numbered items will represent map keys and odd numbered items will represent their values
-	// This field's length is capped at proc.maxArrayValues for slices and arrays and 2*proc.maxArrayValues for maps, in the circumnstances where the cap takes effect len(Children) != Len
+	// This field's length is capped at proc.maxArrayValues for slices and arrays and 2*proc.maxArrayValues for maps, in the circumstances where the cap takes effect len(Children) != Len
 	// The other length cap applied to this field is related to maximum recursion depth, when the maximum recursion depth is reached this field is left empty, contrary to the previous one this cap also applies to structs (otherwise structs will always have all their member fields returned)
 	Children []Variable `json:"children"`
 
@@ -205,6 +240,11 @@ type Variable struct {
 
 	// Unreadable addresses will have this field set
 	Unreadable string `json:"unreadable"`
+
+	// LocationExpr describes the location expression of this variable's address
+	LocationExpr string
+	// DeclLine is the line number of this variable's declaration
+	DeclLine int64
 }
 
 // LoadConfig describes how to load values from target's memory
@@ -232,6 +272,8 @@ type Goroutine struct {
 	UserCurrentLoc Location `json:"userCurrentLoc"`
 	// Location of the go instruction that started this goroutine
 	GoStatementLoc Location `json:"goStatementLoc"`
+	// Location of the starting function
+	StartLoc Location `json:"startLoc"`
 	// ID of the associated thread for running goroutines
 	ThreadID int `json:"threadID"`
 }
@@ -246,6 +288,11 @@ type DebuggerCommand struct {
 	// GoroutineID is used to specify which thread to use with the SwitchGoroutine
 	// command.
 	GoroutineID int `json:"goroutineID,omitempty"`
+	// When ReturnInfoLoadConfig is not nil it will be used to load the value
+	// of any return variables.
+	ReturnInfoLoadConfig *LoadConfig
+	// Expr is the expression argument for a Call command
+	Expr string `json:"expr,omitempty"`
 }
 
 // Informations about the current breakpoint
@@ -281,6 +328,8 @@ const (
 	SwitchGoroutine = "switchGoroutine"
 	// Halt suspends the process.
 	Halt = "halt"
+	// Call resumes process execution injecting a function call.
+	Call = "call"
 )
 
 type AssemblyFlavour int

@@ -1,7 +1,6 @@
 package debugger
 
 import (
-	"debug/gosym"
 	"fmt"
 	"go/constant"
 	"path/filepath"
@@ -216,7 +215,7 @@ func stripReceiverDecoration(in string) string {
 	return in[2 : len(in)-1]
 }
 
-func (spec *FuncLocationSpec) Match(sym *gosym.Sym) bool {
+func (spec *FuncLocationSpec) Match(sym proc.Function) bool {
 	if spec.BaseName != sym.BaseName() {
 		return false
 	}
@@ -243,7 +242,7 @@ func (spec *FuncLocationSpec) Match(sym *gosym.Sym) bool {
 }
 
 func (loc *RegexLocationSpec) Find(d *Debugger, scope *proc.EvalScope, locStr string) ([]api.Location, error) {
-	funcs := d.target.BinInfo().Funcs()
+	funcs := d.target.BinInfo().Functions
 	matches, err := regexFilterFuncs(loc.FuncRegex, funcs)
 	if err != nil {
 		return nil, err
@@ -317,7 +316,7 @@ func (ale AmbiguousLocationError) Error() string {
 	var candidates []string
 	if ale.CandidatesLocation != nil {
 		for i := range ale.CandidatesLocation {
-			candidates = append(candidates, ale.CandidatesLocation[i].Function.Name)
+			candidates = append(candidates, ale.CandidatesLocation[i].Function.Name())
 		}
 
 	} else {
@@ -329,7 +328,7 @@ func (ale AmbiguousLocationError) Error() string {
 func (loc *NormalLocationSpec) Find(d *Debugger, scope *proc.EvalScope, locStr string) ([]api.Location, error) {
 	limit := maxFindLocationCandidates
 	var candidateFiles []string
-	for file := range d.target.BinInfo().Sources() {
+	for _, file := range d.target.BinInfo().Sources {
 		if loc.FileMatch(file) {
 			candidateFiles = append(candidateFiles, file)
 			if len(candidateFiles) >= limit {
@@ -342,11 +341,8 @@ func (loc *NormalLocationSpec) Find(d *Debugger, scope *proc.EvalScope, locStr s
 
 	var candidateFuncs []string
 	if loc.FuncBase != nil {
-		for _, f := range d.target.BinInfo().Funcs() {
-			if f.Sym == nil {
-				continue
-			}
-			if !loc.FuncBase.Match(f.Sym) {
+		for _, f := range d.target.BinInfo().Functions {
+			if !loc.FuncBase.Match(f) {
 				continue
 			}
 			if loc.Base == f.Name {
@@ -400,6 +396,9 @@ func (loc *NormalLocationSpec) Find(d *Debugger, scope *proc.EvalScope, locStr s
 func (loc *OffsetLocationSpec) Find(d *Debugger, scope *proc.EvalScope, locStr string) ([]api.Location, error) {
 	if scope == nil {
 		return nil, fmt.Errorf("could not determine current location (scope is nil)")
+	}
+	if loc.Offset == 0 {
+		return []api.Location{{PC: scope.PC}}, nil
 	}
 	file, line, fn := d.target.BinInfo().PCToLine(scope.PC)
 	if fn == nil {

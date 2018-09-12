@@ -51,8 +51,15 @@ func (this* RS2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.BT_UploadGameUser{})
 	this.msgparser.RegistSendProto(msg.BT_ReqEnterRoom{})
 	this.msgparser.RegistSendProto(msg.BT_ReqQuitGameRoom{})
-	this.msgparser.RegistSendProto(msg.BT_UpdateMoney{})
+	//this.msgparser.RegistSendProto(msg.BT_UpdateMoney{})
 	this.msgparser.RegistSendProto(msg.C2GW_StartLuckyDraw{})
+	this.msgparser.RegistSendProto(msg.C2GW_PlatformRechargeDone{})
+	this.msgparser.RegistSendProto(msg.C2GW_GoldExchange{})
+	this.msgparser.RegistSendProto(msg.BT_ReqLaunchBullet{})
+	this.msgparser.RegistSendProto(msg.BT_StepOnBomb{})
+	this.msgparser.RegistSendProto(msg.BT_BulletEarnMoney{})
+	this.msgparser.RegistSendProto(msg.BT_UseUltimateSkil{})
+	this.msgparser.RegistSendProto(msg.BT_ReqCrushSuperBrick{})
 }
 
 func on_RS2GW_ReqRegist(session network.IBaseNetSession, message interface{}) {
@@ -88,15 +95,15 @@ func on_BT_GameInit(session network.IBaseNetSession, message interface{}) {
 	user.SendMsg(tmsg)
 }
 
-func on_BT_SendBattleUser(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.BT_SendBattleUser)
-	user := UserMgr().FindById(tmsg.GetOwnerid())
-	if user == nil {
-		log.Error("BT_SendBattleUser 找不到玩家[%d]", tmsg.GetOwnerid())
-		return
-	}
-	user.SendMsg(tmsg)
-}
+//func on_BT_SendBattleUser(session network.IBaseNetSession, message interface{}) {
+//	tmsg := message.(*msg.BT_SendBattleUser)
+//	user := UserMgr().FindById(tmsg.GetOwnerid())
+//	if user == nil {
+//		log.Error("BT_SendBattleUser 找不到玩家[%d]", tmsg.GetOwnerid())
+//		return
+//	}
+//	user.SendMsg(tmsg)
+//}
 
 func on_BT_GameStart(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.BT_GameStart)

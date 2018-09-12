@@ -60,8 +60,13 @@ type Info interface {
 	// ResumeNotify specifies a channel that will be closed the next time
 	// ContinueOnce finishes resuming the target.
 	ResumeNotify(chan<- struct{})
-	Exited() bool
+	// Valid returns true if this Process can be used. When it returns false it
+	// also returns an error describing why the Process is invalid (either
+	// ProcessExitedError or ProcessDetachedError).
+	Valid() (bool, error)
 	BinInfo() *BinaryInfo
+	// Common returns a struct with fields common to all backends
+	Common() *CommonProcess
 
 	ThreadInfo
 	GoroutineInfo
@@ -87,18 +92,33 @@ type ProcessManipulation interface {
 	SwitchThread(int) error
 	SwitchGoroutine(int) error
 	RequestManualStop() error
-	// ManualStopRequested returns true the first time it's called after a call
-	// to RequestManualStop.
-	ManualStopRequested() bool
-	Halt() error
-	Kill() error
+	// CheckAndClearManualStopRequest returns true the first time it's called
+	// after a call to RequestManualStop.
+	CheckAndClearManualStopRequest() bool
 	Detach(bool) error
 }
 
 // BreakpointManipulation is an interface for managing breakpoints.
 type BreakpointManipulation interface {
-	Breakpoints() map[uint64]*Breakpoint
+	Breakpoints() *BreakpointMap
 	SetBreakpoint(addr uint64, kind BreakpointKind, cond ast.Expr) (*Breakpoint, error)
 	ClearBreakpoint(addr uint64) (*Breakpoint, error)
 	ClearInternalBreakpoints() error
+}
+
+// CommonProcess contains fields used by this package, common to all
+// implementations of the Process interface.
+type CommonProcess struct {
+	allGCache     []*G
+	fncallState   functionCallState
+	fncallEnabled bool
+}
+
+func NewCommonProcess(fncallEnabled bool) CommonProcess {
+	return CommonProcess{fncallEnabled: fncallEnabled}
+}
+
+// ClearAllGCache clears the cached contents of the cache for runtime.allgs.
+func (p *CommonProcess) ClearAllGCache() {
+	p.allGCache = nil
 }

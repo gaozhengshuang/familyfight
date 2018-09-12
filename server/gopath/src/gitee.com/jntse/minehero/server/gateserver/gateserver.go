@@ -11,6 +11,7 @@ import (
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
+	"gitee.com/jntse/minehero/server/tbl/excel"
 	"gitee.com/jntse/minehero/server/def"
 	pb "github.com/gogo/protobuf/proto"
 	"github.com/go-redis/redis"
@@ -60,6 +61,8 @@ type GateServer struct {
 	quit_graceful 	bool
 	runtimestamp	int64
 	hourmonitor		*util.IntHourMonitorPool
+	namebase        []*table.TNameDefine
+	gameroommgr		GameRoomSvrManager
 }
 
 var g_GateServer *GateServer = nil
@@ -204,6 +207,7 @@ func (this *GateServer) Init(fileconf string) bool {
 	this.usermgr.Init()
 	this.waitpool.Init()
 	this.roomsvrmgr.Init()
+	this.gameroommgr.Init()
 	//this.countmgr.Init()
 	//this.gamemgr.Init()
 	this.ticker1m = util.NewGameTicker(60 * time.Second, this.Handler1mTick)
@@ -213,6 +217,8 @@ func (this *GateServer) Init(fileconf string) bool {
 	this.ticker1s.Start()
 	this.ticker100ms.Start()
 	this.runtimestamp = 0
+	this.namebase = make([]*table.TNameDefine,0)
+	for _, v := range tbl.NameBase.TNameById { this.namebase = append(this.namebase, v) }
 	return true
 }
 
@@ -226,6 +232,7 @@ func (this *GateServer) Handler1sTick(now int64) {
 func (this *GateServer) Handler100msTick(now int64) {
 	this.waitpool.Tick(now)
 
+	this.gameroommgr.Tick(now)
 	// 
 	if this.quit_graceful && this.usermgr.Amount() == 0 {
 		g_KeyBordInput.Insert("quit")
@@ -461,6 +468,22 @@ func IntHourClockCallback(now int64) {
 	log.Info("==========整点回调开始===========")
 	//UserMgr().GiveFreeStep(now)
 	log.Info("==========整点点回调结束===========")
+}
+
+func (this *GateServer) GetRandNickName() string {
+	lenlist := int32(len(this.namebase))
+	if lenlist <= 0 {
+		return "穿靴子的猫"
+	}
+	rnd := util.RandBetween(0, lenlist-1)
+	if rnd >= 0 && rnd < lenlist {
+		return this.namebase[rnd].Name
+	}
+	return "穿靴子的猫"
+}
+
+func GameRoomSvrMgr() *GameRoomSvrManager {
+	return &GateSvr().gameroommgr
 }
 
 
