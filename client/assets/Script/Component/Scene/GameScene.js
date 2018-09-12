@@ -1,9 +1,12 @@
+import Game from '../../Game';
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
         btn_shop: { default: null, type: cc.Button },
         node_maid: { default: null, type: cc.Node},
+        prefab_player: {default: null, type: cc.Prefab},
     },
 
     onLoad() {
@@ -12,7 +15,6 @@ cc.Class({
     },
 
     start() {
-        
     },
 
     update(dt) {
@@ -26,17 +28,11 @@ cc.Class({
     },
 
     initView() {
-        cc.loader.loadRes("Prefab/MaidNode", function (err, prefab) {
-            if (err) {
-                console.log('[严重错误] 奖励资源加载错误 ' + err);
-            } else {
-                let _view = cc.instantiate(prefab);
-                this.node_maid.addChild(_view);
+        let _view = cc.instantiate(this.prefab_player);
+        this.node_maid.addChild(_view);
 
-                let xx = _view.getComponent('MaidNode');
-                xx.initPos(this.node_maid);
-            }
-        }.bind(this));
+        let xx = _view.getComponent('MaidNode');
+        xx.setParentAndData(this.node_maid, 1);
     },
 
     onOpenShopView(event) {

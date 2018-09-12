@@ -985,6 +985,9 @@
     },
     "node_maid": {
       "__id__": 22
+    },
+    "prefab_player": {
+      "__uuid__": "996f9f27-59ba-416d-8417-69615d2edff6"
     }
   }
 ]
