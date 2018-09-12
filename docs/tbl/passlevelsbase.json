@@ -2,24 +2,7 @@
 	"Tool": "github.com/davyxu/tabtoy",
 	"Version": "2.8.10",
 	"PassLevels":[
-		{ "Id": 1, "Name": "绣女", "Reward": "Image/GameScene/Pass/pass_1", "NextLevels": 2 },
-		{ "Id": 2, "Name": "作弊", "Reward": "Image/GameScene/Pass/pass_2", "NextLevels": 3 },
-		{ "Id": 3, "Name": "泼水", "Reward": "Image/GameScene/Pass/pass_3", "NextLevels": 4 },
-		{ "Id": 4, "NextLevels": 5 },
-		{ "Id": 5, "NextLevels": 6 },
-		{ "Id": 6, "NextLevels": 7 },
-		{ "Id": 7, "NextLevels": 8 },
-		{ "Id": 8, "NextLevels": 9 },
-		{ "Id": 9, "NextLevels": 10 },
-		{ "Id": 10, "NextLevels": 11 },
-		{ "Id": 11, "NextLevels": 12 },
-		{ "Id": 12, "NextLevels": 13 },
-		{ "Id": 13, "NextLevels": 14 },
-		{ "Id": 14, "NextLevels": 15 },
-		{ "Id": 15, "NextLevels": 16 },
-		{ "Id": 16, "NextLevels": 17 },
-		{ "Id": 17, "NextLevels": 18 },
-		{ "Id": 18, "NextLevels": 19 },
-		{ "Id": 19, "NextLevels": 20 },
-		{ "Id": 20 }
+		{ "Id": 1, "Name": "绣女", "Path": "Image/GameScene/Pass/pass_1", "NextLevels": 2 },
+		{ "Id": 2, "Name": "作弊", "Path": "Image/GameScene/Pass/pass_2", "NextLevels": 3 },
+		{ "Id": 3, "Name": "泼水", "Path": "Image/GameScene/Pass/pass_3", "NextLevels": 4 }
 	]}

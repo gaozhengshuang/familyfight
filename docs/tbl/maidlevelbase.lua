@@ -9,20 +9,12 @@ export var TMaidLevel : table.ITMaidLevelDefine[] = [
 		{ Id : 4, Name : "陆晚晚", Path : "Image/GameScene/Maid/maid_4", Passlevels : 1, Reward : 100, NextID : 5, ShopShow : [ 1 ] 	},
 		{ Id : 5, Name : "纳兰淳雪", Path : "Image/GameScene/Maid/maid_5", Passlevels : 1, Reward : 100, NextID : 6, ShopShow : [ 1 ] 	},
 		{ Id : 6, Name : "乌雅青黛", Path : "Image/GameScene/Maid/maid_6", Passlevels : 1, Reward : 100, NextID : 7, ShopShow : [ 1, 2 ] 	},
-		{ Id : 7, Name : "牡丹图", Path : "", Passlevels : 0, Reward : 0, NextID : 8, ShopShow : [ 1, 2, 3 ] 	},
-		{ Id : 8, Name : "金鸡图", Path : "", Passlevels : 0, Reward : 0, NextID : 9, ShopShow : [ 1, 2, 3, 4 ] 	},
-		{ Id : 9, Name : "吉祥哭", Path : "", Passlevels : 0, Reward : 0, NextID : 10, ShopShow : [ 2, 3, 4, 5 ] 	},
-		{ Id : 10, Name : "璎珞", Path : "", Passlevels : 0, Reward : 0, NextID : 11, ShopShow : [ 3, 4, 5, 6 ] 	},
-		{ Id : 11, Name : "张嬷嬷", Path : "", Passlevels : 0, Reward : 0, NextID : 12, ShopShow : [ 4, 5, 6, 7 ] 	},
-		{ Id : 12, Name : "吴书来", Path : "", Passlevels : 0, Reward : 0, NextID : 13, ShopShow : [ 5, 6, 7, 8 ] 	},
-		{ Id : 13, Name : "", Path : "", Passlevels : 0, Reward : 0, NextID : 14, ShopShow : [ 6, 7, 8, 9 ] 	},
-		{ Id : 14, Name : "", Path : "", Passlevels : 0, Reward : 0, NextID : 15, ShopShow : [ 7, 8, 9, 10 ] 	},
-		{ Id : 15, Name : "", Path : "", Passlevels : 0, Reward : 0, NextID : 16, ShopShow : [  ] 	},
-		{ Id : 16, Name : "", Path : "", Passlevels : 0, Reward : 0, NextID : 17, ShopShow : [  ] 	},
-		{ Id : 17, Name : "", Path : "", Passlevels : 0, Reward : 0, NextID : 18, ShopShow : [  ] 	},
-		{ Id : 18, Name : "", Path : "", Passlevels : 0, Reward : 0, NextID : 19, ShopShow : [  ] 	},
-		{ Id : 19, Name : "", Path : "", Passlevels : 0, Reward : 0, NextID : 20, ShopShow : [  ] 	},
-		{ Id : 20, Name : "", Path : "", Passlevels : 0, Reward : 0, NextID : 21, ShopShow : [  ] 	}
+		{ Id : 7, Name : "牡丹图", Path : "Image/GameScene/Maid/maid_1", Passlevels : 2, Reward : 200, NextID : 8, ShopShow : [ 1, 2, 3 ] 	},
+		{ Id : 8, Name : "金鸡图", Path : "Image/GameScene/Maid/maid_2", Passlevels : 2, Reward : 200, NextID : 9, ShopShow : [ 1, 2, 3, 4 ] 	},
+		{ Id : 9, Name : "吉祥哭", Path : "Image/GameScene/Maid/maid_3", Passlevels : 2, Reward : 200, NextID : 10, ShopShow : [ 2, 3, 4, 5 ] 	},
+		{ Id : 10, Name : "璎珞", Path : "Image/GameScene/Maid/maid_4", Passlevels : 2, Reward : 200, NextID : 11, ShopShow : [ 3, 4, 5, 6 ] 	},
+		{ Id : 11, Name : "张嬷嬷", Path : "Image/GameScene/Maid/maid_5", Passlevels : 2, Reward : 200, NextID : 12, ShopShow : [ 4, 5, 6, 7 ] 	},
+		{ Id : 12, Name : "吴书来", Path : "Image/GameScene/Maid/maid_6", Passlevels : 2, Reward : 200, NextID : 13, ShopShow : [ 5, 6, 7, 8 ] 	}
 	]
 
 

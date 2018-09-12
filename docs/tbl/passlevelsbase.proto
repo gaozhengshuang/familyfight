@@ -25,7 +25,7 @@ message PassLevelsDefine
 	optional string Name = 2; // 名字
 	
 	
-	optional string Reward = 3; // 图片路径
+	optional string Path = 3; // 图片路径
 	
 	
 	optional int32 NextLevels = 4; // 下个关卡ID
