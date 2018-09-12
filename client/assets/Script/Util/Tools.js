@@ -1,5 +1,5 @@
-let _ = require('lodash');
-let moment = require('moment');
+import _ from 'lodash';
+import moment from 'moment';
 
 let Tools = {
     GetRandomInt: function (min, max) {
@@ -29,6 +29,21 @@ let Tools = {
             source = source[keys[i]];
         }
         return source;
+    },
+    SetValueInObj: function (obj, key, value) {
+        let keys = key.split('.');
+        let pre = obj;
+        let nextKey = '';
+        for (let i = 0; i < keys.length; i++) {
+            if (i != 0) {
+                pre = pre[nextKey];
+            }
+            nextKey = keys[i];
+            if (pre[nextKey] == null) {
+                return false;
+            }
+        }
+        pre[nextKey] = value;
     },
     GetValuesInArray: function (arr, key) {
         if (_.isArray(arr)) {
@@ -61,8 +76,17 @@ let Tools = {
     GetMilliSecond: function () {
         return moment().unix() * 1000 + moment().milliseconds();
     },
-    GetPercent: function (start, end, value) {
-        return (value - start) / (end - start);
+    CalculateCouponStr: function (value) {
+        let coupon = _.isString(value) ? parseInt(value) : value;
+        let info = null;
+        if (coupon > 9999) {
+            let ret = (coupon / 1000).toFixed(2);
+            ret = ret == Math.floor(ret) ? Math.floor(ret) : ret;
+            info = { num: ret, suffix: 'k' };
+        } else {
+            info = { num: coupon, suffix: '' };
+        }
+        return info;
     },
     AutoFit: function (canvas) {
         let designResolution = canvas.designResolution
@@ -75,6 +99,12 @@ let Tools = {
             canvas.fitHeight = false;
             canvas.fitWidth = true
         }
+    },
+    ObjectLength: function (obj) {
+        if (_.isObject(obj)) {
+            return _.keys(obj).length;
+        }
+        return 0;
     }
 }
 
