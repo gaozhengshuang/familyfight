@@ -34,7 +34,11 @@ cc.Class({
         let xx = _view.getComponent('MaidNode');
         xx.setParentAndData(this.node_maid, 1);
 
-        // Game.ConfigController.GetConfig("TMaidLevel");
+        _view = cc.instantiate(this.prefab_player);
+        this.node_maid.addChild(_view);
+
+        xx = _view.getComponent('MaidNode');
+        xx.setParentAndData(this.node_maid, 1);
     },
 
     onOpenShopView(event) {

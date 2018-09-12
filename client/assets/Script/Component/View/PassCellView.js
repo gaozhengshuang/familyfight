@@ -1,3 +1,5 @@
+import Game from '../../Game';
+
 cc.Class({
     extends: require('viewCell'),
 
@@ -14,6 +16,9 @@ cc.Class({
     init(index, data, reload, group) {
         this._target = data.target;
         this._data = data.array[index];
+
+        this.passClickTrue_img.node.active = Game.UserModel.GetCurPass() == this._data.Id;
+        Game.ResController.SetSprite(this.pass_img, this._data.Path);
     },
 
     clicked() {

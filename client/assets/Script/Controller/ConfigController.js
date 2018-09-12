@@ -1,4 +1,6 @@
 import Tools from '../util/Tools';
+import _ from 'lodash';
+
 let ConfigController = function () {
     this._configs = {};
 };
@@ -26,6 +28,20 @@ ConfigController.prototype.Init = function (cb) {
 
 ConfigController.prototype.GetConfig = function (key) {
     return this._configs[key];
+}
+
+ConfigController.prototype.GetConfigByIndex = function (key, index) {
+    if (this._configs[key] == null) {
+        return null;
+    }
+    return this._configs[key][index];
+}
+
+ConfigController.prototype.GetConfigById = function (key, id) {
+    if (this._configs[key] == null) {
+        return null;
+    }
+    return _.find(this._configs[key], { Id: id });
 }
 
 module.exports = new ConfigController();

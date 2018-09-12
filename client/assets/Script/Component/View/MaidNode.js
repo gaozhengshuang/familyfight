@@ -1,4 +1,5 @@
 import addGoldPrefab from  "AddGoldNode"
+import Game from '../../Game';
 
 cc.Class({
     extends: cc.Component,
@@ -41,6 +42,7 @@ cc.Class({
         this.isLongclick = false;
 
         this.parentNode = null;
+        this.maidBase = {};
     },
 
     initEvent() {
@@ -82,6 +84,9 @@ cc.Class({
         
         this.node.x = this.moveMinX + Math.floor(Math.random() * (this.moveMaxX - this.moveMinX + 1));
         this.node.y = this.moveMinY + Math.floor(Math.random() * (this.moveMaxY - this.moveMinY + 1));
+
+        this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel",data);
+        Game.ResController.SetSprite(this.maid_img, this.maidBase.Path);
     },
 
     updateEvent(isClick) {

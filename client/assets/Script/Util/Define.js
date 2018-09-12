@@ -20,7 +20,9 @@ var Define = {
         TIP_RESULT: '403',
 
         MUSIC_CHANGE: '500',
-        EFFECT_CHANGE: '501'
+        EFFECT_CHANGE: '501',
+
+        USERINFO_UPDATEGOLD: '600'
     },
     DATA_KEY: {
         HISTORY_PHONE: '1',
@@ -30,7 +32,7 @@ var Define = {
     HEART_BEAT: {
         INTERVAL: 10,
         TIMEOUT: 30,
-    }
+    },
 }
 
 module.exports = Define;

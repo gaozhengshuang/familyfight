@@ -38,5 +38,14 @@ ResController.prototype.DestoryAllChildren = function (node) {
     }
 }
 
+ResController.prototype.SetSprite = function(sprite, path) {
+    this.GetSpriteFrameByName(path, function (err, res) {
+        if (err) {
+            console.log('[严重错误] 奖励资源加载错误 ' + err);
+        } else {
+            sprite.spriteFrame = res;
+        }
+    });
+}
 
 module.exports = new ResController();

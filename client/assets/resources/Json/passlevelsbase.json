@@ -1,0 +1,8 @@
+{
+	"Tool": "github.com/davyxu/tabtoy",
+	"Version": "2.8.10",
+	"PassLevels":[
+		{ "Id": 1, "Name": "绣女", "Path": "Image/GameScene/Pass/pass_1", "NextLevels": 2 },
+		{ "Id": 2, "Name": "作弊", "Path": "Image/GameScene/Pass/pass_2", "NextLevels": 3 },
+		{ "Id": 3, "Name": "泼水", "Path": "Image/GameScene/Pass/pass_3", "NextLevels": 4 }
+	]}

@@ -1,3 +1,4 @@
+import Game from '../../Game';
 
 cc.Class({
     extends: cc.Component,
@@ -11,7 +12,6 @@ cc.Class({
     },
 
     start() {
-        
     },
 
     update(dt) {
@@ -20,17 +20,15 @@ cc.Class({
     onDestroy() {
     },
 
-    _getdata: function (num) {
-        var array = [];
-        for (var i = 0; i < num; ++i) {
-            var obj = {};
-            obj.name = 'a' + i;
-            array.push(obj);
-        }
-        return array;
-    },
     initView: function () {
-        var data = this._getdata(100);
-        this.tableView.getComponent(cc.tableView).initTableView(data.length, { array: data, target: this });
+        let passList = [];
+        let passBase = Game.ConfigController.GetConfig("PassLevels");
+        for (let i = 0; i < passBase.length; i ++) {
+            let info = passBase[i];
+            if (info.Id <= Game.UserModel.GetTopPass()) {
+                passList.push(info);
+            }
+        }
+        this.tableView.getComponent(cc.tableView).initTableView(passList.length, { array: passList, target: this });
     },
 });
