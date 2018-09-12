@@ -5,8 +5,8 @@
 package table;
 
 
-// Defined in table: TPassLevelBase
-message TPassLevelBase
+// Defined in table: TPassLevelsBase
+message TPassLevelsBase
 {	
 	
 	

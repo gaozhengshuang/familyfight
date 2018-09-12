@@ -222,7 +222,8 @@ gen.maketbl_excel('TBallGiftbase', 'ballgiftbase', 'TBallGift.xlsx')
 gen.maketbl_excel('GiftProBase', 'giftprobase', 'TGiftPro.xlsx')
 gen.maketbl_excel('TaskBase', 'taskbase', 'TTask.xlsx')
 gen.maketbl_excel('Question', 'question', 'TQuestion.xlsx')
-
+gen.maketbl_excel('TMaidLevelBase','maidlevelbase','MaidLevel.xlsx')
+gen.maketbl_excel('TPassLevelsBase','passlevelsbase','PassLevels.xlsx')
 
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')

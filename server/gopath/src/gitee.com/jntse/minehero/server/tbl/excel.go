@@ -14,6 +14,7 @@ type IBaseExcel interface {
 /// @brief 为excel config 实例取一个别名
 // --------------------------------------------------------------------------
 var TaskBase = table.InsTaskBaseTable
+var TPassLevelsBase = table.InsTPassLevelsBaseTable
 var MusicBase = table.InsMusicBaseTable
 var RechargeBase = table.InsRechargeBaseTable
 var LevelBasee = table.InsLevelBaseeTable
@@ -27,6 +28,7 @@ var TBirckBase = table.InsTBirckBaseTable
 var Question = table.InsQuestionTable
 var TBallGiftbase = table.InsTBallGiftbaseTable
 var NoticeBase = table.InsNoticeBaseTable
+var TMaidLevelBase = table.InsTMaidLevelBaseTable
 var ShopBase = table.InsShopBaseTable
 var TbirckRefreshbase = table.InsTbirckRefreshbaseTable
 var TBallBase = table.InsTBallBaseTable
