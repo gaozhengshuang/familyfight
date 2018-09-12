@@ -30,11 +30,24 @@
         "timeout":30000
     },
 
-    "//":"新玩家初始数据，元宝，金卷",
-    "newuser": {
-        "yuanbao": 0,
-        "coupon": 0 
+    "//":"新玩家初始数据，元宝，金币",
+    "NewUser": {
+        "yuanbao": 5000,
+        "gold":0,
+        "Diamond":0
     },
+
+    "gametype":[
+        100,1000
+        ],
+    "gamewaittime":20,
+    "gamemaxmember":30,
+    "gameroundtime":9,
+    "gameroundcount":5,
+    "gamerobotnum":20,
+    "gamerobotmin":10,
+    "gamerewardper":0,
+    "sharetime":600,
 
 
     "//":"发货API，运费，几个包邮",
@@ -94,9 +107,31 @@
 
     "//":"微信开放平台",
     "Wechat": {
-        "AppId":"wx03789100061e5d6c",
-        "AppSecret":"81e8f7d08b55f0f4a0ea3c4b15f558c6",
+        "AppId_RRWWJ":"wx03789100061e5d6c",
+        "AppSecret_RRWWJ":"81e8f7d08b55f0f4a0ea3c4b15f558c6",
         "Mchid":"1500100872",
-        "PaySecret":"80a8c4a9d76c71e1701c001e3a41583e"
+        "PaySecret":"RMEqvgecHWoa4Fkv5Q1gaBT82iuBl4hw",
+
+        "AppId":"wx84b1ac649bf52b9b",
+        "AppSecret":"4cc40bd304534e13fedb6307c800541b",
+        "Mchid1":"1495077762",
+        "PaySecret1":"80a8c4a9d76c71e1701c001e3a41583e"
+    },
+
+    "//":"微信小游戏",
+    "WechatMiniGame": {
+        "MidasOfferID":"1450016022",
+        "MidasSecret1":"80a8c4a9d76c71e1701c001e3a41583e",
+        "MidasCancelPay1":"https://api.weixin.qq.com/cgi-bin/midas/cancelpay?access_token=",
+        "MidasBalance1":"https://api.weixin.qq.com/cgi-bin/midas/getbalance?access_token=",
+        "MidasPay1":"https://api.weixin.qq.com/cgi-bin/midas/pay?access_token=",
+        "MidasPresent1":"https://api.weixin.qq.com/cgi-bin/midas/present?access_token=",
+        
+        "Jscode2Session":"https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code",
+        "MidasCancelPay":"https://api.weixin.qq.com/cgi-bin/midas/sandbox/cancelpay?access_token=",
+        "MidasBalance":"https://api.weixin.qq.com/cgi-bin/midas/sandbox/getbalance?access_token=",
+        "MidasPay":"https://api.weixin.qq.com/cgi-bin/midas/sandbox/pay?access_token=",
+        "MidasPresent":"https://api.weixin.qq.com/cgi-bin/midas/sandbox/present?access_token=",
+        "MidasSecret":"XYXpkBu1iEzgu0W0WMHmuK8LGVLPRuma"
     }
 }
