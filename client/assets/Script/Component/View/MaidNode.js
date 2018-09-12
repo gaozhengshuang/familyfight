@@ -39,6 +39,8 @@ cc.Class({
         this.intervalTime = 2.0;
 
         this.isLongclick = false;
+
+        this.parentNode = null;
     },
 
     initEvent() {
@@ -53,7 +55,9 @@ cc.Class({
     },
 
     touchMove(event) {
-        let pos = event.getLocation();
+        var delta = event.touch.getDelta();
+        this.node.x += delta.x;
+        this.node.y += delta.y;
     },
 
     touchEnd(event) {
@@ -70,10 +74,14 @@ cc.Class({
     },
 
     setParentAndData(parentNode, data) {
+        this.parentNode = parentNode;
         this.moveMaxX = (parentNode.width / 2) - (this.node.width / 2);
         this.moveMaxY = (parentNode.height / 2) - (this.node.height / 2);
         this.moveMinX = -this.moveMaxX;
-        this.moveMinY = -this.moveMaxY;        
+        this.moveMinY = -this.moveMaxY;
+        
+        this.node.x = this.moveMinX + Math.floor(Math.random() * (this.moveMaxX - this.moveMinX + 1));
+        this.node.y = this.moveMinY + Math.floor(Math.random() * (this.moveMaxY - this.moveMinY + 1));
     },
 
     updateEvent(isClick) {

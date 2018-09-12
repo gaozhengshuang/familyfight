@@ -5,8 +5,8 @@ cc.Class({
 
     properties: {
         btn_shop: { default: null, type: cc.Button },
-        node_maid: { default: null, type: cc.Node},
-        prefab_player: {default: null, type: cc.Prefab},
+        node_maid: { default: null, type: cc.Node },
+        prefab_player: { default: null, type: cc.Prefab },
     },
 
     onLoad() {
@@ -33,6 +33,8 @@ cc.Class({
 
         let xx = _view.getComponent('MaidNode');
         xx.setParentAndData(this.node_maid, 1);
+
+        // Game.ConfigController.GetConfig("TMaidLevel");
     },
 
     onOpenShopView(event) {

@@ -7,16 +7,16 @@ cc.Class({
     },
 
     // use this for initialization
-    onLoad: function () {
+    onLoad() {
 
     },
 
-    init: function (index, data, reload, group) {
+    init(index, data, reload, group) {
         this._target = data.target;
         this._data = data.array[index];
     },
 
-    clicked: function () {
+    clicked() {
 
     }
 });
