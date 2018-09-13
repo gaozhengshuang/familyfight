@@ -1,5 +1,6 @@
 package msg;
 import "serialize.proto";
+
 message GW2C_AckMaids
 {
     repeated msg.MaidData datas = 1;
@@ -9,6 +10,16 @@ message GW2C_AckMaids
 message GW2C_AckMaidShop
 {
     repeated MaidShopData shop = 3;
+}
+
+message C2GW_ReqBuyMaid
+{
+    optional uint32 maidid = 1;
+}
+
+message GW2C_AckBuyMaid
+{
+    optional uint32 result = 1;
 }
 
 message C2GW_ReqMergeMaid

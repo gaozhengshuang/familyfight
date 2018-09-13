@@ -422,7 +422,8 @@ func (this *GateUser) Syn() {
     send := &msg.GW2C_HeartBeat{}
     send.Uid = pb.Int64(int64(this.Id()))
     send.Time = pb.Int64(util.CURTIMEUS())
-    this.SendMsg(send)
+	this.SendMsg(send)
+	this.maid.Syn(this)
 }
 
 // 断开连接回调

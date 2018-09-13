@@ -83,6 +83,17 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.BT_GameStart{})
 	this.msgparser.RegistSendProto(msg.BT_GameOver{})
 	this.msgparser.RegistSendProto(msg.BT_PickItem{})
+
+	//侍女
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqBuyMaid{}, on_C2GW_ReqBuyMaid)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMergeMaid{}, on_C2GW_ReqMergeMaid)
+
+	this.msgparser.RegistSendProto(msg.GW2C_AckMaids{})
+	this.msgparser.RegistSendProto(msg.GW2C_AckMaidShop{})
+	this.msgparser.RegistSendProto(msg.GW2C_AckBuyMaid{})
+	this.msgparser.RegistSendProto(msg.GW2C_AckMergeMaid{})
+	//货币
+	this.msgparser.RegistSendProto(msg.GW2C_UpdateTrueGold{})
 }
 
 // 客户端心跳
@@ -219,4 +230,61 @@ func on_C2GW_ReqDeliveryDiamond(session network.IBaseNetSession, message interfa
 	//}
 }
 
+//====================================== 侍女
+//购买
+func on_C2GW_ReqBuyMaid(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqBuyMaid)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
 
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	send := &msg.GW2C_AckBuyMaid{}
+	result,addition := user.maid.BuyMaid(user,tmsg.GetMaidid())
+	if result == 0 && addition != nil {
+		updateSend := &msg.GW2C_AckMaids{ Datas: make([]*msg.MaidData, 0) }
+		updateSend.Datas = append(updateSend.Datas, addition.PackBin())
+		updateSend.Maxid = pb.Uint32(user.maid.GetMaxId())
+		user.SendMsg(updateSend)
+	}
+	send.Result = pb.Uint32(result)
+	user.SendMsg(send)
+}
+//合并
+func on_C2GW_ReqMergeMaid(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqMergeMaid)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	send := &msg.GW2C_AckMergeMaid{}
+	result,removed,addition := user.maid.MergeMaid(user,tmsg.GetMaidid())
+	if result == 0{
+		updateSend := &msg.GW2C_AckMaids{ Datas: make([]*msg.MaidData, 0) }
+		if removed != nil {
+			updateSend.Datas = append(updateSend.Datas, removed.PackBin())
+		}
+		if addition != nil {
+			updateSend.Datas = append(updateSend.Datas, addition.PackBin())
+		}
+		updateSend.Maxid = pb.Uint32(user.maid.GetMaxId())
+		user.SendMsg(updateSend)
+	}
+	send.Result = pb.Uint32(result)
+	user.SendMsg(send)
+}

@@ -76,6 +76,19 @@ func (this *UserMaid) PackBin(bin *msg.Serialize) {
 		maidbin.Shop = append(maidbin.Shop,shop.PackBin())
 	}
 }
+// ========================= 对外接口 ========================= 
+func (this *UserMaid) GetMaxId() uint32 {
+	return this.maxid
+}
+
+func (this *UserMaid) Syn(user* GateUser) {
+	send := &msg.GW2C_AckMaids{ Datas: make([]*msg.MaidData, 0) }
+	for _, v := range this.maids {
+		send.Datas = append(send.Datas, v.PackBin())
+	}
+	send.Maxid = pb.Uint32(this.GetMaxId())
+	user.SendMsg(send)
+}
 // ========================= 消息接口 ========================= 
 //购买侍女 
 func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition *MaidData){
