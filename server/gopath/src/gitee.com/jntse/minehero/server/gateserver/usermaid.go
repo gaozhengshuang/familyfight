@@ -79,10 +79,6 @@ func (this *UserMaid) PackBin(bin *msg.Serialize) {
 // ========================= 消息接口 ========================= 
 //购买侍女 
 func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition *MaidData){
-	maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[this.maxid]
-	if !find {
-		return 1,nil
-	}
 	shopdata, find := this.shop[id]
 	if !find {
 		return 2,nil
@@ -163,18 +159,18 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 	}
 	newShop := make(map[uint32]*MaidShop)
 	for _, v := range maidconfig.ShopShow {
-		oldshop, find := this.shop[v]
+		oldshop, find := this.shop[uint32(v)]
 		if find {
 			//找不到初始化价格
-			maidshop, find := tbs.TMaidShopBase.TMaidShopById[v]
-			price := 0
+			maidshop, find := tbl.TMaidShopBase.TMaidShopById[uint32(v)]
+			price := uint64(0)
 			if find {
-				price = maidshop.Price
+				price = uint64(maidshop.Price)
 			}
 			shop := &MaidShop{}
-			shop.id = v
+			shop.id = uint32(v)
 			shop.price = price
-			newShop[v] = oldshop
+			newShop[shop.id] = shop
 		} else {
 			// 继承老的价格
 			newShop[oldshop.id] = oldshop
@@ -184,9 +180,9 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 	this.maxid = id
 	this.shop = newShop
 
-	send := &GW2C_AckMaidShop{Shop:make([]*msg.MaidShopData,0)}
+	send := &msg.GW2C_AckMaidShop{Shop:make([]*msg.MaidShopData,0)}
 	for _, v := range this.shop {
-		send.Shop = append(shend.Shop,v.PackBin())
+		send.Shop = append(send.Shop,v.PackBin())
 	}
 	user.SendMsg(send)
 }
