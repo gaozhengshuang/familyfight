@@ -14,3 +14,7 @@ message GW2C_UpdateYuanbao {
 message GW2C_UpdateCoupon {
     optional uint32 num = 1;
 }
+
+message GW2C_UpdateTrueGold {
+    optional uint64 num = 1;
+}
