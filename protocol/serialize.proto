@@ -92,10 +92,21 @@ message ItemBin {
     repeated ItemData items = 1;        // 
 }
 
+message MaidData 
+{
+    optional uint32 id = 1;
+    optional uint32 count = 2;
+}
+
+message MaidBin
+{
+    repeated MaidData datas = 1;
+}
 message Serialize {
     optional EntityBase entity  = 1;
     optional UserBase   base    = 2;
     optional ItemBin    item    = 3;
+    optional MaidBin    maid    = 4;
 }
 
 

@@ -1,0 +1,16 @@
+package msg;
+import "serialize.proto";
+message GW2C_AckMaids
+{
+    repeated msg.MaidData datas = 1;
+}
+
+message C2GW_ReqMergeMaid
+{
+    optional uint32 maidid = 1;
+}
+
+message GW2C_AckMergeMaid
+{
+    optional uint32 result = 1;
+}
