@@ -1,14 +1,8 @@
 package main
 import (
-	"gitee.com/jntse/gotoolkit/log"
-	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/server/tbl"
-	"gitee.com/jntse/minehero/server/def"
 	"gitee.com/jntse/minehero/pbmsg"
 	pb "github.com/golang/protobuf/proto"
-	"encoding/json"
-	"fmt"
-	"strings"
 )
 
 // --------------------------------------------------------------------------
@@ -108,7 +102,7 @@ func (this *UserMaid) MergeMaid(user *GateUser,id uint32) (result uint32,removed
 	if !find {
 		return 1,nil,nil
 	}
-	nextid = uint32(maidconfg.NextID)
+	nextid := uint32(maidconfg.NextID)
 	if nextid == 0 {
 		return 2,nil,nil
 	}

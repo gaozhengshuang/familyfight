@@ -1,19 +1,9 @@
 package main
 import (
 	"gitee.com/jntse/gotoolkit/log"
-	"gitee.com/jntse/gotoolkit/util"
 	_"gitee.com/jntse/gotoolkit/eventqueue"
-	"gitee.com/jntse/gotoolkit/net"
-	"gitee.com/jntse/minehero/server/tbl"
-	"gitee.com/jntse/minehero/server/def"
 	"gitee.com/jntse/minehero/pbmsg"
 	pb "github.com/golang/protobuf/proto"
-	"encoding/json"
-	"net/http"
-	"strconv"
-	"fmt"
-	"time"
-	"strings"
 )
 
 // money
@@ -28,7 +18,7 @@ func (this *GateUser) GetGold() uint64 { return this.gold }
 func (this *GateUser) AddGold(gold uint64, reason string) {
 	this.gold = this.GetGold() + gold
 	log.Info("玩家[%d] 添加gold[%d] 库存[%d] 原因[%s]", this.Id(), gold, this.GetGold(), reason)
-	send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetGold())}
+	send := &msg.GW2C_UpdateGold{Num:pb.Uint64(this.GetGold())}
 	this.SendMsg(send)
 }
 func (this *GateUser) RemoveGold(gold uint64, reason string ) bool {
@@ -37,8 +27,9 @@ func (this *GateUser) RemoveGold(gold uint64, reason string ) bool {
 	}
 	this.gold = this.GetGold() - gold
 	log.Info("玩家[%d] 扣除gold[%d] 库存[%d] 原因[%s]", this.Id(), gold, this.GetGold(), reason)
-	send := &msg.GW2C_UpdateGold{Num:pb.Uint32(this.GetGold())}
+	send := &msg.GW2C_UpdateGold{Num:pb.Uint64(this.GetGold())}
 	this.SendMsg(send)
+	return true
 }
 
 // 添加元宝
