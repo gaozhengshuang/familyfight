@@ -68,6 +68,7 @@ message UserBase {
     optional FreePresentMoney freepresent = 16;
     optional UserTask   task = 17;      // 任务
     optional LuckyDrawHistory luckydraw = 18;   // 抽奖
+    optional uint64     gold            = 19;    //金币
 }
 
 message UserAddress {
@@ -97,10 +98,17 @@ message MaidData
     optional uint32 id = 1;
     optional uint32 count = 2;
 }
+message MaidShopData
+{
+    optional uint32 id = 1;
+    optional uint64 price = 2;
+}
 
 message MaidBin
 {
     repeated MaidData datas = 1;
+    optional uint32 maxid = 2;
+    repeated MaidShopData shop = 3;
 }
 message Serialize {
     optional EntityBase entity  = 1;
