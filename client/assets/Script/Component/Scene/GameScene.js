@@ -28,7 +28,7 @@ cc.Class({
     },
 
     initData() {
-        this._maidList = [];
+        this._playerList = [];
     },
 
     initNotification() {
@@ -42,12 +42,26 @@ cc.Class({
             this.node_maid.addChild(_view1);
             let xx1 = _view1.getComponent('MaidNode');
             xx1.setParentAndData(this.node_maid, 1);
-            this._maidList.push(xx1);
+            this._playerList.push(xx1);
         }
     },
 
-    findPlayerAndMerge(player) {
-        
+    findPlayerAndMerge(_player) {
+        for (let i = 0; i < this._playerList.length; i ++) {
+            let findPlayer = this._playerList[i];
+
+            if (_player.node.uuid != findPlayer.node.uuid) {
+                if (_player.node.getBoundingBox().intersects(findPlayer.node.getBoundingBox())) {
+                    if (_player.getPlayerId() == findPlayer.getPlayerId()) {
+                        findPlayer.node.removeFromParent();
+                        this._playerList.splice(i,1);
+
+                        _player.levelUp();
+                        break;
+                    }
+                }
+            }
+        }
     },
 
     onOpenShopView(event) {
