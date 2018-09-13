@@ -82,12 +82,18 @@ func (this *UserMaid) GetMaxId() uint32 {
 }
 
 func (this *UserMaid) Syn(user* GateUser) {
-	send := &msg.GW2C_AckMaids{ Datas: make([]*msg.MaidData, 0) }
+	maidSend := &msg.GW2C_AckMaids{ Datas: make([]*msg.MaidData, 0) }
 	for _, v := range this.maids {
-		send.Datas = append(send.Datas, v.PackBin())
+		maidSend.Datas = append(maidSend.Datas, v.PackBin())
 	}
-	send.Maxid = pb.Uint32(this.GetMaxId())
-	user.SendMsg(send)
+	maidSend.Maxid = pb.Uint32(this.GetMaxId())
+	user.SendMsg(maidSend)
+
+	shopSend := &msg.GW2C_AckMaidShop{Shop:make([]*msg.MaidShopData,0)}
+	for _, v := range this.shop {
+		shopSend.Shop = append(shopSend.Shop,v.PackBin())
+	}
+	user.SendMsg(shopSend)
 }
 // ========================= 消息接口 ========================= 
 //购买侍女 
