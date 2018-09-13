@@ -34,8 +34,7 @@ cc.Class({
         if (Game.GameInstance.loadingCount == Game.GameInstance.totalCount) {
             //加载完了
             this.loaded = true;
-            // Game.Platform.AutoLogin();
-            this.onLoginComplete();
+            Game.Platform.AutoLogin();
         }
     },
 

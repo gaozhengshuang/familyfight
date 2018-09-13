@@ -1,7 +1,7 @@
 var PlatformDefine = {
     PLATFORM: 'Normal',//'Normal',//'Wechat',//'QQPlay',
-    WSPrefix: 'wss://',
-    LoginHost: 'dati-service17002.giantfun.cn',
+    WSPrefix: 'ws://',
+    LoginHost: '192.168.30.206:7020',
     // LoginHost: '192.168.30.202:7101',
     // LoginPort: 17002,
     LoginSuffix: 'ws_handler',

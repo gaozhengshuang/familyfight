@@ -15,6 +15,7 @@ let Game = {
     ConfigController: require('./Controller/ConfigController'),
     GameController: require('./Controller/GameController'),
     LoginController: require('./Controller/LoginController'),
+    MaidController: require('./Controller/MaidController'),
     NetWorkController: require('./Controller/NetWorkController'),
     NotificationController: require('./Controller/NotificationController'),
     ResController: require('./Controller/ResController'),
