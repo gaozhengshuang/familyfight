@@ -4,10 +4,11 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        btn_shop: { default: null, type: cc.Button },
-        node_maid: { default: null, type: cc.Node },
+        node_player: { default: null, type: cc.Node },
         prefab_player: { default: null, type: cc.Prefab },
-        txt_gold: { default: null, type: cc.Label },
+        label_gold: { default: null, type: cc.Label },
+
+        prefab_Shop: { default: null, type: cc.Prefab },
     },
 
     onLoad() {
@@ -25,6 +26,7 @@ cc.Class({
     onDestroy() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
     },
 
     initData() {
@@ -34,16 +36,22 @@ cc.Class({
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
     },
 
     initView() {
-        for (let i = 0; i < 20; i ++) {
-            let _view1 = cc.instantiate(this.prefab_player);
-            this.node_maid.addChild(_view1);
-            let xx1 = _view1.getComponent('MaidNode');
-            xx1.setParentAndData(this.node_maid, 1);
-            this._playerList.push(xx1);
+        for (let i = 0; i < 10; i ++) {
+            this.createPlayer(i+1);
         }
+    },
+
+    createPlayer(playerId) {
+        let _playerPrefab = cc.instantiate(this.prefab_player);
+        this.node_player.addChild(_playerPrefab);
+
+        let _player = _playerPrefab.getComponent('PlayerNode');
+        _player.setParentAndData(this.node_player, playerId);
+        this._playerList.push(_player);
     },
 
     findPlayerAndMerge(_player) {
@@ -66,9 +74,13 @@ cc.Class({
 
     onOpenShopView(event) {
         event.stopPropagationImmediate();
+        let shopView = cc.instantiate(this.prefab_Shop);
+        if (shopView) {
+            this.node.addChild(shopView);
+        }
     },
 
     updateGold(gold) {
-        this.txt_gold.string = `${gold}`;
+        this.label_gold.string = `${gold}`;
     }
 });

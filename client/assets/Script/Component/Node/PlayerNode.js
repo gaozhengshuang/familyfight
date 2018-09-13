@@ -5,8 +5,8 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        maid_img: { default: null, type: cc.Sprite },
-        addgold_Prefab: { default: null, type: addGoldPrefab},
+        image_maid: { default: null, type: cc.Sprite },
+        prefab_addgold: { default: null, type: addGoldPrefab},
     },
 
     onLoad() {
@@ -76,15 +76,15 @@ cc.Class({
 
     initView() {
         //创建金币动画
-        this.addgold_Node = this.addgold_Prefab.getComponent('AddGoldNode');
+        this.node_addgold = this.prefab_addgold.getComponent('AddGoldNode');
     },
 
     updateView(id) {
         this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel", id);
         if (this.maidBase) {
-            this.addgold_Node.updateGold(this.maidBase.Reward);
+            this.node_addgold.updateGold(this.maidBase.Reward);
         }
-        Game.ResController.SetSprite(this.maid_img, this.maidBase.Path);
+        Game.ResController.SetSprite(this.image_maid, this.maidBase.Path);
     },
 
     setParentAndData(parentNode, data) {
@@ -111,11 +111,11 @@ cc.Class({
     updateEvent(isClick) {
         this.isLongclick = isClick;
         if (this.isLongclick) {
-            this.maid_img.node.scaleX = 1.2;
-            this.maid_img.node.scaleY = 1.2;
+            this.image_maid.node.scaleX = 1.2;
+            this.image_maid.node.scaleY = 1.2;
         } else {
-            this.maid_img.node.scaleX = 1;
-            this.maid_img.node.scaleY = 1;
+            this.image_maid.node.scaleX = 1;
+            this.image_maid.node.scaleY = 1;
         }
     },
 
@@ -165,16 +165,16 @@ cc.Class({
 
         if (targetX >= this.moveMinX && targetX <= this.moveMaxX && targetY >= this.moveMinY && targetY <= this.moveMaxY) {
             if (targetX >= this.node.x) {
-                this.maid_img.node.scaleX = 1;
+                this.image_maid.node.scaleX = 1;
             } else {
-                this.maid_img.node.scaleX = -1;
+                this.image_maid.node.scaleX = -1;
             }
             this.node.runAction(cc.sequence([
                 cc.moveTo(this.intervalTime/2, targetX, targetY),
                 cc.scaleTo(0.1, 1, 0.8),
                 cc.scaleTo(0.1, 1, 1),
                 cc.callFunc(function () {
-                    this.addgold_Node.playGoldAni();
+                    this.node_addgold.playGoldAni();
                 }, this)
             ]));
         } else {

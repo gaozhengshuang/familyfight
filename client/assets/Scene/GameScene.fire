@@ -752,7 +752,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "node_maid",
+    "_name": "node_player",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -980,17 +980,17 @@
       "__id__": 2
     },
     "_enabled": true,
-    "btn_shop": {
-      "__id__": 25
-    },
-    "node_maid": {
+    "node_player": {
       "__id__": 22
     },
     "prefab_player": {
       "__uuid__": "996f9f27-59ba-416d-8417-69615d2edff6"
     },
-    "txt_gold": {
+    "label_gold": {
       "__id__": 7
+    },
+    "prefab_Shop": {
+      "__uuid__": "a83a4f53-b793-45aa-9880-6ea3970f6320"
     }
   }
 ]

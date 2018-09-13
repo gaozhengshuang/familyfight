@@ -8,6 +8,7 @@ var Define = {
         LOADED_COMPLETE: '5',
 
         MERGE_PLAYER: '10',
+        ADD_PLAYER: '11',
 
         CONNECT_TO_GATESERVER: '100',
 

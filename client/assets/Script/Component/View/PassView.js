@@ -20,7 +20,7 @@ cc.Class({
     onDestroy() {
     },
 
-    initView: function () {
+    initView() {
         let passList = [];
         let passBase = Game.ConfigController.GetConfig("PassLevels");
         for (let i = 0; i < passBase.length; i ++) {

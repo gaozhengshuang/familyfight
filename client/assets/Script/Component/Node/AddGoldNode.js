@@ -4,8 +4,8 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        gold_img: { default: null, type: cc.Sprite },
-        gold_txt: { default: null, type: cc.Label },
+        image_gold: { default: null, type: cc.Sprite },
+        label_gold: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -34,7 +34,7 @@ cc.Class({
 
     updateGold(gold) {
         this.gold = gold;
-        this.gold_txt.string = `+${this.gold*2}`;
+        this.label_gold.string = `+${this.gold*2}`;
     },
 
     playGoldAni() {
