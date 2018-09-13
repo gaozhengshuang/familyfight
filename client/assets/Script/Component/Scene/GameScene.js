@@ -4,10 +4,11 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        btn_shop: { default: null, type: cc.Button },
-        node_maid: { default: null, type: cc.Node },
+        node_player: { default: null, type: cc.Node },
         prefab_player: { default: null, type: cc.Prefab },
-        txt_gold: { default: null, type: cc.Label },
+        label_gold: { default: null, type: cc.Label },
+
+        prefab_Shop: { default: null, type: cc.Prefab },
     },
 
     onLoad() {
@@ -39,9 +40,9 @@ cc.Class({
     initView() {
         for (let i = 0; i < 20; i ++) {
             let _view1 = cc.instantiate(this.prefab_player);
-            this.node_maid.addChild(_view1);
-            let xx1 = _view1.getComponent('MaidNode');
-            xx1.setParentAndData(this.node_maid, 1);
+            this.node_player.addChild(_view1);
+            let xx1 = _view1.getComponent('PlayerNode');
+            xx1.setParentAndData(this.node_player, 1);
             this._playerList.push(xx1);
         }
     },
@@ -69,6 +70,6 @@ cc.Class({
     },
 
     updateGold(gold) {
-        this.txt_gold.string = `${gold}`;
+        this.label_gold.string = `${gold}`;
     }
 });

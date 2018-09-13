@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "MaidNode",
+    "_name": "PlayerNode",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -307,7 +307,7 @@
     "asset": {
       "__uuid__": "996f9f27-59ba-416d-8417-69615d2edff6"
     },
-    "fileId": "6bmPmKma1OWKRl3xgo8i8f",
+    "fileId": "61JPuRF0ZPR7bIfu5yPacW",
     "sync": false
   },
   {
@@ -414,7 +414,7 @@
     "asset": {
       "__uuid__": "996f9f27-59ba-416d-8417-69615d2edff6"
     },
-    "fileId": "9a+0VzwGBIeataUmAS1osr",
+    "fileId": "dbBf6AQu1KI6deuYfwLLne",
     "sync": false
   },
   {
@@ -425,10 +425,10 @@
       "__id__": 5
     },
     "_enabled": true,
-    "gold_img": {
+    "image_gold": {
       "__id__": 7
     },
-    "gold_txt": {
+    "label_gold": {
       "__id__": 10
     }
   },
@@ -440,21 +440,21 @@
     "asset": {
       "__uuid__": "996f9f27-59ba-416d-8417-69615d2edff6"
     },
-    "fileId": "feRKix6GxCIZdPmJFI3495",
+    "fileId": "d6Wo6Gk6dGMI7hMmneaqql",
     "sync": false
   },
   {
-    "__type__": "d17cduvanJJ3LPqS1RPCMYh",
+    "__type__": "650015WXZdBCqlVRhycwxDm",
     "_name": "",
     "_objFlags": 0,
     "node": {
       "__id__": 1
     },
     "_enabled": true,
-    "maid_img": {
+    "image_maid": {
       "__id__": 3
     },
-    "addgold_Prefab": {
+    "prefab_addgold": {
       "__id__": 13
     }
   },
