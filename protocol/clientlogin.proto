@@ -20,6 +20,7 @@ message L2C_RetLogin {
     optional string reason = 2;     // 失败原因
     optional msg.IpHost gatehost = 3;
     optional string verifykey = 5;  // 客户端使用这个key登陆网关
+    optional string host = 6;
 }
 
 

@@ -59,6 +59,7 @@ func newL2C_RetLogin(reason string, ip string, port int, key string) *msg.L2C_Re
 		Port : pb.Int(port),
 		},
 		Verifykey : pb.String(key),
+		Host: pb.String(fmt.Sprintf("%s:%d",ip,port))
 	}
 	if reason != "" {
 		send.Result = pb.Int32(0)
