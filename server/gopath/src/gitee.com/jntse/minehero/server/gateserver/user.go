@@ -415,7 +415,6 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 }
 
 func (this *GateUser) Syn() {
-	this.SendUserBase()
 	this.CheckHaveCompensation()
 	this.QueryPlatformCoins()
 
@@ -424,6 +423,8 @@ func (this *GateUser) Syn() {
     send.Time = pb.Int64(util.CURTIMEUS())
 	this.SendMsg(send)
 	this.maid.Syn(this)
+
+	this.SendUserBase()
 }
 
 // 断开连接回调
