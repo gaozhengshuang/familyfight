@@ -15,9 +15,29 @@ MaidController.prototype.Init = function (cb) {
     Tools.InvokeCallback(cb, null);
 }
 
+MaidController.prototype.getMaids = function() {
+    return this._maids;
+}
+
 //回调函数
 MaidController.prototype.onGW2C_AckMaids = function (msgid, data) {
-    this._maids = data.datas;
+    if (this._maids == null) {
+        this._maids = data.datas;
+    } else {
+        for (let i = 0; i < data.datas.length; i ++) {
+            let _newMaid = data.datas[i];
+            for (let b = 0; b < this._maids.length; b ++) {
+                let _oldMaid = this._maids[b];
+                if (_newMaid.id == _oldMaid.id) {
+                    if (_newMaid.count > _oldMaid.count) {
+                        NotificationController.Emit(Game.Define.EVENT_KEY.ADD_PLAYER, _newMaid.id);
+                    }
+                    this._maids[b] = _newMaid;
+                    break;
+                }
+            }
+        }
+    }
     this.topMaid = data.maxid;
 }
 

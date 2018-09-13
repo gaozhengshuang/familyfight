@@ -40,8 +40,11 @@ cc.Class({
     },
 
     initView() {
-        for (let i = 0; i < 10; i ++) {
-            this.createPlayer(i+1);
+        for (let i = 0; i < Game.MaidController.getMaids().length; i ++) {
+            let player = Game.MaidController.getMaids()[i];
+            for (let b = 0; b < player.count; b ++) {
+                this.createPlayer(player.id);
+            }
         }
     },
 
