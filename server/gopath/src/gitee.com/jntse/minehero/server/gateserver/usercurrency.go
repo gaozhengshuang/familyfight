@@ -15,6 +15,12 @@ func (this *GateUser) AddMoney(gold uint32, reason string) {
 
 // gold
 func (this *GateUser) GetGold() uint64 { return this.gold }
+func (this *GateUser) SetGold(gold uint64) {
+	this.gold = gold
+	log.Info("玩家[%d] 更新gold[%d] 库存[%d] ", this.Id(), gold, this.GetGold())
+	send := &msg.GW2C_UpdateTrueGold{Num:pb.Uint64(this.GetGold())}
+	this.SendMsg(send)
+}
 func (this *GateUser) AddGold(gold uint64, reason string) {
 	this.gold = this.GetGold() + gold
 	log.Info("玩家[%d] 添加gold[%d] 库存[%d] 原因[%s]", this.Id(), gold, this.GetGold(), reason)

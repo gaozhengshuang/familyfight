@@ -93,6 +93,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistSendProto(msg.GW2C_AckBuyMaid{})
 	this.msgparser.RegistSendProto(msg.GW2C_AckMergeMaid{})
 	//货币
+	this.msgparser.RegistProtoMsg(msg.C2GW_UploadTrueGold{}, on_C2GW_UploadTrueGold)
 	this.msgparser.RegistSendProto(msg.GW2C_UpdateTrueGold{})
 }
 
@@ -287,4 +288,21 @@ func on_C2GW_ReqMergeMaid(session network.IBaseNetSession, message interface{}) 
 	}
 	send.Result = pb.Uint32(result)
 	user.SendMsg(send)
+}
+
+func on_C2GW_UploadTrueGold(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_UploadTrueGold)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	user.SetGold(tmsg.GetNum())
 }
