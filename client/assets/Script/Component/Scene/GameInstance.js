@@ -23,6 +23,7 @@ cc.Class({
             Game.GameController,
             Game.AudioController,
             Game.LoginController,
+            Game.MaidController,
             Game.ResController,
             Game.TimeController,
         ];
