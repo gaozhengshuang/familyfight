@@ -179,7 +179,7 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 	newShop := make(map[uint32]*MaidShop)
 	for _, v := range maidconfig.ShopShow {
 		oldshop, find := this.shop[uint32(v)]
-		if find {
+		if !find {
 			//找不到初始化价格
 			maidshop, find := tbl.TMaidShopBase.TMaidShopById[uint32(v)]
 			price := uint64(0)
