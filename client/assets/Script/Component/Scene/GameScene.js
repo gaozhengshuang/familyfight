@@ -67,6 +67,10 @@ cc.Class({
 
     onOpenShopView(event) {
         event.stopPropagationImmediate();
+        let shopView = cc.instantiate(this.prefab_Shop);
+        if (shopView) {
+            this.node.addChild(shopView);
+        }
     },
 
     updateGold(gold) {
