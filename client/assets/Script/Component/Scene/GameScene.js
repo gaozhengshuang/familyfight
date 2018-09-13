@@ -26,6 +26,7 @@ cc.Class({
     onDestroy() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
     },
 
     initData() {
@@ -35,16 +36,22 @@ cc.Class({
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
     },
 
     initView() {
-        for (let i = 0; i < 20; i ++) {
-            let _view1 = cc.instantiate(this.prefab_player);
-            this.node_player.addChild(_view1);
-            let xx1 = _view1.getComponent('PlayerNode');
-            xx1.setParentAndData(this.node_player, 1);
-            this._playerList.push(xx1);
+        for (let i = 0; i < 10; i ++) {
+            this.createPlayer(i+1);
         }
+    },
+
+    createPlayer(playerId) {
+        let _playerPrefab = cc.instantiate(this.prefab_player);
+        this.node_player.addChild(_playerPrefab);
+
+        let _player = _playerPrefab.getComponent('PlayerNode');
+        _player.setParentAndData(this.node_player, playerId);
+        this._playerList.push(_player);
     },
 
     findPlayerAndMerge(_player) {
