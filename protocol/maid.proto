@@ -3,6 +3,12 @@ import "serialize.proto";
 message GW2C_AckMaids
 {
     repeated msg.MaidData datas = 1;
+    optional uint32 maxid = 2;
+}
+
+message GW2C_AckMaidShop
+{
+    repeated MaidShopData shop = 3;
 }
 
 message C2GW_ReqMergeMaid
