@@ -109,7 +109,7 @@ func (this *UserMaid) Syn(user* GateUser) {
 // ========================= 消息接口 ========================= 
 //购买侍女 
 func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition *MaidData){
-	shopdata, find := this.shop[id]
+	_, find := this.shop[id]
 	if !find {
 		return 2,nil
 	}
