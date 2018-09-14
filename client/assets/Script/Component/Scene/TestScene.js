@@ -1,4 +1,4 @@
-
+let Game = require('../../Game');
 cc.Class({
     extends: cc.Component,
 
@@ -15,9 +15,6 @@ cc.Class({
     update(dt) {
     },
     onStartTest: function () {
-        let node = cc.instantiate(this.dialogPrefab);
-        let dialogView = node.getComponent('DialogView');
-        this.node.addChild(node);
-        dialogView.Init(1);
+        Game.GameController.ShowDialogue(this.node, 1);
     }
 });
