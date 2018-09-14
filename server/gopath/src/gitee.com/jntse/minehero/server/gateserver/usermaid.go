@@ -114,12 +114,12 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 	if !find {
 		return 2,nil
 	}
-	if user.GetGold() < shopdata.price {
-		return 3,nil
-	}
+	// if user.GetGold() < shopdata.price {
+	// 	return 3,nil
+	// }
 	//可以买了
 	maid := this.AddMaid(user,id,1)
-	user.RemoveGold(shopdata.price, "购买侍女")
+	// user.RemoveGold(shopdata.price, "购买侍女")
 	return 0, maid
 }
 

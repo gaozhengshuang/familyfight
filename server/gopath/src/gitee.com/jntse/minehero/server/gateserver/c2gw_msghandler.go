@@ -256,6 +256,7 @@ func on_C2GW_ReqBuyMaid(session network.IBaseNetSession, message interface{}) {
 		user.SendMsg(updateSend)
 	}
 	send.Result = pb.Uint32(result)
+	send.Maidid = pb.Uint32(tmsg.GetMaidid())
 	user.SendMsg(send)
 }
 //合并
