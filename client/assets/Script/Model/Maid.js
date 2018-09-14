@@ -76,7 +76,10 @@ Maid.prototype.onGW2C_AckMaids = function (msgid, data) {
             
             if (isNewPlayer) {
                 this._maids.push(_newMaid);
-                NotificationController.Emit(Define.EVENT_KEY.ADD_PLAYER, _newMaid.id);
+                let maidBase = ConfigController.GetConfigById("TMaidLevel", _newMaid.id);
+                if (maidBase && maidBase.Passlevels == this.GetCurPass()) {
+                    NotificationController.Emit(Define.EVENT_KEY.ADD_PLAYER, _newMaid.id);
+                }
             }
         }
     }
