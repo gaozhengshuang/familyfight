@@ -35,7 +35,7 @@ cc.Class({
         let passBase = Game.ConfigController.GetConfig("PassLevels");
         for (let i = 0; i < passBase.length; i ++) {
             let info = passBase[i];
-            if (info.Id <= Game.UserModel.GetTopPass()) {
+            if (info.Id <= Game.MaidModel.GetTopPass()) {
                 passList.push(info);
             }
         }

@@ -58,10 +58,10 @@ cc.Class({
     },
 
     updatePlayer() {
-        for (let i = 0; i < Game.MaidController.getMaids().length; i ++) {
-            let player = Game.MaidController.getMaids()[i];
+        for (let i = 0; i < Game.MaidModel.GetMaids().length; i ++) {
+            let player = Game.MaidModel.GetMaids()[i];
             let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", player.id);
-            if (maidBase && maidBase.Passlevels <= Game.UserModel.GetCurPass()) {
+            if (maidBase && maidBase.Passlevels <= Game.MaidModel.GetCurPass()) {
                 for (let b = 0; b < player.count; b ++) {
                     this.createPlayer(player.id);
                 }

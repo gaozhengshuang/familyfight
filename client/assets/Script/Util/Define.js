@@ -29,6 +29,7 @@ var Define = {
 
         USERINFO_UPDATEGOLD: '600',
         USERINFO_UPDATEPASS: '601',
+        MAID_UPDATESHOP: '602',
     },
     DATA_KEY: {
         HISTORY_PHONE: '1',

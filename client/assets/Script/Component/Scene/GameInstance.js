@@ -23,13 +23,13 @@ cc.Class({
             Game.GameController,
             Game.AudioController,
             Game.LoginController,
-            Game.MaidController,
             Game.ResController,
             Game.TimeController,
         ];
 
         this.models = [
             Game.UserModel,
+            Game.MaidModel,
         ];
         this.totalCount = this.ctls.length + this.models.length;
         Game.async.waterfall([

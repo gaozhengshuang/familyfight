@@ -83,8 +83,8 @@ cc.Class({
         this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel", id);
         if (this.maidBase) {
             this.node_addgold.updateGold(this.maidBase.Reward);
+            Game.ResController.SetSprite(this.image_maid, this.maidBase.Path);
         }
-        Game.ResController.SetSprite(this.image_maid, this.maidBase.Path);
     },
 
     setParentAndData(parentNode, data) {

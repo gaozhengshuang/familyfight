@@ -17,13 +17,13 @@ cc.Class({
         this._target = data.target;
         this._data = data.array[index];
 
-        this.passClickTrue_img.node.active = Game.UserModel.GetCurPass() == this._data.Id;
+        this.passClickTrue_img.node.active = Game.MaidModel.GetCurPass() == this._data.Id;
         Game.ResController.SetSprite(this.pass_img, this._data.Path);
     },
 
     clicked() {
-        if (this._data.Id != Game.UserModel.GetCurPass()) {
-            Game.UserModel.SetCurPass(this._data.Id);
+        if (this._data.Id != Game.MaidModel.GetCurPass()) {
+            Game.MaidModel.SetCurPass(this._data.Id);
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_PLAYER);
         }        

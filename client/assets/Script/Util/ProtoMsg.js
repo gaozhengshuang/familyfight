@@ -19961,6 +19961,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IGW2C_AckBuyMaid
          * @property {number|null} [result] GW2C_AckBuyMaid result
+         * @property {number|null} [maidid] GW2C_AckBuyMaid maidid
          */
 
         /**
@@ -19985,6 +19986,14 @@ $root.msg = (function() {
          * @instance
          */
         GW2C_AckBuyMaid.prototype.result = 0;
+
+        /**
+         * GW2C_AckBuyMaid maidid.
+         * @member {number} maidid
+         * @memberof msg.GW2C_AckBuyMaid
+         * @instance
+         */
+        GW2C_AckBuyMaid.prototype.maidid = 0;
 
         /**
          * Creates a new GW2C_AckBuyMaid instance using the specified properties.
@@ -20012,6 +20021,8 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.result != null && message.hasOwnProperty("result"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
+            if (message.maidid != null && message.hasOwnProperty("maidid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.maidid);
             return writer;
         };
 
@@ -20048,6 +20059,9 @@ $root.msg = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.result = reader.uint32();
+                    break;
+                case 2:
+                    message.maidid = reader.uint32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -20087,6 +20101,9 @@ $root.msg = (function() {
             if (message.result != null && message.hasOwnProperty("result"))
                 if (!$util.isInteger(message.result))
                     return "result: integer expected";
+            if (message.maidid != null && message.hasOwnProperty("maidid"))
+                if (!$util.isInteger(message.maidid))
+                    return "maidid: integer expected";
             return null;
         };
 
@@ -20104,6 +20121,8 @@ $root.msg = (function() {
             var message = new $root.msg.GW2C_AckBuyMaid();
             if (object.result != null)
                 message.result = object.result >>> 0;
+            if (object.maidid != null)
+                message.maidid = object.maidid >>> 0;
             return message;
         };
 
@@ -20120,10 +20139,14 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
+            if (options.defaults) {
                 object.result = 0;
+                object.maidid = 0;
+            }
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
+            if (message.maidid != null && message.hasOwnProperty("maidid"))
+                object.maidid = message.maidid;
             return object;
         };
 

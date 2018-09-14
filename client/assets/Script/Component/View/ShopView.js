@@ -9,6 +9,7 @@ cc.Class({
 
     onLoad() {
         this.initView();
+        this.initNotification();
     },
 
     start() {
@@ -18,10 +19,19 @@ cc.Class({
     },
 
     onDestroy() {
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.MAID_UPDATESHOP, this, this.updateTableView);
+    },
+
+    initNotification() {
+        Game.NotificationController.On(Game.Define.EVENT_KEY.MAID_UPDATESHOP, this, this.updateTableView);
     },
 
     initView() {
-        this.tableView.getComponent(cc.tableView).initTableView(10, { array: [0,1,2,3,4,5,6,7,8,9], target: this });
+        this.updateTableView();
+    },
+
+    updateTableView() {
+        this.tableView.getComponent(cc.tableView).initTableView(Game.MaidModel.GetShopMaids().length, { array: Game.MaidModel.GetShopMaids(), target: this });
     },
 
     onClose() {
