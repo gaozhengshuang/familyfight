@@ -88,16 +88,16 @@ cc.Class({
         }
     },
 
-    setParentAndData(parentNode, touchComponent, data) {
+    setParentAndData(parentNode, posComponent, data) {
         this.parentNode = parentNode;
         this.moveMaxX = (parentNode.width / 2) - (this.node.width / 2);
         this.moveMaxY = (parentNode.height / 2) - (this.node.height / 2);
         this.moveMinX = -this.moveMaxX;
         this.moveMinY = -this.moveMaxY;
         
-        if (touchComponent != null && touchComponent.node != null) {
-            this.node.x = touchComponent.node.x;
-            this.node.y = touchComponent.node.y;
+        if (posComponent != null && posComponent.node != null) {
+            this.node.x = posComponent.node.x;
+            this.node.y = posComponent.node.y;
         } else {
             this.node.x = this.moveMinX + Math.floor(Math.random() * (this.moveMaxX - this.moveMinX + 1));
             this.node.y = this.moveMinY + Math.floor(Math.random() * (this.moveMaxY - this.moveMinY + 1));
