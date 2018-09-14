@@ -5,8 +5,8 @@
 package table;
 
 
-// Defined in table: TDialogue
-message TDialogue
+// Defined in table: TDialogueBase
+message TDialogueBase
 {	
 	
 	
