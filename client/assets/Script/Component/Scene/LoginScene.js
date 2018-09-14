@@ -11,6 +11,8 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
+        Game.Tools.AutoFit(this.targetCanvas);
+        
         Game.NotificationController.On(Game.Define.EVENT_KEY.CONNECT_TO_GATESERVER, this, this.onLoginComplete);
     },
 

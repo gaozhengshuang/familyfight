@@ -9,9 +9,12 @@ cc.Class({
         label_gold: { default: null, type: cc.Label },
         prefab_Shop: { default: null, type: cc.Prefab },
         prefab_FindNewPlayer: { default: null, type: cc.Prefab },
+        targetCanvas: { default: null, type: cc.Canvas },
     },
 
     onLoad() {
+        Game.Tools.AutoFit(this.targetCanvas);
+
         this.initData();
         this.initNotification();
         this.initView();
@@ -33,7 +36,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
-        Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.AckMergePlayer);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.ackMergePlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
     },
 
@@ -52,7 +55,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
         Game.NotificationController.On(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
-        Game.NotificationController.On(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.AckMergePlayer);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.ackMergePlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
     },
 
@@ -104,7 +107,7 @@ cc.Class({
         }
     },
 
-    AckMergePlayer(result) {
+    ackMergePlayer(result) {
         if (result == 0) {
             //删除掉合成成功的女仆
             this._touchPlayer.node.destroy();
