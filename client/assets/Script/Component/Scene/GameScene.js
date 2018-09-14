@@ -61,6 +61,7 @@ cc.Class({
     },
 
     updatePlayer() {
+        this.node_player.removeAllChildren();
         for (let i = 0; i < Game.MaidModel.GetMaids().length; i ++) {
             let player = Game.MaidModel.GetMaids()[i];
             let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", player.id);

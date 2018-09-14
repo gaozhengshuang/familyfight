@@ -86,6 +86,7 @@ UserModel.prototype.onGW2C_RetLogin = function (msgid, data) {
 UserModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
     this.userInfo = data;
     NotificationController.Emit(Define.EVENT_KEY.CONNECT_TO_GATESERVER);
+    
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, Tools.GetValueInObj(this.userInfo, 'base.gold') || 0);
     let Game = require('../Game');
     Game.Platform.SendUserInfo();
