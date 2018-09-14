@@ -31,6 +31,7 @@ var Define = {
         UPDATE_PLAYER: '1003',
         MERGEPLAYER_ACK: '1004',
         FINDNEW_PLAYER: '1005',
+        SHOWDIALOGUE_PLAYER: '1006',
     },
     DATA_KEY: {
         HISTORY_PHONE: '1',

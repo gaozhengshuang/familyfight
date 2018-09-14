@@ -24,8 +24,16 @@ cc.Class({
     clicked() {
         if (this._data.Id != Game.MaidModel.GetCurPass()) {
             Game.MaidModel.SetCurPass(this._data.Id);
+
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_PLAYER);
-        }        
+        }
+
+        if (this._data.Id == Game.MaidModel.GetTopPass() && cc.sys.localStorage.getItem('lookTopPass') < this._data.Id) {
+            if (this._data.DialogueID != 0) {
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);
+            }
+            cc.sys.localStorage.setItem('lookTopPass', this._data.Id);
+        }
     }
 });

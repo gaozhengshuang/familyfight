@@ -21,6 +21,11 @@ cc.Class({
     },
 
     start() {
+        let _lookTopPass = cc.sys.localStorage.getItem('lookTopPass');
+        if (_lookTopPass == 0 || _lookTopPass == null) {
+            this.showDialoguePlayer(1);
+            cc.sys.localStorage.setItem('lookTopPass', 1);
+        }
     },
 
     update(dt) {
@@ -38,6 +43,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.ackMergePlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
     },
 
     initData() {
@@ -57,6 +63,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.ackMergePlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
     },
 
     initView() {
@@ -131,6 +138,10 @@ cc.Class({
                 _findNewPlayer.setData(_playerId);
             }
         }
+    },
+
+    showDialoguePlayer(_dialogueId) {
+        Game.GameController.ShowDialogue(this.node, _dialogueId);
     },
 
     onOpenShopView(event) {
