@@ -26,6 +26,14 @@ cc.Class({
 
     //漂浮提示代码--------------------------------------start-----------------------------------
     onShowTips(data) {
+        if (this.notifyPrefab) {
+            let toast = cc.instantiate(this.notifyPrefab);
+            toast.x = 0;
+            toast.y = 0;
+            toast.parent = this.tipParentNode;
+            let toastView = toast.getComponent('NotifyView');
+            toastView.flap(data.text, data.alive || 3, data.delay || 0.1);
+        }
     },
     //漂浮提示代码--------------------------------------end-------------------------------------
 

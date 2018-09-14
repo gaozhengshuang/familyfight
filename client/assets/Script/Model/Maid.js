@@ -75,7 +75,7 @@ Maid.prototype.onGW2C_AckMaids = function (msgid, data) {
 }
 
 Maid.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
-    NotificationController.Emit(Define.EVENT_KEY.MERGEPLAYER_ACK, data);
+    NotificationController.Emit(Define.EVENT_KEY.MERGEPLAYER_ACK, data.result);
 }
 
 Maid.prototype.onGW2C_AckMaidShop = function (msgid, data) {

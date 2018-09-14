@@ -120,8 +120,7 @@ cc.Class({
                 }
             }
 
-            
-            NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
         }
     },
 
