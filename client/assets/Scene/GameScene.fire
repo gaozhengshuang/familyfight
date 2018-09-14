@@ -991,6 +991,9 @@
     },
     "prefab_Shop": {
       "__uuid__": "a83a4f53-b793-45aa-9880-6ea3970f6320"
+    },
+    "prefab_FindNewPlayer": {
+      "__uuid__": "d1280465-beeb-488f-a9f2-bc7cca2131a9"
     }
   }
 ]

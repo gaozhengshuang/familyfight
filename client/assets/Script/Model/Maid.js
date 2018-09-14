@@ -7,7 +7,7 @@ let Define = require("../Util/Define");
 
 var Maid = function () {
     this._maids = null;
-    this.topMaid = 0;
+    this.topMaid = 1;
     this._shopMaids = [];
     this.curPass = 1;
 }
@@ -70,6 +70,10 @@ Maid.prototype.onGW2C_AckMaids = function (msgid, data) {
                 }
             }
         }
+    }
+
+    if (this.topMaid != data.maxid) {
+        NotificationController.Emit(Define.EVENT_KEY.FINDNEW_PLAYER, data.maxid);
     }
     this.topMaid = data.maxid;
 }

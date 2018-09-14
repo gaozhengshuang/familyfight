@@ -7,11 +7,6 @@ var Define = {
         CHANGE_GAMESTATE: '0',
         LOADED_COMPLETE: '5',
 
-        MERGE_PLAYER: '10',
-        ADD_PLAYER: '11',
-        UPDATE_PLAYER: '12',
-        MERGEPLAYER_ACK: '13',
-
         CONNECT_TO_GATESERVER: '100',
 
         USERINFO_UPDATECOINS: '200',
@@ -30,6 +25,12 @@ var Define = {
         USERINFO_UPDATEGOLD: '600',
         USERINFO_UPDATEPASS: '601',
         MAID_UPDATESHOP: '602',
+
+        MERGE_PLAYER: '1001',
+        ADD_PLAYER: '1002',
+        UPDATE_PLAYER: '1003',
+        MERGEPLAYER_ACK: '1004',
+        FINDNEW_PLAYER: '1005',
     },
     DATA_KEY: {
         HISTORY_PHONE: '1',

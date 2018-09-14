@@ -33,7 +33,11 @@ cc.Class({
     },
 
     buyShop() {
-        Game.NetWorkController.Send('msg.C2GW_ReqBuyMaid', {maidid: this._data.id});
+        if (Game.UserModel.GetGold() >= this._data.price) {
+            Game.NetWorkController.Send('msg.C2GW_ReqBuyMaid', {maidid: this._data.id});
+        } else {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>' + '金币不足哟!' + '</color>' });
+        }
     },
 
     clicked() {

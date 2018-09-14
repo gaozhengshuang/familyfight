@@ -8,6 +8,7 @@ cc.Class({
         prefab_player: { default: null, type: cc.Prefab },
         label_gold: { default: null, type: cc.Label },
         prefab_Shop: { default: null, type: cc.Prefab },
+        prefab_FindNewPlayer: { default: null, type: cc.Prefab },
     },
 
     onLoad() {
@@ -33,6 +34,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.AckMergePlayer);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
     },
 
     initData() {
@@ -50,6 +52,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.AckMergePlayer);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
     },
 
     initView() {
@@ -71,11 +74,14 @@ cc.Class({
 
     createPlayer(playerId) {
         let _playerPrefab = cc.instantiate(this.prefab_player);
-        this.node_player.addChild(_playerPrefab);
-
-        let _player = _playerPrefab.getComponent('PlayerNode');
-        _player.setParentAndData(this.node_player, playerId);
-        this._playerList.push(_player);
+        if (_playerPrefab) {
+            this.node_player.addChild(_playerPrefab);
+            let _player = _playerPrefab.getComponent('PlayerNode');
+            if (_player) {
+                _player.setParentAndData(this.node_player, playerId);
+                this._playerList.push(_player);
+            }
+        }
     },
 
     findPlayerAndMerge(_player) {
@@ -121,6 +127,17 @@ cc.Class({
             }
 
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
+        }
+    },
+
+    findNewPlayer(_playerId) {
+        let _prefab = cc.instantiate(this.prefab_FindNewPlayer);
+        if (_prefab) {
+            this.node.addChild(_prefab);
+            let _findNewPlayer = _prefab.getComponent('FindNewPlayerView');
+            if (_findNewPlayer) {
+                _findNewPlayer.setData(_playerId);
+            }
         }
     },
 

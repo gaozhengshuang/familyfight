@@ -1138,7 +1138,13 @@
     "node": {
       "__id__": 1
     },
-    "_enabled": true
+    "_enabled": true,
+    "image_maid": {
+      "__id__": 20
+    },
+    "label_name": {
+      "__id__": 23
+    }
   },
   {
     "__type__": "cc.PrefabInfo",

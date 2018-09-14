@@ -333,7 +333,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 84,
+      "width": 85,
       "height": 40
     },
     "_rotationX": 0,
@@ -371,7 +371,7 @@
     "_N$string": "商 店",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
-    "_N$fontFamily": "Arial",
+    "_N$fontFamily": "Microsoft YaHei",
     "_N$overflow": 0
   },
   {
