@@ -132,13 +132,13 @@ cc.Class({
                 resetX = 200;
             }
             if (this.node.x < this.moveMinX) {
-                resetX = 100;
+                resetX = -200;
             }
             if (this.node.y > this.moveMaxY) {
-                resetY = 200;
+                resetY = 300;
             }
             if (this.node.y < this.moveMaxY) {
-                resetY = 100;
+                resetY = -300;
             }
             this.node.runAction(cc.moveTo(0.2, resetX, resetY));
             return;
