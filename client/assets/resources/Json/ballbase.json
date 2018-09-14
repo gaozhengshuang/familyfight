@@ -1,7 +1,0 @@
-{
-	"Tool": "github.com/davyxu/tabtoy",
-	"Version": "2.8.10",
-	"TBall":[
-		{ "Id": 1, "Atk": 1, "Price": 1 },
-		{ "Id": 2, "Atk": 1, "Price": 1 }
-	]}

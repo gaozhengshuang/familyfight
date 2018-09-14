@@ -1,0 +1,10 @@
+{
+	"Tool": "github.com/davyxu/tabtoy",
+	"Version": "2.8.10",
+	"TDialogue":[
+		{ "Id": 1, "Index": 1, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "富察皇后", "NameLocation": 1, "Content": "今天天气真好啊" },
+		{ "Id": 2, "Index": 1, "HeadSprite":[ "Image/Head/1", "Image/Head/2" ], "HeadLocation":[ 1, 2 ], "Name": "???", "NameLocation": 2, "Content": "是啊，挺好的" },
+		{ "Id": 3, "Index": 1, "HeadSprite":[ "Image/Head/3", "Image/Head/2" ], "HeadLocation":[ 1, 2 ], "Name": "李公公", "NameLocation": 1, "Content": "皇上驾到…上驾到…驾到…到…刀…" },
+		{ "Id": 4, "Index": 1, "HeadSprite":[ "Image/Head/4", "Image/Head/2" ], "HeadLocation":[ 1, 2 ], "Name": "皇上", "NameLocation": 2, "Content": "朕惟乾坤德合、式隆化育之功。内外治成、聿懋雍和之用。典礼于斯而备。教化所由以兴。咨尔何舍里氏。乃内大臣噶布喇之女也。世德钟祥。崇勋启秀。柔嘉成性、宜昭女教于六宫。贞静持躬、应正母仪于万国。兹仰承太皇太后懿命。以册宝立尔为皇后。其尚弘资孝养。克赞恭勤。茂本支奕叶之休。佐宗庙维馨之祀。钦哉。" },
+		{ "Id": 5, "Index": 1, "HeadSprite":[ "Image/Head/4", "Image/Head/2" ], "HeadLocation":[ 1, 2 ], "Name": "延禧", "NameLocation": 1, "Content": "谢皇上隆恩" }
+	]}

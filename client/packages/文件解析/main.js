@@ -1,5 +1,6 @@
 'use strict';
 var fs = require('fs');
+var async = require('async');
 var node_xj = require('xls-to-json');
 var process = require('child_process');
 
@@ -15,24 +16,30 @@ module.exports = {
     // register your ipc messages here
     messages: {
         'genJson'() {
-            // open entry panel registered in package.json
+            let fileNames = [
+                'proto_index',
+                'gialoguebase',
+                'maidlevelbase',
+                'maidshopbase',
+                'passlevelsbase'
+            ];
             Editor.log('开始生成JSON');
-            let sourcePath = __dirname + '\\..\\..\\..\\docs\\tbl\\*.json';
-            let targetFile = __dirname + '\\..\\..\\assets\\resources\\Json\\';
-            let cmd = 'copy ' + sourcePath + ' ' + targetFile;
-            process.exec(cmd, function (err, stdout, stderr) {
+            async.timesSeries(fileNames.length, function (n, tnext) {
+                let sourcePath = __dirname + '\\..\\..\\..\\docs\\tbl\\' + fileNames[n] + '.json';
+                let targetFile = __dirname + '\\..\\..\\assets\\resources\\Json\\';
+                let cmd = 'copy ' + sourcePath + ' ' + targetFile;
+                process.exec(cmd, function (err, stdout, stderr) {
+                    if (err) {
+                        tnext(err);
+                    } else {
+                        tnext();
+                    }
+                });
+            }, function (err) {
                 if (err) {
-                    Editor.log('++++++ Json 错误 ++++++' + stderr);
+                    Editor.log('++++++ Json 错误 ++++++' + JSON.stringify(err));
                 } else {
-                    sourcePath = __dirname + '\\..\\..\\..\\docs\\json\\*.json';
-                    let cmd = 'copy ' + sourcePath + ' ' + targetFile;
-                    process.exec(cmd, function (err, stdout, stderr) {
-                        if (err) {
-                            Editor.log('++++++ Json 错误 ++++++' + stderr);
-                        } else {
-                            Editor.log('生成成功');
-                        }
-                    });
+                    Editor.log('生成成功');
                 }
             });
         },
