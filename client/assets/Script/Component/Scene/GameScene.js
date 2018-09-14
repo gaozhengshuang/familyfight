@@ -40,6 +40,7 @@ cc.Class({
     initData() {
         this._playerList = [];
         this._touchPlayer = null;
+        this._findPlayer = null;
         this._deleteIndex = 0;
 
         this.mainTime = 0;
@@ -94,7 +95,7 @@ cc.Class({
             if (this._touchPlayer.node.uuid != findPlayer.node.uuid) {
                 if (this._touchPlayer.node.getBoundingBox().intersects(findPlayer.node.getBoundingBox())) {
                     if (this._touchPlayer.getPlayerId() == findPlayer.getPlayerId()) {
-                        this._deleteIndex = i;
+                        this._findPlayer = findPlayer;
                         Game.NetWorkController.Send('msg.C2GW_ReqMergeMaid', {maidid: findPlayer.getPlayerId()});
                         break;
                     }
@@ -106,26 +107,12 @@ cc.Class({
     AckMergePlayer(result) {
         if (result == 0) {
             //删除掉合成成功的女仆
-            this._playerList[this._deleteIndex].node.destroy();
-            this._playerList.splice(this._deleteIndex, 1);
+            this._touchPlayer.node.destroy();
+            this._findPlayer.node.destroy();
 
-            //把当前拖动的女仆进行升级
-            let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", this._touchPlayer.getPlayerId());
-            let nextMaidBase = Game.ConfigController.GetConfigById("TMaidLevel", maidBase.NextID);
-            if (maidBase && nextMaidBase) {
-                if (maidBase.Passlevels != nextMaidBase.Passlevels) {   //两个女仆的关卡等级不一样 不能同时存在
-                    for (let i = 0; i < this._playerList.length; i ++) {
-                        let findPlayer = this._playerList[i];
-                        if (this._touchPlayer.node.uuid == findPlayer.node.uuid) {
-                            findPlayer.node.destroy();
-                            this._playerList.splice(i,1);
-                            break;
-                        }
-                    }
-                } else {
-                    this._touchPlayer.levelUp();
-                }
-            }
+            Game._.remove(this._playerList, function (player) {
+                return player.node.uuid == this._touchPlayer.node.uuid || player.node.uuid == this._findPlayer.node.uuid;
+            }.bind(this))
 
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
         }
