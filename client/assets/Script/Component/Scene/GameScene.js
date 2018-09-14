@@ -7,7 +7,6 @@ cc.Class({
         node_player: { default: null, type: cc.Node },
         prefab_player: { default: null, type: cc.Prefab },
         label_gold: { default: null, type: cc.Label },
-
         prefab_Shop: { default: null, type: cc.Prefab },
     },
 
@@ -27,23 +26,36 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.AckMergePlayer);
     },
 
     initData() {
         this._playerList = [];
+        this._touchPlayer = null;
+        this._deleteIndex = 0;
     },
 
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
         Game.NotificationController.On(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.AckMergePlayer);
     },
 
     initView() {
+        this.updatePlayer();
+    },
+
+    updatePlayer() {
         for (let i = 0; i < Game.MaidController.getMaids().length; i ++) {
             let player = Game.MaidController.getMaids()[i];
-            for (let b = 0; b < player.count; b ++) {
-                this.createPlayer(player.id);
+            let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", player.id);
+            if (maidBase && maidBase.Passlevels <= Game.UserModel.GetCurPass()) {
+                for (let b = 0; b < player.count; b ++) {
+                    this.createPlayer(player.id);
+                }
             }
         }
     },
@@ -58,18 +70,44 @@ cc.Class({
     },
 
     findPlayerAndMerge(_player) {
+        this._touchPlayer = _player;
+
         for (let i = 0; i < this._playerList.length; i ++) {
             let findPlayer = this._playerList[i];
 
-            if (_player.node.uuid != findPlayer.node.uuid) {
-                if (_player.node.getBoundingBox().intersects(findPlayer.node.getBoundingBox())) {
-                    if (_player.getPlayerId() == findPlayer.getPlayerId()) {
-                        findPlayer.node.removeFromParent();
-                        this._playerList.splice(i,1);
-
-                        _player.levelUp();
+            if (this._touchPlayer.node.uuid != findPlayer.node.uuid) {
+                if (this._touchPlayer.node.getBoundingBox().intersects(findPlayer.node.getBoundingBox())) {
+                    if (this._touchPlayer.getPlayerId() == findPlayer.getPlayerId()) {
+                        this._deleteIndex = i;
+                        Game.NetWorkController.Send('msg.C2GW_ReqMergeMaid', {maidid: findPlayer.getPlayerId()});
                         break;
                     }
+                }
+            }
+        }
+    },
+
+    AckMergePlayer(result) {
+        if (result == 0) {
+            //删除掉合成成功的女仆
+            this._playerList[this._deleteIndex].node.destroy();
+            this._playerList.splice(this._deleteIndex, 1);
+
+            //把当前拖动的女仆进行升级
+            let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", this._touchPlayer.getPlayerId());
+            let nextMaidBase = Game.ConfigController.GetConfigById("TMaidLevel", maidBase.NextID);
+            if (maidBase && nextMaidBase) {
+                if (maidBase.Passlevels != nextMaidBase.Passlevels) {   //两个女仆的关卡等级不一样 不能同时存在
+                    for (let i = 0; i < this._playerList.length; i ++) {
+                        let findPlayer = this._playerList[i];
+                        if (this._touchPlayer.node.uuid == findPlayer.node.uuid) {
+                            findPlayer.node.destroy();
+                            this._playerList.splice(i,1);
+                            break;
+                        }
+                    }
+                } else {
+                    this._touchPlayer.levelUp();
                 }
             }
         }

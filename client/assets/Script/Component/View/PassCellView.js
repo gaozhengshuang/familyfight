@@ -22,6 +22,8 @@ cc.Class({
     },
 
     clicked() {
-
+        if (this._data.Id != Game.UserModel.GetCurPass()) {
+            NotificationController.Emit(Define.EVENT_KEY.UPDATE_PLAYER);
+        }        
     }
 });

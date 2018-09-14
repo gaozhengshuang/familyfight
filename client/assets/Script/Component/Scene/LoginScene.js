@@ -15,7 +15,10 @@ cc.Class({
     },
 
     start() {
-
+       let account = cc.sys.localStorage.getItem('account');
+       if (account) {
+           this.accEditBox.string = account;
+       }
     },
 
     update(dt) {
@@ -40,6 +43,7 @@ cc.Class({
             face: '',
             token: ''
         }
+        cc.sys.localStorage.setItem('account', this.accEditBox.string);
         Game.UserModel.loginInfo = loginInfo;
         Game.LoginController.ConnectToLoginServer(function () {
             Game.NetWorkController.Send('msg.C2L_ReqLogin', loginInfo);

@@ -1,4 +1,3 @@
-let async = require('async');
 let NetWorkController = require('./NetWorkController');
 let NotificationController = require('./NotificationController');
 let Tools = require("../Util/Tools");
@@ -11,6 +10,7 @@ var MaidController = function () {
 
 MaidController.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_AckMaids', this, this.onGW2C_AckMaids);
+    NetWorkController.AddListener('msg.GW2C_AckMergeMaid', this, this.onGW2C_AckMergeMaid);
 
     Tools.InvokeCallback(cb, null);
 }
@@ -19,7 +19,13 @@ MaidController.prototype.getMaids = function() {
     return this._maids;
 }
 
-//回调函数
+MaidController.prototype.getTopMaid = function() {
+    return this.topMaid;
+}
+
+/**
+ * 消息处理接口
+ */
 MaidController.prototype.onGW2C_AckMaids = function (msgid, data) {
     if (this._maids == null) {
         this._maids = data.datas;
@@ -39,6 +45,10 @@ MaidController.prototype.onGW2C_AckMaids = function (msgid, data) {
         }
     }
     this.topMaid = data.maxid;
+}
+
+MaidController.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
+    NotificationController.Emit(Game.Define.MERGEPLAYER_ACK.ADD_PLAYER, data);
 }
 
 module.exports = new MaidController();

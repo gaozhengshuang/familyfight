@@ -3,12 +3,15 @@ let PlatformDefine = require('../Util/PlatformDefine');
 let Tools = require('../Util/Tools');
 let NetWorkController = require('../Controller/NetWorkController');
 let NotificationController = require('../Controller/NotificationController');
+let ConfigController = require('../Controller/ConfigController');
+let MaidController = require('../Controller/MaidController');
 let HttpUtil = require('../Util/HttpUtil');
 
 var UserModel = function () {
     this.loginInfo = null;
     this.userInfo = {};
     this.platformCoins = 0;
+    this.curPass = 1;
 }
 
 UserModel.prototype.Init = function (cb) {
@@ -68,13 +71,23 @@ UserModel.prototype.GetGold = function () {
     return Tools.GetValueInObj(this.userInfo, 'base.gold') || 0;
 }
 
+UserModel.prototype.SetCurPass = function (pass) {
+    this.curPass = pass;
+}
+
 UserModel.prototype.GetCurPass = function () {
-    return 1;
+    return this.curPass;
 }
 
 UserModel.prototype.GetTopPass = function () {
-    return 1;
+    let pass = 1;
+    let maidBase = ConfigController.GetConfigById("TMaidLevel", MaidController.getTopMaid());
+    if (maidBase) {
+        pass = maidBase.Passlevels;
+    } 
+    return pass;
 }
+
 /**
  * 消息处理接口
  */
