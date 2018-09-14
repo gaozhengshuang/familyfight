@@ -85,7 +85,7 @@ Maid.prototype.onGW2C_AckMaidShop = function (msgid, data) {
 
 Maid.prototype.onGW2C_AckBuyMaid = function (msgid, data) {
     if (data.result == 0) {
-        UserModel.SubtractGold(20);
+        UserModel.SubtractGold(data.price);
     }
 }
 

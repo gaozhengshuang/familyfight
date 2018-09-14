@@ -19961,7 +19961,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IGW2C_AckBuyMaid
          * @property {number|null} [result] GW2C_AckBuyMaid result
-         * @property {number|null} [maidid] GW2C_AckBuyMaid maidid
+         * @property {number|Long|null} [price] GW2C_AckBuyMaid price
          */
 
         /**
@@ -19988,12 +19988,12 @@ $root.msg = (function() {
         GW2C_AckBuyMaid.prototype.result = 0;
 
         /**
-         * GW2C_AckBuyMaid maidid.
-         * @member {number} maidid
+         * GW2C_AckBuyMaid price.
+         * @member {number|Long} price
          * @memberof msg.GW2C_AckBuyMaid
          * @instance
          */
-        GW2C_AckBuyMaid.prototype.maidid = 0;
+        GW2C_AckBuyMaid.prototype.price = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * Creates a new GW2C_AckBuyMaid instance using the specified properties.
@@ -20021,8 +20021,8 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.result != null && message.hasOwnProperty("result"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
-            if (message.maidid != null && message.hasOwnProperty("maidid"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.maidid);
+            if (message.price != null && message.hasOwnProperty("price"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.price);
             return writer;
         };
 
@@ -20061,7 +20061,7 @@ $root.msg = (function() {
                     message.result = reader.uint32();
                     break;
                 case 2:
-                    message.maidid = reader.uint32();
+                    message.price = reader.uint64();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -20101,9 +20101,9 @@ $root.msg = (function() {
             if (message.result != null && message.hasOwnProperty("result"))
                 if (!$util.isInteger(message.result))
                     return "result: integer expected";
-            if (message.maidid != null && message.hasOwnProperty("maidid"))
-                if (!$util.isInteger(message.maidid))
-                    return "maidid: integer expected";
+            if (message.price != null && message.hasOwnProperty("price"))
+                if (!$util.isInteger(message.price) && !(message.price && $util.isInteger(message.price.low) && $util.isInteger(message.price.high)))
+                    return "price: integer|Long expected";
             return null;
         };
 
@@ -20121,8 +20121,15 @@ $root.msg = (function() {
             var message = new $root.msg.GW2C_AckBuyMaid();
             if (object.result != null)
                 message.result = object.result >>> 0;
-            if (object.maidid != null)
-                message.maidid = object.maidid >>> 0;
+            if (object.price != null)
+                if ($util.Long)
+                    (message.price = $util.Long.fromValue(object.price)).unsigned = true;
+                else if (typeof object.price === "string")
+                    message.price = parseInt(object.price, 10);
+                else if (typeof object.price === "number")
+                    message.price = object.price;
+                else if (typeof object.price === "object")
+                    message.price = new $util.LongBits(object.price.low >>> 0, object.price.high >>> 0).toNumber(true);
             return message;
         };
 
@@ -20141,12 +20148,19 @@ $root.msg = (function() {
             var object = {};
             if (options.defaults) {
                 object.result = 0;
-                object.maidid = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.price = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.price = options.longs === String ? "0" : 0;
             }
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
-            if (message.maidid != null && message.hasOwnProperty("maidid"))
-                object.maidid = message.maidid;
+            if (message.price != null && message.hasOwnProperty("price"))
+                if (typeof message.price === "number")
+                    object.price = options.longs === String ? String(message.price) : message.price;
+                else
+                    object.price = options.longs === String ? $util.Long.prototype.toString.call(message.price) : options.longs === Number ? new $util.LongBits(message.price.low >>> 0, message.price.high >>> 0).toNumber(true) : message.price;
             return object;
         };
 
