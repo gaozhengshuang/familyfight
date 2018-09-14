@@ -84,7 +84,7 @@ cc.Class({
             this.node_player.addChild(_playerPrefab);
             let _player = _playerPrefab.getComponent('PlayerNode');
             if (_player) {
-                _player.setParentAndData(this.node_player, playerId);
+                _player.setParentAndData(this.node_player, this._touchPlayer, playerId);
                 this._playerList.push(_player);
             }
         }
