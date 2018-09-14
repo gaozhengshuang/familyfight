@@ -3,11 +3,23 @@
 
 module table {
 export var TDialogue : table.ITDialogueDefine[] = [
-		{ Id : 1, Index : 1, HeadSprite : [ "Image/Head/1" ], HeadLocation : [ 1 ], Name : "富察皇后", NameLocation : 1, Content : "今天天气真好啊" 	},
-		{ Id : 2, Index : 1, HeadSprite : [ "Image/Head/1", "Image/Head/2" ], HeadLocation : [ 1, 2 ], Name : "???", NameLocation : 2, Content : "是啊，挺好的" 	},
-		{ Id : 3, Index : 1, HeadSprite : [ "Image/Head/3", "Image/Head/2" ], HeadLocation : [ 1, 2 ], Name : "李公公", NameLocation : 1, Content : "皇上驾到…上驾到…驾到…到…刀…" 	},
-		{ Id : 4, Index : 1, HeadSprite : [ "Image/Head/4", "Image/Head/2" ], HeadLocation : [ 1, 2 ], Name : "皇上", NameLocation : 2, Content : "朕惟乾坤德合、式隆化育之功。内外治成、聿懋雍和之用。典礼于斯而备。教化所由以兴。咨尔何舍里氏。乃内大臣噶布喇之女也。世德钟祥。崇勋启秀。柔嘉成性、宜昭女教于六宫。贞静持躬、应正母仪于万国。兹仰承太皇太后懿命。以册宝立尔为皇后。其尚弘资孝养。克赞恭勤。茂本支奕叶之休。佐宗庙维馨之祀。钦哉。" 	},
-		{ Id : 5, Index : 1, HeadSprite : [ "Image/Head/4", "Image/Head/2" ], HeadLocation : [ 1, 2 ], Name : "延禧", NameLocation : 1, Content : "谢皇上隆恩" 	}
+		{ Id : 1, Index : 1, HeadSprite : [ "Image/Head/2" ], HeadLocation : [ 1 ], Name : "皇上", NameLocation : 1, Content : "今天风这么大，站着挺费劲儿吧。" 	},
+		{ Id : 2, Index : 1, HeadSprite : [ "Image/Head/2", "Image/Head/3" ], HeadLocation : [ 1, 2 ], Name : "李玉", NameLocation : 2, Content : "赐花。" 	},
+		{ Id : 3, Index : 2, HeadSprite : [ "Image/Head/2" ], HeadLocation : [ 1 ], Name : "皇上", NameLocation : 1, Content : "这是一天吃五顿饭。" 	},
+		{ Id : 4, Index : 2, HeadSprite : [ "Image/Head/2", "Image/Head/3" ], HeadLocation : [ 1, 2 ], Name : "李玉", NameLocation : 2, Content : "赐花。" 	},
+		{ Id : 5, Index : 3, HeadSprite : [ "Image/Head/2" ], HeadLocation : [ 1 ], Name : "皇上", NameLocation : 1, Content : "每天顶着酱油晒太阳吗？" 	},
+		{ Id : 6, Index : 3, HeadSprite : [ "Image/Head/2", "Image/Head/3" ], HeadLocation : [ 1, 2 ], Name : "李玉", NameLocation : 2, Content : "赐花。" 	},
+		{ Id : 7, Index : 4, HeadSprite : [ "Image/Head/3" ], HeadLocation : [ 1 ], Name : "李玉", NameLocation : 1, Content : "光禄寺少卿陆士隆之女陆晚晚，年十六！" 	},
+		{ Id : 8, Index : 5, HeadSprite : [ "Image/Head/4" ], HeadLocation : [ 1 ], Name : "纳兰淳雪", NameLocation : 1, Content : "臣女阿玛常说，女子一耳带三钳，穿花盆鞋，乃是老祖宗留下的规矩，若是一朝抛弃，效法汉女一耳一坠，就是忘了祖宗。" 	},
+		{ Id : 9, Index : 5, HeadSprite : [ "Image/Head/4", "Image/Head/2" ], HeadLocation : [ 1, 2 ], Name : "皇上", NameLocation : 2, Content : "说的不错。" 	},
+		{ Id : 10, Index : 5, HeadSprite : [ "Image/Head/4", "Image/Head/3" ], HeadLocation : [ 1, 2 ], Name : "李玉", NameLocation : 2, Content : "留牌子。" 	},
+		{ Id : 11, Index : 6, HeadSprite : [ "Image/Head/2" ], HeadLocation : [ 1 ], Name : "皇上", NameLocation : 1, Content : "你脚上是怎么回事？" 	},
+		{ Id : 12, Index : 6, HeadSprite : [ "Image/Head/2", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "乌雅青黛", NameLocation : 2, Content : "这叫步步生莲" 	},
+		{ Id : 13, Index : 6, HeadSprite : [ "Image/Head/2", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "皇上", NameLocation : 1, Content : "来人，叉出去" 	},
+		{ Id : 14, Index : 6, HeadSprite : [ "Image/Head/2", "Image/Head/1" ], HeadLocation : [ 1, 2 ], Name : "皇后", NameLocation : 2, Content : "皇上，秀女想要拔个头筹，也没有什么不对，您若是不喜欢，赐花就是了，这样驱逐出宫，她以后有何颜面见人。" 	},
+		{ Id : 15, Index : 6, HeadSprite : [ "Image/Head/2", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "乌雅青黛", NameLocation : 2, Content : "皇上，皇上，臣女只是仿照步步生莲，想要博个头彩，皇上宽恕！" 	},
+		{ Id : 16, Index : 6, HeadSprite : [ "Image/Head/2", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "皇上", NameLocation : 1, Content : "朕早已明令，禁止汉军旗秀女缠足，非但汉军旗如此，连乌雅氏也学此等奢靡颓废风气，这样的女子进了宫，一定会惹出是非，朕不但要将她驱逐出宫，还要将她的父亲按违例治罪，以儆效尤！" 	},
+		{ Id : 17, Index : 6, HeadSprite : [ "Image/Head/2", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "乌雅青黛", NameLocation : 2, Content : "不要，皇上！不要啊！臣女知错了！臣女真的知错了！对了，是那贱婢，是那贱婢害了臣女！不是我，往鞋底涂抹香粉的主意不是我……呜！" 	}
 	]
 
 
