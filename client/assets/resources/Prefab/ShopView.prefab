@@ -3,10 +3,12 @@
     "__type__": "cc.Prefab",
     "_name": "",
     "_objFlags": 0,
-    "_rawFiles": null,
+    "_native": "",
     "data": {
       "__id__": 1
-    }
+    },
+    "optimizationPolicy": 0,
+    "asyncLoadAssets": false
   },
   {
     "__type__": "cc.Node",
@@ -286,7 +288,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 376
+      "y": 380
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -487,7 +489,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 285,
-      "y": 258
+      "y": 263
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -650,7 +652,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 500,
-      "height": 660
+      "height": 680
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -659,7 +661,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -17
+      "y": -10
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -708,7 +710,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 500,
-      "height": 640
+      "height": 680
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -758,7 +760,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 500,
-      "height": 640
+      "height": 680
     },
     "_rotationX": 0,
     "_rotationY": 0,

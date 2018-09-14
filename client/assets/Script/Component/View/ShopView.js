@@ -31,7 +31,10 @@ cc.Class({
     },
 
     updateTableView() {
-        this.tableView.getComponent(cc.tableView).initTableView(Game.MaidModel.GetShopMaids().length, { array: Game.MaidModel.GetShopMaids(), target: this });
+        let _tbList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
+            return maid.id;
+        });
+        this.tableView.getComponent(cc.tableView).initTableView(_tbList.length, { array: _tbList, target: this });
     },
 
     onClose() {

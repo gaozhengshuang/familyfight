@@ -969,8 +969,8 @@
       "width": 720,
       "height": 1280
     },
-    "_fitWidth": true,
-    "_fitHeight": true
+    "_fitWidth": false,
+    "_fitHeight": false
   },
   {
     "__type__": "2d351VNOt5DiLMa2RWNsXJ7",
@@ -994,6 +994,9 @@
     },
     "prefab_FindNewPlayer": {
       "__uuid__": "d1280465-beeb-488f-a9f2-bc7cca2131a9"
+    },
+    "targetCanvas": {
+      "__id__": 27
     }
   }
 ]
