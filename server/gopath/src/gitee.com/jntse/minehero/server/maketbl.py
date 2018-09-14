@@ -225,6 +225,7 @@ gen.maketbl_excel('Question', 'question', 'TQuestion.xlsx')
 gen.maketbl_excel('TMaidLevelBase','maidlevelbase','MaidLevel.xlsx')
 gen.maketbl_excel('TPassLevelsBase','passlevelsbase','PassLevels.xlsx')
 gen.maketbl_excel('TMaidShopBase','maidshopbase','MaidShop.xlsx')
+gen.maketbl_excel('TDialogue','gialoguebase','Dialogue.xlsx')
 
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')

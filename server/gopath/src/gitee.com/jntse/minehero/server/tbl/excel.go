@@ -13,25 +13,26 @@ type IBaseExcel interface {
 // --------------------------------------------------------------------------
 /// @brief 为excel config 实例取一个别名
 // --------------------------------------------------------------------------
-var TaskBase = table.InsTaskBaseTable
-var TPassLevelsBase = table.InsTPassLevelsBaseTable
 var MusicBase = table.InsMusicBaseTable
-var RechargeBase = table.InsRechargeBaseTable
 var LevelBasee = table.InsLevelBaseeTable
-var TBirckItembase = table.InsTBirckItembaseTable
-var TbirckInfobase = table.InsTbirckInfobaseTable
-var SignBase = table.InsSignBaseTable
-var ProtoMsgIndex = table.InsProtoMsgIndexTable
-var GiftProBase = table.InsGiftProBaseTable
-var NameBase = table.InsNameBaseTable
-var TMaidShopBase = table.InsTMaidShopBaseTable
-var TBirckBase = table.InsTBirckBaseTable
+var TMaidLevelBase = table.InsTMaidLevelBaseTable
 var Question = table.InsQuestionTable
+var TMaidShopBase = table.InsTMaidShopBaseTable
+var TDialogue = table.InsTDialogueTable
+var TbirckInfobase = table.InsTbirckInfobaseTable
+var GiftProBase = table.InsGiftProBaseTable
+var TBirckBase = table.InsTBirckBaseTable
+var ProtoMsgIndex = table.InsProtoMsgIndexTable
 var TBallGiftbase = table.InsTBallGiftbaseTable
 var NoticeBase = table.InsNoticeBaseTable
-var TMaidLevelBase = table.InsTMaidLevelBaseTable
+var TPassLevelsBase = table.InsTPassLevelsBaseTable
+var RechargeBase = table.InsRechargeBaseTable
+var TBirckItembase = table.InsTBirckItembaseTable
+var SignBase = table.InsSignBaseTable
+var NameBase = table.InsNameBaseTable
+var TBallBase = table.InsTBallBaseTable
+var TaskBase = table.InsTaskBaseTable
 var ShopBase = table.InsShopBaseTable
 var TbirckRefreshbase = table.InsTbirckRefreshbaseTable
-var TBallBase = table.InsTBallBaseTable
 var ItemBase = table.InsItemBaseTable
 
