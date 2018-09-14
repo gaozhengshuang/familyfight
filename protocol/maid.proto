@@ -20,7 +20,7 @@ message C2GW_ReqBuyMaid
 message GW2C_AckBuyMaid
 {
     optional uint32 result = 1;
-    optional uint32 maidid = 2;
+    optional uint64 price = 2;
 }
 
 message C2GW_ReqMergeMaid

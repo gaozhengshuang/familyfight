@@ -42,12 +42,15 @@ type UserMaid struct {
 	maids			map[uint32]* MaidData
 	maxid 			uint32
 	shop 			map[uint32]* MaidShop
+
+	maidCountByLevel map[uint32]uint32
 }
 
 func (this *UserMaid) Init() {
 	this.maxid = 0
 	this.maids = make(map[uint32]*MaidData)
 	this.shop = make(map[uint32]*MaidShop)
+	this.maidCountByLevel = make(map[uint32]uint32)
 }
 //加载数据
 func (this *UserMaid) LoadBin(user *GateUser,bin *msg.Serialize) {
@@ -62,6 +65,11 @@ func (this *UserMaid) LoadBin(user *GateUser,bin *msg.Serialize) {
 		shop.id = data.GetId()
 		shop.price = data.GetPrice()
 		this.shop[data.GetId()] = shop
+	}
+	//计算每个关卡的侍女数量
+	maxLevel := this.GetLevelByMaid(this.maxid)
+	for i := uint32(1); i < maxLevel; i++ {
+		this.CalculateMaidCountByLevel(i)
 	}
 }
 
@@ -108,40 +116,53 @@ func (this *UserMaid) Syn(user* GateUser) {
 }
 // ========================= 消息接口 ========================= 
 //购买侍女 
-func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition *MaidData){
-	_, find := this.shop[id]
+func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition *MaidData,price uint64){
+	shopdata, find := this.shop[id]
 	if !find {
-		return 2,nil
+		user.SendNotify("没有对应的商店信息")
+		return 1,nil,0
 	}
-	// if user.GetGold() < shopdata.price {
-	// 	return 3,nil
-	// }
+	maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[id]
+	if !find {
+		user.SendNotify("没有对应的侍女配置")
+		return 2,nil,0
+	}
+	count := this.GetMaidCountByLevel(uint32(maidconfg.Passlevels))
+	if count >= 20 {
+		user.SendNotify("该关卡侍女数量已达上限")
+		return 3,nil,0
+	}
 	//可以买了
 	maid := this.AddMaid(user,id,1)
 	// user.RemoveGold(shopdata.price, "购买侍女")
-	return 0, maid
+	return 0, maid, shopdata.price
 }
 
 //合并侍女
 func (this *UserMaid) MergeMaid(user *GateUser,id uint32) (result uint32,removed *MaidData, addition *MaidData){
 	maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[id]
 	if !find {
+		user.SendNotify("没有对应的侍女配置")
 		return 1,nil,nil
 	}
 	nextid := uint32(maidconfg.NextID)
 	if nextid == 0 {
+		user.SendNotify("没有下一级的配置了")
 		return 2,nil,nil
 	}
 	maid, ok := this.maids[id]; 
 	if !ok {
+		user.SendNotify("侍女数量不够")
 		return 3,nil,nil
 	}
 	if maid.count < 2 {
+		user.SendNotify("侍女数量不够")
 		return 4,nil,nil
 	}
 	//可以了 合并
 	removed = this.RemoveMaid(id,2)
 	if removed == nil {
+		user.SendNotify("侍女移除失败")
 		return 5,nil,nil
 	}
 	addition = this.AddMaid(user,nextid,1)
@@ -162,6 +183,7 @@ func (this *UserMaid) AddMaid(user *GateUser, id uint32, count uint32) *MaidData
 	if id > this.maxid {
 		this.ChangeMaxId(user,id)
 	}
+	this.CalculateMaidCountByLevel(this.GetLevelByMaid(id))
 	return maid
 }
 
@@ -175,6 +197,7 @@ func (this *UserMaid) RemoveMaid(id uint32,count uint32) *MaidData {
 		return nil
 	}
 	maid.count = maid.count - count
+	this.CalculateMaidCountByLevel(this.GetLevelByMaid(id))
 	return maid
 }
 
@@ -227,4 +250,36 @@ func (this *UserMaid) CalculateRewardPerSecond() uint64 {
 		ret = ret + uint64(maidconfg.Reward) * uint64(v.count)
 	}
 	return ret
+}
+//重新计算关卡中的侍女数量
+func (this *UserMaid) CalculateMaidCountByLevel(level uint32) {
+	count := uint32(0)
+	for _, v := range this.maids {
+		maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[v.id]
+		if !find {
+			continue
+		}
+		if uint32(maidconfg.Passlevels) == level {
+			count = count + v.count
+		}
+	}
+	this.maidCountByLevel[level] = count
+}
+
+//获得关卡中的侍女数量
+func (this *UserMaid) GetMaidCountByLevel(level uint32) uint32 {
+	count, find := this.maidCountByLevel[level]
+	if !find {
+		return 0
+	}
+	return count
+}
+
+//根据侍女id获得所在关卡
+func (this *UserMaid) GetLevelByMaid(id uint32) uint32 {
+	maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[id]
+	if !find {
+		return 0
+	}
+	return uint32(maidconfg.Passlevels)
 }
