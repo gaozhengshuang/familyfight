@@ -20,6 +20,11 @@ cc.Class({
     },
 
     update(dt) {
+        this.mainTime += dt;
+        if (this.mainTime >= this.synchroTime) {
+            this.mainTime = 0;
+            Game.NetWorkController.Send('msg.C2GW_UploadTrueGold', {num: Game.UserModel.GetGold()});
+        }
     },
 
     onDestroy() {
@@ -34,6 +39,9 @@ cc.Class({
         this._playerList = [];
         this._touchPlayer = null;
         this._deleteIndex = 0;
+
+        this.mainTime = 0;
+        this.synchroTime = 10;
     },
 
     initNotification() {
@@ -46,6 +54,7 @@ cc.Class({
 
     initView() {
         this.updatePlayer();
+        this.updateGold(Game.UserModel.GetGold());
     },
 
     updatePlayer() {
@@ -110,6 +119,9 @@ cc.Class({
                     this._touchPlayer.levelUp();
                 }
             }
+
+            
+            NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
         }
     },
 
