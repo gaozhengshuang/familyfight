@@ -16,6 +16,7 @@ cc.Class({
     },
 
     start() {
+        this.updatePosAndAni();
     },
 
     update(dt) {
