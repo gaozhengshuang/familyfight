@@ -18,5 +18,11 @@
 		{ "Id": 14, "Index": 6, "HeadSprite":[ "Image/Head/2", "Image/Head/1" ], "HeadLocation":[ 1, 2 ], "Name": "皇后", "NameLocation": 2, "Content": "皇上，秀女想要拔个头筹，也没有什么不对，您若是不喜欢，赐花就是了，这样驱逐出宫，她以后有何颜面见人。" },
 		{ "Id": 15, "Index": 6, "HeadSprite":[ "Image/Head/2", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "乌雅青黛", "NameLocation": 2, "Content": "皇上，皇上，臣女只是仿照步步生莲，想要博个头彩，皇上宽恕！" },
 		{ "Id": 16, "Index": 6, "HeadSprite":[ "Image/Head/2", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "皇上", "NameLocation": 1, "Content": "朕早已明令，禁止汉军旗秀女缠足，非但汉军旗如此，连乌雅氏也学此等奢靡颓废风气，这样的女子进了宫，一定会惹出是非，朕不但要将她驱逐出宫，还要将她的父亲按违例治罪，以儆效尤！" },
-		{ "Id": 17, "Index": 6, "HeadSprite":[ "Image/Head/2", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "乌雅青黛", "NameLocation": 2, "Content": "不要，皇上！不要啊！臣女知错了！臣女真的知错了！对了，是那贱婢，是那贱婢害了臣女！不是我，往鞋底涂抹香粉的主意不是我……呜！" }
+		{ "Id": 17, "Index": 6, "HeadSprite":[ "Image/Head/2", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "乌雅青黛", "NameLocation": 2, "Content": "不要，皇上！不要啊！臣女知错了！臣女真的知错了！对了，是那贱婢，是那贱婢害了臣女！不是我，往鞋底涂抹香粉的主意不是我……呜！" },
+		{ "Id": 18, "Index": 7, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "皇后", "NameLocation": 1, "Content": "本宫很满意!" },
+		{ "Id": 19, "Index": 8, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "皇后", "NameLocation": 1, "Content": "本宫非常满意!" },
+		{ "Id": 20, "Index": 9, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "皇后", "NameLocation": 1, "Content": "本宫满意!" },
+		{ "Id": 21, "Index": 10, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "皇后", "NameLocation": 1, "Content": "本宫不太满意!" },
+		{ "Id": 22, "Index": 11, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "皇后", "NameLocation": 1, "Content": "本宫特别满意!" },
+		{ "Id": 23, "Index": 12, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "皇后", "NameLocation": 1, "Content": "本宫很无语!" }
 	]}
