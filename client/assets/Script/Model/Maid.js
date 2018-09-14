@@ -58,16 +58,25 @@ Maid.prototype.onGW2C_AckMaids = function (msgid, data) {
         this._maids = data.datas;
     } else {
         for (let i = 0; i < data.datas.length; i ++) {
+            let isNewPlayer = true;
             let _newMaid = data.datas[i];
             for (let b = 0; b < this._maids.length; b ++) {
                 let _oldMaid = this._maids[b];
                 if (_newMaid.id == _oldMaid.id) {
                     if (_newMaid.count > _oldMaid.count) {
-                        NotificationController.Emit(Define.EVENT_KEY.ADD_PLAYER, _newMaid.id);
+                        for (let t = 0; t < _newMaid.count - _oldMaid.count; t ++) {
+                            NotificationController.Emit(Define.EVENT_KEY.ADD_PLAYER, _newMaid.id);
+                        }
                     }
                     this._maids[b] = _newMaid;
+                    isNewPlayer = false;
                     break;
                 }
+            }
+            
+            if (isNewPlayer) {
+                this._maids.push(_newMaid);
+                NotificationController.Emit(Define.EVENT_KEY.ADD_PLAYER, _newMaid.id);
             }
         }
     }

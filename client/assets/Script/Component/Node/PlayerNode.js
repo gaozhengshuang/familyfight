@@ -100,10 +100,6 @@ cc.Class({
         this.updateView(data);
     },
 
-    levelUp() {
-        this.updateView(this.maidBase.NextID);
-    },
-
     getPlayerId() {
         return this.maidBase.Id;
     },
