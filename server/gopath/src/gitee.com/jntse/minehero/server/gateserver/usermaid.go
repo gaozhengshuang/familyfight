@@ -3,6 +3,7 @@ import (
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/pbmsg"
 	pb "github.com/golang/protobuf/proto"
+	"math"
 )
 
 // --------------------------------------------------------------------------
@@ -79,6 +80,17 @@ func (this *UserMaid) PackBin(bin *msg.Serialize) {
 // ========================= 对外接口 ========================= 
 func (this *UserMaid) GetMaxId() uint32 {
 	return this.maxid
+}
+
+func (this *UserMaid) Online(user* GateUser) {
+	//上线了 要给离线奖励了
+	passedtime := user.tm_login - user.tm_logout
+	rewardpersecond := this.CalculateRewardPerSecond()
+	addition := uint64(passedtime / 1000) * rewardpersecond
+	user.AddGold(addition, "离线侍女奖励")
+	send := &msg.GW2C_OfflineReward{}
+	send.Gold = pb.Uint64(addition)
+	user.SendMsg(send)
 }
 
 func (this *UserMaid) Syn(user* GateUser) {
@@ -204,4 +216,16 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 		send.Shop = append(send.Shop,v.PackBin())
 	}
 	user.SendMsg(send)
+}
+
+func (this *UserMaid) CalculateRewardPerSecond() uint64 {
+	ret := uint64(0)
+	for _, v := range this.maids {
+		maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[v.id]
+		if !find {
+			continue
+		}
+		ret = ret + uint64(maidconfg.Reward) * uint64(v.count)
+	}
+	return ret
 }

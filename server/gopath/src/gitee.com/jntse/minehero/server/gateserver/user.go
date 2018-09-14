@@ -406,6 +406,7 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 	this.tm_heartbeat = util.CURTIMEMS()
 	this.savedone = false
 	this.roomdata.Reset()
+	this.maid.Online(this)
 	log.Info("Sid[%d] 账户[%s] 玩家[%d] 名字[%s] 登录成功", this.Sid(), this.account, this.Id(), this.Name())
 
 	// 同步数据到客户端

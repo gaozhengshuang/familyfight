@@ -31,3 +31,8 @@ message GW2C_AckMergeMaid
 {
     optional uint32 result = 1;
 }
+
+message GW2C_OfflineReward
+{
+    optional uint64 gold = 1;
+}
