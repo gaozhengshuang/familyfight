@@ -249,7 +249,7 @@ func on_C2GW_ReqBuyMaid(session network.IBaseNetSession, message interface{}) {
 		return
 	}
 	send := &msg.GW2C_AckBuyMaid{}
-	result,addition := user.maid.BuyMaid(user,tmsg.GetMaidid())
+	result,addition,price := user.maid.BuyMaid(user,tmsg.GetMaidid())
 	if result == 0 && addition != nil {
 		updateSend := &msg.GW2C_AckMaids{ Datas: make([]*msg.MaidData, 0) }
 		updateSend.Datas = append(updateSend.Datas, addition.PackBin())
@@ -257,7 +257,7 @@ func on_C2GW_ReqBuyMaid(session network.IBaseNetSession, message interface{}) {
 		user.SendMsg(updateSend)
 	}
 	send.Result = pb.Uint32(result)
-	send.Maidid = pb.Uint32(tmsg.GetMaidid())
+	send.Price = pb.Uint64(price)
 	user.SendMsg(send)
 }
 //合并
