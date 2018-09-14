@@ -9,6 +9,8 @@ var Define = {
 
         MERGE_PLAYER: '10',
         ADD_PLAYER: '11',
+        UPDATE_PLAYER: '12',
+        MERGEPLAYER_ACK: '13',
 
         CONNECT_TO_GATESERVER: '100',
 
@@ -26,6 +28,7 @@ var Define = {
         EFFECT_CHANGE: '501',
 
         USERINFO_UPDATEGOLD: '600',
+        USERINFO_UPDATEPASS: '601',
     },
     DATA_KEY: {
         HISTORY_PHONE: '1',

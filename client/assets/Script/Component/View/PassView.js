@@ -9,6 +9,7 @@ cc.Class({
 
     onLoad() {
         this.initView();
+        this.initNotification();
     },
 
     start() {
@@ -18,9 +19,18 @@ cc.Class({
     },
 
     onDestroy() {
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS, this, this.updateTableView);
+    },
+
+    initNotification() {
+        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS, this, this.updateTableView);
     },
 
     initView() {
+        this.updateTableView();
+    },
+
+    updateTableView() {
         let passList = [];
         let passBase = Game.ConfigController.GetConfig("PassLevels");
         for (let i = 0; i < passBase.length; i ++) {
