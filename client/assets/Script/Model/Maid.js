@@ -50,6 +50,13 @@ Maid.prototype.GetTopPass = function () {
     return pass;
 }
 
+Maid.prototype.IsAddMaid = function (_maidId) {
+    let maidBase = ConfigController.GetConfigById("TMaidLevel", _maidId);
+    if (maidBase && maidBase.Passlevels == this.GetCurPass()) {
+        NotificationController.Emit(Define.EVENT_KEY.ADD_PLAYER, _maidId);
+    }
+}
+
 /**
  * 消息处理接口
  */
@@ -65,7 +72,7 @@ Maid.prototype.onGW2C_AckMaids = function (msgid, data) {
                 if (_newMaid.id == _oldMaid.id) {
                     if (_newMaid.count > _oldMaid.count) {
                         for (let t = 0; t < _newMaid.count - _oldMaid.count; t ++) {
-                            NotificationController.Emit(Define.EVENT_KEY.ADD_PLAYER, _newMaid.id);
+                            this.IsAddMaid(_newMaid.id);
                         }
                     }
                     this._maids[b] = _newMaid;
@@ -76,10 +83,7 @@ Maid.prototype.onGW2C_AckMaids = function (msgid, data) {
             
             if (isNewPlayer) {
                 this._maids.push(_newMaid);
-                let maidBase = ConfigController.GetConfigById("TMaidLevel", _newMaid.id);
-                if (maidBase && maidBase.Passlevels == this.GetCurPass()) {
-                    NotificationController.Emit(Define.EVENT_KEY.ADD_PLAYER, _newMaid.id);
-                }
+                this.IsAddMaid(_newMaid.id);
             }
         }
     }

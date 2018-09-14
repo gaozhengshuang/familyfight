@@ -65,7 +65,8 @@ cc.Class({
     },
 
     updatePlayer() {
-        this.node_player.removeAllChildren();
+        this._playerList = [];
+        this.node_player.destroyAllChildren();
         for (let i = 0; i < Game.MaidModel.GetMaids().length; i ++) {
             let player = Game.MaidModel.GetMaids()[i];
             let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", player.id);
@@ -110,13 +111,13 @@ cc.Class({
     ackMergePlayer(result) {
         if (result == 0) {
             //删除掉合成成功的女仆
-            this._touchPlayer.node.destroy();
-            this._findPlayer.node.destroy();
-
             Game._.remove(this._playerList, function (player) {
                 return player.node.uuid == this._touchPlayer.node.uuid || player.node.uuid == this._findPlayer.node.uuid;
             }.bind(this))
 
+            this._touchPlayer.node.destroy();
+            this._findPlayer.node.destroy();
+            
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
         }
     },
