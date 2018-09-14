@@ -10,7 +10,7 @@ let CommonPlatform = {
     },
     AutoLogin: function () {
         console.log('AutoLogin');
-        cc.director.loadScene("TestScene");
+        cc.director.loadScene("LoginScene");
     },
     SendUserInfo: function (cb) {
         Tools.InvokeCallback(cb, '', '');
