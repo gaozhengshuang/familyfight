@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -16482,13 +16482,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -16737,13 +16731,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")

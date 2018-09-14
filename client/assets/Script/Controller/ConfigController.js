@@ -16,10 +16,10 @@ ConfigController.prototype.Init = function (cb) {
         }
         for (let i = 0; i < datas.length; i++) {
             let data = datas[i];
-            delete data.Tool;
-            delete data.Version;
-            for (let j in data) {
-                this._configs[j] = data[j];
+            delete data.json.Tool;
+            delete data.json.Version;
+            for (let j in data.json) {
+                this._configs[j] = data.json[j];
             }
         }
         Tools.InvokeCallback(cb, null);

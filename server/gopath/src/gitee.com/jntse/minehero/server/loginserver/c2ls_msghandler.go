@@ -127,7 +127,7 @@ func registAccount(account, passwd, name, face, token string) (errcode string) {
 		Yuanbao, Coupon := uint32(tbl.Global.Newuser.Yuanbao), uint32(tbl.Global.Newuser.Coupon)
 		userinfo := &msg.Serialize {
 			Entity : &msg.EntityBase{ Id:pb.Uint64(userid), Name:pb.String(name), Face:pb.String(face), Account:pb.String(account) },
-			Base : &msg.UserBase{Money: pb.Uint32(0), Coupon:pb.Uint32(Coupon), Yuanbao:pb.Uint32(Yuanbao), Level:pb.Uint32(1)},
+			Base : &msg.UserBase{Money: pb.Uint32(0), Coupon:pb.Uint32(Coupon), Yuanbao:pb.Uint32(Yuanbao), Level:pb.Uint32(1), Gold:pb.Uint64(0)},
 			Item : nil,
 			//Item : &msg.ItemBin{Items:make([]*msg.ItemData,0)},
 		}
