@@ -38,6 +38,9 @@ message TMaidLevelDefine
 	
 	
 	repeated int32 ShopShow = 7; // 商店显示
+	
+	
+	optional int32 DialogueID = 8; // 对话ID
 
 }
 

@@ -2,10 +2,10 @@
 	"Tool": "github.com/davyxu/tabtoy",
 	"Version": "2.8.10",
 	"PassLevels":[
-		{ "Id": 1, "Name": "绣女", "Path": "Image/GameScene/Pass/pass_1", "NextLevels": 2 },
-		{ "Id": 2, "Name": "作弊", "Path": "Image/GameScene/Pass/pass_2", "NextLevels": 3 },
-		{ "Id": 3, "Name": "泼水", "Path": "Image/GameScene/Pass/pass_3", "NextLevels": 4 },
-		{ "Id": 4, "Name": "绣女", "Path": "Image/GameScene/Pass/pass_1", "NextLevels": 5 },
-		{ "Id": 5, "Name": "作弊", "Path": "Image/GameScene/Pass/pass_2", "NextLevels": 6 },
-		{ "Id": 6, "Name": "泼水", "Path": "Image/GameScene/Pass/pass_3", "NextLevels": 7 }
+		{ "Id": 1, "Name": "绣女", "Path": "Image/GameScene/Pass/pass_1", "NextLevels": 2, "DialogueID": 0 },
+		{ "Id": 2, "Name": "作弊", "Path": "Image/GameScene/Pass/pass_2", "NextLevels": 3, "DialogueID": 7 },
+		{ "Id": 3, "Name": "泼水", "Path": "Image/GameScene/Pass/pass_3", "NextLevels": 4, "DialogueID": 0 },
+		{ "Id": 4, "Name": "绣女", "Path": "Image/GameScene/Pass/pass_1", "NextLevels": 5, "DialogueID": 0 },
+		{ "Id": 5, "Name": "作弊", "Path": "Image/GameScene/Pass/pass_2", "NextLevels": 6, "DialogueID": 0 },
+		{ "Id": 6, "Name": "泼水", "Path": "Image/GameScene/Pass/pass_3", "NextLevels": 7, "DialogueID": 0 }
 	]}

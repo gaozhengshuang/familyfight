@@ -29,6 +29,9 @@ message PassLevelsDefine
 	
 	
 	optional int32 NextLevels = 4; // 下个关卡ID
+	
+	
+	optional int32 DialogueID = 5; // 对话ID
 
 }
 
