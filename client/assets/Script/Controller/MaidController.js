@@ -36,7 +36,7 @@ MaidController.prototype.onGW2C_AckMaids = function (msgid, data) {
                 let _oldMaid = this._maids[b];
                 if (_newMaid.id == _oldMaid.id) {
                     if (_newMaid.count > _oldMaid.count) {
-                        NotificationController.Emit(Game.Define.EVENT_KEY.ADD_PLAYER, _newMaid.id);
+                        NotificationController.Emit(Define.EVENT_KEY.ADD_PLAYER, _newMaid.id);
                     }
                     this._maids[b] = _newMaid;
                     break;
@@ -48,7 +48,7 @@ MaidController.prototype.onGW2C_AckMaids = function (msgid, data) {
 }
 
 MaidController.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
-    NotificationController.Emit(Game.Define.MERGEPLAYER_ACK.ADD_PLAYER, data);
+    NotificationController.Emit(Define.EVENT_KEY.MERGEPLAYER_ACK, data);
 }
 
 module.exports = new MaidController();

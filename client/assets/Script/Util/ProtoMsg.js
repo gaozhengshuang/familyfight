@@ -20515,6 +20515,207 @@ $root.msg = (function() {
         return GW2C_AckMergeMaid;
     })();
 
+    msg.GW2C_OfflineReward = (function() {
+
+        /**
+         * Properties of a GW2C_OfflineReward.
+         * @memberof msg
+         * @interface IGW2C_OfflineReward
+         * @property {number|Long|null} [gold] GW2C_OfflineReward gold
+         */
+
+        /**
+         * Constructs a new GW2C_OfflineReward.
+         * @memberof msg
+         * @classdesc Represents a GW2C_OfflineReward.
+         * @implements IGW2C_OfflineReward
+         * @constructor
+         * @param {msg.IGW2C_OfflineReward=} [properties] Properties to set
+         */
+        function GW2C_OfflineReward(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_OfflineReward gold.
+         * @member {number|Long} gold
+         * @memberof msg.GW2C_OfflineReward
+         * @instance
+         */
+        GW2C_OfflineReward.prototype.gold = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * Creates a new GW2C_OfflineReward instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_OfflineReward
+         * @static
+         * @param {msg.IGW2C_OfflineReward=} [properties] Properties to set
+         * @returns {msg.GW2C_OfflineReward} GW2C_OfflineReward instance
+         */
+        GW2C_OfflineReward.create = function create(properties) {
+            return new GW2C_OfflineReward(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_OfflineReward message. Does not implicitly {@link msg.GW2C_OfflineReward.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_OfflineReward
+         * @static
+         * @param {msg.IGW2C_OfflineReward} message GW2C_OfflineReward message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_OfflineReward.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.gold);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_OfflineReward message, length delimited. Does not implicitly {@link msg.GW2C_OfflineReward.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_OfflineReward
+         * @static
+         * @param {msg.IGW2C_OfflineReward} message GW2C_OfflineReward message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_OfflineReward.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_OfflineReward message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_OfflineReward
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_OfflineReward} GW2C_OfflineReward
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_OfflineReward.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_OfflineReward();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.gold = reader.uint64();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_OfflineReward message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_OfflineReward
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_OfflineReward} GW2C_OfflineReward
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_OfflineReward.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_OfflineReward message.
+         * @function verify
+         * @memberof msg.GW2C_OfflineReward
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_OfflineReward.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                if (!$util.isInteger(message.gold) && !(message.gold && $util.isInteger(message.gold.low) && $util.isInteger(message.gold.high)))
+                    return "gold: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_OfflineReward message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_OfflineReward
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_OfflineReward} GW2C_OfflineReward
+         */
+        GW2C_OfflineReward.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_OfflineReward)
+                return object;
+            var message = new $root.msg.GW2C_OfflineReward();
+            if (object.gold != null)
+                if ($util.Long)
+                    (message.gold = $util.Long.fromValue(object.gold)).unsigned = true;
+                else if (typeof object.gold === "string")
+                    message.gold = parseInt(object.gold, 10);
+                else if (typeof object.gold === "number")
+                    message.gold = object.gold;
+                else if (typeof object.gold === "object")
+                    message.gold = new $util.LongBits(object.gold.low >>> 0, object.gold.high >>> 0).toNumber(true);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_OfflineReward message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_OfflineReward
+         * @static
+         * @param {msg.GW2C_OfflineReward} message GW2C_OfflineReward
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_OfflineReward.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.gold = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.gold = options.longs === String ? "0" : 0;
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                if (typeof message.gold === "number")
+                    object.gold = options.longs === String ? String(message.gold) : message.gold;
+                else
+                    object.gold = options.longs === String ? $util.Long.prototype.toString.call(message.gold) : options.longs === Number ? new $util.LongBits(message.gold.low >>> 0, message.gold.high >>> 0).toNumber(true) : message.gold;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_OfflineReward to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_OfflineReward
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_OfflineReward.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_OfflineReward;
+    })();
+
     msg.RS2MS_ReqRegist = (function() {
 
         /**
