@@ -65,7 +65,7 @@ cc.Class({
         for (let i = 0; i < Game.MaidModel.GetMaids().length; i ++) {
             let player = Game.MaidModel.GetMaids()[i];
             let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", player.id);
-            if (maidBase && maidBase.Passlevels <= Game.MaidModel.GetCurPass()) {
+            if (maidBase && maidBase.Passlevels == Game.MaidModel.GetCurPass()) {
                 for (let b = 0; b < player.count; b ++) {
                     this.createPlayer(player.id);
                 }
