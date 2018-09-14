@@ -18,7 +18,7 @@ module.exports = {
         'genJson'() {
             let fileNames = [
                 'proto_index',
-                'gialoguebase',
+                'dialoguebase',
                 'maidlevelbase',
                 'maidshopbase',
                 'passlevelsbase'
