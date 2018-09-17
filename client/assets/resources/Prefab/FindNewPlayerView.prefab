@@ -3,10 +3,12 @@
     "__type__": "cc.Prefab",
     "_name": "",
     "_objFlags": 0,
-    "_rawFiles": null,
+    "_native": "",
     "data": {
       "__id__": 1
-    }
+    },
+    "optimizationPolicy": 0,
+    "asyncLoadAssets": false
   },
   {
     "__type__": "cc.Node",
@@ -650,8 +652,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 150,
-      "height": 150
+      "width": 180,
+      "height": 250
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -754,7 +756,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -128
+      "y": -160
     },
     "_skewX": 0,
     "_skewY": 0,
