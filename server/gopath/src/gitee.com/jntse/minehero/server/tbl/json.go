@@ -14,4 +14,5 @@ type IBaseJson interface {
 var Game *table.Game = new(table.Game)
 var Global *table.Global = new(table.Global)
 var Room *table.Room = new(table.Room)
+var Common *table.Common = new(table.Common)
 

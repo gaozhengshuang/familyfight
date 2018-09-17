@@ -96,7 +96,7 @@ func (this *GateUser) UpdatePower(curtimems uint64) {
 		if newPower >= this.maxpower {
 			break
 		}
-		if this.nextpowertime > curtimems {
+		if this.nextpowertime > curtimes {
 			break
 		}
 		this.nextpowertime = this.nextpowertime + uint64(tbl.Common.PowerAddInterval)
