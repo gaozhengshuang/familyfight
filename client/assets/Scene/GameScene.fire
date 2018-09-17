@@ -983,6 +983,9 @@
     "node_player": {
       "__id__": 22
     },
+    "node_pass": {
+      "__id__": 9
+    },
     "prefab_player": {
       "__uuid__": "996f9f27-59ba-416d-8417-69615d2edff6"
     },
