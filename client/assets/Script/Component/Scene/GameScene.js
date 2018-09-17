@@ -55,6 +55,8 @@ cc.Class({
 
         this.mainTime = 0;
         this.synchroTime = 10;
+
+        Game.MaidModel.SetCurPass(Game.MaidModel.GetTopPass());
     },
 
     initNotification() {

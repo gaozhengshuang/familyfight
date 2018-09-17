@@ -40,5 +40,6 @@ cc.Class({
             }
         }
         this.tableView.getComponent(cc.tableView).initTableView(passList.length, { array: passList, target: this });
+        this.tableView.getComponent(cc.tableView).scrollToRight(1);
     },
 });
