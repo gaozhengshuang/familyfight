@@ -230,6 +230,7 @@ gen.maketbl_excel('TDialogueBase','dialoguebase','Dialogue.xlsx')
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')
 gen.maketbl_json('table', 'Game', 'game.json')
+gen.maketbl_json('table', 'Common', 'common.json')
 
 #// --------------------------------------------------------------------------
 #/// @brief 生成自动加载代码

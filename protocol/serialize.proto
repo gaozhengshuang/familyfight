@@ -16,11 +16,6 @@ message SimpleCounter {
     optional int64 money_cost_reset = 4;
 }
 
-// 免费赠送金币
-message FreePresentMoney {
-    optional int32 count = 1;
-    optional int64 tmrecord = 2;
-}
 
 // 微信相关
 message UserWechat {
@@ -49,6 +44,13 @@ message LuckyDrawHistory {
     repeated LuckyDrawItem drawlist = 1;
 }
 
+//体力
+message PowerData {
+    optional uint32 power = 1;          //当前体力值
+    optional uint64 nexttime = 2;       //下次增加体力的时机
+    optional uint32 maxpower = 3;       //最大体力值
+}
+
 message UserBase {
     optional uint32     level   = 1;
     optional uint32     exp     = 2;
@@ -65,10 +67,10 @@ message UserBase {
     optional SimpleCounter scounter = 13;   // 简单计数器
     optional UserWechat wechat = 14;
     optional string     invitationcode = 15;    // 邀请码
-    optional FreePresentMoney freepresent = 16;
-    optional UserTask   task = 17;      // 任务
-    optional LuckyDrawHistory luckydraw = 18;   // 抽奖
-    optional uint64     gold            = 19;    //金币
+    optional UserTask   task = 16;              // 任务
+    optional LuckyDrawHistory luckydraw = 17;   // 抽奖
+    optional uint64     gold            = 18;   //金币
+    optional PowerData  power           = 19;   //体力
 }
 
 message UserAddress {

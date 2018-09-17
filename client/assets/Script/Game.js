@@ -22,12 +22,13 @@ let Game = {
 
     UserModel: require('./Model/User'),
     MaidModel: require('./Model/Maid'),
+    CurrencyModel: require('./Model/Currency'),
 
     GameInstance: null
 };
 
 if (cc.sys.platform == cc.sys.WECHAT_GAME) {
-    Game.Platform =  require('./Platform/WechatGame');
+    Game.Platform = require('./Platform/WechatGame');
 }
 
 module.exports = Game;

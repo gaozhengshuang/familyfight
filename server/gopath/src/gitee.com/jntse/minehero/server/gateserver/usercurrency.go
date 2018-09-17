@@ -3,7 +3,9 @@ import (
 	"gitee.com/jntse/gotoolkit/log"
 	_"gitee.com/jntse/gotoolkit/eventqueue"
 	"gitee.com/jntse/minehero/pbmsg"
+	"gitee.com/jntse/minehero/server/tbl"
 	pb "github.com/golang/protobuf/proto"
+	"math"
 )
 
 // money
@@ -82,5 +84,63 @@ func (this *GateUser) RemoveCoupon(num uint32, reason string) bool {
 		return true
 	}
 	log.Info("玩家[%d] 添加金卷[%d]失败 库存[%d] 原因[%s]", this.Id(), num, this.GetCoupon(), reason)
+	return false
+}
+
+// 体力
+func (this *GateUser) UpdatePower(curtimems uint64) *msg.PowerData {
+	curtimes = uint64(curtimems / 1000)
+	newPower := this.GetPower()
+	for {
+		if newPower >= this.maxpower {
+			break
+		}
+		if this.nextpowertime > curtimems {
+			break
+		}
+		this.nextpowertime = this.nextpowertime + tbl.Common.PowerAddInterval
+		newPower = newPower + tbl.Common.PowerAddition
+	}
+	addition := newPower - this.GetPower()
+	if addition > 0 {
+		this.AddPower(addition,"定时加体力", false)
+	}
+}
+func (this *GateUser) PackPower() *msg.PowerData {
+	data := &msg.PowerData{}
+	data.Power = pb.Uint32(this.power)
+	data.Nexttime = pb.Uint64(this.nextpowertime)
+	data.MaxPower = pb.Uint32(this.maxpower)
+	return data
+}
+func (this *GateUser) GetPower() uint32 { return this.power }
+func (this *GateUser) AddPower(num uint32, reason string, ignorelimit bool) {
+	newpower = this.GetPower() + num
+	if !ignorelimit {
+		if this.GetPower() < this.maxpower {
+			newpower = uint32(math.Min(float64(newpower), float64(this.maxpower)))
+		} else {
+			newpower = this.GetPower()
+		}
+	}
+	if newpower != this.GetPower() {
+		this.power = newpower
+		send := &msg.GW2C_UpdatePower{ Power: this.PackPower()}
+		this.SendMsg(send)
+		log.Info("玩家[%d] 添加体力[%d] 库存[%d] 原因[%s]", this.Id(), num, this.GetPower(), reason)
+	}
+}
+func (this *GateUser) RemovePower(num uint32, reason string) bool {
+	if this.GetPower() >= num {
+		this.power = this.GetPower() - num
+		if this.power < this.maxpower {
+			this.nextpowertime = uint64(util.CURTIME() / 1000) + uint64(tbl.Common.PowerAddInterval)
+		}
+		send := &msg.GW2C_UpdatePower{ Power: this.PackPower()}
+		this.SendMsg(send)
+		log.Info("玩家[%d] 扣除体力[%d] 库存[%d] 原因[%s]", this.Id(), num, this.GetPower(), reason)
+		return true
+	}
+	log.Info("玩家[%d] 扣除体力[%d]失败 库存[%d] 原因[%s]", this.Id(), num, this.GetPower(), reason)
 	return false
 }

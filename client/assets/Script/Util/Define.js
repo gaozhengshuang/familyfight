@@ -25,6 +25,7 @@ var Define = {
         USERINFO_UPDATEGOLD: '600',
         USERINFO_UPDATEPASS: '601',
         MAID_UPDATESHOP: '602',
+        USERINFO_UPDATEPOWER: '603',
 
         MERGE_PLAYER: '1001',
         ADD_PLAYER: '1002',

@@ -1,4 +1,5 @@
 package msg;
+import "serialize.proto";
 
 // 更新金币
 message GW2C_UpdateGold {
@@ -21,4 +22,9 @@ message C2GW_UploadTrueGold {
 }
 message GW2C_UpdateTrueGold {
     optional uint64 num = 1;
+}
+
+//更新体力值
+message GW2C_UpdatePower {
+    optional PowerData power = 1;
 }

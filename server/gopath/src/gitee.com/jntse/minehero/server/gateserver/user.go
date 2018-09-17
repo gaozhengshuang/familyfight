@@ -64,6 +64,9 @@ type DBUserData struct {
 	signtime      uint32
 	addrlist      []*msg.UserAddress
 	gold 		  uint64
+	power 		  uint32 
+	nextpowertime uint64
+	maxpower 	  uint32
 }
 
 // --------------------------------------------------------------------------
@@ -315,6 +318,9 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	if bin.Base.Scounter == nil {
 		bin.Base.Scounter = &msg.SimpleCounter{}
 	}
+	if bin.Base.Power == nil {
+		this.Base.Power = &msg.PowerData{}
+	}
 
 	userbase := bin.GetBase()
 	userbase.Tmlogin = pb.Int64(this.tm_login)
@@ -329,6 +335,9 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase.Signreward = pb.Uint32(this.signreward)
 	userbase.Signtime = pb.Uint32(this.signtime)
 	userbase.Gold = pb.Uint64(this.gold)
+	userbase.GetPower().Power = pb.Uint32(this.power)
+	userbase.GetPower().Nexttime = pb.Uint64(this.nextpowertime)
+	userbase.GetPower().Maxpower = pb.Uint32(this.maxpower)
 	//userbase.Addrlist = this.addrlist[:]
 
 	// 道具信息
@@ -357,6 +366,9 @@ func (this *GateUser) LoadBin() {
 	this.signreward = userbase.GetSignreward()
 	this.signtime = userbase.GetSigntime()
 	this.gold = userbase.GetGold()
+	this.power = userbase.GetPower().GetPower()
+	this.maxpower = userbase.GetPower().GetMaxpower()
+	this.nextpowertime = userbase.GetPower().GetNexttime()
 	//this.addrlist = userbase.GetAddrlist()[:]
 	// 道具信息
 	this.bag.Clean()
@@ -385,6 +397,10 @@ func (this *GateUser) AsynSaveFeedback() {
 func (this *GateUser) OnCreateNew() {
 	//创建新侍女
 	this.maid.AddMaid(this,1,1)
+
+	this.power = uint32(tbl.Common.PowerInit)
+	this.maxpower = uint32(tbl.Common.PowerMax)
+	this.nextpowertime = uint64(util.CURTIME() / 1000) + uint64(tbl.Common.PowerAddInterval)
 }
 
 // 上线回调，玩家数据在LoginOk中发送
@@ -407,6 +423,7 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 	this.savedone = false
 	this.roomdata.Reset()
 	this.maid.Online(this)
+	this.UpdatePower(uint64(curtime))
 	log.Info("Sid[%d] 账户[%s] 玩家[%d] 名字[%s] 登录成功", this.Sid(), this.account, this.Id(), this.Name())
 
 	// 同步数据到客户端
