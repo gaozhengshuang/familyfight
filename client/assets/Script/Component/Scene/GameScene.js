@@ -5,6 +5,7 @@ cc.Class({
 
     properties: {
         node_player: { default: null, type: cc.Node },
+        node_pass: { default: null, type: cc.Node},
         prefab_player: { default: null, type: cc.Prefab },
         label_gold: { default: null, type: cc.Label },
         prefab_Shop: { default: null, type: cc.Prefab },
@@ -121,6 +122,35 @@ cc.Class({
             Game._.remove(this._playerList, function (player) {
                 return player.node.uuid == this._touchPlayer.node.uuid || player.node.uuid == this._findPlayer.node.uuid;
             }.bind(this))
+
+            //升级后的女仆没在此关卡后的动画
+            let nextLvPlayer = Game.ConfigController.GetConfigById("TMaidLevel", this._findPlayer.getMaidBase().NextID);
+            if (nextLvPlayer) {
+                if (nextLvPlayer.Passlevels != this._findPlayer.getMaidBase().Passlevels) {
+                    let curX = this._findPlayer.node.x;
+                    let curY = this._findPlayer.node.y;
+                    cc.loader.loadRes(this._findPlayer.getMaidBase().Path, cc.SpriteFrame, function (err, spriteFrame) {
+                        var node_newMaid = new cc.Node('newMaid');
+                        const sprite = node_newMaid.addComponent(cc.Sprite);
+                        sprite.spriteFrame = spriteFrame;
+                        this.node_player.addChild(node_newMaid);
+                        
+                        node_newMaid.x = curX;
+                        node_newMaid.y = curY;
+
+                        node_newMaid.runAction(cc.sequence([
+                            cc.spawn([
+                                cc.moveTo(0.6, 0, 400),
+                                cc.scaleTo(0.6, 0, 0),
+                            ]),
+                            cc.callFunc(function () {
+                                node_newMaid.destroy();
+                                node_newMaid = null;
+                            }, this)
+                        ]));
+                    }.bind(this));
+                }
+            }
 
             this._touchPlayer.node.destroy();
             this._findPlayer.node.destroy();

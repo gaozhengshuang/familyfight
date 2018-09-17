@@ -110,6 +110,10 @@ cc.Class({
         return this.maidBase.Id;
     },
 
+    getMaidBase() {
+        return this.maidBase;
+    },
+
     updateEvent(isClick) {
         this.isLongclick = isClick;
         if (this.isLongclick) {
