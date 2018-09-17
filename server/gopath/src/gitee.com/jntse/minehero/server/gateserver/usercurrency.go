@@ -89,8 +89,7 @@ func (this *GateUser) RemoveCoupon(num uint32, reason string) bool {
 }
 
 // 体力
-func (this *GateUser) UpdatePower(curtimems uint64) {
-	curtimes := uint64(curtimems / 1000)
+func (this *GateUser) UpdatePower(curtimes uint64) {
 	newPower := this.GetPower()
 	for {
 		if newPower >= this.maxpower {

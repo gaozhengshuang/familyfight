@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -4132,230 +4132,6 @@ $root.msg = (function() {
         return SimpleCounter;
     })();
 
-    msg.FreePresentMoney = (function() {
-
-        /**
-         * Properties of a FreePresentMoney.
-         * @memberof msg
-         * @interface IFreePresentMoney
-         * @property {number|null} [count] FreePresentMoney count
-         * @property {number|Long|null} [tmrecord] FreePresentMoney tmrecord
-         */
-
-        /**
-         * Constructs a new FreePresentMoney.
-         * @memberof msg
-         * @classdesc Represents a FreePresentMoney.
-         * @implements IFreePresentMoney
-         * @constructor
-         * @param {msg.IFreePresentMoney=} [properties] Properties to set
-         */
-        function FreePresentMoney(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * FreePresentMoney count.
-         * @member {number} count
-         * @memberof msg.FreePresentMoney
-         * @instance
-         */
-        FreePresentMoney.prototype.count = 0;
-
-        /**
-         * FreePresentMoney tmrecord.
-         * @member {number|Long} tmrecord
-         * @memberof msg.FreePresentMoney
-         * @instance
-         */
-        FreePresentMoney.prototype.tmrecord = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * Creates a new FreePresentMoney instance using the specified properties.
-         * @function create
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {msg.IFreePresentMoney=} [properties] Properties to set
-         * @returns {msg.FreePresentMoney} FreePresentMoney instance
-         */
-        FreePresentMoney.create = function create(properties) {
-            return new FreePresentMoney(properties);
-        };
-
-        /**
-         * Encodes the specified FreePresentMoney message. Does not implicitly {@link msg.FreePresentMoney.verify|verify} messages.
-         * @function encode
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {msg.IFreePresentMoney} message FreePresentMoney message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        FreePresentMoney.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.count != null && message.hasOwnProperty("count"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.count);
-            if (message.tmrecord != null && message.hasOwnProperty("tmrecord"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.tmrecord);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified FreePresentMoney message, length delimited. Does not implicitly {@link msg.FreePresentMoney.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {msg.IFreePresentMoney} message FreePresentMoney message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        FreePresentMoney.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a FreePresentMoney message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.FreePresentMoney} FreePresentMoney
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        FreePresentMoney.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.FreePresentMoney();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.count = reader.int32();
-                    break;
-                case 2:
-                    message.tmrecord = reader.int64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a FreePresentMoney message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.FreePresentMoney} FreePresentMoney
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        FreePresentMoney.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a FreePresentMoney message.
-         * @function verify
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        FreePresentMoney.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.count != null && message.hasOwnProperty("count"))
-                if (!$util.isInteger(message.count))
-                    return "count: integer expected";
-            if (message.tmrecord != null && message.hasOwnProperty("tmrecord"))
-                if (!$util.isInteger(message.tmrecord) && !(message.tmrecord && $util.isInteger(message.tmrecord.low) && $util.isInteger(message.tmrecord.high)))
-                    return "tmrecord: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a FreePresentMoney message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.FreePresentMoney} FreePresentMoney
-         */
-        FreePresentMoney.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.FreePresentMoney)
-                return object;
-            var message = new $root.msg.FreePresentMoney();
-            if (object.count != null)
-                message.count = object.count | 0;
-            if (object.tmrecord != null)
-                if ($util.Long)
-                    (message.tmrecord = $util.Long.fromValue(object.tmrecord)).unsigned = false;
-                else if (typeof object.tmrecord === "string")
-                    message.tmrecord = parseInt(object.tmrecord, 10);
-                else if (typeof object.tmrecord === "number")
-                    message.tmrecord = object.tmrecord;
-                else if (typeof object.tmrecord === "object")
-                    message.tmrecord = new $util.LongBits(object.tmrecord.low >>> 0, object.tmrecord.high >>> 0).toNumber();
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a FreePresentMoney message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.FreePresentMoney
-         * @static
-         * @param {msg.FreePresentMoney} message FreePresentMoney
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        FreePresentMoney.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.count = 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.tmrecord = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.tmrecord = options.longs === String ? "0" : 0;
-            }
-            if (message.count != null && message.hasOwnProperty("count"))
-                object.count = message.count;
-            if (message.tmrecord != null && message.hasOwnProperty("tmrecord"))
-                if (typeof message.tmrecord === "number")
-                    object.tmrecord = options.longs === String ? String(message.tmrecord) : message.tmrecord;
-                else
-                    object.tmrecord = options.longs === String ? $util.Long.prototype.toString.call(message.tmrecord) : options.longs === Number ? new $util.LongBits(message.tmrecord.low >>> 0, message.tmrecord.high >>> 0).toNumber() : message.tmrecord;
-            return object;
-        };
-
-        /**
-         * Converts this FreePresentMoney to JSON.
-         * @function toJSON
-         * @memberof msg.FreePresentMoney
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        FreePresentMoney.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return FreePresentMoney;
-    })();
-
     msg.UserWechat = (function() {
 
         /**
@@ -5459,6 +5235,252 @@ $root.msg = (function() {
         return LuckyDrawHistory;
     })();
 
+    msg.PowerData = (function() {
+
+        /**
+         * Properties of a PowerData.
+         * @memberof msg
+         * @interface IPowerData
+         * @property {number|null} [power] PowerData power
+         * @property {number|Long|null} [nexttime] PowerData nexttime
+         * @property {number|null} [maxpower] PowerData maxpower
+         */
+
+        /**
+         * Constructs a new PowerData.
+         * @memberof msg
+         * @classdesc Represents a PowerData.
+         * @implements IPowerData
+         * @constructor
+         * @param {msg.IPowerData=} [properties] Properties to set
+         */
+        function PowerData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * PowerData power.
+         * @member {number} power
+         * @memberof msg.PowerData
+         * @instance
+         */
+        PowerData.prototype.power = 0;
+
+        /**
+         * PowerData nexttime.
+         * @member {number|Long} nexttime
+         * @memberof msg.PowerData
+         * @instance
+         */
+        PowerData.prototype.nexttime = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * PowerData maxpower.
+         * @member {number} maxpower
+         * @memberof msg.PowerData
+         * @instance
+         */
+        PowerData.prototype.maxpower = 0;
+
+        /**
+         * Creates a new PowerData instance using the specified properties.
+         * @function create
+         * @memberof msg.PowerData
+         * @static
+         * @param {msg.IPowerData=} [properties] Properties to set
+         * @returns {msg.PowerData} PowerData instance
+         */
+        PowerData.create = function create(properties) {
+            return new PowerData(properties);
+        };
+
+        /**
+         * Encodes the specified PowerData message. Does not implicitly {@link msg.PowerData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.PowerData
+         * @static
+         * @param {msg.IPowerData} message PowerData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PowerData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.power != null && message.hasOwnProperty("power"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.power);
+            if (message.nexttime != null && message.hasOwnProperty("nexttime"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.nexttime);
+            if (message.maxpower != null && message.hasOwnProperty("maxpower"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.maxpower);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified PowerData message, length delimited. Does not implicitly {@link msg.PowerData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.PowerData
+         * @static
+         * @param {msg.IPowerData} message PowerData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        PowerData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a PowerData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.PowerData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.PowerData} PowerData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PowerData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.PowerData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.power = reader.uint32();
+                    break;
+                case 2:
+                    message.nexttime = reader.uint64();
+                    break;
+                case 3:
+                    message.maxpower = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a PowerData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.PowerData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.PowerData} PowerData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        PowerData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a PowerData message.
+         * @function verify
+         * @memberof msg.PowerData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        PowerData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.power != null && message.hasOwnProperty("power"))
+                if (!$util.isInteger(message.power))
+                    return "power: integer expected";
+            if (message.nexttime != null && message.hasOwnProperty("nexttime"))
+                if (!$util.isInteger(message.nexttime) && !(message.nexttime && $util.isInteger(message.nexttime.low) && $util.isInteger(message.nexttime.high)))
+                    return "nexttime: integer|Long expected";
+            if (message.maxpower != null && message.hasOwnProperty("maxpower"))
+                if (!$util.isInteger(message.maxpower))
+                    return "maxpower: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a PowerData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.PowerData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.PowerData} PowerData
+         */
+        PowerData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.PowerData)
+                return object;
+            var message = new $root.msg.PowerData();
+            if (object.power != null)
+                message.power = object.power >>> 0;
+            if (object.nexttime != null)
+                if ($util.Long)
+                    (message.nexttime = $util.Long.fromValue(object.nexttime)).unsigned = true;
+                else if (typeof object.nexttime === "string")
+                    message.nexttime = parseInt(object.nexttime, 10);
+                else if (typeof object.nexttime === "number")
+                    message.nexttime = object.nexttime;
+                else if (typeof object.nexttime === "object")
+                    message.nexttime = new $util.LongBits(object.nexttime.low >>> 0, object.nexttime.high >>> 0).toNumber(true);
+            if (object.maxpower != null)
+                message.maxpower = object.maxpower >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a PowerData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.PowerData
+         * @static
+         * @param {msg.PowerData} message PowerData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        PowerData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.power = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.nexttime = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.nexttime = options.longs === String ? "0" : 0;
+                object.maxpower = 0;
+            }
+            if (message.power != null && message.hasOwnProperty("power"))
+                object.power = message.power;
+            if (message.nexttime != null && message.hasOwnProperty("nexttime"))
+                if (typeof message.nexttime === "number")
+                    object.nexttime = options.longs === String ? String(message.nexttime) : message.nexttime;
+                else
+                    object.nexttime = options.longs === String ? $util.Long.prototype.toString.call(message.nexttime) : options.longs === Number ? new $util.LongBits(message.nexttime.low >>> 0, message.nexttime.high >>> 0).toNumber(true) : message.nexttime;
+            if (message.maxpower != null && message.hasOwnProperty("maxpower"))
+                object.maxpower = message.maxpower;
+            return object;
+        };
+
+        /**
+         * Converts this PowerData to JSON.
+         * @function toJSON
+         * @memberof msg.PowerData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        PowerData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return PowerData;
+    })();
+
     msg.UserBase = (function() {
 
         /**
@@ -5480,10 +5502,10 @@ $root.msg = (function() {
          * @property {msg.ISimpleCounter|null} [scounter] UserBase scounter
          * @property {msg.IUserWechat|null} [wechat] UserBase wechat
          * @property {string|null} [invitationcode] UserBase invitationcode
-         * @property {msg.IFreePresentMoney|null} [freepresent] UserBase freepresent
          * @property {msg.IUserTask|null} [task] UserBase task
          * @property {msg.ILuckyDrawHistory|null} [luckydraw] UserBase luckydraw
          * @property {number|Long|null} [gold] UserBase gold
+         * @property {msg.IPowerData|null} [power] UserBase power
          */
 
         /**
@@ -5623,14 +5645,6 @@ $root.msg = (function() {
         UserBase.prototype.invitationcode = "";
 
         /**
-         * UserBase freepresent.
-         * @member {msg.IFreePresentMoney|null|undefined} freepresent
-         * @memberof msg.UserBase
-         * @instance
-         */
-        UserBase.prototype.freepresent = null;
-
-        /**
          * UserBase task.
          * @member {msg.IUserTask|null|undefined} task
          * @memberof msg.UserBase
@@ -5653,6 +5667,14 @@ $root.msg = (function() {
          * @instance
          */
         UserBase.prototype.gold = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * UserBase power.
+         * @member {msg.IPowerData|null|undefined} power
+         * @memberof msg.UserBase
+         * @instance
+         */
+        UserBase.prototype.power = null;
 
         /**
          * Creates a new UserBase instance using the specified properties.
@@ -5709,14 +5731,14 @@ $root.msg = (function() {
                 $root.msg.UserWechat.encode(message.wechat, writer.uint32(/* id 14, wireType 2 =*/114).fork()).ldelim();
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 writer.uint32(/* id 15, wireType 2 =*/122).string(message.invitationcode);
-            if (message.freepresent != null && message.hasOwnProperty("freepresent"))
-                $root.msg.FreePresentMoney.encode(message.freepresent, writer.uint32(/* id 16, wireType 2 =*/130).fork()).ldelim();
             if (message.task != null && message.hasOwnProperty("task"))
-                $root.msg.UserTask.encode(message.task, writer.uint32(/* id 17, wireType 2 =*/138).fork()).ldelim();
+                $root.msg.UserTask.encode(message.task, writer.uint32(/* id 16, wireType 2 =*/130).fork()).ldelim();
             if (message.luckydraw != null && message.hasOwnProperty("luckydraw"))
-                $root.msg.LuckyDrawHistory.encode(message.luckydraw, writer.uint32(/* id 18, wireType 2 =*/146).fork()).ldelim();
+                $root.msg.LuckyDrawHistory.encode(message.luckydraw, writer.uint32(/* id 17, wireType 2 =*/138).fork()).ldelim();
             if (message.gold != null && message.hasOwnProperty("gold"))
-                writer.uint32(/* id 19, wireType 0 =*/152).uint64(message.gold);
+                writer.uint32(/* id 18, wireType 0 =*/144).uint64(message.gold);
+            if (message.power != null && message.hasOwnProperty("power"))
+                $root.msg.PowerData.encode(message.power, writer.uint32(/* id 19, wireType 2 =*/154).fork()).ldelim();
             return writer;
         };
 
@@ -5799,16 +5821,16 @@ $root.msg = (function() {
                     message.invitationcode = reader.string();
                     break;
                 case 16:
-                    message.freepresent = $root.msg.FreePresentMoney.decode(reader, reader.uint32());
-                    break;
-                case 17:
                     message.task = $root.msg.UserTask.decode(reader, reader.uint32());
                     break;
-                case 18:
+                case 17:
                     message.luckydraw = $root.msg.LuckyDrawHistory.decode(reader, reader.uint32());
                     break;
-                case 19:
+                case 18:
                     message.gold = reader.uint64();
+                    break;
+                case 19:
+                    message.power = $root.msg.PowerData.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -5900,11 +5922,6 @@ $root.msg = (function() {
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 if (!$util.isString(message.invitationcode))
                     return "invitationcode: string expected";
-            if (message.freepresent != null && message.hasOwnProperty("freepresent")) {
-                var error = $root.msg.FreePresentMoney.verify(message.freepresent);
-                if (error)
-                    return "freepresent." + error;
-            }
             if (message.task != null && message.hasOwnProperty("task")) {
                 var error = $root.msg.UserTask.verify(message.task);
                 if (error)
@@ -5918,6 +5935,11 @@ $root.msg = (function() {
             if (message.gold != null && message.hasOwnProperty("gold"))
                 if (!$util.isInteger(message.gold) && !(message.gold && $util.isInteger(message.gold.low) && $util.isInteger(message.gold.high)))
                     return "gold: integer|Long expected";
+            if (message.power != null && message.hasOwnProperty("power")) {
+                var error = $root.msg.PowerData.verify(message.power);
+                if (error)
+                    return "power." + error;
+            }
             return null;
         };
 
@@ -5991,11 +6013,6 @@ $root.msg = (function() {
             }
             if (object.invitationcode != null)
                 message.invitationcode = String(object.invitationcode);
-            if (object.freepresent != null) {
-                if (typeof object.freepresent !== "object")
-                    throw TypeError(".msg.UserBase.freepresent: object expected");
-                message.freepresent = $root.msg.FreePresentMoney.fromObject(object.freepresent);
-            }
             if (object.task != null) {
                 if (typeof object.task !== "object")
                     throw TypeError(".msg.UserBase.task: object expected");
@@ -6015,6 +6032,11 @@ $root.msg = (function() {
                     message.gold = object.gold;
                 else if (typeof object.gold === "object")
                     message.gold = new $util.LongBits(object.gold.low >>> 0, object.gold.high >>> 0).toNumber(true);
+            if (object.power != null) {
+                if (typeof object.power !== "object")
+                    throw TypeError(".msg.UserBase.power: object expected");
+                message.power = $root.msg.PowerData.fromObject(object.power);
+            }
             return message;
         };
 
@@ -6056,7 +6078,6 @@ $root.msg = (function() {
                 object.scounter = null;
                 object.wechat = null;
                 object.invitationcode = "";
-                object.freepresent = null;
                 object.task = null;
                 object.luckydraw = null;
                 if ($util.Long) {
@@ -6064,6 +6085,7 @@ $root.msg = (function() {
                     object.gold = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.gold = options.longs === String ? "0" : 0;
+                object.power = null;
             }
             if (message.level != null && message.hasOwnProperty("level"))
                 object.level = message.level;
@@ -6104,8 +6126,6 @@ $root.msg = (function() {
                 object.wechat = $root.msg.UserWechat.toObject(message.wechat, options);
             if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
                 object.invitationcode = message.invitationcode;
-            if (message.freepresent != null && message.hasOwnProperty("freepresent"))
-                object.freepresent = $root.msg.FreePresentMoney.toObject(message.freepresent, options);
             if (message.task != null && message.hasOwnProperty("task"))
                 object.task = $root.msg.UserTask.toObject(message.task, options);
             if (message.luckydraw != null && message.hasOwnProperty("luckydraw"))
@@ -6115,6 +6135,8 @@ $root.msg = (function() {
                     object.gold = options.longs === String ? String(message.gold) : message.gold;
                 else
                     object.gold = options.longs === String ? $util.Long.prototype.toString.call(message.gold) : options.longs === Number ? new $util.LongBits(message.gold.low >>> 0, message.gold.high >>> 0).toNumber(true) : message.gold;
+            if (message.power != null && message.hasOwnProperty("power"))
+                object.power = $root.msg.PowerData.toObject(message.power, options);
             return object;
         };
 
@@ -12625,6 +12647,198 @@ $root.msg = (function() {
         return GW2C_UpdateTrueGold;
     })();
 
+    msg.GW2C_UpdatePower = (function() {
+
+        /**
+         * Properties of a GW2C_UpdatePower.
+         * @memberof msg
+         * @interface IGW2C_UpdatePower
+         * @property {msg.IPowerData|null} [power] GW2C_UpdatePower power
+         */
+
+        /**
+         * Constructs a new GW2C_UpdatePower.
+         * @memberof msg
+         * @classdesc Represents a GW2C_UpdatePower.
+         * @implements IGW2C_UpdatePower
+         * @constructor
+         * @param {msg.IGW2C_UpdatePower=} [properties] Properties to set
+         */
+        function GW2C_UpdatePower(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_UpdatePower power.
+         * @member {msg.IPowerData|null|undefined} power
+         * @memberof msg.GW2C_UpdatePower
+         * @instance
+         */
+        GW2C_UpdatePower.prototype.power = null;
+
+        /**
+         * Creates a new GW2C_UpdatePower instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_UpdatePower
+         * @static
+         * @param {msg.IGW2C_UpdatePower=} [properties] Properties to set
+         * @returns {msg.GW2C_UpdatePower} GW2C_UpdatePower instance
+         */
+        GW2C_UpdatePower.create = function create(properties) {
+            return new GW2C_UpdatePower(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_UpdatePower message. Does not implicitly {@link msg.GW2C_UpdatePower.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_UpdatePower
+         * @static
+         * @param {msg.IGW2C_UpdatePower} message GW2C_UpdatePower message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_UpdatePower.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.power != null && message.hasOwnProperty("power"))
+                $root.msg.PowerData.encode(message.power, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_UpdatePower message, length delimited. Does not implicitly {@link msg.GW2C_UpdatePower.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_UpdatePower
+         * @static
+         * @param {msg.IGW2C_UpdatePower} message GW2C_UpdatePower message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_UpdatePower.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_UpdatePower message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_UpdatePower
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_UpdatePower} GW2C_UpdatePower
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_UpdatePower.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_UpdatePower();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.power = $root.msg.PowerData.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_UpdatePower message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_UpdatePower
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_UpdatePower} GW2C_UpdatePower
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_UpdatePower.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_UpdatePower message.
+         * @function verify
+         * @memberof msg.GW2C_UpdatePower
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_UpdatePower.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.power != null && message.hasOwnProperty("power")) {
+                var error = $root.msg.PowerData.verify(message.power);
+                if (error)
+                    return "power." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_UpdatePower message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_UpdatePower
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_UpdatePower} GW2C_UpdatePower
+         */
+        GW2C_UpdatePower.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_UpdatePower)
+                return object;
+            var message = new $root.msg.GW2C_UpdatePower();
+            if (object.power != null) {
+                if (typeof object.power !== "object")
+                    throw TypeError(".msg.GW2C_UpdatePower.power: object expected");
+                message.power = $root.msg.PowerData.fromObject(object.power);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_UpdatePower message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_UpdatePower
+         * @static
+         * @param {msg.GW2C_UpdatePower} message GW2C_UpdatePower
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_UpdatePower.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.power = null;
+            if (message.power != null && message.hasOwnProperty("power"))
+                object.power = $root.msg.PowerData.toObject(message.power, options);
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_UpdatePower to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_UpdatePower
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_UpdatePower.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_UpdatePower;
+    })();
+
     msg.GW2L_ReqRegist = (function() {
 
         /**
@@ -16482,13 +16696,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -16737,13 +16945,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")

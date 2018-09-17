@@ -10,7 +10,7 @@ var Currency = function () {
 }
 
 Currency.prototype.Init = function (cb) {
-    NetWorkController.AddListener('msg.GW2C_SendUserInfo', this, this.onGW2C_UpdatePower);
+    NetWorkController.AddListener('msg.GW2C_SendUserInfo', this, this.onGW2C_SendUserInfo);
     NetWorkController.AddListener('msg.GW2C_UpdatePower', this, this.onGW2C_UpdatePower);
 
     Tools.InvokeCallback(cb, null);
@@ -34,6 +34,10 @@ Currency.prototype.GetPowerAddition = function () {
 /**
  * 消息处理接口
  */
+Currency.prototype.onGW2C_SendUserInfo = function (msgid, data) {
+    this.powerData = Tools.GetValueInObj(data, 'base.power');
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEPOWER);
+}
 Currency.prototype.onGW2C_UpdatePower = function (msgid, data) {
     this.powerData = data.power;
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEPOWER);

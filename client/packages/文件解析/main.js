@@ -3,6 +3,7 @@ var fs = require('fs');
 var async = require('async');
 var node_xj = require('xls-to-json');
 var process = require('child_process');
+var path = require('path');
 
 module.exports = {
     load() {
@@ -21,11 +22,16 @@ module.exports = {
                 'dialoguebase',
                 'maidlevelbase',
                 'maidshopbase',
-                'passlevelsbase'
+                'passlevelsbase',
+                'common'
             ];
             Editor.log('开始生成JSON');
+
             async.timesSeries(fileNames.length, function (n, tnext) {
                 let sourcePath = __dirname + '\\..\\..\\..\\docs\\tbl\\' + fileNames[n] + '.json';
+                if (!fs.existsSync(sourcePath)) {
+                    sourcePath = __dirname + '\\..\\..\\..\\docs\\json\\' + fileNames[n] + '.json';
+                }
                 let targetFile = __dirname + '\\..\\..\\assets\\resources\\Json\\';
                 let cmd = 'copy ' + sourcePath + ' ' + targetFile;
                 process.exec(cmd, function (err, stdout, stderr) {
