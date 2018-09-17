@@ -4,6 +4,7 @@ import (
 	_"gitee.com/jntse/gotoolkit/eventqueue"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
+	"gitee.com/jntse/gotoolkit/util"
 	pb "github.com/golang/protobuf/proto"
 	"math"
 )
@@ -88,7 +89,7 @@ func (this *GateUser) RemoveCoupon(num uint32, reason string) bool {
 }
 
 // 体力
-func (this *GateUser) UpdatePower(curtimems uint64) *msg.PowerData {
+func (this *GateUser) UpdatePower(curtimems uint64) {
 	curtimes := uint64(curtimems / 1000)
 	newPower := this.GetPower()
 	for {
@@ -110,7 +111,7 @@ func (this *GateUser) PackPower() *msg.PowerData {
 	data := &msg.PowerData{}
 	data.Power = pb.Uint32(this.power)
 	data.Nexttime = pb.Uint64(this.nextpowertime)
-	data.MaxPower = pb.Uint32(this.maxpower)
+	data.Maxpower = pb.Uint32(this.maxpower)
 	return data
 }
 func (this *GateUser) GetPower() uint32 { return this.power }
