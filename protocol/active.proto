@@ -1,0 +1,11 @@
+package msg;
+import "serialize.proto";
+
+// 大转盘 抽签
+message C2GW_TurnBrand 
+{
+    repeated uint32 ids = 1;
+}
+message GW2C_RetTurnBrand {
+    optional uint32 id = 1;
+}
