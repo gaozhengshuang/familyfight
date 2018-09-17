@@ -319,7 +319,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 		bin.Base.Scounter = &msg.SimpleCounter{}
 	}
 	if bin.Base.Power == nil {
-		this.Base.Power = &msg.PowerData{}
+		bin.Base.Power = &msg.PowerData{}
 	}
 
 	userbase := bin.GetBase()

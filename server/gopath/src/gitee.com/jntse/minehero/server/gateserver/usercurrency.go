@@ -89,7 +89,7 @@ func (this *GateUser) RemoveCoupon(num uint32, reason string) bool {
 
 // 体力
 func (this *GateUser) UpdatePower(curtimems uint64) *msg.PowerData {
-	curtimes = uint64(curtimems / 1000)
+	curtimes := uint64(curtimems / 1000)
 	newPower := this.GetPower()
 	for {
 		if newPower >= this.maxpower {
@@ -98,8 +98,8 @@ func (this *GateUser) UpdatePower(curtimems uint64) *msg.PowerData {
 		if this.nextpowertime > curtimems {
 			break
 		}
-		this.nextpowertime = this.nextpowertime + tbl.Common.PowerAddInterval
-		newPower = newPower + tbl.Common.PowerAddition
+		this.nextpowertime = this.nextpowertime + uint64(tbl.Common.PowerAddInterval)
+		newPower = newPower + uint32(tbl.Common.PowerAddition)
 	}
 	addition := newPower - this.GetPower()
 	if addition > 0 {
@@ -115,7 +115,7 @@ func (this *GateUser) PackPower() *msg.PowerData {
 }
 func (this *GateUser) GetPower() uint32 { return this.power }
 func (this *GateUser) AddPower(num uint32, reason string, ignorelimit bool) {
-	newpower = this.GetPower() + num
+	newpower := this.GetPower() + num
 	if !ignorelimit {
 		if this.GetPower() < this.maxpower {
 			newpower = uint32(math.Min(float64(newpower), float64(this.maxpower)))
