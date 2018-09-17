@@ -1,7 +1,9 @@
+let Game = require('../../Game');
+let BrandItemView = require('./BrandItemView');
 cc.Class({
     extends: cc.Component,
     properties: {
-        brandParents: { default: [], type: [cc.Node] }
+        brandViews: { default: [], type: [BrandItemView] }
     },
     onLoad() {
     },

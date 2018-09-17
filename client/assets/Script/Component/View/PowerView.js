@@ -30,7 +30,7 @@ cc.Class({
             this.countDownLabel.string = '';
         } else {
             let lasttime = Game.CurrencyModel.GetNextPowerTime() - Game.TimeController.GetCurTime()
-            this.stateLabel.string = '+' + Game.ConfigController.GetConfig(PowerAddition);
+            this.stateLabel.string = '+' + Game.ConfigController.GetConfig('PowerAddition');
             if (lasttime > 0) {
                 this.countDownLabel.string = Game.moment.unix(lasttime).format('mm:ss');
             } else {

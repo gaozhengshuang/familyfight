@@ -3763,10 +3763,10 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 117
+      "__id__": 1
     },
     "asset": {
-      "__uuid__": "8717466a-1bec-4107-b5d3-eb8398925a0b"
+      "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
     "fileId": "1a173DKh1KQrQBUKbgmf0W",
     "sync": false
@@ -3854,10 +3854,10 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 117
+      "__id__": 1
     },
     "asset": {
-      "__uuid__": "8717466a-1bec-4107-b5d3-eb8398925a0b"
+      "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
     "fileId": "ffcrUZL1RELIdObeDkDi2f",
     "sync": false
@@ -3941,10 +3941,10 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 117
+      "__id__": 1
     },
     "asset": {
-      "__uuid__": "8717466a-1bec-4107-b5d3-eb8398925a0b"
+      "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
     "fileId": "430Xqn7DROqZPOcLc7zioS",
     "sync": false
@@ -4048,10 +4048,10 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 117
+      "__id__": 1
     },
     "asset": {
-      "__uuid__": "8717466a-1bec-4107-b5d3-eb8398925a0b"
+      "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
     "fileId": "abjhLDXp5KSKli9TmSUpOy",
     "sync": false
@@ -4155,10 +4155,10 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 117
+      "__id__": 1
     },
     "asset": {
-      "__uuid__": "8717466a-1bec-4107-b5d3-eb8398925a0b"
+      "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
     "fileId": "88RjWmHNpANrXYsRfKFb6T",
     "sync": false
@@ -4229,10 +4229,10 @@
   {
     "__type__": "cc.PrefabInfo",
     "root": {
-      "__id__": 117
+      "__id__": 1
     },
     "asset": {
-      "__uuid__": "8717466a-1bec-4107-b5d3-eb8398925a0b"
+      "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
     "fileId": "b1TGBgRIhApLQK2U2RFTfy",
     "sync": false
@@ -4313,24 +4313,24 @@
       "__id__": 1
     },
     "_enabled": true,
-    "brandParents": [
+    "brandViews": [
       {
-        "__id__": 3
+        "__id__": 18
       },
       {
-        "__id__": 21
+        "__id__": 36
       },
       {
-        "__id__": 39
+        "__id__": 54
       },
       {
-        "__id__": 57
+        "__id__": 72
       },
       {
-        "__id__": 75
+        "__id__": 90
       },
       {
-        "__id__": 93
+        "__id__": 108
       }
     ]
   },
