@@ -380,7 +380,9 @@ func (this *GateUser) LoadBin() {
 // TODO: 存盘可以单独协程
 func (this *GateUser) Save() {
 	key := fmt.Sprintf("userbin_%d", this.Id())
-	if err := utredis.SetProtoBin(Redis(), key, this.PackBin()); err != nil {
+	bin := this.PackBin()
+	this.bin = bin
+	if err := utredis.SetProtoBin(Redis(), key, bin); err != nil {
 		log.Error("保存玩家[%s %d]数据失败", this.Name(), this.Id())
 		return
 	}
@@ -400,7 +402,8 @@ func (this *GateUser) OnCreateNew() {
 
 	this.power = uint32(tbl.Common.PowerInit)
 	this.maxpower = uint32(tbl.Common.PowerMax)
-	this.nextpowertime = uint64(util.CURTIME() / 1000) + uint64(tbl.Common.PowerAddInterval)
+	this.nextpowertime = uint64(util.CURTIME()) + uint64(tbl.Common.PowerAddInterval)
+	this.Save()
 }
 
 // 上线回调，玩家数据在LoginOk中发送

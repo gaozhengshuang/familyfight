@@ -98,6 +98,7 @@ func (this *GateUser) UpdatePower(curtimes uint64) {
 		if this.nextpowertime > curtimes {
 			break
 		}
+		log.Info("玩家[%d] 下次增加体力时间[%d] 当前时间[%d]",this.Id(),this.nextpowertime,curtimes)
 		this.nextpowertime = this.nextpowertime + uint64(tbl.Common.PowerAddInterval)
 		newPower = newPower + uint32(tbl.Common.PowerAddition)
 	}

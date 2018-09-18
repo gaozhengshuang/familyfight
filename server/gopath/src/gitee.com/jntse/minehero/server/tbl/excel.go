@@ -31,6 +31,7 @@ var TBirckItembase = table.InsTBirckItembaseTable
 var SignBase = table.InsSignBaseTable
 var NameBase = table.InsNameBaseTable
 var TBallBase = table.InsTBallBaseTable
+var TTurnBrandBase = table.InsTTurnBrandBaseTable
 var TaskBase = table.InsTaskBaseTable
 var ShopBase = table.InsShopBaseTable
 var TbirckRefreshbase = table.InsTbirckRefreshbaseTable

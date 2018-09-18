@@ -96,6 +96,10 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_UploadTrueGold{}, on_C2GW_UploadTrueGold)
 	this.msgparser.RegistSendProto(msg.GW2C_UpdateTrueGold{})
 	this.msgparser.RegistSendProto(msg.GW2C_OfflineReward{})
+	this.msgparser.RegistSendProto(msg.GW2C_UpdatePower{})
+	//活动
+	this.msgparser.RegistProtoMsg(msg.C2GW_TurnBrand{}, on_C2GW_TurnBrand)
+	this.msgparser.RegistSendProto(msg.GW2C_RetTurnBrand{})
 }
 
 // 客户端心跳
@@ -291,7 +295,7 @@ func on_C2GW_ReqMergeMaid(session network.IBaseNetSession, message interface{}) 
 	send.Result = pb.Uint32(result)
 	user.SendMsg(send)
 }
-
+//更新货币
 func on_C2GW_UploadTrueGold(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_UploadTrueGold)
 	user := ExtractSessionUser(session)
@@ -307,4 +311,25 @@ func on_C2GW_UploadTrueGold(session network.IBaseNetSession, message interface{}
 		return
 	}
 	user.SetGold(tmsg.GetNum())
+}
+//翻牌子
+func on_C2GW_TurnBrand(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_TurnBrand)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result, id := user.TurnBrand(tmsg.GetIds())
+	send := &msg.GW2C_RetTurnBrand{}
+	send.Result = pb.Uint32(result)
+	send.Id = pb.Uint32(id)
+	user.SendMsg(send)
 }
