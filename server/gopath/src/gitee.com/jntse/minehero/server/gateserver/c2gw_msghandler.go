@@ -96,6 +96,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_UploadTrueGold{}, on_C2GW_UploadTrueGold)
 	this.msgparser.RegistSendProto(msg.GW2C_UpdateTrueGold{})
 	this.msgparser.RegistSendProto(msg.GW2C_OfflineReward{})
+	this.msgparser.RegistSendProto(msg.GW2C_UpdatePower{})
 }
 
 // 客户端心跳

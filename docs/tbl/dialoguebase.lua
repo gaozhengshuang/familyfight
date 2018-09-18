@@ -25,7 +25,10 @@ export var TDialogue : table.ITDialogueDefine[] = [
 		{ Id : 20, Index : 9, HeadSprite : [ "Image/Head/1" ], HeadLocation : [ 1 ], Name : "皇后", NameLocation : 1, Content : "本宫满意!" 	},
 		{ Id : 21, Index : 10, HeadSprite : [ "Image/Head/1" ], HeadLocation : [ 1 ], Name : "皇后", NameLocation : 1, Content : "本宫不太满意!" 	},
 		{ Id : 22, Index : 11, HeadSprite : [ "Image/Head/1" ], HeadLocation : [ 1 ], Name : "皇后", NameLocation : 1, Content : "本宫特别满意!" 	},
-		{ Id : 23, Index : 12, HeadSprite : [ "Image/Head/1" ], HeadLocation : [ 1 ], Name : "皇后", NameLocation : 1, Content : "本宫很无语!" 	}
+		{ Id : 23, Index : 12, HeadSprite : [ "Image/Head/1" ], HeadLocation : [ 1 ], Name : "皇后", NameLocation : 1, Content : "本宫很无语!" 	},
+		{ Id : 24, Index : 13, HeadSprite : [ "Image/Head/5" ], HeadLocation : [ 1 ], Name : "侍卫", NameLocation : 1, Content : "我会守护你的一生" 	},
+		{ Id : 25, Index : 14, HeadSprite : [ "Image/Head/1" ], HeadLocation : [ 1 ], Name : "皇后", NameLocation : 1, Content : "我就是你的白月光" 	},
+		{ Id : 26, Index : 0, HeadSprite : [  ], HeadLocation : [  ], Name : "", NameLocation : 0, Content : "" 	}
 	]
 
 
