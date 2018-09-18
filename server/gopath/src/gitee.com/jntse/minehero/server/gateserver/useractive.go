@@ -4,6 +4,7 @@ import (
 	_"gitee.com/jntse/gotoolkit/eventqueue"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
+	"gitee.com/jntse/minehero/server/tbl/excel"
 	"gitee.com/jntse/gotoolkit/util"
 	pb "github.com/golang/protobuf/proto"
 	"fmt"
@@ -69,18 +70,18 @@ func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
 		totalWeight = totalWeight + tmpl.Weight
 	}
 	//随机吧
-	result = util.RandBetween(0,totalWeight - 1)
-	find := nil
+	result = util.RandBetween(0, uint32(totalWeight - 1))
+	findbrand := &table.TurnBrandDefine{}
 	for _, v := range brands {
 		if result < v.Weight {
 			//找到了
-			find = v
+			findbrand = v
 		}
 	}
-	if find == nil {
+	if findbrand == nil {
 		this.SendNotify("未随机到牌子")
 		return 2,0
 	}
-	result = this.AddReward(find.Type, find.RewardId, find.Value)
-	return result, find.Id
+	result = this.AddReward(findbrand.Type, findbrand.RewardId, findbrand.Value, "翻牌子奖励")
+	return result, findbrand.Id
 }
