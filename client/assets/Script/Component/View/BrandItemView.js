@@ -5,15 +5,26 @@ cc.Class({
         headSprite: { default: null, type: cc.Sprite },
         nameLabel: { default: null, type: cc.Label },
         backNode: { default: null, type: cc.Node },
-        frontNode: { default: null, type: cc.Node }
+        frontNode: { default: null, type: cc.Node },
+        index: { default: 0 },
+        clickFunc: { default: null },
     },
     onLoad: function () {
+        this.node.on(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
     },
     start: function () {
     },
     update: function (dt) {
     },
-    Init: function (head, name) {
+    onDestroy: function () {
+        this.node.off(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
+    },
+    onTouchStart: function () {
+        Game.Tools.InvokeCallback(this.clickFunc, this.index);
+    },
+    Init: function (index, head, name, clickFunc) {
+        this.index = index;
+        this.clickFunc = clickFunc;
         Game.ResController.GetSpriteFrameByName(head, function (err, res) {
             if (err != null) {
                 console.log('[严重错误] 加载资源错误 ' + JSON.stringify(err));
@@ -68,5 +79,27 @@ cc.Class({
                 }, this)
             ));
         }
+    },
+    ShakeForever: function (cb) {
+        this.node.runAction(cc.repeatForever(
+            cc.sequence([
+                cc.rotateTo(0.05, -20),
+                cc.rotateTo(0.1, 20),
+                cc.rotateTo(0.05, -15),
+                cc.rotateTo(0.1, 15),
+                cc.rotateTo(0.05, -10),
+                cc.rotateTo(0.1, 10),
+                cc.rotateTo(0.05, -5),
+                cc.rotateTo(0.1, 5),
+                cc.rotateTo(0.05, 0),
+                cc.callFunc(function () {
+                    Game.Tools.InvokeCallback(cb)
+                }),
+                cc.delayTime(3),
+            ])
+        ));
+    },
+    StopAllAction: function () {
+        this.node.stopAllActions();
     }
 });

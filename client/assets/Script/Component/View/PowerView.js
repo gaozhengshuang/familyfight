@@ -24,17 +24,20 @@ cc.Class({
         if (curPower > maxPower) {
             this.stateLabel.string = '+' + (maxPower - curPower);
             this.countDownLabel.string = '';
-            this.progressBar
+            this.progressBar.progress = 1;
         } else if (curPower == maxPower) {
             this.stateLabel.string = '满';
             this.countDownLabel.string = '';
+            this.progressBar.progress = 1;
         } else {
             let lasttime = Game.CurrencyModel.GetNextPowerTime() - Game.TimeController.GetCurTime()
             this.stateLabel.string = '+' + Game.ConfigController.GetConfig('PowerAddition');
             if (lasttime > 0) {
                 this.countDownLabel.string = Game.moment.unix(lasttime).format('mm:ss');
+                this.progressBar.progress = 1 - (lasttime / Game.ConfigController.GetConfig('PowerAddInterval'));
             } else {
                 this.countDownLabel.string = '';
+                this.progressBar.progress = 1;
             }
         }
     },
