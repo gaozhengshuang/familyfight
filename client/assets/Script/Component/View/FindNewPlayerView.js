@@ -1,7 +1,7 @@
 import Game from '../../Game';
 
 cc.Class({
-    extends: cc.Component,
+    extends: cc.GameComponent,
 
     properties: {
         image_maid: { default: null, type: cc.Sprite },
@@ -9,7 +9,10 @@ cc.Class({
     },
 
     onLoad() {
+        this.uiType = Game.Define.UI_KEY.LAYER;
+
         this.initData();
+        this.initView();
     },
 
     start() {
@@ -25,8 +28,8 @@ cc.Class({
         this.maidBase = null;
     },
 
-    setData(_playerId) {
-        this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel", _playerId);
+    initView() {
+        this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel", Game.MaidModel.GetTopMaid());
         if (this.maidBase) {
             Game.ResController.SetSprite(this.image_maid, this.maidBase.Path);
             this.label_name.string = this.maidBase.Name;
@@ -40,6 +43,6 @@ cc.Class({
             }
         }
 
-        this.node.destroy();
+        this.closeView(Game.UIName.UI_FINDNEWPLAYER);
     }
 });

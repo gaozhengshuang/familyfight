@@ -14,6 +14,7 @@ cc.Class({
     },
 
     onLoad() {
+        this.uiType = Game.Define.UI_KEY.LAYER;
         Game.Tools.AutoFit(this.targetCanvas);
 
         this.initData();
@@ -160,15 +161,8 @@ cc.Class({
         }
     },
 
-    findNewPlayer(_playerId) {
-        let _prefab = cc.instantiate(this.prefab_FindNewPlayer);
-        if (_prefab) {
-            this.node.addChild(_prefab);
-            let _findNewPlayer = _prefab.getComponent('FindNewPlayerView');
-            if (_findNewPlayer) {
-                _findNewPlayer.setData(_playerId);
-            }
-        }
+    findNewPlayer() {
+        this.openView(Game.UIName.UI_FINDNEWPLAYER);
     },
 
     showDialoguePlayer(_dialogueId) {
@@ -177,13 +171,19 @@ cc.Class({
 
     onOpenShopView(event) {
         event.stopPropagationImmediate();
-        Game.ViewController.openView(Game.UIName.UI_SHOP);
+        this.openView(Game.UIName.UI_SHOP);
     },
 
     updateUIView() {
-        let _haveActive = Game._.find(Game.ViewController._viewList, function(v) {
+        let _haveActive = null;
+        _haveActive = Game._.find(Game.ViewController._viewList, function(v) {
             return v.active == true;
         });
         this.node_ViewLayer.active = _haveActive != null;
+
+        _haveActive = Game._.find(Game.ViewController._alertList, function(v) {
+            return v.active == true;
+        });
+        this.node_AlertLayer.active = _haveActive != null;
     },
 });

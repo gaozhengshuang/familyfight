@@ -1,13 +1,15 @@
 import Game from '../../Game';
 
 cc.Class({
-    extends: cc.Component,
+    extends: cc.GameComponent,
 
     properties: {
         tableView: { default: null, type: cc.Node }
     },
 
     onLoad() {
+        this.uiType = Game.Define.UI_KEY.LAYER;
+        
         this.initView();
         this.initNotification();
     },
@@ -38,6 +40,6 @@ cc.Class({
     },
 
     onClose() {
-        Game.ViewController.closeView(Game.UIName.UI_SHOP);
+        this.closeView(Game.UIName.UI_SHOP);
     }
 });

@@ -89,9 +89,9 @@ Maid.prototype.onGW2C_AckMaids = function (msgid, data) {
     }
 
     if (this.topMaid != data.maxid) {
-        NotificationController.Emit(Define.EVENT_KEY.FINDNEW_PLAYER, data.maxid);
+        this.topMaid = data.maxid;
+        NotificationController.Emit(Define.EVENT_KEY.FINDNEW_PLAYER);
     }
-    this.topMaid = data.maxid;
 }
 
 Maid.prototype.onGW2C_AckMergeMaid = function (msgid, data) {

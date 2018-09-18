@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 var ViewController = function () {
     this._viewList = [];
+    this._alertList = [];
 }
 
 ViewController.prototype.Init = function (cb) {
@@ -28,7 +29,7 @@ ViewController.prototype.openView = function (ui) {
                 if (err) {
                     console.log('[严重错误] 奖励资源加载错误 ' + err);
                 } else {
-                    var _view = cc.instantiate(prefab);
+                    let _view = cc.instantiate(prefab);
                     _view.uiname = ui;
                     let canvas = cc.director.getScene().getChildByName('Canvas');
                     canvas.getChildByName("ViewLayer").addChild(_view);
@@ -62,21 +63,56 @@ ViewController.prototype.closeView = function (ui, removeView = false) {
     }
 }
 
+
 /**
- * 关闭所有界面,参数true彻底删除界面,false隐藏界面(默认false)
+ * 打开弹窗
  */
-ViewController.prototype.closeAllView = function (removeView = false) {
+ViewController.prototype.openAlert = function (ui) {
     if (ui != null) {
-        if (removeView) {
-            let canvas = cc.director.getScene().getChildByName('Canvas');
-            canvas.getChildByName("ViewLayer").destroyAllChildren();
-            this._viewList = [];
+        let _view = _.find(this._alertList, function(v) {
+            return v.uiname == ui;
+        });
+    
+        if (_view) {
+            for(let i = 0; i < this._alertList.length; i ++) {
+                this._alertList[i].active = this._alertList[i].uiname == ui;
+            } 
         } else {
-            for (let i = 0; i < this._viewList.length; i ++) {
-                this._viewList[i].active = false;
+            cc.loader.loadRes(ui, function (err, prefab) {
+                if (err) {
+                    console.log('[严重错误] 奖励资源加载错误 ' + err);
+                } else {
+                    let _view = cc.instantiate(prefab);
+                    _view.uiname = ui;
+                    let canvas = cc.director.getScene().getChildByName('Canvas');
+                    canvas.getChildByName("AlertLayer").addChild(_view);
+                    this._alertList.push(_view);
+                }
+            }.bind(this));
+        }
+    }  
+}
+
+/**
+ * 关闭弹窗,参数true彻底删除界面,false隐藏界面(默认false)
+ */
+ViewController.prototype.closeAlert = function (ui, removeView = false) {
+    if (ui != null) {
+        let _view = _.find(this._alertList, function(v) {
+            return v.uiname == ui;
+        });
+        
+        if (_view) {
+            if (removeView) {
+                _view.destroy();
+
+                _.remove(this._alertList, function (v) {
+                    return v.uiname == ui;
+                });
+            } else {
+                _view.active = false;
             }
         }
     }
 }
-
 module.exports = new ViewController();
