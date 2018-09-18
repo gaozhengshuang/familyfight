@@ -32,7 +32,7 @@ cc.Class({
             toast.y = 0;
             toast.parent = this.tipParentNode;
             let toastView = toast.getComponent('NotifyView');
-            toastView.flap(data.text, data.alive || 3, data.delay || 0.1);
+            toastView.flap(data.text || data, data.alive || 3, data.delay || 0.1);
         }
     },
     //漂浮提示代码--------------------------------------end-------------------------------------

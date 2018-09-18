@@ -38,6 +38,6 @@ cc.Class({
     },
 
     onClose() {
-        this.node.destroy();
+        Game.ViewController.closeView(Game.UIName.UI_SHOP);
     }
 });

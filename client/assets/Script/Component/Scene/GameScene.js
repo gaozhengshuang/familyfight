@@ -1,13 +1,14 @@
 import Game from '../../Game';
 
 cc.Class({
-    extends: cc.Component,
+    extends: cc.GameComponent,
 
     properties: {
+        node_ViewLayer: { default: null, type: cc.Node},
+        node_AlertLayer: { default: null, type: cc.Node},
         node_player: { default: null, type: cc.Node },
         node_pass: { default: null, type: cc.Node},
         prefab_player: { default: null, type: cc.Prefab },
-        prefab_Shop: { default: null, type: cc.Prefab },
         prefab_FindNewPlayer: { default: null, type: cc.Prefab },
         targetCanvas: { default: null, type: cc.Canvas },
     },
@@ -34,6 +35,8 @@ cc.Class({
             this.mainTime = 0;
             Game.NetWorkController.Send('msg.C2GW_UploadTrueGold', {num: Game.UserModel.GetGold()});
         }
+
+        this.updateUIView();
     },
 
     onDestroy() {
@@ -58,7 +61,6 @@ cc.Class({
     },
 
     initNotification() {
-        
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
         Game.NotificationController.On(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
@@ -175,9 +177,13 @@ cc.Class({
 
     onOpenShopView(event) {
         event.stopPropagationImmediate();
-        let shopView = cc.instantiate(this.prefab_Shop);
-        if (shopView) {
-            this.node.addChild(shopView);
-        }
+        Game.ViewController.openView(Game.UIName.UI_SHOP);
+    },
+
+    updateUIView() {
+        let _haveActive = Game._.find(Game.ViewController._viewList, function(v) {
+            return v.active == true;
+        });
+        this.node_ViewLayer.active = _haveActive != null;
     },
 });

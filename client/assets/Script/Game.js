@@ -4,6 +4,7 @@ let Game = {
     _: require('lodash'),
 
     Define: require('./Util/Define'),
+    UIName: require('./Util/UIName'),
     TurnGameDefine: require('./Util/TurnGameDefine'),
     Tools: require('./Util/Tools'),
     HttpUtil: require('./Util/HttpUtil'),
@@ -19,6 +20,7 @@ let Game = {
     NotificationController: require('./Controller/NotificationController'),
     ResController: require('./Controller/ResController'),
     TimeController: require('./Controller/TimeController'),
+    ViewController: require('./Controller/ViewController'),
 
     UserModel: require('./Model/User'),
     MaidModel: require('./Model/Maid'),
