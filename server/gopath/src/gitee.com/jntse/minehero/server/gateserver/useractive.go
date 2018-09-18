@@ -6,11 +6,12 @@ import (
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/gotoolkit/util"
 	pb "github.com/golang/protobuf/proto"
+	"fmt"
 	"math"
 )
 
 // 获得奖励
-func (this *GateUser) AddReward(rtype uint32, rid uint32 rvalue uint32,reason string) uint32   { 
+func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,reason string) uint32 { 
 	switch rtype {
 		case 1:
 			//金币
@@ -19,7 +20,6 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 rvalue uint32,reason st
 			//体力
 			this.AddPower(rvalue, reason, true)
 			return 0
-			break
 		case 3:
 			//侍女
 			maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[rid]
@@ -38,19 +38,50 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 rvalue uint32,reason st
 			maidSend.Datas = append(maidSend.Datas, maid.PackBin())
 			maidSend.Maxid = pb.Uint32(this.maid.GetMaxId())
 			user.SendMsg(maidSend)
-			break
+			return 0
 		case 4:
 			//小游戏
-			break
+			return 0
 		case 5:
 			//小游戏
-			break
+			return 0
 		default:
 			return 0
 	}
 }
 
-//大转盘
+//翻牌子
 func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
-	
+	// 体力够不够 
+	if this.GetPower() < 1 {
+		this.SendNotify("体力不足")
+		return 1,0
+	}
+	totalWeight := 0
+	brands = make([]*table.TurnBrandDefine,0)
+	for _,v := range ids {
+		tmpl, find := tbl.TTurnBrandBase.TurnBrandById[v]
+		if !find {
+			log.Info("玩家[%d] 翻牌子 没有该牌子配置[%d]", this.Id(), v)
+			this.SendNotify(fmt.Sprintf("没有对应的牌子配置 [%d]",id))
+			continue
+		}
+		brands = append(brands, tmpl)
+		totalWeight = totalWeight + tmpl.Weight
+	}
+	//随机吧
+	result := util.RandBetween(0,totalWeight - 1)
+	find := nil
+	for _, v := range brands {
+		if result < v.Weight {
+			//找到了
+			find = v
+		}
+	}
+	if find == nil {
+		this.SendNotify("未随机到牌子")
+		return 2,0
+	}
+	result = this.AddReward(find.Type, find.RewardId, find.Value)
+	return result, find.Id
 }
