@@ -70,8 +70,8 @@ func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
 		totalWeight = totalWeight + tmpl.Weight
 	}
 	//随机吧
-	result = util.RandBetween(0, uint32(totalWeight - 1))
-	findbrand := *table.TurnBrandDefine(nil)
+	result = util.RandBetween(0, int32(totalWeight - 1))
+	var findbrand *table.TurnBrandDefine
 	for _, v := range brands {
 		if result < v.Weight {
 			//找到了
