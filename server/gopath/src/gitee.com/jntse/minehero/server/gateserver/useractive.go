@@ -7,7 +7,6 @@ import (
 	"gitee.com/jntse/gotoolkit/util"
 	pb "github.com/golang/protobuf/proto"
 	"fmt"
-	"math"
 )
 
 // 获得奖励
@@ -24,20 +23,20 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,reason s
 			//侍女
 			maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[rid]
 			if !find {
-				user.SendNotify("没有对应的侍女配置")
+				this.SendNotify("没有对应的侍女配置")
 				return 1
 			}
 			count := this.maid.GetMaidCountByLevel(uint32(maidconfg.Passlevels))
 			if count >= 20 {
-				user.SendNotify("该关卡侍女数量已达上限")
+				this.SendNotify("该关卡侍女数量已达上限")
 				return 2
 			}
 			//可以获得了
-			maid := this.maid.AddMaid(user,rid,rvalue)
+			maid := this.maid.AddMaid(this,rid,rvalue)
 			maidSend := &msg.GW2C_AckMaids{ Datas: make([]*msg.MaidData, 0) }
 			maidSend.Datas = append(maidSend.Datas, maid.PackBin())
 			maidSend.Maxid = pb.Uint32(this.maid.GetMaxId())
-			user.SendMsg(maidSend)
+			this.SendMsg(maidSend)
 			return 0
 		case 4:
 			//小游戏
@@ -57,8 +56,8 @@ func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
 		this.SendNotify("体力不足")
 		return 1,0
 	}
-	totalWeight := 0
-	brands = make([]*table.TurnBrandDefine,0)
+	totalWeight := uint32(0)
+	brands := make([]*table.TurnBrandDefine,0)
 	for _,v := range ids {
 		tmpl, find := tbl.TTurnBrandBase.TurnBrandById[v]
 		if !find {
@@ -70,7 +69,7 @@ func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
 		totalWeight = totalWeight + tmpl.Weight
 	}
 	//随机吧
-	result := util.RandBetween(0,totalWeight - 1)
+	result = util.RandBetween(0,totalWeight - 1)
 	find := nil
 	for _, v := range brands {
 		if result < v.Weight {
