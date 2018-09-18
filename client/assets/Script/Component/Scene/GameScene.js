@@ -7,7 +7,6 @@ cc.Class({
         node_player: { default: null, type: cc.Node },
         node_pass: { default: null, type: cc.Node},
         prefab_player: { default: null, type: cc.Prefab },
-        label_gold: { default: null, type: cc.Label },
         prefab_Shop: { default: null, type: cc.Prefab },
         prefab_FindNewPlayer: { default: null, type: cc.Prefab },
         targetCanvas: { default: null, type: cc.Canvas },
@@ -38,7 +37,6 @@ cc.Class({
     },
 
     onDestroy() {
-        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
@@ -60,7 +58,7 @@ cc.Class({
     },
 
     initNotification() {
-        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateGold);
+        
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
         Game.NotificationController.On(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
@@ -71,7 +69,6 @@ cc.Class({
 
     initView() {
         this.updatePlayer();
-        this.updateGold(Game.UserModel.GetGold());
     },
 
     updatePlayer() {
@@ -183,8 +180,4 @@ cc.Class({
             this.node.addChild(shopView);
         }
     },
-
-    updateGold(gold) {
-        this.label_gold.string = `${gold}`;
-    }
 });
