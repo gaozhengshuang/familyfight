@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
+/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -496,26 +496,25 @@ $root.msg = (function() {
         return AccountGateInfo;
     })();
 
-    msg.BattleUser = (function() {
+    msg.C2GW_TurnBrand = (function() {
 
         /**
-         * Properties of a BattleUser.
+         * Properties of a C2GW_TurnBrand.
          * @memberof msg
-         * @interface IBattleUser
-         * @property {number|Long|null} [userid] BattleUser userid
-         * @property {number|null} [gold] BattleUser gold
-         * @property {number|null} [stepindex] BattleUser stepindex
+         * @interface IC2GW_TurnBrand
+         * @property {Array.<number>|null} [ids] C2GW_TurnBrand ids
          */
 
         /**
-         * Constructs a new BattleUser.
+         * Constructs a new C2GW_TurnBrand.
          * @memberof msg
-         * @classdesc Represents a BattleUser.
-         * @implements IBattleUser
+         * @classdesc Represents a C2GW_TurnBrand.
+         * @implements IC2GW_TurnBrand
          * @constructor
-         * @param {msg.IBattleUser=} [properties] Properties to set
+         * @param {msg.IC2GW_TurnBrand=} [properties] Properties to set
          */
-        function BattleUser(properties) {
+        function C2GW_TurnBrand(properties) {
+            this.ids = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -523,101 +522,83 @@ $root.msg = (function() {
         }
 
         /**
-         * BattleUser userid.
-         * @member {number|Long} userid
-         * @memberof msg.BattleUser
+         * C2GW_TurnBrand ids.
+         * @member {Array.<number>} ids
+         * @memberof msg.C2GW_TurnBrand
          * @instance
          */
-        BattleUser.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+        C2GW_TurnBrand.prototype.ids = $util.emptyArray;
 
         /**
-         * BattleUser gold.
-         * @member {number} gold
-         * @memberof msg.BattleUser
-         * @instance
-         */
-        BattleUser.prototype.gold = 0;
-
-        /**
-         * BattleUser stepindex.
-         * @member {number} stepindex
-         * @memberof msg.BattleUser
-         * @instance
-         */
-        BattleUser.prototype.stepindex = 0;
-
-        /**
-         * Creates a new BattleUser instance using the specified properties.
+         * Creates a new C2GW_TurnBrand instance using the specified properties.
          * @function create
-         * @memberof msg.BattleUser
+         * @memberof msg.C2GW_TurnBrand
          * @static
-         * @param {msg.IBattleUser=} [properties] Properties to set
-         * @returns {msg.BattleUser} BattleUser instance
+         * @param {msg.IC2GW_TurnBrand=} [properties] Properties to set
+         * @returns {msg.C2GW_TurnBrand} C2GW_TurnBrand instance
          */
-        BattleUser.create = function create(properties) {
-            return new BattleUser(properties);
+        C2GW_TurnBrand.create = function create(properties) {
+            return new C2GW_TurnBrand(properties);
         };
 
         /**
-         * Encodes the specified BattleUser message. Does not implicitly {@link msg.BattleUser.verify|verify} messages.
+         * Encodes the specified C2GW_TurnBrand message. Does not implicitly {@link msg.C2GW_TurnBrand.verify|verify} messages.
          * @function encode
-         * @memberof msg.BattleUser
+         * @memberof msg.C2GW_TurnBrand
          * @static
-         * @param {msg.IBattleUser} message BattleUser message or plain object to encode
+         * @param {msg.IC2GW_TurnBrand} message C2GW_TurnBrand message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        BattleUser.encode = function encode(message, writer) {
+        C2GW_TurnBrand.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.gold);
-            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
-                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.stepindex);
+            if (message.ids != null && message.ids.length)
+                for (var i = 0; i < message.ids.length; ++i)
+                    writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.ids[i]);
             return writer;
         };
 
         /**
-         * Encodes the specified BattleUser message, length delimited. Does not implicitly {@link msg.BattleUser.verify|verify} messages.
+         * Encodes the specified C2GW_TurnBrand message, length delimited. Does not implicitly {@link msg.C2GW_TurnBrand.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof msg.BattleUser
+         * @memberof msg.C2GW_TurnBrand
          * @static
-         * @param {msg.IBattleUser} message BattleUser message or plain object to encode
+         * @param {msg.IC2GW_TurnBrand} message C2GW_TurnBrand message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        BattleUser.encodeDelimited = function encodeDelimited(message, writer) {
+        C2GW_TurnBrand.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a BattleUser message from the specified reader or buffer.
+         * Decodes a C2GW_TurnBrand message from the specified reader or buffer.
          * @function decode
-         * @memberof msg.BattleUser
+         * @memberof msg.C2GW_TurnBrand
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BattleUser} BattleUser
+         * @returns {msg.C2GW_TurnBrand} C2GW_TurnBrand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        BattleUser.decode = function decode(reader, length) {
+        C2GW_TurnBrand.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BattleUser();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_TurnBrand();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.userid = reader.uint64();
-                    break;
-                case 2:
-                    message.gold = reader.int32();
-                    break;
-                case 3:
-                    message.stepindex = reader.int32();
+                    if (!(message.ids && message.ids.length))
+                        message.ids = [];
+                    if ((tag & 7) === 2) {
+                        var end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.ids.push(reader.uint32());
+                    } else
+                        message.ids.push(reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -628,142 +609,120 @@ $root.msg = (function() {
         };
 
         /**
-         * Decodes a BattleUser message from the specified reader or buffer, length delimited.
+         * Decodes a C2GW_TurnBrand message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof msg.BattleUser
+         * @memberof msg.C2GW_TurnBrand
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BattleUser} BattleUser
+         * @returns {msg.C2GW_TurnBrand} C2GW_TurnBrand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        BattleUser.decodeDelimited = function decodeDelimited(reader) {
+        C2GW_TurnBrand.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a BattleUser message.
+         * Verifies a C2GW_TurnBrand message.
          * @function verify
-         * @memberof msg.BattleUser
+         * @memberof msg.C2GW_TurnBrand
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        BattleUser.verify = function verify(message) {
+        C2GW_TurnBrand.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
-                    return "userid: integer|Long expected";
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                if (!$util.isInteger(message.gold))
-                    return "gold: integer expected";
-            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
-                if (!$util.isInteger(message.stepindex))
-                    return "stepindex: integer expected";
+            if (message.ids != null && message.hasOwnProperty("ids")) {
+                if (!Array.isArray(message.ids))
+                    return "ids: array expected";
+                for (var i = 0; i < message.ids.length; ++i)
+                    if (!$util.isInteger(message.ids[i]))
+                        return "ids: integer[] expected";
+            }
             return null;
         };
 
         /**
-         * Creates a BattleUser message from a plain object. Also converts values to their respective internal types.
+         * Creates a C2GW_TurnBrand message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof msg.BattleUser
+         * @memberof msg.C2GW_TurnBrand
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BattleUser} BattleUser
+         * @returns {msg.C2GW_TurnBrand} C2GW_TurnBrand
          */
-        BattleUser.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BattleUser)
+        C2GW_TurnBrand.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_TurnBrand)
                 return object;
-            var message = new $root.msg.BattleUser();
-            if (object.userid != null)
-                if ($util.Long)
-                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
-                else if (typeof object.userid === "string")
-                    message.userid = parseInt(object.userid, 10);
-                else if (typeof object.userid === "number")
-                    message.userid = object.userid;
-                else if (typeof object.userid === "object")
-                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
-            if (object.gold != null)
-                message.gold = object.gold | 0;
-            if (object.stepindex != null)
-                message.stepindex = object.stepindex | 0;
+            var message = new $root.msg.C2GW_TurnBrand();
+            if (object.ids) {
+                if (!Array.isArray(object.ids))
+                    throw TypeError(".msg.C2GW_TurnBrand.ids: array expected");
+                message.ids = [];
+                for (var i = 0; i < object.ids.length; ++i)
+                    message.ids[i] = object.ids[i] >>> 0;
+            }
             return message;
         };
 
         /**
-         * Creates a plain object from a BattleUser message. Also converts values to other types if specified.
+         * Creates a plain object from a C2GW_TurnBrand message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof msg.BattleUser
+         * @memberof msg.C2GW_TurnBrand
          * @static
-         * @param {msg.BattleUser} message BattleUser
+         * @param {msg.C2GW_TurnBrand} message C2GW_TurnBrand
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        BattleUser.toObject = function toObject(message, options) {
+        C2GW_TurnBrand.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.userid = options.longs === String ? "0" : 0;
-                object.gold = 0;
-                object.stepindex = 0;
+            if (options.arrays || options.defaults)
+                object.ids = [];
+            if (message.ids && message.ids.length) {
+                object.ids = [];
+                for (var j = 0; j < message.ids.length; ++j)
+                    object.ids[j] = message.ids[j];
             }
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (typeof message.userid === "number")
-                    object.userid = options.longs === String ? String(message.userid) : message.userid;
-                else
-                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                object.gold = message.gold;
-            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
-                object.stepindex = message.stepindex;
             return object;
         };
 
         /**
-         * Converts this BattleUser to JSON.
+         * Converts this C2GW_TurnBrand to JSON.
          * @function toJSON
-         * @memberof msg.BattleUser
+         * @memberof msg.C2GW_TurnBrand
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        BattleUser.prototype.toJSON = function toJSON() {
+        C2GW_TurnBrand.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return BattleUser;
+        return C2GW_TurnBrand;
     })();
 
-    msg.GridItem = (function() {
+    msg.GW2C_RetTurnBrand = (function() {
 
         /**
-         * Properties of a GridItem.
+         * Properties of a GW2C_RetTurnBrand.
          * @memberof msg
-         * @interface IGridItem
-         * @property {number|null} [index] GridItem index
-         * @property {number|null} [id] GridItem id
-         * @property {number|null} [num] GridItem num
-         * @property {number|null} [gridtype] GridItem gridtype
-         * @property {boolean|null} [control] GridItem control
+         * @interface IGW2C_RetTurnBrand
+         * @property {number|null} [result] GW2C_RetTurnBrand result
+         * @property {number|null} [id] GW2C_RetTurnBrand id
          */
 
         /**
-         * Constructs a new GridItem.
+         * Constructs a new GW2C_RetTurnBrand.
          * @memberof msg
-         * @classdesc Represents a GridItem.
-         * @implements IGridItem
+         * @classdesc Represents a GW2C_RetTurnBrand.
+         * @implements IGW2C_RetTurnBrand
          * @constructor
-         * @param {msg.IGridItem=} [properties] Properties to set
+         * @param {msg.IGW2C_RetTurnBrand=} [properties] Properties to set
          */
-        function GridItem(properties) {
+        function GW2C_RetTurnBrand(properties) {
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -771,127 +730,88 @@ $root.msg = (function() {
         }
 
         /**
-         * GridItem index.
-         * @member {number} index
-         * @memberof msg.GridItem
+         * GW2C_RetTurnBrand result.
+         * @member {number} result
+         * @memberof msg.GW2C_RetTurnBrand
          * @instance
          */
-        GridItem.prototype.index = 0;
+        GW2C_RetTurnBrand.prototype.result = 0;
 
         /**
-         * GridItem id.
+         * GW2C_RetTurnBrand id.
          * @member {number} id
-         * @memberof msg.GridItem
+         * @memberof msg.GW2C_RetTurnBrand
          * @instance
          */
-        GridItem.prototype.id = 0;
+        GW2C_RetTurnBrand.prototype.id = 0;
 
         /**
-         * GridItem num.
-         * @member {number} num
-         * @memberof msg.GridItem
-         * @instance
-         */
-        GridItem.prototype.num = 0;
-
-        /**
-         * GridItem gridtype.
-         * @member {number} gridtype
-         * @memberof msg.GridItem
-         * @instance
-         */
-        GridItem.prototype.gridtype = 0;
-
-        /**
-         * GridItem control.
-         * @member {boolean} control
-         * @memberof msg.GridItem
-         * @instance
-         */
-        GridItem.prototype.control = false;
-
-        /**
-         * Creates a new GridItem instance using the specified properties.
+         * Creates a new GW2C_RetTurnBrand instance using the specified properties.
          * @function create
-         * @memberof msg.GridItem
+         * @memberof msg.GW2C_RetTurnBrand
          * @static
-         * @param {msg.IGridItem=} [properties] Properties to set
-         * @returns {msg.GridItem} GridItem instance
+         * @param {msg.IGW2C_RetTurnBrand=} [properties] Properties to set
+         * @returns {msg.GW2C_RetTurnBrand} GW2C_RetTurnBrand instance
          */
-        GridItem.create = function create(properties) {
-            return new GridItem(properties);
+        GW2C_RetTurnBrand.create = function create(properties) {
+            return new GW2C_RetTurnBrand(properties);
         };
 
         /**
-         * Encodes the specified GridItem message. Does not implicitly {@link msg.GridItem.verify|verify} messages.
+         * Encodes the specified GW2C_RetTurnBrand message. Does not implicitly {@link msg.GW2C_RetTurnBrand.verify|verify} messages.
          * @function encode
-         * @memberof msg.GridItem
+         * @memberof msg.GW2C_RetTurnBrand
          * @static
-         * @param {msg.IGridItem} message GridItem message or plain object to encode
+         * @param {msg.IGW2C_RetTurnBrand} message GW2C_RetTurnBrand message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        GridItem.encode = function encode(message, writer) {
+        GW2C_RetTurnBrand.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.index != null && message.hasOwnProperty("index"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.index);
+            if (message.result != null && message.hasOwnProperty("result"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
             if (message.id != null && message.hasOwnProperty("id"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.id);
-            if (message.num != null && message.hasOwnProperty("num"))
-                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.num);
-            if (message.gridtype != null && message.hasOwnProperty("gridtype"))
-                writer.uint32(/* id 4, wireType 0 =*/32).int32(message.gridtype);
-            if (message.control != null && message.hasOwnProperty("control"))
-                writer.uint32(/* id 5, wireType 0 =*/40).bool(message.control);
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.id);
             return writer;
         };
 
         /**
-         * Encodes the specified GridItem message, length delimited. Does not implicitly {@link msg.GridItem.verify|verify} messages.
+         * Encodes the specified GW2C_RetTurnBrand message, length delimited. Does not implicitly {@link msg.GW2C_RetTurnBrand.verify|verify} messages.
          * @function encodeDelimited
-         * @memberof msg.GridItem
+         * @memberof msg.GW2C_RetTurnBrand
          * @static
-         * @param {msg.IGridItem} message GridItem message or plain object to encode
+         * @param {msg.IGW2C_RetTurnBrand} message GW2C_RetTurnBrand message or plain object to encode
          * @param {$protobuf.Writer} [writer] Writer to encode to
          * @returns {$protobuf.Writer} Writer
          */
-        GridItem.encodeDelimited = function encodeDelimited(message, writer) {
+        GW2C_RetTurnBrand.encodeDelimited = function encodeDelimited(message, writer) {
             return this.encode(message, writer).ldelim();
         };
 
         /**
-         * Decodes a GridItem message from the specified reader or buffer.
+         * Decodes a GW2C_RetTurnBrand message from the specified reader or buffer.
          * @function decode
-         * @memberof msg.GridItem
+         * @memberof msg.GW2C_RetTurnBrand
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
          * @param {number} [length] Message length if known beforehand
-         * @returns {msg.GridItem} GridItem
+         * @returns {msg.GW2C_RetTurnBrand} GW2C_RetTurnBrand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        GridItem.decode = function decode(reader, length) {
+        GW2C_RetTurnBrand.decode = function decode(reader, length) {
             if (!(reader instanceof $Reader))
                 reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GridItem();
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_RetTurnBrand();
             while (reader.pos < end) {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.index = reader.int32();
+                    message.result = reader.uint32();
                     break;
                 case 2:
-                    message.id = reader.int32();
-                    break;
-                case 3:
-                    message.num = reader.int32();
-                    break;
-                case 4:
-                    message.gridtype = reader.int32();
-                    break;
-                case 5:
-                    message.control = reader.bool();
+                    message.id = reader.uint32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -902,2648 +822,96 @@ $root.msg = (function() {
         };
 
         /**
-         * Decodes a GridItem message from the specified reader or buffer, length delimited.
+         * Decodes a GW2C_RetTurnBrand message from the specified reader or buffer, length delimited.
          * @function decodeDelimited
-         * @memberof msg.GridItem
+         * @memberof msg.GW2C_RetTurnBrand
          * @static
          * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.GridItem} GridItem
+         * @returns {msg.GW2C_RetTurnBrand} GW2C_RetTurnBrand
          * @throws {Error} If the payload is not a reader or valid buffer
          * @throws {$protobuf.util.ProtocolError} If required fields are missing
          */
-        GridItem.decodeDelimited = function decodeDelimited(reader) {
+        GW2C_RetTurnBrand.decodeDelimited = function decodeDelimited(reader) {
             if (!(reader instanceof $Reader))
                 reader = new $Reader(reader);
             return this.decode(reader, reader.uint32());
         };
 
         /**
-         * Verifies a GridItem message.
+         * Verifies a GW2C_RetTurnBrand message.
          * @function verify
-         * @memberof msg.GridItem
+         * @memberof msg.GW2C_RetTurnBrand
          * @static
          * @param {Object.<string,*>} message Plain object to verify
          * @returns {string|null} `null` if valid, otherwise the reason why it is not
          */
-        GridItem.verify = function verify(message) {
+        GW2C_RetTurnBrand.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.index != null && message.hasOwnProperty("index"))
-                if (!$util.isInteger(message.index))
-                    return "index: integer expected";
+            if (message.result != null && message.hasOwnProperty("result"))
+                if (!$util.isInteger(message.result))
+                    return "result: integer expected";
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isInteger(message.id))
                     return "id: integer expected";
-            if (message.num != null && message.hasOwnProperty("num"))
-                if (!$util.isInteger(message.num))
-                    return "num: integer expected";
-            if (message.gridtype != null && message.hasOwnProperty("gridtype"))
-                if (!$util.isInteger(message.gridtype))
-                    return "gridtype: integer expected";
-            if (message.control != null && message.hasOwnProperty("control"))
-                if (typeof message.control !== "boolean")
-                    return "control: boolean expected";
             return null;
         };
 
         /**
-         * Creates a GridItem message from a plain object. Also converts values to their respective internal types.
+         * Creates a GW2C_RetTurnBrand message from a plain object. Also converts values to their respective internal types.
          * @function fromObject
-         * @memberof msg.GridItem
+         * @memberof msg.GW2C_RetTurnBrand
          * @static
          * @param {Object.<string,*>} object Plain object
-         * @returns {msg.GridItem} GridItem
+         * @returns {msg.GW2C_RetTurnBrand} GW2C_RetTurnBrand
          */
-        GridItem.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.GridItem)
+        GW2C_RetTurnBrand.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_RetTurnBrand)
                 return object;
-            var message = new $root.msg.GridItem();
-            if (object.index != null)
-                message.index = object.index | 0;
+            var message = new $root.msg.GW2C_RetTurnBrand();
+            if (object.result != null)
+                message.result = object.result >>> 0;
             if (object.id != null)
-                message.id = object.id | 0;
-            if (object.num != null)
-                message.num = object.num | 0;
-            if (object.gridtype != null)
-                message.gridtype = object.gridtype | 0;
-            if (object.control != null)
-                message.control = Boolean(object.control);
+                message.id = object.id >>> 0;
             return message;
         };
 
         /**
-         * Creates a plain object from a GridItem message. Also converts values to other types if specified.
+         * Creates a plain object from a GW2C_RetTurnBrand message. Also converts values to other types if specified.
          * @function toObject
-         * @memberof msg.GridItem
+         * @memberof msg.GW2C_RetTurnBrand
          * @static
-         * @param {msg.GridItem} message GridItem
+         * @param {msg.GW2C_RetTurnBrand} message GW2C_RetTurnBrand
          * @param {$protobuf.IConversionOptions} [options] Conversion options
          * @returns {Object.<string,*>} Plain object
          */
-        GridItem.toObject = function toObject(message, options) {
+        GW2C_RetTurnBrand.toObject = function toObject(message, options) {
             if (!options)
                 options = {};
             var object = {};
             if (options.defaults) {
-                object.index = 0;
+                object.result = 0;
                 object.id = 0;
-                object.num = 0;
-                object.gridtype = 0;
-                object.control = false;
             }
-            if (message.index != null && message.hasOwnProperty("index"))
-                object.index = message.index;
+            if (message.result != null && message.hasOwnProperty("result"))
+                object.result = message.result;
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
-            if (message.num != null && message.hasOwnProperty("num"))
-                object.num = message.num;
-            if (message.gridtype != null && message.hasOwnProperty("gridtype"))
-                object.gridtype = message.gridtype;
-            if (message.control != null && message.hasOwnProperty("control"))
-                object.control = message.control;
             return object;
         };
 
         /**
-         * Converts this GridItem to JSON.
+         * Converts this GW2C_RetTurnBrand to JSON.
          * @function toJSON
-         * @memberof msg.GridItem
+         * @memberof msg.GW2C_RetTurnBrand
          * @instance
          * @returns {Object.<string,*>} JSON object
          */
-        GridItem.prototype.toJSON = function toJSON() {
+        GW2C_RetTurnBrand.prototype.toJSON = function toJSON() {
             return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
         };
 
-        return GridItem;
-    })();
-
-    msg.BT_UploadGameUser = (function() {
-
-        /**
-         * Properties of a BT_UploadGameUser.
-         * @memberof msg
-         * @interface IBT_UploadGameUser
-         * @property {number|Long|null} [roomid] BT_UploadGameUser roomid
-         * @property {msg.ISerialize|null} [bin] BT_UploadGameUser bin
-         */
-
-        /**
-         * Constructs a new BT_UploadGameUser.
-         * @memberof msg
-         * @classdesc Represents a BT_UploadGameUser.
-         * @implements IBT_UploadGameUser
-         * @constructor
-         * @param {msg.IBT_UploadGameUser=} [properties] Properties to set
-         */
-        function BT_UploadGameUser(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_UploadGameUser roomid.
-         * @member {number|Long} roomid
-         * @memberof msg.BT_UploadGameUser
-         * @instance
-         */
-        BT_UploadGameUser.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * BT_UploadGameUser bin.
-         * @member {msg.ISerialize|null|undefined} bin
-         * @memberof msg.BT_UploadGameUser
-         * @instance
-         */
-        BT_UploadGameUser.prototype.bin = null;
-
-        /**
-         * Creates a new BT_UploadGameUser instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_UploadGameUser
-         * @static
-         * @param {msg.IBT_UploadGameUser=} [properties] Properties to set
-         * @returns {msg.BT_UploadGameUser} BT_UploadGameUser instance
-         */
-        BT_UploadGameUser.create = function create(properties) {
-            return new BT_UploadGameUser(properties);
-        };
-
-        /**
-         * Encodes the specified BT_UploadGameUser message. Does not implicitly {@link msg.BT_UploadGameUser.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_UploadGameUser
-         * @static
-         * @param {msg.IBT_UploadGameUser} message BT_UploadGameUser message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_UploadGameUser.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
-            if (message.bin != null && message.hasOwnProperty("bin"))
-                $root.msg.Serialize.encode(message.bin, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_UploadGameUser message, length delimited. Does not implicitly {@link msg.BT_UploadGameUser.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_UploadGameUser
-         * @static
-         * @param {msg.IBT_UploadGameUser} message BT_UploadGameUser message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_UploadGameUser.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_UploadGameUser message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_UploadGameUser
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_UploadGameUser} BT_UploadGameUser
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_UploadGameUser.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_UploadGameUser();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.roomid = reader.int64();
-                    break;
-                case 2:
-                    message.bin = $root.msg.Serialize.decode(reader, reader.uint32());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_UploadGameUser message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_UploadGameUser
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_UploadGameUser} BT_UploadGameUser
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_UploadGameUser.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_UploadGameUser message.
-         * @function verify
-         * @memberof msg.BT_UploadGameUser
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_UploadGameUser.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
-                    return "roomid: integer|Long expected";
-            if (message.bin != null && message.hasOwnProperty("bin")) {
-                var error = $root.msg.Serialize.verify(message.bin);
-                if (error)
-                    return "bin." + error;
-            }
-            return null;
-        };
-
-        /**
-         * Creates a BT_UploadGameUser message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_UploadGameUser
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_UploadGameUser} BT_UploadGameUser
-         */
-        BT_UploadGameUser.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_UploadGameUser)
-                return object;
-            var message = new $root.msg.BT_UploadGameUser();
-            if (object.roomid != null)
-                if ($util.Long)
-                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
-                else if (typeof object.roomid === "string")
-                    message.roomid = parseInt(object.roomid, 10);
-                else if (typeof object.roomid === "number")
-                    message.roomid = object.roomid;
-                else if (typeof object.roomid === "object")
-                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
-            if (object.bin != null) {
-                if (typeof object.bin !== "object")
-                    throw TypeError(".msg.BT_UploadGameUser.bin: object expected");
-                message.bin = $root.msg.Serialize.fromObject(object.bin);
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_UploadGameUser message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_UploadGameUser
-         * @static
-         * @param {msg.BT_UploadGameUser} message BT_UploadGameUser
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_UploadGameUser.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.roomid = options.longs === String ? "0" : 0;
-                object.bin = null;
-            }
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (typeof message.roomid === "number")
-                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
-                else
-                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
-            if (message.bin != null && message.hasOwnProperty("bin"))
-                object.bin = $root.msg.Serialize.toObject(message.bin, options);
-            return object;
-        };
-
-        /**
-         * Converts this BT_UploadGameUser to JSON.
-         * @function toJSON
-         * @memberof msg.BT_UploadGameUser
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_UploadGameUser.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_UploadGameUser;
-    })();
-
-    msg.BT_ReqEnterRoom = (function() {
-
-        /**
-         * Properties of a BT_ReqEnterRoom.
-         * @memberof msg
-         * @interface IBT_ReqEnterRoom
-         * @property {number|Long|null} [roomid] BT_ReqEnterRoom roomid
-         * @property {number|Long|null} [userid] BT_ReqEnterRoom userid
-         * @property {string|null} [token] BT_ReqEnterRoom token
-         */
-
-        /**
-         * Constructs a new BT_ReqEnterRoom.
-         * @memberof msg
-         * @classdesc Represents a BT_ReqEnterRoom.
-         * @implements IBT_ReqEnterRoom
-         * @constructor
-         * @param {msg.IBT_ReqEnterRoom=} [properties] Properties to set
-         */
-        function BT_ReqEnterRoom(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_ReqEnterRoom roomid.
-         * @member {number|Long} roomid
-         * @memberof msg.BT_ReqEnterRoom
-         * @instance
-         */
-        BT_ReqEnterRoom.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * BT_ReqEnterRoom userid.
-         * @member {number|Long} userid
-         * @memberof msg.BT_ReqEnterRoom
-         * @instance
-         */
-        BT_ReqEnterRoom.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * BT_ReqEnterRoom token.
-         * @member {string} token
-         * @memberof msg.BT_ReqEnterRoom
-         * @instance
-         */
-        BT_ReqEnterRoom.prototype.token = "";
-
-        /**
-         * Creates a new BT_ReqEnterRoom instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_ReqEnterRoom
-         * @static
-         * @param {msg.IBT_ReqEnterRoom=} [properties] Properties to set
-         * @returns {msg.BT_ReqEnterRoom} BT_ReqEnterRoom instance
-         */
-        BT_ReqEnterRoom.create = function create(properties) {
-            return new BT_ReqEnterRoom(properties);
-        };
-
-        /**
-         * Encodes the specified BT_ReqEnterRoom message. Does not implicitly {@link msg.BT_ReqEnterRoom.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_ReqEnterRoom
-         * @static
-         * @param {msg.IBT_ReqEnterRoom} message BT_ReqEnterRoom message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_ReqEnterRoom.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.userid);
-            if (message.token != null && message.hasOwnProperty("token"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.token);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_ReqEnterRoom message, length delimited. Does not implicitly {@link msg.BT_ReqEnterRoom.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_ReqEnterRoom
-         * @static
-         * @param {msg.IBT_ReqEnterRoom} message BT_ReqEnterRoom message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_ReqEnterRoom.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_ReqEnterRoom message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_ReqEnterRoom
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_ReqEnterRoom} BT_ReqEnterRoom
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_ReqEnterRoom.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_ReqEnterRoom();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.roomid = reader.int64();
-                    break;
-                case 2:
-                    message.userid = reader.uint64();
-                    break;
-                case 3:
-                    message.token = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_ReqEnterRoom message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_ReqEnterRoom
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_ReqEnterRoom} BT_ReqEnterRoom
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_ReqEnterRoom.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_ReqEnterRoom message.
-         * @function verify
-         * @memberof msg.BT_ReqEnterRoom
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_ReqEnterRoom.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
-                    return "roomid: integer|Long expected";
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
-                    return "userid: integer|Long expected";
-            if (message.token != null && message.hasOwnProperty("token"))
-                if (!$util.isString(message.token))
-                    return "token: string expected";
-            return null;
-        };
-
-        /**
-         * Creates a BT_ReqEnterRoom message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_ReqEnterRoom
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_ReqEnterRoom} BT_ReqEnterRoom
-         */
-        BT_ReqEnterRoom.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_ReqEnterRoom)
-                return object;
-            var message = new $root.msg.BT_ReqEnterRoom();
-            if (object.roomid != null)
-                if ($util.Long)
-                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
-                else if (typeof object.roomid === "string")
-                    message.roomid = parseInt(object.roomid, 10);
-                else if (typeof object.roomid === "number")
-                    message.roomid = object.roomid;
-                else if (typeof object.roomid === "object")
-                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
-            if (object.userid != null)
-                if ($util.Long)
-                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
-                else if (typeof object.userid === "string")
-                    message.userid = parseInt(object.userid, 10);
-                else if (typeof object.userid === "number")
-                    message.userid = object.userid;
-                else if (typeof object.userid === "object")
-                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
-            if (object.token != null)
-                message.token = String(object.token);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_ReqEnterRoom message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_ReqEnterRoom
-         * @static
-         * @param {msg.BT_ReqEnterRoom} message BT_ReqEnterRoom
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_ReqEnterRoom.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.roomid = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.userid = options.longs === String ? "0" : 0;
-                object.token = "";
-            }
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (typeof message.roomid === "number")
-                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
-                else
-                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (typeof message.userid === "number")
-                    object.userid = options.longs === String ? String(message.userid) : message.userid;
-                else
-                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
-            if (message.token != null && message.hasOwnProperty("token"))
-                object.token = message.token;
-            return object;
-        };
-
-        /**
-         * Converts this BT_ReqEnterRoom to JSON.
-         * @function toJSON
-         * @memberof msg.BT_ReqEnterRoom
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_ReqEnterRoom.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_ReqEnterRoom;
-    })();
-
-    msg.BT_GameInit = (function() {
-
-        /**
-         * Properties of a BT_GameInit.
-         * @memberof msg
-         * @interface IBT_GameInit
-         * @property {number|Long|null} [roomid] BT_GameInit roomid
-         * @property {number|Long|null} [ownerid] BT_GameInit ownerid
-         * @property {number|null} [gamekind] BT_GameInit gamekind
-         */
-
-        /**
-         * Constructs a new BT_GameInit.
-         * @memberof msg
-         * @classdesc Represents a BT_GameInit.
-         * @implements IBT_GameInit
-         * @constructor
-         * @param {msg.IBT_GameInit=} [properties] Properties to set
-         */
-        function BT_GameInit(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_GameInit roomid.
-         * @member {number|Long} roomid
-         * @memberof msg.BT_GameInit
-         * @instance
-         */
-        BT_GameInit.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * BT_GameInit ownerid.
-         * @member {number|Long} ownerid
-         * @memberof msg.BT_GameInit
-         * @instance
-         */
-        BT_GameInit.prototype.ownerid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * BT_GameInit gamekind.
-         * @member {number} gamekind
-         * @memberof msg.BT_GameInit
-         * @instance
-         */
-        BT_GameInit.prototype.gamekind = 0;
-
-        /**
-         * Creates a new BT_GameInit instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_GameInit
-         * @static
-         * @param {msg.IBT_GameInit=} [properties] Properties to set
-         * @returns {msg.BT_GameInit} BT_GameInit instance
-         */
-        BT_GameInit.create = function create(properties) {
-            return new BT_GameInit(properties);
-        };
-
-        /**
-         * Encodes the specified BT_GameInit message. Does not implicitly {@link msg.BT_GameInit.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_GameInit
-         * @static
-         * @param {msg.IBT_GameInit} message BT_GameInit message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_GameInit.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.ownerid);
-            if (message.gamekind != null && message.hasOwnProperty("gamekind"))
-                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.gamekind);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_GameInit message, length delimited. Does not implicitly {@link msg.BT_GameInit.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_GameInit
-         * @static
-         * @param {msg.IBT_GameInit} message BT_GameInit message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_GameInit.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_GameInit message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_GameInit
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_GameInit} BT_GameInit
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_GameInit.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_GameInit();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.roomid = reader.int64();
-                    break;
-                case 2:
-                    message.ownerid = reader.uint64();
-                    break;
-                case 3:
-                    message.gamekind = reader.int32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_GameInit message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_GameInit
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_GameInit} BT_GameInit
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_GameInit.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_GameInit message.
-         * @function verify
-         * @memberof msg.BT_GameInit
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_GameInit.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
-                    return "roomid: integer|Long expected";
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                if (!$util.isInteger(message.ownerid) && !(message.ownerid && $util.isInteger(message.ownerid.low) && $util.isInteger(message.ownerid.high)))
-                    return "ownerid: integer|Long expected";
-            if (message.gamekind != null && message.hasOwnProperty("gamekind"))
-                if (!$util.isInteger(message.gamekind))
-                    return "gamekind: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a BT_GameInit message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_GameInit
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_GameInit} BT_GameInit
-         */
-        BT_GameInit.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_GameInit)
-                return object;
-            var message = new $root.msg.BT_GameInit();
-            if (object.roomid != null)
-                if ($util.Long)
-                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
-                else if (typeof object.roomid === "string")
-                    message.roomid = parseInt(object.roomid, 10);
-                else if (typeof object.roomid === "number")
-                    message.roomid = object.roomid;
-                else if (typeof object.roomid === "object")
-                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
-            if (object.ownerid != null)
-                if ($util.Long)
-                    (message.ownerid = $util.Long.fromValue(object.ownerid)).unsigned = true;
-                else if (typeof object.ownerid === "string")
-                    message.ownerid = parseInt(object.ownerid, 10);
-                else if (typeof object.ownerid === "number")
-                    message.ownerid = object.ownerid;
-                else if (typeof object.ownerid === "object")
-                    message.ownerid = new $util.LongBits(object.ownerid.low >>> 0, object.ownerid.high >>> 0).toNumber(true);
-            if (object.gamekind != null)
-                message.gamekind = object.gamekind | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_GameInit message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_GameInit
-         * @static
-         * @param {msg.BT_GameInit} message BT_GameInit
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_GameInit.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.roomid = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.ownerid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.ownerid = options.longs === String ? "0" : 0;
-                object.gamekind = 0;
-            }
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (typeof message.roomid === "number")
-                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
-                else
-                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                if (typeof message.ownerid === "number")
-                    object.ownerid = options.longs === String ? String(message.ownerid) : message.ownerid;
-                else
-                    object.ownerid = options.longs === String ? $util.Long.prototype.toString.call(message.ownerid) : options.longs === Number ? new $util.LongBits(message.ownerid.low >>> 0, message.ownerid.high >>> 0).toNumber(true) : message.ownerid;
-            if (message.gamekind != null && message.hasOwnProperty("gamekind"))
-                object.gamekind = message.gamekind;
-            return object;
-        };
-
-        /**
-         * Converts this BT_GameInit to JSON.
-         * @function toJSON
-         * @memberof msg.BT_GameInit
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_GameInit.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_GameInit;
-    })();
-
-    msg.BT_SendBattleUser = (function() {
-
-        /**
-         * Properties of a BT_SendBattleUser.
-         * @memberof msg
-         * @interface IBT_SendBattleUser
-         * @property {number|Long|null} [ownerid] BT_SendBattleUser ownerid
-         * @property {number|null} [gold] BT_SendBattleUser gold
-         * @property {number|null} [coupon] BT_SendBattleUser coupon
-         * @property {number|null} [yuanbao] BT_SendBattleUser yuanbao
-         * @property {number|null} [level] BT_SendBattleUser level
-         * @property {number|null} [freestep] BT_SendBattleUser freestep
-         */
-
-        /**
-         * Constructs a new BT_SendBattleUser.
-         * @memberof msg
-         * @classdesc Represents a BT_SendBattleUser.
-         * @implements IBT_SendBattleUser
-         * @constructor
-         * @param {msg.IBT_SendBattleUser=} [properties] Properties to set
-         */
-        function BT_SendBattleUser(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_SendBattleUser ownerid.
-         * @member {number|Long} ownerid
-         * @memberof msg.BT_SendBattleUser
-         * @instance
-         */
-        BT_SendBattleUser.prototype.ownerid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * BT_SendBattleUser gold.
-         * @member {number} gold
-         * @memberof msg.BT_SendBattleUser
-         * @instance
-         */
-        BT_SendBattleUser.prototype.gold = 0;
-
-        /**
-         * BT_SendBattleUser coupon.
-         * @member {number} coupon
-         * @memberof msg.BT_SendBattleUser
-         * @instance
-         */
-        BT_SendBattleUser.prototype.coupon = 0;
-
-        /**
-         * BT_SendBattleUser yuanbao.
-         * @member {number} yuanbao
-         * @memberof msg.BT_SendBattleUser
-         * @instance
-         */
-        BT_SendBattleUser.prototype.yuanbao = 0;
-
-        /**
-         * BT_SendBattleUser level.
-         * @member {number} level
-         * @memberof msg.BT_SendBattleUser
-         * @instance
-         */
-        BT_SendBattleUser.prototype.level = 0;
-
-        /**
-         * BT_SendBattleUser freestep.
-         * @member {number} freestep
-         * @memberof msg.BT_SendBattleUser
-         * @instance
-         */
-        BT_SendBattleUser.prototype.freestep = 0;
-
-        /**
-         * Creates a new BT_SendBattleUser instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_SendBattleUser
-         * @static
-         * @param {msg.IBT_SendBattleUser=} [properties] Properties to set
-         * @returns {msg.BT_SendBattleUser} BT_SendBattleUser instance
-         */
-        BT_SendBattleUser.create = function create(properties) {
-            return new BT_SendBattleUser(properties);
-        };
-
-        /**
-         * Encodes the specified BT_SendBattleUser message. Does not implicitly {@link msg.BT_SendBattleUser.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_SendBattleUser
-         * @static
-         * @param {msg.IBT_SendBattleUser} message BT_SendBattleUser message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_SendBattleUser.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.ownerid);
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.gold);
-            if (message.coupon != null && message.hasOwnProperty("coupon"))
-                writer.uint32(/* id 4, wireType 0 =*/32).uint32(message.coupon);
-            if (message.yuanbao != null && message.hasOwnProperty("yuanbao"))
-                writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.yuanbao);
-            if (message.level != null && message.hasOwnProperty("level"))
-                writer.uint32(/* id 6, wireType 0 =*/48).uint32(message.level);
-            if (message.freestep != null && message.hasOwnProperty("freestep"))
-                writer.uint32(/* id 7, wireType 0 =*/56).int32(message.freestep);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_SendBattleUser message, length delimited. Does not implicitly {@link msg.BT_SendBattleUser.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_SendBattleUser
-         * @static
-         * @param {msg.IBT_SendBattleUser} message BT_SendBattleUser message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_SendBattleUser.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_SendBattleUser message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_SendBattleUser
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_SendBattleUser} BT_SendBattleUser
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_SendBattleUser.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_SendBattleUser();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 2:
-                    message.ownerid = reader.uint64();
-                    break;
-                case 3:
-                    message.gold = reader.uint32();
-                    break;
-                case 4:
-                    message.coupon = reader.uint32();
-                    break;
-                case 5:
-                    message.yuanbao = reader.uint32();
-                    break;
-                case 6:
-                    message.level = reader.uint32();
-                    break;
-                case 7:
-                    message.freestep = reader.int32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_SendBattleUser message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_SendBattleUser
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_SendBattleUser} BT_SendBattleUser
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_SendBattleUser.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_SendBattleUser message.
-         * @function verify
-         * @memberof msg.BT_SendBattleUser
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_SendBattleUser.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                if (!$util.isInteger(message.ownerid) && !(message.ownerid && $util.isInteger(message.ownerid.low) && $util.isInteger(message.ownerid.high)))
-                    return "ownerid: integer|Long expected";
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                if (!$util.isInteger(message.gold))
-                    return "gold: integer expected";
-            if (message.coupon != null && message.hasOwnProperty("coupon"))
-                if (!$util.isInteger(message.coupon))
-                    return "coupon: integer expected";
-            if (message.yuanbao != null && message.hasOwnProperty("yuanbao"))
-                if (!$util.isInteger(message.yuanbao))
-                    return "yuanbao: integer expected";
-            if (message.level != null && message.hasOwnProperty("level"))
-                if (!$util.isInteger(message.level))
-                    return "level: integer expected";
-            if (message.freestep != null && message.hasOwnProperty("freestep"))
-                if (!$util.isInteger(message.freestep))
-                    return "freestep: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a BT_SendBattleUser message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_SendBattleUser
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_SendBattleUser} BT_SendBattleUser
-         */
-        BT_SendBattleUser.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_SendBattleUser)
-                return object;
-            var message = new $root.msg.BT_SendBattleUser();
-            if (object.ownerid != null)
-                if ($util.Long)
-                    (message.ownerid = $util.Long.fromValue(object.ownerid)).unsigned = true;
-                else if (typeof object.ownerid === "string")
-                    message.ownerid = parseInt(object.ownerid, 10);
-                else if (typeof object.ownerid === "number")
-                    message.ownerid = object.ownerid;
-                else if (typeof object.ownerid === "object")
-                    message.ownerid = new $util.LongBits(object.ownerid.low >>> 0, object.ownerid.high >>> 0).toNumber(true);
-            if (object.gold != null)
-                message.gold = object.gold >>> 0;
-            if (object.coupon != null)
-                message.coupon = object.coupon >>> 0;
-            if (object.yuanbao != null)
-                message.yuanbao = object.yuanbao >>> 0;
-            if (object.level != null)
-                message.level = object.level >>> 0;
-            if (object.freestep != null)
-                message.freestep = object.freestep | 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_SendBattleUser message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_SendBattleUser
-         * @static
-         * @param {msg.BT_SendBattleUser} message BT_SendBattleUser
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_SendBattleUser.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.ownerid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.ownerid = options.longs === String ? "0" : 0;
-                object.gold = 0;
-                object.coupon = 0;
-                object.yuanbao = 0;
-                object.level = 0;
-                object.freestep = 0;
-            }
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                if (typeof message.ownerid === "number")
-                    object.ownerid = options.longs === String ? String(message.ownerid) : message.ownerid;
-                else
-                    object.ownerid = options.longs === String ? $util.Long.prototype.toString.call(message.ownerid) : options.longs === Number ? new $util.LongBits(message.ownerid.low >>> 0, message.ownerid.high >>> 0).toNumber(true) : message.ownerid;
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                object.gold = message.gold;
-            if (message.coupon != null && message.hasOwnProperty("coupon"))
-                object.coupon = message.coupon;
-            if (message.yuanbao != null && message.hasOwnProperty("yuanbao"))
-                object.yuanbao = message.yuanbao;
-            if (message.level != null && message.hasOwnProperty("level"))
-                object.level = message.level;
-            if (message.freestep != null && message.hasOwnProperty("freestep"))
-                object.freestep = message.freestep;
-            return object;
-        };
-
-        /**
-         * Converts this BT_SendBattleUser to JSON.
-         * @function toJSON
-         * @memberof msg.BT_SendBattleUser
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_SendBattleUser.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_SendBattleUser;
-    })();
-
-    msg.BT_GameStart = (function() {
-
-        /**
-         * Properties of a BT_GameStart.
-         * @memberof msg
-         * @interface IBT_GameStart
-         * @property {number|Long|null} [roomid] BT_GameStart roomid
-         * @property {number|Long|null} [ownerid] BT_GameStart ownerid
-         */
-
-        /**
-         * Constructs a new BT_GameStart.
-         * @memberof msg
-         * @classdesc Represents a BT_GameStart.
-         * @implements IBT_GameStart
-         * @constructor
-         * @param {msg.IBT_GameStart=} [properties] Properties to set
-         */
-        function BT_GameStart(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_GameStart roomid.
-         * @member {number|Long} roomid
-         * @memberof msg.BT_GameStart
-         * @instance
-         */
-        BT_GameStart.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * BT_GameStart ownerid.
-         * @member {number|Long} ownerid
-         * @memberof msg.BT_GameStart
-         * @instance
-         */
-        BT_GameStart.prototype.ownerid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * Creates a new BT_GameStart instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_GameStart
-         * @static
-         * @param {msg.IBT_GameStart=} [properties] Properties to set
-         * @returns {msg.BT_GameStart} BT_GameStart instance
-         */
-        BT_GameStart.create = function create(properties) {
-            return new BT_GameStart(properties);
-        };
-
-        /**
-         * Encodes the specified BT_GameStart message. Does not implicitly {@link msg.BT_GameStart.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_GameStart
-         * @static
-         * @param {msg.IBT_GameStart} message BT_GameStart message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_GameStart.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.ownerid);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_GameStart message, length delimited. Does not implicitly {@link msg.BT_GameStart.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_GameStart
-         * @static
-         * @param {msg.IBT_GameStart} message BT_GameStart message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_GameStart.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_GameStart message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_GameStart
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_GameStart} BT_GameStart
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_GameStart.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_GameStart();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.roomid = reader.int64();
-                    break;
-                case 2:
-                    message.ownerid = reader.uint64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_GameStart message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_GameStart
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_GameStart} BT_GameStart
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_GameStart.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_GameStart message.
-         * @function verify
-         * @memberof msg.BT_GameStart
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_GameStart.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
-                    return "roomid: integer|Long expected";
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                if (!$util.isInteger(message.ownerid) && !(message.ownerid && $util.isInteger(message.ownerid.low) && $util.isInteger(message.ownerid.high)))
-                    return "ownerid: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a BT_GameStart message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_GameStart
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_GameStart} BT_GameStart
-         */
-        BT_GameStart.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_GameStart)
-                return object;
-            var message = new $root.msg.BT_GameStart();
-            if (object.roomid != null)
-                if ($util.Long)
-                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
-                else if (typeof object.roomid === "string")
-                    message.roomid = parseInt(object.roomid, 10);
-                else if (typeof object.roomid === "number")
-                    message.roomid = object.roomid;
-                else if (typeof object.roomid === "object")
-                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
-            if (object.ownerid != null)
-                if ($util.Long)
-                    (message.ownerid = $util.Long.fromValue(object.ownerid)).unsigned = true;
-                else if (typeof object.ownerid === "string")
-                    message.ownerid = parseInt(object.ownerid, 10);
-                else if (typeof object.ownerid === "number")
-                    message.ownerid = object.ownerid;
-                else if (typeof object.ownerid === "object")
-                    message.ownerid = new $util.LongBits(object.ownerid.low >>> 0, object.ownerid.high >>> 0).toNumber(true);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_GameStart message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_GameStart
-         * @static
-         * @param {msg.BT_GameStart} message BT_GameStart
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_GameStart.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.roomid = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.ownerid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.ownerid = options.longs === String ? "0" : 0;
-            }
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (typeof message.roomid === "number")
-                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
-                else
-                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                if (typeof message.ownerid === "number")
-                    object.ownerid = options.longs === String ? String(message.ownerid) : message.ownerid;
-                else
-                    object.ownerid = options.longs === String ? $util.Long.prototype.toString.call(message.ownerid) : options.longs === Number ? new $util.LongBits(message.ownerid.low >>> 0, message.ownerid.high >>> 0).toNumber(true) : message.ownerid;
-            return object;
-        };
-
-        /**
-         * Converts this BT_GameStart to JSON.
-         * @function toJSON
-         * @memberof msg.BT_GameStart
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_GameStart.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_GameStart;
-    })();
-
-    msg.BT_GameEnd = (function() {
-
-        /**
-         * Properties of a BT_GameEnd.
-         * @memberof msg
-         * @interface IBT_GameEnd
-         * @property {number|Long|null} [roomid] BT_GameEnd roomid
-         * @property {number|Long|null} [ownerid] BT_GameEnd ownerid
-         * @property {string|null} [reason] BT_GameEnd reason
-         * @property {msg.ISerialize|null} [bin] BT_GameEnd bin
-         */
-
-        /**
-         * Constructs a new BT_GameEnd.
-         * @memberof msg
-         * @classdesc Represents a BT_GameEnd.
-         * @implements IBT_GameEnd
-         * @constructor
-         * @param {msg.IBT_GameEnd=} [properties] Properties to set
-         */
-        function BT_GameEnd(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_GameEnd roomid.
-         * @member {number|Long} roomid
-         * @memberof msg.BT_GameEnd
-         * @instance
-         */
-        BT_GameEnd.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * BT_GameEnd ownerid.
-         * @member {number|Long} ownerid
-         * @memberof msg.BT_GameEnd
-         * @instance
-         */
-        BT_GameEnd.prototype.ownerid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * BT_GameEnd reason.
-         * @member {string} reason
-         * @memberof msg.BT_GameEnd
-         * @instance
-         */
-        BT_GameEnd.prototype.reason = "";
-
-        /**
-         * BT_GameEnd bin.
-         * @member {msg.ISerialize|null|undefined} bin
-         * @memberof msg.BT_GameEnd
-         * @instance
-         */
-        BT_GameEnd.prototype.bin = null;
-
-        /**
-         * Creates a new BT_GameEnd instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_GameEnd
-         * @static
-         * @param {msg.IBT_GameEnd=} [properties] Properties to set
-         * @returns {msg.BT_GameEnd} BT_GameEnd instance
-         */
-        BT_GameEnd.create = function create(properties) {
-            return new BT_GameEnd(properties);
-        };
-
-        /**
-         * Encodes the specified BT_GameEnd message. Does not implicitly {@link msg.BT_GameEnd.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_GameEnd
-         * @static
-         * @param {msg.IBT_GameEnd} message BT_GameEnd message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_GameEnd.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.ownerid);
-            if (message.reason != null && message.hasOwnProperty("reason"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.reason);
-            if (message.bin != null && message.hasOwnProperty("bin"))
-                $root.msg.Serialize.encode(message.bin, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_GameEnd message, length delimited. Does not implicitly {@link msg.BT_GameEnd.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_GameEnd
-         * @static
-         * @param {msg.IBT_GameEnd} message BT_GameEnd message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_GameEnd.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_GameEnd message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_GameEnd
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_GameEnd} BT_GameEnd
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_GameEnd.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_GameEnd();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.roomid = reader.int64();
-                    break;
-                case 2:
-                    message.ownerid = reader.uint64();
-                    break;
-                case 3:
-                    message.reason = reader.string();
-                    break;
-                case 4:
-                    message.bin = $root.msg.Serialize.decode(reader, reader.uint32());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_GameEnd message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_GameEnd
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_GameEnd} BT_GameEnd
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_GameEnd.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_GameEnd message.
-         * @function verify
-         * @memberof msg.BT_GameEnd
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_GameEnd.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
-                    return "roomid: integer|Long expected";
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                if (!$util.isInteger(message.ownerid) && !(message.ownerid && $util.isInteger(message.ownerid.low) && $util.isInteger(message.ownerid.high)))
-                    return "ownerid: integer|Long expected";
-            if (message.reason != null && message.hasOwnProperty("reason"))
-                if (!$util.isString(message.reason))
-                    return "reason: string expected";
-            if (message.bin != null && message.hasOwnProperty("bin")) {
-                var error = $root.msg.Serialize.verify(message.bin);
-                if (error)
-                    return "bin." + error;
-            }
-            return null;
-        };
-
-        /**
-         * Creates a BT_GameEnd message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_GameEnd
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_GameEnd} BT_GameEnd
-         */
-        BT_GameEnd.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_GameEnd)
-                return object;
-            var message = new $root.msg.BT_GameEnd();
-            if (object.roomid != null)
-                if ($util.Long)
-                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
-                else if (typeof object.roomid === "string")
-                    message.roomid = parseInt(object.roomid, 10);
-                else if (typeof object.roomid === "number")
-                    message.roomid = object.roomid;
-                else if (typeof object.roomid === "object")
-                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
-            if (object.ownerid != null)
-                if ($util.Long)
-                    (message.ownerid = $util.Long.fromValue(object.ownerid)).unsigned = true;
-                else if (typeof object.ownerid === "string")
-                    message.ownerid = parseInt(object.ownerid, 10);
-                else if (typeof object.ownerid === "number")
-                    message.ownerid = object.ownerid;
-                else if (typeof object.ownerid === "object")
-                    message.ownerid = new $util.LongBits(object.ownerid.low >>> 0, object.ownerid.high >>> 0).toNumber(true);
-            if (object.reason != null)
-                message.reason = String(object.reason);
-            if (object.bin != null) {
-                if (typeof object.bin !== "object")
-                    throw TypeError(".msg.BT_GameEnd.bin: object expected");
-                message.bin = $root.msg.Serialize.fromObject(object.bin);
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_GameEnd message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_GameEnd
-         * @static
-         * @param {msg.BT_GameEnd} message BT_GameEnd
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_GameEnd.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.roomid = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.ownerid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.ownerid = options.longs === String ? "0" : 0;
-                object.reason = "";
-                object.bin = null;
-            }
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (typeof message.roomid === "number")
-                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
-                else
-                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
-            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
-                if (typeof message.ownerid === "number")
-                    object.ownerid = options.longs === String ? String(message.ownerid) : message.ownerid;
-                else
-                    object.ownerid = options.longs === String ? $util.Long.prototype.toString.call(message.ownerid) : options.longs === Number ? new $util.LongBits(message.ownerid.low >>> 0, message.ownerid.high >>> 0).toNumber(true) : message.ownerid;
-            if (message.reason != null && message.hasOwnProperty("reason"))
-                object.reason = message.reason;
-            if (message.bin != null && message.hasOwnProperty("bin"))
-                object.bin = $root.msg.Serialize.toObject(message.bin, options);
-            return object;
-        };
-
-        /**
-         * Converts this BT_GameEnd to JSON.
-         * @function toJSON
-         * @memberof msg.BT_GameEnd
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_GameEnd.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_GameEnd;
-    })();
-
-    msg.BT_GameOver = (function() {
-
-        /**
-         * Properties of a BT_GameOver.
-         * @memberof msg
-         * @interface IBT_GameOver
-         * @property {number|Long|null} [roomid] BT_GameOver roomid
-         */
-
-        /**
-         * Constructs a new BT_GameOver.
-         * @memberof msg
-         * @classdesc Represents a BT_GameOver.
-         * @implements IBT_GameOver
-         * @constructor
-         * @param {msg.IBT_GameOver=} [properties] Properties to set
-         */
-        function BT_GameOver(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_GameOver roomid.
-         * @member {number|Long} roomid
-         * @memberof msg.BT_GameOver
-         * @instance
-         */
-        BT_GameOver.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * Creates a new BT_GameOver instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_GameOver
-         * @static
-         * @param {msg.IBT_GameOver=} [properties] Properties to set
-         * @returns {msg.BT_GameOver} BT_GameOver instance
-         */
-        BT_GameOver.create = function create(properties) {
-            return new BT_GameOver(properties);
-        };
-
-        /**
-         * Encodes the specified BT_GameOver message. Does not implicitly {@link msg.BT_GameOver.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_GameOver
-         * @static
-         * @param {msg.IBT_GameOver} message BT_GameOver message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_GameOver.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_GameOver message, length delimited. Does not implicitly {@link msg.BT_GameOver.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_GameOver
-         * @static
-         * @param {msg.IBT_GameOver} message BT_GameOver message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_GameOver.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_GameOver message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_GameOver
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_GameOver} BT_GameOver
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_GameOver.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_GameOver();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.roomid = reader.int64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_GameOver message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_GameOver
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_GameOver} BT_GameOver
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_GameOver.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_GameOver message.
-         * @function verify
-         * @memberof msg.BT_GameOver
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_GameOver.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
-                    return "roomid: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a BT_GameOver message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_GameOver
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_GameOver} BT_GameOver
-         */
-        BT_GameOver.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_GameOver)
-                return object;
-            var message = new $root.msg.BT_GameOver();
-            if (object.roomid != null)
-                if ($util.Long)
-                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
-                else if (typeof object.roomid === "string")
-                    message.roomid = parseInt(object.roomid, 10);
-                else if (typeof object.roomid === "number")
-                    message.roomid = object.roomid;
-                else if (typeof object.roomid === "object")
-                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_GameOver message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_GameOver
-         * @static
-         * @param {msg.BT_GameOver} message BT_GameOver
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_GameOver.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults)
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.roomid = options.longs === String ? "0" : 0;
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (typeof message.roomid === "number")
-                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
-                else
-                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
-            return object;
-        };
-
-        /**
-         * Converts this BT_GameOver to JSON.
-         * @function toJSON
-         * @memberof msg.BT_GameOver
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_GameOver.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_GameOver;
-    })();
-
-    msg.BT_ReqQuitGameRoom = (function() {
-
-        /**
-         * Properties of a BT_ReqQuitGameRoom.
-         * @memberof msg
-         * @interface IBT_ReqQuitGameRoom
-         * @property {number|Long|null} [roomid] BT_ReqQuitGameRoom roomid
-         * @property {number|Long|null} [userid] BT_ReqQuitGameRoom userid
-         */
-
-        /**
-         * Constructs a new BT_ReqQuitGameRoom.
-         * @memberof msg
-         * @classdesc Represents a BT_ReqQuitGameRoom.
-         * @implements IBT_ReqQuitGameRoom
-         * @constructor
-         * @param {msg.IBT_ReqQuitGameRoom=} [properties] Properties to set
-         */
-        function BT_ReqQuitGameRoom(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_ReqQuitGameRoom roomid.
-         * @member {number|Long} roomid
-         * @memberof msg.BT_ReqQuitGameRoom
-         * @instance
-         */
-        BT_ReqQuitGameRoom.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * BT_ReqQuitGameRoom userid.
-         * @member {number|Long} userid
-         * @memberof msg.BT_ReqQuitGameRoom
-         * @instance
-         */
-        BT_ReqQuitGameRoom.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * Creates a new BT_ReqQuitGameRoom instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_ReqQuitGameRoom
-         * @static
-         * @param {msg.IBT_ReqQuitGameRoom=} [properties] Properties to set
-         * @returns {msg.BT_ReqQuitGameRoom} BT_ReqQuitGameRoom instance
-         */
-        BT_ReqQuitGameRoom.create = function create(properties) {
-            return new BT_ReqQuitGameRoom(properties);
-        };
-
-        /**
-         * Encodes the specified BT_ReqQuitGameRoom message. Does not implicitly {@link msg.BT_ReqQuitGameRoom.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_ReqQuitGameRoom
-         * @static
-         * @param {msg.IBT_ReqQuitGameRoom} message BT_ReqQuitGameRoom message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_ReqQuitGameRoom.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.userid);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_ReqQuitGameRoom message, length delimited. Does not implicitly {@link msg.BT_ReqQuitGameRoom.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_ReqQuitGameRoom
-         * @static
-         * @param {msg.IBT_ReqQuitGameRoom} message BT_ReqQuitGameRoom message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_ReqQuitGameRoom.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_ReqQuitGameRoom message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_ReqQuitGameRoom
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_ReqQuitGameRoom} BT_ReqQuitGameRoom
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_ReqQuitGameRoom.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_ReqQuitGameRoom();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.roomid = reader.int64();
-                    break;
-                case 2:
-                    message.userid = reader.uint64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_ReqQuitGameRoom message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_ReqQuitGameRoom
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_ReqQuitGameRoom} BT_ReqQuitGameRoom
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_ReqQuitGameRoom.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_ReqQuitGameRoom message.
-         * @function verify
-         * @memberof msg.BT_ReqQuitGameRoom
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_ReqQuitGameRoom.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
-                    return "roomid: integer|Long expected";
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
-                    return "userid: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a BT_ReqQuitGameRoom message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_ReqQuitGameRoom
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_ReqQuitGameRoom} BT_ReqQuitGameRoom
-         */
-        BT_ReqQuitGameRoom.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_ReqQuitGameRoom)
-                return object;
-            var message = new $root.msg.BT_ReqQuitGameRoom();
-            if (object.roomid != null)
-                if ($util.Long)
-                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
-                else if (typeof object.roomid === "string")
-                    message.roomid = parseInt(object.roomid, 10);
-                else if (typeof object.roomid === "number")
-                    message.roomid = object.roomid;
-                else if (typeof object.roomid === "object")
-                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
-            if (object.userid != null)
-                if ($util.Long)
-                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
-                else if (typeof object.userid === "string")
-                    message.userid = parseInt(object.userid, 10);
-                else if (typeof object.userid === "number")
-                    message.userid = object.userid;
-                else if (typeof object.userid === "object")
-                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_ReqQuitGameRoom message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_ReqQuitGameRoom
-         * @static
-         * @param {msg.BT_ReqQuitGameRoom} message BT_ReqQuitGameRoom
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_ReqQuitGameRoom.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.roomid = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.userid = options.longs === String ? "0" : 0;
-            }
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (typeof message.roomid === "number")
-                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
-                else
-                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (typeof message.userid === "number")
-                    object.userid = options.longs === String ? String(message.userid) : message.userid;
-                else
-                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
-            return object;
-        };
-
-        /**
-         * Converts this BT_ReqQuitGameRoom to JSON.
-         * @function toJSON
-         * @memberof msg.BT_ReqQuitGameRoom
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_ReqQuitGameRoom.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_ReqQuitGameRoom;
-    })();
-
-    msg.BT_PickItem = (function() {
-
-        /**
-         * Properties of a BT_PickItem.
-         * @memberof msg
-         * @interface IBT_PickItem
-         * @property {number|Long|null} [userid] BT_PickItem userid
-         * @property {msg.IGridItem|null} [item] BT_PickItem item
-         */
-
-        /**
-         * Constructs a new BT_PickItem.
-         * @memberof msg
-         * @classdesc Represents a BT_PickItem.
-         * @implements IBT_PickItem
-         * @constructor
-         * @param {msg.IBT_PickItem=} [properties] Properties to set
-         */
-        function BT_PickItem(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_PickItem userid.
-         * @member {number|Long} userid
-         * @memberof msg.BT_PickItem
-         * @instance
-         */
-        BT_PickItem.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * BT_PickItem item.
-         * @member {msg.IGridItem|null|undefined} item
-         * @memberof msg.BT_PickItem
-         * @instance
-         */
-        BT_PickItem.prototype.item = null;
-
-        /**
-         * Creates a new BT_PickItem instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_PickItem
-         * @static
-         * @param {msg.IBT_PickItem=} [properties] Properties to set
-         * @returns {msg.BT_PickItem} BT_PickItem instance
-         */
-        BT_PickItem.create = function create(properties) {
-            return new BT_PickItem(properties);
-        };
-
-        /**
-         * Encodes the specified BT_PickItem message. Does not implicitly {@link msg.BT_PickItem.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_PickItem
-         * @static
-         * @param {msg.IBT_PickItem} message BT_PickItem message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_PickItem.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
-            if (message.item != null && message.hasOwnProperty("item"))
-                $root.msg.GridItem.encode(message.item, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_PickItem message, length delimited. Does not implicitly {@link msg.BT_PickItem.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_PickItem
-         * @static
-         * @param {msg.IBT_PickItem} message BT_PickItem message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_PickItem.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_PickItem message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_PickItem
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_PickItem} BT_PickItem
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_PickItem.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_PickItem();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.userid = reader.uint64();
-                    break;
-                case 2:
-                    message.item = $root.msg.GridItem.decode(reader, reader.uint32());
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_PickItem message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_PickItem
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_PickItem} BT_PickItem
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_PickItem.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_PickItem message.
-         * @function verify
-         * @memberof msg.BT_PickItem
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_PickItem.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
-                    return "userid: integer|Long expected";
-            if (message.item != null && message.hasOwnProperty("item")) {
-                var error = $root.msg.GridItem.verify(message.item);
-                if (error)
-                    return "item." + error;
-            }
-            return null;
-        };
-
-        /**
-         * Creates a BT_PickItem message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_PickItem
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_PickItem} BT_PickItem
-         */
-        BT_PickItem.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_PickItem)
-                return object;
-            var message = new $root.msg.BT_PickItem();
-            if (object.userid != null)
-                if ($util.Long)
-                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
-                else if (typeof object.userid === "string")
-                    message.userid = parseInt(object.userid, 10);
-                else if (typeof object.userid === "number")
-                    message.userid = object.userid;
-                else if (typeof object.userid === "object")
-                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
-            if (object.item != null) {
-                if (typeof object.item !== "object")
-                    throw TypeError(".msg.BT_PickItem.item: object expected");
-                message.item = $root.msg.GridItem.fromObject(object.item);
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_PickItem message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_PickItem
-         * @static
-         * @param {msg.BT_PickItem} message BT_PickItem
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_PickItem.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.userid = options.longs === String ? "0" : 0;
-                object.item = null;
-            }
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (typeof message.userid === "number")
-                    object.userid = options.longs === String ? String(message.userid) : message.userid;
-                else
-                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
-            if (message.item != null && message.hasOwnProperty("item"))
-                object.item = $root.msg.GridItem.toObject(message.item, options);
-            return object;
-        };
-
-        /**
-         * Converts this BT_PickItem to JSON.
-         * @function toJSON
-         * @memberof msg.BT_PickItem
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_PickItem.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_PickItem;
-    })();
-
-    msg.BT_UpdateMoney = (function() {
-
-        /**
-         * Properties of a BT_UpdateMoney.
-         * @memberof msg
-         * @interface IBT_UpdateMoney
-         * @property {number|Long|null} [userid] BT_UpdateMoney userid
-         * @property {number|Long|null} [roomid] BT_UpdateMoney roomid
-         * @property {number|Long|null} [money] BT_UpdateMoney money
-         */
-
-        /**
-         * Constructs a new BT_UpdateMoney.
-         * @memberof msg
-         * @classdesc Represents a BT_UpdateMoney.
-         * @implements IBT_UpdateMoney
-         * @constructor
-         * @param {msg.IBT_UpdateMoney=} [properties] Properties to set
-         */
-        function BT_UpdateMoney(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * BT_UpdateMoney userid.
-         * @member {number|Long} userid
-         * @memberof msg.BT_UpdateMoney
-         * @instance
-         */
-        BT_UpdateMoney.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * BT_UpdateMoney roomid.
-         * @member {number|Long} roomid
-         * @memberof msg.BT_UpdateMoney
-         * @instance
-         */
-        BT_UpdateMoney.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-
-        /**
-         * BT_UpdateMoney money.
-         * @member {number|Long} money
-         * @memberof msg.BT_UpdateMoney
-         * @instance
-         */
-        BT_UpdateMoney.prototype.money = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
-
-        /**
-         * Creates a new BT_UpdateMoney instance using the specified properties.
-         * @function create
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {msg.IBT_UpdateMoney=} [properties] Properties to set
-         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney instance
-         */
-        BT_UpdateMoney.create = function create(properties) {
-            return new BT_UpdateMoney(properties);
-        };
-
-        /**
-         * Encodes the specified BT_UpdateMoney message. Does not implicitly {@link msg.BT_UpdateMoney.verify|verify} messages.
-         * @function encode
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {msg.IBT_UpdateMoney} message BT_UpdateMoney message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_UpdateMoney.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.roomid);
-            if (message.money != null && message.hasOwnProperty("money"))
-                writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.money);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified BT_UpdateMoney message, length delimited. Does not implicitly {@link msg.BT_UpdateMoney.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {msg.IBT_UpdateMoney} message BT_UpdateMoney message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        BT_UpdateMoney.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a BT_UpdateMoney message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_UpdateMoney.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_UpdateMoney();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.userid = reader.uint64();
-                    break;
-                case 2:
-                    message.roomid = reader.int64();
-                    break;
-                case 3:
-                    message.money = reader.uint64();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a BT_UpdateMoney message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        BT_UpdateMoney.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a BT_UpdateMoney message.
-         * @function verify
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        BT_UpdateMoney.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
-                    return "userid: integer|Long expected";
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
-                    return "roomid: integer|Long expected";
-            if (message.money != null && message.hasOwnProperty("money"))
-                if (!$util.isInteger(message.money) && !(message.money && $util.isInteger(message.money.low) && $util.isInteger(message.money.high)))
-                    return "money: integer|Long expected";
-            return null;
-        };
-
-        /**
-         * Creates a BT_UpdateMoney message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
-         */
-        BT_UpdateMoney.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.BT_UpdateMoney)
-                return object;
-            var message = new $root.msg.BT_UpdateMoney();
-            if (object.userid != null)
-                if ($util.Long)
-                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
-                else if (typeof object.userid === "string")
-                    message.userid = parseInt(object.userid, 10);
-                else if (typeof object.userid === "number")
-                    message.userid = object.userid;
-                else if (typeof object.userid === "object")
-                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
-            if (object.roomid != null)
-                if ($util.Long)
-                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
-                else if (typeof object.roomid === "string")
-                    message.roomid = parseInt(object.roomid, 10);
-                else if (typeof object.roomid === "number")
-                    message.roomid = object.roomid;
-                else if (typeof object.roomid === "object")
-                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
-            if (object.money != null)
-                if ($util.Long)
-                    (message.money = $util.Long.fromValue(object.money)).unsigned = true;
-                else if (typeof object.money === "string")
-                    message.money = parseInt(object.money, 10);
-                else if (typeof object.money === "number")
-                    message.money = object.money;
-                else if (typeof object.money === "object")
-                    message.money = new $util.LongBits(object.money.low >>> 0, object.money.high >>> 0).toNumber(true);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a BT_UpdateMoney message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.BT_UpdateMoney
-         * @static
-         * @param {msg.BT_UpdateMoney} message BT_UpdateMoney
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        BT_UpdateMoney.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.userid = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, false);
-                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.roomid = options.longs === String ? "0" : 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.money = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.money = options.longs === String ? "0" : 0;
-            }
-            if (message.userid != null && message.hasOwnProperty("userid"))
-                if (typeof message.userid === "number")
-                    object.userid = options.longs === String ? String(message.userid) : message.userid;
-                else
-                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
-            if (message.roomid != null && message.hasOwnProperty("roomid"))
-                if (typeof message.roomid === "number")
-                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
-                else
-                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
-            if (message.money != null && message.hasOwnProperty("money"))
-                if (typeof message.money === "number")
-                    object.money = options.longs === String ? String(message.money) : message.money;
-                else
-                    object.money = options.longs === String ? $util.Long.prototype.toString.call(message.money) : options.longs === Number ? new $util.LongBits(message.money.low >>> 0, message.money.high >>> 0).toNumber(true) : message.money;
-            return object;
-        };
-
-        /**
-         * Converts this BT_UpdateMoney to JSON.
-         * @function toJSON
-         * @memberof msg.BT_UpdateMoney
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        BT_UpdateMoney.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return BT_UpdateMoney;
+        return GW2C_RetTurnBrand;
     })();
 
     msg.EntityBase = (function() {
@@ -7821,6 +5189,3056 @@ $root.msg = (function() {
         };
 
         return Serialize;
+    })();
+
+    msg.BattleUser = (function() {
+
+        /**
+         * Properties of a BattleUser.
+         * @memberof msg
+         * @interface IBattleUser
+         * @property {number|Long|null} [userid] BattleUser userid
+         * @property {number|null} [gold] BattleUser gold
+         * @property {number|null} [stepindex] BattleUser stepindex
+         */
+
+        /**
+         * Constructs a new BattleUser.
+         * @memberof msg
+         * @classdesc Represents a BattleUser.
+         * @implements IBattleUser
+         * @constructor
+         * @param {msg.IBattleUser=} [properties] Properties to set
+         */
+        function BattleUser(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BattleUser userid.
+         * @member {number|Long} userid
+         * @memberof msg.BattleUser
+         * @instance
+         */
+        BattleUser.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BattleUser gold.
+         * @member {number} gold
+         * @memberof msg.BattleUser
+         * @instance
+         */
+        BattleUser.prototype.gold = 0;
+
+        /**
+         * BattleUser stepindex.
+         * @member {number} stepindex
+         * @memberof msg.BattleUser
+         * @instance
+         */
+        BattleUser.prototype.stepindex = 0;
+
+        /**
+         * Creates a new BattleUser instance using the specified properties.
+         * @function create
+         * @memberof msg.BattleUser
+         * @static
+         * @param {msg.IBattleUser=} [properties] Properties to set
+         * @returns {msg.BattleUser} BattleUser instance
+         */
+        BattleUser.create = function create(properties) {
+            return new BattleUser(properties);
+        };
+
+        /**
+         * Encodes the specified BattleUser message. Does not implicitly {@link msg.BattleUser.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BattleUser
+         * @static
+         * @param {msg.IBattleUser} message BattleUser message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BattleUser.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.gold);
+            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.stepindex);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BattleUser message, length delimited. Does not implicitly {@link msg.BattleUser.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BattleUser
+         * @static
+         * @param {msg.IBattleUser} message BattleUser message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BattleUser.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BattleUser message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BattleUser
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BattleUser} BattleUser
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BattleUser.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BattleUser();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.userid = reader.uint64();
+                    break;
+                case 2:
+                    message.gold = reader.int32();
+                    break;
+                case 3:
+                    message.stepindex = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BattleUser message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BattleUser
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BattleUser} BattleUser
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BattleUser.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BattleUser message.
+         * @function verify
+         * @memberof msg.BattleUser
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BattleUser.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                if (!$util.isInteger(message.gold))
+                    return "gold: integer expected";
+            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
+                if (!$util.isInteger(message.stepindex))
+                    return "stepindex: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a BattleUser message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BattleUser
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BattleUser} BattleUser
+         */
+        BattleUser.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BattleUser)
+                return object;
+            var message = new $root.msg.BattleUser();
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
+            if (object.gold != null)
+                message.gold = object.gold | 0;
+            if (object.stepindex != null)
+                message.stepindex = object.stepindex | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BattleUser message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BattleUser
+         * @static
+         * @param {msg.BattleUser} message BattleUser
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BattleUser.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+                object.gold = 0;
+                object.stepindex = 0;
+            }
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                object.gold = message.gold;
+            if (message.stepindex != null && message.hasOwnProperty("stepindex"))
+                object.stepindex = message.stepindex;
+            return object;
+        };
+
+        /**
+         * Converts this BattleUser to JSON.
+         * @function toJSON
+         * @memberof msg.BattleUser
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BattleUser.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BattleUser;
+    })();
+
+    msg.GridItem = (function() {
+
+        /**
+         * Properties of a GridItem.
+         * @memberof msg
+         * @interface IGridItem
+         * @property {number|null} [index] GridItem index
+         * @property {number|null} [id] GridItem id
+         * @property {number|null} [num] GridItem num
+         * @property {number|null} [gridtype] GridItem gridtype
+         * @property {boolean|null} [control] GridItem control
+         */
+
+        /**
+         * Constructs a new GridItem.
+         * @memberof msg
+         * @classdesc Represents a GridItem.
+         * @implements IGridItem
+         * @constructor
+         * @param {msg.IGridItem=} [properties] Properties to set
+         */
+        function GridItem(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GridItem index.
+         * @member {number} index
+         * @memberof msg.GridItem
+         * @instance
+         */
+        GridItem.prototype.index = 0;
+
+        /**
+         * GridItem id.
+         * @member {number} id
+         * @memberof msg.GridItem
+         * @instance
+         */
+        GridItem.prototype.id = 0;
+
+        /**
+         * GridItem num.
+         * @member {number} num
+         * @memberof msg.GridItem
+         * @instance
+         */
+        GridItem.prototype.num = 0;
+
+        /**
+         * GridItem gridtype.
+         * @member {number} gridtype
+         * @memberof msg.GridItem
+         * @instance
+         */
+        GridItem.prototype.gridtype = 0;
+
+        /**
+         * GridItem control.
+         * @member {boolean} control
+         * @memberof msg.GridItem
+         * @instance
+         */
+        GridItem.prototype.control = false;
+
+        /**
+         * Creates a new GridItem instance using the specified properties.
+         * @function create
+         * @memberof msg.GridItem
+         * @static
+         * @param {msg.IGridItem=} [properties] Properties to set
+         * @returns {msg.GridItem} GridItem instance
+         */
+        GridItem.create = function create(properties) {
+            return new GridItem(properties);
+        };
+
+        /**
+         * Encodes the specified GridItem message. Does not implicitly {@link msg.GridItem.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GridItem
+         * @static
+         * @param {msg.IGridItem} message GridItem message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GridItem.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.index != null && message.hasOwnProperty("index"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.index);
+            if (message.id != null && message.hasOwnProperty("id"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.id);
+            if (message.num != null && message.hasOwnProperty("num"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.num);
+            if (message.gridtype != null && message.hasOwnProperty("gridtype"))
+                writer.uint32(/* id 4, wireType 0 =*/32).int32(message.gridtype);
+            if (message.control != null && message.hasOwnProperty("control"))
+                writer.uint32(/* id 5, wireType 0 =*/40).bool(message.control);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GridItem message, length delimited. Does not implicitly {@link msg.GridItem.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GridItem
+         * @static
+         * @param {msg.IGridItem} message GridItem message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GridItem.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GridItem message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GridItem
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GridItem} GridItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GridItem.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GridItem();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.index = reader.int32();
+                    break;
+                case 2:
+                    message.id = reader.int32();
+                    break;
+                case 3:
+                    message.num = reader.int32();
+                    break;
+                case 4:
+                    message.gridtype = reader.int32();
+                    break;
+                case 5:
+                    message.control = reader.bool();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GridItem message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GridItem
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GridItem} GridItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GridItem.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GridItem message.
+         * @function verify
+         * @memberof msg.GridItem
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GridItem.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.index != null && message.hasOwnProperty("index"))
+                if (!$util.isInteger(message.index))
+                    return "index: integer expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isInteger(message.id))
+                    return "id: integer expected";
+            if (message.num != null && message.hasOwnProperty("num"))
+                if (!$util.isInteger(message.num))
+                    return "num: integer expected";
+            if (message.gridtype != null && message.hasOwnProperty("gridtype"))
+                if (!$util.isInteger(message.gridtype))
+                    return "gridtype: integer expected";
+            if (message.control != null && message.hasOwnProperty("control"))
+                if (typeof message.control !== "boolean")
+                    return "control: boolean expected";
+            return null;
+        };
+
+        /**
+         * Creates a GridItem message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GridItem
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GridItem} GridItem
+         */
+        GridItem.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GridItem)
+                return object;
+            var message = new $root.msg.GridItem();
+            if (object.index != null)
+                message.index = object.index | 0;
+            if (object.id != null)
+                message.id = object.id | 0;
+            if (object.num != null)
+                message.num = object.num | 0;
+            if (object.gridtype != null)
+                message.gridtype = object.gridtype | 0;
+            if (object.control != null)
+                message.control = Boolean(object.control);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GridItem message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GridItem
+         * @static
+         * @param {msg.GridItem} message GridItem
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GridItem.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.index = 0;
+                object.id = 0;
+                object.num = 0;
+                object.gridtype = 0;
+                object.control = false;
+            }
+            if (message.index != null && message.hasOwnProperty("index"))
+                object.index = message.index;
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.num != null && message.hasOwnProperty("num"))
+                object.num = message.num;
+            if (message.gridtype != null && message.hasOwnProperty("gridtype"))
+                object.gridtype = message.gridtype;
+            if (message.control != null && message.hasOwnProperty("control"))
+                object.control = message.control;
+            return object;
+        };
+
+        /**
+         * Converts this GridItem to JSON.
+         * @function toJSON
+         * @memberof msg.GridItem
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GridItem.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GridItem;
+    })();
+
+    msg.BT_UploadGameUser = (function() {
+
+        /**
+         * Properties of a BT_UploadGameUser.
+         * @memberof msg
+         * @interface IBT_UploadGameUser
+         * @property {number|Long|null} [roomid] BT_UploadGameUser roomid
+         * @property {msg.ISerialize|null} [bin] BT_UploadGameUser bin
+         */
+
+        /**
+         * Constructs a new BT_UploadGameUser.
+         * @memberof msg
+         * @classdesc Represents a BT_UploadGameUser.
+         * @implements IBT_UploadGameUser
+         * @constructor
+         * @param {msg.IBT_UploadGameUser=} [properties] Properties to set
+         */
+        function BT_UploadGameUser(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_UploadGameUser roomid.
+         * @member {number|Long} roomid
+         * @memberof msg.BT_UploadGameUser
+         * @instance
+         */
+        BT_UploadGameUser.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * BT_UploadGameUser bin.
+         * @member {msg.ISerialize|null|undefined} bin
+         * @memberof msg.BT_UploadGameUser
+         * @instance
+         */
+        BT_UploadGameUser.prototype.bin = null;
+
+        /**
+         * Creates a new BT_UploadGameUser instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_UploadGameUser
+         * @static
+         * @param {msg.IBT_UploadGameUser=} [properties] Properties to set
+         * @returns {msg.BT_UploadGameUser} BT_UploadGameUser instance
+         */
+        BT_UploadGameUser.create = function create(properties) {
+            return new BT_UploadGameUser(properties);
+        };
+
+        /**
+         * Encodes the specified BT_UploadGameUser message. Does not implicitly {@link msg.BT_UploadGameUser.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_UploadGameUser
+         * @static
+         * @param {msg.IBT_UploadGameUser} message BT_UploadGameUser message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_UploadGameUser.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
+            if (message.bin != null && message.hasOwnProperty("bin"))
+                $root.msg.Serialize.encode(message.bin, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_UploadGameUser message, length delimited. Does not implicitly {@link msg.BT_UploadGameUser.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_UploadGameUser
+         * @static
+         * @param {msg.IBT_UploadGameUser} message BT_UploadGameUser message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_UploadGameUser.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_UploadGameUser message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_UploadGameUser
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_UploadGameUser} BT_UploadGameUser
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_UploadGameUser.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_UploadGameUser();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.roomid = reader.int64();
+                    break;
+                case 2:
+                    message.bin = $root.msg.Serialize.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_UploadGameUser message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_UploadGameUser
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_UploadGameUser} BT_UploadGameUser
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_UploadGameUser.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_UploadGameUser message.
+         * @function verify
+         * @memberof msg.BT_UploadGameUser
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_UploadGameUser.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
+                    return "roomid: integer|Long expected";
+            if (message.bin != null && message.hasOwnProperty("bin")) {
+                var error = $root.msg.Serialize.verify(message.bin);
+                if (error)
+                    return "bin." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a BT_UploadGameUser message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_UploadGameUser
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_UploadGameUser} BT_UploadGameUser
+         */
+        BT_UploadGameUser.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_UploadGameUser)
+                return object;
+            var message = new $root.msg.BT_UploadGameUser();
+            if (object.roomid != null)
+                if ($util.Long)
+                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
+                else if (typeof object.roomid === "string")
+                    message.roomid = parseInt(object.roomid, 10);
+                else if (typeof object.roomid === "number")
+                    message.roomid = object.roomid;
+                else if (typeof object.roomid === "object")
+                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
+            if (object.bin != null) {
+                if (typeof object.bin !== "object")
+                    throw TypeError(".msg.BT_UploadGameUser.bin: object expected");
+                message.bin = $root.msg.Serialize.fromObject(object.bin);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_UploadGameUser message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_UploadGameUser
+         * @static
+         * @param {msg.BT_UploadGameUser} message BT_UploadGameUser
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_UploadGameUser.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.roomid = options.longs === String ? "0" : 0;
+                object.bin = null;
+            }
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (typeof message.roomid === "number")
+                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
+                else
+                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
+            if (message.bin != null && message.hasOwnProperty("bin"))
+                object.bin = $root.msg.Serialize.toObject(message.bin, options);
+            return object;
+        };
+
+        /**
+         * Converts this BT_UploadGameUser to JSON.
+         * @function toJSON
+         * @memberof msg.BT_UploadGameUser
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_UploadGameUser.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_UploadGameUser;
+    })();
+
+    msg.BT_ReqEnterRoom = (function() {
+
+        /**
+         * Properties of a BT_ReqEnterRoom.
+         * @memberof msg
+         * @interface IBT_ReqEnterRoom
+         * @property {number|Long|null} [roomid] BT_ReqEnterRoom roomid
+         * @property {number|Long|null} [userid] BT_ReqEnterRoom userid
+         * @property {string|null} [token] BT_ReqEnterRoom token
+         */
+
+        /**
+         * Constructs a new BT_ReqEnterRoom.
+         * @memberof msg
+         * @classdesc Represents a BT_ReqEnterRoom.
+         * @implements IBT_ReqEnterRoom
+         * @constructor
+         * @param {msg.IBT_ReqEnterRoom=} [properties] Properties to set
+         */
+        function BT_ReqEnterRoom(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_ReqEnterRoom roomid.
+         * @member {number|Long} roomid
+         * @memberof msg.BT_ReqEnterRoom
+         * @instance
+         */
+        BT_ReqEnterRoom.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * BT_ReqEnterRoom userid.
+         * @member {number|Long} userid
+         * @memberof msg.BT_ReqEnterRoom
+         * @instance
+         */
+        BT_ReqEnterRoom.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BT_ReqEnterRoom token.
+         * @member {string} token
+         * @memberof msg.BT_ReqEnterRoom
+         * @instance
+         */
+        BT_ReqEnterRoom.prototype.token = "";
+
+        /**
+         * Creates a new BT_ReqEnterRoom instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_ReqEnterRoom
+         * @static
+         * @param {msg.IBT_ReqEnterRoom=} [properties] Properties to set
+         * @returns {msg.BT_ReqEnterRoom} BT_ReqEnterRoom instance
+         */
+        BT_ReqEnterRoom.create = function create(properties) {
+            return new BT_ReqEnterRoom(properties);
+        };
+
+        /**
+         * Encodes the specified BT_ReqEnterRoom message. Does not implicitly {@link msg.BT_ReqEnterRoom.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_ReqEnterRoom
+         * @static
+         * @param {msg.IBT_ReqEnterRoom} message BT_ReqEnterRoom message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_ReqEnterRoom.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.userid);
+            if (message.token != null && message.hasOwnProperty("token"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.token);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_ReqEnterRoom message, length delimited. Does not implicitly {@link msg.BT_ReqEnterRoom.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_ReqEnterRoom
+         * @static
+         * @param {msg.IBT_ReqEnterRoom} message BT_ReqEnterRoom message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_ReqEnterRoom.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_ReqEnterRoom message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_ReqEnterRoom
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_ReqEnterRoom} BT_ReqEnterRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_ReqEnterRoom.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_ReqEnterRoom();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.roomid = reader.int64();
+                    break;
+                case 2:
+                    message.userid = reader.uint64();
+                    break;
+                case 3:
+                    message.token = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_ReqEnterRoom message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_ReqEnterRoom
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_ReqEnterRoom} BT_ReqEnterRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_ReqEnterRoom.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_ReqEnterRoom message.
+         * @function verify
+         * @memberof msg.BT_ReqEnterRoom
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_ReqEnterRoom.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
+                    return "roomid: integer|Long expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
+            if (message.token != null && message.hasOwnProperty("token"))
+                if (!$util.isString(message.token))
+                    return "token: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a BT_ReqEnterRoom message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_ReqEnterRoom
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_ReqEnterRoom} BT_ReqEnterRoom
+         */
+        BT_ReqEnterRoom.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_ReqEnterRoom)
+                return object;
+            var message = new $root.msg.BT_ReqEnterRoom();
+            if (object.roomid != null)
+                if ($util.Long)
+                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
+                else if (typeof object.roomid === "string")
+                    message.roomid = parseInt(object.roomid, 10);
+                else if (typeof object.roomid === "number")
+                    message.roomid = object.roomid;
+                else if (typeof object.roomid === "object")
+                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
+            if (object.token != null)
+                message.token = String(object.token);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_ReqEnterRoom message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_ReqEnterRoom
+         * @static
+         * @param {msg.BT_ReqEnterRoom} message BT_ReqEnterRoom
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_ReqEnterRoom.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.roomid = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+                object.token = "";
+            }
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (typeof message.roomid === "number")
+                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
+                else
+                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
+            if (message.token != null && message.hasOwnProperty("token"))
+                object.token = message.token;
+            return object;
+        };
+
+        /**
+         * Converts this BT_ReqEnterRoom to JSON.
+         * @function toJSON
+         * @memberof msg.BT_ReqEnterRoom
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_ReqEnterRoom.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_ReqEnterRoom;
+    })();
+
+    msg.BT_GameInit = (function() {
+
+        /**
+         * Properties of a BT_GameInit.
+         * @memberof msg
+         * @interface IBT_GameInit
+         * @property {number|Long|null} [roomid] BT_GameInit roomid
+         * @property {number|Long|null} [ownerid] BT_GameInit ownerid
+         * @property {number|null} [gamekind] BT_GameInit gamekind
+         */
+
+        /**
+         * Constructs a new BT_GameInit.
+         * @memberof msg
+         * @classdesc Represents a BT_GameInit.
+         * @implements IBT_GameInit
+         * @constructor
+         * @param {msg.IBT_GameInit=} [properties] Properties to set
+         */
+        function BT_GameInit(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_GameInit roomid.
+         * @member {number|Long} roomid
+         * @memberof msg.BT_GameInit
+         * @instance
+         */
+        BT_GameInit.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * BT_GameInit ownerid.
+         * @member {number|Long} ownerid
+         * @memberof msg.BT_GameInit
+         * @instance
+         */
+        BT_GameInit.prototype.ownerid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BT_GameInit gamekind.
+         * @member {number} gamekind
+         * @memberof msg.BT_GameInit
+         * @instance
+         */
+        BT_GameInit.prototype.gamekind = 0;
+
+        /**
+         * Creates a new BT_GameInit instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_GameInit
+         * @static
+         * @param {msg.IBT_GameInit=} [properties] Properties to set
+         * @returns {msg.BT_GameInit} BT_GameInit instance
+         */
+        BT_GameInit.create = function create(properties) {
+            return new BT_GameInit(properties);
+        };
+
+        /**
+         * Encodes the specified BT_GameInit message. Does not implicitly {@link msg.BT_GameInit.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_GameInit
+         * @static
+         * @param {msg.IBT_GameInit} message BT_GameInit message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_GameInit.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.ownerid);
+            if (message.gamekind != null && message.hasOwnProperty("gamekind"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.gamekind);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_GameInit message, length delimited. Does not implicitly {@link msg.BT_GameInit.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_GameInit
+         * @static
+         * @param {msg.IBT_GameInit} message BT_GameInit message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_GameInit.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_GameInit message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_GameInit
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_GameInit} BT_GameInit
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_GameInit.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_GameInit();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.roomid = reader.int64();
+                    break;
+                case 2:
+                    message.ownerid = reader.uint64();
+                    break;
+                case 3:
+                    message.gamekind = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_GameInit message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_GameInit
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_GameInit} BT_GameInit
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_GameInit.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_GameInit message.
+         * @function verify
+         * @memberof msg.BT_GameInit
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_GameInit.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
+                    return "roomid: integer|Long expected";
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                if (!$util.isInteger(message.ownerid) && !(message.ownerid && $util.isInteger(message.ownerid.low) && $util.isInteger(message.ownerid.high)))
+                    return "ownerid: integer|Long expected";
+            if (message.gamekind != null && message.hasOwnProperty("gamekind"))
+                if (!$util.isInteger(message.gamekind))
+                    return "gamekind: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a BT_GameInit message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_GameInit
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_GameInit} BT_GameInit
+         */
+        BT_GameInit.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_GameInit)
+                return object;
+            var message = new $root.msg.BT_GameInit();
+            if (object.roomid != null)
+                if ($util.Long)
+                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
+                else if (typeof object.roomid === "string")
+                    message.roomid = parseInt(object.roomid, 10);
+                else if (typeof object.roomid === "number")
+                    message.roomid = object.roomid;
+                else if (typeof object.roomid === "object")
+                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
+            if (object.ownerid != null)
+                if ($util.Long)
+                    (message.ownerid = $util.Long.fromValue(object.ownerid)).unsigned = true;
+                else if (typeof object.ownerid === "string")
+                    message.ownerid = parseInt(object.ownerid, 10);
+                else if (typeof object.ownerid === "number")
+                    message.ownerid = object.ownerid;
+                else if (typeof object.ownerid === "object")
+                    message.ownerid = new $util.LongBits(object.ownerid.low >>> 0, object.ownerid.high >>> 0).toNumber(true);
+            if (object.gamekind != null)
+                message.gamekind = object.gamekind | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_GameInit message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_GameInit
+         * @static
+         * @param {msg.BT_GameInit} message BT_GameInit
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_GameInit.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.roomid = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.ownerid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.ownerid = options.longs === String ? "0" : 0;
+                object.gamekind = 0;
+            }
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (typeof message.roomid === "number")
+                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
+                else
+                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                if (typeof message.ownerid === "number")
+                    object.ownerid = options.longs === String ? String(message.ownerid) : message.ownerid;
+                else
+                    object.ownerid = options.longs === String ? $util.Long.prototype.toString.call(message.ownerid) : options.longs === Number ? new $util.LongBits(message.ownerid.low >>> 0, message.ownerid.high >>> 0).toNumber(true) : message.ownerid;
+            if (message.gamekind != null && message.hasOwnProperty("gamekind"))
+                object.gamekind = message.gamekind;
+            return object;
+        };
+
+        /**
+         * Converts this BT_GameInit to JSON.
+         * @function toJSON
+         * @memberof msg.BT_GameInit
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_GameInit.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_GameInit;
+    })();
+
+    msg.BT_SendBattleUser = (function() {
+
+        /**
+         * Properties of a BT_SendBattleUser.
+         * @memberof msg
+         * @interface IBT_SendBattleUser
+         * @property {number|Long|null} [ownerid] BT_SendBattleUser ownerid
+         * @property {number|null} [gold] BT_SendBattleUser gold
+         * @property {number|null} [coupon] BT_SendBattleUser coupon
+         * @property {number|null} [yuanbao] BT_SendBattleUser yuanbao
+         * @property {number|null} [level] BT_SendBattleUser level
+         * @property {number|null} [freestep] BT_SendBattleUser freestep
+         */
+
+        /**
+         * Constructs a new BT_SendBattleUser.
+         * @memberof msg
+         * @classdesc Represents a BT_SendBattleUser.
+         * @implements IBT_SendBattleUser
+         * @constructor
+         * @param {msg.IBT_SendBattleUser=} [properties] Properties to set
+         */
+        function BT_SendBattleUser(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_SendBattleUser ownerid.
+         * @member {number|Long} ownerid
+         * @memberof msg.BT_SendBattleUser
+         * @instance
+         */
+        BT_SendBattleUser.prototype.ownerid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BT_SendBattleUser gold.
+         * @member {number} gold
+         * @memberof msg.BT_SendBattleUser
+         * @instance
+         */
+        BT_SendBattleUser.prototype.gold = 0;
+
+        /**
+         * BT_SendBattleUser coupon.
+         * @member {number} coupon
+         * @memberof msg.BT_SendBattleUser
+         * @instance
+         */
+        BT_SendBattleUser.prototype.coupon = 0;
+
+        /**
+         * BT_SendBattleUser yuanbao.
+         * @member {number} yuanbao
+         * @memberof msg.BT_SendBattleUser
+         * @instance
+         */
+        BT_SendBattleUser.prototype.yuanbao = 0;
+
+        /**
+         * BT_SendBattleUser level.
+         * @member {number} level
+         * @memberof msg.BT_SendBattleUser
+         * @instance
+         */
+        BT_SendBattleUser.prototype.level = 0;
+
+        /**
+         * BT_SendBattleUser freestep.
+         * @member {number} freestep
+         * @memberof msg.BT_SendBattleUser
+         * @instance
+         */
+        BT_SendBattleUser.prototype.freestep = 0;
+
+        /**
+         * Creates a new BT_SendBattleUser instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_SendBattleUser
+         * @static
+         * @param {msg.IBT_SendBattleUser=} [properties] Properties to set
+         * @returns {msg.BT_SendBattleUser} BT_SendBattleUser instance
+         */
+        BT_SendBattleUser.create = function create(properties) {
+            return new BT_SendBattleUser(properties);
+        };
+
+        /**
+         * Encodes the specified BT_SendBattleUser message. Does not implicitly {@link msg.BT_SendBattleUser.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_SendBattleUser
+         * @static
+         * @param {msg.IBT_SendBattleUser} message BT_SendBattleUser message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_SendBattleUser.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.ownerid);
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.gold);
+            if (message.coupon != null && message.hasOwnProperty("coupon"))
+                writer.uint32(/* id 4, wireType 0 =*/32).uint32(message.coupon);
+            if (message.yuanbao != null && message.hasOwnProperty("yuanbao"))
+                writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.yuanbao);
+            if (message.level != null && message.hasOwnProperty("level"))
+                writer.uint32(/* id 6, wireType 0 =*/48).uint32(message.level);
+            if (message.freestep != null && message.hasOwnProperty("freestep"))
+                writer.uint32(/* id 7, wireType 0 =*/56).int32(message.freestep);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_SendBattleUser message, length delimited. Does not implicitly {@link msg.BT_SendBattleUser.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_SendBattleUser
+         * @static
+         * @param {msg.IBT_SendBattleUser} message BT_SendBattleUser message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_SendBattleUser.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_SendBattleUser message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_SendBattleUser
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_SendBattleUser} BT_SendBattleUser
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_SendBattleUser.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_SendBattleUser();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 2:
+                    message.ownerid = reader.uint64();
+                    break;
+                case 3:
+                    message.gold = reader.uint32();
+                    break;
+                case 4:
+                    message.coupon = reader.uint32();
+                    break;
+                case 5:
+                    message.yuanbao = reader.uint32();
+                    break;
+                case 6:
+                    message.level = reader.uint32();
+                    break;
+                case 7:
+                    message.freestep = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_SendBattleUser message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_SendBattleUser
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_SendBattleUser} BT_SendBattleUser
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_SendBattleUser.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_SendBattleUser message.
+         * @function verify
+         * @memberof msg.BT_SendBattleUser
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_SendBattleUser.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                if (!$util.isInteger(message.ownerid) && !(message.ownerid && $util.isInteger(message.ownerid.low) && $util.isInteger(message.ownerid.high)))
+                    return "ownerid: integer|Long expected";
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                if (!$util.isInteger(message.gold))
+                    return "gold: integer expected";
+            if (message.coupon != null && message.hasOwnProperty("coupon"))
+                if (!$util.isInteger(message.coupon))
+                    return "coupon: integer expected";
+            if (message.yuanbao != null && message.hasOwnProperty("yuanbao"))
+                if (!$util.isInteger(message.yuanbao))
+                    return "yuanbao: integer expected";
+            if (message.level != null && message.hasOwnProperty("level"))
+                if (!$util.isInteger(message.level))
+                    return "level: integer expected";
+            if (message.freestep != null && message.hasOwnProperty("freestep"))
+                if (!$util.isInteger(message.freestep))
+                    return "freestep: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a BT_SendBattleUser message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_SendBattleUser
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_SendBattleUser} BT_SendBattleUser
+         */
+        BT_SendBattleUser.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_SendBattleUser)
+                return object;
+            var message = new $root.msg.BT_SendBattleUser();
+            if (object.ownerid != null)
+                if ($util.Long)
+                    (message.ownerid = $util.Long.fromValue(object.ownerid)).unsigned = true;
+                else if (typeof object.ownerid === "string")
+                    message.ownerid = parseInt(object.ownerid, 10);
+                else if (typeof object.ownerid === "number")
+                    message.ownerid = object.ownerid;
+                else if (typeof object.ownerid === "object")
+                    message.ownerid = new $util.LongBits(object.ownerid.low >>> 0, object.ownerid.high >>> 0).toNumber(true);
+            if (object.gold != null)
+                message.gold = object.gold >>> 0;
+            if (object.coupon != null)
+                message.coupon = object.coupon >>> 0;
+            if (object.yuanbao != null)
+                message.yuanbao = object.yuanbao >>> 0;
+            if (object.level != null)
+                message.level = object.level >>> 0;
+            if (object.freestep != null)
+                message.freestep = object.freestep | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_SendBattleUser message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_SendBattleUser
+         * @static
+         * @param {msg.BT_SendBattleUser} message BT_SendBattleUser
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_SendBattleUser.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.ownerid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.ownerid = options.longs === String ? "0" : 0;
+                object.gold = 0;
+                object.coupon = 0;
+                object.yuanbao = 0;
+                object.level = 0;
+                object.freestep = 0;
+            }
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                if (typeof message.ownerid === "number")
+                    object.ownerid = options.longs === String ? String(message.ownerid) : message.ownerid;
+                else
+                    object.ownerid = options.longs === String ? $util.Long.prototype.toString.call(message.ownerid) : options.longs === Number ? new $util.LongBits(message.ownerid.low >>> 0, message.ownerid.high >>> 0).toNumber(true) : message.ownerid;
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                object.gold = message.gold;
+            if (message.coupon != null && message.hasOwnProperty("coupon"))
+                object.coupon = message.coupon;
+            if (message.yuanbao != null && message.hasOwnProperty("yuanbao"))
+                object.yuanbao = message.yuanbao;
+            if (message.level != null && message.hasOwnProperty("level"))
+                object.level = message.level;
+            if (message.freestep != null && message.hasOwnProperty("freestep"))
+                object.freestep = message.freestep;
+            return object;
+        };
+
+        /**
+         * Converts this BT_SendBattleUser to JSON.
+         * @function toJSON
+         * @memberof msg.BT_SendBattleUser
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_SendBattleUser.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_SendBattleUser;
+    })();
+
+    msg.BT_GameStart = (function() {
+
+        /**
+         * Properties of a BT_GameStart.
+         * @memberof msg
+         * @interface IBT_GameStart
+         * @property {number|Long|null} [roomid] BT_GameStart roomid
+         * @property {number|Long|null} [ownerid] BT_GameStart ownerid
+         */
+
+        /**
+         * Constructs a new BT_GameStart.
+         * @memberof msg
+         * @classdesc Represents a BT_GameStart.
+         * @implements IBT_GameStart
+         * @constructor
+         * @param {msg.IBT_GameStart=} [properties] Properties to set
+         */
+        function BT_GameStart(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_GameStart roomid.
+         * @member {number|Long} roomid
+         * @memberof msg.BT_GameStart
+         * @instance
+         */
+        BT_GameStart.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * BT_GameStart ownerid.
+         * @member {number|Long} ownerid
+         * @memberof msg.BT_GameStart
+         * @instance
+         */
+        BT_GameStart.prototype.ownerid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * Creates a new BT_GameStart instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_GameStart
+         * @static
+         * @param {msg.IBT_GameStart=} [properties] Properties to set
+         * @returns {msg.BT_GameStart} BT_GameStart instance
+         */
+        BT_GameStart.create = function create(properties) {
+            return new BT_GameStart(properties);
+        };
+
+        /**
+         * Encodes the specified BT_GameStart message. Does not implicitly {@link msg.BT_GameStart.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_GameStart
+         * @static
+         * @param {msg.IBT_GameStart} message BT_GameStart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_GameStart.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.ownerid);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_GameStart message, length delimited. Does not implicitly {@link msg.BT_GameStart.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_GameStart
+         * @static
+         * @param {msg.IBT_GameStart} message BT_GameStart message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_GameStart.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_GameStart message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_GameStart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_GameStart} BT_GameStart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_GameStart.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_GameStart();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.roomid = reader.int64();
+                    break;
+                case 2:
+                    message.ownerid = reader.uint64();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_GameStart message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_GameStart
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_GameStart} BT_GameStart
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_GameStart.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_GameStart message.
+         * @function verify
+         * @memberof msg.BT_GameStart
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_GameStart.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
+                    return "roomid: integer|Long expected";
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                if (!$util.isInteger(message.ownerid) && !(message.ownerid && $util.isInteger(message.ownerid.low) && $util.isInteger(message.ownerid.high)))
+                    return "ownerid: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a BT_GameStart message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_GameStart
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_GameStart} BT_GameStart
+         */
+        BT_GameStart.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_GameStart)
+                return object;
+            var message = new $root.msg.BT_GameStart();
+            if (object.roomid != null)
+                if ($util.Long)
+                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
+                else if (typeof object.roomid === "string")
+                    message.roomid = parseInt(object.roomid, 10);
+                else if (typeof object.roomid === "number")
+                    message.roomid = object.roomid;
+                else if (typeof object.roomid === "object")
+                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
+            if (object.ownerid != null)
+                if ($util.Long)
+                    (message.ownerid = $util.Long.fromValue(object.ownerid)).unsigned = true;
+                else if (typeof object.ownerid === "string")
+                    message.ownerid = parseInt(object.ownerid, 10);
+                else if (typeof object.ownerid === "number")
+                    message.ownerid = object.ownerid;
+                else if (typeof object.ownerid === "object")
+                    message.ownerid = new $util.LongBits(object.ownerid.low >>> 0, object.ownerid.high >>> 0).toNumber(true);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_GameStart message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_GameStart
+         * @static
+         * @param {msg.BT_GameStart} message BT_GameStart
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_GameStart.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.roomid = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.ownerid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.ownerid = options.longs === String ? "0" : 0;
+            }
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (typeof message.roomid === "number")
+                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
+                else
+                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                if (typeof message.ownerid === "number")
+                    object.ownerid = options.longs === String ? String(message.ownerid) : message.ownerid;
+                else
+                    object.ownerid = options.longs === String ? $util.Long.prototype.toString.call(message.ownerid) : options.longs === Number ? new $util.LongBits(message.ownerid.low >>> 0, message.ownerid.high >>> 0).toNumber(true) : message.ownerid;
+            return object;
+        };
+
+        /**
+         * Converts this BT_GameStart to JSON.
+         * @function toJSON
+         * @memberof msg.BT_GameStart
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_GameStart.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_GameStart;
+    })();
+
+    msg.BT_GameEnd = (function() {
+
+        /**
+         * Properties of a BT_GameEnd.
+         * @memberof msg
+         * @interface IBT_GameEnd
+         * @property {number|Long|null} [roomid] BT_GameEnd roomid
+         * @property {number|Long|null} [ownerid] BT_GameEnd ownerid
+         * @property {string|null} [reason] BT_GameEnd reason
+         * @property {msg.ISerialize|null} [bin] BT_GameEnd bin
+         */
+
+        /**
+         * Constructs a new BT_GameEnd.
+         * @memberof msg
+         * @classdesc Represents a BT_GameEnd.
+         * @implements IBT_GameEnd
+         * @constructor
+         * @param {msg.IBT_GameEnd=} [properties] Properties to set
+         */
+        function BT_GameEnd(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_GameEnd roomid.
+         * @member {number|Long} roomid
+         * @memberof msg.BT_GameEnd
+         * @instance
+         */
+        BT_GameEnd.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * BT_GameEnd ownerid.
+         * @member {number|Long} ownerid
+         * @memberof msg.BT_GameEnd
+         * @instance
+         */
+        BT_GameEnd.prototype.ownerid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BT_GameEnd reason.
+         * @member {string} reason
+         * @memberof msg.BT_GameEnd
+         * @instance
+         */
+        BT_GameEnd.prototype.reason = "";
+
+        /**
+         * BT_GameEnd bin.
+         * @member {msg.ISerialize|null|undefined} bin
+         * @memberof msg.BT_GameEnd
+         * @instance
+         */
+        BT_GameEnd.prototype.bin = null;
+
+        /**
+         * Creates a new BT_GameEnd instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_GameEnd
+         * @static
+         * @param {msg.IBT_GameEnd=} [properties] Properties to set
+         * @returns {msg.BT_GameEnd} BT_GameEnd instance
+         */
+        BT_GameEnd.create = function create(properties) {
+            return new BT_GameEnd(properties);
+        };
+
+        /**
+         * Encodes the specified BT_GameEnd message. Does not implicitly {@link msg.BT_GameEnd.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_GameEnd
+         * @static
+         * @param {msg.IBT_GameEnd} message BT_GameEnd message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_GameEnd.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.ownerid);
+            if (message.reason != null && message.hasOwnProperty("reason"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.reason);
+            if (message.bin != null && message.hasOwnProperty("bin"))
+                $root.msg.Serialize.encode(message.bin, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_GameEnd message, length delimited. Does not implicitly {@link msg.BT_GameEnd.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_GameEnd
+         * @static
+         * @param {msg.IBT_GameEnd} message BT_GameEnd message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_GameEnd.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_GameEnd message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_GameEnd
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_GameEnd} BT_GameEnd
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_GameEnd.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_GameEnd();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.roomid = reader.int64();
+                    break;
+                case 2:
+                    message.ownerid = reader.uint64();
+                    break;
+                case 3:
+                    message.reason = reader.string();
+                    break;
+                case 4:
+                    message.bin = $root.msg.Serialize.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_GameEnd message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_GameEnd
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_GameEnd} BT_GameEnd
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_GameEnd.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_GameEnd message.
+         * @function verify
+         * @memberof msg.BT_GameEnd
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_GameEnd.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
+                    return "roomid: integer|Long expected";
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                if (!$util.isInteger(message.ownerid) && !(message.ownerid && $util.isInteger(message.ownerid.low) && $util.isInteger(message.ownerid.high)))
+                    return "ownerid: integer|Long expected";
+            if (message.reason != null && message.hasOwnProperty("reason"))
+                if (!$util.isString(message.reason))
+                    return "reason: string expected";
+            if (message.bin != null && message.hasOwnProperty("bin")) {
+                var error = $root.msg.Serialize.verify(message.bin);
+                if (error)
+                    return "bin." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a BT_GameEnd message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_GameEnd
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_GameEnd} BT_GameEnd
+         */
+        BT_GameEnd.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_GameEnd)
+                return object;
+            var message = new $root.msg.BT_GameEnd();
+            if (object.roomid != null)
+                if ($util.Long)
+                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
+                else if (typeof object.roomid === "string")
+                    message.roomid = parseInt(object.roomid, 10);
+                else if (typeof object.roomid === "number")
+                    message.roomid = object.roomid;
+                else if (typeof object.roomid === "object")
+                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
+            if (object.ownerid != null)
+                if ($util.Long)
+                    (message.ownerid = $util.Long.fromValue(object.ownerid)).unsigned = true;
+                else if (typeof object.ownerid === "string")
+                    message.ownerid = parseInt(object.ownerid, 10);
+                else if (typeof object.ownerid === "number")
+                    message.ownerid = object.ownerid;
+                else if (typeof object.ownerid === "object")
+                    message.ownerid = new $util.LongBits(object.ownerid.low >>> 0, object.ownerid.high >>> 0).toNumber(true);
+            if (object.reason != null)
+                message.reason = String(object.reason);
+            if (object.bin != null) {
+                if (typeof object.bin !== "object")
+                    throw TypeError(".msg.BT_GameEnd.bin: object expected");
+                message.bin = $root.msg.Serialize.fromObject(object.bin);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_GameEnd message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_GameEnd
+         * @static
+         * @param {msg.BT_GameEnd} message BT_GameEnd
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_GameEnd.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.roomid = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.ownerid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.ownerid = options.longs === String ? "0" : 0;
+                object.reason = "";
+                object.bin = null;
+            }
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (typeof message.roomid === "number")
+                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
+                else
+                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
+            if (message.ownerid != null && message.hasOwnProperty("ownerid"))
+                if (typeof message.ownerid === "number")
+                    object.ownerid = options.longs === String ? String(message.ownerid) : message.ownerid;
+                else
+                    object.ownerid = options.longs === String ? $util.Long.prototype.toString.call(message.ownerid) : options.longs === Number ? new $util.LongBits(message.ownerid.low >>> 0, message.ownerid.high >>> 0).toNumber(true) : message.ownerid;
+            if (message.reason != null && message.hasOwnProperty("reason"))
+                object.reason = message.reason;
+            if (message.bin != null && message.hasOwnProperty("bin"))
+                object.bin = $root.msg.Serialize.toObject(message.bin, options);
+            return object;
+        };
+
+        /**
+         * Converts this BT_GameEnd to JSON.
+         * @function toJSON
+         * @memberof msg.BT_GameEnd
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_GameEnd.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_GameEnd;
+    })();
+
+    msg.BT_GameOver = (function() {
+
+        /**
+         * Properties of a BT_GameOver.
+         * @memberof msg
+         * @interface IBT_GameOver
+         * @property {number|Long|null} [roomid] BT_GameOver roomid
+         */
+
+        /**
+         * Constructs a new BT_GameOver.
+         * @memberof msg
+         * @classdesc Represents a BT_GameOver.
+         * @implements IBT_GameOver
+         * @constructor
+         * @param {msg.IBT_GameOver=} [properties] Properties to set
+         */
+        function BT_GameOver(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_GameOver roomid.
+         * @member {number|Long} roomid
+         * @memberof msg.BT_GameOver
+         * @instance
+         */
+        BT_GameOver.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * Creates a new BT_GameOver instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_GameOver
+         * @static
+         * @param {msg.IBT_GameOver=} [properties] Properties to set
+         * @returns {msg.BT_GameOver} BT_GameOver instance
+         */
+        BT_GameOver.create = function create(properties) {
+            return new BT_GameOver(properties);
+        };
+
+        /**
+         * Encodes the specified BT_GameOver message. Does not implicitly {@link msg.BT_GameOver.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_GameOver
+         * @static
+         * @param {msg.IBT_GameOver} message BT_GameOver message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_GameOver.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_GameOver message, length delimited. Does not implicitly {@link msg.BT_GameOver.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_GameOver
+         * @static
+         * @param {msg.IBT_GameOver} message BT_GameOver message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_GameOver.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_GameOver message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_GameOver
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_GameOver} BT_GameOver
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_GameOver.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_GameOver();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.roomid = reader.int64();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_GameOver message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_GameOver
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_GameOver} BT_GameOver
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_GameOver.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_GameOver message.
+         * @function verify
+         * @memberof msg.BT_GameOver
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_GameOver.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
+                    return "roomid: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a BT_GameOver message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_GameOver
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_GameOver} BT_GameOver
+         */
+        BT_GameOver.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_GameOver)
+                return object;
+            var message = new $root.msg.BT_GameOver();
+            if (object.roomid != null)
+                if ($util.Long)
+                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
+                else if (typeof object.roomid === "string")
+                    message.roomid = parseInt(object.roomid, 10);
+                else if (typeof object.roomid === "number")
+                    message.roomid = object.roomid;
+                else if (typeof object.roomid === "object")
+                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_GameOver message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_GameOver
+         * @static
+         * @param {msg.BT_GameOver} message BT_GameOver
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_GameOver.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.roomid = options.longs === String ? "0" : 0;
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (typeof message.roomid === "number")
+                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
+                else
+                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
+            return object;
+        };
+
+        /**
+         * Converts this BT_GameOver to JSON.
+         * @function toJSON
+         * @memberof msg.BT_GameOver
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_GameOver.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_GameOver;
+    })();
+
+    msg.BT_ReqQuitGameRoom = (function() {
+
+        /**
+         * Properties of a BT_ReqQuitGameRoom.
+         * @memberof msg
+         * @interface IBT_ReqQuitGameRoom
+         * @property {number|Long|null} [roomid] BT_ReqQuitGameRoom roomid
+         * @property {number|Long|null} [userid] BT_ReqQuitGameRoom userid
+         */
+
+        /**
+         * Constructs a new BT_ReqQuitGameRoom.
+         * @memberof msg
+         * @classdesc Represents a BT_ReqQuitGameRoom.
+         * @implements IBT_ReqQuitGameRoom
+         * @constructor
+         * @param {msg.IBT_ReqQuitGameRoom=} [properties] Properties to set
+         */
+        function BT_ReqQuitGameRoom(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_ReqQuitGameRoom roomid.
+         * @member {number|Long} roomid
+         * @memberof msg.BT_ReqQuitGameRoom
+         * @instance
+         */
+        BT_ReqQuitGameRoom.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * BT_ReqQuitGameRoom userid.
+         * @member {number|Long} userid
+         * @memberof msg.BT_ReqQuitGameRoom
+         * @instance
+         */
+        BT_ReqQuitGameRoom.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * Creates a new BT_ReqQuitGameRoom instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_ReqQuitGameRoom
+         * @static
+         * @param {msg.IBT_ReqQuitGameRoom=} [properties] Properties to set
+         * @returns {msg.BT_ReqQuitGameRoom} BT_ReqQuitGameRoom instance
+         */
+        BT_ReqQuitGameRoom.create = function create(properties) {
+            return new BT_ReqQuitGameRoom(properties);
+        };
+
+        /**
+         * Encodes the specified BT_ReqQuitGameRoom message. Does not implicitly {@link msg.BT_ReqQuitGameRoom.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_ReqQuitGameRoom
+         * @static
+         * @param {msg.IBT_ReqQuitGameRoom} message BT_ReqQuitGameRoom message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_ReqQuitGameRoom.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int64(message.roomid);
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.userid);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_ReqQuitGameRoom message, length delimited. Does not implicitly {@link msg.BT_ReqQuitGameRoom.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_ReqQuitGameRoom
+         * @static
+         * @param {msg.IBT_ReqQuitGameRoom} message BT_ReqQuitGameRoom message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_ReqQuitGameRoom.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_ReqQuitGameRoom message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_ReqQuitGameRoom
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_ReqQuitGameRoom} BT_ReqQuitGameRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_ReqQuitGameRoom.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_ReqQuitGameRoom();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.roomid = reader.int64();
+                    break;
+                case 2:
+                    message.userid = reader.uint64();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_ReqQuitGameRoom message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_ReqQuitGameRoom
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_ReqQuitGameRoom} BT_ReqQuitGameRoom
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_ReqQuitGameRoom.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_ReqQuitGameRoom message.
+         * @function verify
+         * @memberof msg.BT_ReqQuitGameRoom
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_ReqQuitGameRoom.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
+                    return "roomid: integer|Long expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a BT_ReqQuitGameRoom message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_ReqQuitGameRoom
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_ReqQuitGameRoom} BT_ReqQuitGameRoom
+         */
+        BT_ReqQuitGameRoom.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_ReqQuitGameRoom)
+                return object;
+            var message = new $root.msg.BT_ReqQuitGameRoom();
+            if (object.roomid != null)
+                if ($util.Long)
+                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
+                else if (typeof object.roomid === "string")
+                    message.roomid = parseInt(object.roomid, 10);
+                else if (typeof object.roomid === "number")
+                    message.roomid = object.roomid;
+                else if (typeof object.roomid === "object")
+                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_ReqQuitGameRoom message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_ReqQuitGameRoom
+         * @static
+         * @param {msg.BT_ReqQuitGameRoom} message BT_ReqQuitGameRoom
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_ReqQuitGameRoom.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.roomid = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+            }
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (typeof message.roomid === "number")
+                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
+                else
+                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
+            return object;
+        };
+
+        /**
+         * Converts this BT_ReqQuitGameRoom to JSON.
+         * @function toJSON
+         * @memberof msg.BT_ReqQuitGameRoom
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_ReqQuitGameRoom.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_ReqQuitGameRoom;
+    })();
+
+    msg.BT_PickItem = (function() {
+
+        /**
+         * Properties of a BT_PickItem.
+         * @memberof msg
+         * @interface IBT_PickItem
+         * @property {number|Long|null} [userid] BT_PickItem userid
+         * @property {msg.IGridItem|null} [item] BT_PickItem item
+         */
+
+        /**
+         * Constructs a new BT_PickItem.
+         * @memberof msg
+         * @classdesc Represents a BT_PickItem.
+         * @implements IBT_PickItem
+         * @constructor
+         * @param {msg.IBT_PickItem=} [properties] Properties to set
+         */
+        function BT_PickItem(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_PickItem userid.
+         * @member {number|Long} userid
+         * @memberof msg.BT_PickItem
+         * @instance
+         */
+        BT_PickItem.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BT_PickItem item.
+         * @member {msg.IGridItem|null|undefined} item
+         * @memberof msg.BT_PickItem
+         * @instance
+         */
+        BT_PickItem.prototype.item = null;
+
+        /**
+         * Creates a new BT_PickItem instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_PickItem
+         * @static
+         * @param {msg.IBT_PickItem=} [properties] Properties to set
+         * @returns {msg.BT_PickItem} BT_PickItem instance
+         */
+        BT_PickItem.create = function create(properties) {
+            return new BT_PickItem(properties);
+        };
+
+        /**
+         * Encodes the specified BT_PickItem message. Does not implicitly {@link msg.BT_PickItem.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_PickItem
+         * @static
+         * @param {msg.IBT_PickItem} message BT_PickItem message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_PickItem.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
+            if (message.item != null && message.hasOwnProperty("item"))
+                $root.msg.GridItem.encode(message.item, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_PickItem message, length delimited. Does not implicitly {@link msg.BT_PickItem.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_PickItem
+         * @static
+         * @param {msg.IBT_PickItem} message BT_PickItem message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_PickItem.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_PickItem message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_PickItem
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_PickItem} BT_PickItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_PickItem.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_PickItem();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.userid = reader.uint64();
+                    break;
+                case 2:
+                    message.item = $root.msg.GridItem.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_PickItem message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_PickItem
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_PickItem} BT_PickItem
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_PickItem.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_PickItem message.
+         * @function verify
+         * @memberof msg.BT_PickItem
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_PickItem.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
+            if (message.item != null && message.hasOwnProperty("item")) {
+                var error = $root.msg.GridItem.verify(message.item);
+                if (error)
+                    return "item." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a BT_PickItem message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_PickItem
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_PickItem} BT_PickItem
+         */
+        BT_PickItem.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_PickItem)
+                return object;
+            var message = new $root.msg.BT_PickItem();
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
+            if (object.item != null) {
+                if (typeof object.item !== "object")
+                    throw TypeError(".msg.BT_PickItem.item: object expected");
+                message.item = $root.msg.GridItem.fromObject(object.item);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_PickItem message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_PickItem
+         * @static
+         * @param {msg.BT_PickItem} message BT_PickItem
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_PickItem.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+                object.item = null;
+            }
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
+            if (message.item != null && message.hasOwnProperty("item"))
+                object.item = $root.msg.GridItem.toObject(message.item, options);
+            return object;
+        };
+
+        /**
+         * Converts this BT_PickItem to JSON.
+         * @function toJSON
+         * @memberof msg.BT_PickItem
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_PickItem.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_PickItem;
+    })();
+
+    msg.BT_UpdateMoney = (function() {
+
+        /**
+         * Properties of a BT_UpdateMoney.
+         * @memberof msg
+         * @interface IBT_UpdateMoney
+         * @property {number|Long|null} [userid] BT_UpdateMoney userid
+         * @property {number|Long|null} [roomid] BT_UpdateMoney roomid
+         * @property {number|Long|null} [money] BT_UpdateMoney money
+         */
+
+        /**
+         * Constructs a new BT_UpdateMoney.
+         * @memberof msg
+         * @classdesc Represents a BT_UpdateMoney.
+         * @implements IBT_UpdateMoney
+         * @constructor
+         * @param {msg.IBT_UpdateMoney=} [properties] Properties to set
+         */
+        function BT_UpdateMoney(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * BT_UpdateMoney userid.
+         * @member {number|Long} userid
+         * @memberof msg.BT_UpdateMoney
+         * @instance
+         */
+        BT_UpdateMoney.prototype.userid = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * BT_UpdateMoney roomid.
+         * @member {number|Long} roomid
+         * @memberof msg.BT_UpdateMoney
+         * @instance
+         */
+        BT_UpdateMoney.prototype.roomid = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+        /**
+         * BT_UpdateMoney money.
+         * @member {number|Long} money
+         * @memberof msg.BT_UpdateMoney
+         * @instance
+         */
+        BT_UpdateMoney.prototype.money = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * Creates a new BT_UpdateMoney instance using the specified properties.
+         * @function create
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {msg.IBT_UpdateMoney=} [properties] Properties to set
+         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney instance
+         */
+        BT_UpdateMoney.create = function create(properties) {
+            return new BT_UpdateMoney(properties);
+        };
+
+        /**
+         * Encodes the specified BT_UpdateMoney message. Does not implicitly {@link msg.BT_UpdateMoney.verify|verify} messages.
+         * @function encode
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {msg.IBT_UpdateMoney} message BT_UpdateMoney message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_UpdateMoney.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.userid);
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int64(message.roomid);
+            if (message.money != null && message.hasOwnProperty("money"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.money);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified BT_UpdateMoney message, length delimited. Does not implicitly {@link msg.BT_UpdateMoney.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {msg.IBT_UpdateMoney} message BT_UpdateMoney message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        BT_UpdateMoney.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a BT_UpdateMoney message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_UpdateMoney.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.BT_UpdateMoney();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.userid = reader.uint64();
+                    break;
+                case 2:
+                    message.roomid = reader.int64();
+                    break;
+                case 3:
+                    message.money = reader.uint64();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a BT_UpdateMoney message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        BT_UpdateMoney.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a BT_UpdateMoney message.
+         * @function verify
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        BT_UpdateMoney.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (!$util.isInteger(message.userid) && !(message.userid && $util.isInteger(message.userid.low) && $util.isInteger(message.userid.high)))
+                    return "userid: integer|Long expected";
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (!$util.isInteger(message.roomid) && !(message.roomid && $util.isInteger(message.roomid.low) && $util.isInteger(message.roomid.high)))
+                    return "roomid: integer|Long expected";
+            if (message.money != null && message.hasOwnProperty("money"))
+                if (!$util.isInteger(message.money) && !(message.money && $util.isInteger(message.money.low) && $util.isInteger(message.money.high)))
+                    return "money: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a BT_UpdateMoney message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.BT_UpdateMoney} BT_UpdateMoney
+         */
+        BT_UpdateMoney.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.BT_UpdateMoney)
+                return object;
+            var message = new $root.msg.BT_UpdateMoney();
+            if (object.userid != null)
+                if ($util.Long)
+                    (message.userid = $util.Long.fromValue(object.userid)).unsigned = true;
+                else if (typeof object.userid === "string")
+                    message.userid = parseInt(object.userid, 10);
+                else if (typeof object.userid === "number")
+                    message.userid = object.userid;
+                else if (typeof object.userid === "object")
+                    message.userid = new $util.LongBits(object.userid.low >>> 0, object.userid.high >>> 0).toNumber(true);
+            if (object.roomid != null)
+                if ($util.Long)
+                    (message.roomid = $util.Long.fromValue(object.roomid)).unsigned = false;
+                else if (typeof object.roomid === "string")
+                    message.roomid = parseInt(object.roomid, 10);
+                else if (typeof object.roomid === "number")
+                    message.roomid = object.roomid;
+                else if (typeof object.roomid === "object")
+                    message.roomid = new $util.LongBits(object.roomid.low >>> 0, object.roomid.high >>> 0).toNumber();
+            if (object.money != null)
+                if ($util.Long)
+                    (message.money = $util.Long.fromValue(object.money)).unsigned = true;
+                else if (typeof object.money === "string")
+                    message.money = parseInt(object.money, 10);
+                else if (typeof object.money === "number")
+                    message.money = object.money;
+                else if (typeof object.money === "object")
+                    message.money = new $util.LongBits(object.money.low >>> 0, object.money.high >>> 0).toNumber(true);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a BT_UpdateMoney message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.BT_UpdateMoney
+         * @static
+         * @param {msg.BT_UpdateMoney} message BT_UpdateMoney
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        BT_UpdateMoney.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.userid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.userid = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, false);
+                    object.roomid = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.roomid = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.money = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.money = options.longs === String ? "0" : 0;
+            }
+            if (message.userid != null && message.hasOwnProperty("userid"))
+                if (typeof message.userid === "number")
+                    object.userid = options.longs === String ? String(message.userid) : message.userid;
+                else
+                    object.userid = options.longs === String ? $util.Long.prototype.toString.call(message.userid) : options.longs === Number ? new $util.LongBits(message.userid.low >>> 0, message.userid.high >>> 0).toNumber(true) : message.userid;
+            if (message.roomid != null && message.hasOwnProperty("roomid"))
+                if (typeof message.roomid === "number")
+                    object.roomid = options.longs === String ? String(message.roomid) : message.roomid;
+                else
+                    object.roomid = options.longs === String ? $util.Long.prototype.toString.call(message.roomid) : options.longs === Number ? new $util.LongBits(message.roomid.low >>> 0, message.roomid.high >>> 0).toNumber() : message.roomid;
+            if (message.money != null && message.hasOwnProperty("money"))
+                if (typeof message.money === "number")
+                    object.money = options.longs === String ? String(message.money) : message.money;
+                else
+                    object.money = options.longs === String ? $util.Long.prototype.toString.call(message.money) : options.longs === Number ? new $util.LongBits(message.money.low >>> 0, message.money.high >>> 0).toNumber(true) : message.money;
+            return object;
+        };
+
+        /**
+         * Converts this BT_UpdateMoney to JSON.
+         * @function toJSON
+         * @memberof msg.BT_UpdateMoney
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        BT_UpdateMoney.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return BT_UpdateMoney;
     })();
 
     msg.C2GW_ReqLogin = (function() {
@@ -16696,7 +17114,13 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                object.buf = options.bytes === String ? "" : [];
+                if (options.bytes === String)
+                    object.buf = "";
+                else {
+                    object.buf = [];
+                    if (options.bytes !== Array)
+                        object.buf = $util.newBuffer(object.buf);
+                }
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -16945,7 +17369,13 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                object.buf = options.bytes === String ? "" : [];
+                if (options.bytes === String)
+                    object.buf = "";
+                else {
+                    object.buf = [];
+                    if (options.bytes !== Array)
+                        object.buf = $util.newBuffer(object.buf);
+                }
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")

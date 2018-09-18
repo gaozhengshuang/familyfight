@@ -53,6 +53,6 @@ cc.Class({
     },
 
     onLoginComplete(msgid, data) {
-        cc.director.loadScene("TestScene");
+        cc.director.loadScene("GameScene");
     },
 });
