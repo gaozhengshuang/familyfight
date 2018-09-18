@@ -23,6 +23,7 @@ module.exports = {
                 'maidlevelbase',
                 'maidshopbase',
                 'passlevelsbase',
+                'turnbrandbase',
                 'common'
             ];
             Editor.log('开始生成JSON');
