@@ -33,12 +33,6 @@ func (this* LS2CMsgHandler) Init() {
 	// 收
 	this.msgparser.RegistProtoMsg(msg.L2C_RetLogin{}, on_L2C_RetLogin)
 	this.msgparser.RegistProtoMsg(msg.L2C_RetRegistAccount{}, on_L2C_RetRegistAccount)
-
-
-	// 发
-	this.msgparser.RegistSendProto(msg.C2L_ReqLogin{})
-	this.msgparser.RegistSendProto(msg.C2L_ReqRegistAccount{})
-	this.msgparser.RegistSendProto(msg.C2L_ReqRegistAuthCode{})
 }
 
 func on_L2C_RetLogin(session network.IBaseNetSession, message interface{}) {

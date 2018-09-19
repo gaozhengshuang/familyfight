@@ -47,60 +47,22 @@ func (this* C2GWMsgHandler) Init() {
 	if this.msgparser == nil {
 		return
 	}
-
 	// 收
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqLogin{}, on_C2GW_ReqLogin)
 	this.msgparser.RegistProtoMsg(msg.C2GW_HeartBeat{}, on_C2GW_HeartBeat)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqDeliveryDiamond{}, on_C2GW_ReqDeliveryDiamond)
 
 	// 发
-	// this.msgparser.RegistSendProto(msg.GW2C_HeartBeat{})
-	// this.msgparser.RegistSendProto(msg.GW2C_MsgNotice{})
-	// this.msgparser.RegistSendProto(msg.GW2C_MsgNotify{})
-	// this.msgparser.RegistSendProto(msg.GW2C_RetLogin{})
-	// this.msgparser.RegistSendProto(msg.GW2C_SendUserInfo{})
-	// this.msgparser.RegistSendProto(msg.GW2C_RetStartGame{})
-	// this.msgparser.RegistSendProto(msg.GW2C_AddPackageItem{})
-	// this.msgparser.RegistSendProto(msg.GW2C_RemovePackageItem{})
-	// this.msgparser.RegistSendProto(msg.GW2C_UpdateYuanbao{})
-	// this.msgparser.RegistSendProto(msg.GW2C_UpdateCoupon{})
-	// this.msgparser.RegistSendProto(msg.GW2C_UpdateGold{})
-	// this.msgparser.RegistSendProto(msg.GW2C_Ret7DayReward{})
-	// this.msgparser.RegistSendProto(msg.Sync_BigRewardPickNum{})
-	// this.msgparser.RegistSendProto(msg.GW2C_RetRechargeMoney{})
-	// this.msgparser.RegistSendProto(msg.GW2C_UpdateFreeStep{})
-	// this.msgparser.RegistSendProto(msg.GW2C_SendUserPlatformMoney{})
-	// this.msgparser.RegistSendProto(msg.GW2C_RetDeliveryDiamond{})
-
-	// this.msgparser.RegistSendProto(msg.GW2C_SendWechatInfo{})
-	// this.msgparser.RegistSendProto(msg.GW2C_LuckyDrawHit{})
-	// this.msgparser.RegistSendProto(msg.GW2C_SendDeliveryAddressList{})
-	// this.msgparser.RegistSendProto(msg.GW2C_FreePresentNotify{})
-
-	// Room
-	// this.msgparser.RegistSendProto(msg.BT_GameInit{})
-	// this.msgparser.RegistSendProto(msg.BT_SendBattleUser{})
-	// this.msgparser.RegistSendProto(msg.BT_GameStart{})
-	// this.msgparser.RegistSendProto(msg.BT_GameOver{})
-	// this.msgparser.RegistSendProto(msg.BT_PickItem{})
 
 	//侍女
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqBuyMaid{}, on_C2GW_ReqBuyMaid)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMergeMaid{}, on_C2GW_ReqMergeMaid)
 
-	// this.msgparser.RegistSendProto(msg.GW2C_AckMaids{})
-	// this.msgparser.RegistSendProto(msg.GW2C_AckMaidShop{})
-	// this.msgparser.RegistSendProto(msg.GW2C_AckBuyMaid{})
-	// this.msgparser.RegistSendProto(msg.GW2C_AckMergeMaid{})
 	//货币
 	this.msgparser.RegistProtoMsg(msg.C2GW_UploadTrueGold{}, on_C2GW_UploadTrueGold)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPower{}, on_C2GW_ReqPower)
-	// this.msgparser.RegistSendProto(msg.GW2C_UpdateTrueGold{})
-	// this.msgparser.RegistSendProto(msg.GW2C_OfflineReward{})
-	// this.msgparser.RegistSendProto(msg.GW2C_UpdatePower{})
 	//活动
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTurnBrand{}, on_C2GW_ReqTurnBrand)
-	// this.msgparser.RegistSendProto(msg.GW2C_RetTurnBrand{})
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqLinkup{}, on_C2GW_ReqLinkup)
 }
 

@@ -42,20 +42,6 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.BT_ReqQuitGameRoom{}, on_BT_ReqQuitGameRoom)
 	this.msgparser.RegistProtoMsg(msg.BT_UpdateMoney{}, on_BT_UpdateMoney)
 	this.msgparser.RegistProtoMsg(msg.C2GW_StartLuckyDraw{}, on_C2GW_StartLuckyDraw)
-
-
-	// 发
-	this.msgparser.RegistSendProto(msg.RS2GW_ReqRegist{})
-	this.msgparser.RegistSendProto(msg.RS2GW_RetUserDisconnect{})
-	this.msgparser.RegistSendProto(msg.RS2GW_MsgTransfer{})
-	//this.msgparser.RegistSendProto(msg.BT_GameInit{})
-	//this.msgparser.RegistSendProto(msg.BT_SendBattleUser{})
-	//this.msgparser.RegistSendProto(msg.BT_GameStart{})
-	this.msgparser.RegistSendProto(msg.BT_GameEnd{})
-	//this.msgparser.RegistSendProto(msg.BT_PickItem{})
-
-	// 发Gate
-	this.msgparser.RegistSendProto(msg.GW2C_MsgNotify{})
 }
 
 func on_GW2RS_RetRegist(session network.IBaseNetSession, message interface{}) {

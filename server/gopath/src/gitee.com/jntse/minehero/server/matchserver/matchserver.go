@@ -200,6 +200,7 @@ func (this* MatchServer) Init(fileconf string) bool {
 
 func (this *MatchServer) InitMsgHandler() {
 	if this.tblloader == nil { panic("should init 'tblloader' first") }
+	network.InitGlobalSendMsgHandler(tbl.GetAllMsgIndex())
 	this.msghandlers = append(this.msghandlers, NewGW2MSMsgHandler())
 	this.msghandlers = append(this.msghandlers, NewRS2MSMsgHandler())
 }
