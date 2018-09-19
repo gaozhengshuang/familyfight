@@ -26,18 +26,21 @@ cc.Class({
     onLoad() {
 
     },
-    onReset: function () {
+    onEnable: function () {
         for (let i = 0; i < this.linkItemNodes.length; i++) {
             let view = this.linkItemNodes[i];
             view.StopAllAction();
             view.SetOpacity(255);
             view.TurnBackWithAnima(0.0);
         }
+        this.maskNode.active = true;
+        this.firstItem = null;
+        this.secondItem = null;
+        this.matchInfos = [];
         this.status = 0;
         this._changeStatus(LinkStatus.Status_Idle);
     },
     start() {
-        this.onReset();
     },
     update(dt) {
         if (this.status != LinkStatus.Status_Idle && this.status != LinkStatus.Status_End) {
@@ -95,7 +98,7 @@ cc.Class({
                         //看看选美选齐全
                         if (this.matchInfos.length >= 6) {
                             //全了 TODO
-                            this.closeView(Game.UIName.UI_LINKUP);
+                            this._changeStatus(LinkStatus.Status_End);
                         }
                     } else {
                         //选错了 翻回去
@@ -121,6 +124,10 @@ cc.Class({
                 case LinkStatus.Status_Wait:
                     break;
                 case LinkStatus.Status_Judge:
+                    break;
+                case LinkStatus.Status_End:
+                    //计算奖励金币
+                    // this.closeView(Game.UIName.UI_LINKUP);
                     break;
                 default:
                     break;

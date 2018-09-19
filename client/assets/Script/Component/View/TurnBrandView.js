@@ -71,7 +71,7 @@ cc.Class({
             this.clickIndex = index;
             this.rewardId = 0;
             //其他状态不响应哦
-            Game.NetWorkController.Send('msg.C2GW_TurnBrand', { ids: Game._.map(this.brandInfos, 'Id') }, function () {
+            Game.NetWorkController.Send('msg.C2GW_ReqTurnBrand', { ids: Game._.map(this.brandInfos, 'Id') }, function () {
                 this._changeStatus(BrandStatus.Status_Shaking);
             }.bind(this));
         }

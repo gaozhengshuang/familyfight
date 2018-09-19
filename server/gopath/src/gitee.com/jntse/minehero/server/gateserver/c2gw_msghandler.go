@@ -54,52 +54,54 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqDeliveryDiamond{}, on_C2GW_ReqDeliveryDiamond)
 
 	// 发
-	this.msgparser.RegistSendProto(msg.GW2C_HeartBeat{})
-	this.msgparser.RegistSendProto(msg.GW2C_MsgNotice{})
-	this.msgparser.RegistSendProto(msg.GW2C_MsgNotify{})
-	this.msgparser.RegistSendProto(msg.GW2C_RetLogin{})
-	this.msgparser.RegistSendProto(msg.GW2C_SendUserInfo{})
-	this.msgparser.RegistSendProto(msg.GW2C_RetStartGame{})
-	this.msgparser.RegistSendProto(msg.GW2C_AddPackageItem{})
-	this.msgparser.RegistSendProto(msg.GW2C_RemovePackageItem{})
-	this.msgparser.RegistSendProto(msg.GW2C_UpdateYuanbao{})
-	this.msgparser.RegistSendProto(msg.GW2C_UpdateCoupon{})
-	this.msgparser.RegistSendProto(msg.GW2C_UpdateGold{})
-	this.msgparser.RegistSendProto(msg.GW2C_Ret7DayReward{})
-	this.msgparser.RegistSendProto(msg.Sync_BigRewardPickNum{})
-	this.msgparser.RegistSendProto(msg.GW2C_RetRechargeMoney{})
-	this.msgparser.RegistSendProto(msg.GW2C_UpdateFreeStep{})
-	this.msgparser.RegistSendProto(msg.GW2C_SendUserPlatformMoney{})
-	this.msgparser.RegistSendProto(msg.GW2C_RetDeliveryDiamond{})
+	// this.msgparser.RegistSendProto(msg.GW2C_HeartBeat{})
+	// this.msgparser.RegistSendProto(msg.GW2C_MsgNotice{})
+	// this.msgparser.RegistSendProto(msg.GW2C_MsgNotify{})
+	// this.msgparser.RegistSendProto(msg.GW2C_RetLogin{})
+	// this.msgparser.RegistSendProto(msg.GW2C_SendUserInfo{})
+	// this.msgparser.RegistSendProto(msg.GW2C_RetStartGame{})
+	// this.msgparser.RegistSendProto(msg.GW2C_AddPackageItem{})
+	// this.msgparser.RegistSendProto(msg.GW2C_RemovePackageItem{})
+	// this.msgparser.RegistSendProto(msg.GW2C_UpdateYuanbao{})
+	// this.msgparser.RegistSendProto(msg.GW2C_UpdateCoupon{})
+	// this.msgparser.RegistSendProto(msg.GW2C_UpdateGold{})
+	// this.msgparser.RegistSendProto(msg.GW2C_Ret7DayReward{})
+	// this.msgparser.RegistSendProto(msg.Sync_BigRewardPickNum{})
+	// this.msgparser.RegistSendProto(msg.GW2C_RetRechargeMoney{})
+	// this.msgparser.RegistSendProto(msg.GW2C_UpdateFreeStep{})
+	// this.msgparser.RegistSendProto(msg.GW2C_SendUserPlatformMoney{})
+	// this.msgparser.RegistSendProto(msg.GW2C_RetDeliveryDiamond{})
 
-	this.msgparser.RegistSendProto(msg.GW2C_SendWechatInfo{})
-	this.msgparser.RegistSendProto(msg.GW2C_LuckyDrawHit{})
-	this.msgparser.RegistSendProto(msg.GW2C_SendDeliveryAddressList{})
-	this.msgparser.RegistSendProto(msg.GW2C_FreePresentNotify{})
+	// this.msgparser.RegistSendProto(msg.GW2C_SendWechatInfo{})
+	// this.msgparser.RegistSendProto(msg.GW2C_LuckyDrawHit{})
+	// this.msgparser.RegistSendProto(msg.GW2C_SendDeliveryAddressList{})
+	// this.msgparser.RegistSendProto(msg.GW2C_FreePresentNotify{})
 
 	// Room
-	this.msgparser.RegistSendProto(msg.BT_GameInit{})
-	this.msgparser.RegistSendProto(msg.BT_SendBattleUser{})
-	this.msgparser.RegistSendProto(msg.BT_GameStart{})
-	this.msgparser.RegistSendProto(msg.BT_GameOver{})
-	this.msgparser.RegistSendProto(msg.BT_PickItem{})
+	// this.msgparser.RegistSendProto(msg.BT_GameInit{})
+	// this.msgparser.RegistSendProto(msg.BT_SendBattleUser{})
+	// this.msgparser.RegistSendProto(msg.BT_GameStart{})
+	// this.msgparser.RegistSendProto(msg.BT_GameOver{})
+	// this.msgparser.RegistSendProto(msg.BT_PickItem{})
 
 	//侍女
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqBuyMaid{}, on_C2GW_ReqBuyMaid)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMergeMaid{}, on_C2GW_ReqMergeMaid)
 
-	this.msgparser.RegistSendProto(msg.GW2C_AckMaids{})
-	this.msgparser.RegistSendProto(msg.GW2C_AckMaidShop{})
-	this.msgparser.RegistSendProto(msg.GW2C_AckBuyMaid{})
-	this.msgparser.RegistSendProto(msg.GW2C_AckMergeMaid{})
+	// this.msgparser.RegistSendProto(msg.GW2C_AckMaids{})
+	// this.msgparser.RegistSendProto(msg.GW2C_AckMaidShop{})
+	// this.msgparser.RegistSendProto(msg.GW2C_AckBuyMaid{})
+	// this.msgparser.RegistSendProto(msg.GW2C_AckMergeMaid{})
 	//货币
 	this.msgparser.RegistProtoMsg(msg.C2GW_UploadTrueGold{}, on_C2GW_UploadTrueGold)
-	this.msgparser.RegistSendProto(msg.GW2C_UpdateTrueGold{})
-	this.msgparser.RegistSendProto(msg.GW2C_OfflineReward{})
-	this.msgparser.RegistSendProto(msg.GW2C_UpdatePower{})
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPower{}, on_C2GW_ReqPower)
+	// this.msgparser.RegistSendProto(msg.GW2C_UpdateTrueGold{})
+	// this.msgparser.RegistSendProto(msg.GW2C_OfflineReward{})
+	// this.msgparser.RegistSendProto(msg.GW2C_UpdatePower{})
 	//活动
-	this.msgparser.RegistProtoMsg(msg.C2GW_TurnBrand{}, on_C2GW_TurnBrand)
-	this.msgparser.RegistSendProto(msg.GW2C_RetTurnBrand{})
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTurnBrand{}, on_C2GW_ReqTurnBrand)
+	// this.msgparser.RegistSendProto(msg.GW2C_RetTurnBrand{})
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqLinkup{}, on_C2GW_ReqLinkup)
 }
 
 // 客户端心跳
@@ -312,9 +314,19 @@ func on_C2GW_UploadTrueGold(session network.IBaseNetSession, message interface{}
 	}
 	user.SetGold(tmsg.GetNum())
 }
+func on_C2GW_ReqPower(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_UploadTrueGold)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+	user.NotifyPower()
+}
 //翻牌子
-func on_C2GW_TurnBrand(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.C2GW_TurnBrand)
+func on_C2GW_ReqTurnBrand(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqTurnBrand)
 	user := ExtractSessionUser(session)
 	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
@@ -331,5 +343,25 @@ func on_C2GW_TurnBrand(session network.IBaseNetSession, message interface{}) {
 	send := &msg.GW2C_RetTurnBrand{}
 	send.Result = pb.Uint32(result)
 	send.Id = pb.Uint32(id)
+	user.SendMsg(send)
+}
+//连连看
+func on_C2GW_ReqLinkup(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqLinkup)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	gold := user.Linkup(tmsg.GetScore())
+	send := &msg.GW2C_RetLinkup{}
+	send.Gold = pb.Uint64(gold)
 	user.SendMsg(send)
 }
