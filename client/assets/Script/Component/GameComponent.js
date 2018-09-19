@@ -44,6 +44,10 @@ var GameComponent = cc.Class({
     closeView(ui, removeView = false) {
         Game.ViewController.closeView(ui, removeView);
     },
+
+    gotoSceneView() {
+        Game.ViewController.closeAllView();
+    },
 });
 
 cc.GameComponent = module.export = GameComponent;
