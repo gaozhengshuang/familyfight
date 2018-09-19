@@ -1,23 +1,26 @@
 import Game from '../../Game';
 
 cc.Class({
-    extends: cc.Component,
+    extends: cc.GameComponent,
 
     properties: {
-        node_ViewLayer: { default: null, type: cc.Node },
         node_player: { default: null, type: cc.Node },
         node_pass: { default: null, type: cc.Node },
         prefab_player: { default: null, type: cc.Prefab },
-        prefab_FindNewPlayer: { default: null, type: cc.Prefab },
-        targetCanvas: { default: null, type: cc.Canvas },
     },
 
     onLoad() {
-        Game.Tools.AutoFit(this.targetCanvas);
+        this.initData();
+        this.initNotification();
+        this.initView();
     },
 
     start() {
-
+        let _lookTopPass = cc.sys.localStorage.getItem('lookTopPass');
+        if (_lookTopPass == 0 || _lookTopPass == null) {
+            this.showDialoguePlayer(1);
+            cc.sys.localStorage.setItem('lookTopPass', 1);
+        }
     },
 
     update(dt) {
@@ -156,7 +159,13 @@ cc.Class({
     showDialoguePlayer(_dialogueId) {
         Game.GameController.ShowDialogue(this.node, _dialogueId);
     },
-    onDestroy() {
 
+    onOpenShopView(event) {
+        event.stopPropagationImmediate();
+        this.openView(Game.UIName.UI_SHOP);
     },
+    onOpenTurnBrand(event) {
+        event.stopPropagationImmediate();
+        this.openView(Game.UIName.UI_TURNBRAND);
+    }
 });

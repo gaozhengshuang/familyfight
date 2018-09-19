@@ -42,8 +42,16 @@ cc.Class({
         }
         Game.NetWorkController.AddListener('msg.GW2C_RetTurnBrand', this, this.onRetTurnBrand);
     },
-    start: function () {
+    onReset: function () {
+        for (let i = 0; i < this.brandViews.length; i++) {
+            let view = this.brandViews[i];
+            view.StopAllAction();
+        }
+        this.status = 0;
         this._randBrandInfo();
+    },
+    start: function () {
+        this.onReset();
     },
     update: function (dt) {
     },

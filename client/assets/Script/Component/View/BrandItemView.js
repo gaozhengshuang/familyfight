@@ -37,7 +37,7 @@ cc.Class({
     TurnBackWithAnima: function (turnDelay) {
         this.backNode.stopAllActions();
         this.frontNode.stopAllActions();
-        if (turnDelay == null && turnDelay == 0.0) {
+        if (turnDelay == null || turnDelay == 0.0) {
             //不播动画
             this.frontNode.active = false;
             this.backNode.active = true;
@@ -60,7 +60,7 @@ cc.Class({
     TurnFrontWithAnima: function (turnDelay) {
         this.backNode.stopAllActions();
         this.frontNode.stopAllActions();
-        if (turnDelay == null && turnDelay == 0.0) {
+        if (turnDelay == null || turnDelay == 0.0) {
             //不播动画
             this.frontNode.active = true;
             this.backNode.active = false;
@@ -101,5 +101,7 @@ cc.Class({
     },
     StopAllAction: function () {
         this.node.stopAllActions();
+        this.backNode.stopAllActions();
+        this.frontNode.stopAllActions();
     }
 });

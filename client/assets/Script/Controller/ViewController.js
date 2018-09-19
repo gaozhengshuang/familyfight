@@ -25,6 +25,12 @@ ViewController.prototype.openView = function (ui) {
                 }
                 v.setLocalZOrder(_view.uiname == v.uiname ? 2 : 1);
             });
+            
+            let _gameComponet = _view.getComponent('GameComponent');
+            if (_gameComponet) {
+                _gameComponet.onReset();
+            }
+
             _view.active = true;
         } else {
             cc.loader.loadRes(ui, function (err, prefab) {
@@ -45,14 +51,14 @@ ViewController.prototype.openView = function (ui) {
 /**
  * 关闭界面,参数true彻底删除界面,false隐藏界面(默认false)
  */
-ViewController.prototype.closeView = function (ui, removeView = false) {
+ViewController.prototype.closeView = function (ui, clear = false) {
     if (ui != null) {
         let _view = _.find(this._viewList, function(v) {
             return v.uiname == ui;
         });
         
         if (_view) {
-            if (removeView) {
+            if (clear) {
                 _view.destroy();
 
                 _.remove(this._viewList, function (v) {
@@ -68,8 +74,8 @@ ViewController.prototype.closeView = function (ui, removeView = false) {
 /**
  * 关闭所有界面,参数true彻底删除界面,false隐藏界面(默认false)
  */
-ViewController.prototype.closeAllView = function (removeView = false) {
-    if (removeView) {
+ViewController.prototype.closeAllView = function (clear = false) {
+    if (clear) {
         let canvas = cc.director.getScene().getChildByName('Canvas');
         canvas.getChildByName("ViewLayer").destroyAllChildren();
         this._viewList = [];

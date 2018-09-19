@@ -1,14 +1,14 @@
 {
   "ver": "2.0.0",
-  "uuid": "e39cca6d-f8ec-4e45-b315-896b637beaef",
+  "uuid": "9d92fd83-bed2-496e-9503-abc7b35bb399",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
     "image_palacelock1": {
       "ver": "1.0.3",
-      "uuid": "b692aaed-93fe-4085-a3c6-275cbc4a6cdf",
-      "rawTextureUuid": "e39cca6d-f8ec-4e45-b315-896b637beaef",
+      "uuid": "0d58b814-b572-4970-8249-010ae097fec0",
+      "rawTextureUuid": "9d92fd83-bed2-496e-9503-abc7b35bb399",
       "trimType": "custom",
       "trimThreshold": 1,
       "rotated": false,

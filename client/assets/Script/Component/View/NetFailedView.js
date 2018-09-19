@@ -1,7 +1,7 @@
 import Game from '../../Game';
 
 cc.Class({
-    extends: cc.Component,
+    extends: cc.GameComponent,
 
     properties: {
     },
@@ -31,6 +31,6 @@ cc.Class({
         }
     },
     onClosePanel() {
-        this.node.destroy();
+        this.closeView(Game.UIName.UI_NETFAILED);
     }
 });

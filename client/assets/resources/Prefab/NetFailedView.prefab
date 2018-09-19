@@ -3,10 +3,12 @@
     "__type__": "cc.Prefab",
     "_name": "",
     "_objFlags": 0,
-    "_rawFiles": null,
+    "_native": "",
     "data": {
       "__id__": 1
-    }
+    },
+    "optimizationPolicy": 0,
+    "asyncLoadAssets": false
   },
   {
     "__type__": "cc.Node",
@@ -108,8 +110,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1000,
-      "height": 2000
+      "width": 720,
+      "height": 1280
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -502,7 +504,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "6f69655b-1605-4a90-8292-111aab9f4c17"
+      "__uuid__": "71b26da0-97ca-4b0a-81f7-8864ab471847"
     },
     "_type": 1,
     "_sizeMode": 0,
@@ -527,7 +529,7 @@
       "__id__": 10
     },
     "_enabled": true,
-    "transition": 2,
+    "transition": 3,
     "pressedColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -565,9 +567,7 @@
       "b": 255,
       "a": 255
     },
-    "_N$normalSprite": {
-      "__uuid__": "6f69655b-1605-4a90-8292-111aab9f4c17"
-    },
+    "_N$normalSprite": null,
     "_N$pressedSprite": null,
     "pressedSprite": null,
     "_N$hoverSprite": null,
@@ -583,7 +583,7 @@
       "__id__": 1
     },
     "component": "NetFailedView",
-    "handler": "onClickResetNet",
+    "handler": "onClosePanel",
     "customEventData": ""
   },
   {
@@ -644,7 +644,7 @@
     "_atlas": null
   },
   {
-    "__type__": "7f8e3qiUwJLWqv2Z0Us004N",
+    "__type__": "92554CM425L2JKqypYl18Tv",
     "_name": "",
     "_objFlags": 0,
     "node": {

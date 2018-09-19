@@ -12,6 +12,10 @@ cc.Class({
         this.initNotification();
     },
 
+    onReset() {
+        this.updateTableView();
+    },
+
     start() {
     },
 

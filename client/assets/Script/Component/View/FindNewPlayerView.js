@@ -13,6 +13,10 @@ cc.Class({
         this.initView();
     },
 
+    onReset() {
+        this.initView();
+    },
+
     start() {
     },
 
