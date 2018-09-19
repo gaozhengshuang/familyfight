@@ -44,7 +44,7 @@ cc.Class({
                 Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this.maidBase.DialogueID);
             }
         }
-
+        
         this.closeView(Game.UIName.UI_FINDNEWPLAYER);
     }
 });
