@@ -1,8 +1,6 @@
-import moment from 'moment';
+const NetWorkController = require('./NetWorkController');
+const Tools = require('../Util/Tools');
 
-import Tools from '../util/Tools';
-import Define from "../Util/Define";
-import NetWorkController from './NetWorkController';
 let TimeController = function () {
     this._recievedTime = Tools.GetMilliSecond();
     this._clientTime = Tools.GetMilliSecond();

@@ -1,5 +1,5 @@
-import Tools from '../util/Tools';
-import _ from 'lodash';
+const Tools = require('../Util/Tools');
+const _ = require('lodash');
 
 let ConfigController = function () {
     this._configs = {};

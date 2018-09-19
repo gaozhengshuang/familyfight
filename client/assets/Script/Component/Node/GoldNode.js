@@ -1,4 +1,4 @@
-import Game from '../../Game';
+const Game = require('../../Game');
 
 cc.Class({
     extends: cc.Component,

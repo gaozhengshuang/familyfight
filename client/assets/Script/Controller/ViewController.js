@@ -1,5 +1,5 @@
-import Tools from '../util/Tools';
-import _ from 'lodash';
+const _ = require('lodash');
+const Tools = require('../Util/Tools');
 
 var ViewController = function () {
     this._viewList = [];
