@@ -8,15 +8,15 @@ cc.Class({
     },
 
     onLoad() {
-        this.initView();
         this.initNotification();
     },
 
     onReset() {
-        this.updateTableView();
+        this.updateView();
     },
 
     start() {
+        this.updateView();
     },
 
     update(dt) {
@@ -30,7 +30,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.MAID_UPDATESHOP, this, this.updateTableView);
     },
 
-    initView() {
+    updateView() {
         this.updateTableView();
     },
 

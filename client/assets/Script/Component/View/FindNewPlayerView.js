@@ -10,14 +10,14 @@ cc.Class({
 
     onLoad() {
         this.initData();
-        this.initView();
     },
 
     onReset() {
-        this.initView();
+        this.updateView();
     },
 
     start() {
+        this.updateView();
     },
 
     update(dt) {
@@ -30,7 +30,7 @@ cc.Class({
         this.maidBase = null;
     },
 
-    initView() {
+    updateView() {
         this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel", Game.MaidModel.GetTopMaid());
         if (this.maidBase) {
             Game.ResController.SetSprite(this.image_maid, this.maidBase.Path);

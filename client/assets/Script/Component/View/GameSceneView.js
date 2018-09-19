@@ -12,15 +12,10 @@ cc.Class({
     onLoad() {
         this.initData();
         this.initNotification();
-        this.initView();
     },
 
     start() {
-        let _lookTopPass = cc.sys.localStorage.getItem('lookTopPass');
-        if (_lookTopPass == 0 || _lookTopPass == null) {
-            this.showDialoguePlayer(1);
-            cc.sys.localStorage.setItem('lookTopPass', 1);
-        }
+        this.updateView();
     },
 
     update(dt) {
@@ -61,7 +56,13 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
     },
 
-    initView() {
+    updateView() {
+        let _lookTopPass = cc.sys.localStorage.getItem('lookTopPass');
+        if (_lookTopPass == 0 || _lookTopPass == null) {
+            this.showDialoguePlayer(1);
+            cc.sys.localStorage.setItem('lookTopPass', 1);
+        }
+
         this.updatePlayer();
     },
 
