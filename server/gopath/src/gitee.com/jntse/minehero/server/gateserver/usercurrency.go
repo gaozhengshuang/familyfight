@@ -121,7 +121,7 @@ func (this *GateUser) PackPower() *msg.PowerData {
 	return data
 }
 func (this *GateUser) GetPower() uint32 { return this.power }
-func (this *GateUser) AddPower(num uint32, reason string, ignorelimit boo, notify bool) {
+func (this *GateUser) AddPower(num uint32, reason string, ignorelimit bool, notify bool) {
 	newpower := this.GetPower() + num
 	if !ignorelimit {
 		if this.GetPower() < this.maxpower {

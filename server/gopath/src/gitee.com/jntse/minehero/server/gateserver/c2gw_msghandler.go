@@ -315,7 +315,6 @@ func on_C2GW_UploadTrueGold(session network.IBaseNetSession, message interface{}
 	user.SetGold(tmsg.GetNum())
 }
 func on_C2GW_ReqPower(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.C2GW_UploadTrueGold)
 	user := ExtractSessionUser(session)
 	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
