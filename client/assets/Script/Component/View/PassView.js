@@ -8,11 +8,12 @@ cc.Class({
     },
 
     onLoad() {
-        this.initView();
         this.initNotification();
+        this.initData();
     },
 
     start() {
+        this.updateView();
     },
 
     update(dt) {
@@ -26,20 +27,26 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS, this, this.updateTableView);
     },
 
-    initView() {
+    initData() {
+        this.passList = [];
+        this.passBase = Game.ConfigController.GetConfig("PassLevels");
+    },
+
+    updateView() {
         this.updateTableView();
     },
 
     updateTableView() {
-        let passList = [];
-        let passBase = Game.ConfigController.GetConfig("PassLevels");
-        for (let i = 0; i < passBase.length; i ++) {
-            let info = passBase[i];
-            if (info.Id <= Game.MaidModel.GetTopPass()) {
-                passList.push(info);
+        if (this.passBase) {
+            this.passList = [];
+            for (let i = 0; i < this.passBase.length; i ++) {
+                let info = this.passBase[i];
+                if (info.Id <= Game.MaidModel.GetTopPass()) {
+                    this.passList.push(info);
+                }
             }
+            this.tableView.getComponent(cc.tableView).initTableView(this.passList.length, { array: this.passList, target: this });
+            this.tableView.getComponent(cc.tableView).scrollToRight(1);
         }
-        this.tableView.getComponent(cc.tableView).initTableView(passList.length, { array: passList, target: this });
-        this.tableView.getComponent(cc.tableView).scrollToRight(1);
     },
 });

@@ -10,12 +10,12 @@ cc.Class({
     },
 
     onLoad() {
-        this.initData();
         this.initEvent();
         this.initView();
     },
 
     start() {
+        this.updateView(this._data);
         this.updatePosAndAni();
     },
 
@@ -30,22 +30,6 @@ cc.Class({
     },
 
     onDestroy() {
-    },
-
-    initData() {
-        this.moveMaxX = 0;
-        this.moveMaxY = 0;
-        this.moveMinX = 0;
-        this.moveMinY = 0;
-        this.moveDistance = 30;
-
-        this.mainTime = 0;
-        this.intervalTime = 2.0;
-
-        this.isLongclick = false;
-
-        this.parentNode = null;
-        this.maidBase = {};
     },
 
     initEvent() {
@@ -88,7 +72,13 @@ cc.Class({
         }
     },
 
-    setParentAndData(parentNode, posComponent, data) {
+    setData(parentNode, posComponent, data) {
+        this.moveDistance = 30;
+        this.mainTime = 0;
+        this.intervalTime = 2.0;
+        this.isLongclick = false;
+        this.maidBase = {};
+
         this.parentNode = parentNode;
         this.moveMaxX = (parentNode.width / 2) - (this.node.width / 2);
         this.moveMaxY = (parentNode.height / 2) - (this.node.height / 2);
@@ -102,8 +92,8 @@ cc.Class({
             this.node.x = this.moveMinX + Math.floor(Math.random() * (this.moveMaxX - this.moveMinX + 1));
             this.node.y = this.moveMinY + Math.floor(Math.random() * (this.moveMaxY - this.moveMinY + 1));
         }
-
-        this.updateView(data);
+        
+        this._data = data;
     },
 
     getPlayerId() {
