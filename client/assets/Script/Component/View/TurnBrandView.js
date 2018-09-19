@@ -1,5 +1,6 @@
 let Game = require('../../Game');
 let BrandItemView = require('./BrandItemView');
+let TipRewardView = require('./TipRewardView');
 
 const BrandStatus = {
     Status_Idle: 1,                 //初始化
@@ -10,17 +11,18 @@ const BrandStatus = {
     Status_Show: 6                  //服务器返回 展示奖励
 }
 
-const TurnTimeDiff = 0.5;
+const TurnTimeDiff = 0.1;
 const TurnDelay = 0.6;
-const MoveDelay = 0.4;
+const MoveDelay = 0.2;
 
 cc.Class({
-    extends: cc.Component,
+    extends: cc.GameComponent,
     properties: {
         brandViews: { default: [], type: [BrandItemView] },
         shuffleTargetNode: { default: null, type: cc.Node },
         showTargetNode: { default: null, type: cc.Node },
         dialogueNode: { default: null, type: cc.Node },
+        tipRewardViewPrefab: { default: null, type: cc.Prefab },
 
         status: { default: BrandStatus.Status_Idle },
         brandInfos: { default: [] },
@@ -51,6 +53,10 @@ cc.Class({
 
     onBrandClick: function (index) {
         if (this.status == BrandStatus.Status_Wait) {
+            if (Game.CurrencyModel.GetPower() < 1) {
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>体力不足</color>' });
+                return;
+            }
             this.clickIndex = index;
             this.rewardId = 0;
             //其他状态不响应哦
@@ -58,6 +64,9 @@ cc.Class({
                 this._changeStatus(BrandStatus.Status_Shaking);
             }.bind(this));
         }
+    },
+    onGoBackClick: function () {
+        this.closeView(Game.UIName.UI_TURNBRAND);
     },
     onRetTurnBrand: function (msgid, data) {
         if (data.result != 0) {
@@ -168,8 +177,40 @@ cc.Class({
     },
     _showReward: function () {
         let config = Game._.find(this.brandConfigs, { Id: this.rewardId });
-        if (config.Dialogue != 0) {
-            Game.GameController.ShowDialogue(this.dialogueNode, config.Dialogue)
+        // if (config.Dialogue != 0) {
+        //     Game.GameController.ShowDialogue(this.dialogueNode, config.Dialogue)
+        // }
+        let node = null;
+        let view = null;
+        switch (config.Type) {
+            case Game.TurnGameDefine.REWARD_TYPE.TYPE_GOLD:
+                //金币
+                node = cc.instantiate(this.tipRewardViewPrefab);
+                this.dialogueNode.addChild(node);
+                view = node.getComponent(TipRewardView);
+                view.flap('获得金币+' + config.Value, 1);
+                this.node.runAction(cc.sequence([
+                    cc.delayTime(2),
+                    cc.callFunc(function () {
+                        this._randBrandInfo()
+                    }, this)
+                ]))
+                break;
+            case Game.TurnGameDefine.REWARD_TYPE.TYPE_POWER:
+                //金币
+                node = cc.instantiate(this.tipRewardViewPrefab);
+                this.dialogueNode.addChild(node);
+                view = node.getComponent(TipRewardView);
+                view.flap('获得金币+' + config.Value, 1);
+                this.node.runAction(cc.sequence([
+                    cc.delayTime(2),
+                    cc.callFunc(function () {
+                        this._randBrandInfo()
+                    }, this)
+                ]))
+                break;
+            default:
+                break;
         }
     }
 });

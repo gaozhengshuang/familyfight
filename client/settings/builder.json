@@ -3,6 +3,7 @@
   "appSecret": "",
   "encryptJs": true,
   "excludeScenes": [],
+  "fb-instant-games": {},
   "includeAnySDK": false,
   "includeSDKBox": false,
   "inlineSpriteFrames": true,
@@ -20,9 +21,13 @@
   },
   "packageName": "org.cocos2d.WorldCup",
   "privateKey": "",
+  "qqplay": {
+    "REMOTE_SERVER_ROOT": "",
+    "orientation": "portrait"
+  },
   "renderMode": "0",
   "startScene": "639f958c-8a3c-44aa-b596-1732aaeec635",
-  "title": "WorldCup",
+  "title": "FamilyFight",
   "webOrientation": "auto",
   "wechatgame": {
     "appid": "wx6ac3f5090a6b99c5",

@@ -59,17 +59,17 @@
         "__id__": 3
       },
       {
-        "__id__": 31
+        "__id__": 35
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 32
+        "__id__": 36
       },
       {
-        "__id__": 33
+        "__id__": 37
       }
     ],
     "_prefab": null,
@@ -131,6 +131,9 @@
       },
       {
         "__id__": 27
+      },
+      {
+        "__id__": 31
       }
     ],
     "_tag": -1,
@@ -939,7 +942,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": 150,
       "y": -532
     },
     "_skewX": 0,
@@ -1054,6 +1057,164 @@
   },
   {
     "__type__": "cc.Node",
+    "_name": "btn_turnbrand",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 3
+    },
+    "_children": [],
+    "_tag": -1,
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 32
+      },
+      {
+        "__id__": 33
+      }
+    ],
+    "_prefab": null,
+    "_id": "dbLfJ/4NtP6ou8CuWbaCOl",
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_cascadeOpacityEnabled": true,
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 233,
+      "height": 142
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_scaleX": 1,
+    "_scaleY": 1,
+    "_position": {
+      "__type__": "cc.Vec2",
+      "x": -150,
+      "y": -532
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_localZOrder": 0,
+    "_globalZOrder": 0,
+    "_opacityModifyRGB": false,
+    "groupIndex": 0
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 31
+    },
+    "_enabled": true,
+    "_spriteFrame": {
+      "__uuid__": "96965eba-54d2-48cf-8222-b517f7064679"
+    },
+    "_type": 1,
+    "_sizeMode": 0,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_atlas": null
+  },
+  {
+    "__type__": "cc.Button",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 31
+    },
+    "_enabled": true,
+    "transition": 3,
+    "pressedColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "hoverColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "duration": 0.1,
+    "zoomScale": 1.2,
+    "clickEvents": [
+      {
+        "__id__": 34
+      }
+    ],
+    "_N$interactable": true,
+    "_N$enableAutoGrayEffect": false,
+    "_N$normalColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_N$disabledColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_N$normalSprite": {
+      "__uuid__": "1eb0a363-a35b-4281-b651-551ef7cb0faf"
+    },
+    "_N$pressedSprite": {
+      "__uuid__": "1eb0a363-a35b-4281-b651-551ef7cb0faf"
+    },
+    "pressedSprite": {
+      "__uuid__": "1eb0a363-a35b-4281-b651-551ef7cb0faf"
+    },
+    "_N$hoverSprite": {
+      "__uuid__": "1eb0a363-a35b-4281-b651-551ef7cb0faf"
+    },
+    "hoverSprite": {
+      "__uuid__": "1eb0a363-a35b-4281-b651-551ef7cb0faf"
+    },
+    "_N$disabledSprite": {
+      "__uuid__": "1eb0a363-a35b-4281-b651-551ef7cb0faf"
+    },
+    "_N$target": {
+      "__id__": 31
+    }
+  },
+  {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 2
+    },
+    "component": "GameScene",
+    "handler": "onOpenTurnBrand",
+    "customEventData": ""
+  },
+  {
+    "__type__": "cc.Node",
     "_name": "ViewLayer",
     "_objFlags": 0,
     "_parent": {
@@ -1125,7 +1286,7 @@
     },
     "_enabled": true,
     "node_ViewLayer": {
-      "__id__": 31
+      "__id__": 35
     },
     "node_player": {
       "__id__": 26
@@ -1140,7 +1301,7 @@
       "__uuid__": "d1280465-beeb-488f-a9f2-bc7cca2131a9"
     },
     "targetCanvas": {
-      "__id__": 32
+      "__id__": 36
     }
   }
 ]

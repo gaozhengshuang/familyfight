@@ -3,19 +3,24 @@
     "__type__": "cc.Prefab",
     "_name": "",
     "_objFlags": 0,
-    "_rawFiles": null,
+    "_native": "",
     "data": {
       "__id__": 1
-    }
+    },
+    "optimizationPolicy": 0,
+    "asyncLoadAssets": false
   },
   {
     "__type__": "cc.Node",
-    "_name": "resultTip",
+    "_name": "LinkItemView",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
       {
         "__id__": 2
+      },
+      {
+        "__id__": 5
       }
     ],
     "_tag": -1,
@@ -45,8 +50,62 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
+      "width": 150,
+      "height": 350
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_scaleX": 1,
+    "_scaleY": 1,
+    "_position": {
+      "__type__": "cc.Vec2",
+      "x": -225,
+      "y": 350
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_localZOrder": 0,
+    "_globalZOrder": 0,
+    "_opacityModifyRGB": false,
+    "groupIndex": 0
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "BackNode",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [],
+    "_tag": -1,
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 3
+      }
+    ],
+    "_prefab": {
+      "__id__": 4
+    },
+    "_id": "",
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_cascadeOpacityEnabled": true,
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 118,
+      "height": 332
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -65,17 +124,50 @@
     "groupIndex": 0
   },
   {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "_spriteFrame": {
+      "__uuid__": "8c821e03-d9d2-411b-b0c2-a62b40aca57b"
+    },
+    "_type": 0,
+    "_sizeMode": 1,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_atlas": null
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__id__": 0
+    },
+    "fileId": "d105tyGHpL8KVH++fF+Rm1",
+    "sync": false
+  },
+  {
     "__type__": "cc.Node",
-    "_name": "BgSprite",
+    "_name": "FrontNode",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
     },
-    "_children": [
-      {
-        "__id__": 3
-      }
-    ],
+    "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
@@ -103,8 +195,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 638,
-      "height": 133
+      "width": 118,
+      "height": 332
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -123,102 +215,15 @@
     "groupIndex": 0
   },
   {
-    "__type__": "cc.Node",
-    "_name": "NameLabel",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 2
-    },
-    "_children": [],
-    "_tag": -1,
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 4
-      }
-    ],
-    "_prefab": {
-      "__id__": 5
-    },
-    "_id": "",
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 227,
-      "b": 98,
-      "a": 255
-    },
-    "_cascadeOpacityEnabled": true,
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 320,
-      "height": 40
-    },
-    "_rotationX": 0,
-    "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
-    "_position": {
-      "__type__": "cc.Vec2",
-      "x": 38,
-      "y": -2
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_localZOrder": 0,
-    "_globalZOrder": 0,
-    "_opacityModifyRGB": false,
-    "groupIndex": 0
-  },
-  {
-    "__type__": "cc.Label",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 3
-    },
-    "_enabled": true,
-    "_useOriginalSize": false,
-    "_actualFontSize": 34,
-    "_fontSize": 36,
-    "_lineHeight": 40,
-    "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
-    "_spacingX": 0,
-    "_N$string": "京东e卡1000元 碎片",
-    "_N$horizontalAlign": 1,
-    "_N$verticalAlign": 1,
-    "_N$fontFamily": "Microsoft YaHei",
-    "_N$overflow": 2
-  },
-  {
-    "__type__": "cc.PrefabInfo",
-    "root": {
-      "__id__": 1
-    },
-    "asset": {
-      "__uuid__": "2724f25c-6cdf-4068-b575-48ee899ff786"
-    },
-    "fileId": "46UsoPuPFL8YC+Ip9ecxUS",
-    "sync": false
-  },
-  {
     "__type__": "cc.Sprite",
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 2
+      "__id__": 5
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "f6482864-af8a-42e1-ab1c-8a5120c66411"
+      "__uuid__": "0820e03e-2b93-4a50-85f4-e21d784ecaf8"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -241,25 +246,30 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "2724f25c-6cdf-4068-b575-48ee899ff786"
+      "__id__": 0
     },
-    "fileId": "34KSLxWNNPzrZq2hXsLnWi",
+    "fileId": "bbCJhv2k5FSZ042QuYsX0S",
     "sync": false
   },
   {
-    "__type__": "7ca22OcmKdLZ77VeNmx114+",
+    "__type__": "69b5dgkx/dI3bE/SZGqSsxk",
     "_name": "",
     "_objFlags": 0,
     "node": {
       "__id__": 1
     },
     "_enabled": true,
-    "nameLabel": {
-      "__id__": 4
+    "backNode": {
+      "__id__": 2
     },
-    "bgSprite": {
+    "frontNode": {
+      "__id__": 5
+    },
+    "frontSprite": {
       "__id__": 6
-    }
+    },
+    "inde": 0,
+    "clickFunc": null
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -267,9 +277,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "2724f25c-6cdf-4068-b575-48ee899ff786"
+      "__id__": 0
     },
-    "fileId": "d75WvpbXlHjLTrejnoG/Wp",
+    "fileId": "20tUg6eTdEzoD6NBA/YuIB",
     "sync": false
   }
 ]

@@ -4,9 +4,9 @@ cc.Class({
     extends: cc.GameComponent,
 
     properties: {
-        node_ViewLayer: { default: null, type: cc.Node},
+        node_ViewLayer: { default: null, type: cc.Node },
         node_player: { default: null, type: cc.Node },
-        node_pass: { default: null, type: cc.Node},
+        node_pass: { default: null, type: cc.Node },
         prefab_player: { default: null, type: cc.Prefab },
         prefab_FindNewPlayer: { default: null, type: cc.Prefab },
         targetCanvas: { default: null, type: cc.Canvas },
@@ -32,7 +32,7 @@ cc.Class({
         this.mainTime += dt;
         if (this.mainTime >= this.synchroTime) {
             this.mainTime = 0;
-            Game.NetWorkController.Send('msg.C2GW_UploadTrueGold', {num: Game.UserModel.GetGold()});
+            Game.NetWorkController.Send('msg.C2GW_UploadTrueGold', { num: Game.UserModel.GetGold() });
         }
     },
 
@@ -73,11 +73,11 @@ cc.Class({
     updatePlayer() {
         this._playerList = [];
         this.node_player.destroyAllChildren();
-        for (let i = 0; i < Game.MaidModel.GetMaids().length; i ++) {
+        for (let i = 0; i < Game.MaidModel.GetMaids().length; i++) {
             let player = Game.MaidModel.GetMaids()[i];
             let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", player.id);
             if (maidBase && maidBase.Passlevels == Game.MaidModel.GetCurPass()) {
-                for (let b = 0; b < player.count; b ++) {
+                for (let b = 0; b < player.count; b++) {
                     this.createPlayer(player.id);
                 }
             }
@@ -99,14 +99,14 @@ cc.Class({
     findPlayerAndMerge(_player) {
         this._touchPlayer = _player;
 
-        for (let i = 0; i < this._playerList.length; i ++) {
+        for (let i = 0; i < this._playerList.length; i++) {
             let findPlayer = this._playerList[i];
 
             if (this._touchPlayer.node.uuid != findPlayer.node.uuid) {
                 if (this._touchPlayer.node.getBoundingBox().intersects(findPlayer.node.getBoundingBox())) {
                     if (this._touchPlayer.getPlayerId() == findPlayer.getPlayerId()) {
                         this._findPlayer = findPlayer;
-                        Game.NetWorkController.Send('msg.C2GW_ReqMergeMaid', {maidid: findPlayer.getPlayerId()});
+                        Game.NetWorkController.Send('msg.C2GW_ReqMergeMaid', { maidid: findPlayer.getPlayerId() });
                         break;
                     }
                 }
@@ -132,7 +132,7 @@ cc.Class({
                         const sprite = node_newMaid.addComponent(cc.Sprite);
                         sprite.spriteFrame = spriteFrame;
                         this.node_player.addChild(node_newMaid);
-                        
+
                         node_newMaid.x = curX;
                         node_newMaid.y = curY;
 
@@ -152,7 +152,7 @@ cc.Class({
 
             this._touchPlayer.node.destroy();
             this._findPlayer.node.destroy();
-            
+
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
         }
     },
@@ -169,4 +169,8 @@ cc.Class({
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_SHOP);
     },
+    onOpenTurnBrand(event) {
+        event.stopPropagationImmediate();
+        this.openView(Game.UIName.UI_TURNBRAND);
+    }
 });
