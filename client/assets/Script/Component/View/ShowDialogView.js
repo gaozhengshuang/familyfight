@@ -6,8 +6,6 @@ cc.Class({
     properties: {
         tipParentNode: { default: null, type: cc.Node },
         notifyPrefab: { default: null, type: cc.Prefab },
-        resultPrefab: { default: null, type: cc.Prefab },
-        barragePrefab: { default: null, type: cc.Prefab },
         barragePositionIndex: { default: 0, type: cc.Integer },
     },
 

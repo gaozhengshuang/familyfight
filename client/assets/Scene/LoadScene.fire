@@ -793,10 +793,6 @@
     "notifyPrefab": {
       "__uuid__": "15bf0e6a-304c-4836-9d97-b4e2049a71f5"
     },
-    "resultPrefab": null,
-    "barragePrefab": {
-      "__uuid__": "a28757b2-ada0-472c-9625-ecfabfa9b06d"
-    },
     "barragePositionIndex": 0
   }
 ]
