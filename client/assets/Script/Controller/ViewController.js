@@ -25,12 +25,6 @@ ViewController.prototype.openView = function (ui) {
                 }
                 v.setLocalZOrder(_view.uiname == v.uiname ? 2 : 1);
             });
-            
-            let _gameComponet = _view.getComponent('GameComponent');
-            if (_gameComponet) {
-                _gameComponet.onReset();
-            }
-
             _view.active = true;
         } else {
             cc.loader.loadRes(ui, function (err, prefab) {

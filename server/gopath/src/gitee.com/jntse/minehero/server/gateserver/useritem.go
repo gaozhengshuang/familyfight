@@ -35,7 +35,7 @@ func (this *GateUser) AddItem(item uint32, num uint32, reason string) {
 		}
 	}
 	//CountMgr().AddGet(item, num)
-	RCounter().IncrByDate("item_add", uint32(item), num)
+	RCounter().IncrByDate("item_add", int32(item), int32(num))
 }
 
 // 扣除道具

@@ -30,9 +30,6 @@ var GameComponent = cc.Class({
 
     onDisable() {        //当组件的 enabled 属性从 true 变为 false 时，会激活 onDisable 回调。
     },
-
-    onReset() {         //界面重新打开时调用
-    },
     /**
      * 生命周期 end
     */

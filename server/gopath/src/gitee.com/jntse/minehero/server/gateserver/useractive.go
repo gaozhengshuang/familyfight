@@ -69,10 +69,12 @@ func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
 		brands = append(brands, tmpl)
 		totalWeight = totalWeight + tmpl.Weight
 	}
+	log.Info("总权重 %d",totalWeight)
 	//随机吧
 	result = uint32(util.RandBetween(0, int32(totalWeight) - 1))
 	var findbrand *table.TurnBrandDefine
 	for _, v := range brands {
+		log.Info("当前牌子 id: %d 权重: %d  当前权重 : %d",v.Id,v.Weight,result)
 		if result < v.Weight {
 			//找到了
 			findbrand = v
