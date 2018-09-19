@@ -12,12 +12,11 @@ cc.Class({
         this.initData();
     },
 
-    onReset() {
+    onEnable() {
         this.updateView();
     },
 
     start() {
-        this.updateView();
     },
 
     update(dt) {

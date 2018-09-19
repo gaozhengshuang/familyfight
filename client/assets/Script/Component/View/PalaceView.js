@@ -9,14 +9,14 @@ cc.Class({
 
     onLoad() {
         this.initData();
+        this.initView();
     },
 
-    onReset() {
+    onEnable() {
         this.updateView();
     },
 
     start() {
-        this.initView();
     },
 
     update(dt) {

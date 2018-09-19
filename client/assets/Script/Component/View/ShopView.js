@@ -11,12 +11,11 @@ cc.Class({
         this.initNotification();
     },
 
-    onReset() {
+    onEnable() {
         this.updateView();
     },
 
     start() {
-        this.updateView();
     },
 
     update(dt) {
