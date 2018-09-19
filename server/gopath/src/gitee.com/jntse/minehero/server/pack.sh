@@ -32,18 +32,18 @@ tar -czvf pack/$filename ./release/
 today=`date +%Y%m%d`
 
 ## 测试环境版本
-wainum=$(ssh goquestion@210.73.214.67 "ls -d -l /home/goquestion/version/${today}R* | wc -l")
+wainum=$(ssh gofamilyfight@210.73.214.72 "ls -d -l /home/gofamilyfight/version/${today}R* | wc -l")
 wainum=$((wainum + 1))
 waibuildDirName=${today}R${wainum}_PP
 echo $waibuildDirName
 
-ssh goquestion@210.73.214.67 "mkdir -p /home/goquestion/version/${waibuildDirName}"
-scp pack/$filename goquestion@210.73.214.67:/home/goquestion/version/${waibuildDirName}
-ssh goquestion@210.73.214.67 "cd /home/goquestion/version/${waibuildDirName}/ && tar xzvf *.tar.gz"
-ssh goquestion@210.73.214.67 "rm /home/goquestion/version/${waibuildDirName}/release/conf -rf"
-ssh goquestion@210.73.214.67 "cp /home/goquestion/version/config/conf /home/goquestion/version/${waibuildDirName}/release/ -rvf"
-ssh goquestion@210.73.214.67 "cp /home/goquestion/version/config/runserver.sh /home/goquestion/version/${waibuildDirName}/release/ -rvf"
-ssh goquestion@210.73.214.67 "cp /home/goquestion/version/config/watch.sh /home/goquestion/version/${waibuildDirName}/release/ -rvf"
+ssh gofamilyfight@210.73.214.72 "mkdir -p /home/gofamilyfight/version/${waibuildDirName}"
+scp pack/$filename gofamilyfight@210.73.214.72:/home/gofamilyfight/version/${waibuildDirName}
+ssh gofamilyfight@210.73.214.72 "cd /home/gofamilyfight/version/${waibuildDirName}/ && tar xzvf *.tar.gz"
+ssh gofamilyfight@210.73.214.72 "rm /home/gofamilyfight/version/${waibuildDirName}/release/conf -rf"
+ssh gofamilyfight@210.73.214.72 "cp /home/gofamilyfight/version/config/conf /home/gofamilyfight/version/${waibuildDirName}/release/ -rvf"
+ssh gofamilyfight@210.73.214.72 "cp /home/gofamilyfight/version/config/runserver.sh /home/gofamilyfight/version/${waibuildDirName}/release/ -rvf"
+ssh gofamilyfight@210.73.214.72 "cp /home/gofamilyfight/version/config/watch.sh /home/gofamilyfight/version/${waibuildDirName}/release/ -rvf"
 
 ## 正式环境版本
 #ssh webgame@210.73.214.68 "scp -r /home/webgame/version/${waibuildDirName} webgame@210.73.214.75:/home/webgame/version/"

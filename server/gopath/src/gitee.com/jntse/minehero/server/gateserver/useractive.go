@@ -76,12 +76,18 @@ func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
 		if result < v.Weight {
 			//找到了
 			findbrand = v
+			break
 		}
+		result = result - v.Weight
 	}
 	if findbrand == nil {
 		this.SendNotify("未随机到牌子")
 		return 2,0
 	}
 	result = this.AddReward(findbrand.Type, findbrand.RewardId, findbrand.Value, "翻牌子奖励")
+	if result == 0 {
+		//扣体力
+		this.RemovePower(1,"翻牌子消耗")
+	}
 	return result, findbrand.Id
 }

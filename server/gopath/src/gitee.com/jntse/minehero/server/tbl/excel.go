@@ -20,6 +20,7 @@ var Question = table.InsQuestionTable
 var TMaidShopBase = table.InsTMaidShopBaseTable
 var TbirckInfobase = table.InsTbirckInfobaseTable
 var GiftProBase = table.InsGiftProBaseTable
+var TPalaceMapBase = table.InsTPalaceMapBaseTable
 var TBirckBase = table.InsTBirckBaseTable
 var ProtoMsgIndex = table.InsProtoMsgIndexTable
 var TDialogueBase = table.InsTDialogueBaseTable

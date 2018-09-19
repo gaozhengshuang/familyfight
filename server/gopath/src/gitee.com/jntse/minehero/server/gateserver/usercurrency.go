@@ -134,8 +134,8 @@ func (this *GateUser) AddPower(num uint32, reason string, ignorelimit bool) {
 func (this *GateUser) RemovePower(num uint32, reason string) bool {
 	if this.GetPower() >= num {
 		this.power = this.GetPower() - num
-		if this.power < this.maxpower {
-			this.nextpowertime = uint64(util.CURTIME() / 1000) + uint64(tbl.Common.PowerAddInterval)
+		if this.power < this.maxpower && this.power + num >= this.maxpower {
+			this.nextpowertime = uint64(util.CURTIME()) + uint64(tbl.Common.PowerAddInterval)
 		}
 		send := &msg.GW2C_UpdatePower{ Power: this.PackPower()}
 		this.SendMsg(send)
