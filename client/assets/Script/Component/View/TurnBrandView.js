@@ -210,6 +210,17 @@ cc.Class({
                 this.dialogueNode.addChild(node);
                 view = node.getComponent(TipRewardView);
                 view.flap('获得金币+' + config.Value, 1);
+                Game.UserModel.AddGold(config.Value);
+                this.node.runAction(cc.sequence([
+                    cc.delayTime(2),
+                    cc.callFunc(function () {
+                        this._randBrandInfo()
+                    }, this)
+                ]))
+                break;
+            case Game.TurnGameDefine.REWARD_TYPE.TYPE_MINIGAME:
+                //小游戏
+                this.openView(Game.UIName.UI_LINKUP);
                 this.node.runAction(cc.sequence([
                     cc.delayTime(2),
                     cc.callFunc(function () {

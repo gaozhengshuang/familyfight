@@ -9,7 +9,7 @@ const LinkStatus = {
 }
 const GameTime = 60;
 cc.Class({
-    extends: cc.Component,
+    extends: cc.GameComponent,
 
     properties: {
         linkItemNodes: { default: [], type: [LinkItemNode] },
@@ -24,9 +24,20 @@ cc.Class({
         matchInfos: { default: [] }
     },
     onLoad() {
+
+    },
+    onReset: function () {
+        for (let i = 0; i < this.linkItemNodes.length; i++) {
+            let view = this.linkItemNodes[i];
+            view.StopAllAction();
+            view.SetOpacity(255);
+            view.TurnBackWithAnima(0.0);
+        }
+        this.status = 0;
         this._changeStatus(LinkStatus.Status_Idle);
     },
     start() {
+        this.onReset();
     },
     update(dt) {
         if (this.status != LinkStatus.Status_Idle && this.status != LinkStatus.Status_End) {
@@ -80,6 +91,12 @@ cc.Class({
                         this.firstItem = null;
                         this.secondItem = null;
                         this._changeStatus(LinkStatus.Status_Wait);
+
+                        //看看选美选齐全
+                        if (this.matchInfos.length >= 6) {
+                            //全了 TODO
+                            this.closeView(Game.UIName.UI_LINKUP);
+                        }
                     } else {
                         //选错了 翻回去
                         this.firstItem.TurnBackWithAnima(0.6);

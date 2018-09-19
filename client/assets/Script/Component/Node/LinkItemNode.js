@@ -83,5 +83,9 @@ cc.Class({
     },
     SetOpacity: function (opacity) {
         this.node.opacity = opacity;
+    },
+    StopAllAction: function () {
+        this.backNode.stopAllActions();
+        this.frontNode.stopAllActions();
     }
 });
