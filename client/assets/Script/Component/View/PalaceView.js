@@ -8,6 +8,7 @@ cc.Class({
     },
 
     onLoad() {
+        this.initData();
     },
 
     onReset() {
@@ -15,7 +16,7 @@ cc.Class({
     },
 
     start() {
-        this.updateView();
+        this.initView();
     },
 
     update(dt) {
@@ -24,7 +25,28 @@ cc.Class({
     onDestroy() {
     },
 
+    initData() {
+        this.palaceList = [];
+        this.palaceBase = Game.ConfigController.GetConfig("PalaceMap");;
+    },
+
+    initView() {
+        Game._.forEach(this.palaceBase, function(v) {
+            let _palacePrefab = cc.instantiate(this.perfab_palace);
+            if (_palacePrefab) {
+                let _palace = _palacePrefab.getComponent('PalaceNode');
+                if (_palace) {
+                    _palace.setData(v);
+                }
+                this.node.addChild(_palacePrefab);
+                this.palaceList.push(_palace);
+            }
+        }.bind(this));
+    },
+
     updateView() {
-        
+        Game._.forEach(this.palaceList, function(v) {
+            v.updateView();
+        }.bind(this));
     },
 });
