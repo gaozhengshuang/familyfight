@@ -47,7 +47,7 @@ func (this *GateUser) AddYuanbao(yuanbao uint32, reason string) {
 	this.yuanbao = this.GetYuanbao() + yuanbao
 	send := &msg.GW2C_UpdateYuanbao{Num:pb.Uint32(this.GetYuanbao())}
 	this.SendMsg(send)
-	RCounter().IncrByDate("item_add", uint32(msg.ItemId_YuanBao), yuanbao)
+	RCounter().IncrByDate("item_add", int32(msg.ItemId_YuanBao), int32(yuanbao))
 	log.Info("玩家[%d] 添加元宝[%d] 库存[%d] 原因[%s]", this.Id(), yuanbao, this.GetYuanbao(), reason)
 	this.PlatformPushLootMoney(float32(yuanbao))
 }
@@ -57,7 +57,7 @@ func (this *GateUser) RemoveYuanbao(yuanbao uint32, reason string) bool {
 		send := &msg.GW2C_UpdateYuanbao{Num:pb.Uint32(this.GetYuanbao())}
 		this.SendMsg(send)
 		log.Info("玩家[%d] 扣除元宝[%d] 库存[%d] 原因[%s]", this.Id(), yuanbao, this.GetYuanbao(), reason)
-		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_YuanBao), yuanbao)
+		RCounter().IncrByDate("item_remove", int32(msg.ItemId_YuanBao), int32(yuanbao))
 		this.PlatformPushConsumeMoney(float32(yuanbao))
 		return true
 	}
@@ -81,7 +81,7 @@ func (this *GateUser) RemoveCoupon(num uint32, reason string) bool {
 		this.SendMsg(send)
 		log.Info("玩家[%d] 添加金卷[%d] 库存[%d] 原因[%s]", this.Id(), num, this.GetCoupon(), reason)
 		//CountMgr().AddRemove(uint32(msg.ItemId_Coupon), num)
-		RCounter().IncrByDate("item_remove", uint32(msg.ItemId_Coupon), num)
+		RCounter().IncrByDate("item_remove", int32(msg.ItemId_Coupon), int32(num))
 		return true
 	}
 	log.Info("玩家[%d] 添加金卷[%d]失败 库存[%d] 原因[%s]", this.Id(), num, this.GetCoupon(), reason)
