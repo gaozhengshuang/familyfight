@@ -1,4 +1,4 @@
-import Game from '../../Game';
+const Game = require('../../Game');
 
 cc.Class({
     extends: cc.GameComponent,
@@ -40,8 +40,4 @@ cc.Class({
         });
         this.tableView.getComponent(cc.tableView).initTableView(_tbList.length, { array: _tbList, target: this });
     },
-
-    onClose() {
-        this.closeView(Game.UIName.UI_SHOP);
-    }
 });

@@ -4,7 +4,7 @@ var GameComponent = cc.Class({
     extends: cc.Component,
 
     properties: {
-
+        _url: { default: '' }
     },
 
     /**
@@ -37,6 +37,10 @@ var GameComponent = cc.Class({
      * 生命周期 end
     */
 
+    initUrl(url) {
+        this._url = url;
+    },
+
     openView(ui) {
         Game.ViewController.openView(ui);
     },
@@ -48,6 +52,10 @@ var GameComponent = cc.Class({
     gotoSceneView() {
         Game.ViewController.closeAllView();
     },
+
+    onClose() {
+        this.closeView(this._url);
+    }
 });
 
 cc.GameComponent = module.export = GameComponent;

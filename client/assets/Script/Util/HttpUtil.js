@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
-import _ from 'lodash';
 
-import DEFINE from './Define';
+const _ = require('lodash');
+const DEFINE = require('./Define');
 
 let HttpUtil = {
     getHost: function () {

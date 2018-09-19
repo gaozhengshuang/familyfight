@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import Tools from '../Util/Tools';
+const Tools = require('../Util/Tools');
 
 var ResController = function () {
     this.spriteFrames = {};

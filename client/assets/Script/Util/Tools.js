@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import moment from 'moment';
+const _ = require('lodash');
+const moment = require('moment');
 
 let Tools = {
     GetRandomInt: function (min, max) {

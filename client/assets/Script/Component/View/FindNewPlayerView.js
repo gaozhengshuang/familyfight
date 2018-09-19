@@ -1,4 +1,4 @@
-import Game from '../../Game';
+const Game = require('../../Game');
 
 cc.Class({
     extends: cc.GameComponent,
@@ -44,7 +44,7 @@ cc.Class({
                 Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this.maidBase.DialogueID);
             }
         }
-
+        
         this.closeView(Game.UIName.UI_FINDNEWPLAYER);
     }
 });

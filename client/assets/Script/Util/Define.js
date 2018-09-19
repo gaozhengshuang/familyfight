@@ -43,10 +43,6 @@ var Define = {
         INTERVAL: 10,
         TIMEOUT: 30,
     },
-    UI_KEY: cc.Enum({
-        LAYER: 1,
-        ALERT: 2,
-    }),
 }
 
 module.exports = Define;

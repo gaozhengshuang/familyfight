@@ -1,5 +1,5 @@
-import addGoldPrefab from  "AddGoldNode"
-import Game from '../../Game';
+const addGoldPrefab = require('../Node/AddGoldNode');
+const Game = require('../../Game');
 
 cc.Class({
     extends: cc.Component,

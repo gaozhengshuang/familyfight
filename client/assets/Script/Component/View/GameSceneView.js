@@ -1,4 +1,4 @@
-import Game from '../../Game';
+const Game = require('../../Game');
 
 cc.Class({
     extends: cc.GameComponent,
@@ -165,6 +165,7 @@ cc.Class({
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_SHOP);
     },
+    
     onOpenTurnBrand(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_TURNBRAND);

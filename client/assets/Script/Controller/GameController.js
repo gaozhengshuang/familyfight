@@ -1,9 +1,8 @@
-import Define from '../Util/Define';
-import TurnGameDefine from '../Util/TurnGameDefine';
-import Tools from '../Util/Tools';
-
-import NotificationController from '../Controller/NotificationController';
-import NetWorkController from '../Controller/NetWorkController';
+const Define = require('../Util/Define');
+const Tools = require('../Util/Tools');
+const NotificationController = require('./NotificationController');
+const TurnGameDefine = require('../Util/TurnGameDefine');
+const NetWorkController = require('../Controller/NetWorkController');
 
 var GameController = function () {
     this.state = TurnGameDefine.GAME_STATE.STATE_PREPARING;
