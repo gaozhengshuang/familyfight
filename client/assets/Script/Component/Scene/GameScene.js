@@ -5,7 +5,6 @@ cc.Class({
 
     properties: {
         node_ViewLayer: { default: null, type: cc.Node},
-        node_AlertLayer: { default: null, type: cc.Node},
         node_player: { default: null, type: cc.Node },
         node_pass: { default: null, type: cc.Node},
         prefab_player: { default: null, type: cc.Prefab },
@@ -14,7 +13,6 @@ cc.Class({
     },
 
     onLoad() {
-        this.uiType = Game.Define.UI_KEY.LAYER;
         Game.Tools.AutoFit(this.targetCanvas);
 
         this.initData();
@@ -36,8 +34,6 @@ cc.Class({
             this.mainTime = 0;
             Game.NetWorkController.Send('msg.C2GW_UploadTrueGold', {num: Game.UserModel.GetGold()});
         }
-
-        this.updateUIView();
     },
 
     onDestroy() {
@@ -172,18 +168,5 @@ cc.Class({
     onOpenShopView(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_SHOP);
-    },
-
-    updateUIView() {
-        let _haveActive = null;
-        _haveActive = Game._.find(Game.ViewController._viewList, function(v) {
-            return v.active == true;
-        });
-        this.node_ViewLayer.active = _haveActive != null;
-
-        _haveActive = Game._.find(Game.ViewController._alertList, function(v) {
-            return v.active == true;
-        });
-        this.node_AlertLayer.active = _haveActive != null;
     },
 });
