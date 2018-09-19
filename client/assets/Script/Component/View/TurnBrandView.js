@@ -11,6 +11,10 @@ const BrandStatus = {
     Status_Show: 6                  //服务器返回 展示奖励
 }
 
+const MiniGameId = {
+    1: Game.UIName.UI_LINKUP
+}
+
 const TurnTimeDiff = 0.1;
 const TurnDelay = 0.6;
 const MoveDelay = 0.2;
@@ -210,6 +214,17 @@ cc.Class({
                 this.dialogueNode.addChild(node);
                 view = node.getComponent(TipRewardView);
                 view.flap('获得金币+' + config.Value, 1);
+                Game.UserModel.AddGold(config.Value);
+                this.node.runAction(cc.sequence([
+                    cc.delayTime(2),
+                    cc.callFunc(function () {
+                        this._randBrandInfo()
+                    }, this)
+                ]))
+                break;
+            case Game.TurnGameDefine.REWARD_TYPE.TYPE_MINIGAME:
+                //小游戏 
+                this.openView(MiniGameId[config.RewardId]);
                 this.node.runAction(cc.sequence([
                     cc.delayTime(2),
                     cc.callFunc(function () {
