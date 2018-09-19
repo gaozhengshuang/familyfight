@@ -1,10 +1,8 @@
 import Tools from '../util/Tools';
 import _ from 'lodash';
 
-
 var ViewController = function () {
     this._viewList = [];
-    this._alertList = [];
 }
 
 ViewController.prototype.Init = function (cb) {
@@ -21,9 +19,19 @@ ViewController.prototype.openView = function (ui) {
         });
     
         if (_view) {
-            for(let i = 0; i < this._viewList.length; i ++) {
-                this._viewList[i].active = this._viewList[i].uiname == ui;
-            } 
+            _.forEach(this._viewList, function(v) {
+                if (_view.active) {
+                    v.active = _view.uiname == v.uiname;
+                }
+                v.setLocalZOrder(_view.uiname == v.uiname ? 2 : 1);
+            });
+            
+            let _gameComponet = _view.getComponent('GameComponent');
+            if (_gameComponet) {
+                _gameComponet.onReset();
+            }
+            
+            _view.active = true;
         } else {
             cc.loader.loadRes(ui, function (err, prefab) {
                 if (err) {
@@ -63,56 +71,19 @@ ViewController.prototype.closeView = function (ui, removeView = false) {
     }
 }
 
-
 /**
- * 打开弹窗
+ * 关闭所有界面,参数true彻底删除界面,false隐藏界面(默认false)
  */
-ViewController.prototype.openAlert = function (ui) {
-    if (ui != null) {
-        let _view = _.find(this._alertList, function(v) {
-            return v.uiname == ui;
-        });
-    
-        if (_view) {
-            for(let i = 0; i < this._alertList.length; i ++) {
-                this._alertList[i].active = this._alertList[i].uiname == ui;
-            } 
-        } else {
-            cc.loader.loadRes(ui, function (err, prefab) {
-                if (err) {
-                    console.log('[严重错误] 奖励资源加载错误 ' + err);
-                } else {
-                    let _view = cc.instantiate(prefab);
-                    _view.uiname = ui;
-                    let canvas = cc.director.getScene().getChildByName('Canvas');
-                    canvas.getChildByName("AlertLayer").addChild(_view);
-                    this._alertList.push(_view);
-                }
-            }.bind(this));
-        }
-    }  
-}
-
-/**
- * 关闭弹窗,参数true彻底删除界面,false隐藏界面(默认false)
- */
-ViewController.prototype.closeAlert = function (ui, removeView = false) {
-    if (ui != null) {
-        let _view = _.find(this._alertList, function(v) {
-            return v.uiname == ui;
-        });
-        
-        if (_view) {
-            if (removeView) {
-                _view.destroy();
-
-                _.remove(this._alertList, function (v) {
-                    return v.uiname == ui;
-                });
-            } else {
-                _view.active = false;
-            }
-        }
+ViewController.prototype.closeAllView = function (removeView = false) {
+    if (removeView) {
+        let canvas = cc.director.getScene().getChildByName('Canvas');
+        canvas.getChildByName("ViewLayer").destroyAllChildren();
+        this._viewList = [];
+    } else {
+        _.forEach(this._viewList, function(v) {
+            v.active = false;
+        })
     }
 }
+
 module.exports = new ViewController();

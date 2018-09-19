@@ -9,9 +9,11 @@ cc.Class({
     },
 
     onLoad() {
-        this.uiType = Game.Define.UI_KEY.LAYER;
-
         this.initData();
+        this.initView();
+    },
+
+    onReset() {
         this.initView();
     },
 
