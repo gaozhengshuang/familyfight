@@ -11,6 +11,10 @@ const BrandStatus = {
     Status_Show: 6                  //服务器返回 展示奖励
 }
 
+const MiniGameId = {
+    1: Game.UIName.UI_LINKUP
+}
+
 const TurnTimeDiff = 0.1;
 const TurnDelay = 0.6;
 const MoveDelay = 0.2;
@@ -219,8 +223,8 @@ cc.Class({
                 ]))
                 break;
             case Game.TurnGameDefine.REWARD_TYPE.TYPE_MINIGAME:
-                //小游戏
-                this.openView(Game.UIName.UI_LINKUP);
+                //小游戏 
+                this.openView(MiniGameId[config.RewardId]);
                 this.node.runAction(cc.sequence([
                     cc.delayTime(2),
                     cc.callFunc(function () {
