@@ -38,6 +38,9 @@ message PalaceMapDefine
 	
 	
 	optional int32 y = 7; // 位置显示y
+	
+	
+	optional string Headpath = 8; // 头像图片路径
 
 }
 

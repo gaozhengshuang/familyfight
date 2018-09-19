@@ -227,7 +227,7 @@ gen.maketbl_excel('TPassLevelsBase','passlevelsbase','PassLevels.xlsx')
 gen.maketbl_excel('TMaidShopBase','maidshopbase','MaidShop.xlsx')
 gen.maketbl_excel('TDialogueBase','dialoguebase','Dialogue.xlsx')
 gen.maketbl_excel('TTurnBrandBase','turnbrandbase','TurnBrand.xlsx')
-gen.maketbl_excel('TPalaceMapBase','palacemapbabse','PalaceMap.xlsx')
+gen.maketbl_excel('TPalaceMapBase','palacemapbase','PalaceMap.xlsx')
 
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')
