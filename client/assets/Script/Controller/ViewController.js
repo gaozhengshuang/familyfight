@@ -39,6 +39,12 @@ ViewController.prototype.openView = function (ui) {
                 } else {
                     let _view = cc.instantiate(prefab);
                     _view.uiname = ui;
+
+                    let _gameComponet = _view.getComponent('GameComponent');
+                    if (_gameComponet) {
+                        _gameComponet.initUrl(ui);
+                    }
+                    
                     let canvas = cc.director.getScene().getChildByName('Canvas');
                     canvas.getChildByName("ViewLayer").addChild(_view);
                     this._viewList.push(_view);
