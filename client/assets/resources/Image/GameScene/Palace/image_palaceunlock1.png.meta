@@ -1,14 +1,14 @@
 {
   "ver": "2.0.0",
-  "uuid": "de882052-51a9-4769-b6bc-0a8bda5270db",
+  "uuid": "9b7322be-a9c4-4bcf-9637-0ab5aacf9894",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "image_palaceunlock": {
+    "image_palaceunlock1": {
       "ver": "1.0.3",
-      "uuid": "267ab47d-3f35-4f51-98a3-1e4367b1c420",
-      "rawTextureUuid": "de882052-51a9-4769-b6bc-0a8bda5270db",
+      "uuid": "78a9a943-5d4c-4d34-9f4c-a634a04883d8",
+      "rawTextureUuid": "9b7322be-a9c4-4bcf-9637-0ab5aacf9894",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

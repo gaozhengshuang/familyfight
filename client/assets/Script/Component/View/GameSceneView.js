@@ -83,12 +83,12 @@ cc.Class({
     createPlayer(playerId) {
         let _playerPrefab = cc.instantiate(this.prefab_player);
         if (_playerPrefab) {
-            this.node_player.addChild(_playerPrefab);
             let _player = _playerPrefab.getComponent('PlayerNode');
             if (_player) {
-                _player.setParentAndData(this.node_player, this._findPlayer, playerId);
+                _player.setData(this.node_player, this._findPlayer, playerId);
                 this._playerList.push(_player);
             }
+            this.node_player.addChild(_playerPrefab);
         }
     },
 
@@ -169,5 +169,10 @@ cc.Class({
     onOpenTurnBrand(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_TURNBRAND);
+    },
+
+    onOpenPalace(event) {
+        event.stopPropagationImmediate();
+        this.openView(Game.UIName.UI_PALACE);
     }
 });
