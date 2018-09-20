@@ -43,11 +43,6 @@ func (this* C2LSMsgHandler) Init() {
 	// 收
 	this.msgparser.RegistProtoMsg(msg.C2L_ReqLogin{}, on_C2L_ReqLogin)
 	this.msgparser.RegistProtoMsg(msg.C2L_ReqRegistAccount{}, on_C2L_ReqRegistAccount)
-
-
-	// 发
-	this.msgparser.RegistSendProto(msg.L2C_RetLogin{})
-	this.msgparser.RegistSendProto(msg.L2C_RetRegistAccount{})
 }
 
 func newL2C_RetLogin(reason string, ip string, port int, key string) *msg.L2C_RetLogin {

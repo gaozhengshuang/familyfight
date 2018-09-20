@@ -89,6 +89,12 @@ func (this *GateUser) RemoveCoupon(num uint32, reason string) bool {
 }
 
 // 体力
+func (this *GateUser) NotifyPower(){
+	if this.online {
+		send := &msg.GW2C_UpdatePower{ Power: this.PackPower()}
+		this.SendMsg(send)
+	}
+}
 func (this *GateUser) UpdatePower(curtimes uint64) {
 	newPower := this.GetPower()
 	for {
@@ -104,7 +110,7 @@ func (this *GateUser) UpdatePower(curtimes uint64) {
 	}
 	addition := newPower - this.GetPower()
 	if addition > 0 {
-		this.AddPower(addition,"定时加体力", false)
+		this.AddPower(addition,"定时加体力", false,true)
 	}
 }
 func (this *GateUser) PackPower() *msg.PowerData {
@@ -115,7 +121,7 @@ func (this *GateUser) PackPower() *msg.PowerData {
 	return data
 }
 func (this *GateUser) GetPower() uint32 { return this.power }
-func (this *GateUser) AddPower(num uint32, reason string, ignorelimit bool) {
+func (this *GateUser) AddPower(num uint32, reason string, ignorelimit bool, notify bool) {
 	newpower := this.GetPower() + num
 	if !ignorelimit {
 		if this.GetPower() < this.maxpower {
@@ -126,8 +132,9 @@ func (this *GateUser) AddPower(num uint32, reason string, ignorelimit bool) {
 	}
 	if newpower != this.GetPower() {
 		this.power = newpower
-		send := &msg.GW2C_UpdatePower{ Power: this.PackPower()}
-		this.SendMsg(send)
+		if notify {
+			this.NotifyPower();
+		}
 		log.Info("玩家[%d] 添加体力[%d] 库存[%d] 原因[%s]", this.Id(), num, this.GetPower(), reason)
 	}
 }
@@ -137,8 +144,7 @@ func (this *GateUser) RemovePower(num uint32, reason string) bool {
 		if this.power < this.maxpower && this.power + num >= this.maxpower {
 			this.nextpowertime = uint64(util.CURTIME()) + uint64(tbl.Common.PowerAddInterval)
 		}
-		send := &msg.GW2C_UpdatePower{ Power: this.PackPower()}
-		this.SendMsg(send)
+		this.NotifyPower();
 		log.Info("玩家[%d] 扣除体力[%d] 库存[%d] 原因[%s]", this.Id(), num, this.GetPower(), reason)
 		return true
 	}

@@ -43,13 +43,6 @@ func (this* RS2MSMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.RS2MS_UpdateRewardPool{}, on_RS2MS_UpdateRewardPool)
 	this.msgparser.RegistProtoMsg(msg.RS2MS_MsgNotice{}, on_RS2MS_MsgNotice)
 
-	// 发
-	this.msgparser.RegistSendProto(msg.MS2RS_RetRegist{})
-	this.msgparser.RegistSendProto(msg.MS2RS_HeartBeat{})
-	this.msgparser.RegistSendProto(msg.MS2RS_GateInfo{})
-	this.msgparser.RegistSendProto(msg.MS2RS_CreateRoom{})
-	this.msgparser.RegistSendProto(msg.MS2Server_BroadCast{})
-
 }
 
 func on_RS2MS_ReqRegist(session network.IBaseNetSession, message interface{}) {

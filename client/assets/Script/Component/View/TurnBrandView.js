@@ -71,7 +71,7 @@ cc.Class({
             this.clickIndex = index;
             this.rewardId = 0;
             //其他状态不响应哦
-            Game.NetWorkController.Send('msg.C2GW_TurnBrand', { ids: Game._.map(this.brandInfos, 'Id') }, function () {
+            Game.NetWorkController.Send('msg.C2GW_ReqTurnBrand', { ids: Game._.map(this.brandInfos, 'Id') }, function () {
                 this._changeStatus(BrandStatus.Status_Shaking);
             }.bind(this));
         }
@@ -214,6 +214,7 @@ cc.Class({
                 this.dialogueNode.addChild(node);
                 view = node.getComponent(TipRewardView);
                 view.flap('获得体力+' + config.Value, 1);
+                Game.NetWorkController.Send('msg.C2GW_ReqPower');
                 this.node.runAction(cc.sequence([
                     cc.delayTime(2),
                     cc.callFunc(function () {

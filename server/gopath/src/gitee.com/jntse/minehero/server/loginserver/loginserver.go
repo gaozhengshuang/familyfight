@@ -165,6 +165,7 @@ func (this *LoginServer) GetSession(id int) network.IBaseNetSession {
 
 func (this *LoginServer) InitMsgHandler() {
 	if this.tblloader == nil { panic("should init 'tblloader' first") }
+	network.InitGlobalSendMsgHandler(tbl.GetAllMsgIndex())
 	this.msghandlers = append(this.msghandlers, NewGW2LMsgHandler())
 	this.msghandlers = append(this.msghandlers, NewC2LSMsgHandler())
 }
