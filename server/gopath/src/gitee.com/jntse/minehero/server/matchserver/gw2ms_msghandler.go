@@ -40,17 +40,6 @@ func (this* GW2MSMsgHandler) Init() {
 	//this.msgparser.RegistProtoMsg(msg.GW2MS_ReqCancelMatch{}, on_GW2MS_ReqCancelMatch)
 	this.msgparser.RegistProtoMsg(msg.GW2MS_ReqCreateRoom{}, on_GW2MS_ReqCreateRoom)
 	this.msgparser.RegistProtoMsg(msg.GW2MS_MsgNotice{}, on_GW2MS_MsgNotice)
-
-	// 发
-	this.msgparser.RegistSendProto(msg.MS2GW_RetRegist{})
-	this.msgparser.RegistSendProto(msg.MS2GW_HeartBeat{})
-	this.msgparser.RegistSendProto(msg.MS2GW_MsgNotice{})
-	//this.msgparser.RegistSendProto(msg.MS2GW_RetStartMatch{})
-	//this.msgparser.RegistSendProto(msg.MS2GW_RetCancelMatch{})
-	//this.msgparser.RegistSendProto(msg.MS2GW_MatchOk{})
-	this.msgparser.RegistSendProto(msg.MS2GW_RetCreateRoom{})
-	this.msgparser.RegistSendProto(msg.MS2Server_BroadCast{})
-
 }
 
 func on_GW2MS_ReqCreateRoom(session network.IBaseNetSession, message interface{}) {

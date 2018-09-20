@@ -54,21 +54,6 @@ func (this* GW2CMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.BT_GameStart{}, on_BT_GameStart)
 	this.msgparser.RegistProtoMsg(msg.BT_GameOver{}, on_BT_GameOver)
 	this.msgparser.RegistProtoMsg(msg.BT_PickItem{}, on_BT_PickItem)
-	
-	// 发
-	this.msgparser.RegistSendProto(msg.C2GW_ReqLogin{})
-	this.msgparser.RegistSendProto(msg.C2GW_HeartBeat{})
-	this.msgparser.RegistSendProto(msg.C2GW_ReqStartGame{})
-	this.msgparser.RegistSendProto(msg.C2GW_BuyItem{})
-	this.msgparser.RegistSendProto(msg.C2GW_ReqRechargeMoney{})
-	this.msgparser.RegistSendProto(msg.C2GW_StartLuckyDraw{})
-	this.msgparser.RegistSendProto(msg.C2GW_ReqDeliveryGoods{})
-	this.msgparser.RegistSendProto(msg.C2GW_ChangeDeliveryAddress{})
-
-	// 发room消息
-	this.msgparser.RegistSendProto(msg.BT_ReqEnterRoom{})
-	this.msgparser.RegistSendProto(msg.BT_ReqQuitGameRoom{})
-
 }
 
 func on_GW2C_UpdateCoupon(session network.IBaseNetSession, message interface{}) {

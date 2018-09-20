@@ -239,6 +239,7 @@ func (this *GateServer) Handler100msTick(now int64) {
 
 func (this *GateServer) InitMsgHandler() {
 	if this.tblloader == nil { panic("should init 'tblloader' first") }
+	network.InitGlobalSendMsgHandler(tbl.GetAllMsgIndex())
 	this.msghandlers = append(this.msghandlers, NewC2GWMsgHandler())
 	this.msghandlers = append(this.msghandlers, NewLS2GMsgHandler())
 	this.msghandlers = append(this.msghandlers, NewMS2GWMsgHandler())

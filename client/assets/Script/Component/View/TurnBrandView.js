@@ -46,7 +46,7 @@ cc.Class({
         }
         Game.NetWorkController.AddListener('msg.GW2C_RetTurnBrand', this, this.onRetTurnBrand);
     },
-    onReset: function () {
+    onEnable: function () {
         for (let i = 0; i < this.brandViews.length; i++) {
             let view = this.brandViews[i];
             view.StopAllAction();
@@ -54,15 +54,14 @@ cc.Class({
         this.status = 0;
         this._randBrandInfo();
     },
-    start: function () {
-        this.onReset();
-    },
     update: function (dt) {
     },
     onDestroy: function () {
         Game.NetWorkController.RemoveListener('msg.GW2C_RetTurnBrand', this, this.onRetTurnBrand);
     },
-
+    onDisable: function () {
+        this.node.stopAllActions();
+    },
     onBrandClick: function (index) {
         if (this.status == BrandStatus.Status_Wait) {
             if (Game.CurrencyModel.GetPower() < 1) {
@@ -72,7 +71,7 @@ cc.Class({
             this.clickIndex = index;
             this.rewardId = 0;
             //其他状态不响应哦
-            Game.NetWorkController.Send('msg.C2GW_TurnBrand', { ids: Game._.map(this.brandInfos, 'Id') }, function () {
+            Game.NetWorkController.Send('msg.C2GW_ReqTurnBrand', { ids: Game._.map(this.brandInfos, 'Id') }, function () {
                 this._changeStatus(BrandStatus.Status_Shaking);
             }.bind(this));
         }
@@ -201,6 +200,7 @@ cc.Class({
                 this.dialogueNode.addChild(node);
                 view = node.getComponent(TipRewardView);
                 view.flap('获得金币+' + config.Value, 1);
+                Game.UserModel.AddGold(config.Value);
                 this.node.runAction(cc.sequence([
                     cc.delayTime(2),
                     cc.callFunc(function () {
@@ -209,12 +209,12 @@ cc.Class({
                 ]))
                 break;
             case Game.TurnGameDefine.REWARD_TYPE.TYPE_POWER:
-                //金币
+                //体力
                 node = cc.instantiate(this.tipRewardViewPrefab);
                 this.dialogueNode.addChild(node);
                 view = node.getComponent(TipRewardView);
-                view.flap('获得金币+' + config.Value, 1);
-                Game.UserModel.AddGold(config.Value);
+                view.flap('获得体力+' + config.Value, 1);
+                Game.NetWorkController.Send('msg.C2GW_ReqPower');
                 this.node.runAction(cc.sequence([
                     cc.delayTime(2),
                     cc.callFunc(function () {

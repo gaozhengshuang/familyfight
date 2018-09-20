@@ -25,6 +25,9 @@ message GW2C_UpdateTrueGold {
 }
 
 //更新体力值
+message C2GW_ReqPower 
+{
+}
 message GW2C_UpdatePower {
     optional PowerData power = 1;
 }

@@ -38,12 +38,6 @@ func (this* GW2LMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.GW2L_ReqRegist{}, on_GW2L_ReqRegist)
 	this.msgparser.RegistProtoMsg(msg.GW2L_HeartBeat{}, on_GW2L_HeartBeat)
 	this.msgparser.RegistProtoMsg(msg.GW2L_RegistUserRet{}, on_GW2L_RegistUserRet)
-
-	// 发
-	this.msgparser.RegistSendProto(msg.L2GW_RetRegist{})
-	this.msgparser.RegistSendProto(msg.L2GW_HeartBeat{})
-	this.msgparser.RegistSendProto(msg.L2GW_ReqRegistUser{})
-
 }
 
 func on_GW2L_ReqRegist(session network.IBaseNetSession, message interface{}) {

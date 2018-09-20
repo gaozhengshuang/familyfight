@@ -11,14 +11,14 @@ import (
 )
 
 // 获得奖励
-func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,reason string) uint32 { 
+func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,reason string,notify bool) uint32 { 
 	switch rtype {
 		case 1:
 			//金币
 			return 0
 		case 2:
 			//体力
-			this.AddPower(rvalue, reason, true)
+			this.AddPower(rvalue, reason, true,notify)
 			return 0
 		case 3:
 			//侍女
@@ -69,10 +69,12 @@ func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
 		brands = append(brands, tmpl)
 		totalWeight = totalWeight + tmpl.Weight
 	}
+	log.Info("总权重 %d",totalWeight)
 	//随机吧
 	result = uint32(util.RandBetween(0, int32(totalWeight) - 1))
 	var findbrand *table.TurnBrandDefine
 	for _, v := range brands {
+		log.Info("当前牌子 id: %d 权重: %d  当前权重 : %d",v.Id,v.Weight,result)
 		if result < v.Weight {
 			//找到了
 			findbrand = v
@@ -84,10 +86,16 @@ func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
 		this.SendNotify("未随机到牌子")
 		return 2,0
 	}
-	result = this.AddReward(findbrand.Type, findbrand.RewardId, findbrand.Value, "翻牌子奖励")
 	if result == 0 {
 		//扣体力
 		this.RemovePower(1,"翻牌子消耗")
 	}
+	result = this.AddReward(findbrand.Type, findbrand.RewardId, findbrand.Value, "翻牌子奖励", false)
 	return result, findbrand.Id
+}
+
+//连连看
+func (this *GateUser) Linkup(score uint32) (gold uint64){
+	//先来简单的，把接口写好
+	return uint64(score) * 1000 
 }

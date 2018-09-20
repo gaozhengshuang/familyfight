@@ -8,6 +8,8 @@ cc.Class({
         countDownLabel: { default: null, type: cc.Label },
         stateLabel: { default: null, type: cc.Label },
         progressBar: { default: null, type: cc.ProgressBar },
+
+        curPower: { default: null },
     },
     onLoad() {
     },
@@ -16,6 +18,9 @@ cc.Class({
     },
     update(dt) {
         this.UpdatePowerInfo();
+    },
+    onEnable: function(){
+        this.curPower = Game.CurrencyModel.GetPower();
     },
     UpdatePowerInfo: function () {
         let curPower = Game.CurrencyModel.GetPower();
@@ -30,15 +35,22 @@ cc.Class({
             this.countDownLabel.string = '';
             this.progressBar.progress = 1;
         } else {
+            this.progressBar.progress = curPower / maxPower;
             let lasttime = Game.CurrencyModel.GetNextPowerTime() - Game.TimeController.GetCurTime()
             this.stateLabel.string = '+' + Game.ConfigController.GetConfig('PowerAddition');
             if (lasttime > 0) {
                 this.countDownLabel.string = Game.moment.unix(lasttime).format('mm:ss');
-                this.progressBar.progress = 1 - (lasttime / Game.ConfigController.GetConfig('PowerAddInterval'));
             } else {
                 this.countDownLabel.string = '';
-                this.progressBar.progress = 1;
             }
+        }
+        if (this.curPower != curPower) {
+            this.countLabel.node.stopAllActions();
+            this.countLabel.node.runAction(cc.sequence([
+                cc.scaleTo(0.2, 1.2, 1.2),
+                cc.scaleTo(0.2, 1, 1)
+            ]))
+            this.curPower = curPower;
         }
     },
 });

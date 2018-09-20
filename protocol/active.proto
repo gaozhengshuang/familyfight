@@ -2,7 +2,7 @@ package msg;
 import "serialize.proto";
 
 // 大转盘 抽签
-message C2GW_TurnBrand 
+message C2GW_ReqTurnBrand 
 {
     repeated uint32 ids = 1;
 }
@@ -10,4 +10,13 @@ message GW2C_RetTurnBrand
 {
     optional uint32 result = 1;
     optional uint32 id = 2;
+}
+//连连看
+message C2GW_ReqLinkup
+{
+    optional uint32 score = 1;
+}
+message GW2C_RetLinkup
+{
+    optional uint64 gold = 1;
 }
