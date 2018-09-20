@@ -1,0 +1,30 @@
+{
+  "ver": "2.0.0",
+  "uuid": "23cb26dd-6e70-4cf4-ade2-cd7c60dca537",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "image_palaceCard3": {
+      "ver": "1.0.3",
+      "uuid": "f90772ed-3de2-4f31-a8ea-cebee11564c5",
+      "rawTextureUuid": "23cb26dd-6e70-4cf4-ade2-cd7c60dca537",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 46,
+      "height": 90,
+      "rawWidth": 46,
+      "rawHeight": 90,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
