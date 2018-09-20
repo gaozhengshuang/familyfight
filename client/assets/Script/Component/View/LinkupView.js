@@ -119,7 +119,7 @@ cc.Class({
     onRetLinkup: function (msgid, data) {
         let node = cc.instantiate(this.tipRewardViewPrefab);
         this.node.addChild(node);
-        view = node.getComponent(TipRewardView);
+        let view = node.getComponent(TipRewardView);
         view.flap('获得金币+' + data.gold, 1);
         Game.UserModel.AddGold(data.gold);
         this.node.runAction(cc.sequence([

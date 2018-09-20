@@ -19,6 +19,9 @@ cc.Class({
     update(dt) {
         this.UpdatePowerInfo();
     },
+    onEnable: function(){
+        this.curPower = Game.CurrencyModel.GetPower();
+    },
     UpdatePowerInfo: function () {
         let curPower = Game.CurrencyModel.GetPower();
         let maxPower = Game.CurrencyModel.GetMaxPower();
