@@ -44,6 +44,6 @@ cc.Class({
     },
 
     onOpenPalaceDetail() {
-
+        this.openView(Game.UIName.UI_PALACEDETAIL);
     },
 });
