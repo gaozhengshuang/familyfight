@@ -1,5 +1,5 @@
 package msg;
-import "serialize.proto";
+import "define.proto";
 //宫殿数据
 message PalaceData
 {
