@@ -214,6 +214,7 @@ cc.Class({
                 this.dialogueNode.addChild(node);
                 view = node.getComponent(TipRewardView);
                 view.flap('获得体力+' + config.Value, 1);
+                Game.NetWorkController.Send('msg.C2GW_ReqPower');
                 this.node.runAction(cc.sequence([
                     cc.delayTime(2),
                     cc.callFunc(function () {

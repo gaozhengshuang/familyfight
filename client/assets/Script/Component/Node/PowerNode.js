@@ -8,6 +8,8 @@ cc.Class({
         countDownLabel: { default: null, type: cc.Label },
         stateLabel: { default: null, type: cc.Label },
         progressBar: { default: null, type: cc.ProgressBar },
+
+        curPower: { default: null },
     },
     onLoad() {
     },
@@ -38,6 +40,14 @@ cc.Class({
             } else {
                 this.countDownLabel.string = '';
             }
+        }
+        if (this.curPower != curPower) {
+            this.countLabel.node.stopAllActions();
+            this.countLabel.node.runAction(cc.sequence([
+                cc.scaleTo(0.2, 1.2, 1.2),
+                cc.scaleTo(0.2, 1, 1)
+            ]))
+            this.curPower = curPower;
         }
     },
 });

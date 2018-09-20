@@ -1,5 +1,6 @@
 let Game = require('../../Game');
 let LinkItemNode = require('../Node/LinkItemNode');
+let TipRewardView = require('./TipRewardView');
 
 const LinkStatus = {
     Status_Idle: 1,
@@ -15,6 +16,7 @@ cc.Class({
         linkItemNodes: { default: [], type: [LinkItemNode] },
         maskNode: { default: null, type: cc.Node },
         countDownLabel: { default: null, type: cc.Label },
+        tipRewardViewPrefab: { default: null, type: cc.Prefab },
 
         linkInfos: { default: [] },
         status: { default: 0 },
@@ -24,7 +26,7 @@ cc.Class({
         matchInfos: { default: [] }
     },
     onLoad() {
-
+        Game.NetWorkController.AddListener('msg.GW2C_RetLinkup', this, this.onRetLinkup);
     },
     onEnable: function () {
         for (let i = 0; i < this.linkItemNodes.length; i++) {
@@ -40,8 +42,6 @@ cc.Class({
         this.status = 0;
         this._changeStatus(LinkStatus.Status_Idle);
     },
-    start() {
-    },
     update(dt) {
         if (this.status != LinkStatus.Status_Idle && this.status != LinkStatus.Status_End) {
             //倒计时
@@ -51,6 +51,9 @@ cc.Class({
                 this._changeStatus(LinkStatus.Status_End);
             }
         }
+    },
+    onDestroy: function () {
+        Game.NetWorkController.RemoveListener('msg.GW2C_RetLinkup', this, this.onRetLinkup);
     },
     onStartClick: function () {
         if (this.status == LinkStatus.Status_Idle) {
@@ -113,6 +116,19 @@ cc.Class({
             }
         }
     },
+    onRetLinkup: function (msgid, data) {
+        let node = cc.instantiate(this.tipRewardViewPrefab);
+        this.node.addChild(node);
+        view = node.getComponent(TipRewardView);
+        view.flap('获得金币+' + data.gold, 1);
+        Game.UserModel.AddGold(data.gold);
+        this.node.runAction(cc.sequence([
+            cc.delayTime(2),
+            cc.callFunc(function () {
+                this.onClose()
+            }, this)
+        ]))
+    },
     _changeStatus: function (status) {
         if (this.status != status) {
             this.status = status;
@@ -127,6 +143,7 @@ cc.Class({
                     break;
                 case LinkStatus.Status_End:
                     //计算奖励金币
+                    Game.NetWorkController.Send('msg.C2GW_ReqLinkup', { score: this.matchInfos.length })
                     // this.closeView(Game.UIName.UI_LINKUP);
                     break;
                 default:
