@@ -11,6 +11,7 @@
   "dependencies": {
     "async": "^2.6.1",
     "bytebuffer": "^5.0.1",
+    "crypto-js": "^3.1.9-1",
     "lodash": "^4.17.10",
     "moment": "^2.22.1",
     "protobufjs": "^6.8.6",

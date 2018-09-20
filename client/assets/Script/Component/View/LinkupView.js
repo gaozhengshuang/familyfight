@@ -8,7 +8,7 @@ const LinkStatus = {
     Status_Judge: 3,
     Status_End: 4,
 }
-const GameTime = 60;
+const GameTime = 30;
 cc.Class({
     extends: cc.GameComponent,
 

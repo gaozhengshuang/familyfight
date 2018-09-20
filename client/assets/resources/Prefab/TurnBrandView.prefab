@@ -34,10 +34,13 @@
     "_components": [
       {
         "__id__": 157
+      },
+      {
+        "__id__": 158
       }
     ],
     "_prefab": {
-      "__id__": 158
+      "__id__": 159
     },
     "_id": "",
     "_opacity": 255,
@@ -4476,7 +4479,8 @@
     },
     "progressBar": {
       "__id__": 144
-    }
+    },
+    "curPower": null
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -4797,6 +4801,7 @@
       "__id__": 1
     },
     "_enabled": true,
+    "_url": "",
     "brandViews": [
       {
         "__id__": 18
@@ -4844,6 +4849,15 @@
     },
     "clickIndex": 0,
     "rewardId": 0
+  },
+  {
+    "__type__": "cc.BlockInputEvents",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true
   },
   {
     "__type__": "cc.PrefabInfo",

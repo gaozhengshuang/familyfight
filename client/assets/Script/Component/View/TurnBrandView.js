@@ -155,23 +155,41 @@ cc.Class({
     },
     _initBrands: function () {
         let maxDuration = 0;
+        // for (let i = 0; i < this.brandViews.length; i++) {
+        //     let view = this.brandViews[i];
+        //     view.node.position = cc.v2(0, 0);
+        //     view.node.scaleX = 0.5;
+        //     view.node.scaleY = 0.5;
+        //     view.TurnFrontWithAnima(0.0);
+        //     let info = this.brandInfos[i];
+        //     view.Init(i, info.Head, info.Name, this.onBrandClick.bind(this));
+        //     let targetPos = view.node.parent.convertToNodeSpaceAR(this.shuffleTargetWorldPos);
+        //     let action = cc.sequence([
+        //         cc.delayTime(i * TurnTimeDiff + 1),
+        //         cc.callFunc(function () {
+        //             view.TurnBackWithAnima(TurnDelay)
+        //         }),
+        //         cc.delayTime(TurnDelay),
+        //         cc.delayTime((this.brandViews.length - i) * TurnTimeDiff),
+        //         cc.moveTo(MoveDelay, targetPos),
+        //         cc.moveTo(MoveDelay, 0, 0),
+        //     ]);
+        //     if (action.getDuration() > maxDuration) {
+        //         maxDuration = action.getDuration();
+        //     }
+        //     view.node.runAction(action);
+        // }
         for (let i = 0; i < this.brandViews.length; i++) {
             let view = this.brandViews[i];
-            view.node.position = cc.v2(0, 0);
+            view.node.position = cc.v2(0, -600);
             view.node.scaleX = 0.5;
             view.node.scaleY = 0.5;
-            view.TurnFrontWithAnima(0.0);
+            view.node.opacity = 255;
+            view.TurnBackWithAnima(0.0);
             let info = this.brandInfos[i];
             view.Init(i, info.Head, info.Name, this.onBrandClick.bind(this));
-            let targetPos = view.node.parent.convertToNodeSpaceAR(this.shuffleTargetWorldPos);
             let action = cc.sequence([
-                cc.delayTime(i * TurnTimeDiff + 1),
-                cc.callFunc(function () {
-                    view.TurnBackWithAnima(TurnDelay)
-                }),
-                cc.delayTime(TurnDelay),
-                cc.delayTime((this.brandViews.length - i) * TurnTimeDiff),
-                cc.moveTo(MoveDelay, targetPos),
+                cc.delayTime(i * TurnTimeDiff),
                 cc.moveTo(MoveDelay, 0, 0),
             ]);
             if (action.getDuration() > maxDuration) {
@@ -179,12 +197,25 @@ cc.Class({
             }
             view.node.runAction(action);
         }
+
         this.node.runAction(cc.sequence([
             cc.delayTime(maxDuration + 0.1),
             cc.callFunc(function () {
                 this._changeStatus(BrandStatus.Status_Wait)
             }, this)
         ]))
+    },
+    _hideBrands: function () {
+        for (let i = 0; i < this.brandViews.length; i++) {
+            let view = this.brandViews[i];
+            let action = cc.sequence([
+                cc.delayTime(0.5),
+                i == this.clickIndex ?
+                    cc.fadeOut(MoveDelay) :
+                    cc.moveTo(MoveDelay, view.node.x, -600),
+            ]);
+            view.node.runAction(action);
+        }
     },
     _showReward: function () {
         let config = Game._.find(this.brandConfigs, { Id: this.rewardId });
@@ -193,6 +224,7 @@ cc.Class({
         // }
         let node = null;
         let view = null;
+        this._hideBrands();
         switch (config.Type) {
             case Game.TurnGameDefine.REWARD_TYPE.TYPE_GOLD:
                 //金币
@@ -202,7 +234,7 @@ cc.Class({
                 view.flap('获得金币+' + config.Value, 1);
                 Game.UserModel.AddGold(config.Value);
                 this.node.runAction(cc.sequence([
-                    cc.delayTime(2),
+                    cc.delayTime(1.2),
                     cc.callFunc(function () {
                         this._randBrandInfo()
                     }, this)
@@ -216,7 +248,7 @@ cc.Class({
                 view.flap('获得体力+' + config.Value, 1);
                 Game.NetWorkController.Send('msg.C2GW_ReqPower');
                 this.node.runAction(cc.sequence([
-                    cc.delayTime(2),
+                    cc.delayTime(1.2),
                     cc.callFunc(function () {
                         this._randBrandInfo()
                     }, this)
@@ -226,7 +258,7 @@ cc.Class({
                 //小游戏 
                 this.openView(MiniGameId[config.RewardId]);
                 this.node.runAction(cc.sequence([
-                    cc.delayTime(2),
+                    cc.delayTime(1.2),
                     cc.callFunc(function () {
                         this._randBrandInfo()
                     }, this)

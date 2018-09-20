@@ -1,4 +1,4 @@
-const Game = require('../../../Game');
+const Game = require('../../Game');
 
 cc.Class({
     extends: cc.Component,

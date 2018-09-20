@@ -34,10 +34,16 @@
     "_components": [
       {
         "__id__": 187
+      },
+      {
+        "__id__": 188
+      },
+      {
+        "__id__": 189
       }
     ],
     "_prefab": {
-      "__id__": 188
+      "__id__": 190
     },
     "_id": "",
     "_opacity": 255,
@@ -5754,6 +5760,25 @@
     "firstItem": null,
     "secondItem": null,
     "matchInfos": []
+  },
+  {
+    "__type__": "cc.BlockInputEvents",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true
+  },
+  {
+    "__type__": "9c827Ff719G4oql+MIFvI57",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "node_playDlg": null
   },
   {
     "__type__": "cc.PrefabInfo",
