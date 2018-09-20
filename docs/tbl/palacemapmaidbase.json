@@ -1,0 +1,6 @@
+{
+	"Tool": "github.com/davyxu/tabtoy",
+	"Version": "2.8.10",
+	"PalaceMapMaid":[
+		{ "Id": 1, "OpenLevel": 1, "UnlockPrice": 1000, "GoldAddition": 1, "ItemGroup":[ "1001_1", "1002_1" ], "ItemProb": 1000 }
+	]}

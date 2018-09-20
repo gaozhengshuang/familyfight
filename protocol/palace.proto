@@ -1,0 +1,47 @@
+package msg;
+import "define.proto";
+//宫殿数据
+message PalaceData
+{
+    optional uint32 id = 1;
+    optional uint32 level = 2;
+    repeated bool maids = 3;
+    optional uint64 endtime = 4;
+}
+message GW2C_AckPalaceData
+{
+    repeated PalaceData datas = 1;
+}
+// 收取
+message C2GW_ReqPalaceTakeBack
+{
+    optional  uint32 id = 1;            //宫殿id
+}
+message GW2C_RetPalaceTakeBack
+{
+    optional uint32 result = 1;
+    optional uint64 gold = 2;
+    repeated PairNumItem items = 3;
+    optional PalaceData data = 4;
+}
+//升级
+message C2GW_ReqMasterLevelup
+{
+    optional  uint32 id = 1;            //宫殿id
+}
+message GW2C_RetMasterLevelup
+{
+    optional uint32 result = 1;
+    optional PalaceData data = 2;
+}
+//解锁宫女
+message C2GW_ReqMaidUnlock
+{
+    optional uint32 id = 1;             //宫殿id
+    optional uint32 index = 2;          //解锁的位置 
+}
+message GW2C_RetMaidUnlock
+{
+    optional uint32 result = 1;
+    optional PalaceData data = 2;
+}
