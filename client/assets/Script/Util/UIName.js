@@ -6,6 +6,7 @@ var UIName = {
     UI_LINKUP: 'Prefab/LinkupView',
     UI_NETFAILED: 'Prefab/NetFailedView',
     UI_PALACE: 'Prefab/PalaceView',
+    UI_PALACEDETAIL: 'Prefab/PalaceDetailView',
 }
 
 module.exports = UIName;

@@ -980,7 +980,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 27,
+      "width": 28,
       "height": 40
     },
     "_rotationX": 0,
@@ -1110,7 +1110,8 @@
     },
     "progressBar": {
       "__id__": 34
-    }
+    },
+    "curPower": null
   },
   {
     "__type__": "cc.PrefabInfo",
