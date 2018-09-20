@@ -14,6 +14,13 @@ func ProtoMsgIndexGenerator(msg interface{}) int32 {
 	return info.Id
 }
 
+func GetAllMsgIndex() map[int32]string {
+	allmsg := make(map[int32]string)
+	for _, info := range ProtoMsgIndex.ProtoIdById {
+		allmsg[info.Id] = info.Name
+	}
+	return allmsg
+}
 
 func JsonMsgIndexGenerator(msg interface{}) int32 {
 	return 0
