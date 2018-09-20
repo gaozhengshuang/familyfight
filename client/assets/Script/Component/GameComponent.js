@@ -25,10 +25,10 @@ var GameComponent = cc.Class({
     onDestroy() {        //当组件调用了 destroy()，会在该帧结束被统一回收，此时会调用 onDestroy 回调。
     },
 
-    onEnable() {         //当组件的 enabled 属性从 false 变为 true 时，会激活 onEnable 回调。倘若节点第一次被 创建且 enabled 为 true，则会在onLoad 之后，start 之前被调用。
+    onEnable() {         //当组件的 enabled(active) 属性从 false 变为 true 时，会激活 onEnable 回调。倘若节点第一次被 创建且 enabled(active) 为 true，则会在onLoad 之后，start 之前被调用。
     },
 
-    onDisable() {        //当组件的 enabled 属性从 true 变为 false 时，会激活 onDisable 回调。
+    onDisable() {        //当组件的 enabled(active) 属性从 true 变为 false 时，会激活 onDisable 回调。
     },
     /**
      * 生命周期 end
