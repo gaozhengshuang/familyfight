@@ -6,6 +6,9 @@ cc.Class({
     },
 
     onLoad() {
+    },
+
+    onEnable() {
         let scale = this.getPnlScale();
         this.node_playDlg.runAction(cc.sequence(
             cc.scaleTo(0,0),
