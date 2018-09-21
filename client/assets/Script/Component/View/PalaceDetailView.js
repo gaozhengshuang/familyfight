@@ -42,6 +42,7 @@ cc.Class({
 
     initData() {
         this._data = null;
+        this._palaceMaids = [];
 
         this.mainTime = 0;
         this.synchroTime = 1;
@@ -50,10 +51,12 @@ cc.Class({
 
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEDATA_ACK, this, this.updateView);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEMAID_UNLOCK, this, this.updatePalaceMaids);
     },
 
     removeNotification() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEDATA_ACK, this, this.updateView);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEMAID_UNLOCK, this, this.updatePalaceMaids);
     },
 
     updateView() {
@@ -64,6 +67,7 @@ cc.Class({
             Game.ResController.SetSprite(this.image_palaceCard, palaceMapBase.BannerPath);
             this.label_master.string = Game.MaidModel.GetMaidNameById(palaceMapBase.Master);
 
+            this._palaceMaids = [];     //创建宫殿里的女仆形象
             this.node_maid.destroyAllChildren();
             for (let i = 0; i < palaceMapBase.Maids.length; i ++) {
                 let maidId = palaceMapBase.Maids[i];
@@ -74,9 +78,10 @@ cc.Class({
                         _maid.setData(maidId, i);
                     }
                     let pos = palaceMapBase.MaidsXY[i].split(",");
-                    _maidPrefab.x = pos[0];
-                    _maidPrefab.y = pos[1];
+                    _maidPrefab.x = Number(pos[0]);
+                    _maidPrefab.y = Number(pos[1]);
                     this.node_maid.addChild(_maidPrefab);
+                    this._palaceMaids.push(_maid);
                 }
             }
         }
@@ -92,6 +97,12 @@ cc.Class({
             this.label_getTime.string = '生产中\n' +Game.moment.unix(this.leftTime).format('mm:ss');
             Game.ResController.SetSprite(this.image_get, "Image/GameScene/Common/button_common2");
         }
+    },
+
+    updatePalaceMaids() {
+        Game._.forEach(this._palaceMaids, function(v) {
+            v.updateView();
+        });
     },
 
     onOpenLvUp(event) {

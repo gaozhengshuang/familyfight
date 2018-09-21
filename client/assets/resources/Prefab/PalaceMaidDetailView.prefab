@@ -566,7 +566,7 @@
       "__uuid__": "5dc99ec4-77de-421c-8f5b-d036795165c2"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -1045,7 +1045,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 82,
+      "width": 84,
       "height": 40
     },
     "_rotationX": 0,
@@ -1210,7 +1210,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 69,
+      "width": 71,
       "height": 40
     },
     "_rotationX": 0,
@@ -1508,6 +1508,9 @@
     },
     "node_buy": {
       "__id__": 30
+    },
+    "image_buy": {
+      "__id__": 42
     }
   },
   {

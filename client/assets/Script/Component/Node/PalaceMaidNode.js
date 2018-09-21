@@ -15,6 +15,10 @@ cc.Class({
         this.updateView();
     },
 
+    onDestroy() {
+
+    },
+
     update(dt) {
     },
 
