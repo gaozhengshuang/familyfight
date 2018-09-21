@@ -1,6 +1,7 @@
 package main
 import (
 	"fmt"
+	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/pbmsg"
 	pb "github.com/golang/protobuf/proto"
 )
@@ -110,7 +111,7 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,gold 
 			for _, item := range v.ItemGroup {
 				if weight < item.num {
 					//就是这个
-					items = append(item, &msg.PairNumItem{ Itemid: pb.Uint32(item.id), Num: pb.Uint32(1)})
+					items = append(items, &msg.PairNumItem{ Itemid: pb.Uint32(item.id), Num: pb.Uint32(1)})
 					break
 				}
 				weight = weight - item.num
@@ -122,7 +123,7 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,gold 
 		user.AddItem(v.GetItemid(), v.GetNum(), "后宫收取奖励")
 	}
 	// 重新计时吧
-	palace.endtime = uint64(util.CURTIME()) + uint64(palacetmpl.WaitTime)
+	palace.endtime = uint64(util.CURTIME()) + uint64(mastertmpl.WaitTime)
 
 	return 0, gold, items, palace.PackBin()
 }
