@@ -112,11 +112,20 @@ message MaidBin
     optional uint32 maxid = 2;
     repeated MaidShopData shop = 3;
 }
+
+message PalaceData
+{
+    optional uint32 id = 1;
+    optional uint32 level = 2;
+    repeated bool maids = 3;
+    optional uint64 endtime = 4;
+}
 message Serialize {
     optional EntityBase entity  = 1;
     optional UserBase   base    = 2;
     optional ItemBin    item    = 3;
     optional MaidBin    maid    = 4;
+    repeated PalaceData palaces = 5;
 }
 
 

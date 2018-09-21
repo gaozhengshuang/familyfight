@@ -1,13 +1,7 @@
 package msg;
 import "define.proto";
+import "serialize.proto";
 //宫殿数据
-message PalaceData
-{
-    optional uint32 id = 1;
-    optional uint32 level = 2;
-    repeated bool maids = 3;
-    optional uint64 endtime = 4;
-}
 message GW2C_AckPalaceData
 {
     repeated PalaceData datas = 1;
