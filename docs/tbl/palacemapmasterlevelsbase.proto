@@ -32,6 +32,9 @@ message PalaceMapMasterLevelsDefine
 	
 	
 	optional uint32 WaitTime = 5; // 等待时间(秒)
+	
+	
+	optional string levelName = 6; // 品级名称
 
 }
 
