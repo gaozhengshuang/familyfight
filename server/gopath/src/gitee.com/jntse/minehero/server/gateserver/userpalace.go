@@ -20,6 +20,7 @@ func (this *PalaceData) PackBin() *msg.PalaceData{
 	data := &msg.PalaceData{}
 	data.Id = pb.Uint32(this.id)
 	data.Level = pb.Uint32(this.level)
+	data.Maids = make([]*bool)
 	for _, v := range this.maids {
 		data.Maids = append(data.Maids, pb.Bool(v))
 	}
@@ -107,7 +108,7 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,gold 
 		rand := uint32(util.RandBetween(0, 9999))
 		if rand <= v.ItemProb {
 			//获得物品
-			weight := uint32(util.RandBetween(0, v.TotalWeight - 1))
+			weight := uint32(util.RandBetween(0, int32(v.TotalWeight - 1)))
 			for _, item := range v.ItemGroup {
 				if weight < item.num {
 					//就是这个
@@ -220,12 +221,13 @@ func (this *UserPalace) AddPalace(user *GateUser, id uint32) *PalaceData {
 	}
 	palace = &PalaceData{}
 	palace.id = id
-	palace.level = 0
-	palace.maids = make(map[uint32]bool)
+	palace.level = 1
+	palace.maids = make([]bool, 0)
 	for i := 0;i < len(tmpl.Maids); i++ {
 		palace.maids = append(palace.maids, false)
 	}
-	palace.endtime = uint64(util.CURTIME()) + uint64(tmpl.WaitTime)
+	mastertmpl := PalaceMgr().GetMasterConfig(id,1)
+	palace.endtime = uint64(util.CURTIME()) + uint64(mastertmpl.WaitTime)
 	this.palaces[id] = palace
 	return palace
 }
