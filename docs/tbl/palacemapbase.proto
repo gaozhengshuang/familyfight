@@ -41,6 +41,12 @@ message PalaceMapDefine
 	
 	
 	optional string Headpath = 8; // 头像图片路径
+	
+	
+	optional uint32 Master = 9; // 主子的id
+	
+	
+	repeated uint32 Maids = 10; // 女仆id们
 
 }
 

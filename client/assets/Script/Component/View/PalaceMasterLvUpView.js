@@ -31,8 +31,4 @@ cc.Class({
     updateView() {
        
     },
-
-    onOpenLvUp() {
-        this.openView(Game.UIName.UI_PALACEMASTERLVUP);
-    },
 });
