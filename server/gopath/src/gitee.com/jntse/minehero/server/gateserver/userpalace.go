@@ -3,6 +3,8 @@ import (
 	"fmt"
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/pbmsg"
+	"gitee.com/jntse/minehero/server/tbl"
+	"gitee.com/jntse/minehero/server/tbl/excel"
 	pb "github.com/golang/protobuf/proto"
 )
 
@@ -62,6 +64,17 @@ func (this *UserPalace) Syn(user* GateUser) {
 	send := &msg.GW2C_AckPalaceData{ Datas: make([]*msg.PalaceData, 0) }
 	for _, v := range this.palaces {
 		send.Datas = append(send.Datas, v.PackBin())
+	}
+	user.SendMsg(send)
+}
+func (this *UserPalace) ChangeMaxLevel(user* GateUser,level uint32) {
+	send := &msg.GW2C_AckPalaceData{ Datas: make([]*msg.PalaceData, 0) }
+	for _, v := range tbl.TPalaceMapBase.PalaceMap {
+		if level == uint32(v.UlockPassId) {
+			//要解锁这一关了
+			palace := this.AddPalace(user,v.Id)
+			send.Datas = append(send.Datas, palace.PackBin())
+		}
 	}
 	user.SendMsg(send)
 }

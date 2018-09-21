@@ -659,3 +659,8 @@ func (this *GateUser) RemoveCoinsOk (removeok bool, cost int32, uid int32){
     this.QueryPlatformCoins()   
 }
 
+// 宫斗游戏系统 
+// 最大宫女变化了
+func (this *GateUser) ChangeMaxLevel(level uint32) {
+	this.palace.ChangeMaxLevel(level)
+}
