@@ -1,7 +1,6 @@
 package main
 import (
 	"fmt"
-	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/pbmsg"
 	pb "github.com/golang/protobuf/proto"
 )

@@ -32,20 +32,20 @@ type PalaceMaidConf struct {
 //后宫管理器
 type PalaceManager struct {
 	palacetmpls     	map[uint32]*table.PalaceMapDefine
-	mastertmpls 		map[uint32]map[uint32]*table.PalaceMapMasterLevelsDefine
+	mastertmpls 		map[uint32]map[uint32]*PalaceMasterConf
 	maidtmpls			map[uint32][]*PalaceMaidConf
 }
 
 func (this *PalaceManager) Init() {
 	this.palacetmpls = make(map[uint32]*table.PalaceMapDefine)
-	this.mastertmpls = make(map[uint32]map[uint32]*table.PalaceMapMasterLevelsDefine)
+	this.mastertmpls = make(map[uint32]map[uint32]*PalaceMasterConf)
 	this.maidtmpls = make(map[uint32][]*PalaceMaidConf)
 	for _, v := range tbl.TPalaceMapBase.PalaceMap {
 		this.palacetmpls[v.Id] = v
 		//处理主子配置
-		mastertmpls := make(map[uint32]*table.PalaceMapMasterLevelsDefine)
+		mastertmpls := make(map[uint32]*PalaceMasterConf)
 		for _, mv := range tbl.TPalaceMapMasterLevelsBase.PalaceMapMasterLevels {
-			if mv.MasterId == v.Master {
+			if mv.MasterId == palacetmpl.Master {
 				conf := &PalaceMasterConf{}
 				conf.Id = mv.MasterId
 				conf.Level = mv.Level
@@ -54,19 +54,19 @@ func (this *PalaceManager) Init() {
 				for _, cost := range mv.LevelupCost {
 					infos := strings.Split(cost, "_")
 					if len(infos) >= 2 {
-						id := uint32(strconv.ParseInt(infos[0],10,32))
-						count := uint32(strconv.ParseInt(infos[1],10,32))
-						conf.LevelupCost = append(conf.LevelupCost,&IdAndNumber{id:id,num:count})
+						id, _ := strconv.ParseInt(infos[0],10,32)
+						count, _ := strconv.ParseInt(infos[1],10,32)
+						conf.LevelupCost = append(conf.LevelupCost,&IdAndNumber{id:uint32(id),num:uint32(count)})
 					}
 				}
-				mastertmpls[mv.Level] = mv
+				mastertmpls[mv.Level] = conf
 			}
 		}
 		this.mastertmpls[v.Id] = mastertmpls
 		//处理宫女配置
 		maidtmpls := make([]*PalaceMaidConf, 0)
 		for _, maidid := range v.Maids {
-			maidtmpl, _ := tbl.TPalaceMapMaidBase.PalaceMapMaidById[maidid]
+			maidtmpl, _ := tbl.TPalaceMapMaidBase.PalaceMapMaidById[v]
 			if maidtmpl != nil {
 				conf := &PalaceMaidConf{}
 				conf.Id = maidtmpl.Id
@@ -78,11 +78,11 @@ func (this *PalaceManager) Init() {
 				conf.TotalWeight = 0
 				for _, item := range maidtmpl.ItemGroup   {
 					infos := strings.Split(item, "_")
-					if len(infos) >= 2 {
-						id := uint32(strconv.ParseInt(infos[0],10,32))
-						weight := uint32(strconv.ParseInt(infos[1],10,32))
-						conf.TotalWeight = conf.TotalWeight + weight
-						conf.ItemGroup = append(conf.ItemGroup, &IdAndNumber{id: id, num: weight})
+					if len(inofs) >= 2 {
+						id, _:= strconv.ParseInt(infos[0],10,32)
+						weight, _ := strconv.ParseInt(infos[1],10,32)
+						conf.TotalWeight = conf.TotalWeight + uint32(weight)
+						conf.ItemGroup = append(conf.ItemGroup, &IdAndNumber{id: uint32(id), num: uint32(weight)})
 					}
 				}
 				maidtmpls = append(maidtmpls, conf)
