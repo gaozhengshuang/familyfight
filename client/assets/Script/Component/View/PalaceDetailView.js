@@ -97,4 +97,11 @@ cc.Class({
     onOpenLvUp() {
         this.openView(Game.UIName.UI_PALACEMASTERLVUP);
     },
+
+    onReqPalaceTakeBack() {
+        Game.NetWorkController.Send('msg.C2GW_ReqPalaceTakeBack', 
+        {
+            id: Game.PalaceModel.GetCurPalaceId(),
+        });
+    }
 });

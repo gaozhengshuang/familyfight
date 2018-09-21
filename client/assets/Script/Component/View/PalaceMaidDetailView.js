@@ -30,7 +30,6 @@ cc.Class({
 
     updateView() {
         this._index = Game.PalaceModel.GetPalaceCurMaidIndex();
-
         let palaceData = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
         let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", palaceData.id);
         let palaceMaidBase = Game.ConfigController.GetConfigById("PalaceMapMaid", palaceMapBase.Maids[this._index]);
@@ -58,5 +57,13 @@ cc.Class({
             this.label_gold.string = `X${palaceMaidBase.UnlockPrice}`;
             this.label_lockLv.string = `主位${palaceMaidBase.OpenLevel}级解锁`
         }
+    },
+
+    onReqMaidUnlock() {
+        Game.NetWorkController.Send('msg.C2GW_ReqMaidUnlock', 
+        {
+            id: Game.PalaceModel.GetCurPalaceId(),
+            index: this._index
+        });
     },
 });
