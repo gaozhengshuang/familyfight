@@ -26,6 +26,7 @@ let Game = {
     UserModel: require('./Model/User'),
     MaidModel: require('./Model/Maid'),
     CurrencyModel: require('./Model/Currency'),
+    PalaceModel: require('./Model/Palace'),
 
     GameInstance: null
 };

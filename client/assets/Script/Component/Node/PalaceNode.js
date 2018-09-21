@@ -44,6 +44,7 @@ cc.Class({
     },
 
     onOpenPalaceDetail() {
+        Game.PalaceModel.SetPalaceId(this._data.Id);
         this.openView(Game.UIName.UI_PALACEDETAIL);
     },
 });
