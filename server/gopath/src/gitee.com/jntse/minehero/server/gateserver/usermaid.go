@@ -232,6 +232,7 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 	//修改吧
 	this.maxid = id
 	this.shop = newShop
+	user.ChangeMaxLevel(uint32(maidconfig.Passlevels))
 
 	send := &msg.GW2C_AckMaidShop{Shop:make([]*msg.MaidShopData,0)}
 	for _, v := range this.shop {
