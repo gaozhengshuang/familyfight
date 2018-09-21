@@ -33,6 +33,7 @@ cc.Class({
             Game.MaidModel,
             Game.CurrencyModel,
             Game.PalaceModel,
+            Game.ItemModel,
         ];
         this.totalCount = this.ctls.length + this.models.length;
         Game.async.waterfall([

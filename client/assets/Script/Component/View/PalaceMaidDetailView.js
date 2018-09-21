@@ -11,6 +11,7 @@ cc.Class({
         label_lockLv: { default:null, type:cc.Label },
         label_gold: { default:null, type:cc.Label },
         node_buy: { default:null, type:cc.Node },
+        image_buy: { default:null, type:cc.Sprite },
     },
 
     onLoad() {
@@ -18,14 +19,25 @@ cc.Class({
     },
 
     onEnable() {
+        this.initNotification();
         this.updateView();
     },
 
     onDisable() {
+        this.removeNotification();
     },
 
     initData() {
         this._index = null;
+        this._lockGold = 0 ;
+    },
+
+    initNotification() {
+        Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEMAID_UNLOCK, this, this.updateView);
+    },
+
+    removeNotification() {
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEMAID_UNLOCK, this, this.updateView);
     },
 
     updateView() {
@@ -42,13 +54,19 @@ cc.Class({
             } else {
                 if (palaceData.level >= palaceMaidBase.OpenLevel) {     //达到开放等级
                     Game.ResController.SetSprite(this.image_maid, maidBase.Path);
-                    this.node_buy.node.active = true;
+                    this.node_buy.active = true;
                     this.label_lockLv.node.active = false;
                 } else {
                     Game.ResController.SetSprite(this.image_maid, "Image/GameScene/Common/image_maidLock");
-                    this.node_buy.node.active = false;
+                    this.node_buy.active = false;
                     this.label_lockLv.node.active = true;
                 }
+            }
+
+            if (Game.UserModel.GetGold() >= palaceMaidBase.UnlockPrice) {
+                Game.ResController.SetSprite(this.image_buy, "Image/GameScene/Common/button_common");
+            } else {
+                Game.ResController.SetSprite(this.image_buy, "Image/GameScene/Common/button_common2");
             }
 
             this.label_findNum.string = `每秒产${palaceMaidBase.GoldAddition}`;
@@ -56,14 +74,21 @@ cc.Class({
             this.label_name.string = maidBase.Name + '详情';
             this.label_gold.string = `X${palaceMaidBase.UnlockPrice}`;
             this.label_lockLv.string = `主位${palaceMaidBase.OpenLevel}级解锁`
+
+            this._lockGold = palaceMaidBase.UnlockPrice;
         }
     },
 
     onReqMaidUnlock() {
-        Game.NetWorkController.Send('msg.C2GW_ReqMaidUnlock', 
-        {
-            id: Game.PalaceModel.GetCurPalaceId(),
-            index: this._index
-        });
+        if (Game.UserModel.GetGold() >= this._lockGold) {
+            Game.NetWorkController.Send('msg.C2GW_ReqMaidUnlock', 
+            {
+                id: Game.PalaceModel.GetCurPalaceId(),
+                index: this._index
+            });
+            Game.UserModel.SubtractGold(this._lockGold);
+        } else {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>' + '金币不足哟!' + '</color>' });
+        }
     },
 });
