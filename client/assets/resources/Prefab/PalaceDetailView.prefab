@@ -2591,6 +2591,9 @@
     "image_master": {
       "__id__": 42
     },
+    "label_master": {
+      "__id__": 48
+    },
     "image_palaceCard": {
       "__id__": 45
     },
@@ -2608,6 +2611,9 @@
     },
     "label_needLvItem": {
       "__id__": 65
+    },
+    "prefab_maid": {
+      "__uuid__": "5a8a4098-77db-4010-a2f2-9092f257cee8"
     }
   },
   {

@@ -25,6 +25,8 @@ module.exports = {
                 'passlevelsbase',
                 'turnbrandbase',
                 'palacemapbase',
+                'palacemapmaidbase',
+                'palacemapmasterlevelsbase',
                 'common'
             ];
             Editor.log('开始生成JSON');
