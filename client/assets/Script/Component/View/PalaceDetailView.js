@@ -4,7 +4,7 @@ cc.Class({
     extends: cc.GameComponent,
 
     properties: {
-        node_mainView: { default: null, type: cc.Node },
+        node_maid: { default: null, type: cc.Node },
         image_master: { default: null, type: cc.Sprite },
         label_master: { default: null, type: cc.Label },
         image_palaceCard: { default: null, type: cc.Sprite },
@@ -64,7 +64,7 @@ cc.Class({
             Game.ResController.SetSprite(this.image_palaceCard, palaceMapBase.BannerPath);
             this.label_master.string = Game.MaidModel.GetMaidNameById(palaceMapBase.Master);
 
-            this.node_mainView.destroyAllChildren();
+            this.node_maid.destroyAllChildren();
             for (let i = 0; i < palaceMapBase.Maids.length; i ++) {
                 let maidId = palaceMapBase.Maids[i];
                 let _maidPrefab = cc.instantiate(this.prefab_maid);
@@ -76,7 +76,7 @@ cc.Class({
                     let pos = palaceMapBase.MaidsXY[i].split(",");
                     _maidPrefab.x = pos[0];
                     _maidPrefab.y = pos[1];
-                    this.node_mainView.addChild(_maidPrefab);
+                    this.node_maid.addChild(_maidPrefab);
                 }
             }
         }
@@ -89,12 +89,13 @@ cc.Class({
             this.label_get.node.active = false;
             this.label_getTime.node.active = true;
             this.leftTime = this._data.endtime - Game.TimeController.GetCurTime();
-            this.label_getTime.string = Game.moment.unix(this.leftTime).format('mm:ss');
+            this.label_getTime.string = '生产中\n' +Game.moment.unix(this.leftTime).format('mm:ss');
             Game.ResController.SetSprite(this.image_get, "Image/GameScene/Common/button_common2");
         }
     },
 
-    onOpenLvUp() {
+    onOpenLvUp(event) {
+        event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_PALACEMASTERLVUP);
     },
 

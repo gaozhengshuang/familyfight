@@ -34,10 +34,13 @@
     "_components": [
       {
         "__id__": 21
+      },
+      {
+        "__id__": 22
       }
     ],
     "_prefab": {
-      "__id__": 22
+      "__id__": 23
     },
     "_id": "",
     "_opacity": 255,
@@ -56,8 +59,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 98,
-      "height": 40
+      "width": 133,
+      "height": 220
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -231,7 +234,7 @@
     "asset": {
       "__uuid__": "5a8a4098-77db-4010-a2f2-9092f257cee8"
     },
-    "fileId": "f2jkL0mWBD7KtnhAGnV2sA",
+    "fileId": "08RuxMZptIDrQ0sa9oGpw0",
     "sync": false
   },
   {
@@ -654,6 +657,37 @@
     "label_lockLv": {
       "__id__": 19
     }
+  },
+  {
+    "__type__": "cc.Layout",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "_layoutSize": {
+      "__type__": "cc.Size",
+      "width": 133,
+      "height": 220
+    },
+    "_resize": 1,
+    "_N$layoutType": 0,
+    "_N$padding": 0,
+    "_N$cellSize": {
+      "__type__": "cc.Size",
+      "width": 40,
+      "height": 40
+    },
+    "_N$startAxis": 0,
+    "_N$paddingLeft": 0,
+    "_N$paddingRight": 0,
+    "_N$paddingTop": 0,
+    "_N$paddingBottom": 0,
+    "_N$spacingX": 0,
+    "_N$spacingY": 0,
+    "_N$verticalDirection": 1,
+    "_N$horizontalDirection": 0
   },
   {
     "__type__": "cc.PrefabInfo",
