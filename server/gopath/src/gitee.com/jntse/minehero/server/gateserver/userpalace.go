@@ -20,9 +20,9 @@ func (this *PalaceData) PackBin() *msg.PalaceData{
 	data := &msg.PalaceData{}
 	data.Id = pb.Uint32(this.id)
 	data.Level = pb.Uint32(this.level)
-	data.Maids = make([]*bool)
+	data.Maids = make([]bool, 0)
 	for _, v := range this.maids {
-		data.Maids = append(data.Maids, pb.Bool(v))
+		data.Maids = append(data.Maids, v)
 	}
 	data.Endtime = pb.Uint64(this.endtime)
 	return data
