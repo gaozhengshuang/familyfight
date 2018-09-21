@@ -9,7 +9,6 @@ let HttpUtil = require('../Util/HttpUtil');
 var UserModel = function () {
     this.loginInfo = null;
     this.userInfo = {};
-    this.platformCoins = 0;
 }
 
 UserModel.prototype.Init = function (cb) {
