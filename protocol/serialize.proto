@@ -127,5 +127,3 @@ message Serialize {
     optional MaidBin    maid    = 4;
     repeated PalaceData palaces = 5;
 }
-
-

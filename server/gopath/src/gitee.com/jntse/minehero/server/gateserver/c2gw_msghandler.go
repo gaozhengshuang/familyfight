@@ -57,13 +57,16 @@ func (this* C2GWMsgHandler) Init() {
 	//侍女
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqBuyMaid{}, on_C2GW_ReqBuyMaid)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMergeMaid{}, on_C2GW_ReqMergeMaid)
-
 	//货币
 	this.msgparser.RegistProtoMsg(msg.C2GW_UploadTrueGold{}, on_C2GW_UploadTrueGold)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPower{}, on_C2GW_ReqPower)
 	//活动
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTurnBrand{}, on_C2GW_ReqTurnBrand)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqLinkup{}, on_C2GW_ReqLinkup)
+	//后宫
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPalaceTakeBack{}, on_C2GW_ReqPalaceTakeBack)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMasterLevelup{}, on_C2GW_ReqMasterLevelup)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMaidUnlock{}, on_C2GW_ReqMaidUnlock)
 }
 
 // 客户端心跳
@@ -324,5 +327,73 @@ func on_C2GW_ReqLinkup(session network.IBaseNetSession, message interface{}) {
 	gold := user.Linkup(tmsg.GetScore())
 	send := &msg.GW2C_RetLinkup{}
 	send.Gold = pb.Uint64(gold)
+	user.SendMsg(send)
+}
+
+//收取
+func on_C2GW_ReqPalaceTakeBack(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqPalaceTakeBack)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result, gold, items, data := user.palace.TakeBack(user, tmsg.GetId())
+	send := &msg.GW2C_RetPalaceTakeBack{}
+	send.Result = pb.Uint32(result)
+	send.Gold = pb.Uint64(gold)
+	send.Items = items
+	send.Data = data
+	user.SendMsg(send)
+}
+
+//升级后宫
+func on_C2GW_ReqMasterLevelup(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqMasterLevelup)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result, data := user.palace.Levelup(user, tmsg.GetId())
+	send := &msg.GW2C_RetMasterLevelup{}
+	send.Result = pb.Uint32(result)
+	send.Data = data
+	user.SendMsg(send)
+}
+
+//解锁宫女
+func on_C2GW_ReqMaidUnlock(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqMaidUnlock)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result, data := user.palace.UnlockMaid(user, tmsg.GetId(), tmsg.GetIndex())
+	send := &msg.GW2C_RetMaidUnlock{}
+	send.Result = pb.Uint32(result)
+	send.Data = data
 	user.SendMsg(send)
 }

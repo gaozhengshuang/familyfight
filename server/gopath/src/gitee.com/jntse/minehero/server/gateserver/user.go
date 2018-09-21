@@ -81,6 +81,7 @@ type GateUser struct {
 	tickers       UserTicker
 	bag           UserBag // 背包
 	maid 		  UserMaid
+	palace 		  UserPalace
 	tm_disconnect int64
 	tm_heartbeat  int64                   // 心跳时间
 	tm_asynsave   int64                   // 异步存盘超时
@@ -99,6 +100,7 @@ func NewGateUser(account, key, token string) *GateUser {
 	u := &GateUser{account: account, verifykey: key}
 	u.bag.Init(u)
 	u.maid.Init()
+	u.palace.Init()
 	u.tickers.Init(u.OnTicker10ms, u.OnTicker100ms, u.OnTicker1s, u.OnTicker5s, u.OnTicker1m)
 	u.cleanup = false
 	u.tm_disconnect = 0
@@ -343,6 +345,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	// 道具信息
 	this.bag.PackBin(bin)
 	this.maid.PackBin(bin)
+	this.palace.PackBin(bin)
 	//
 	return bin
 }
@@ -375,6 +378,8 @@ func (this *GateUser) LoadBin() {
 	this.bag.LoadBin(this.bin)
 	this.maid.Init()
 	this.maid.LoadBin(this,this.bin)
+	this.palace.Init()
+	this.palace.LoadBin(this, this.bin)
 }
 
 // TODO: 存盘可以单独协程
@@ -425,7 +430,7 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 	this.tm_heartbeat = util.CURTIMEMS()
 	this.savedone = false
 	this.roomdata.Reset()
-	this.maid.Online(this)
+	this.palace.Online(this)
 	this.UpdatePower(uint64(curtime))
 	log.Info("Sid[%d] 账户[%s] 玩家[%d] 名字[%s] 登录成功", this.Sid(), this.account, this.Id(), this.Name())
 
@@ -444,6 +449,7 @@ func (this *GateUser) Syn() {
     send.Time = pb.Int64(util.CURTIMEUS())
 	this.SendMsg(send)
 	this.maid.Syn(this)
+	this.palace.Syn(this)
 
 	this.SendUserBase()
 }
