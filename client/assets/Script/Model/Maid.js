@@ -5,14 +5,14 @@ let UserModel = require('./User');
 let Tools = require("../Util/Tools");
 let Define = require("../Util/Define");
 
-var Maid = function () {
+var MaidModel = function () {
     this._maids = null;
     this.topMaid = 1;
     this._shopMaids = [];
     this.curPass = 1;
 }
 
-Maid.prototype.Init = function (cb) {
+MaidModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_AckMaids', this, this.onGW2C_AckMaids);
     NetWorkController.AddListener('msg.GW2C_AckMergeMaid', this, this.onGW2C_AckMergeMaid);
     NetWorkController.AddListener('msg.GW2C_AckMaidShop', this, this.onGW2C_AckMaidShop);
@@ -21,27 +21,27 @@ Maid.prototype.Init = function (cb) {
     Tools.InvokeCallback(cb, null);
 }
 
-Maid.prototype.GetMaids = function() {
+MaidModel.prototype.GetMaids = function() {
     return this._maids;
 }
 
-Maid.prototype.GetTopMaid = function() {
+MaidModel.prototype.GetTopMaid = function() {
     return this.topMaid;
 }
 
-Maid.prototype.GetShopMaids = function() {
+MaidModel.prototype.GetShopMaids = function() {
     return this._shopMaids;
 }
 
-Maid.prototype.SetCurPass = function (pass) {
+MaidModel.prototype.SetCurPass = function (pass) {
     this.curPass = pass;
 }
 
-Maid.prototype.GetCurPass = function () {
+MaidModel.prototype.GetCurPass = function () {
     return this.curPass;
 }
 
-Maid.prototype.GetTopPass = function () {
+MaidModel.prototype.GetTopPass = function () {
     let pass = 1;
     let maidBase = ConfigController.GetConfigById("TMaidLevel", this.GetTopMaid());
     if (maidBase) {
@@ -50,7 +50,7 @@ Maid.prototype.GetTopPass = function () {
     return pass;
 }
 
-Maid.prototype.IsAddMaid = function (_maidId) {
+MaidModel.prototype.IsAddMaid = function (_maidId) {
     let maidBase = ConfigController.GetConfigById("TMaidLevel", _maidId);
     if (maidBase && maidBase.Passlevels == this.GetCurPass()) {
         NotificationController.Emit(Define.EVENT_KEY.ADD_PLAYER, _maidId);
@@ -60,7 +60,7 @@ Maid.prototype.IsAddMaid = function (_maidId) {
 /**
  * 消息处理接口
  */
-Maid.prototype.onGW2C_AckMaids = function (msgid, data) {
+MaidModel.prototype.onGW2C_AckMaids = function (msgid, data) {
     if (this._maids == null) {
         this._maids = data.datas;
     } else {
@@ -94,19 +94,19 @@ Maid.prototype.onGW2C_AckMaids = function (msgid, data) {
     }
 }
 
-Maid.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
+MaidModel.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
     NotificationController.Emit(Define.EVENT_KEY.MERGEPLAYER_ACK, data.result);
 }
 
-Maid.prototype.onGW2C_AckMaidShop = function (msgid, data) {
+MaidModel.prototype.onGW2C_AckMaidShop = function (msgid, data) {
     this._shopMaids = data.shop;
     NotificationController.Emit(Define.EVENT_KEY.MAID_UPDATESHOP);
 }
 
-Maid.prototype.onGW2C_AckBuyMaid = function (msgid, data) {
+MaidModel.prototype.onGW2C_AckBuyMaid = function (msgid, data) {
     if (data.result == 0) {
         UserModel.SubtractGold(data.price);
     }
 }
 
-module.exports = new Maid();
+module.exports = new MaidModel();

@@ -17,7 +17,7 @@ ViewController.prototype.openView = function (ui) {
         let _view = _.find(this._viewList, function(v) {
             return v.uiname == ui;
         });
-    
+
         if (_view) {
             _.forEach(this._viewList, function(v) {
                 if (_view.active) {
@@ -42,6 +42,8 @@ ViewController.prototype.openView = function (ui) {
                     let canvas = cc.director.getScene().getChildByName('Canvas');
                     canvas.getChildByName("ViewLayer").addChild(_view);
                     this._viewList.push(_view);
+
+                    _view.setLocalZOrder(2);
                 }
             }.bind(this));
         }
@@ -60,7 +62,6 @@ ViewController.prototype.closeView = function (ui, clear = false) {
         if (_view) {
             if (clear) {
                 _view.destroy();
-
                 _.remove(this._viewList, function (v) {
                     return v.uiname == ui;
                 });
