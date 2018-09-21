@@ -1,8 +1,6 @@
 package main
 
 import (
-	"gitee.com/jntse/gotoolkit/util"
-	"gitee.com/jntse/minehero/server/def"
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/server/tbl/excel"
 	"strings"
@@ -47,7 +45,7 @@ func (this *PalaceManager) Init() {
 		//处理主子配置
 		mastertmpls := make(map[uint32]*table.PalaceMapMasterLevelsDefine)
 		for _, mv := range tbl.TPalaceMapMasterLevelsBase.PalaceMapMasterLevels {
-			if mv.MasterId == palacetmpl.Master {
+			if mv.MasterId == v.Master {
 				conf := &PalaceMasterConf{}
 				conf.Id = mv.MasterId
 				conf.Level = mv.Level
@@ -68,7 +66,7 @@ func (this *PalaceManager) Init() {
 		//处理宫女配置
 		maidtmpls := make([]*PalaceMaidConf, 0)
 		for _, maidid := range v.Maids {
-			maidtmpl, _ := tbl.TPalaceMapMaidBase.PalaceMapMaidById[v]
+			maidtmpl, _ := tbl.TPalaceMapMaidBase.PalaceMapMaidById[maidid]
 			if maidtmpl != nil {
 				conf := &PalaceMaidConf{}
 				conf.Id = maidtmpl.Id
@@ -80,7 +78,7 @@ func (this *PalaceManager) Init() {
 				conf.TotalWeight = 0
 				for _, item := range maidtmpl.ItemGroup   {
 					infos := strings.Split(item, "_")
-					if len(inofs) >= 2 {
+					if len(infos) >= 2 {
 						id := uint32(strconv.ParseInt(infos[0],10,32))
 						weight := uint32(strconv.ParseInt(infos[1],10,32))
 						conf.TotalWeight = conf.TotalWeight + weight

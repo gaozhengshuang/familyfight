@@ -119,7 +119,7 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,gold 
 		}
 	}
 	//TODO 加钱 加金币
-	for _, v := tiems {
+	for _, v := range items {
 		user.AddItem(v.GetItemid(), v.GetNum(), "后宫收取奖励")
 	}
 	// 重新计时吧
