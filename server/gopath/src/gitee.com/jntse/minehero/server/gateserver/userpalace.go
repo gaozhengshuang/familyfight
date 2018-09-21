@@ -3,6 +3,7 @@ import (
 	"fmt"
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/pbmsg"
+	"gitee.com/jntse/minehero/server/tbl"
 	pb "github.com/golang/protobuf/proto"
 )
 
@@ -20,9 +21,9 @@ func (this *PalaceData) PackBin() *msg.PalaceData{
 	data := &msg.PalaceData{}
 	data.Id = pb.Uint32(this.id)
 	data.Level = pb.Uint32(this.level)
-	data.Maids = make([]*bool)
+	data.Maids = make([]bool, 0)
 	for _, v := range this.maids {
-		data.Maids = append(data.Maids, pb.Bool(v))
+		data.Maids = append(data.Maids, v)
 	}
 	data.Endtime = pb.Uint64(this.endtime)
 	return data
@@ -62,6 +63,17 @@ func (this *UserPalace) Syn(user* GateUser) {
 	send := &msg.GW2C_AckPalaceData{ Datas: make([]*msg.PalaceData, 0) }
 	for _, v := range this.palaces {
 		send.Datas = append(send.Datas, v.PackBin())
+	}
+	user.SendMsg(send)
+}
+func (this *UserPalace) ChangeMaxLevel(user* GateUser,level uint32) {
+	send := &msg.GW2C_AckPalaceData{ Datas: make([]*msg.PalaceData, 0) }
+	for _, v := range tbl.TPalaceMapBase.PalaceMap {
+		if level == uint32(v.UlockPassId) {
+			//要解锁这一关了
+			palace := this.AddPalace(user,v.Id)
+			send.Datas = append(send.Datas, palace.PackBin())
+		}
 	}
 	user.SendMsg(send)
 }
