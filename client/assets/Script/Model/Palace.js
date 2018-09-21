@@ -8,6 +8,7 @@ let _ = require('lodash');
 
 var PalaceModel = function () {
     this.curPalaceId = 0;
+    this.curPalaceMaidIndex = 0;
     this.palaceDatas = null;
 }
 
@@ -17,15 +18,23 @@ PalaceModel.prototype.Init = function (cb) {
     Tools.InvokeCallback(cb, null);
 }
 
-PalaceModel.prototype.SetPalaceId = function(id) {
+PalaceModel.prototype.SetCurPalaceId = function (id) {
     this.curPalaceId = id;
 }
 
-PalaceModel.prototype.GetPalaceId = function() {
+PalaceModel.prototype.GetCurPalaceId = function () {
     return this.curPalaceId;
 }
 
-PalaceModel.prototype.GetPalaceDataById = function(id) {
+PalaceModel.prototype.SetPalaceCurMaidIndex = function (index) {
+    this.curPalaceMaidIndex = index;
+}
+
+PalaceModel.prototype.GetPalaceCurMaidIndex = function () {
+    return this.curPalaceMaidIndex;
+}
+
+PalaceModel.prototype.GetPalaceDataById = function (id) {
     return _.find(this.palaceDatas, {'id': id});
 }
 

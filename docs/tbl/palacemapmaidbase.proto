@@ -35,6 +35,9 @@ message PalaceMapMaidDefine
 	
 	
 	optional uint32 ItemProb = 6; // 产出概率(万分比)
+	
+	
+	optional string Describe = 7; // 产出描述
 
 }
 

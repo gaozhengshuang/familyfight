@@ -1,6 +1,7 @@
 package main
 import (
-	"gitee.com/jntse/minehero/server/tbl"
+	"fmt"
+	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/pbmsg"
 	pb "github.com/golang/protobuf/proto"
 )
@@ -11,7 +12,7 @@ import (
 type PalaceData struct {
 	id				uint32
 	level 			uint32
-	maids			map[uint32]bool
+	maids			[]bool
 	endtime			uint64
 }
 
@@ -19,6 +20,7 @@ func (this *PalaceData) PackBin() *msg.PalaceData{
 	data := &msg.PalaceData{}
 	data.Id = pb.Uint32(this.id)
 	data.Level = pb.Uint32(this.level)
+	data.Maids = make([]*bool)
 	for _, v := range this.maids {
 		data.Maids = append(data.Maids, pb.Bool(v))
 	}
@@ -27,7 +29,7 @@ func (this *PalaceData) PackBin() *msg.PalaceData{
 }
 
 // --------------------------------------------------------------------------
-/// @brief 玩家侍女
+/// @brief 玩家后宫
 // --------------------------------------------------------------------------
 type UserPalace struct {
 	palaces			map[uint32]* PalaceData
@@ -66,33 +68,151 @@ func (this *UserPalace) Syn(user* GateUser) {
 // ========================= 消息接口 =========================
 //收取
 func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,gold uint64,items []*msg.PairNumItem, data *msg.PalaceData){
-	items := make([]*msg.PairNumItem,0)
+	items = make([]*msg.PairNumItem,0)
 	palace, find := this.palaces[id]
 	if !find {
 		user.SendNotify("后宫尚未开启")
-		return 1,0，items,nil
+		return 1,0,items,nil
 	}
-	palacetmpl, ok := TPalaceMapBase.PalaceMapById[id]
-	if !ok {
+	palacetmpl := PalaceMgr().GetPalaceConfig(id)
+	if palacetmpl == nil {
 		user.SendNotify("没有后宫配置")
-		return 1,0，items,nil
+		return 1,0,items,nil
 	}
-	mastertmpl, ok := TPalaceMapMasterLevelsBase.PalaceMapMasterLevelsById[id]
-	if !ok {
-
+	mastertmpl := PalaceMgr().GetMasterConfig(id, palace.level)
+	if mastertmpl == nil {
+		user.SendNotify("没有主子配置")
+		return 2,0,items,nil
+	}
+	maidsconfig := PalaceMgr().GetMaidConfig(id)
+	if len(maidsconfig) == 0 {
+		user.SendNotify("没有女仆配置")
+		return 3,0,items,nil
 	}
 	if palace.endtime > uint64(util.CURTIME()) {
 		user.SendNotify("时间还未到")
-		return 2,0，items,nil
+		return 4,0,items,nil
 	}
 	//可以收取了 根据宫女计算金币和物品吧
-	
+	gold = 0
+	for i, v := range maidsconfig {
+		if i >= len(palace.maids) {
+			continue
+		}
+		if !palace.maids[i] {
+			continue
+		}
+		//这个宫女开启了
+		//计算金币
+		gold = gold + uint64(v.GoldAddition) * uint64(mastertmpl.WaitTime)
+		rand := uint32(util.RandBetween(0, 9999))
+		if rand <= v.ItemProb {
+			//获得物品
+			weight := uint32(util.RandBetween(0, int32(v.TotalWeight - 1)))
+			for _, item := range v.ItemGroup {
+				if weight < item.num {
+					//就是这个
+					items = append(items, &msg.PairNumItem{ Itemid: pb.Uint32(item.id), Num: pb.Uint32(1)})
+					break
+				}
+				weight = weight - item.num
+			}
+		}
+	}
+	//TODO 加钱 加金币
+	for _, v := range items {
+		user.AddItem(v.GetItemid(), v.GetNum(), "后宫收取奖励")
+	}
+	// 重新计时吧
+	palace.endtime = uint64(util.CURTIME()) + uint64(mastertmpl.WaitTime)
+
+	return 0, gold, items, palace.PackBin()
+}
+
+//升级
+func (this *UserPalace) Levelup(user* GateUser, id uint32) (result uint32, data *msg.PalaceData) {
+	palace, find := this.palaces[id]
+	if !find {
+		user.SendNotify("后宫尚未开启")
+		return 1,nil
+	}
+	palacetmpl := PalaceMgr().GetPalaceConfig(id)
+	if palacetmpl == nil {
+		user.SendNotify("没有后宫配置")
+		return 2,nil
+	}
+	mastertmpl := PalaceMgr().GetMasterConfig(id, palace.level)
+	if mastertmpl == nil {
+		user.SendNotify("没有主子配置")
+		return 3,nil
+	}
+	nextmastertmpl := PalaceMgr().GetMasterConfig(id, palace.level + 1)
+	if nextmastertmpl == nil {
+		user.SendNotify("已经最高级了")
+		return 4,nil
+	}
+	//判断道具是否够呢
+	for _, v := range mastertmpl.LevelupCost {
+		if user.bag.GetItemNum(v.id) < v.num {
+			user.SendNotify(fmt.Sprintf("道具 %d 数量不足 %d", v.id, v.num))
+			return 5, nil
+		}
+	}
+	//可以升级咯
+	palace.level = palace.level + 1
+	//重新计算结束时间
+	starttime := palace.endtime - uint64(mastertmpl.WaitTime)
+	palace.endtime = starttime + uint64(nextmastertmpl.WaitTime)
+	//扣除道具
+	for _, v := range mastertmpl.LevelupCost {
+		user.RemoveItem(v.id, v.num, "升级后宫消耗")
+	}
+	return 0, palace.PackBin()
+}
+
+//解锁
+func (this *UserPalace) UnlockMaid(user* GateUser, id uint32, index uint32) (result uint32, data *msg.PalaceData) {
+	palace, find := this.palaces[id]
+	if !find {
+		user.SendNotify("后宫尚未开启")
+		return 1,nil
+	}
+	palacetmpl := PalaceMgr().GetPalaceConfig(id)
+	if palacetmpl == nil {
+		user.SendNotify("没有后宫配置")
+		return 2,nil
+	}
+	palacemaidstmpls := PalaceMgr().GetMaidConfig(id)
+	if palacemaidstmpls == nil {
+		user.SendNotify("没有宫女配置")
+		return 3,nil
+	}
+	if index >= uint32(len(palacemaidstmpls)) {
+		user.SendNotify("没有这个槽位")
+		return 3,nil
+	}
+	palacemaidtmpl := palacemaidstmpls[index]
+	if palacemaidtmpl == nil {
+		user.SendNotify("没有这个槽位")
+		return 3,nil
+	}
+	if palacemaidtmpl.OpenLevel > palace.level {
+		user.SendNotify("宫殿等级不够")
+		return 4,nil
+	}
+	if palace.maids[index] {
+		user.SendNotify("该槽位已经解锁")
+		return 5,nil
+	}
+	//钱就前端判断了
+	palace.maids[index] = true
+	return 0, palace.PackBin()
 }
 // ========================= 数据处理 ========================= 
 // 添加后宫
 func (this *UserPalace) AddPalace(user *GateUser, id uint32) *PalaceData {
-	tmpl, find := TPalaceMapMasterLevelsBase.PalaceMapMasterLevelsById[id]
-	if !find {
+	tmpl := PalaceMgr().GetPalaceConfig(id)
+	if tmpl == nil {
 		return nil
 	}
 	palace, ok := this.palaces[id];
@@ -101,43 +221,14 @@ func (this *UserPalace) AddPalace(user *GateUser, id uint32) *PalaceData {
 	}
 	palace = &PalaceData{}
 	palace.id = id
-	palace.level = 0
-	palace.maids = make(map[uint32]bool)
-	palace.endtime = uint64(util.CURTIME()) + uint64(tmpl.WaitTime)
+	palace.level = 1
+	palace.maids = make([]bool, 0)
+	for i := 0;i < len(tmpl.Maids); i++ {
+		palace.maids = append(palace.maids, false)
+	}
+	mastertmpl := PalaceMgr().GetMasterConfig(id,1)
+	palace.endtime = uint64(util.CURTIME()) + uint64(mastertmpl.WaitTime)
 	this.palaces[id] = palace
 	return palace
 }
 
-// 获得后宫的配置
-func (this *UserPalace) GetPalaceConfig(pid uint32) *table.PalaceMapDefine{
-	tmpl, _ := tbl.TPalaceMapBase.PalaceMapById[pid]
-	return tmpl
-}
-// 获得后宫主子的配置
-func (this *UserPalace) GetMasterConfig(pid uint32, level uint32) *table.PalaceMapMasterLevelsDefine {
-	palacetmpl := this.GetPalaceConfig(pid)
-	if palacetmpl == nil {
-		return nil
-	}
-	for _, v := range tbl.TPalaceMapMasterLevelsBase.PalaceMapMasterLevels {
-		if v.MasterId == palacetmpl.Master && v.Level == level {
-			return v
-		}
-	}	
-	return nil
-}
-//获得后宫宫女的配置
-func (this *UserPalace) GetMaidConfig(pid uint32 ) []*table.PalaceMapMaidDefine {
-	palacetmpl := this.GetPalaceConfig(pid)
-	ret := make([]*table.PalaceMapMaidDefine, 0)
-	if palacetmpl == nil {
-		return ret
-	}
-	for _, v := palacetmpl.Maids {
-		maidtmpl, _ := tbl.TPalaceMapMaidBase.PalaceMapMaidById[v]
-		if maidtmpl != nil {
-			ret = append(ret, maidtmpl)
-		}
-	}
-	return ret
-}

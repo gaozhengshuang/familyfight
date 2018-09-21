@@ -51,6 +51,7 @@ type GateServer struct {
 	usermgr			UserManager
 	waitpool		LoginWaitPool
 	roomsvrmgr		RoomSvrManager
+	palacemgr 		PalaceManager
 	msghandlers		[]network.IBaseMsgHandler
 	tblloader		*tbl.TblLoader
 	//countmgr		CountManager
@@ -88,6 +89,10 @@ func WaitPool() *LoginWaitPool {
 
 func RoomSvrMgr() *RoomSvrManager {
 	return &GateSvr().roomsvrmgr
+}
+
+func PalaceMgr() *PalaceManager {
+	return &GateSvr().palacemgr
 }
 
 //func CountMgr() *CountManager {
@@ -206,6 +211,7 @@ func (this *GateServer) Init(fileconf string) bool {
 	this.usermgr.Init()
 	this.waitpool.Init()
 	this.roomsvrmgr.Init()
+	this.palacemgr.Init()
 	//this.countmgr.Init()
 	//this.gamemgr.Init()
 	this.ticker1m = util.NewGameTicker(60 * time.Second, this.Handler1mTick)
