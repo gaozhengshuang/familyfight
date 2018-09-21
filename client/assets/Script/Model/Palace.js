@@ -1,7 +1,5 @@
 let NetWorkController = require('../Controller/NetWorkController');
 let NotificationController = require('../Controller/NotificationController');
-let ConfigController = require('../Controller/ConfigController');
-let UserModel = require('./User');
 let Tools = require("../Util/Tools");
 let Define = require("../Util/Define");
 let _ = require('lodash');
