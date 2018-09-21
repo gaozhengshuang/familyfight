@@ -33,7 +33,7 @@
 		{ "Id": 29, "Index": 11, "HeadSprite":[ "Image/Head/1", "Image/Head/3" ], "HeadLocation":[ 1, 2 ], "Name": "皇后", "NameLocation": 1, "Content": "臣妾谢皇上厚恩。" },
 		{ "Id": 30, "Index": 12, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 2 ], "Name": "魏璎珞", "NameLocation": 2, "Content": "恭贺皇后娘娘，芳龄永驻，福寿绵长。" },
 		{ "Id": 31, "Index": 12, "HeadSprite":[ "Image/Head/1", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "富察皇后", "NameLocation": 1, "Content": "这既不是金线也不是银线。这到底是用什么织的？" },
-		{ "Id": 32, "Index": 12, "HeadSprite":[ "Image/Head/1", "Image/Head/4" ], "HeadLocation":[ 2 ], "Name": "魏璎珞", "NameLocation": 2, "Content": "回禀皇后娘娘，听闻皇后娘娘素来节俭。今年特意用了鹿尾绒毛搓成的丝线。" },
+		{ "Id": 32, "Index": 12, "HeadSprite":[ "Image/Head/1", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "魏璎珞", "NameLocation": 2, "Content": "回禀皇后娘娘，听闻皇后娘娘素来节俭。今年特意用了鹿尾绒毛搓成的丝线。" },
 		{ "Id": 33, "Index": 12, "HeadSprite":[ "Image/Head/1", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "皇后", "NameLocation": 1, "Content": "来人啊，赏！" },
 		{ "Id": 34, "Index": 13, "HeadSprite":[ "Image/Head/5" ], "HeadLocation":[ 1 ], "Name": "侍卫", "NameLocation": 1, "Content": "我会守护你的一生。" },
 		{ "Id": 35, "Index": 14, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "皇后", "NameLocation": 1, "Content": "我就是你的白月光。" },

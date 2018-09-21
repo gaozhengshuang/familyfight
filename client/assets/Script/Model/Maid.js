@@ -57,6 +57,15 @@ MaidModel.prototype.IsAddMaid = function (_maidId) {
     }
 }
 
+MaidModel.prototype.GetMaidNameById = function (_maidId) {
+    let name = '';
+    let maidBase = ConfigController.GetConfigById("TMaidLevel", _maidId);
+    if (maidBase) {
+        name = maidBase.Name;
+    } 
+    return name;
+}
+
 /**
  * 消息处理接口
  */

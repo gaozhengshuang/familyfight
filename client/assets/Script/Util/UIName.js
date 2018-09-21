@@ -7,6 +7,7 @@ var UIName = {
     UI_NETFAILED: 'Prefab/NetFailedView',
     UI_PALACE: 'Prefab/PalaceView',
     UI_PALACEDETAIL: 'Prefab/PalaceDetailView',
+    UI_PALACEMAIDDETAIL: 'Prefab/PalaceMaidDetailView',
     UI_PALACEMASTERLVUP: 'Prefab/PalaceMasterLvUpView',
 }
 

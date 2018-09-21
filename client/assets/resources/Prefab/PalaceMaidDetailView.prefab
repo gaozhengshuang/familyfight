@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "PalaceDetailView",
+    "_name": "PalaceMaidDetailView",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -535,7 +535,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 81,
+      "width": 83,
       "height": 142
     },
     "_rotationX": 0,
@@ -891,7 +891,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 85,
+      "width": 160,
       "height": 40
     },
     "_rotationX": 0,
@@ -926,7 +926,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "3级解锁",
+    "_N$string": "主位3级解锁",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1474,7 +1474,28 @@
       "__id__": 1
     },
     "_enabled": true,
-    "_url": ""
+    "_url": "",
+    "image_maid": {
+      "__id__": 16
+    },
+    "label_name": {
+      "__id__": 13
+    },
+    "label_findNum": {
+      "__id__": 19
+    },
+    "label_findDetail": {
+      "__id__": 25
+    },
+    "label_lockLv": {
+      "__id__": 28
+    },
+    "label_gold": {
+      "__id__": 37
+    },
+    "node_buy": {
+      "__id__": 30
+    }
   },
   {
     "__type__": "cc.PrefabInfo",

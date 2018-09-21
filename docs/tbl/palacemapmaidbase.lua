@@ -3,7 +3,9 @@
 
 module table {
 export var PalaceMapMaid : table.IPalaceMapMaidDefine[] = [
-		{ Id : 1, OpenLevel : 1, UnlockPrice : 1000, GoldAddition : 1, ItemGroup : [ "1001_1", "1002_1" ], ItemProb : 1000 	}
+		{ Id : 17, OpenLevel : 1, UnlockPrice : 1000, GoldAddition : 1, ItemGroup : [ "1001_1", "1002_1" ], ItemProb : 1000, Describe : "主要产出御膳道具" 	},
+		{ Id : 19, OpenLevel : 2, UnlockPrice : 20000, GoldAddition : 2, ItemGroup : [ "1001_1", "1002_1" ], ItemProb : 1000, Describe : "主要产出御品道具" 	},
+		{ Id : 18, OpenLevel : 3, UnlockPrice : 400000, GoldAddition : 3, ItemGroup : [ "1001_1", "1002_1" ], ItemProb : 1000, Describe : "主要产出服装道具" 	}
 	]
 
 
