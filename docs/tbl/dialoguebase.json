@@ -62,7 +62,7 @@
 		{ "Id": 58, "Index": 23, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 2 ], "Name": "乌雅青黛", "NameLocation": 2, "Content": "如何分忧？" },
 		{ "Id": 59, "Index": 23, "HeadSprite":[ "Image/Head/1", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "魏璎珞", "NameLocation": 1, "Content": "请乌雅小主抬足。" },
 		{ "Id": 60, "Index": 23, "HeadSprite":[ "Image/Head/1", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "旁白", "NameLocation": 2, "Content": "(魏璎珞双手捧着乌雅青黛的绣鞋，然后以香囊沾粉，均匀的将香粉涂抹在乌雅青黛的鞋底，神情专注)" },
-		{ "Id": 61, "Index": 24, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "魏璎珞", "NameLocation": 1, "Content": "今日璎珞雕虫小技，用玫瑰花粉嵌入鞋底，祝愿小主心愿得偿、步步高升！" },
+		{ "Id": 61, "Index": 24, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 1 ], "Name": "魏璎珞", "NameLocation": 1, "Content": "今日璎珞雕虫小技，用玫瑰花粉嵌入鞋底，祝愿小主心愿得偿、步步高升！" },
 		{ "Id": 62, "Index": 24, "HeadSprite":[ "Image/Head/1", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "乌雅青黛", "NameLocation": 2, "Content": "就冲你这哈巴狗的样，我饶她一命！" },
 		{ "Id": 63, "Index": 25, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 1 ], "Name": "魏璎珞", "NameLocation": 1, "Content": "珍珠你好，我是新来的魏璎珞" },
 		{ "Id": 64, "Index": 26, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 1 ], "Name": "魏璎珞", "NameLocation": 1, "Content": "玛瑙，我来帮你一起打扫吧" },
@@ -73,5 +73,15 @@
 		{ "Id": 69, "Index": 30, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 1 ], "Name": "魏璎珞", "NameLocation": 1, "Content": "我终于到了长春宫，为姐姐报仇，查找真正凶手。" },
 		{ "Id": 70, "Index": 31, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 2 ], "Name": "尔晴", "NameLocation": 2, "Content": "好了璎珞，这收拾的挺干净的，回去休息吧。" },
 		{ "Id": 71, "Index": 31, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "魏璎珞", "NameLocation": 1, "Content": "谢谢尔晴姐姐。" },
-		{ "Id": 72, "Index": 32, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "富察皇后", "NameLocation": 1, "Content": "我看这丫头挺机灵的，全当来给我逗个闷儿。" }
+		{ "Id": 72, "Index": 32, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "富察皇后", "NameLocation": 1, "Content": "我看这丫头挺机灵的，全当来给我逗个闷儿。" },
+		{ "Id": 73, "Index": 33, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "吴总管", "NameLocation": 1, "Content": "这牡丹生动逼真，形神具备，好，好，好！" },
+		{ "Id": 74, "Index": 34, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "吴总管", "NameLocation": 1, "Content": "心思巧，针法也好，这届的宫女，可真是人才辈出！" },
+		{ "Id": 75, "Index": 35, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "宫女甲", "NameLocation": 1, "Content": "总管，魏璎珞代人作弊！" },
+		{ "Id": 76, "Index": 35, "HeadSprite":[ "Image/Head/1", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "吉祥", "NameLocation": 2, "Content": "我，我……都是因为我。" },
+		{ "Id": 77, "Index": 36, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 1 ], "Name": "魏璎珞", "NameLocation": 1, "Content": "谁说我作弊。" },
+		{ "Id": 78, "Index": 36, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 1 ], "Name": "魏璎珞", "NameLocation": 1, "Content": "这本就是一副绣品，名为—牡丹锦鸡图。因为耗时太长，故由我与吉祥合作完成。" },
+		{ "Id": 79, "Index": 37, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "张嬷嬷", "NameLocation": 1, "Content": "宫里面可没有这样的先例，吴总管……您看？" },
+		{ "Id": 80, "Index": 38, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "吴总管", "NameLocation": 1, "Content": "宫里得用之人，就得少说话，多办事。还有……主子最讨厌搬弄是非的蠢东西。" },
+		{ "Id": 81, "Index": 38, "HeadSprite":[ "Image/Head/1" ], "HeadLocation":[ 1 ], "Name": "吴总管", "NameLocation": 1, "Content": "拉下去，除名。" },
+		{ "Id": 82, "Index": 38, "HeadSprite":[ "Image/Head/1", "Image/Head/4" ], "HeadLocation":[ 1, 2 ], "Name": "宫女甲", "NameLocation": 2, "Content": "总管，我错了，再也不敢了。" }
 	]}
