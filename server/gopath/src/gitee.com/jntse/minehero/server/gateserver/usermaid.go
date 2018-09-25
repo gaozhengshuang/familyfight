@@ -25,13 +25,13 @@ func (this *MaidData) PackBin() *msg.MaidData{
 // --------------------------------------------------------------------------
 type MaidShop struct {
 	id 				uint32
-	price 			uint64
+	price 			float32
 }
 
 func (this *MaidShop) PackBin() *msg.MaidShopData{
 	data := &msg.MaidShopData{}
 	data.Id = pb.Uint32(this.id)
-	data.Price = pb.Uint64(this.price)
+	data.Price = pb.Float32(this.price)
 	return data
 }
 
@@ -134,7 +134,14 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 	}
 	//可以买了
 	maid := this.AddMaid(user,id,1)
-	// user.RemoveGold(shopdata.price, "购买侍女")
+	//更新价格咯
+	shopdata.price = shopdata.price * float32(tbl.Common.PriceAdditionPerBuy)
+	send := &msg.GW2C_AckMaidShop{Shop:make([]*msg.MaidShopData,0)}
+	for _, v := range this.shop {
+		send.Shop = append(send.Shop,v.PackBin())
+	}
+	user.SendMsg(send)
+
 	return 0, maid, shopdata.price
 }
 
