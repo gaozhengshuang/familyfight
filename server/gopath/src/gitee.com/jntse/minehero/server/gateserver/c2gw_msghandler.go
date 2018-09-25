@@ -347,10 +347,9 @@ func on_C2GW_ReqPalaceTakeBack(session network.IBaseNetSession, message interfac
 		session.Close()
 		return
 	}
-	result, gold, items, data := user.palace.TakeBack(user, tmsg.GetId())
+	result, items, data := user.palace.TakeBack(user, tmsg.GetId())
 	send := &msg.GW2C_RetPalaceTakeBack{}
 	send.Result = pb.Uint32(result)
-	send.Gold = pb.Uint64(gold)
 	send.Items = items
 	send.Data = data
 	user.SendMsg(send)
