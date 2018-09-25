@@ -41,6 +41,9 @@ message TMaidLevelDefine
 	
 	
 	optional int32 DialogueID = 8; // 对话ID
+	
+	
+	optional string RoleDescribe = 9; // 角色描述
 
 }
 

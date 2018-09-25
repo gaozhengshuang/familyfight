@@ -38,6 +38,9 @@ message ItemBaseDataDefine
 	
 	
 	optional int32 RealPrice = 7; // 真实价格
+	
+	
+	optional string Itempath = 8; // 道具图片路径
 
 }
 
