@@ -105,11 +105,13 @@ cc.Class({
         });
     },
 
-    updateGetState(data) {
+    updateGetState() {
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
 
         this.getItemBtnStateView();
-        Game.UserModel.AddGold(data.gold);
+        Game.UserModel.AddGold(Game.PalaceModel.GetPalaceTakeBack().gold);
+
+        this.openView(Game.UIName.UI_PALACETASKITEM);
     },
 
     updateLvUpBtnState() {

@@ -12591,7 +12591,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IPairNumItem
          * @property {number|null} [itemid] PairNumItem itemid
-         * @property {number|null} [num] PairNumItem num
+         * @property {number|Long|null} [num] PairNumItem num
          */
 
         /**
@@ -12619,11 +12619,11 @@ $root.msg = (function() {
 
         /**
          * PairNumItem num.
-         * @member {number} num
+         * @member {number|Long} num
          * @memberof msg.PairNumItem
          * @instance
          */
-        PairNumItem.prototype.num = 0;
+        PairNumItem.prototype.num = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * Creates a new PairNumItem instance using the specified properties.
@@ -12652,7 +12652,7 @@ $root.msg = (function() {
             if (message.itemid != null && message.hasOwnProperty("itemid"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.itemid);
             if (message.num != null && message.hasOwnProperty("num"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.num);
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.num);
             return writer;
         };
 
@@ -12691,7 +12691,7 @@ $root.msg = (function() {
                     message.itemid = reader.uint32();
                     break;
                 case 2:
-                    message.num = reader.uint32();
+                    message.num = reader.uint64();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -12732,8 +12732,8 @@ $root.msg = (function() {
                 if (!$util.isInteger(message.itemid))
                     return "itemid: integer expected";
             if (message.num != null && message.hasOwnProperty("num"))
-                if (!$util.isInteger(message.num))
-                    return "num: integer expected";
+                if (!$util.isInteger(message.num) && !(message.num && $util.isInteger(message.num.low) && $util.isInteger(message.num.high)))
+                    return "num: integer|Long expected";
             return null;
         };
 
@@ -12752,7 +12752,14 @@ $root.msg = (function() {
             if (object.itemid != null)
                 message.itemid = object.itemid >>> 0;
             if (object.num != null)
-                message.num = object.num >>> 0;
+                if ($util.Long)
+                    (message.num = $util.Long.fromValue(object.num)).unsigned = true;
+                else if (typeof object.num === "string")
+                    message.num = parseInt(object.num, 10);
+                else if (typeof object.num === "number")
+                    message.num = object.num;
+                else if (typeof object.num === "object")
+                    message.num = new $util.LongBits(object.num.low >>> 0, object.num.high >>> 0).toNumber(true);
             return message;
         };
 
@@ -12771,12 +12778,19 @@ $root.msg = (function() {
             var object = {};
             if (options.defaults) {
                 object.itemid = 0;
-                object.num = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.num = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.num = options.longs === String ? "0" : 0;
             }
             if (message.itemid != null && message.hasOwnProperty("itemid"))
                 object.itemid = message.itemid;
             if (message.num != null && message.hasOwnProperty("num"))
-                object.num = message.num;
+                if (typeof message.num === "number")
+                    object.num = options.longs === String ? String(message.num) : message.num;
+                else
+                    object.num = options.longs === String ? $util.Long.prototype.toString.call(message.num) : options.longs === Number ? new $util.LongBits(message.num.low >>> 0, message.num.high >>> 0).toNumber(true) : message.num;
             return object;
         };
 
@@ -25940,7 +25954,6 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IGW2C_RetPalaceTakeBack
          * @property {number|null} [result] GW2C_RetPalaceTakeBack result
-         * @property {number|Long|null} [gold] GW2C_RetPalaceTakeBack gold
          * @property {Array.<msg.IPairNumItem>|null} [items] GW2C_RetPalaceTakeBack items
          * @property {msg.IPalaceData|null} [data] GW2C_RetPalaceTakeBack data
          */
@@ -25968,14 +25981,6 @@ $root.msg = (function() {
          * @instance
          */
         GW2C_RetPalaceTakeBack.prototype.result = 0;
-
-        /**
-         * GW2C_RetPalaceTakeBack gold.
-         * @member {number|Long} gold
-         * @memberof msg.GW2C_RetPalaceTakeBack
-         * @instance
-         */
-        GW2C_RetPalaceTakeBack.prototype.gold = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
 
         /**
          * GW2C_RetPalaceTakeBack items.
@@ -26019,13 +26024,11 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.result != null && message.hasOwnProperty("result"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.gold);
             if (message.items != null && message.items.length)
                 for (var i = 0; i < message.items.length; ++i)
-                    $root.msg.PairNumItem.encode(message.items[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+                    $root.msg.PairNumItem.encode(message.items[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             if (message.data != null && message.hasOwnProperty("data"))
-                $root.msg.PalaceData.encode(message.data, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+                $root.msg.PalaceData.encode(message.data, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             return writer;
         };
 
@@ -26064,14 +26067,11 @@ $root.msg = (function() {
                     message.result = reader.uint32();
                     break;
                 case 2:
-                    message.gold = reader.uint64();
-                    break;
-                case 3:
                     if (!(message.items && message.items.length))
                         message.items = [];
                     message.items.push($root.msg.PairNumItem.decode(reader, reader.uint32()));
                     break;
-                case 4:
+                case 3:
                     message.data = $root.msg.PalaceData.decode(reader, reader.uint32());
                     break;
                 default:
@@ -26112,9 +26112,6 @@ $root.msg = (function() {
             if (message.result != null && message.hasOwnProperty("result"))
                 if (!$util.isInteger(message.result))
                     return "result: integer expected";
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                if (!$util.isInteger(message.gold) && !(message.gold && $util.isInteger(message.gold.low) && $util.isInteger(message.gold.high)))
-                    return "gold: integer|Long expected";
             if (message.items != null && message.hasOwnProperty("items")) {
                 if (!Array.isArray(message.items))
                     return "items: array expected";
@@ -26146,15 +26143,6 @@ $root.msg = (function() {
             var message = new $root.msg.GW2C_RetPalaceTakeBack();
             if (object.result != null)
                 message.result = object.result >>> 0;
-            if (object.gold != null)
-                if ($util.Long)
-                    (message.gold = $util.Long.fromValue(object.gold)).unsigned = true;
-                else if (typeof object.gold === "string")
-                    message.gold = parseInt(object.gold, 10);
-                else if (typeof object.gold === "number")
-                    message.gold = object.gold;
-                else if (typeof object.gold === "object")
-                    message.gold = new $util.LongBits(object.gold.low >>> 0, object.gold.high >>> 0).toNumber(true);
             if (object.items) {
                 if (!Array.isArray(object.items))
                     throw TypeError(".msg.GW2C_RetPalaceTakeBack.items: array expected");
@@ -26190,20 +26178,10 @@ $root.msg = (function() {
                 object.items = [];
             if (options.defaults) {
                 object.result = 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.gold = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.gold = options.longs === String ? "0" : 0;
                 object.data = null;
             }
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                if (typeof message.gold === "number")
-                    object.gold = options.longs === String ? String(message.gold) : message.gold;
-                else
-                    object.gold = options.longs === String ? $util.Long.prototype.toString.call(message.gold) : options.longs === Number ? new $util.LongBits(message.gold.low >>> 0, message.gold.high >>> 0).toNumber(true) : message.gold;
             if (message.items && message.items.length) {
                 object.items = [];
                 for (var j = 0; j < message.items.length; ++j)

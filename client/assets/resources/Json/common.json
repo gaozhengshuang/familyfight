@@ -3,5 +3,6 @@
     "PowerMax": 60,
     "PowerAddInterval": 3600,
     "PowerAddition": 6,
-    "PriceAdditionPerBuy": 1.13
+    "PriceAdditionPerBuy": 1.13,
+    "GoldItemId": 50001
 }
