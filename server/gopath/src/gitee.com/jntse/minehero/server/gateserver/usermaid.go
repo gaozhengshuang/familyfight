@@ -55,7 +55,7 @@ func (this *UserMaid) Init() {
 }
 //加载数据
 func (this *UserMaid) LoadBin(user *GateUser,bin *msg.Serialize) {
-	maidbin := bin.GetMaid();
+	maidbin := bin.GetMaid()
 	if maidbin == nil { return }
 	this.maxid = maidbin.GetMaxid()
 	for _, data := range maidbin.GetDatas() {
@@ -109,6 +109,10 @@ func (this *UserMaid) Syn(user* GateUser) {
 	maidSend.Maxid = pb.Uint32(this.GetMaxId())
 	user.SendMsg(maidSend)
 
+	this.SynMaidShop(user)
+}
+
+func (this *UserMaid) SynMaidShop(user* GateUser) {
 	shopSend := &msg.GW2C_AckMaidShop{Shop:make([]*msg.MaidShopData,0)}
 	for _, v := range this.shop {
 		shopSend.Shop = append(shopSend.Shop,v.PackBin())
@@ -137,12 +141,6 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 	maid := this.AddMaid(user,id,1)
 	//更新价格咯
 	shopdata.price = shopdata.price * float32(tbl.Common.PriceAdditionPerBuy)
-	send := &msg.GW2C_AckMaidShop{Shop:make([]*msg.MaidShopData,0)}
-	for _, v := range this.shop {
-		send.Shop = append(send.Shop,v.PackBin())
-	}
-	user.SendMsg(send)
-
 	return 0, maid, uint64(math.Floor(float64(shopdata.price)))
 }
 
@@ -158,7 +156,7 @@ func (this *UserMaid) MergeMaid(user *GateUser,id uint32) (result uint32,removed
 		user.SendNotify("没有下一级的配置了")
 		return 2,nil,nil
 	}
-	maid, ok := this.maids[id]; 
+	maid, ok := this.maids[id]
 	if !ok {
 		user.SendNotify("侍女数量不够")
 		return 3,nil,nil
@@ -180,7 +178,7 @@ func (this *UserMaid) MergeMaid(user *GateUser,id uint32) (result uint32,removed
 // ========================= 数据处理 ========================= 
 // 添加侍女
 func (this *UserMaid) AddMaid(user *GateUser, id uint32, count uint32) *MaidData {
-	maid, ok := this.maids[id];
+	maid, ok := this.maids[id]
 	if !ok {
 		maid = &MaidData{}
 		maid.id = id
@@ -197,7 +195,7 @@ func (this *UserMaid) AddMaid(user *GateUser, id uint32, count uint32) *MaidData
 
 // 减少侍女
 func (this *UserMaid) RemoveMaid(id uint32,count uint32) *MaidData {
-	maid, ok := this.maids[id];
+	maid, ok := this.maids[id]
 	if !ok {
 		return nil
 	}
@@ -242,11 +240,7 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 	this.shop = newShop
 	user.ChangeMaxLevel(uint32(maidconfig.Passlevels))
 
-	send := &msg.GW2C_AckMaidShop{Shop:make([]*msg.MaidShopData,0)}
-	for _, v := range this.shop {
-		send.Shop = append(send.Shop,v.PackBin())
-	}
-	user.SendMsg(send)
+	this.SynMaidShop(user)
 }
 
 func (this *UserMaid) CalculateRewardPerSecond() uint64 {
