@@ -3,24 +3,24 @@
 
 module table {
 export var PalaceMapMasterLevels : table.IPalaceMapMasterLevelsDefine[] = [
-		{ Id : 1, MasterId : 39, Level : 1, LevelupCost : [ "1001_1", "1002_2" ], WaitTime : 1800, levelName : "贵人" 	},
-		{ Id : 2, MasterId : 39, Level : 2, LevelupCost : [ "1001_5", "1002_3" ], WaitTime : 1800, levelName : "嫔" 	},
-		{ Id : 3, MasterId : 39, Level : 3, LevelupCost : [ "1001_10", "1002_4" ], WaitTime : 1800, levelName : "妃" 	},
-		{ Id : 4, MasterId : 39, Level : 4, LevelupCost : [ "1001_1", "1002_5" ], WaitTime : 1800, levelName : "贵妃" 	},
-		{ Id : 5, MasterId : 39, Level : 5, LevelupCost : [ "1001_1", "1002_6" ], WaitTime : 1800, levelName : "皇贵妃" 	},
-		{ Id : 6, MasterId : 39, Level : 6, LevelupCost : [ "1001_1", "1002_7" ], WaitTime : 1800, levelName : "皇后" 	},
-		{ Id : 7, MasterId : 39, Level : 1, LevelupCost : [ "1001_1", "1002_8" ], WaitTime : 3600, levelName : "贵人" 	},
-		{ Id : 8, MasterId : 39, Level : 2, LevelupCost : [ "1001_1", "1002_9" ], WaitTime : 3600, levelName : "嫔" 	},
-		{ Id : 9, MasterId : 39, Level : 3, LevelupCost : [ "1001_1", "1002_10" ], WaitTime : 3600, levelName : "妃" 	},
-		{ Id : 10, MasterId : 39, Level : 4, LevelupCost : [ "1001_1", "1002_11" ], WaitTime : 3600, levelName : "贵妃" 	},
-		{ Id : 11, MasterId : 39, Level : 5, LevelupCost : [ "1001_1", "1002_12" ], WaitTime : 3600, levelName : "皇贵妃" 	},
-		{ Id : 12, MasterId : 39, Level : 6, LevelupCost : [ "1001_1", "1002_13" ], WaitTime : 3600, levelName : "皇后" 	},
-		{ Id : 13, MasterId : 39, Level : 1, LevelupCost : [ "1001_1", "1002_14" ], WaitTime : 5400, levelName : "贵人" 	},
-		{ Id : 14, MasterId : 39, Level : 2, LevelupCost : [ "1001_1", "1002_15" ], WaitTime : 5400, levelName : "嫔" 	},
-		{ Id : 15, MasterId : 39, Level : 3, LevelupCost : [ "1001_1", "1002_16" ], WaitTime : 5400, levelName : "妃" 	},
-		{ Id : 16, MasterId : 39, Level : 4, LevelupCost : [ "1001_1", "1002_17" ], WaitTime : 5400, levelName : "贵妃" 	},
-		{ Id : 17, MasterId : 39, Level : 5, LevelupCost : [ "1001_1", "1002_18" ], WaitTime : 5400, levelName : "皇贵妃" 	},
-		{ Id : 18, MasterId : 39, Level : 6, LevelupCost : [ "1001_1", "1002_19" ], WaitTime : 5400, levelName : "皇后" 	}
+		{ Id : 1, MasterId : 39, Level : 1, LevelupCost : [ "10001_1" ], WaitTime : 1800, levelName : "贵人" 	},
+		{ Id : 2, MasterId : 39, Level : 2, LevelupCost : [ "10001_5" ], WaitTime : 1800, levelName : "嫔" 	},
+		{ Id : 3, MasterId : 39, Level : 3, LevelupCost : [ "10001_10" ], WaitTime : 1800, levelName : "妃" 	},
+		{ Id : 4, MasterId : 39, Level : 4, LevelupCost : [ "10001_50" ], WaitTime : 1800, levelName : "贵妃" 	},
+		{ Id : 5, MasterId : 39, Level : 5, LevelupCost : [ "10001_80" ], WaitTime : 1800, levelName : "皇贵妃" 	},
+		{ Id : 6, MasterId : 39, Level : 6, LevelupCost : [ "10001_120" ], WaitTime : 1800, levelName : "皇后" 	},
+		{ Id : 7, MasterId : 39, Level : 1, LevelupCost : [ "10001_1" ], WaitTime : 3600, levelName : "贵人" 	},
+		{ Id : 8, MasterId : 39, Level : 2, LevelupCost : [ "10001_5" ], WaitTime : 3600, levelName : "嫔" 	},
+		{ Id : 9, MasterId : 39, Level : 3, LevelupCost : [ "10001_10" ], WaitTime : 3600, levelName : "妃" 	},
+		{ Id : 10, MasterId : 39, Level : 4, LevelupCost : [ "10001_80" ], WaitTime : 3600, levelName : "贵妃" 	},
+		{ Id : 11, MasterId : 39, Level : 5, LevelupCost : [ "10001_120" ], WaitTime : 3600, levelName : "皇贵妃" 	},
+		{ Id : 12, MasterId : 39, Level : 6, LevelupCost : [ "10001_240" ], WaitTime : 3600, levelName : "皇后" 	},
+		{ Id : 13, MasterId : 39, Level : 1, LevelupCost : [ "10001_1" ], WaitTime : 5400, levelName : "贵人" 	},
+		{ Id : 14, MasterId : 39, Level : 2, LevelupCost : [ "10001_5" ], WaitTime : 5400, levelName : "嫔" 	},
+		{ Id : 15, MasterId : 39, Level : 3, LevelupCost : [ "10001_10" ], WaitTime : 5400, levelName : "妃" 	},
+		{ Id : 16, MasterId : 39, Level : 4, LevelupCost : [ "10001_100" ], WaitTime : 5400, levelName : "贵妃" 	},
+		{ Id : 17, MasterId : 39, Level : 5, LevelupCost : [ "10001_240" ], WaitTime : 5400, levelName : "皇贵妃" 	},
+		{ Id : 18, MasterId : 39, Level : 6, LevelupCost : [ "10001_500" ], WaitTime : 5400, levelName : "皇后" 	}
 	]
 
 

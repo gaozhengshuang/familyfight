@@ -36,6 +36,7 @@ var Define = {
         PALACEDATA_ACK: '1007',
         PALACEMAID_UNLOCK: '1008',
         PALACETASK_ACK: '1009',
+        PALACEMASTERLVUP_ACK: '1010',
     },
     DATA_KEY: {
         HISTORY_PHONE: '1',
