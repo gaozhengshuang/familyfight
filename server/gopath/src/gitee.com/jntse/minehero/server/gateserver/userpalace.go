@@ -133,12 +133,14 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 	}
 	//TODO 加钱 加金币
 	for _, v := range items {
-		user.AddItem(v.GetItemid(), v.GetNum(), "后宫收取奖励")
+		user.AddItem(v.GetItemid(), uint32(v.GetNum()), "后宫收取奖励")
 	}
 	// 重新计时吧
 	palace.endtime = uint64(util.CURTIME()) + uint64(mastertmpl.WaitTime)
 	//
-	retitems := append(&msg.PairNumItem{ Itemid: pb.Uint32(tbl.Common.GoldItemID), Num: pb.Uint64(gold)}, items...)
+	retitems := make([]*msg.PairNumItem,0)
+	retitems := append(retitems, &msg.PairNumItem{ Itemid: pb.Uint32(uint32(tbl.Common.GoldItemID)), Num: pb.Uint64(gold)})
+	retitems := append(retitems, items...)
 
 	return 0, retitems, palace.PackBin()
 }
