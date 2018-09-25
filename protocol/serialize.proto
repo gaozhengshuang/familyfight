@@ -1,4 +1,5 @@
 package msg;
+import "define.proto";
 
 message EntityBase {
     optional uint64 id      = 1;
@@ -120,10 +121,19 @@ message PalaceData
     repeated bool maids = 3;
     optional uint64 endtime = 4;
 }
+//御赐数据
+message TravelData
+{
+    optional uint64 nexttime = 1;               //下次触发时间
+    repeated PairNumItem items = 2;             //供奉的物品
+    optional uint32 eventid = 3;                //触发的事件
+}
 message Serialize {
     optional EntityBase entity  = 1;
     optional UserBase   base    = 2;
     optional ItemBin    item    = 3;
-    optional MaidBin    maid    = 4;
-    repeated PalaceData palaces = 5;
+    optional MaidBin    maid    = 4;            //侍女数据
+    repeated PalaceData palaces = 5;            //后宫数据
+    optional TravelData travel  = 6;            //御赐数据
+    repeated uint32 eventids    = 7;            //开启的事件
 }
