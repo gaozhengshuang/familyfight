@@ -79,7 +79,7 @@ func (this *UserPalace) ChangeMaxLevel(user* GateUser,level uint32) {
 }
 // ========================= 消息接口 =========================
 //收取
-func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,gold uint64,items []*msg.PairNumItem, data *msg.PalaceData){
+func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items []*msg.PairNumItem, data *msg.PalaceData){
 	items = make([]*msg.PairNumItem,0)
 	palace, find := this.palaces[id]
 	if !find {
@@ -124,7 +124,7 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,gold 
 			for _, item := range v.ItemGroup {
 				if weight < item.num {
 					//就是这个
-					items = append(items, &msg.PairNumItem{ Itemid: pb.Uint32(item.id), Num: pb.Uint32(1)})
+					items = append(items, &msg.PairNumItem{ Itemid: pb.Uint32(item.id), Num: pb.Uint64(1)})
 					break
 				}
 				weight = weight - item.num
@@ -137,8 +137,11 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,gold 
 	}
 	// 重新计时吧
 	palace.endtime = uint64(util.CURTIME()) + uint64(mastertmpl.WaitTime)
+	//
+	retitems := make([]*msg.PairNumItem,0)
+	retitems = append(retitems, &msg.PairNumItem{ Itemid: pb.Uint32(tbl.Common.GoldItemId), Num: pb.Uint64(gold)}, items...)
 
-	return 0, gold, items, palace.PackBin()
+	return 0, retitems, palace.PackBin()
 }
 
 //升级
