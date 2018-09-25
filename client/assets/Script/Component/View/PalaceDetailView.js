@@ -52,11 +52,13 @@ cc.Class({
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEDATA_ACK, this, this.updateView);
         Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEMAID_UNLOCK, this, this.updatePalaceMaids);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.PALACETASK_ACK, this, this.updateGetState);
     },
 
     removeNotification() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEDATA_ACK, this, this.updateView);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEMAID_UNLOCK, this, this.updatePalaceMaids);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACETASK_ACK, this, this.updateGetState);
     },
 
     updateView() {
@@ -84,8 +86,29 @@ cc.Class({
                     this._palaceMaids.push(_maid);
                 }
             }
+
+            this.getLvUpView(palaceMapBase);
         }
 
+        this.getStateView();
+    },
+
+    updatePalaceMaids() {
+        this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
+        
+        Game._.forEach(this._palaceMaids, function(v) {
+            v.updateView();
+        });
+    },
+
+    updateGetState(data) {
+        this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
+
+        this.getStateView();
+        Game.UserModel.AddGold(data.gold);
+    },
+
+    getStateView() {
         if (Game.TimeController.GetCurTime() >= this._data.endtime) {
             this.label_get.node.active = true;
             this.label_getTime.node.active = false;
@@ -99,10 +122,22 @@ cc.Class({
         }
     },
 
-    updatePalaceMaids() {
-        Game._.forEach(this._palaceMaids, function(v) {
-            v.updateView();
-        });
+    getLvUpView(palaceMapBase){
+        let masterLvUpBase = Game.PalaceModel.GetPalaceMasterLvUpBase(palaceMapBase.Master, this._data.level);  //主人升级相关
+        if (masterLvUpBase) {
+            let lvItemBase = masterLvUpBase.LevelupCost[0];
+            if (lvItemBase) {
+                let item_num = lvItemBase.split("_");
+                if (item_num) {
+                    if (Game.ItemModel.GetItemNumById(item_num[0]) >= item_num[1]) {
+                        Game.ResController.SetSprite(this.image_lvUp, "Image/GameScene/Common/image_LvUp");
+                    } else {
+                        Game.ResController.SetSprite(this.image_lvUp, "Image/GameScene/Common/image_noLvUp");
+                    }
+                    this.label_needLvItem.string = Game.ItemModel.GetItemNumById(item_num[0]) + "/" + item_num[1];
+                }
+            }
+        }
     },
 
     onOpenLvUp(event) {

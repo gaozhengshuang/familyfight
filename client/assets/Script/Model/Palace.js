@@ -1,7 +1,8 @@
 let NetWorkController = require('../Controller/NetWorkController');
 let NotificationController = require('../Controller/NotificationController');
-let Tools = require("../Util/Tools");
-let Define = require("../Util/Define");
+let Tools = require('../Util/Tools');
+let Define = require('../Util/Define');
+let ConfigController = require('../Controller/ConfigController');
 let _ = require('lodash');
 
 var PalaceModel = function () {
@@ -13,6 +14,7 @@ var PalaceModel = function () {
 PalaceModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_AckPalaceData', this, this.onGW2C_AckPalaceData);
     NetWorkController.AddListener('msg.GW2C_RetMaidUnlock', this, this.onGW2C_RetMaidUnlock);
+    NetWorkController.AddListener('msg.GW2C_RetPalaceTakeBack', this, this.onGW2C_RetPalaceTakeBack);
 
     Tools.InvokeCallback(cb, null);
 }
@@ -37,6 +39,10 @@ PalaceModel.prototype.GetPalaceDataById = function (id) {
     return _.find(this.palaceDatas, {'id': id});
 }
 
+PalaceModel.prototype.GetPalaceMasterLvUpBase = function(MasterId, level) {
+    return _.find(ConfigController.GetConfig('PalaceMapMasterLevels'), {'MasterId': MasterId, 'Level': level});
+}
+
 /**
  * 消息处理接口
  */
@@ -47,14 +53,29 @@ PalaceModel.prototype.onGW2C_AckPalaceData = function (msgid, data) {
 }
 
 PalaceModel.prototype.onGW2C_RetMaidUnlock = function (msgid, data) {
-    for (let i = 0; i < this.palaceDatas.length; i ++){
-        if (this.palaceDatas[i].id = data.data.id) {
-            this.palaceDatas[i] = data.data;
-            break;
+    if (data.result == 0) {
+        for (let i = 0; i < this.palaceDatas.length; i ++){
+            if (this.palaceDatas[i].id = data.data.id) {
+                this.palaceDatas[i] = data.data;
+                break;
+            }
         }
+    
+        NotificationController.Emit(Define.EVENT_KEY.PALACEMAID_UNLOCK)
     }
+}
 
-    NotificationController.Emit(Define.EVENT_KEY.PALACEMAID_UNLOCK)
+PalaceModel.prototype.onGW2C_RetPalaceTakeBack = function (msgid, data) {
+    if (data.result == 0) {
+        for (let i = 0; i < this.palaceDatas.length; i ++){
+            if (this.palaceDatas[i].id = data.data.id) {
+                this.palaceDatas[i] = data.data;
+                break;
+            }
+        }
+    
+        NotificationController.Emit(Define.EVENT_KEY.PALACETASK_ACK, data);
+    }
 }
 
 module.exports = new PalaceModel();

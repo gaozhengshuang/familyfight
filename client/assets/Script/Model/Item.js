@@ -20,17 +20,26 @@ ItemModel.prototype.GetItems = function() {
     return this.items;
 }
 
+ItemModel.prototype.GetItemNumById = function(id) {
+    let num = 0;
+    let item = _.find(this.items, { 'itemid': id });
+    if (item) {
+        num = item.num;
+    }
+    return num;
+}
+
 /**
  * 消息处理接口
  */
 ItemModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
-    this.items = Tools.getValueInObj(data, 'item.items') || [];
+    this.items = Tools.GetValueInObj(data, 'item.items') || [];
 }
 
 ItemModel.prototype.onGW2C_AddPackageItem = function (msgid, data) {
-    let index = _.findIndex(this.items, { id: data.itemid });
+    let index = _.findIndex(this.items, { itemid: data.itemid });
     if (index == -1) {
-        this.items.push({ id: data.itemid, num: data.num });
+        this.items.push({ itemid: data.itemid, num: data.num });
     } else {
         let item = this.items[index];
         item.num += data.num;

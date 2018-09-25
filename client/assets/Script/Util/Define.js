@@ -35,6 +35,7 @@ var Define = {
         SHOWDIALOGUE_PLAYER: '1006',
         PALACEDATA_ACK: '1007',
         PALACEMAID_UNLOCK: '1008',
+        PALACETASK_ACK: '1009',
     },
     DATA_KEY: {
         HISTORY_PHONE: '1',
