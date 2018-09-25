@@ -22,7 +22,7 @@ func (this *TravelData) PackData() *msg.TravelData{
 	for _, v := range this.items {
 		data.Items = append(data.Items, &msg.PairNumItem{ Itemid: pb.Uint32(v.GetItemid()), Num: pb.Uint64(v.GetNum())})
 	}
-	data.Eventid = pb.Uint64(this.eventid)
+	data.Eventid = pb.Uint32(this.eventid)
 	return data
 }
 
@@ -57,7 +57,7 @@ func (this *UserTravel) PackBin(bin *msg.Serialize) {
 	bin.Travel = this.travel.PackData()
 	bin.Eventids = make([]uint32, 0)
 	for _, v := range this.eventids {
-		bin.Eventids = append(bin.Eventids, pb.Uint32(v))
+		bin.Eventids = append(bin.Eventids, v)
 	}
 }
 // ========================= 对外接口 ========================= 
@@ -73,7 +73,7 @@ func (this *UserTravel) SynTravelData(user *GateUser){
 func (this *UserTravel) SynEventids(user *GateUser){
 	send := &msg.GW2C_AckEventData{ Ids: make([]uint32, 0)}
 	for _, v := range this.eventids {
-		send.Ids = append(send.Ids, pb.Uint32(v))
+		send.Ids = append(send.Ids, v)
 	}
 	user.SendMsg(send)
 }
@@ -85,7 +85,7 @@ func (this *UserTravel) PrepareTravel(user* GateUser, items []*msg.PairNumItem) 
 		return 1
 	}
 	//检查物品够不够
-	for _, v := range items {
+	for k, v := range items {
 		if this.travel.items[k].GetItemid() != v.GetItemid() && v.GetItemid() != 0{
 			if user.bag.GetItemNum(v.GetItemid()) < uint32(v.GetNum()) {
 				user.SendNotify(fmt.Sprintf("道具%d数量不够", v.GetItemid()))
