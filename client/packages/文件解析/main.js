@@ -27,6 +27,7 @@ module.exports = {
                 'palacemapbase',
                 'palacemapmaidbase',
                 'palacemapmasterlevelsbase',
+                'itembase',
                 'common'
             ];
             Editor.log('开始生成JSON');

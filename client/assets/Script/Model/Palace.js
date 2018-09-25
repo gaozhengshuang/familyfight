@@ -9,6 +9,7 @@ var PalaceModel = function () {
     this.curPalaceId = 0;
     this.curPalaceMaidIndex = 0;
     this.palaceDatas = null;
+    this.palaceTakeBack = null;
 }
 
 PalaceModel.prototype.Init = function (cb) {
@@ -44,6 +45,10 @@ PalaceModel.prototype.GetPalaceMasterLvUpBase = function(MasterId, level) {
     return _.find(ConfigController.GetConfig('PalaceMapMasterLevels'), {'MasterId': MasterId, 'Level': level});
 }
 
+PalaceModel.prototype.GetPalaceTakeBack = function() {
+    return this.palaceTakeBack;
+}
+
 /**
  * 消息处理接口
  */
@@ -68,6 +73,7 @@ PalaceModel.prototype.onGW2C_RetMaidUnlock = function (msgid, data) {
 
 PalaceModel.prototype.onGW2C_RetPalaceTakeBack = function (msgid, data) {
     if (data.result == 0) {
+        this.palaceTakeBack = data;
         for (let i = 0; i < this.palaceDatas.length; i ++){
             if (this.palaceDatas[i].id = data.data.id) {
                 this.palaceDatas[i] = data.data;
@@ -75,7 +81,7 @@ PalaceModel.prototype.onGW2C_RetPalaceTakeBack = function (msgid, data) {
             }
         }
     
-        NotificationController.Emit(Define.EVENT_KEY.PALACETASK_ACK, data);
+        NotificationController.Emit(Define.EVENT_KEY.PALACETASK_ACK);
     }
 }
 

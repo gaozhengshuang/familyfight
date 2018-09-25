@@ -139,8 +139,8 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 	palace.endtime = uint64(util.CURTIME()) + uint64(mastertmpl.WaitTime)
 	//
 	retitems := make([]*msg.PairNumItem,0)
-	retitems := append(retitems, &msg.PairNumItem{ Itemid: pb.Uint32(uint32(tbl.Common.GoldItemID)), Num: pb.Uint64(gold)})
-	retitems := append(retitems, items...)
+	retitems = append(retitems, &msg.PairNumItem{ Itemid: pb.Uint32(uint32(tbl.Common.GoldItemID)), Num: pb.Uint64(gold)})
+	retitems = append(retitems, items...)
 
 	return 0, retitems, palace.PackBin()
 }
