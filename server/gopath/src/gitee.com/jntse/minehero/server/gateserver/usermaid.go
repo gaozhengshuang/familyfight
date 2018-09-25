@@ -3,6 +3,7 @@ import (
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/pbmsg"
 	pb "github.com/golang/protobuf/proto"
+	"math"
 )
 
 // --------------------------------------------------------------------------
@@ -142,7 +143,7 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 	}
 	user.SendMsg(send)
 
-	return 0, maid, shopdata.price
+	return 0, maid, uint64(math.Floor(float64(shopdata.price)))
 }
 
 //合并侍女
@@ -223,9 +224,9 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 		if !find {
 			//找不到初始化价格
 			maidshop, find := tbl.TMaidShopBase.TMaidShopById[uint32(v)]
-			price := uint64(0)
+			price := float32(0)
 			if find {
-				price = uint64(maidshop.Price)
+				price = float32(maidshop.Price)
 			}
 			shop := &MaidShop{}
 			shop.id = uint32(v)
