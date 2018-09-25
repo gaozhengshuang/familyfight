@@ -157,7 +157,7 @@ func (this *UserTravel) RandomEvent() uint32 {
 		if len(travels) == 0 {
 			return 0
 		}
-		travel = travels[util.RandBetween(0, len(travels) - 1)]
+		travel = travels[util.RandBetween(0, int32(len(travels) - 1))]
 	}
 	return travel.Event
 }
