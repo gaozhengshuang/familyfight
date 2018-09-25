@@ -35,7 +35,11 @@ cc.Class({
             this.mainTime = 0;
             if (this.leftTime > 0) {
                 this.leftTime = this.leftTime - 1;
-                this.label_getTime.string ='生产中\n' + Game.moment.unix(this.leftTime).format('mm:ss');
+                if (this.leftTime > 0) {
+                    this.label_getTime.string ='生产中\n' + Game.moment.unix(this.leftTime).format('mm:ss');
+                } else {
+                    this.getItemBtnStateView();
+                }
             }
         }
     },
