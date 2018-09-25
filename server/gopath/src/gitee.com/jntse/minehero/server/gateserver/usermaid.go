@@ -140,8 +140,9 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 	//可以买了
 	maid := this.AddMaid(user,id,1)
 	//更新价格咯
+	oldprice := shopdata.price
 	shopdata.price = shopdata.price * float32(tbl.Common.PriceAdditionPerBuy)
-	return 0, maid, uint64(math.Floor(float64(shopdata.price)))
+	return 0, maid, uint64(math.Floor(float64(oldprice)))
 }
 
 //合并侍女

@@ -239,7 +239,8 @@ func (this *UserPalace) AddPalace(user *GateUser, id uint32) *PalaceData {
 	palace.id = id
 	palace.level = 1
 	palace.maids = make([]bool, 0)
-	for i := 0;i < len(tmpl.Maids); i++ {
+	palace.maids = append(palace.maids, true)
+	for i := 0;i < len(tmpl.Maids) - 1; i++ {
 		palace.maids = append(palace.maids, false)
 	}
 	mastertmpl := PalaceMgr().GetMasterConfig(id,1)
