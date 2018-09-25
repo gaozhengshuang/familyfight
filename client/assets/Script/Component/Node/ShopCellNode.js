@@ -12,20 +12,23 @@ cc.Class({
 
     // use this for initialization
     onLoad() {
-
+        this.price = 0;
     },
 
     init(index, data, reload, group) {
         this._target = data.target;
         this._data = data.array[index];
+        this.price = Math.floor(this._data.price);
 
         let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", this._data.id);
         if (maidBase) {
             Game.ResController.SetSprite(this.image_maid, maidBase.Path);
             this.label_maid.string = maidBase.Name;
         }
-        this.label_gold.string = `+${this._data.price}`;
-        if (Game.UserModel.GetGold() >= this._data.price) {
+
+        this.label_gold.string = `+${this.price}`;
+
+        if (Game.UserModel.GetGold() >= this.price) {
             Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common");
         } else {
             Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common2");
@@ -33,7 +36,7 @@ cc.Class({
     },
 
     buyShop() {
-        if (Game.UserModel.GetGold() >= this._data.price) {
+        if (Game.UserModel.GetGold() >= this.price) {
             Game.NetWorkController.Send('msg.C2GW_ReqBuyMaid', {maidid: this._data.id});
         } else {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>' + '金币不足哟!' + '</color>' });

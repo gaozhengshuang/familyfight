@@ -18,6 +18,7 @@ cc.Class({
     },
 
     onEnable() {
+        this.initNotification();
         this.updateView();
     },
 
@@ -25,10 +26,18 @@ cc.Class({
     },
 
     onDisable() {
+        this.removeNotification();
     },
 
     initData() {
-        
+    },
+
+    initNotification() {
+        Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEMASTERLVUP_ACK, this, this.updateView);
+    },
+
+    removeNotification() {
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEMASTERLVUP_ACK, this, this.updateView);
     },
 
     updateView() {

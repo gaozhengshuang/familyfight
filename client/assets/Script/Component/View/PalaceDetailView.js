@@ -47,24 +47,29 @@ cc.Class({
         this.mainTime = 0;
         this.synchroTime = 1;
         this.leftTime = 0;
+
+        this.masterId = 0;
     },
 
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEDATA_ACK, this, this.updateView);
         Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEMAID_UNLOCK, this, this.updatePalaceMaids);
         Game.NotificationController.On(Game.Define.EVENT_KEY.PALACETASK_ACK, this, this.updateGetState);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEMASTERLVUP_ACK, this, this.updateLvUpBtnState);
     },
 
     removeNotification() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEDATA_ACK, this, this.updateView);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEMAID_UNLOCK, this, this.updatePalaceMaids);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACETASK_ACK, this, this.updateGetState);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEMASTERLVUP_ACK, this, this.updateLvUpBtnState);
     },
 
     updateView() {
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
         let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this._data.id);
         if (palaceMapBase) {
+            this.masterId = palaceMapBase.Master;
             Game.ResController.SetSprite(this.image_master, palaceMapBase.Headpath);
             Game.ResController.SetSprite(this.image_palaceCard, palaceMapBase.BannerPath);
             this.label_master.string = Game.MaidModel.GetMaidNameById(palaceMapBase.Master);
@@ -86,11 +91,10 @@ cc.Class({
                     this._palaceMaids.push(_maid);
                 }
             }
-
-            this.getLvUpView(palaceMapBase);
         }
 
-        this.getStateView();
+        this.getItemBtnStateView();
+        this.lvUpBtnStateView();
     },
 
     updatePalaceMaids() {
@@ -104,11 +108,17 @@ cc.Class({
     updateGetState(data) {
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
 
-        this.getStateView();
+        this.getItemBtnStateView();
         Game.UserModel.AddGold(data.gold);
     },
 
-    getStateView() {
+    updateLvUpBtnState() {
+        this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
+
+        this.lvUpBtnStateView();
+    },
+
+    getItemBtnStateView() {
         if (Game.TimeController.GetCurTime() >= this._data.endtime) {
             this.label_get.node.active = true;
             this.label_getTime.node.active = false;
@@ -122,8 +132,8 @@ cc.Class({
         }
     },
 
-    getLvUpView(palaceMapBase){
-        let masterLvUpBase = Game.PalaceModel.GetPalaceMasterLvUpBase(palaceMapBase.Master, this._data.level);  //主人升级相关
+    lvUpBtnStateView(){
+        let masterLvUpBase = Game.PalaceModel.GetPalaceMasterLvUpBase(this.masterId, this._data.level);  //主人升级相关
         if (masterLvUpBase) {
             let lvItemBase = masterLvUpBase.LevelupCost[0];
             if (lvItemBase) {
