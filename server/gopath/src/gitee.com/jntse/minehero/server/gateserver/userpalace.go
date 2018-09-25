@@ -106,7 +106,7 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 		return 4,items,nil
 	}
 	//可以收取了 根据宫女计算金币和物品吧
-	gold = 0
+	gold := uint64(0)
 	for i, v := range maidsconfig {
 		if i >= len(palace.maids) {
 			continue
@@ -138,8 +138,7 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 	// 重新计时吧
 	palace.endtime = uint64(util.CURTIME()) + uint64(mastertmpl.WaitTime)
 	//
-	retitems := make([]*msg.PairNumItem,0)
-	retitems = append(retitems, &msg.PairNumItem{ Itemid: pb.Uint32(tbl.Common.GoldItemId), Num: pb.Uint64(gold)}, items...)
+	retitems := append(&msg.PairNumItem{ Itemid: pb.Uint32(tbl.Common.GoldItemID), Num: pb.Uint64(gold)}, items...)
 
 	return 0, retitems, palace.PackBin()
 }
