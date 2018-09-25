@@ -240,7 +240,7 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 	this.shop = newShop
 	user.ChangeMaxLevel(uint32(maidconfig.Passlevels))
 
-	this.SynMaidShop()
+	this.SynMaidShop(user)
 }
 
 func (this *UserMaid) CalculateRewardPerSecond() uint64 {

@@ -231,7 +231,7 @@ func on_C2GW_ReqBuyMaid(session network.IBaseNetSession, message interface{}) {
 	send.Price = pb.Uint64(price)
 	user.SendMsg(send)
 
-	user.maid.SynMaidShop()
+	user.maid.SynMaidShop(user)
 }
 //合并
 func on_C2GW_ReqMergeMaid(session network.IBaseNetSession, message interface{}) {
