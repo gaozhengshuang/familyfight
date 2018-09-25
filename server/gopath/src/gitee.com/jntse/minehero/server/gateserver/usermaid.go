@@ -3,6 +3,7 @@ import (
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/pbmsg"
 	pb "github.com/golang/protobuf/proto"
+	"math"
 )
 
 // --------------------------------------------------------------------------
@@ -25,13 +26,13 @@ func (this *MaidData) PackBin() *msg.MaidData{
 // --------------------------------------------------------------------------
 type MaidShop struct {
 	id 				uint32
-	price 			uint64
+	price 			float32
 }
 
 func (this *MaidShop) PackBin() *msg.MaidShopData{
 	data := &msg.MaidShopData{}
 	data.Id = pb.Uint32(this.id)
-	data.Price = pb.Uint64(this.price)
+	data.Price = pb.Float32(this.price)
 	return data
 }
 
@@ -54,7 +55,7 @@ func (this *UserMaid) Init() {
 }
 //加载数据
 func (this *UserMaid) LoadBin(user *GateUser,bin *msg.Serialize) {
-	maidbin := bin.GetMaid();
+	maidbin := bin.GetMaid()
 	if maidbin == nil { return }
 	this.maxid = maidbin.GetMaxid()
 	for _, data := range maidbin.GetDatas() {
@@ -108,6 +109,10 @@ func (this *UserMaid) Syn(user* GateUser) {
 	maidSend.Maxid = pb.Uint32(this.GetMaxId())
 	user.SendMsg(maidSend)
 
+	this.SynMaidShop(user)
+}
+
+func (this *UserMaid) SynMaidShop(user* GateUser) {
 	shopSend := &msg.GW2C_AckMaidShop{Shop:make([]*msg.MaidShopData,0)}
 	for _, v := range this.shop {
 		shopSend.Shop = append(shopSend.Shop,v.PackBin())
@@ -134,8 +139,9 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 	}
 	//可以买了
 	maid := this.AddMaid(user,id,1)
-	// user.RemoveGold(shopdata.price, "购买侍女")
-	return 0, maid, shopdata.price
+	//更新价格咯
+	shopdata.price = shopdata.price * float32(tbl.Common.PriceAdditionPerBuy)
+	return 0, maid, uint64(math.Floor(float64(shopdata.price)))
 }
 
 //合并侍女
@@ -150,7 +156,7 @@ func (this *UserMaid) MergeMaid(user *GateUser,id uint32) (result uint32,removed
 		user.SendNotify("没有下一级的配置了")
 		return 2,nil,nil
 	}
-	maid, ok := this.maids[id]; 
+	maid, ok := this.maids[id]
 	if !ok {
 		user.SendNotify("侍女数量不够")
 		return 3,nil,nil
@@ -172,7 +178,7 @@ func (this *UserMaid) MergeMaid(user *GateUser,id uint32) (result uint32,removed
 // ========================= 数据处理 ========================= 
 // 添加侍女
 func (this *UserMaid) AddMaid(user *GateUser, id uint32, count uint32) *MaidData {
-	maid, ok := this.maids[id];
+	maid, ok := this.maids[id]
 	if !ok {
 		maid = &MaidData{}
 		maid.id = id
@@ -189,7 +195,7 @@ func (this *UserMaid) AddMaid(user *GateUser, id uint32, count uint32) *MaidData
 
 // 减少侍女
 func (this *UserMaid) RemoveMaid(id uint32,count uint32) *MaidData {
-	maid, ok := this.maids[id];
+	maid, ok := this.maids[id]
 	if !ok {
 		return nil
 	}
@@ -216,9 +222,9 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 		if !find {
 			//找不到初始化价格
 			maidshop, find := tbl.TMaidShopBase.TMaidShopById[uint32(v)]
-			price := uint64(0)
+			price := float32(0)
 			if find {
-				price = uint64(maidshop.Price)
+				price = float32(maidshop.Price)
 			}
 			shop := &MaidShop{}
 			shop.id = uint32(v)
@@ -234,11 +240,7 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 	this.shop = newShop
 	user.ChangeMaxLevel(uint32(maidconfig.Passlevels))
 
-	send := &msg.GW2C_AckMaidShop{Shop:make([]*msg.MaidShopData,0)}
-	for _, v := range this.shop {
-		send.Shop = append(send.Shop,v.PackBin())
-	}
-	user.SendMsg(send)
+	this.SynMaidShop(user)
 }
 
 func (this *UserMaid) CalculateRewardPerSecond() uint64 {

@@ -16,7 +16,6 @@ cc.Class({
     },
 
     onDestroy() {
-
     },
 
     update(dt) {

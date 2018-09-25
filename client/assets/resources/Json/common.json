@@ -2,5 +2,6 @@
     "PowerInit": 10,
     "PowerMax": 60,
     "PowerAddInterval": 3600,
-    "PowerAddition": 6
+    "PowerAddition": 6,
+    "PriceAdditionPerBuy": 1.13
 }

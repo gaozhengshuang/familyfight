@@ -92,7 +92,7 @@ message ItemData {
 }
 
 message ItemBin {
-    repeated ItemData items = 1;        // 
+    repeated ItemData items = 1;
 }
 
 message MaidData 
@@ -103,7 +103,7 @@ message MaidData
 message MaidShopData
 {
     optional uint32 id = 1;
-    optional uint64 price = 2;
+    optional float price = 2;
 }
 
 message MaidBin
