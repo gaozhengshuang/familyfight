@@ -113,13 +113,7 @@ let Tools = {
         let curentUnit = moneyUnits[0]; //转换单位 
         for (let i = 0; i < moneyUnits.length; i ++) { 
             curentUnit = moneyUnits[i];
-
-            if (i > 0) {
-                if(Math.floor(curentNum/(dividend*i)) <= 0) {
-                    break;
-                }
-            }
-            
+            if(Math.floor(curentNum/(dividend*i)) <= 0) { break; }
             curentNum = curentNum / dividend;
         }
 
@@ -132,15 +126,6 @@ let Tools = {
 
         return moenyStr;
     },
-    StrNumSize(tempNum) {
-        let stringNum = tempNum.toString();
-        let index = stringNum.indexOf(".");
-        let newNum = stringNum;
-        if (index != -1) {
-            newNum = stringNum.substring(0, index);
-        } 
-        return newNum.length;
-    }
 }
 
 module.exports = Tools;
