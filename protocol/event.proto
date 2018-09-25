@@ -1,0 +1,30 @@
+package msg;
+import "define.proto";
+import "serialize.proto";
+//旅行数据
+message GW2C_AckTravelData
+{
+    optional TravelData data = 1;
+}
+//事件数据
+message GW2C_AckEventData
+{
+    repeated uint32 ids = 1;
+}
+//上供
+message C2GW_ReqPrepareTravel
+{
+    repeated PairNumItem items = 1;
+}
+message GW2C_AckPrepareTravel
+{
+    optional uint32 result = 1;
+}
+//查看事件
+message C2GW_ReqCheckEvent
+{
+}
+message GW2C_AckCheckEvent
+{
+    optional uint32 result = 1;
+}
