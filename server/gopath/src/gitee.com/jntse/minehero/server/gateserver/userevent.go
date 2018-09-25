@@ -81,7 +81,7 @@ func (this *UserTravel) SynEventids(user *GateUser){
 //上供
 func (this *UserTravel) PrepareTravel(user* GateUser, items []*msg.PairNumItem) (result uint32){
 	if this.travel.eventid != 0 {
-		user.SendNotify("还有已触发事件未查看"))
+		user.SendNotify("还有已触发事件未查看")
 		return 1
 	}
 	//检查物品够不够
@@ -112,7 +112,7 @@ func (this *UserTravel) PrepareTravel(user* GateUser, items []*msg.PairNumItem) 
 // 查看事件 
 func (this *UserTravel) CheckEvent(user* GateUser) (result uint32) {
 	if this.travel.eventid == 0 {
-		user.SendNotify("没有事件可被查看"))
+		user.SendNotify("没有事件可被查看")
 		return 1
 	}
 	//那看完了
@@ -135,5 +135,11 @@ func (this *UserTravel) RandomEvent() uint32 {
 	if len(this.travel.items) < 3 {
 		return 0
 	}
-	key := fmt.string("%d_%d_%d",this.travel.items[0].GetItemid(),this.travel.items[1].GetItemid(),this.travel.items[2].GetItemid())
+	key := fmt.Sprintf("%d_%d_%d",this.travel.items[0].GetItemid(),this.travel.items[1].GetItemid(),this.travel.items[2].GetItemid())
+	travel, find := tbl.TTravelBase.TravelById[key]
+	if !find {
+		//要疯狂查询咯
+		return 0
+	}
+	return travel.Event
 }
