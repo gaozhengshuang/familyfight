@@ -84,26 +84,26 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 	palace, find := this.palaces[id]
 	if !find {
 		user.SendNotify("后宫尚未开启")
-		return 1,0,items,nil
+		return 1,items,nil
 	}
 	palacetmpl := PalaceMgr().GetPalaceConfig(id)
 	if palacetmpl == nil {
 		user.SendNotify("没有后宫配置")
-		return 1,0,items,nil
+		return 1,items,nil
 	}
 	mastertmpl := PalaceMgr().GetMasterConfig(id, palace.level)
 	if mastertmpl == nil {
 		user.SendNotify("没有主子配置")
-		return 2,0,items,nil
+		return 2,items,nil
 	}
 	maidsconfig := PalaceMgr().GetMaidConfig(id)
 	if len(maidsconfig) == 0 {
 		user.SendNotify("没有女仆配置")
-		return 3,0,items,nil
+		return 3,items,nil
 	}
 	if palace.endtime > uint64(util.CURTIME()) {
 		user.SendNotify("时间还未到")
-		return 4,0,items,nil
+		return 4,items,nil
 	}
 	//可以收取了 根据宫女计算金币和物品吧
 	gold = 0
