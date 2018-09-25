@@ -8,20 +8,17 @@ cc.Class({
     },
 
     onLoad() {
-        this.initNotification();
-    },
-
-    onEnable() {
-        this.updateView();
-    },
-
-    start() {
     },
 
     update(dt) {
     },
 
-    onDestroy() {
+    onEnable() {
+        this.initNotification();
+        this.updateView();
+    },
+
+    onDisable() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MAID_UPDATESHOP, this, this.updateTableView);
     },
 
