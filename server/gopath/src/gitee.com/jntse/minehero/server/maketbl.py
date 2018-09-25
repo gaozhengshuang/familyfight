@@ -230,6 +230,8 @@ gen.maketbl_excel('TTurnBrandBase','turnbrandbase','TurnBrand.xlsx')
 gen.maketbl_excel('TPalaceMapBase','palacemapbase','PalaceMap.xlsx')
 gen.maketbl_excel('TPalaceMapMaidBase','palacemapmaidbase','PalaceMapMaid.xlsx')
 gen.maketbl_excel('TPalaceMapMasterLevelsBase','palacemapmasterlevelsbase','PalaceMapMasterLevels.xlsx')
+gen.maketbl_excel('TTravelBase','travelbase','Travel.xlsx')
+gen.maketbl_excel('TEventBase','eventbase','Event.xlsx')
 
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')

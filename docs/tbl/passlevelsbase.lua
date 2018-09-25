@@ -6,7 +6,7 @@ export var PassLevels : table.IPassLevelsDefine[] = [
 		{ Id : 1, Name : "绣女", Path : "Image/GameScene/Pass/pass_1", NextLevels : 2, DialogueID : 1 	},
 		{ Id : 2, Name : "作弊", Path : "Image/GameScene/Pass/pass_2", NextLevels : 3, DialogueID : 33 	},
 		{ Id : 3, Name : "皇后千秋", Path : "Image/GameScene/Pass/pass_4", NextLevels : 4, DialogueID : 7 	},
-		{ Id : 4, Name : "入长春宫", Path : "Image/GameScene/Pass/pass_5", NextLevels : 5, DialogueID : 25 	},
+		{ Id : 4, Name : "初入长春宫", Path : "Image/GameScene/Pass/pass_5", NextLevels : 5, DialogueID : 25 	},
 		{ Id : 5, Name : "作弊", Path : "Image/GameScene/Pass/pass_2", NextLevels : 6, DialogueID : 33 	},
 		{ Id : 6, Name : "泼水", Path : "Image/GameScene/Pass/pass_3", NextLevels : 7, DialogueID : 25 	}
 	]
