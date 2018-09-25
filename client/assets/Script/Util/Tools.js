@@ -105,6 +105,41 @@ let Tools = {
             return _.keys(obj).length;
         }
         return 0;
+    },
+    UnitConvert(num) {
+        let moneyUnits = ["", "万", "亿", "兆", "京", "垓", "秭", "穰", "沟", "涧", "正", "载", "极"]; 
+        let dividend = 10000;
+        let curentNum = num; //转换数字 
+        let curentUnit = moneyUnits[0]; //转换单位 
+        for (let i = 0; i < moneyUnits.length; i ++) { 
+            curentUnit = moneyUnits[i];
+
+            if (i > 0) {
+                if(Math.floor(curentNum/(dividend*i)) <= 0) {
+                    break;
+                }
+            }
+            
+            curentNum = curentNum / dividend;
+        }
+
+        let moenyStr = "";
+        if (num < dividend) {
+            moenyStr = `${Math.ceil(curentNum)}`;
+        } else {
+            moenyStr = curentNum.toFixed(2) + curentUnit;
+        }
+
+        return moenyStr;
+    },
+    StrNumSize(tempNum) {
+        let stringNum = tempNum.toString();
+        let index = stringNum.indexOf(".");
+        let newNum = stringNum;
+        if (index != -1) {
+            newNum = stringNum.substring(0, index);
+        } 
+        return newNum.length;
     }
 }
 
