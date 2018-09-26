@@ -3093,7 +3093,7 @@
     "content": {
       "__id__": 94
     },
-    "horizontal": true,
+    "horizontal": false,
     "vertical": true,
     "inertia": true,
     "brake": 0.5,
@@ -3101,6 +3101,7 @@
     "bounceDuration": 1,
     "scrollEvents": [],
     "cancelInnerEvents": true,
+    "_N$horizontalScrollBar": null,
     "_data": null,
     "_minCellIndex": 0,
     "_maxCellIndex": 0,
@@ -3120,7 +3121,7 @@
     "_N$cell": {
       "__uuid__": "8bb8ac67-a4f4-46b8-8947-f5c0085ceebf"
     },
-    "_N$ScrollModel": 0,
+    "_N$ScrollModel": 1,
     "_N$ViewType": 0
   },
   {
