@@ -369,7 +369,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_maid",
+    "_name": "label_reward",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -852,6 +852,9 @@
     },
     "label_gold": {
       "__id__": 20
+    },
+    "label_reward": {
+      "__id__": 13
     }
   },
   {
