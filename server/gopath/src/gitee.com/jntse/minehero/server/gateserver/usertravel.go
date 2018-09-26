@@ -116,7 +116,7 @@ func (this *UserTravel) PrepareTravel(user* GateUser, items []*msg.PairNumItem) 
 			user.RemoveItem(v.GetItemid(), uint32(v.GetNum()), "上供")
 		}
 	}
-	this.SynTravelData()
+	this.SynTravelData(user)
 	return 0
 }
 
@@ -138,8 +138,8 @@ func (this *UserTravel) CheckEvent(user* GateUser) (result uint32) {
 		this.eventids = append(this.eventids, this.travel.eventid)
 	}
 	this.travel.eventid = 0
-	this.SynTravelData()
-	this.SynEventids()
+	this.SynTravelData(user)
+	this.SynEventids(user)
 	return 0
 }
 // ========================= 数据处理 ========================= 
@@ -191,7 +191,7 @@ func (this *UserTravel) Tick(user *GateUser, now uint64) {
 		passtime := util.RandBetween(int32(tbl.Common.TravelMinTime), int32(tbl.Common.TravelMaxTime))
 		this.travel.nexttime = now + uint64(passtime)
 		if user.online {
-			this.SynTravelData()
+			this.SynTravelData(user)
 		}
 	}
 }
