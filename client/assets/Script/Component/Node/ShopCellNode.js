@@ -27,6 +27,10 @@ cc.Class({
     },
 
     init(index, data, reload, group) {
+        if (index >= Game.MaidModel.GetShopMaids().length) {
+            this.node.active = false;
+            return;
+        }
         this._target = data.target;
         this._data = data.array[index];
         this.price = Math.floor(this._data.price);
