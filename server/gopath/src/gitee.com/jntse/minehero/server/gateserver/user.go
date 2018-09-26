@@ -82,6 +82,7 @@ type GateUser struct {
 	bag           UserBag // 背包
 	maid 		  UserMaid
 	palace 		  UserPalace
+	travel 		  UserTravel
 	tm_disconnect int64
 	tm_heartbeat  int64                   // 心跳时间
 	tm_asynsave   int64                   // 异步存盘超时
@@ -101,6 +102,7 @@ func NewGateUser(account, key, token string) *GateUser {
 	u.bag.Init(u)
 	u.maid.Init()
 	u.palace.Init()
+	u.travel.Init()
 	u.tickers.Init(u.OnTicker10ms, u.OnTicker100ms, u.OnTicker1s, u.OnTicker5s, u.OnTicker1m)
 	u.cleanup = false
 	u.tm_disconnect = 0
@@ -346,6 +348,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	this.bag.PackBin(bin)
 	this.maid.PackBin(bin)
 	this.palace.PackBin(bin)
+	this.travel.PackBin(bin)
 	//
 	return bin
 }
@@ -380,6 +383,8 @@ func (this *GateUser) LoadBin() {
 	this.maid.LoadBin(this,this.bin)
 	this.palace.Init()
 	this.palace.LoadBin(this, this.bin)
+	this.travel.Init()
+	this.travel.LoadBin(this, this.bin)
 }
 
 // TODO: 存盘可以单独协程
@@ -449,6 +454,7 @@ func (this *GateUser) Syn() {
 	this.SendMsg(send)
 	this.maid.Syn(this)
 	this.palace.Syn(this)
+	this.travel.Syn(this)
 
 	this.SendUserBase()
 }
