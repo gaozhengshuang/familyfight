@@ -1569,7 +1569,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 102,
+      "width": 100,
       "height": 40
     },
     "_rotationX": 0,
@@ -2643,7 +2643,9 @@
     "image_master": {
       "__id__": 44
     },
-    "label_master": null,
+    "label_master": {
+      "__id__": 50
+    },
     "image_palaceCard": {
       "__id__": 47
     },
