@@ -111,20 +111,22 @@ let Tools = {
         let dividend = 10000;
         let curentNum = num; //转换数字 
         let curentUnit = moneyUnits[0]; //转换单位 
+
         for (let i = 0; i < moneyUnits.length; i ++) { 
             curentUnit = moneyUnits[i];
-            if(Math.floor(curentNum/(dividend*i)) <= 0) { break; }
+            if(Math.floor(curentNum/dividend) <= 0 || i >= moneyUnits.length - 1) { break; }
             curentNum = curentNum / dividend;
         }
 
-        let moenyStr = "";
-        if (num < dividend) {
-            moenyStr = `${Math.ceil(curentNum)}`;
-        } else {
-            moenyStr = curentNum.toFixed(2) + curentUnit;
+        return this.toDecimal(curentNum) + curentUnit;
+    },
+    toDecimal(x) {
+        var f = parseFloat(x);
+        if (isNaN(f)) {
+            return;
         }
-
-        return moenyStr;
+        f = Math.round(x*100)/100;
+        return f;
     },
 }
 
