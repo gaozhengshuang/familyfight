@@ -1,14 +1,14 @@
 {
   "ver": "2.0.0",
-  "uuid": "aeb15d12-abf1-4aa7-aff6-5b9e1fd1dd84",
+  "uuid": "fd89ab5a-acdc-4350-b788-9cb2cf9161b1",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "button_shop": {
+    "map_road": {
       "ver": "1.0.3",
-      "uuid": "1eb0a363-a35b-4281-b651-551ef7cb0faf",
-      "rawTextureUuid": "aeb15d12-abf1-4aa7-aff6-5b9e1fd1dd84",
+      "uuid": "1979e20d-cdb8-4540-bab5-8c1bc5dae88c",
+      "rawTextureUuid": "fd89ab5a-acdc-4350-b788-9cb2cf9161b1",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -16,10 +16,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 135,
-      "height": 135,
-      "rawWidth": 135,
-      "rawHeight": 135,
+      "width": 640,
+      "height": 619,
+      "rawWidth": 640,
+      "rawHeight": 619,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,
