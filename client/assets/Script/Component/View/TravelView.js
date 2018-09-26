@@ -26,6 +26,7 @@ cc.Class({
         tabIndex: { default: 0 }
     },
     onEnable: function () {
+        Game.NotificationController.On(Game.Define.EVENT_KEY.SUPPLYPREPARE_ACK, this, this.onClose);
         this.supplyData = Game._.cloneDeep(Game.TravelModel.supplyItems);
         this.itemDatas = [];
         for (let k in SupplyType) {
@@ -35,7 +36,7 @@ cc.Class({
             let data = this.supplyData[i];
             if (data.itemid != 0) {
                 let config = Game.ItemModel.GetItemConfig(data.itemid);
-                let index = Game._.findIndex(ItemType, Game._.get(config, 'Type', -1));
+                let index = Game._.indexOf(ItemType, Game._.get(config, 'Type', -1));
                 if (index != -1) {
                     let item = Game._.find(this.itemDatas[index], { itemid: data.itemid });
                     if (item != null) {
@@ -50,6 +51,9 @@ cc.Class({
         this.onSwitchTab(null, 0);
         this._updateSupplyView();
     },
+    onDestroy: function () {
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.SUPPLYPREPARE_ACK, this, this.onClose);
+    },
     onSwitchTab: function (event, index) {
         this.tabIndex = index;
         for (let i = 0; i < this.tabButtons.length; i++) {
@@ -61,10 +65,10 @@ cc.Class({
             labelNode.color = (i == index ? TabSelectColor : TabNormalColor);
         }
         this.tableView.clear();
-        this.tableView.initTableView(this.itemDatas[index].length, { array: this.itemDatas[index], target: this, selectid: this.supplyData[index].itemid });
+        this.tableView.initTableView(24, { array: this.itemDatas[index], target: this, selectid: this.supplyData[index].itemid });
     },
     onConfirm: function () {
-        this.onClose();
+        Game.NetWorkController.Send('msg.C2GW_ReqPrepareTravel', { items: this.supplyData });
     },
     onSupplyItemClick: function (index) {
         let items = this.itemDatas[this.tabIndex];
@@ -87,7 +91,7 @@ cc.Class({
                 let supplyItemNode = cell.getComponent(SupplyItemNode);
                 let id = supplyItemNode.GetId()
                 if (id != -1) {
-                    id == item.itemid ? supplyItemNode.Select() : supplyItemNode.Unselect();
+                    id == supplyItem.itemid ? supplyItemNode.Select() : supplyItemNode.Unselect();
                 }
             }
         }.bind(this));

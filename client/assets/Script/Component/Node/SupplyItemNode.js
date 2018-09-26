@@ -42,7 +42,7 @@ cc.Class({
     onItemClick: function () {
         if (this.data != null) {
             //点击了
-            Game.Tools.InvokeCallback(this.target.onSupplyItemClick, this.index);
+            Game.Tools.InvokeCallback(this.target.onSupplyItemClick.bind(this.target), this.index);
         }
     },
     Select: function () {

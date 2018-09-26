@@ -69,7 +69,7 @@ ItemModel.prototype.onGW2C_AddPackageItem = function (msgid, data) {
 }
 
 ItemModel.prototype.onGW2C_RemovePackageItem = function (msgid, data) {
-    let item = _.find(this.items, { itemid: data.itemid });
+    let index = _.findIndex(this.items, { itemid: data.itemid });
     if (index == -1) {
         console.log('[严重错误] 玩家物品数据缺失 ' + data.itemid);
     } else {

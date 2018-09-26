@@ -28,10 +28,13 @@
     "_components": [
       {
         "__id__": 120
+      },
+      {
+        "__id__": 121
       }
     ],
     "_prefab": {
-      "__id__": 121
+      "__id__": 122
     },
     "_id": "",
     "_opacity": 255,
@@ -3809,6 +3812,18 @@
     "supplyData": null,
     "itemDatas": [],
     "tabIndex": 0
+  },
+  {
+    "__type__": "9c827Ff719G4oql+MIFvI57",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "node_playDlg": {
+      "__id__": 6
+    }
   },
   {
     "__type__": "cc.PrefabInfo",
