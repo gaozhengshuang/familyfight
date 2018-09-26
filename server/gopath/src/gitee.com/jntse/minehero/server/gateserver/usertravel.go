@@ -161,3 +161,22 @@ func (this *UserTravel) RandomEvent() uint32 {
 	}
 	return travel.Event
 }
+
+//做tick
+func (this *UserTravel) Tick(now uint64) {
+	if this.travel.nexttime <= now {
+		//到时间了 触发事件
+		eventid := this.RandomEvent()
+		if eventid != 0 {
+			this.travel.eventid = eventid
+		}
+		//消耗掉供品
+		for _, v := range this.travel.items {
+			v.Itemid = pb.Uint32(0)
+			v.Num = pb.Uint64(0)
+		}
+		//随机下次时间
+		passtime := util.RandBetween(int32(tbl.Common.TravelMinTime), int32(tbl.Common.TravelMaxTime))
+		this.travel.nexttime = now + uint64(passtime)
+	}
+}

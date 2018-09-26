@@ -16,6 +16,9 @@ UserModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_RetLogin', this, this.onGW2C_RetLogin);
     NetWorkController.AddListener('msg.GW2C_UpdateGold', this, this.onGW2C_UpdateGold);
 
+    NotificationController.On(Define.EVENT_KEY.USERINFO_ADDGOLD, this, this.AddGold);
+    NotificationController.On(Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, this, this.SubtractGold);
+
     Tools.InvokeCallback(cb);
 }
 
