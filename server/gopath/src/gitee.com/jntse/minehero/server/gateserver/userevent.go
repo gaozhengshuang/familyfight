@@ -140,7 +140,7 @@ func (this *UserTravel) RandomEvent() uint32 {
 	travel, find := tbl.TTravelBase.TravelById[key]
 	if !find {
 		//要疯狂查询咯
-		travels := make([]*tabel.TravelDefine, 0)
+		travels := make([]*table.TravelDefine, 0)
 		keys := make([]string, 0)
 		keys = append(keys,fmt.Sprintf("%d_%d_0",this.travel.items[0].GetItemid(),this.travel.items[1].GetItemid()))
 		keys = append(keys,fmt.Sprintf("%d_0_%d",this.travel.items[0].GetItemid(),this.travel.items[2].GetItemid()))
@@ -157,7 +157,7 @@ func (this *UserTravel) RandomEvent() uint32 {
 		if len(travels) == 0 {
 			return 0
 		}
-		travel = travels[util.RandBetween(0, len(travels) - 1)]
+		travel = travels[util.RandBetween(0, int32(len(travels) - 1))]
 	}
 	return travel.Event
 }
