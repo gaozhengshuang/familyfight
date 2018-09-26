@@ -423,7 +423,6 @@ func on_C2GW_ReqPrepareTravel(session network.IBaseNetSession, message interface
 }
 //查看事件
 func on_C2GW_ReqCheckEvent(session network.IBaseNetSession, message interface{}) {
-	tmsg := message.(*msg.C2GW_ReqCheckEvent)
 	user := ExtractSessionUser(session)
 	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
