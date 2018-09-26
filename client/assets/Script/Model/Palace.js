@@ -80,7 +80,9 @@ PalaceModel.prototype.onGW2C_RetPalaceTakeBack = function (msgid, data) {
                 break;
             }
         }
-    
+        
+        let goldInfo = _.find(data.items, {'itemid': 50001});
+        NotificationController.Emit(Define.EVENT_KEY.USERINFO_ADDGOLD, goldInfo.num);
         NotificationController.Emit(Define.EVENT_KEY.PALACETASK_ACK);
     }
 }

@@ -1,7 +1,6 @@
 let NetWorkController = require('../Controller/NetWorkController');
 let NotificationController = require('../Controller/NotificationController');
 let ConfigController = require('../Controller/ConfigController');
-let UserModel = require('./User');
 let Tools = require("../Util/Tools");
 let Define = require("../Util/Define");
 
@@ -114,7 +113,7 @@ MaidModel.prototype.onGW2C_AckMaidShop = function (msgid, data) {
 
 MaidModel.prototype.onGW2C_AckBuyMaid = function (msgid, data) {
     if (data.result == 0) {
-        UserModel.SubtractGold(data.price);
+        NotificationController.Emit(Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, data.price);
     }
 }
 

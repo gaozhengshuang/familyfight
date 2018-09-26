@@ -34,7 +34,7 @@ cc.Class({
 
     updateGold(gold) {
         this.gold = gold;
-        this.label_gold.string = `+${this.gold*2}`;
+        this.label_gold.string = `+${Game.Tools.UnitConvert(this.gold*2)}`;
     },
 
     playGoldAni() {

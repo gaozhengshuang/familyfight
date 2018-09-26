@@ -27,6 +27,6 @@ cc.Class({
     },
 
     updateGold(gold) {
-        this.label_gold.string = `${gold}`;
+        this.label_gold.string = `${Game.Tools.UnitConvert(gold)}`;
     }
 });

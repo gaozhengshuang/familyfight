@@ -113,8 +113,6 @@ cc.Class({
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
 
         this.getItemBtnStateView();
-        Game.UserModel.AddGold(Game.PalaceModel.GetPalaceTakeBack().gold);
-
         this.openView(Game.UIName.UI_PALACETASKITEM);
     },
 
