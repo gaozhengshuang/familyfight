@@ -847,14 +847,14 @@
     "image_button": {
       "__id__": 23
     },
-    "label_maid": {
-      "__id__": 13
-    },
     "label_gold": {
       "__id__": 20
     },
     "label_reward": {
       "__id__": 13
+    },
+    "label_name": {
+      "__id__": 9
     }
   },
   {
