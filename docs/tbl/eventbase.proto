@@ -23,6 +23,12 @@ message EventDefine
 	
 	
 	optional uint32 Event = 2; // 触发后的事件
+	
+	
+	optional string EventName = 3; // 事件名称
+	
+	
+	optional string EventPath = 4; // 事件图片路径
 
 }
 
