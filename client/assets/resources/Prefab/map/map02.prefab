@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "GameSceneView",
+    "_name": "map02",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -28,13 +28,9 @@
     ],
     "_tag": -1,
     "_active": true,
-    "_components": [
-      {
-        "__id__": 11
-      }
-    ],
+    "_components": [],
     "_prefab": {
-      "__id__": 12
+      "__id__": 11
     },
     "_id": "",
     "_opacity": 255,
@@ -158,14 +154,14 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "cbd6a696-76c9-4af6-9da0-7fb68c04a0e4"
+      "__uuid__": "dfd316b6-3014-4f63-a453-860804387d66"
     },
     "fileId": "26WOlcs39EMbtG2iXvNr5h",
     "sync": false
   },
   {
     "__type__": "cc.Node",
-    "_name": "map_road",
+    "_name": "map_palace",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -198,8 +194,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 640,
-      "height": 619
+      "width": 720,
+      "height": 366
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -208,7 +204,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -267
+      "y": 281
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -226,7 +222,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "1979e20d-cdb8-4540-bab5-8c1bc5dae88c"
+      "__uuid__": "039e7aca-0122-40da-a77a-b40e3857483b"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -249,14 +245,14 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "cbd6a696-76c9-4af6-9da0-7fb68c04a0e4"
+      "__uuid__": "dfd316b6-3014-4f63-a453-860804387d66"
     },
-    "fileId": "d1P7o2QTFFopjr/40vlINy",
+    "fileId": "62TMHmSfxOIrIwRyhSdNYa",
     "sync": false
   },
   {
     "__type__": "cc.Node",
-    "_name": "map_gardan",
+    "_name": "image_palaceCard3",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -289,8 +285,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 720,
-      "height": 565
+      "width": 63,
+      "height": 95
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -299,7 +295,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 357
+      "y": 340
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -317,7 +313,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "df401b66-c35c-4c63-a608-61795739bf1b"
+      "__uuid__": "f90772ed-3de2-4f31-a8ea-cebee11564c5"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -340,25 +336,10 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "cbd6a696-76c9-4af6-9da0-7fb68c04a0e4"
+      "__uuid__": "dfd316b6-3014-4f63-a453-860804387d66"
     },
-    "fileId": "3ebI7ZdXJJB75MM2TJCA4R",
+    "fileId": "83QzmbDgROdrS8b69iKxGU",
     "sync": false
-  },
-  {
-    "__type__": "38ef3cral9HnKN6N4tCBo3s",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "_url": "Prefab/GameSceneView",
-    "node_player": null,
-    "node_pass": null,
-    "prefab_player": {
-      "__uuid__": "996f9f27-59ba-416d-8417-69615d2edff6"
-    }
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -366,7 +347,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "cbd6a696-76c9-4af6-9da0-7fb68c04a0e4"
+      "__uuid__": "dfd316b6-3014-4f63-a453-860804387d66"
     },
     "fileId": "959QTmchZB2o3aKl08OznG",
     "sync": false

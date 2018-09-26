@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "GameSceneView",
+    "_name": "map03",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -28,13 +28,9 @@
     ],
     "_tag": -1,
     "_active": true,
-    "_components": [
-      {
-        "__id__": 11
-      }
-    ],
+    "_components": [],
     "_prefab": {
-      "__id__": 12
+      "__id__": 11
     },
     "_id": "",
     "_opacity": 255,
@@ -344,21 +340,6 @@
     },
     "fileId": "86ssJJ2jxNhJh1rdsxPafE",
     "sync": false
-  },
-  {
-    "__type__": "38ef3cral9HnKN6N4tCBo3s",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "_url": "Prefab/GameSceneView",
-    "node_player": null,
-    "node_pass": null,
-    "prefab_player": {
-      "__uuid__": "996f9f27-59ba-416d-8417-69615d2edff6"
-    }
   },
   {
     "__type__": "cc.PrefabInfo",
