@@ -23,8 +23,8 @@ TravelModel.prototype.Init = function (cb) {
  * 消息处理接口
  */
 TravelModel.prototype.onTravelData = function (msgid, data) {
-    this.supplyItems = data.items;
-    this.eventid = data.eventid;
+    this.supplyItems = data.data.items;
+    this.eventid = data.data.eventid;
     NotificationController.Emit(Define.EVENT_KEY.TRAVELDATA_UPDATE);
 }
 

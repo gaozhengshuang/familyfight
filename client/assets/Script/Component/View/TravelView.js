@@ -47,8 +47,8 @@ cc.Class({
                 }
             }
         }
-
         this.onSwitchTab(null, 0);
+        this._updateSupplyView();
     },
     onSwitchTab: function (event, index) {
         this.tabIndex = index;
@@ -71,22 +71,14 @@ cc.Class({
         let item = items[index];
         //点击了这个物品
         let supplyItem = this.supplyData[this.tabIndex];
-        let iconSprite = this.supplyIconSprites[this.tabIndex];
-        let detailLabel = this.supplyDetailLabels[this.tabIndex];
         if (supplyItem.itemid == item.itemid) {
             //取消选择
             supplyItem.itemid = 0;
             supplyItem.num = 0;
-            iconSprite.spriteFrame = null;
-            detailLabel.string = '';
         } else {
             //选择
             supplyItem.itemid = item.itemid;
             supplyItem.num = 1;
-            Game.ResController.GetSpriteFrameByName(item.config.Itempath, function (err, res) {
-                iconSprite.spriteFrame = res;
-            });
-            detailLabel.string = item.config.Desc;
         }
         //更新物品吧
         this.tableView.getCells(function (cells) {
@@ -99,5 +91,25 @@ cc.Class({
                 }
             }
         }.bind(this));
+        this._updateSupplyView();
     },
+    _updateSupplyView: function () {
+        for (let i = 0; i < 3; i++) {
+            let iconSprite = this.supplyIconSprites[i];
+            let detailLabel = this.supplyDetailLabels[i];
+            let supplyItem = this.supplyData[i];
+            if (supplyItem.itemid == 0) {
+                iconSprite.spriteFrame = null;
+                detailLabel.string = '';
+            } else {
+                let config = Game.ItemModel.GetItemConfig(supplyItem.itemid)
+                Game.ResController.GetSpriteFrameByName(config.Itempath, function (err, res) {
+                    if (!err) {
+                        iconSprite.spriteFrame = res;
+                    }
+                });
+                detailLabel.string = config.Desc;
+            }
+        }
+    }
 });

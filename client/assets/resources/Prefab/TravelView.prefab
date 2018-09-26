@@ -3633,7 +3633,7 @@
       "__id__": 110
     },
     "_enabled": true,
-    "transition": 2,
+    "transition": 3,
     "pressedColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -3807,7 +3807,7 @@
       "__id__": 96
     },
     "supplyData": null,
-    "itemData": [],
+    "itemDatas": [],
     "tabIndex": 0
   },
   {
