@@ -32,6 +32,9 @@ message PassLevelsDefine
 	
 	
 	optional int32 DialogueID = 5; // 对话ID
+	
+	
+	optional string MapPrefab = 6; // 地图预制
 
 }
 

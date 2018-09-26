@@ -67,6 +67,9 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPalaceTakeBack{}, on_C2GW_ReqPalaceTakeBack)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMasterLevelup{}, on_C2GW_ReqMasterLevelup)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMaidUnlock{}, on_C2GW_ReqMaidUnlock)
+	//御赐
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPrepareTravel{}, on_C2GW_ReqPrepareTravel)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqCheckEvent{}, on_C2GW_ReqCheckEvent)
 }
 
 // 客户端心跳
@@ -396,5 +399,44 @@ func on_C2GW_ReqMaidUnlock(session network.IBaseNetSession, message interface{})
 	send := &msg.GW2C_RetMaidUnlock{}
 	send.Result = pb.Uint32(result)
 	send.Data = data
+	user.SendMsg(send)
+}
+//上供
+func on_C2GW_ReqPrepareTravel(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqPrepareTravel)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result := user.travel.PrepareTravel(user, tmsg.GetItems())
+	send := &msg.GW2C_AckPrepareTravel{}
+	send.Result = pb.Uint32(result)
+	user.SendMsg(send)
+}
+//查看事件
+func on_C2GW_ReqCheckEvent(session network.IBaseNetSession, message interface{}) {
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result := user.travel.CheckEvent(user)
+	send := &msg.GW2C_AckCheckEvent{}
+	send.Result = pb.Uint32(result)
 	user.SendMsg(send)
 }
