@@ -2,5 +2,7 @@
 	"Tool": "github.com/davyxu/tabtoy",
 	"Version": "2.8.10",
 	"Event":[
-		{ "Id": 1, "Event": 1001 }
+		{ "Id": 1, "Event": 1001, "EventName": "璎珞保护茉莉花", "EventPath": "Image/GameScene/Event/1001" },
+		{ "Id": 2, "Event": 1002, "EventName": "茉莉花遭雨淋", "EventPath": "Image/GameScene/Event/1002" },
+		{ "Id": 3, "Event": 1003, "EventName": "宫女感冒", "EventPath": "Image/GameScene/Event/1003" }
 	]}

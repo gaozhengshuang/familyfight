@@ -31,7 +31,7 @@ var Define = {
 
         MERGE_PLAYER: '1001',
         ADD_PLAYER: '1002',
-        UPDATE_PLAYER: '1003',
+        UPDATE_GAMEVIEW: '1003',
         MERGEPLAYER_ACK: '1004',
         FINDNEW_PLAYER: '1005',
         SHOWDIALOGUE_PLAYER: '1006',
