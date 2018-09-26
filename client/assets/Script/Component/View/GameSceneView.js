@@ -6,6 +6,7 @@ cc.Class({
     properties: {
         node_player: { default: null, type: cc.Node },
         node_pass: { default: null, type: cc.Node },
+        node_bg: { default: null, type: cc.Node },
         prefab_player: { default: null, type: cc.Prefab },
     },
 
@@ -29,7 +30,7 @@ cc.Class({
     onDestroy() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
-        Game.NotificationController.Off(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW, this, this.updateGameView);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.ackMergePlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
@@ -50,7 +51,7 @@ cc.Class({
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGE_PLAYER, this, this.findPlayerAndMerge);
         Game.NotificationController.On(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
-        Game.NotificationController.On(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updatePlayer);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW, this, this.updateGameView);
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.ackMergePlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
@@ -63,7 +64,12 @@ cc.Class({
             cc.sys.localStorage.setItem('lookTopPass', 1);
         }
 
+        this.updateGameView();
+    },
+
+    updateGameView() {
         this.updatePlayer();
+        this.updatePassBg();
     },
 
     updatePlayer() {
@@ -77,6 +83,21 @@ cc.Class({
                     this.createPlayer(player.id);
                 }
             }
+        }
+    },
+
+    updatePassBg() {
+        let passBase = Game.ConfigController.GetConfigById("PassLevels", Game.MaidModel.GetCurPass());
+        if (passBase) {
+            this.node_bg.destroyAllChildren();
+            cc.loader.loadRes(passBase.MapPrefab, function (err, prefab) {
+                if (err) {
+                    console.log('[严重错误] 奖励资源加载错误 ' + err);
+                } else {
+                    let _view = cc.instantiate(prefab);
+                    this.node_bg.addChild(_view);
+                }
+            }.bind(this));
         }
     },
 

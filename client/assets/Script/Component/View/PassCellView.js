@@ -26,7 +26,7 @@ cc.Class({
             Game.MaidModel.SetCurPass(this._data.Id);
 
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_PLAYER);
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW);
         }
 
         if (this._data.Id == Game.MaidModel.GetTopPass() && cc.sys.localStorage.getItem('lookTopPass') < this._data.Id) {
