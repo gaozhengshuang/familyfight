@@ -181,9 +181,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 238,
+      "g": 238,
+      "b": 238,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -295,7 +295,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 300
+      "y": 297
     },
     "_skewX": 0,
     "_skewY": 0,
