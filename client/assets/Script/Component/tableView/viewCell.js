@@ -1,4 +1,4 @@
-cc.Class({
+let viewCell = cc.Class({
     extends: cc.Component,
 
     properties: {
@@ -72,3 +72,5 @@ cc.Class({
 
     },
 });
+
+cc.viewCell = module.export = viewCell;

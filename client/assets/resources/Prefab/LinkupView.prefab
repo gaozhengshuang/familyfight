@@ -5798,7 +5798,9 @@
       "__id__": 1
     },
     "_enabled": true,
-    "node_playDlg": null
+    "node_playDlg": {
+      "__id__": 2
+    }
   },
   {
     "__type__": "cc.PrefabInfo",
