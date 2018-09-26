@@ -6,9 +6,9 @@ cc.Class({
     properties: {
         image_maid: { default: null, type: cc.Sprite },
         image_button: { default: null, type: cc.Sprite },
-        label_maid: { default: null, type: cc.Label },
         label_gold: { default: null, type: cc.Label },
         label_reward: { default: null, type: cc.Label },
+        label_name: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -39,7 +39,7 @@ cc.Class({
         let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", this._data.id);
         if (maidBase) {
             Game.ResController.SetSprite(this.image_maid, maidBase.Path);
-            this.label_maid.string = maidBase.Name;
+            this.label_name.string = maidBase.Name;
             this.label_reward.string = `${maidBase.Reward}金币/秒`;
         }
         this.updateBtnGold();
