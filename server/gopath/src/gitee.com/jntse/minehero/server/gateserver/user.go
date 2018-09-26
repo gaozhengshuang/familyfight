@@ -413,6 +413,7 @@ func (this *GateUser) OnCreateNew() {
 	this.power = uint32(tbl.Common.PowerInit)
 	this.maxpower = uint32(tbl.Common.PowerMax)
 	this.nextpowertime = uint64(util.CURTIME()) + uint64(tbl.Common.PowerAddInterval)
+	this.travel.CreateNew()
 	this.Save()
 }
 

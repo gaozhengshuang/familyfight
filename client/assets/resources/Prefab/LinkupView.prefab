@@ -4971,8 +4971,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 224,
-      "height": 70
+      "width": 147,
+      "height": 50
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -5778,7 +5778,9 @@
       "__id__": 1
     },
     "_enabled": true,
-    "node_playDlg": null
+    "node_playDlg": {
+      "__id__": 2
+    }
   },
   {
     "__type__": "cc.PrefabInfo",

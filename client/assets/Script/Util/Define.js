@@ -39,6 +39,10 @@ var Define = {
         PALACEMAID_UNLOCK: '1008',
         PALACETASK_ACK: '1009',
         PALACEMASTERLVUP_ACK: '1010',
+
+        TRAVELDATA_UPDATE: '1100',
+        EVENTDATA_UPDATE: '1101',
+        SUPPLYPREPARE_ACK: '1102',
     },
     DATA_KEY: {
         HISTORY_PHONE: '1',
@@ -49,6 +53,13 @@ var Define = {
         INTERVAL: 10,
         TIMEOUT: 30,
     },
+    ITEM_TYPE: {
+        TYPE_PALACECARD: 1,
+        TYPE_TRAVELFOOD: 2,
+        TYPE_TRAVELGOOD: 3,
+        TYPE_TRAVELCLOTH: 4,
+        TYPE_GOLD: 5
+    }
 }
 
 module.exports = Define;

@@ -36,7 +36,7 @@ cc.Class({
             if (this.leftTime > 0) {
                 this.leftTime = this.leftTime - 1;
                 if (this.leftTime > 0) {
-                    this.label_getTime.string ='生产中\n' + Game.moment.unix(this.leftTime).format('mm:ss');
+                    this.label_getTime.string = '生产中\n' + Game.moment.unix(this.leftTime).format('mm:ss');
                 } else {
                     this.getItemBtnStateView();
                 }
@@ -80,7 +80,7 @@ cc.Class({
 
             this._palaceMaids = [];     //创建宫殿里的女仆形象
             this.node_maid.destroyAllChildren();
-            for (let i = 0; i < palaceMapBase.Maids.length; i ++) {
+            for (let i = 0; i < palaceMapBase.Maids.length; i++) {
                 let maidId = palaceMapBase.Maids[i];
                 let _maidPrefab = cc.instantiate(this.prefab_maid);
                 if (_maidPrefab) {
@@ -103,8 +103,8 @@ cc.Class({
 
     updatePalaceMaids() {
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
-        
-        Game._.forEach(this._palaceMaids, function(v) {
+
+        Game._.forEach(this._palaceMaids, function (v) {
             v.updateView();
         });
     },
@@ -131,12 +131,12 @@ cc.Class({
             this.label_get.node.active = false;
             this.label_getTime.node.active = true;
             this.leftTime = this._data.endtime - Game.TimeController.GetCurTime();
-            this.label_getTime.string = '生产中\n' +Game.moment.unix(this.leftTime).format('mm:ss');
+            this.label_getTime.string = '生产中\n' + Game.moment.unix(this.leftTime).format('mm:ss');
             Game.ResController.SetSprite(this.image_get, "Image/GameScene/Common/button_common2");
         }
     },
 
-    lvUpBtnStateView(){
+    lvUpBtnStateView() {
         let masterLvUpBase = Game.PalaceModel.GetPalaceMasterLvUpBase(this.masterId, this._data.level);  //主人升级相关
         if (masterLvUpBase) {
             let lvItemBase = masterLvUpBase.LevelupCost[0];
@@ -158,11 +158,14 @@ cc.Class({
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_PALACEMASTERLVUP);
     },
-
+    onOpenTravel(event) {
+        event.stopPropagationImmediate();
+        this.openView(Game.UIName.UI_TRAVELVIEW);
+    },
     onReqPalaceTakeBack() {
-        Game.NetWorkController.Send('msg.C2GW_ReqPalaceTakeBack', 
-        {
-            id: Game.PalaceModel.GetCurPalaceId(),
-        });
+        Game.NetWorkController.Send('msg.C2GW_ReqPalaceTakeBack',
+            {
+                id: Game.PalaceModel.GetCurPalaceId(),
+            });
     }
 });

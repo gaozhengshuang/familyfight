@@ -61,7 +61,7 @@ func (this *UserTravel) PackBin(bin *msg.Serialize) {
 		bin.Eventids = append(bin.Eventids, v)
 	}
 }
-// ========================= 对外接口 ========================= 
+// ========================= 对外接口 =========================
 func (this *UserTravel) Syn(user* GateUser) {
 	this.SynTravelData(user)
 	this.SynEventids(user)
@@ -77,6 +77,15 @@ func (this *UserTravel) SynEventids(user *GateUser){
 		send.Ids = append(send.Ids, v)
 	}
 	user.SendMsg(send)
+}
+func (this *UserTravel) CreateNew() {
+	passtime := util.RandBetween(int32(tbl.Common.TravelMinTime), int32(tbl.Common.TravelMaxTime))
+	this.travel.nexttime = uint64(util.CURTIMEMS()) + uint64(passtime)
+	this.travel.items = make([]*msg.PairNumItem, 0)
+	for i := 0; i < 3; i++ {
+		this.travel.items = append(this.travel.items, &msg.PairNumItem{ Itemid: pb.Uint32(0), Num: pb.Uint64(0)})
+	}
+	this.travel.eventid = 0
 }
 // ========================= 消息接口 =========================
 //上供

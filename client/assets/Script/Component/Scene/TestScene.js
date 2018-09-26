@@ -9,28 +9,22 @@ cc.Class({
     onLoad() {
     },
     start() {
+        let a = [{
+            a: 1,
+            b: 1,
+        }, {
+            b: 1,
+            c: 2,
+        }, {
+            c: 2,
+            d: 3
+        }];
+        console.log(Game._.filter(a, { c: 2 }));
     },
     update(dt) {
     },
     onStartTest: function () {
         // let info = this.inputEditbox.string;
-        let info = JSON.stringify({
-            a: 1,
-            b: [2, 3],
-            c: {
-                d: 4,
-                e: [
-                    {
-                        f: 5,
-                        g: 6
-                    }, {
-                        h: 7
-                    }
-                ]
-            }
-        });
-        let str = Game.Crypto.AESEncrypt(info);
-        this.infoLabel.string = str;
     },
     onStartTest2: function () {
         let info = this.infoLabel.string;
