@@ -53,7 +53,7 @@ message C2GW_ReqTravelView
 {
     optional bool open = 1;
 }
-messge GW2C_AckTravelView
+message GW2C_AckTravelView
 {
     optional bool open = 1;
 }
