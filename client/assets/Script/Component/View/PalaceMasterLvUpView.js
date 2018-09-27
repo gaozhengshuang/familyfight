@@ -10,6 +10,7 @@ cc.Class({
         label_name: { default:null, type:cc.Label },
         label_detail: { default:null, type:cc.Label },
         label_lvTitle: { default:null, type:cc.Label },
+        label_UpTitle: { default:null, type:cc.Label },
         label_cardNum: { default:null, type:cc.Label },
     },
 
@@ -70,7 +71,8 @@ cc.Class({
 
                 let nextMasterLvUpBase = Game.PalaceModel.GetPalaceMasterLvUpBase(palaceMapBase.Master, this._data.level + 1); //下个等级数据
                 if (nextMasterLvUpBase) {
-                    this.label_lvTitle.string = masterLvUpBase.levelName + ">>>" + nextMasterLvUpBase.levelName;
+                    this.label_lvTitle.string = masterLvUpBase.levelName;
+                    this.label_UpTitle.string = nextMasterLvUpBase.levelName;
                 } else {
                     this.label_lvTitle.string = masterLvUpBase.levelName;
                 }
