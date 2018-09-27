@@ -30,14 +30,13 @@ func TestScopeWithEscapedVariable(t *testing.T) {
 		// isn't shadowed is a variable that escapes to the heap and figures in
 		// debug_info as '&a'. Evaluating 'a' should yield the escaped variable.
 
-		avar, err := evalVariable(p, "a")
-		assertNoError(err, t, "EvalVariable(a)")
+		avar := evalVariable(p, t, "a")
 		if aval, _ := constant.Int64Val(avar.Value); aval != 3 {
 			t.Errorf("wrong value for variable a: %d", aval)
 		}
 
 		if avar.Flags&proc.VariableEscaped == 0 {
-			t.Errorf("variale a isn't escaped to the heap")
+			t.Errorf("variable a isn't escaped to the heap")
 		}
 	})
 }
@@ -86,34 +85,14 @@ func TestScope(t *testing.T) {
 				}
 				assertNoError(err, t, "Continue()")
 			}
-			bp, _, _ := p.CurrentThread().Breakpoint()
+			bp := p.CurrentThread().Breakpoint()
 
 			scopeCheck := findScopeCheck(scopeChecks, bp.Line)
 			if scopeCheck == nil {
 				t.Errorf("unknown stop position %s:%d %#x", bp.File, bp.Line, bp.Addr)
 			}
 
-			scope, err := proc.GoroutineScope(p.CurrentThread())
-			assertNoError(err, t, "GoroutineScope()")
-
-			args, err := scope.FunctionArguments(normalLoadConfig)
-			assertNoError(err, t, "FunctionArguments()")
-			locals, err := scope.LocalVariables(normalLoadConfig)
-			assertNoError(err, t, "LocalVariables()")
-
-			for _, arg := range args {
-				scopeCheck.checkVar(arg, t)
-			}
-
-			for _, local := range locals {
-				scopeCheck.checkVar(local, t)
-			}
-
-			for i := range scopeCheck.varChecks {
-				if !scopeCheck.varChecks[i].ok {
-					t.Errorf("%d: variable %s not found", scopeCheck.line, scopeCheck.varChecks[i].name)
-				}
-			}
+			scope, _ := scopeCheck.checkLocalsAndArgs(p, t)
 
 			var prev *varCheck
 			for i := range scopeCheck.varChecks {
@@ -128,7 +107,7 @@ func TestScope(t *testing.T) {
 			}
 
 			scopeCheck.ok = true
-			_, err = p.ClearBreakpoint(bp.Addr)
+			_, err := p.ClearBreakpoint(bp.Addr)
 			assertNoError(err, t, "ClearBreakpoint")
 		}
 	})
@@ -255,11 +234,39 @@ func (check *scopeCheck) Parse(descr string, t *testing.T) {
 	}
 }
 
+func (scopeCheck *scopeCheck) checkLocalsAndArgs(p proc.Process, t *testing.T) (*proc.EvalScope, bool) {
+	scope, err := proc.GoroutineScope(p.CurrentThread())
+	assertNoError(err, t, "GoroutineScope()")
+
+	ok := true
+
+	args, err := scope.FunctionArguments(normalLoadConfig)
+	assertNoError(err, t, "FunctionArguments()")
+	locals, err := scope.LocalVariables(normalLoadConfig)
+	assertNoError(err, t, "LocalVariables()")
+
+	for _, arg := range args {
+		scopeCheck.checkVar(arg, t)
+	}
+
+	for _, local := range locals {
+		scopeCheck.checkVar(local, t)
+	}
+
+	for i := range scopeCheck.varChecks {
+		if !scopeCheck.varChecks[i].ok {
+			t.Errorf("%d: variable %s not found", scopeCheck.line, scopeCheck.varChecks[i].name)
+			ok = false
+		}
+	}
+
+	return scope, ok
+}
+
 func (check *scopeCheck) checkVar(v *proc.Variable, t *testing.T) {
 	var varCheck *varCheck
 	for i := range check.varChecks {
-		varCheck = &check.varChecks[i]
-		if !varCheck.ok && (varCheck.name == v.Name) {
+		if !check.varChecks[i].ok && (check.varChecks[i].name == v.Name) {
 			varCheck = &check.varChecks[i]
 			break
 		}
@@ -267,6 +274,7 @@ func (check *scopeCheck) checkVar(v *proc.Variable, t *testing.T) {
 
 	if varCheck == nil {
 		t.Errorf("%d: unexpected variable %s", check.line, v.Name)
+		return
 	}
 
 	varCheck.check(check.line, v, t, "FunctionArguments+LocalVariables")

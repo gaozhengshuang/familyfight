@@ -1,6 +1,7 @@
 package native
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/derekparker/delve/pkg/proc"
@@ -12,16 +13,14 @@ import (
 // a whole, and Status represents the last result of a `wait` call
 // on this thread.
 type Thread struct {
-	ID                       int              // Thread ID or mach port
-	Status                   *WaitStatus      // Status returned from last wait call
-	CurrentBreakpoint        *proc.Breakpoint // Breakpoint thread is currently stopped at
-	BreakpointConditionMet   bool             // Output of evaluating the breakpoint's condition
-	BreakpointConditionError error            // Error evaluating the breakpoint's condition
+	ID                int                  // Thread ID or mach port
+	Status            *WaitStatus          // Status returned from last wait call
+	CurrentBreakpoint proc.BreakpointState // Breakpoint thread is currently stopped at
 
 	dbp            *Process
 	singleStepping bool
-	running        bool
 	os             *OSSpecificDetails
+	common         proc.CommonThread
 }
 
 // Continue the execution of this thread.
@@ -51,11 +50,9 @@ func (thread *Thread) Continue() error {
 // execute the instruction, and then replace the breakpoint.
 // Otherwise we simply execute the next instruction.
 func (thread *Thread) StepInstruction() (err error) {
-	thread.running = true
 	thread.singleStepping = true
 	defer func() {
 		thread.singleStepping = false
-		thread.running = false
 	}()
 	pc, err := thread.PC()
 	if err != nil {
@@ -65,7 +62,7 @@ func (thread *Thread) StepInstruction() (err error) {
 	bp, ok := thread.dbp.FindBreakpoint(pc)
 	if ok {
 		// Clear the breakpoint so that we can continue execution.
-		_, err = thread.ClearBreakpoint(bp)
+		err = thread.ClearBreakpoint(bp)
 		if err != nil {
 			return err
 		}
@@ -106,53 +103,24 @@ func (thread *Thread) BinInfo() *proc.BinaryInfo {
 	return &thread.dbp.bi
 }
 
-// SetPC sets the PC for this thread.
-func (thread *Thread) SetPC(pc uint64) error {
-	regs, err := thread.Registers(false)
-	if err != nil {
-		return err
-	}
-	return regs.SetPC(thread, pc)
-}
-
-// Stopped returns whether the thread is stopped at
-// the operating system level. Actual implementation
-// is OS dependant, look in OS thread file.
-func (thread *Thread) Stopped() bool {
-	return thread.stopped()
-}
-
-// Halt stops this thread from executing. Actual
-// implementation is OS dependant. Look in OS
-// thread file.
-func (thread *Thread) Halt() (err error) {
-	defer func() {
-		if err == nil {
-			thread.running = false
-		}
-	}()
-	if thread.Stopped() {
-		return
-	}
-	err = thread.halt()
-	return
+func (thread *Thread) Common() *proc.CommonThread {
+	return &thread.common
 }
 
 // SetCurrentBreakpoint sets the current breakpoint that this
 // thread is stopped at as CurrentBreakpoint on the thread struct.
 func (thread *Thread) SetCurrentBreakpoint() error {
-	thread.CurrentBreakpoint = nil
+	thread.CurrentBreakpoint.Clear()
 	pc, err := thread.PC()
 	if err != nil {
 		return err
 	}
 	if bp, ok := thread.dbp.FindBreakpoint(pc); ok {
-		thread.CurrentBreakpoint = bp
 		if err = thread.SetPC(bp.Addr); err != nil {
 			return err
 		}
-		thread.BreakpointConditionMet, thread.BreakpointConditionError = bp.CheckCondition(thread)
-		if thread.CurrentBreakpoint != nil && thread.BreakpointConditionMet {
+		thread.CurrentBreakpoint = bp.CheckCondition(thread)
+		if thread.CurrentBreakpoint.Breakpoint != nil && thread.CurrentBreakpoint.Active {
 			if g, err := proc.GetG(thread); err == nil {
 				thread.CurrentBreakpoint.HitCount[g.ID]++
 			}
@@ -162,14 +130,8 @@ func (thread *Thread) SetCurrentBreakpoint() error {
 	return nil
 }
 
-func (thread *Thread) clearBreakpointState() {
-	thread.CurrentBreakpoint = nil
-	thread.BreakpointConditionMet = false
-	thread.BreakpointConditionError = nil
-}
-
-func (th *Thread) Breakpoint() (*proc.Breakpoint, bool, error) {
-	return th.CurrentBreakpoint, th.CurrentBreakpoint != nil && th.BreakpointConditionMet, th.BreakpointConditionError
+func (th *Thread) Breakpoint() proc.BreakpointState {
+	return th.CurrentBreakpoint
 }
 
 func (th *Thread) ThreadID() int {
@@ -177,16 +139,24 @@ func (th *Thread) ThreadID() int {
 }
 
 // ClearBreakpoint clears the specified breakpoint.
-func (thread *Thread) ClearBreakpoint(bp *proc.Breakpoint) (*proc.Breakpoint, error) {
+func (thread *Thread) ClearBreakpoint(bp *proc.Breakpoint) error {
 	if _, err := thread.WriteMemory(uintptr(bp.Addr), bp.OriginalData); err != nil {
-		return nil, fmt.Errorf("could not clear breakpoint %s", err)
+		return fmt.Errorf("could not clear breakpoint %s", err)
 	}
-	return bp, nil
+	return nil
 }
 
 // Registers obtains register values from the debugged process.
 func (t *Thread) Registers(floatingPoint bool) (proc.Registers, error) {
 	return registers(t, floatingPoint)
+}
+
+func (t *Thread) RestoreRegisters(savedRegs proc.SavedRegisters) error {
+	sr, ok := savedRegs.(*savedRegisters)
+	if !ok {
+		return errors.New("unknown saved register set")
+	}
+	return t.restoreRegisters(sr)
 }
 
 func (t *Thread) PC() (uint64, error) {

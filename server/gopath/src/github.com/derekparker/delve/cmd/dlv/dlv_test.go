@@ -1,4 +1,4 @@
-package main
+package main_test
 
 import (
 	"bufio"
@@ -12,9 +12,13 @@ import (
 	"runtime"
 	"strings"
 	"testing"
+	"time"
 
+	"github.com/derekparker/delve/cmd/dlv/cmds"
 	protest "github.com/derekparker/delve/pkg/proc/test"
+	"github.com/derekparker/delve/pkg/terminal"
 	"github.com/derekparker/delve/service/rpc2"
+	"github.com/spf13/cobra/doc"
 )
 
 var testBackend string
@@ -39,21 +43,23 @@ func assertNoError(err error, t testing.TB, s string) {
 	}
 }
 
-func goEnv(name string) string {
+func goPath(name string) string {
 	if val := os.Getenv(name); val != "" {
-		return val
+		// Use first GOPATH entry if there are multiple.
+		return filepath.SplitList(val)[0]
 	}
+
 	val, err := exec.Command("go", "env", name).Output()
 	if err != nil {
 		panic(err) // the Go tool was tested to work earlier
 	}
-	return strings.TrimSpace(string(val))
+	return filepath.SplitList(strings.TrimSpace(string(val)))[0]
 }
 
 func TestBuild(t *testing.T) {
 	const listenAddr = "localhost:40573"
 	var err error
-	makedir := filepath.Join(goEnv("GOPATH"), "src", "github.com", "derekparker", "delve")
+	makedir := filepath.Join(goPath("GOPATH"), "src", "github.com", "derekparker", "delve")
 	for _, makeProgram := range []string{"make", "mingw32-make"} {
 		var out []byte
 		cmd := exec.Command(makeProgram, "build")
@@ -74,13 +80,13 @@ func TestBuild(t *testing.T) {
 
 	buildtestdir := filepath.Join(fixtures, "buildtest")
 
-	cmd := exec.Command(dlvbin, "debug", "--headless=true", "--listen="+listenAddr, "--api-version=2", "--backend="+testBackend)
+	cmd := exec.Command(dlvbin, "debug", "--headless=true", "--listen="+listenAddr, "--api-version=2", "--backend="+testBackend, "--log", "--log-output=debugger,rpc")
 	cmd.Dir = buildtestdir
-	stdout, err := cmd.StdoutPipe()
-	assertNoError(err, t, "stdout pipe")
+	stderr, err := cmd.StderrPipe()
+	assertNoError(err, t, "stderr pipe")
 	cmd.Start()
 
-	scan := bufio.NewScanner(stdout)
+	scan := bufio.NewScanner(stderr)
 	// wait for the debugger to start
 	scan.Scan()
 	go func() {
@@ -100,10 +106,21 @@ func TestBuild(t *testing.T) {
 	cmd.Wait()
 }
 
-func testIssue398(t *testing.T, dlvbin string, cmds []string) (stdout, stderr []byte) {
+func testOutput(t *testing.T, dlvbin, output string, delveCmds []string) (stdout, stderr []byte) {
 	var stdoutBuf, stderrBuf bytes.Buffer
 	buildtestdir := filepath.Join(protest.FindFixturesDir(), "buildtest")
-	cmd := exec.Command(dlvbin, "debug")
+
+	c := []string{dlvbin, "debug"}
+	debugbin := filepath.Join(buildtestdir, "debug")
+	if output != "" {
+		c = append(c, "--output", output)
+		if filepath.IsAbs(output) {
+			debugbin = output
+		} else {
+			debugbin = filepath.Join(buildtestdir, output)
+		}
+	}
+	cmd := exec.Command(c[0], c[1:]...)
 	cmd.Dir = buildtestdir
 	stdin, err := cmd.StdinPipe()
 	if err != nil {
@@ -111,37 +128,57 @@ func testIssue398(t *testing.T, dlvbin string, cmds []string) (stdout, stderr []
 	}
 	cmd.Stdout = &stdoutBuf
 	cmd.Stderr = &stderrBuf
+
 	if err := cmd.Start(); err != nil {
 		t.Fatal(err)
 	}
-	for _, c := range cmds {
+
+	// Give delve some time to compile and write the binary.
+	foundIt := false
+	for wait := 0; wait < 30; wait++ {
+		_, err = os.Stat(debugbin)
+		if err == nil {
+			foundIt = true
+			break
+		}
+
+		time.Sleep(1 * time.Second)
+	}
+	if !foundIt {
+		t.Errorf("running %q: file not created: %v", delveCmds, err)
+	}
+
+	for _, c := range delveCmds {
 		fmt.Fprintf(stdin, "%s\n", c)
 	}
+
 	// ignore "dlv debug" command error, it returns
 	// errors even after successful debug session.
 	cmd.Wait()
 	stdout, stderr = stdoutBuf.Bytes(), stderrBuf.Bytes()
 
-	debugbin := filepath.Join(buildtestdir, "debug")
 	_, err = os.Stat(debugbin)
 	if err == nil {
-		t.Errorf("running %q: file %v was not deleted\nstdout is %q, stderr is %q", cmds, debugbin, stdout, stderr)
+		if strings.ToLower(os.Getenv("APPVEYOR")) != "true" {
+			// Sometimes delve on Appveyor can't remove the built binary before
+			// exiting and gets an "Access is denied" error when trying.
+			// See: https://ci.appveyor.com/project/derekparker/delve/build/1527
+			t.Errorf("running %q: file %v was not deleted\nstdout is %q, stderr is %q", delveCmds, debugbin, stdout, stderr)
+		}
 		return
 	}
 	if !os.IsNotExist(err) {
-		t.Errorf("running %q: %v\nstdout is %q, stderr is %q", cmds, err, stdout, stderr)
+		t.Errorf("running %q: %v\nstdout is %q, stderr is %q", delveCmds, err, stdout, stderr)
 		return
 	}
 	return
 }
 
-// TestIssue398 verifies that the debug executable is removed after exit.
-func TestIssue398(t *testing.T) {
-	tmpdir, err := ioutil.TempDir("", "TestIssue398")
+func getDlvBin(t *testing.T) (string, string) {
+	tmpdir, err := ioutil.TempDir("", "TestDlv")
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.RemoveAll(tmpdir)
 
 	dlvbin := filepath.Join(tmpdir, "dlv.exe")
 	out, err := exec.Command("go", "build", "-o", dlvbin, "github.com/derekparker/delve/cmd/dlv").CombinedOutput()
@@ -149,11 +186,67 @@ func TestIssue398(t *testing.T) {
 		t.Fatalf("go build -o %v github.com/derekparker/delve/cmd/dlv: %v\n%s", dlvbin, err, string(out))
 	}
 
-	testIssue398(t, dlvbin, []string{"exit"})
+	return dlvbin, tmpdir
+}
 
-	const hello = "hello world!"
-	stdout, _ := testIssue398(t, dlvbin, []string{"continue", "exit"})
-	if !strings.Contains(string(stdout), hello) {
-		t.Errorf("stdout %q should contain %q", stdout, hello)
+// TestOutput verifies that the debug executable is created in the correct path
+// and removed after exit.
+func TestOutput(t *testing.T) {
+	dlvbin, tmpdir := getDlvBin(t)
+	defer os.RemoveAll(tmpdir)
+
+	for _, output := range []string{"", "myownname", filepath.Join(tmpdir, "absolute.path")} {
+		testOutput(t, dlvbin, output, []string{"exit"})
+
+		const hello = "hello world!"
+		stdout, _ := testOutput(t, dlvbin, output, []string{"continue", "exit"})
+		if !strings.Contains(string(stdout), hello) {
+			t.Errorf("stdout %q should contain %q", stdout, hello)
+		}
+	}
+}
+
+func checkAutogenDoc(t *testing.T, filename, gencommand string, generated []byte) {
+	saved := slurpFile(t, os.ExpandEnv(fmt.Sprintf("$GOPATH/src/github.com/derekparker/delve/%s", filename)))
+
+	if len(saved) != len(generated) {
+		t.Fatalf("%s: needs to be regenerated; run %s", filename, gencommand)
+	}
+
+	for i := range saved {
+		if saved[i] != generated[i] {
+			t.Fatalf("%s: needs to be regenerated; run %s", filename, gencommand)
+		}
+	}
+}
+
+func slurpFile(t *testing.T, filename string) []byte {
+	saved, err := ioutil.ReadFile(filename)
+	if err != nil {
+		t.Fatalf("Could not read %s: %v", filename, err)
+	}
+	return saved
+}
+
+// TestGeneratedDoc tests that the autogenerated documentation has been
+// updated.
+func TestGeneratedDoc(t *testing.T) {
+	// Checks gen-cli-docs.go
+	var generatedBuf bytes.Buffer
+	commands := terminal.DebugCommands(nil)
+	commands.WriteMarkdown(&generatedBuf)
+	cliDocFilename := "Documentation/cli/README.md"
+	checkAutogenDoc(t, cliDocFilename, "scripts/gen-cli-docs.go", generatedBuf.Bytes())
+
+	// Checks gen-usage-docs.go
+	tempDir, err := ioutil.TempDir(os.TempDir(), "test-gen-doc")
+	assertNoError(err, t, "TempDir")
+	defer cmds.SafeRemoveAll(tempDir)
+	doc.GenMarkdownTree(cmds.New(true), tempDir)
+	entries, err := ioutil.ReadDir(tempDir)
+	assertNoError(err, t, "ReadDir")
+	for _, doc := range entries {
+		docFilename := "Documentation/usage/" + doc.Name()
+		checkAutogenDoc(t, docFilename, "scripts/gen-usage-docs.go", slurpFile(t, tempDir+"/"+doc.Name()))
 	}
 }

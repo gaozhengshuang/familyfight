@@ -39,6 +39,10 @@ type Config struct {
 	// MaxArrayValues is the maximum number of array items that the commands
 	// print, locals, args and vars should read (in verbose mode).
 	MaxArrayValues *int `yaml:"max-array-values,omitempty"`
+
+	// If ShowLocationExpr is true whatis will print the DWARF location
+	// expression for its argument.
+	ShowLocationExpr bool `yaml:"show-location-expr"`
 }
 
 // LoadConfig attempts to populate a Config object from the config.yml file.
@@ -56,8 +60,11 @@ func LoadConfig() *Config {
 
 	f, err := os.Open(fullConfigFile)
 	if err != nil {
-		createDefaultConfig(fullConfigFile)
-		return nil
+		f, err = createDefaultConfig(fullConfigFile)
+		if err != nil {
+			fmt.Printf("Error creating default config file: %v", err)
+			return nil
+		}
 	}
 	defer func() {
 		err := f.Close()
@@ -103,22 +110,16 @@ func SaveConfig(conf *Config) error {
 	return err
 }
 
-func createDefaultConfig(path string) {
+func createDefaultConfig(path string) (*os.File, error) {
 	f, err := os.Create(path)
 	if err != nil {
-		fmt.Printf("Unable to create config file: %v.", err)
-		return
+		return nil, fmt.Errorf("Unable to create config file: %v.", err)
 	}
-	defer func() {
-		err := f.Close()
-		if err != nil {
-			fmt.Printf("Closing config file failed: %v.", err)
-		}
-	}()
 	err = writeDefaultConfig(f)
 	if err != nil {
-		fmt.Printf("Unable to write default configuration: %v.", err)
+		return nil, fmt.Errorf("Unable to write default configuration: %v.", err)
 	}
+	return f, nil
 }
 
 func writeDefaultConfig(f *os.File) error {
@@ -139,6 +140,15 @@ aliases:
 # commands.
 substitute-path:
   # - {from: path, to: path}
+  
+# Maximum number of elements loaded from an array.
+# max-array-values: 64
+
+# Maximum loaded string length.
+# max-string-len: 64
+
+# Uncomment the following line to make the whatis command also print the DWARF location expression of its argument.
+# show-location-expr: true
 `)
 	return err
 }

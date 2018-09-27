@@ -73,14 +73,14 @@ func configureList(t *Term) error {
 			continue
 		}
 
-		if !field.IsNil() {
-			if field.Kind() == reflect.Ptr {
+		if field.Kind() == reflect.Ptr {
+			if !field.IsNil() {
 				fmt.Fprintf(w, "%s\t%v\n", fieldName, field.Elem())
 			} else {
-				fmt.Fprintf(w, "%s\t%v\n", fieldName, field)
+				fmt.Fprintf(w, "%s\t<not defined>\n", fieldName)
 			}
 		} else {
-			fmt.Fprintf(w, "%s\t<not defined>\n", fieldName)
+			fmt.Fprintf(w, "%s\t%v\n", fieldName, field)
 		}
 	}
 	return w.Flush()
@@ -105,7 +105,7 @@ func configureSet(t *Term, args string) error {
 	}
 
 	if field.Kind() == reflect.Slice && field.Type().Elem().Name() == "SubstitutePathRule" {
-		return configureSetSubstituePath(t, rest)
+		return configureSetSubstitutePath(t, rest)
 	}
 
 	simpleArg := func(typ reflect.Type) (reflect.Value, error) {
@@ -116,6 +116,9 @@ func configureSet(t *Term, args string) error {
 				return reflect.ValueOf(nil), fmt.Errorf("argument to %q must be a number", cfgname)
 			}
 			return reflect.ValueOf(&n), nil
+		case reflect.Bool:
+			v := rest == "true"
+			return reflect.ValueOf(&v), nil
 		default:
 			return reflect.ValueOf(nil), fmt.Errorf("unsupported type for configuration key %q", cfgname)
 		}
@@ -137,7 +140,7 @@ func configureSet(t *Term, args string) error {
 	return nil
 }
 
-func configureSetSubstituePath(t *Term, rest string) error {
+func configureSetSubstitutePath(t *Term, rest string) error {
 	argv := config.SplitQuotedFields(rest, '"')
 	switch len(argv) {
 	case 1: // delete substitute-path rule

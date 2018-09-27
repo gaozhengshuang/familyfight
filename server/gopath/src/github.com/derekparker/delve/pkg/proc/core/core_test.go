@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go/constant"
 	"io/ioutil"
+	"os"
 	"os/exec"
 	"path"
 	"path/filepath"
@@ -13,9 +14,22 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/derekparker/delve/pkg/goversion"
 	"github.com/derekparker/delve/pkg/proc"
 	"github.com/derekparker/delve/pkg/proc/test"
 )
+
+func TestMain(m *testing.M) {
+	os.Exit(test.RunTestsWithFixtures(m))
+}
+
+func assertNoError(err error, t testing.TB, s string) {
+	if err != nil {
+		_, file, line, _ := runtime.Caller(1)
+		fname := filepath.Base(file)
+		t.Fatalf("failed assertion at %s:%d: %s - %s\n", fname, line, s, err)
+	}
+}
 
 func TestSplicedReader(t *testing.T) {
 	data := []byte{}
@@ -170,12 +184,18 @@ func TestCore(t *testing.T) {
 	var panicking *proc.G
 	var panickingStack []proc.Stackframe
 	for _, g := range gs {
-		stack, err := g.Stacktrace(10)
+		t.Logf("Goroutine %d", g.ID)
+		stack, err := g.Stacktrace(10, false)
 		if err != nil {
 			t.Errorf("Stacktrace() on goroutine %v = %v", g, err)
 		}
 		for _, frame := range stack {
-			if strings.Contains(frame.Current.Fn.Name, "panic") {
+			fnname := ""
+			if frame.Call.Fn != nil {
+				fnname = frame.Call.Fn.Name
+			}
+			t.Logf("\tframe %s:%d in %s %#x (systemstack: %v)", frame.Call.File, frame.Call.Line, fnname, frame.Call.PC, frame.SystemStack)
+			if frame.Current.Fn != nil && strings.Contains(frame.Current.Fn.Name, "panic") {
 				panicking = g
 				panickingStack = stack
 			}
@@ -196,7 +216,7 @@ func TestCore(t *testing.T) {
 	if mainFrame == nil {
 		t.Fatalf("Couldn't find main in stack %v", panickingStack)
 	}
-	msg, err := proc.FrameToScope(p, *mainFrame).EvalVariable("msg", proc.LoadConfig{MaxStringLen: 64})
+	msg, err := proc.FrameToScope(p.BinInfo(), p.CurrentThread(), nil, *mainFrame).EvalVariable("msg", proc.LoadConfig{MaxStringLen: 64})
 	if err != nil {
 		t.Fatalf("Couldn't EvalVariable(msg, ...): %v", err)
 	}
@@ -218,6 +238,12 @@ func TestCoreFpRegisters(t *testing.T) {
 	if runtime.GOOS != "linux" || runtime.GOARCH != "amd64" {
 		return
 	}
+	// in go1.10 the crash is executed on a different thread and registers are
+	// no longer available in the core dump.
+	if ver, _ := goversion.Parse(runtime.Version()); ver.Major < 0 || ver.AfterOrEqual(goversion.GoVersion{1, 10, -1, 0, 0, ""}) {
+		t.Skip("not supported in go1.10 and later")
+	}
+
 	p := withCoreFile(t, "fputest/", "panic")
 
 	gs, err := proc.GoroutinesInfo(p)
@@ -236,7 +262,7 @@ func TestCoreFpRegisters(t *testing.T) {
 			if frames[i].Current.Fn == nil {
 				continue
 			}
-			if frames[i].Current.Fn.Name == "runtime.crash" {
+			if frames[i].Current.Fn.Name == "main.main" {
 				regs, err = thread.Registers(true)
 				if err != nil {
 					t.Fatalf("Could not get registers for thread %x, %v", thread.ThreadID(), err)
@@ -261,8 +287,8 @@ func TestCoreFpRegisters(t *testing.T) {
 		// Unlike TestClientServer_FpRegisters in service/test/integration2_test
 		// we can not test the value of XMM0, it probably has been reused by
 		// something between the panic and the time we get the core dump.
-		{"XMM1", "0x3ff66666666666663ff4cccccccccccd"},
-		{"XMM2", "0x3fe666663fd9999a3fcccccd3fc00000"},
+		{"XMM9", "0x3ff66666666666663ff4cccccccccccd"},
+		{"XMM10", "0x3fe666663fd9999a3fcccccd3fc00000"},
 		{"XMM3", "0x3ff199999999999a3ff3333333333333"},
 		{"XMM4", "0x3ff4cccccccccccd3ff6666666666666"},
 		{"XMM5", "0x3fcccccd3fc000003fe666663fd9999a"},
@@ -289,4 +315,41 @@ func TestCoreFpRegisters(t *testing.T) {
 			t.Fatalf("register %s not found: %v", regtest.name, regs)
 		}
 	}
+}
+
+func TestCoreWithEmptyString(t *testing.T) {
+	if runtime.GOOS != "linux" || runtime.GOARCH != "amd64" {
+		return
+	}
+	p := withCoreFile(t, "coreemptystring", "")
+
+	gs, err := proc.GoroutinesInfo(p)
+	assertNoError(err, t, "GoroutinesInfo")
+
+	var mainFrame *proc.Stackframe
+mainSearch:
+	for _, g := range gs {
+		stack, err := g.Stacktrace(10, false)
+		assertNoError(err, t, "Stacktrace()")
+		for _, frame := range stack {
+			if frame.Current.Fn != nil && frame.Current.Fn.Name == "main.main" {
+				mainFrame = &frame
+				break mainSearch
+			}
+		}
+	}
+
+	if mainFrame == nil {
+		t.Fatal("could not find main.main frame")
+	}
+
+	scope := proc.FrameToScope(p.BinInfo(), p.CurrentThread(), nil, *mainFrame)
+	v1, err := scope.EvalVariable("t", proc.LoadConfig{true, 1, 64, 64, -1})
+	assertNoError(err, t, "EvalVariable(t)")
+	assertNoError(v1.Unreadable, t, "unreadable variable 't'")
+	t.Logf("t = %#v\n", v1)
+	v2, err := scope.EvalVariable("s", proc.LoadConfig{true, 1, 64, 64, -1})
+	assertNoError(err, t, "EvalVariable(s)")
+	assertNoError(v2.Unreadable, t, "unreadable variable 's'")
+	t.Logf("s = %#v\n", v2)
 }

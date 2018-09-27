@@ -7,6 +7,7 @@ import (
 	"net"
 	"os"
 	"path/filepath"
+	"reflect"
 	"runtime"
 	"strconv"
 	"strings"
@@ -16,6 +17,7 @@ import (
 	protest "github.com/derekparker/delve/pkg/proc/test"
 
 	"github.com/derekparker/delve/pkg/goversion"
+	"github.com/derekparker/delve/pkg/logflags"
 	"github.com/derekparker/delve/service"
 	"github.com/derekparker/delve/service/api"
 	"github.com/derekparker/delve/service/rpc2"
@@ -27,6 +29,8 @@ var testBackend string
 
 func TestMain(m *testing.M) {
 	flag.StringVar(&testBackend, "backend", "", "selects backend")
+	var logOutput string
+	flag.StringVar(&logOutput, "log-output", "", "configures log output")
 	flag.Parse()
 	if testBackend == "" {
 		testBackend = os.Getenv("PROCTEST")
@@ -34,6 +38,7 @@ func TestMain(m *testing.M) {
 			testBackend = "native"
 		}
 	}
+	logflags.Setup(logOutput != "", logOutput)
 	os.Exit(protest.RunTestsWithFixtures(m))
 }
 
@@ -50,7 +55,7 @@ func withTestClient2(name string, t *testing.T, fn func(c service.Client)) {
 		Listener:    listener,
 		ProcessArgs: []string{protest.BuildFixture(name, 0).Path},
 		Backend:     testBackend,
-	}, false)
+	})
 	if err := server.Run(); err != nil {
 		t.Fatal(err)
 	}
@@ -83,7 +88,7 @@ func TestRunWithInvalidPath(t *testing.T) {
 		ProcessArgs: []string{"invalid_path"},
 		APIVersion:  2,
 		Backend:     testBackend,
-	}, false)
+	})
 	if err := server.Run(); err == nil {
 		t.Fatal("Expected Run to return error for invalid program path")
 	}
@@ -174,7 +179,7 @@ func TestRestart_attachPid(t *testing.T) {
 		AttachPid:  999,
 		APIVersion: 2,
 		Backend:    testBackend,
-	}, false)
+	})
 	if err := server.Restart(); err == nil {
 		t.Fatal("expected error on restart after attaching to pid but got none")
 	}
@@ -677,7 +682,7 @@ func TestClientServer_FindLocations(t *testing.T) {
 		findLocationHelper(t, c, "locationsUpperCase.go:6", false, 1, 0)
 
 		// Fully qualified path
-		path := protest.Fixtures["locationsUpperCase"].Source
+		path := protest.Fixtures[protest.FixtureKey{"locationsUpperCase", 0}].Source
 		findLocationHelper(t, c, path+":6", false, 1, 0)
 		bp, err := c.CreateBreakpoint(&api.Breakpoint{File: path, Line: 6})
 		if err != nil {
@@ -793,13 +798,13 @@ func TestClientServer_FullStacktrace(t *testing.T) {
 		assertNoError(err, t, "GoroutinesInfo()")
 		found := make([]bool, 10)
 		for _, g := range gs {
-			frames, err := c.Stacktrace(g.ID, 10, &normalLoadConfig)
+			frames, err := c.Stacktrace(g.ID, 10, false, &normalLoadConfig)
 			assertNoError(err, t, fmt.Sprintf("Stacktrace(%d)", g.ID))
 			for i, frame := range frames {
 				if frame.Function == nil {
 					continue
 				}
-				if frame.Function.Name != "main.agoroutine" {
+				if frame.Function.Name() != "main.agoroutine" {
 					continue
 				}
 				t.Logf("frame %d: %v", i, frame)
@@ -827,7 +832,7 @@ func TestClientServer_FullStacktrace(t *testing.T) {
 			t.Fatalf("Continue(): %v\n", state.Err)
 		}
 
-		frames, err := c.Stacktrace(-1, 10, &normalLoadConfig)
+		frames, err := c.Stacktrace(-1, 10, false, &normalLoadConfig)
 		assertNoError(err, t, "Stacktrace")
 
 		cur := 3
@@ -906,7 +911,7 @@ func TestIssue355(t *testing.T) {
 		assertError(err, t, "ListRegisters()")
 		_, err = c.ListGoroutines()
 		assertError(err, t, "ListGoroutines()")
-		_, err = c.Stacktrace(gid, 10, &normalLoadConfig)
+		_, err = c.Stacktrace(gid, 10, false, &normalLoadConfig)
 		assertError(err, t, "Stacktrace()")
 		_, err = c.FindLocation(api.EvalScope{gid, 0}, "+1")
 		assertError(err, t, "FindLocation()")
@@ -959,7 +964,7 @@ func TestDisasm(t *testing.T) {
 		// look for static call to afunction() on line 29
 		found := false
 		for i := range d3 {
-			if d3[i].Loc.Line == 29 && strings.HasPrefix(d3[i].Text, "call") && d3[i].DestLoc != nil && d3[i].DestLoc.Function != nil && d3[i].DestLoc.Function.Name == "main.afunction" {
+			if d3[i].Loc.Line == 29 && strings.HasPrefix(d3[i].Text, "call") && d3[i].DestLoc != nil && d3[i].DestLoc.Function != nil && d3[i].DestLoc.Function.Name() == "main.afunction" {
 				found = true
 				break
 			}
@@ -1009,7 +1014,7 @@ func TestDisasm(t *testing.T) {
 				if curinstr.DestLoc == nil || curinstr.DestLoc.Function == nil {
 					t.Fatalf("Call instruction does not have destination: %v", curinstr)
 				}
-				if curinstr.DestLoc.Function.Name != "main.afunction" {
+				if curinstr.DestLoc.Function.Name() != "main.afunction" {
 					t.Fatalf("Call instruction destination not main.afunction: %v", curinstr)
 				}
 				break
@@ -1029,7 +1034,7 @@ func TestNegativeStackDepthBug(t *testing.T) {
 		ch := c.Continue()
 		state := <-ch
 		assertNoError(state.Err, t, "Continue()")
-		_, err = c.Stacktrace(-1, -2, &normalLoadConfig)
+		_, err = c.Stacktrace(-1, -2, false, &normalLoadConfig)
 		assertError(err, t, "Stacktrace()")
 	})
 }
@@ -1385,5 +1390,232 @@ func TestClientServer_collectBreakpointInfoError(t *testing.T) {
 		assertNoError(err, t, "CreateBreakpoint()")
 		state := <-c.Continue()
 		assertNoError(state.Err, t, "Continue()")
+	})
+}
+
+func TestClientServerConsistentExit(t *testing.T) {
+	// This test is useful because it ensures that Next and Continue operations both
+	// exit with the same exit status and details when the target application terminates.
+	// Other program execution API calls should also behave in the same way.
+	// An error should be present in state.Err.
+	withTestClient2("pr1055", t, func(c service.Client) {
+		fp := testProgPath(t, "pr1055")
+		_, err := c.CreateBreakpoint(&api.Breakpoint{File: fp, Line: 12})
+		if err != nil {
+			t.Fatalf("Unexpected error: %v", err)
+		}
+		state := <-c.Continue()
+		if state.Err != nil {
+			t.Fatalf("Unexpected error: %v, state: %#v", state.Err, state)
+		}
+		state, err = c.Next()
+		if err != nil {
+			t.Fatalf("Unexpected error: %v", err)
+		}
+		if !state.Exited {
+			t.Fatal("Process state is not exited")
+		}
+		if state.ExitStatus != 2 {
+			t.Fatalf("Process exit status is not 2, got: %v", state.ExitStatus)
+		}
+	})
+}
+
+func TestClientServer_StepOutReturn(t *testing.T) {
+	ver, _ := goversion.Parse(runtime.Version())
+	if ver.Major >= 0 && !ver.AfterOrEqual(goversion.GoVersion{1, 10, -1, 0, 0, ""}) {
+		t.Skip("return variables aren't marked on 1.9 or earlier")
+	}
+	withTestClient2("stepoutret", t, func(c service.Client) {
+		c.SetReturnValuesLoadConfig(&normalLoadConfig)
+		_, err := c.CreateBreakpoint(&api.Breakpoint{FunctionName: "main.stepout", Line: -1})
+		assertNoError(err, t, "CreateBreakpoint()")
+		stateBefore := <-c.Continue()
+		assertNoError(stateBefore.Err, t, "Continue()")
+		stateAfter, err := c.StepOut()
+		assertNoError(err, t, "StepOut")
+		ret := stateAfter.CurrentThread.ReturnValues
+
+		if len(ret) != 2 {
+			t.Fatalf("wrong number of return values %v", ret)
+		}
+
+		if ret[0].Name != "str" {
+			t.Fatalf("(str) bad return value name %s", ret[0].Name)
+		}
+		if ret[0].Kind != reflect.String {
+			t.Fatalf("(str) bad return value kind %v", ret[0].Kind)
+		}
+		if ret[0].Value != "return 47" {
+			t.Fatalf("(str) bad return value %q", ret[0].Value)
+		}
+
+		if ret[1].Name != "num" {
+			t.Fatalf("(num) bad return value name %s", ret[1].Name)
+		}
+		if ret[1].Kind != reflect.Int {
+			t.Fatalf("(num) bad return value kind %v", ret[1].Kind)
+		}
+		if ret[1].Value != "48" {
+			t.Fatalf("(num) bad return value %s", ret[1].Value)
+		}
+	})
+}
+
+func TestAcceptMulticlient(t *testing.T) {
+	if testBackend == "rr" {
+		t.Skip("recording not allowed for TestAcceptMulticlient")
+	}
+	listener, err := net.Listen("tcp", "localhost:0")
+	if err != nil {
+		t.Fatalf("couldn't start listener: %s\n", err)
+	}
+	serverDone := make(chan struct{})
+	go func() {
+		defer close(serverDone)
+		defer listener.Close()
+		disconnectChan := make(chan struct{})
+		server := rpccommon.NewServer(&service.Config{
+			Listener:       listener,
+			ProcessArgs:    []string{protest.BuildFixture("testvariables2", 0).Path},
+			Backend:        testBackend,
+			AcceptMulti:    true,
+			DisconnectChan: disconnectChan,
+		})
+		if err := server.Run(); err != nil {
+			t.Fatal(err)
+		}
+		<-disconnectChan
+		server.Stop()
+	}()
+	client1 := rpc2.NewClient(listener.Addr().String())
+	client1.Disconnect(false)
+
+	client2 := rpc2.NewClient(listener.Addr().String())
+	state := <-client2.Continue()
+	if state.CurrentThread.Function.Name() != "main.main" {
+		t.Fatalf("bad state after continue: %v\n", state)
+	}
+	client2.Detach(true)
+	<-serverDone
+}
+
+func mustHaveDebugCalls(t *testing.T, c service.Client) {
+	locs, err := c.FindLocation(api.EvalScope{-1, 0}, "runtime.debugCallV1")
+	if len(locs) == 0 || err != nil {
+		t.Skip("function calls not supported on this version of go")
+	}
+}
+
+func TestClientServerFunctionCall(t *testing.T) {
+	if runtime.GOOS != "linux" || testBackend != "native" {
+		t.Skip("unsupported")
+	}
+	withTestClient2("fncall", t, func(c service.Client) {
+		mustHaveDebugCalls(t, c)
+		c.SetReturnValuesLoadConfig(&normalLoadConfig)
+		state := <-c.Continue()
+		assertNoError(state.Err, t, "Continue()")
+		beforeCallFn := state.CurrentThread.Function.Name()
+		state, err := c.Call("call1(one, two)")
+		assertNoError(err, t, "Call()")
+		t.Logf("returned to %q", state.CurrentThread.Function.Name())
+		if state.CurrentThread.Function.Name() != beforeCallFn {
+			t.Fatalf("did not return to the calling function %q %q", beforeCallFn, state.CurrentThread.Function.Name())
+		}
+		if state.CurrentThread.ReturnValues == nil {
+			t.Fatal("no return values on return from call")
+		}
+		t.Logf("Return values %v", state.CurrentThread.ReturnValues)
+		if len(state.CurrentThread.ReturnValues) != 1 {
+			t.Fatal("not enough return values")
+		}
+		if state.CurrentThread.ReturnValues[0].Value != "3" {
+			t.Fatalf("wrong return value %s", state.CurrentThread.ReturnValues[0].Value)
+		}
+		state = <-c.Continue()
+		if !state.Exited {
+			t.Fatalf("expected process to exit after call %v", state.CurrentThread)
+		}
+	})
+}
+
+func TestClientServerFunctionCallBadPos(t *testing.T) {
+	if runtime.GOOS != "linux" || testBackend != "native" {
+		t.Skip("unsupported")
+	}
+	withTestClient2("fncall", t, func(c service.Client) {
+		mustHaveDebugCalls(t, c)
+		loc, err := c.FindLocation(api.EvalScope{-1, 0}, "fmt/print.go:649")
+		assertNoError(err, t, "could not find location")
+
+		_, err = c.CreateBreakpoint(&api.Breakpoint{File: loc[0].File, Line: loc[0].Line})
+		assertNoError(err, t, "CreateBreakpoin")
+
+		state := <-c.Continue()
+		assertNoError(state.Err, t, "Continue()")
+
+		state = <-c.Continue()
+		assertNoError(state.Err, t, "Continue()")
+
+		state, err = c.Call("main.call1(main.zero, main.zero)")
+		if err == nil || err.Error() != "call not at safe point" {
+			t.Fatalf("wrong error or no error: %v", err)
+		}
+	})
+}
+
+func TestClientServerFunctionCallPanic(t *testing.T) {
+	if runtime.GOOS != "linux" || testBackend != "native" {
+		t.Skip("unsupported")
+	}
+	withTestClient2("fncall", t, func(c service.Client) {
+		mustHaveDebugCalls(t, c)
+		c.SetReturnValuesLoadConfig(&normalLoadConfig)
+		state := <-c.Continue()
+		assertNoError(state.Err, t, "Continue()")
+		state, err := c.Call("callpanic()")
+		assertNoError(err, t, "Call()")
+		t.Logf("at: %s:%d", state.CurrentThread.File, state.CurrentThread.Line)
+		if state.CurrentThread.ReturnValues == nil {
+			t.Fatal("no return values on return from call")
+		}
+		t.Logf("Return values %v", state.CurrentThread.ReturnValues)
+		if len(state.CurrentThread.ReturnValues) != 1 {
+			t.Fatal("not enough return values")
+		}
+		if state.CurrentThread.ReturnValues[0].Name != "~panic" {
+			t.Fatal("not a panic")
+		}
+		if state.CurrentThread.ReturnValues[0].Children[0].Value != "callpanic panicked" {
+			t.Fatalf("wrong panic value %s", state.CurrentThread.ReturnValues[0].Children[0].Value)
+		}
+	})
+}
+
+func TestClientServerFunctionCallStacktrace(t *testing.T) {
+	if runtime.GOOS != "linux" || testBackend != "native" {
+		t.Skip("unsupported")
+	}
+	withTestClient2("fncall", t, func(c service.Client) {
+		mustHaveDebugCalls(t, c)
+		c.SetReturnValuesLoadConfig(&api.LoadConfig{false, 0, 2048, 0, 0})
+		state := <-c.Continue()
+		assertNoError(state.Err, t, "Continue()")
+		state, err := c.Call("callstacktrace()")
+		assertNoError(err, t, "Call()")
+		t.Logf("at: %s:%d", state.CurrentThread.File, state.CurrentThread.Line)
+		if state.CurrentThread.ReturnValues == nil {
+			t.Fatal("no return values on return from call")
+		}
+		if len(state.CurrentThread.ReturnValues) != 1 || state.CurrentThread.ReturnValues[0].Kind != reflect.String {
+			t.Fatal("not enough return values")
+		}
+		st := state.CurrentThread.ReturnValues[0].Value
+		t.Logf("Returned stacktrace:\n%s", st)
+
+		if !strings.Contains(st, "main.callstacktrace") || !strings.Contains(st, "main.main") || !strings.Contains(st, "runtime.main") {
+			t.Fatal("bad stacktrace returned")
+		}
 	})
 }

@@ -1,7 +1,6 @@
 package proc
 
 import (
-	"debug/dwarf"
 	"encoding/binary"
 	"errors"
 	"fmt"
@@ -9,12 +8,8 @@ import (
 	"go/token"
 	"path/filepath"
 	"strconv"
+	"strings"
 )
-
-type functionDebugInfo struct {
-	lowpc, highpc uint64
-	offset        dwarf.Offset
-}
 
 var NotExecutableErr = errors.New("not an executable file")
 var NotRecordedErr = errors.New("not a recording")
@@ -32,10 +27,18 @@ func (pe ProcessExitedError) Error() string {
 	return fmt.Sprintf("Process %d has exited with status %d", pe.Pid, pe.Status)
 }
 
+// ProcessDetachedError indicates that we detached from the target process.
+type ProcessDetachedError struct {
+}
+
+func (pe ProcessDetachedError) Error() string {
+	return "detached from the process"
+}
+
 // FindFileLocation returns the PC for a given file:line.
-// Assumes that `file` is normailzed to lower case and '/' on Windows.
+// Assumes that `file` is normalized to lower case and '/' on Windows.
 func FindFileLocation(p Process, fileName string, lineno int) (uint64, error) {
-	pc, fn, err := p.BinInfo().goSymTable.LineToPC(fileName, lineno)
+	pc, fn, err := p.BinInfo().LineToPC(fileName, lineno)
 	if err != nil {
 		return 0, err
 	}
@@ -43,6 +46,14 @@ func FindFileLocation(p Process, fileName string, lineno int) (uint64, error) {
 		pc, _ = FirstPCAfterPrologue(p, fn, true)
 	}
 	return pc, nil
+}
+
+type FunctionNotFoundError struct {
+	FuncName string
+}
+
+func (err *FunctionNotFoundError) Error() string {
+	return fmt.Sprintf("Could not find function %s\n", err.FuncName)
 }
 
 // FindFunctionLocation finds address of a function's line
@@ -53,16 +64,16 @@ func FindFileLocation(p Process, fileName string, lineno int) (uint64, error) {
 // https://github.com/derekparker/delve/issues/170
 func FindFunctionLocation(p Process, funcName string, firstLine bool, lineOffset int) (uint64, error) {
 	bi := p.BinInfo()
-	origfn := bi.goSymTable.LookupFunc(funcName)
+	origfn := bi.LookupFunc[funcName]
 	if origfn == nil {
-		return 0, fmt.Errorf("Could not find function %s\n", funcName)
+		return 0, &FunctionNotFoundError{funcName}
 	}
 
 	if firstLine {
 		return FirstPCAfterPrologue(p, origfn, false)
 	} else if lineOffset > 0 {
-		filename, lineno, _ := bi.goSymTable.PCToLine(origfn.Entry)
-		breakAddr, _, err := bi.goSymTable.LineToPC(filename, lineno+lineOffset)
+		filename, lineno := origfn.cu.lineInfo.PCToLine(origfn.Entry, origfn.Entry)
+		breakAddr, _, err := bi.LineToPC(filename, lineno+lineOffset)
 		return breakAddr, err
 	}
 
@@ -71,16 +82,14 @@ func FindFunctionLocation(p Process, funcName string, firstLine bool, lineOffset
 
 // Next continues execution until the next source line.
 func Next(dbp Process) (err error) {
-	if dbp.Exited() {
-		return &ProcessExitedError{Pid: dbp.Pid()}
+	if _, err := dbp.Valid(); err != nil {
+		return err
 	}
-	for _, bp := range dbp.Breakpoints() {
-		if bp.Internal() {
-			return fmt.Errorf("next while nexting")
-		}
+	if dbp.Breakpoints().HasInternalBreakpoints() {
+		return fmt.Errorf("next while nexting")
 	}
 
-	if err = next(dbp, false); err != nil {
+	if err = next(dbp, false, false); err != nil {
 		dbp.ClearInternalBreakpoints()
 		return
 	}
@@ -92,12 +101,23 @@ func Next(dbp Process) (err error) {
 // process. It will continue until it hits a breakpoint
 // or is otherwise stopped.
 func Continue(dbp Process) error {
-	if dbp.Exited() {
-		return &ProcessExitedError{Pid: dbp.Pid()}
+	if _, err := dbp.Valid(); err != nil {
+		return err
 	}
-	dbp.ManualStopRequested()
+	for _, thread := range dbp.ThreadList() {
+		thread.Common().returnValues = nil
+	}
+	dbp.CheckAndClearManualStopRequest()
+	defer func() {
+		// Make sure we clear internal breakpoints if we simultaneously receive a
+		// manual stop request and hit a breakpoint.
+		if dbp.CheckAndClearManualStopRequest() {
+			dbp.ClearInternalBreakpoints()
+		}
+	}()
 	for {
-		if dbp.ManualStopRequested() {
+		if dbp.CheckAndClearManualStopRequest() {
+			dbp.ClearInternalBreakpoints()
 			return nil
 		}
 		trapthread, err := dbp.ContinueOnce()
@@ -112,28 +132,50 @@ func Continue(dbp Process) error {
 		}
 
 		curthread := dbp.CurrentThread()
-		curbp, curbpActive, _ := curthread.Breakpoint()
+		curbp := curthread.Breakpoint()
 
 		switch {
-		case curbp == nil:
-			// runtime.Breakpoint or manual stop
-			if recorded, _ := dbp.Recorded(); onRuntimeBreakpoint(curthread) && !recorded {
+		case curbp.Breakpoint == nil:
+			// runtime.Breakpoint, manual stop or debugCallV1-related stop
+			recorded, _ := dbp.Recorded()
+			if recorded {
+				return conditionErrors(threads)
+			}
+
+			loc, err := curthread.Location()
+			if err != nil || loc.Fn == nil {
+				return conditionErrors(threads)
+			}
+
+			switch {
+			case loc.Fn.Name == "runtime.breakpoint":
 				// Single-step current thread until we exit runtime.breakpoint and
 				// runtime.Breakpoint.
 				// On go < 1.8 it was sufficient to single-step twice on go1.8 a change
 				// to the compiler requires 4 steps.
-				for {
-					if err = curthread.StepInstruction(); err != nil {
-						return err
-					}
-					loc, err := curthread.Location()
-					if err != nil || loc.Fn == nil || (loc.Fn.Name != "runtime.breakpoint" && loc.Fn.Name != "runtime.Breakpoint") {
-						break
-					}
+				if err := stepInstructionOut(dbp, curthread, "runtime.breakpoint", "runtime.Breakpoint"); err != nil {
+					return err
 				}
+				return conditionErrors(threads)
+			case strings.HasPrefix(loc.Fn.Name, debugCallFunctionNamePrefix1) || strings.HasPrefix(loc.Fn.Name, debugCallFunctionNamePrefix2):
+				fncall := &dbp.Common().fncallState
+				if !fncall.inProgress {
+					return conditionErrors(threads)
+				}
+				fncall.step(dbp)
+				// only stop execution if the function call finished
+				if fncall.finished {
+					fncall.inProgress = false
+					if fncall.err != nil {
+						return fncall.err
+					}
+					curthread.Common().returnValues = fncall.returnValues()
+					return conditionErrors(threads)
+				}
+			default:
+				return conditionErrors(threads)
 			}
-			return conditionErrors(threads)
-		case curbpActive && curbp.Internal():
+		case curbp.Active && curbp.Internal:
 			if curbp.Kind == StepBreakpoint {
 				// See description of proc.(*Process).next for the meaning of StepBreakpoints
 				if err := conditionErrors(threads); err != nil {
@@ -144,7 +186,7 @@ func Continue(dbp Process) error {
 					return err
 				}
 				pc := regs.PC()
-				text, err := disassemble(curthread, regs, dbp.Breakpoints(), dbp.BinInfo(), pc, pc+maxInstructionLength)
+				text, err := disassemble(curthread, regs, dbp.Breakpoints(), dbp.BinInfo(), pc, pc+maxInstructionLength, true)
 				if err != nil {
 					return err
 				}
@@ -155,12 +197,13 @@ func Continue(dbp Process) error {
 					return err
 				}
 			} else {
+				curthread.Common().returnValues = curbp.Breakpoint.returnInfo.Collect(curthread)
 				if err := dbp.ClearInternalBreakpoints(); err != nil {
 					return err
 				}
 				return conditionErrors(threads)
 			}
-		case curbpActive:
+		case curbp.Active:
 			onNextGoroutine, err := onNextGoroutine(curthread, dbp.Breakpoints())
 			if err != nil {
 				return err
@@ -184,9 +227,9 @@ func Continue(dbp Process) error {
 func conditionErrors(threads []Thread) error {
 	var condErr error
 	for _, th := range threads {
-		if bp, _, bperr := th.Breakpoint(); bp != nil && bperr != nil {
+		if bp := th.Breakpoint(); bp.Breakpoint != nil && bp.CondError != nil {
 			if condErr == nil {
-				condErr = bperr
+				condErr = bp.CondError
 			} else {
 				return fmt.Errorf("multiple errors evaluating conditions")
 			}
@@ -201,36 +244,53 @@ func conditionErrors(threads []Thread) error {
 // 	- trapthread
 func pickCurrentThread(dbp Process, trapthread Thread, threads []Thread) error {
 	for _, th := range threads {
-		if bp, active, _ := th.Breakpoint(); active && bp.Internal() {
+		if bp := th.Breakpoint(); bp.Active && bp.Internal {
 			return dbp.SwitchThread(th.ThreadID())
 		}
 	}
-	if _, active, _ := trapthread.Breakpoint(); active {
+	if bp := trapthread.Breakpoint(); bp.Active {
 		return dbp.SwitchThread(trapthread.ThreadID())
 	}
 	for _, th := range threads {
-		if _, active, _ := th.Breakpoint(); active {
+		if bp := th.Breakpoint(); bp.Active {
 			return dbp.SwitchThread(th.ThreadID())
 		}
 	}
 	return dbp.SwitchThread(trapthread.ThreadID())
 }
 
+// stepInstructionOut repeatedly calls StepInstruction until the current
+// function is neither fnname1 or fnname2.
+// This function is used to step out of runtime.Breakpoint as well as
+// runtime.debugCallV1.
+func stepInstructionOut(dbp Process, curthread Thread, fnname1, fnname2 string) error {
+	for {
+		if err := curthread.StepInstruction(); err != nil {
+			return err
+		}
+		loc, err := curthread.Location()
+		if err != nil || loc.Fn == nil || (loc.Fn.Name != fnname1 && loc.Fn.Name != fnname2) {
+			if g := dbp.SelectedGoroutine(); g != nil {
+				g.CurrentLoc = *loc
+			}
+			return nil
+		}
+	}
+}
+
 // Step will continue until another source line is reached.
 // Will step into functions.
 func Step(dbp Process) (err error) {
-	if dbp.Exited() {
-		return &ProcessExitedError{Pid: dbp.Pid()}
+	if _, err := dbp.Valid(); err != nil {
+		return err
 	}
-	for _, bp := range dbp.Breakpoints() {
-		if bp.Internal() {
-			return fmt.Errorf("next while nexting")
-		}
+	if dbp.Breakpoints().HasInternalBreakpoints() {
+		return fmt.Errorf("next while nexting")
 	}
 
-	if err = next(dbp, true); err != nil {
+	if err = next(dbp, true, false); err != nil {
 		switch err.(type) {
-		case ThreadBlockedError, NoReturnAddr: // Noop
+		case ThreadBlockedError: // Noop
 		default:
 			dbp.ClearInternalBreakpoints()
 			return
@@ -284,9 +344,13 @@ func andFrameoffCondition(cond ast.Expr, frameoff int64) ast.Expr {
 // StepOut will continue until the current goroutine exits the
 // function currently being executed or a deferred function is executed
 func StepOut(dbp Process) error {
-	if dbp.Exited() {
-		return &ProcessExitedError{Pid: dbp.Pid()}
+	if _, err := dbp.Valid(); err != nil {
+		return err
 	}
+	if dbp.Breakpoints().HasInternalBreakpoints() {
+		return fmt.Errorf("next while nexting")
+	}
+
 	selg := dbp.SelectedGoroutine()
 	curthread := dbp.CurrentThread()
 
@@ -295,32 +359,40 @@ func StepOut(dbp Process) error {
 		return err
 	}
 
+	success := false
+	defer func() {
+		if !success {
+			dbp.ClearInternalBreakpoints()
+		}
+	}()
+
+	if topframe.Inlined {
+		if err := next(dbp, false, true); err != nil {
+			return err
+		}
+
+		success = true
+		return Continue(dbp)
+	}
+
 	sameGCond := SameGoroutineCondition(selg)
-	retFrameCond := andFrameoffCondition(sameGCond, retframe.CFA-int64(retframe.StackHi))
+	retFrameCond := andFrameoffCondition(sameGCond, retframe.FrameOffset())
 
 	var deferpc uint64 = 0
 	if filepath.Ext(topframe.Current.File) == ".go" {
-		if selg != nil {
-			deferPCEntry := selg.DeferPC()
-			if deferPCEntry != 0 {
-				_, _, deferfn := dbp.BinInfo().PCToLine(deferPCEntry)
-				deferpc, err = FirstPCAfterPrologue(dbp, deferfn, false)
-				if err != nil {
-					return err
-				}
+		if topframe.TopmostDefer != nil && topframe.TopmostDefer.DeferredPC != 0 {
+			deferfn := dbp.BinInfo().PCToFunc(topframe.TopmostDefer.DeferredPC)
+			deferpc, err = FirstPCAfterPrologue(dbp, deferfn, false)
+			if err != nil {
+				return err
 			}
 		}
-	}
-
-	if topframe.Ret == 0 && deferpc == 0 {
-		return errors.New("nothing to stepout to")
 	}
 
 	if deferpc != 0 && deferpc != topframe.Current.PC {
 		bp, err := dbp.SetBreakpoint(deferpc, NextDeferBreakpoint, sameGCond)
 		if err != nil {
 			if _, ok := err.(BreakpointExistsError); !ok {
-				dbp.ClearInternalBreakpoints()
 				return err
 			}
 		}
@@ -332,43 +404,42 @@ func StepOut(dbp Process) error {
 		}
 	}
 
+	if topframe.Ret == 0 && deferpc == 0 {
+		return errors.New("nothing to stepout to")
+	}
+
 	if topframe.Ret != 0 {
-		_, err := dbp.SetBreakpoint(topframe.Ret, NextBreakpoint, retFrameCond)
+		bp, err := dbp.SetBreakpoint(topframe.Ret, NextBreakpoint, retFrameCond)
 		if err != nil {
 			if _, isexists := err.(BreakpointExistsError); !isexists {
-				dbp.ClearInternalBreakpoints()
 				return err
 			}
 		}
+		if bp != nil {
+			configureReturnBreakpoint(dbp.BinInfo(), bp, &topframe, retFrameCond)
+		}
 	}
 
-	if bp, _, _ := curthread.Breakpoint(); bp == nil {
+	if bp := curthread.Breakpoint(); bp.Breakpoint == nil {
 		curthread.SetCurrentBreakpoint()
 	}
 
+	success = true
 	return Continue(dbp)
-}
-
-// If the argument of GoroutinesInfo implements AllGCache GoroutinesInfo
-// will use the pointer returned by AllGCache as a cache.
-type AllGCache interface {
-	AllGCache() *[]*G
 }
 
 // GoroutinesInfo returns an array of G structures representing the information
 // Delve cares about from the internal runtime G structure.
 func GoroutinesInfo(dbp Process) ([]*G, error) {
-	if dbp.Exited() {
-		return nil, &ProcessExitedError{Pid: dbp.Pid()}
+	if _, err := dbp.Valid(); err != nil {
+		return nil, err
 	}
-	if dbp, ok := dbp.(AllGCache); ok {
-		if allGCache := dbp.AllGCache(); *allGCache != nil {
-			return *allGCache, nil
-		}
+	if dbp.Common().allGCache != nil {
+		return dbp.Common().allGCache, nil
 	}
 
 	var (
-		threadg = map[int]Thread{}
+		threadg = map[int]*G{}
 		allg    []*G
 		rdr     = dbp.BinInfo().DwarfReader()
 	)
@@ -380,7 +451,7 @@ func GoroutinesInfo(dbp Process) ([]*G, error) {
 		}
 		g, _ := GetG(th)
 		if g != nil {
-			threadg[g.ID] = th
+			threadg[g.ID] = g
 		}
 	}
 
@@ -420,23 +491,21 @@ func GoroutinesInfo(dbp Process) ([]*G, error) {
 		if err != nil {
 			return nil, err
 		}
-		if thread, allocated := threadg[g.ID]; allocated {
-			loc, err := thread.Location()
+		if thg, allocated := threadg[g.ID]; allocated {
+			loc, err := thg.Thread.Location()
 			if err != nil {
 				return nil, err
 			}
-			g.Thread = thread
+			g.Thread = thg.Thread
 			// Prefer actual thread location information.
 			g.CurrentLoc = *loc
+			g.SystemStack = thg.SystemStack
 		}
 		if g.Status != Gdead {
 			allg = append(allg, g)
 		}
 	}
-	if dbp, ok := dbp.(AllGCache); ok {
-		allGCache := dbp.AllGCache()
-		*allGCache = allg
-	}
+	dbp.Common().allGCache = allg
 
 	return allg, nil
 }
@@ -463,8 +532,8 @@ func FindGoroutine(dbp Process, gid int) (*G, error) {
 // ConvertEvalScope returns a new EvalScope in the context of the
 // specified goroutine ID and stack frame.
 func ConvertEvalScope(dbp Process, gid, frame int) (*EvalScope, error) {
-	if dbp.Exited() {
-		return nil, &ProcessExitedError{Pid: dbp.Pid()}
+	if _, err := dbp.Valid(); err != nil {
+		return nil, err
 	}
 	ct := dbp.CurrentThread()
 	g, err := FindGoroutine(dbp, gid)
@@ -482,7 +551,7 @@ func ConvertEvalScope(dbp Process, gid, frame int) (*EvalScope, error) {
 		thread = g.Thread
 	}
 
-	locs, err := g.Stacktrace(frame)
+	locs, err := g.Stacktrace(frame+1, false)
 	if err != nil {
 		return nil, err
 	}
@@ -491,12 +560,87 @@ func ConvertEvalScope(dbp Process, gid, frame int) (*EvalScope, error) {
 		return nil, fmt.Errorf("Frame %d does not exist in goroutine %d", frame, gid)
 	}
 
-	PC, CFA := locs[frame].Current.PC, locs[frame].CFA
-
-	return &EvalScope{PC, CFA, thread, g.variable, dbp.BinInfo(), g.stackhi}, nil
+	return FrameToScope(dbp.BinInfo(), thread, g, locs[frame:]...), nil
 }
 
-// FrameToScope returns a new EvalScope for this frame
-func FrameToScope(p Process, frame Stackframe) *EvalScope {
-	return &EvalScope{frame.Current.PC, frame.CFA, p.CurrentThread(), nil, p.BinInfo(), frame.StackHi}
+// FrameToScope returns a new EvalScope for frames[0].
+// If frames has at least two elements all memory between
+// frames[0].Regs.SP() and frames[1].Regs.CFA will be cached.
+// Otherwise all memory between frames[0].Regs.SP() and frames[0].Regs.CFA
+// will be cached.
+func FrameToScope(bi *BinaryInfo, thread MemoryReadWriter, g *G, frames ...Stackframe) *EvalScope {
+	var gvar *Variable
+	if g != nil {
+		gvar = g.variable
+	}
+
+	// Creates a cacheMem that will preload the entire stack frame the first
+	// time any local variable is read.
+	// Remember that the stack grows downward in memory.
+	minaddr := frames[0].Regs.SP()
+	var maxaddr uint64
+	if len(frames) > 1 && frames[0].SystemStack == frames[1].SystemStack {
+		maxaddr = uint64(frames[1].Regs.CFA)
+	} else {
+		maxaddr = uint64(frames[0].Regs.CFA)
+	}
+	if maxaddr > minaddr && maxaddr-minaddr < maxFramePrefetchSize {
+		thread = cacheMemory(thread, uintptr(minaddr), int(maxaddr-minaddr))
+	}
+
+	s := &EvalScope{Location: frames[0].Call, Regs: frames[0].Regs, Mem: thread, Gvar: gvar, BinInfo: bi, frameOffset: frames[0].FrameOffset()}
+	s.PC = frames[0].lastpc
+	return s
+}
+
+// CreateUnrecoverablePanicBreakpoint creates the unrecoverable-panic breakpoint.
+// This function is meant to be called by implementations of the Process interface.
+func CreateUnrecoveredPanicBreakpoint(p Process, writeBreakpoint writeBreakpointFn, breakpoints *BreakpointMap) {
+	panicpc, err := FindFunctionLocation(p, "runtime.startpanic", true, 0)
+	if _, isFnNotFound := err.(*FunctionNotFoundError); isFnNotFound {
+		panicpc, err = FindFunctionLocation(p, "runtime.fatalpanic", true, 0)
+	}
+	if err == nil {
+		bp, err := breakpoints.SetWithID(-1, panicpc, writeBreakpoint)
+		if err == nil {
+			bp.Name = UnrecoveredPanic
+			bp.Variables = []string{"runtime.curg._panic.arg"}
+		}
+	}
+
+}
+
+// FirstPCAfterPrologue returns the address of the first
+// instruction after the prologue for function fn.
+// If sameline is set FirstPCAfterPrologue will always return an
+// address associated with the same line as fn.Entry.
+func FirstPCAfterPrologue(p Process, fn *Function, sameline bool) (uint64, error) {
+	pc, _, line, ok := fn.cu.lineInfo.PrologueEndPC(fn.Entry, fn.End)
+	if ok {
+		if !sameline {
+			return pc, nil
+		} else {
+			_, entryLine := fn.cu.lineInfo.PCToLine(fn.Entry, fn.Entry)
+			if entryLine == line {
+				return pc, nil
+			}
+		}
+	}
+
+	pc, err := firstPCAfterPrologueDisassembly(p, fn, sameline)
+	if err != nil {
+		return fn.Entry, err
+	}
+
+	if pc == fn.Entry {
+		// Look for the first instruction with the stmt flag set, so that setting a
+		// breakpoint with file:line and with the function name always result on
+		// the same instruction being selected.
+		entryFile, entryLine := fn.cu.lineInfo.PCToLine(fn.Entry, fn.Entry)
+		if pc, _, err := p.BinInfo().LineToPC(entryFile, entryLine); err == nil && pc >= fn.Entry && pc < fn.End {
+			return pc, nil
+		}
+	}
+
+	return pc, nil
 }
