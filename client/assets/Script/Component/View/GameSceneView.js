@@ -17,6 +17,7 @@ cc.Class({
 
     start() {
         this.updateView();
+        this.offLineOpen();
     },
 
     update(dt) {
@@ -34,6 +35,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.ackMergePlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
     },
 
     initData() {
@@ -55,6 +57,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.ackMergePlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
     },
 
     updateView() {
@@ -171,6 +174,12 @@ cc.Class({
             this._findPlayer.node.destroy();
 
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
+        }
+    },
+
+    offLineOpen() {
+        if (Game.UserModel.GetOffLineReward() != null) {
+            this.openView(Game.UIName.UI_OFFLINEREWARD);
         }
     },
 
