@@ -48,7 +48,6 @@ ItemModel.prototype.GetItemConfig = function (id) {
  */
 ItemModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
     this.items = Tools.GetValueInObj(data, 'item.items') || [];
-    console.log(this.items);
     for (let i = 0; i < this.items.length; i++) {
         let item = this.items[i];
         item.config = _.find(this.itemConfigs, { Id: item.id });
