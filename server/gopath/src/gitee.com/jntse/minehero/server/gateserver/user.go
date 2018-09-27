@@ -438,7 +438,8 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 	this.roomdata.Reset()
 	this.UpdatePower(uint64(curtime))
 	log.Info("Sid[%d] 账户[%s] 玩家[%d] 名字[%s] 登录成功", this.Sid(), this.account, this.Id(), this.Name())
-
+	this.maid.Online()
+	this.travel.Online()
 	// 同步数据到客户端
 	this.Syn()
 

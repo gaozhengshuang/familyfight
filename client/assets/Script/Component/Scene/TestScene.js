@@ -9,17 +9,9 @@ cc.Class({
     onLoad() {
     },
     start() {
-        let a = [{
-            a: 1,
-            b: 1,
-        }, {
-            b: 1,
-            c: 2,
-        }, {
-            c: 2,
-            d: 3
-        }];
-        console.log(Game._.filter(a, { c: 2 }));
+        let a = [1, 2, 3, 4, 5];
+        console.log(a.shift());
+        console.log(a);
     },
     update(dt) {
     },

@@ -19,7 +19,7 @@ cc.Class({
     update(dt) {
         this.UpdatePowerInfo();
     },
-    onEnable: function(){
+    onEnable: function () {
         this.curPower = Game.CurrencyModel.GetPower();
     },
     UpdatePowerInfo: function () {
@@ -27,7 +27,7 @@ cc.Class({
         let maxPower = Game.CurrencyModel.GetMaxPower();
         this.countLabel.string = curPower + '/' + maxPower;
         if (curPower > maxPower) {
-            this.stateLabel.string = '+' + (maxPower - curPower);
+            this.stateLabel.string = '+' + (curPower - maxPower);
             this.countDownLabel.string = '';
             this.progressBar.progress = 1;
         } else if (curPower == maxPower) {

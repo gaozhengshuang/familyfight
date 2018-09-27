@@ -26,7 +26,8 @@ cc.Class({
         tabIndex: { default: 0 }
     },
     onEnable: function () {
-        Game.NotificationController.On(Game.Define.EVENT_KEY.SUPPLYPREPARE_ACK, this, this.onClose);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.SUPPLYPREPARE_ACK, this, this.onPreClose);
+        Game.NetWorkController.AddListener('msg.GW2C_AckTravelView', this, this.onAckTravelView);
         this.supplyData = Game._.cloneDeep(Game.TravelModel.supplyItems);
         this.itemDatas = [];
         for (let k in SupplyType) {
@@ -50,9 +51,17 @@ cc.Class({
         }
         this.onSwitchTab(null, 0);
         this._updateSupplyView();
+        Game.NetWorkController.Send('msg.C2GW_ReqTravelView', { open: true });
+        if (Game.TravelModel.eventid != 0) {
+            //有事件未查看
+            Game.TravelModel.SetOpenEvent(Game.TravelModel.eventid);
+            this.openView(Game.UIName.UI_EVENTDETAILVIEW);
+        }
     },
-    onDestroy: function () {
-        Game.NotificationController.Off(Game.Define.EVENT_KEY.SUPPLYPREPARE_ACK, this, this.onClose);
+    onDisable: function () {
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.SUPPLYPREPARE_ACK, this, this.onPreClose);
+        Game.NetWorkController.RemoveListener('msg.GW2C_AckTravelView', this, this.onAckTravelView);
+        Game.NetWorkController.Send('msg.C2GW_ReqTravelView', { open: false });
     },
     onSwitchTab: function (event, index) {
         this.tabIndex = index;
@@ -69,6 +78,14 @@ cc.Class({
     },
     onConfirm: function () {
         Game.NetWorkController.Send('msg.C2GW_ReqPrepareTravel', { items: this.supplyData });
+    },
+    onPreClose: function () {
+        Game.NetWorkController.Send('msg.C2GW_ReqTravelView', { open: false });
+    },
+    onAckTravelView: function (msgid, data) {
+        if (!data.open) {
+            this.onClose();
+        }
     },
     onSupplyItemClick: function (index) {
         let items = this.itemDatas[this.tabIndex];

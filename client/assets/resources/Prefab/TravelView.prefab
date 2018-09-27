@@ -3354,7 +3354,7 @@
       "__id__": 1
     },
     "component": "TravelView",
-    "handler": "onClose",
+    "handler": "onPreClose",
     "customEventData": ""
   },
   {

@@ -1,6 +1,6 @@
 let Game = require('../../Game');
 cc.Class({
-    extends: cc.viewCell,
+    extends: require('viewCell'),
     properties: {
         normalNode: { default: null, type: cc.Node },
         selectedNode: { default: null, type: cc.Node },

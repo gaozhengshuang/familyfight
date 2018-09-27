@@ -8,6 +8,10 @@ cc.Class({
     onEnable: function () {
         this.tableView.clear();
         let events = Game.TravelModel.eventConfigs;
-        this.tableView.initTableView(events.length, { array: events });
+        this.tableView.initTableView(events.length, { array: events, target: this });
+    },
+    onItemClick: function (eventid) {
+        Game.TravelModel.SetOpenEvent(eventid);
+        this.openView(Game.UIName.UI_EVENTDETAILVIEW);
     }
 });

@@ -12,6 +12,8 @@ let TravelModel = function () {
 
     this.eventConfigs = [];
     this.headConfigs = [];
+
+    this.openEvent = 0;
 }
 
 TravelModel.prototype.Init = function (cb) {
@@ -33,6 +35,9 @@ TravelModel.prototype.GetHeadConfig = function (id) {
 }
 TravelModel.prototype.IsEventOpen = function (id) {
     return _.indexOf(this.eventids, id) != -1;
+}
+TravelModel.prototype.SetOpenEvent = function (id) {
+    this.openEvent = id;
 }
 /**
  * 消息处理接口

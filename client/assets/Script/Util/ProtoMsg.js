@@ -29476,6 +29476,380 @@ $root.msg = (function() {
         return GW2C_AckSendEventBarrage;
     })();
 
+    msg.C2GW_ReqTravelView = (function() {
+
+        /**
+         * Properties of a C2GW_ReqTravelView.
+         * @memberof msg
+         * @interface IC2GW_ReqTravelView
+         * @property {boolean|null} [open] C2GW_ReqTravelView open
+         */
+
+        /**
+         * Constructs a new C2GW_ReqTravelView.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqTravelView.
+         * @implements IC2GW_ReqTravelView
+         * @constructor
+         * @param {msg.IC2GW_ReqTravelView=} [properties] Properties to set
+         */
+        function C2GW_ReqTravelView(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_ReqTravelView open.
+         * @member {boolean} open
+         * @memberof msg.C2GW_ReqTravelView
+         * @instance
+         */
+        C2GW_ReqTravelView.prototype.open = false;
+
+        /**
+         * Creates a new C2GW_ReqTravelView instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqTravelView
+         * @static
+         * @param {msg.IC2GW_ReqTravelView=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqTravelView} C2GW_ReqTravelView instance
+         */
+        C2GW_ReqTravelView.create = function create(properties) {
+            return new C2GW_ReqTravelView(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqTravelView message. Does not implicitly {@link msg.C2GW_ReqTravelView.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqTravelView
+         * @static
+         * @param {msg.IC2GW_ReqTravelView} message C2GW_ReqTravelView message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqTravelView.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.open != null && message.hasOwnProperty("open"))
+                writer.uint32(/* id 1, wireType 0 =*/8).bool(message.open);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqTravelView message, length delimited. Does not implicitly {@link msg.C2GW_ReqTravelView.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqTravelView
+         * @static
+         * @param {msg.IC2GW_ReqTravelView} message C2GW_ReqTravelView message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqTravelView.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqTravelView message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqTravelView
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqTravelView} C2GW_ReqTravelView
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqTravelView.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqTravelView();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.open = reader.bool();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqTravelView message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqTravelView
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqTravelView} C2GW_ReqTravelView
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqTravelView.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqTravelView message.
+         * @function verify
+         * @memberof msg.C2GW_ReqTravelView
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqTravelView.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.open != null && message.hasOwnProperty("open"))
+                if (typeof message.open !== "boolean")
+                    return "open: boolean expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqTravelView message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqTravelView
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqTravelView} C2GW_ReqTravelView
+         */
+        C2GW_ReqTravelView.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqTravelView)
+                return object;
+            var message = new $root.msg.C2GW_ReqTravelView();
+            if (object.open != null)
+                message.open = Boolean(object.open);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqTravelView message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqTravelView
+         * @static
+         * @param {msg.C2GW_ReqTravelView} message C2GW_ReqTravelView
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqTravelView.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.open = false;
+            if (message.open != null && message.hasOwnProperty("open"))
+                object.open = message.open;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_ReqTravelView to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqTravelView
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqTravelView.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqTravelView;
+    })();
+
+    msg.GW2C_AckTravelView = (function() {
+
+        /**
+         * Properties of a GW2C_AckTravelView.
+         * @memberof msg
+         * @interface IGW2C_AckTravelView
+         * @property {boolean|null} [open] GW2C_AckTravelView open
+         */
+
+        /**
+         * Constructs a new GW2C_AckTravelView.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckTravelView.
+         * @implements IGW2C_AckTravelView
+         * @constructor
+         * @param {msg.IGW2C_AckTravelView=} [properties] Properties to set
+         */
+        function GW2C_AckTravelView(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckTravelView open.
+         * @member {boolean} open
+         * @memberof msg.GW2C_AckTravelView
+         * @instance
+         */
+        GW2C_AckTravelView.prototype.open = false;
+
+        /**
+         * Creates a new GW2C_AckTravelView instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckTravelView
+         * @static
+         * @param {msg.IGW2C_AckTravelView=} [properties] Properties to set
+         * @returns {msg.GW2C_AckTravelView} GW2C_AckTravelView instance
+         */
+        GW2C_AckTravelView.create = function create(properties) {
+            return new GW2C_AckTravelView(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckTravelView message. Does not implicitly {@link msg.GW2C_AckTravelView.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckTravelView
+         * @static
+         * @param {msg.IGW2C_AckTravelView} message GW2C_AckTravelView message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckTravelView.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.open != null && message.hasOwnProperty("open"))
+                writer.uint32(/* id 1, wireType 0 =*/8).bool(message.open);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckTravelView message, length delimited. Does not implicitly {@link msg.GW2C_AckTravelView.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckTravelView
+         * @static
+         * @param {msg.IGW2C_AckTravelView} message GW2C_AckTravelView message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckTravelView.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckTravelView message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckTravelView
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckTravelView} GW2C_AckTravelView
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckTravelView.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckTravelView();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.open = reader.bool();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckTravelView message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckTravelView
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckTravelView} GW2C_AckTravelView
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckTravelView.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckTravelView message.
+         * @function verify
+         * @memberof msg.GW2C_AckTravelView
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckTravelView.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.open != null && message.hasOwnProperty("open"))
+                if (typeof message.open !== "boolean")
+                    return "open: boolean expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckTravelView message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckTravelView
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckTravelView} GW2C_AckTravelView
+         */
+        GW2C_AckTravelView.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckTravelView)
+                return object;
+            var message = new $root.msg.GW2C_AckTravelView();
+            if (object.open != null)
+                message.open = Boolean(object.open);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckTravelView message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckTravelView
+         * @static
+         * @param {msg.GW2C_AckTravelView} message GW2C_AckTravelView
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckTravelView.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.open = false;
+            if (message.open != null && message.hasOwnProperty("open"))
+                object.open = message.open;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckTravelView to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckTravelView
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckTravelView.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckTravelView;
+    })();
+
     msg.C2GW_AddDeliveryAddress = (function() {
 
         /**
