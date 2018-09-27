@@ -162,6 +162,10 @@ cc.Class({
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_TRAVELVIEW);
     },
+    onOpenEvent(event) {
+        event.stopPropagationImmediate();
+        this.openView(Game.UIName.UI_EVENTVIEW);
+    },
     onReqPalaceTakeBack() {
         Game.NetWorkController.Send('msg.C2GW_ReqPalaceTakeBack',
             {

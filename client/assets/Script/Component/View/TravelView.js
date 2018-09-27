@@ -65,7 +65,7 @@ cc.Class({
             labelNode.color = (i == index ? TabSelectColor : TabNormalColor);
         }
         this.tableView.clear();
-        this.tableView.initTableView(24, { array: this.itemDatas[index], target: this, selectid: this.supplyData[index].itemid });
+        this.tableView.initTableView(Math.max(24, this.itemDatas.length), { array: this.itemDatas[index], target: this, selectid: this.supplyData[index].itemid });
     },
     onConfirm: function () {
         Game.NetWorkController.Send('msg.C2GW_ReqPrepareTravel', { items: this.supplyData });

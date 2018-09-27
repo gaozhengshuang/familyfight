@@ -9,6 +9,9 @@ let TravelModel = function () {
     this.supplyItems = [];
     this.eventid = 0;
     this.eventids = [];
+
+    this.eventConfigs = [];
+    this.headConfigs = [];
 }
 
 TravelModel.prototype.Init = function (cb) {
@@ -16,9 +19,21 @@ TravelModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_AckEventData', this, this.onEventData);
     NetWorkController.AddListener('msg.GW2C_AckPrepareTravel', this, this.onPrepareTravel);
     NetWorkController.AddListener('msg.GW2C_AckCheckEvent', this, this.onCheckEvent);
+
+    this.eventConfigs = ConfigController.GetConfig('Event');
+    this.headConfigs = ConfigController.GetConfig('Head');
     Tools.InvokeCallback(cb, null);
 }
 
+TravelModel.prototype.GetEventConfig = function (id) {
+    return _.find(this.eventConfigs, { Id: id });
+}
+TravelModel.prototype.GetHeadConfig = function (id) {
+    return _.find(this.headConfigs, { Id: id });
+}
+TravelModel.prototype.IsEventOpen = function (id) {
+    return _.indexOf(this.eventids, id) != -1;
+}
 /**
  * 消息处理接口
  */

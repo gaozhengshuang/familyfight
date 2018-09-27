@@ -24,14 +24,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 89
+        "__id__": 90
       },
       {
-        "__id__": 90
+        "__id__": 91
       }
     ],
     "_prefab": {
-      "__id__": 91
+      "__id__": 92
     },
     "_id": "",
     "_opacity": 255,
@@ -112,14 +112,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 86
+        "__id__": 87
       },
       {
-        "__id__": 87
+        "__id__": 88
       }
     ],
     "_prefab": {
-      "__id__": 88
+      "__id__": 89
     },
     "_id": "",
     "_opacity": 255,
@@ -2550,7 +2550,7 @@
       }
     ],
     "_prefab": {
-      "__id__": 85
+      "__id__": 86
     },
     "_id": "",
     "_opacity": 255,
@@ -2639,7 +2639,11 @@
     },
     "duration": 0.1,
     "zoomScale": 1.2,
-    "clickEvents": [],
+    "clickEvents": [
+      {
+        "__id__": 85
+      }
+    ],
     "_N$interactable": true,
     "_N$enableAutoGrayEffect": false,
     "_N$normalColor": {
@@ -2665,6 +2669,15 @@
     "_N$target": {
       "__id__": 82
     }
+  },
+  {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 1
+    },
+    "component": "PalaceDetailView",
+    "handler": "onOpenEvent",
+    "customEventData": ""
   },
   {
     "__type__": "cc.PrefabInfo",

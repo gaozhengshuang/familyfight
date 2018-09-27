@@ -106,28 +106,34 @@ let Tools = {
         }
         return 0;
     },
-    UnitConvert(num) {
-        let moneyUnits = ["", "万", "亿", "兆", "京", "垓", "秭", "穰", "沟", "涧", "正", "载", "极"]; 
+    UnitConvert: function (num) {
+        let moneyUnits = ["", "万", "亿", "兆", "京", "垓", "秭", "穰", "沟", "涧", "正", "载", "极"];
         let dividend = 10000;
         let curentNum = num; //转换数字 
         let curentUnit = moneyUnits[0]; //转换单位 
 
-        for (let i = 0; i < moneyUnits.length; i ++) { 
+        for (let i = 0; i < moneyUnits.length; i++) {
             curentUnit = moneyUnits[i];
-            if(Math.floor(curentNum/dividend) <= 0 || i >= moneyUnits.length - 1) { break; }
+            if (Math.floor(curentNum / dividend) <= 0 || i >= moneyUnits.length - 1) { break; }
             curentNum = curentNum / dividend;
         }
 
         return this.toDecimal(curentNum) + curentUnit;
     },
-    toDecimal(x) {
+    toDecimal: function (x) {
         var f = parseFloat(x);
         if (isNaN(f)) {
             return;
         }
-        f = Math.round(x*100)/100;
+        f = Math.round(x * 100) / 100;
         return f;
     },
+    zeroPadding: function (tbl) {
+        return function (num, n) {
+            return (0 >= (n = n - num.toString().length)) ? num.toString() : (tbl[n] || (tbl[n] = Array(n + 1).join('0'))) + num.toString();
+        };
+    }([]),
+
 }
 
 module.exports = Tools;

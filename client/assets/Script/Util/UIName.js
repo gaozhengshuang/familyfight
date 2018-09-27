@@ -10,7 +10,8 @@ var UIName = {
     UI_PALACEMAIDDETAIL: 'Prefab/PalaceMaidDetailView',
     UI_PALACEMASTERLVUP: 'Prefab/PalaceMasterLvUpView',
     UI_PALACETASKITEM: 'Prefab/PalaceTakeItemView',
-    UI_TRAVELVIEW: 'Prefab/TravelView'
+    UI_TRAVELVIEW: 'Prefab/TravelView',
+    UI_EVENTVIEW: 'Prefab/EventView'
 }
 
 module.exports = UIName;

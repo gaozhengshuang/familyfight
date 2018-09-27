@@ -70,6 +70,7 @@ func (this* C2GWMsgHandler) Init() {
 	//御赐
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPrepareTravel{}, on_C2GW_ReqPrepareTravel)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqCheckEvent{}, on_C2GW_ReqCheckEvent)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTravelView{}, on_C2GW_ReqTravelView)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqEventBarrage{}, on_C2GW_ReqEventBarrage)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqSendEventBarrage{}, on_C2GW_ReqSendEventBarrage)
 }
@@ -440,6 +441,26 @@ func on_C2GW_ReqCheckEvent(session network.IBaseNetSession, message interface{})
 	result := user.travel.CheckEvent(user)
 	send := &msg.GW2C_AckCheckEvent{}
 	send.Result = pb.Uint32(result)
+	user.SendMsg(send)
+}
+//界面变化
+func on_C2GW_ReqTravelView(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqTravelView)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result := user.travel.OpenTravelView(tmsg.GetOpen())
+	send := &msg.GW2C_AckTravelView{}
+	send.Result = result
 	user.SendMsg(send)
 }
 //查询弹幕

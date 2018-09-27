@@ -43,11 +43,13 @@ func (this *TravelData) LoadData(data *msg.TravelData) {
 type UserTravel struct {
 	travel			*TravelData
 	eventids		[]uint32
+	opentravelview	bool
 }
 
 func (this *UserTravel) Init() {
 	this.travel = &TravelData{}
 	this.eventids = make([]uint32, 0)
+	this.opentravelview = false
 }
 //加载数据
 func (this *UserTravel) LoadBin(user *GateUser,bin *msg.Serialize) {
@@ -66,6 +68,9 @@ func (this *UserTravel) PackBin(bin *msg.Serialize) {
 	}
 }
 // ========================= 对外接口 =========================
+func (this *UserTravel) Online(user* GateUser){
+	this.opentravelview = false
+}
 func (this *UserTravel) Syn(user* GateUser) {
 	this.SynTravelData(user)
 	this.SynEventids(user)
@@ -146,7 +151,11 @@ func (this *UserTravel) CheckEvent(user* GateUser) (result uint32) {
 	this.SynEventids(user)
 	return 0
 }
-
+//界面变化
+func (this *UserTravel) OpenTravelView(open bool) bool {
+	this.opentravelview = open
+	return open
+}
 //请求弹幕
 func (this *GateUser) ReqEventBarrages(eventid uint32) []string {
 	//尝试从内存加载 如果没有返回nil
@@ -210,7 +219,7 @@ func (this *UserTravel) RandomEvent() uint32 {
 
 //做tick
 func (this *UserTravel) Tick(user *GateUser, now uint64) {
-	if this.travel.nexttime <= now {
+	if !this.open && this.travel.nexttime <= now {
 		//到时间了 触发事件
 		eventid := this.RandomEvent()
 		if eventid != 0 {
