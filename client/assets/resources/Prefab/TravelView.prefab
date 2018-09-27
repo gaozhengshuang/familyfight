@@ -230,7 +230,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 691,
-      "height": 947
+      "height": 967
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -608,7 +608,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 172,
-      "height": 226
+      "height": 230
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -662,7 +662,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 160,
-      "height": 51
+      "height": 60
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -671,7 +671,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -86
+      "y": -77.8
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -689,7 +689,7 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 20,
+    "_actualFontSize": 17,
     "_fontSize": 20,
     "_lineHeight": 24,
     "_enableWrapText": true,
@@ -698,7 +698,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "详情: 御用品御用品御用品御",
+    "_N$string": "详情: 御用品御用品御用品御品御用品御御用品御",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 0,
     "_N$fontFamily": "Arial",
@@ -792,7 +792,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 172,
-      "height": 226
+      "height": 230
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -846,7 +846,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 160,
-      "height": 51
+      "height": 60
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -855,7 +855,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -86
+      "y": -77.8
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -873,7 +873,7 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 20,
+    "_actualFontSize": 17,
     "_fontSize": 20,
     "_lineHeight": 24,
     "_enableWrapText": true,
@@ -882,7 +882,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "详情: 御用品御用品御用品御",
+    "_N$string": "详情: 御用品御用品御用品御品御用品御御用品御",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 0,
     "_N$fontFamily": "Arial",
@@ -910,7 +910,7 @@
     "_spriteFrame": {
       "__uuid__": "256f56cf-573a-469e-8e48-332a489ececc"
     },
-    "_type": 1,
+    "_type": 0,
     "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
@@ -976,7 +976,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 172,
-      "height": 226
+      "height": 230
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -1030,7 +1030,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 160,
-      "height": 51
+      "height": 60
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -1039,7 +1039,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -86
+      "y": -77.8
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1057,7 +1057,7 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 20,
+    "_actualFontSize": 17,
     "_fontSize": 20,
     "_lineHeight": 24,
     "_enableWrapText": true,
@@ -1066,7 +1066,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "详情: 御用品御用品御用品御",
+    "_N$string": "详情: 御用品御用品御用品御品御用品御御用品御",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 0,
     "_N$fontFamily": "Arial",
@@ -1680,7 +1680,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 0
+      "y": 13
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1864,7 +1864,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 220,
-      "y": 0
+      "y": 13
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -3413,7 +3413,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -199,
-      "y": -443.6
+      "y": -452.4
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -3509,7 +3509,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 5,
-      "y": -397
+      "y": -401.9
     },
     "_skewX": 0,
     "_skewY": 0,
