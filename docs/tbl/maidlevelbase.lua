@@ -41,7 +41,9 @@ export var TMaidLevel : table.ITMaidLevelDefine[] = [
 		{ Id : 36, Name : "明玉", Path : "Image/GameScene/Maid/maid_17", Passlevels : 6, Reward : 36, NextID : 37, ShopShow : [ 30, 31, 32, 33 ], DialogueID : 29, RoleDescribe : "" 	},
 		{ Id : 37, Name : "璎珞", Path : "Image/GameScene/Maid/maid_18", Passlevels : 6, Reward : 37, NextID : 38, ShopShow : [ 31, 32, 33, 34 ], DialogueID : 30, RoleDescribe : "" 	},
 		{ Id : 38, Name : "尔晴", Path : "Image/GameScene/Maid/maid_19", Passlevels : 6, Reward : 38, NextID : 39, ShopShow : [ 32, 33, 34, 35 ], DialogueID : 31, RoleDescribe : "" 	},
-		{ Id : 39, Name : "富察容音", Path : "Image/Head/2", Passlevels : 0, Reward : 0, NextID : 0, ShopShow : [ 0 ], DialogueID : 0, RoleDescribe : "乾隆的结发妻子。" 	}
+		{ Id : 39, Name : "富察容音", Path : "Image/GameScene/halfbody/1", Passlevels : 0, Reward : 0, NextID : 0, ShopShow : [ 0 ], DialogueID : 0, RoleDescribe : "乾隆的结发妻子。" 	},
+		{ Id : 40, Name : "高宁馨", Path : "Image/GameScene/halfbody/12", Passlevels : 0, Reward : 0, NextID : 0, ShopShow : [ 0 ], DialogueID : 0, RoleDescribe : "为人嚣张跋扈" 	},
+		{ Id : 41, Name : "辉发那拉", Path : "Image/GameScene/halfbody/13", Passlevels : 0, Reward : 0, NextID : 0, ShopShow : [ 0 ], DialogueID : 0, RoleDescribe : "乾隆的第二任皇后" 	}
 	]
 
 

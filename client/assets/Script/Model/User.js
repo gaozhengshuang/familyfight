@@ -107,6 +107,7 @@ UserModel.prototype.onGW2C_UpdateGold = function (msgid, data) {
 }
 
 UserModel.prototype.onGW2C_OfflineReward = function (msgid, data) {
+    console.log(data);
     this.offLineReward = data;
     NotificationController.Emit(Define.EVENT_KEY.OFFLINE_ACK);
 }

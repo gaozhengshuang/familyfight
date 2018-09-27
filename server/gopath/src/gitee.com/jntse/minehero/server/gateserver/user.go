@@ -528,7 +528,6 @@ func (this *GateUser) CheckDisconnectTimeOut(now int64) {
 
 // 真下线(存盘，从Gate清理玩家数据)
 func (this *GateUser) Logout() {
-    RoomSvrMgr().LeaveGame(this)
 	this.online = false
 	this.tm_logout = util.CURTIME()
 	this.cleanup = true
@@ -562,7 +561,6 @@ func (this *GateUser) SendRoomMsg(msg pb.Message) {
 		log.Error("玩家[%s %d]没有房间信息", this.Name(), this.Id())
 		return
 	}
-	//RoomSvrMgr().SendMsg(this.roomdata.sid_room, msg)
 }
 
 // 回复客户端
@@ -650,21 +648,6 @@ func (this *GateUser) SetDeliveryState(b bool) {
 
 func (this *GateUser) DeliveryState() bool {
 	return this.deliverystate
-}
-
-func (this *GateUser) RemoveCoinsOk (removeok bool, cost int32, uid int32){
-    this.gameflag = false
-    if removeok == false {
-        return
-    }
-    var gtype int32
-    if cost == 1000 {
-        gtype = 1
-    }else{
-        gtype = 0
-    }
-    RoomSvrMgr().JoinGameOk(this, gtype) 
-    this.QueryPlatformCoins()   
 }
 
 // 宫斗游戏系统 

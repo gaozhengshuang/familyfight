@@ -50,7 +50,6 @@ type GateServer struct {
 	hredis			*redis.Client
 	usermgr			UserManager
 	waitpool		LoginWaitPool
-	roomsvrmgr		RoomSvrManager
 	palacemgr 		PalaceManager
 	msghandlers		[]network.IBaseMsgHandler
 	tblloader		*tbl.TblLoader
@@ -87,9 +86,6 @@ func WaitPool() *LoginWaitPool {
 	return &GateSvr().waitpool
 }
 
-func RoomSvrMgr() *RoomSvrManager {
-	return &GateSvr().roomsvrmgr
-}
 
 func PalaceMgr() *PalaceManager {
 	return &GateSvr().palacemgr
@@ -149,7 +145,6 @@ func (this *GateServer) OnClose(session network.IBaseNetSession) {
 		this.usermgr.OnMatchServerClose()
 	case "TaskRoom":
 		log.Info("sid[%d] 和RoomServer连接断开", sid)
-		//this.roomsvrmgr.OnClose(sid)
 		break
 	case "TaskClient":
 		log.Info("sid[%d] 和客户端连接断开", sid)
@@ -210,7 +205,6 @@ func (this *GateServer) Init(fileconf string) bool {
 	//
 	this.usermgr.Init()
 	this.waitpool.Init()
-	this.roomsvrmgr.Init()
 	this.palacemgr.Init()
 	//this.countmgr.Init()
 	//this.gamemgr.Init()
@@ -240,7 +234,6 @@ func (this *GateServer) Handler100msTick(now int64) {
 	if this.quit_graceful && this.usermgr.Amount() == 0 {
 		g_KeyBordInput.Insert("quit")
 	}
-    this.roomsvrmgr.Tick(now)
 }
 
 func (this *GateServer) InitMsgHandler() {
@@ -409,11 +402,6 @@ func (this *GateServer) RegistToMatchServer() {
 	}
 	this.matchsvr.SendCmd(send)
 	log.Info("请求注册网关'%s'到Match", conf.Host.String())
-}
-
-func (this *GateServer) RegistRoomServer(agent *RoomAgent) {
-	this.roomsvrmgr.AddRoom(agent)
-	log.Info("注册房间服 id=%d 当前总数:%d", agent.Id(), this.roomsvrmgr.Num())
 }
 
 //func (this *GateServer) GetUserBySession(session network.IBaseNetSession) *GateUser {

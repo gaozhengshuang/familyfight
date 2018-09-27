@@ -17,7 +17,6 @@ message SimpleCounter {
     optional int64 money_cost_reset = 4;
 }
 
-
 // 微信相关
 message UserWechat {
     optional string openid = 1;
