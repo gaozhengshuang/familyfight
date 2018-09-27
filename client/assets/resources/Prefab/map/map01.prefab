@@ -146,7 +146,9 @@
     "_isTrimmedMode": true,
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
-    "_atlas": null
+    "_atlas": {
+      "__uuid__": "c6c0f796-ce27-4bbf-a91f-b5732be67fa6"
+    }
   },
   {
     "__type__": "cc.PrefabInfo",
