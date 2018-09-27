@@ -44,7 +44,11 @@ cc.Class({
     },
 
     onOpenPalaceDetail() {
-        Game.PalaceModel.SetCurPalaceId(this._data.Id);
-        this.openView(Game.UIName.UI_PALACEDETAIL);
+        if (Game.MaidModel.GetTopPass() >= this._data.UlockPassId) {
+            Game.PalaceModel.SetCurPalaceId(this._data.Id);
+            this.openView(Game.UIName.UI_PALACEDETAIL);
+        } else {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>宫殿尚未解锁</color>' });
+        }
     },
 });
