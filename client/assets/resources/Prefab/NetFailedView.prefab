@@ -329,7 +329,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "btn_close",
+    "_name": "btn_resetLogin",
     "_objFlags": 0,
     "_parent": {
       "__id__": 6
@@ -565,7 +565,7 @@
       "__id__": 1
     },
     "component": "NetFailedView",
-    "handler": "onClosePanel",
+    "handler": "onClickResetNet",
     "customEventData": ""
   },
   {
