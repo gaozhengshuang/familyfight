@@ -25,7 +25,7 @@ cc.Class({
         this.index = index;
         this.value = value;
         this.clickFunc = clickFunc;
-        Game.ResController.GetSpriteFrameByName('Image/ActiveView/image_linkitem' + value + '.png', function (err, res) {
+        Game.ResController.GetSpriteFrameByName('Image/ActiveView/image_linkitem' + value, function (err, res) {
             if (err != null) {
                 console.log('[严重错误] 加载资源错误 ' + JSON.stringify(err));
             } else {
