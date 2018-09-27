@@ -27,14 +27,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 28
+        "__id__": 27
       },
       {
-        "__id__": 29
+        "__id__": 28
       }
     ],
     "_prefab": {
-      "__id__": 30
+      "__id__": 29
     },
     "_id": "",
     "_opacity": 255,
@@ -196,18 +196,18 @@
         "__id__": 18
       },
       {
-        "__id__": 22
+        "__id__": 21
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 26
+        "__id__": 25
       }
     ],
     "_prefab": {
-      "__id__": 27
+      "__id__": 26
     },
     "_id": "",
     "_opacity": 255,
@@ -542,8 +542,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 225,
-      "height": 282
+      "width": 189,
+      "height": 236
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -611,13 +611,10 @@
     "_components": [
       {
         "__id__": 19
-      },
-      {
-        "__id__": 20
       }
     ],
     "_prefab": {
-      "__id__": 21
+      "__id__": 20
     },
     "_id": "",
     "_opacity": 255,
@@ -636,7 +633,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 91,
+      "width": 90,
       "height": 40
     },
     "_rotationX": 0,
@@ -668,31 +665,16 @@
     "_fontSize": 30,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "胖秀女",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0
-  },
-  {
-    "__type__": "cc.LabelOutline",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 18
-    },
-    "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 88,
-      "g": 33,
-      "b": 10,
-      "a": 255
-    },
-    "_width": 0.5
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -717,14 +699,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 23
+        "__id__": 22
       },
       {
-        "__id__": 24
+        "__id__": 23
       }
     ],
     "_prefab": {
-      "__id__": 25
+      "__id__": 24
     },
     "_id": "",
     "_opacity": 255,
@@ -767,7 +749,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 22
+      "__id__": 21
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -793,7 +775,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 22
+      "__id__": 21
     },
     "_enabled": true,
     "transition": 3,
@@ -849,7 +831,7 @@
       "__uuid__": "29158224-f8dd-4661-a796-1ffab537140e"
     },
     "_N$target": {
-      "__id__": 22
+      "__id__": 21
     }
   },
   {

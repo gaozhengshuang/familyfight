@@ -27,14 +27,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 64
+        "__id__": 62
       },
       {
-        "__id__": 65
+        "__id__": 63
       }
     ],
     "_prefab": {
-      "__id__": 66
+      "__id__": 64
     },
     "_id": "",
     "_opacity": 255,
@@ -202,18 +202,18 @@
         "__id__": 46
       },
       {
-        "__id__": 59
+        "__id__": 57
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 62
+        "__id__": 60
       }
     ],
     "_prefab": {
-      "__id__": 63
+      "__id__": 61
     },
     "_id": "",
     "_opacity": 255,
@@ -344,7 +344,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 151,
+      "width": 148,
       "height": 50
     },
     "_rotationX": 0,
@@ -374,7 +374,9 @@
     "_N$string": "<outline color=#FFD9DC width=2><b><color=#361513>主位升级</c></b></outline>",
     "_N$horizontalAlign": 0,
     "_N$fontSize": 36,
-    "_N$font": null,
+    "_N$font": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
     "_N$maxWidth": 0,
     "_N$lineHeight": 50,
     "_N$imageAtlas": null,
@@ -789,7 +791,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 82,
+      "width": 92,
       "height": 40
     },
     "_rotationX": 0,
@@ -821,8 +823,10 @@
     "_fontSize": 30,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "(贵人)",
     "_N$horizontalAlign": 1,
@@ -1026,8 +1030,10 @@
     "_fontSize": 30,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "富察容音",
     "_N$horizontalAlign": 1,
@@ -1133,8 +1139,10 @@
     "_fontSize": 18,
     "_lineHeight": 30,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "乾隆的结发妻子。",
     "_N$horizontalAlign": 0,
@@ -1303,7 +1311,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 145,
+      "width": 146,
       "height": 40
     },
     "_rotationX": 0,
@@ -1335,8 +1343,10 @@
     "_fontSize": 30,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "贵人>>>嫔",
     "_N$horizontalAlign": 1,
@@ -1421,21 +1431,21 @@
         "__id__": 47
       },
       {
-        "__id__": 51
+        "__id__": 50
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 55
+        "__id__": 53
       },
       {
-        "__id__": 56
+        "__id__": 54
       }
     ],
     "_prefab": {
-      "__id__": 58
+      "__id__": 56
     },
     "_id": "",
     "_opacity": 255,
@@ -1486,13 +1496,10 @@
     "_components": [
       {
         "__id__": 48
-      },
-      {
-        "__id__": 49
       }
     ],
     "_prefab": {
-      "__id__": 50
+      "__id__": 49
     },
     "_id": "",
     "_opacity": 255,
@@ -1543,31 +1550,16 @@
     "_fontSize": 24,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "所需卡牌10/20",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0
-  },
-  {
-    "__type__": "cc.LabelOutline",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 47
-    },
-    "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 161,
-      "g": 104,
-      "b": 104,
-      "a": 255
-    },
-    "_width": 0.5
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -1592,14 +1584,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 52
-      },
-      {
-        "__id__": 53
+        "__id__": 51
       }
     ],
     "_prefab": {
-      "__id__": 54
+      "__id__": 52
     },
     "_id": "",
     "_opacity": 255,
@@ -1618,7 +1607,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 93,
+      "width": 91,
       "height": 50
     },
     "_rotationX": 0,
@@ -1642,7 +1631,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 51
+      "__id__": 50
     },
     "_enabled": true,
     "_useOriginalSize": false,
@@ -1650,31 +1639,16 @@
     "_fontSize": 40,
     "_lineHeight": 50,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "升 级",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0
-  },
-  {
-    "__type__": "cc.LabelOutline",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 51
-    },
-    "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 88,
-      "g": 33,
-      "b": 10,
-      "a": 255
-    },
-    "_width": 1
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -1740,7 +1714,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 57
+        "__id__": 55
       }
     ],
     "_N$interactable": true,
@@ -1801,14 +1775,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 60
+        "__id__": 58
       }
     ],
     "_prefab": {
-      "__id__": 61
+      "__id__": 59
     },
     "_id": "",
-    "_opacity": 255,
+    "_opacity": 200,
     "_color": {
       "__type__": "cc.Color",
       "r": 161,
@@ -1824,7 +1798,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 192,
+      "width": 160,
       "height": 40
     },
     "_rotationX": 0,
@@ -1833,8 +1807,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 239,
-      "y": -498
+      "x": 255.6,
+      "y": -503.9
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1848,16 +1822,18 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 59
+      "__id__": 57
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 24,
-    "_fontSize": 24,
+    "_actualFontSize": 20,
+    "_fontSize": 20,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "翻牌子活动可获得",
     "_N$horizontalAlign": 1,
@@ -1938,7 +1914,7 @@
       "__id__": 20
     },
     "image_lvUp": {
-      "__id__": 55
+      "__id__": 53
     },
     "label_tltie": {
       "__id__": 23

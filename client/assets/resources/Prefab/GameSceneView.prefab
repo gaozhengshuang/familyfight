@@ -1981,8 +1981,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 135,
-      "height": 135
+      "width": 140,
+      "height": 141
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -2152,8 +2152,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 135,
-      "height": 135
+      "width": 140,
+      "height": 141
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -2323,8 +2323,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 233,
-      "height": 142
+      "width": 140,
+      "height": 141
     },
     "_rotationX": 0,
     "_rotationY": 0,

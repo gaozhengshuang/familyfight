@@ -162,7 +162,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 295,
+      "width": 298,
       "height": 40
     },
     "_rotationX": 0,
@@ -194,8 +194,10 @@
     "_fontSize": 40,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "获得金币+99999",
     "_N$horizontalAlign": 1,
@@ -209,7 +211,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "ac026e95-2708-4976-84ba-d1fe6b513937"
     },
     "fileId": "fbAAQNo7dCUrAePklwT3qW",
     "sync": false
@@ -246,7 +248,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "ac026e95-2708-4976-84ba-d1fe6b513937"
     },
     "fileId": "6c0adnNFJJt4CII7JNRMdE",
     "sync": false
@@ -300,7 +302,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "ac026e95-2708-4976-84ba-d1fe6b513937"
     },
     "fileId": "1eGU4hsKhDHrDl4xApItu6",
     "sync": false

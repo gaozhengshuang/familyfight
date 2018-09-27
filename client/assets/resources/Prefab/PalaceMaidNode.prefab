@@ -307,8 +307,10 @@
     "_fontSize": 24,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "明玉",
     "_N$horizontalAlign": 1,
@@ -440,7 +442,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 71,
+      "width": 74,
       "height": 40
     },
     "_rotationX": 0,
@@ -472,8 +474,10 @@
     "_fontSize": 24,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "X1000",
     "_N$horizontalAlign": 0,
@@ -581,7 +585,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 133,
+      "width": 134,
       "height": 40
     },
     "_rotationX": 0,
@@ -613,8 +617,10 @@
     "_fontSize": 24,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "主位3级解锁",
     "_N$horizontalAlign": 1,

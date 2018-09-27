@@ -482,7 +482,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 42,
+      "width": 43,
       "height": 30
     },
     "_rotationX": 0,
@@ -514,8 +514,10 @@
     "_fontSize": 24,
     "_lineHeight": 30,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "113",
     "_N$horizontalAlign": 1,
@@ -538,7 +540,7 @@
       "b": 255,
       "a": 255
     },
-    "_width": 2
+    "_width": 1
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -640,7 +642,8 @@
       "__id__": 15
     },
     "target": null,
-    "data": null
+    "data": null,
+    "index": 0
   },
   {
     "__type__": "cc.PrefabInfo",
