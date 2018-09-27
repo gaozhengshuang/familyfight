@@ -2,7 +2,6 @@ package main
 import (
 	"fmt"
 	"gitee.com/jntse/gotoolkit/log"
-	"gitee.com/jntse/gotoolkit/redis"
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
@@ -163,7 +162,7 @@ func (this *GateUser) ReqEventBarrages(eventid uint32) []string {
 //发送弹幕
 func (this *GateUser) SendEventBarrage(eventid uint32, barrage string ) uint32 {
 	key := fmt.Sprintf("%s_%d", EventBarragePrefix, eventid)
-	err := Redis().LPush(key, data).Err()
+	err := Redis().LPush(key, barrage).Err()
 	if err != nil {
 		log.Error("创建事件弹幕数据失败 id: %d ，err: %s", eventid, err)
 		return 1
