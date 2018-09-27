@@ -3,9 +3,9 @@
 
 module table {
 export var Event : table.IEventDefine[] = [
-		{ Id : 1, Event : 1001, EventName : "璎珞保护茉莉花", EventPath : "Image/GameScene/Event/1001" 	},
-		{ Id : 2, Event : 1002, EventName : "茉莉花遭雨淋", EventPath : "Image/GameScene/Event/1002" 	},
-		{ Id : 3, Event : 1003, EventName : "宫女感冒", EventPath : "Image/GameScene/Event/1003" 	}
+		{ Id : 1, EventName : "璎珞保护茉莉花", EventPath : "Image/GameScene/Event/1001", DefaultBarrage : [ "1_哈哈哈哈", "2_嘻嘻嘻嘻" ] 	},
+		{ Id : 2, EventName : "茉莉花遭雨淋", EventPath : "Image/GameScene/Event/1002", DefaultBarrage : [ "1_哈哈哈哈", "2_嘻嘻嘻嘻" ] 	},
+		{ Id : 3, EventName : "宫女感冒", EventPath : "Image/GameScene/Event/1003", DefaultBarrage : [ "1_哈哈哈哈", "2_嘻嘻嘻嘻" ] 	}
 	]
 
 
