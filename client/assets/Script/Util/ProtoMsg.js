@@ -28689,6 +28689,793 @@ $root.msg = (function() {
         return GW2C_AckCheckEvent;
     })();
 
+    msg.C2GW_ReqEventBarrage = (function() {
+
+        /**
+         * Properties of a C2GW_ReqEventBarrage.
+         * @memberof msg
+         * @interface IC2GW_ReqEventBarrage
+         * @property {number|null} [eventid] C2GW_ReqEventBarrage eventid
+         */
+
+        /**
+         * Constructs a new C2GW_ReqEventBarrage.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqEventBarrage.
+         * @implements IC2GW_ReqEventBarrage
+         * @constructor
+         * @param {msg.IC2GW_ReqEventBarrage=} [properties] Properties to set
+         */
+        function C2GW_ReqEventBarrage(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_ReqEventBarrage eventid.
+         * @member {number} eventid
+         * @memberof msg.C2GW_ReqEventBarrage
+         * @instance
+         */
+        C2GW_ReqEventBarrage.prototype.eventid = 0;
+
+        /**
+         * Creates a new C2GW_ReqEventBarrage instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqEventBarrage
+         * @static
+         * @param {msg.IC2GW_ReqEventBarrage=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqEventBarrage} C2GW_ReqEventBarrage instance
+         */
+        C2GW_ReqEventBarrage.create = function create(properties) {
+            return new C2GW_ReqEventBarrage(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqEventBarrage message. Does not implicitly {@link msg.C2GW_ReqEventBarrage.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqEventBarrage
+         * @static
+         * @param {msg.IC2GW_ReqEventBarrage} message C2GW_ReqEventBarrage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqEventBarrage.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.eventid != null && message.hasOwnProperty("eventid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.eventid);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqEventBarrage message, length delimited. Does not implicitly {@link msg.C2GW_ReqEventBarrage.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqEventBarrage
+         * @static
+         * @param {msg.IC2GW_ReqEventBarrage} message C2GW_ReqEventBarrage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqEventBarrage.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqEventBarrage message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqEventBarrage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqEventBarrage} C2GW_ReqEventBarrage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqEventBarrage.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqEventBarrage();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.eventid = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqEventBarrage message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqEventBarrage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqEventBarrage} C2GW_ReqEventBarrage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqEventBarrage.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqEventBarrage message.
+         * @function verify
+         * @memberof msg.C2GW_ReqEventBarrage
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqEventBarrage.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.eventid != null && message.hasOwnProperty("eventid"))
+                if (!$util.isInteger(message.eventid))
+                    return "eventid: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqEventBarrage message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqEventBarrage
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqEventBarrage} C2GW_ReqEventBarrage
+         */
+        C2GW_ReqEventBarrage.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqEventBarrage)
+                return object;
+            var message = new $root.msg.C2GW_ReqEventBarrage();
+            if (object.eventid != null)
+                message.eventid = object.eventid >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqEventBarrage message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqEventBarrage
+         * @static
+         * @param {msg.C2GW_ReqEventBarrage} message C2GW_ReqEventBarrage
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqEventBarrage.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.eventid = 0;
+            if (message.eventid != null && message.hasOwnProperty("eventid"))
+                object.eventid = message.eventid;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_ReqEventBarrage to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqEventBarrage
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqEventBarrage.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqEventBarrage;
+    })();
+
+    msg.GW2C_AckEventBarrage = (function() {
+
+        /**
+         * Properties of a GW2C_AckEventBarrage.
+         * @memberof msg
+         * @interface IGW2C_AckEventBarrage
+         * @property {Array.<string>|null} [barrages] GW2C_AckEventBarrage barrages
+         */
+
+        /**
+         * Constructs a new GW2C_AckEventBarrage.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckEventBarrage.
+         * @implements IGW2C_AckEventBarrage
+         * @constructor
+         * @param {msg.IGW2C_AckEventBarrage=} [properties] Properties to set
+         */
+        function GW2C_AckEventBarrage(properties) {
+            this.barrages = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckEventBarrage barrages.
+         * @member {Array.<string>} barrages
+         * @memberof msg.GW2C_AckEventBarrage
+         * @instance
+         */
+        GW2C_AckEventBarrage.prototype.barrages = $util.emptyArray;
+
+        /**
+         * Creates a new GW2C_AckEventBarrage instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckEventBarrage
+         * @static
+         * @param {msg.IGW2C_AckEventBarrage=} [properties] Properties to set
+         * @returns {msg.GW2C_AckEventBarrage} GW2C_AckEventBarrage instance
+         */
+        GW2C_AckEventBarrage.create = function create(properties) {
+            return new GW2C_AckEventBarrage(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckEventBarrage message. Does not implicitly {@link msg.GW2C_AckEventBarrage.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckEventBarrage
+         * @static
+         * @param {msg.IGW2C_AckEventBarrage} message GW2C_AckEventBarrage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckEventBarrage.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.barrages != null && message.barrages.length)
+                for (var i = 0; i < message.barrages.length; ++i)
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.barrages[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckEventBarrage message, length delimited. Does not implicitly {@link msg.GW2C_AckEventBarrage.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckEventBarrage
+         * @static
+         * @param {msg.IGW2C_AckEventBarrage} message GW2C_AckEventBarrage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckEventBarrage.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckEventBarrage message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckEventBarrage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckEventBarrage} GW2C_AckEventBarrage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckEventBarrage.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckEventBarrage();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.barrages && message.barrages.length))
+                        message.barrages = [];
+                    message.barrages.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckEventBarrage message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckEventBarrage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckEventBarrage} GW2C_AckEventBarrage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckEventBarrage.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckEventBarrage message.
+         * @function verify
+         * @memberof msg.GW2C_AckEventBarrage
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckEventBarrage.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.barrages != null && message.hasOwnProperty("barrages")) {
+                if (!Array.isArray(message.barrages))
+                    return "barrages: array expected";
+                for (var i = 0; i < message.barrages.length; ++i)
+                    if (!$util.isString(message.barrages[i]))
+                        return "barrages: string[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckEventBarrage message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckEventBarrage
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckEventBarrage} GW2C_AckEventBarrage
+         */
+        GW2C_AckEventBarrage.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckEventBarrage)
+                return object;
+            var message = new $root.msg.GW2C_AckEventBarrage();
+            if (object.barrages) {
+                if (!Array.isArray(object.barrages))
+                    throw TypeError(".msg.GW2C_AckEventBarrage.barrages: array expected");
+                message.barrages = [];
+                for (var i = 0; i < object.barrages.length; ++i)
+                    message.barrages[i] = String(object.barrages[i]);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckEventBarrage message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckEventBarrage
+         * @static
+         * @param {msg.GW2C_AckEventBarrage} message GW2C_AckEventBarrage
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckEventBarrage.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.barrages = [];
+            if (message.barrages && message.barrages.length) {
+                object.barrages = [];
+                for (var j = 0; j < message.barrages.length; ++j)
+                    object.barrages[j] = message.barrages[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckEventBarrage to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckEventBarrage
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckEventBarrage.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckEventBarrage;
+    })();
+
+    msg.C2GW_ReqSendEventBarrage = (function() {
+
+        /**
+         * Properties of a C2GW_ReqSendEventBarrage.
+         * @memberof msg
+         * @interface IC2GW_ReqSendEventBarrage
+         * @property {number|null} [eventid] C2GW_ReqSendEventBarrage eventid
+         * @property {string|null} [barrage] C2GW_ReqSendEventBarrage barrage
+         */
+
+        /**
+         * Constructs a new C2GW_ReqSendEventBarrage.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqSendEventBarrage.
+         * @implements IC2GW_ReqSendEventBarrage
+         * @constructor
+         * @param {msg.IC2GW_ReqSendEventBarrage=} [properties] Properties to set
+         */
+        function C2GW_ReqSendEventBarrage(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_ReqSendEventBarrage eventid.
+         * @member {number} eventid
+         * @memberof msg.C2GW_ReqSendEventBarrage
+         * @instance
+         */
+        C2GW_ReqSendEventBarrage.prototype.eventid = 0;
+
+        /**
+         * C2GW_ReqSendEventBarrage barrage.
+         * @member {string} barrage
+         * @memberof msg.C2GW_ReqSendEventBarrage
+         * @instance
+         */
+        C2GW_ReqSendEventBarrage.prototype.barrage = "";
+
+        /**
+         * Creates a new C2GW_ReqSendEventBarrage instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqSendEventBarrage
+         * @static
+         * @param {msg.IC2GW_ReqSendEventBarrage=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqSendEventBarrage} C2GW_ReqSendEventBarrage instance
+         */
+        C2GW_ReqSendEventBarrage.create = function create(properties) {
+            return new C2GW_ReqSendEventBarrage(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqSendEventBarrage message. Does not implicitly {@link msg.C2GW_ReqSendEventBarrage.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqSendEventBarrage
+         * @static
+         * @param {msg.IC2GW_ReqSendEventBarrage} message C2GW_ReqSendEventBarrage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqSendEventBarrage.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.eventid != null && message.hasOwnProperty("eventid"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.eventid);
+            if (message.barrage != null && message.hasOwnProperty("barrage"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.barrage);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqSendEventBarrage message, length delimited. Does not implicitly {@link msg.C2GW_ReqSendEventBarrage.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqSendEventBarrage
+         * @static
+         * @param {msg.IC2GW_ReqSendEventBarrage} message C2GW_ReqSendEventBarrage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqSendEventBarrage.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqSendEventBarrage message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqSendEventBarrage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqSendEventBarrage} C2GW_ReqSendEventBarrage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqSendEventBarrage.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqSendEventBarrage();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.eventid = reader.uint32();
+                    break;
+                case 2:
+                    message.barrage = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqSendEventBarrage message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqSendEventBarrage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqSendEventBarrage} C2GW_ReqSendEventBarrage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqSendEventBarrage.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqSendEventBarrage message.
+         * @function verify
+         * @memberof msg.C2GW_ReqSendEventBarrage
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqSendEventBarrage.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.eventid != null && message.hasOwnProperty("eventid"))
+                if (!$util.isInteger(message.eventid))
+                    return "eventid: integer expected";
+            if (message.barrage != null && message.hasOwnProperty("barrage"))
+                if (!$util.isString(message.barrage))
+                    return "barrage: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqSendEventBarrage message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqSendEventBarrage
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqSendEventBarrage} C2GW_ReqSendEventBarrage
+         */
+        C2GW_ReqSendEventBarrage.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqSendEventBarrage)
+                return object;
+            var message = new $root.msg.C2GW_ReqSendEventBarrage();
+            if (object.eventid != null)
+                message.eventid = object.eventid >>> 0;
+            if (object.barrage != null)
+                message.barrage = String(object.barrage);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqSendEventBarrage message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqSendEventBarrage
+         * @static
+         * @param {msg.C2GW_ReqSendEventBarrage} message C2GW_ReqSendEventBarrage
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqSendEventBarrage.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.eventid = 0;
+                object.barrage = "";
+            }
+            if (message.eventid != null && message.hasOwnProperty("eventid"))
+                object.eventid = message.eventid;
+            if (message.barrage != null && message.hasOwnProperty("barrage"))
+                object.barrage = message.barrage;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_ReqSendEventBarrage to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqSendEventBarrage
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqSendEventBarrage.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqSendEventBarrage;
+    })();
+
+    msg.GW2C_AckSendEventBarrage = (function() {
+
+        /**
+         * Properties of a GW2C_AckSendEventBarrage.
+         * @memberof msg
+         * @interface IGW2C_AckSendEventBarrage
+         * @property {number|null} [result] GW2C_AckSendEventBarrage result
+         */
+
+        /**
+         * Constructs a new GW2C_AckSendEventBarrage.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckSendEventBarrage.
+         * @implements IGW2C_AckSendEventBarrage
+         * @constructor
+         * @param {msg.IGW2C_AckSendEventBarrage=} [properties] Properties to set
+         */
+        function GW2C_AckSendEventBarrage(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckSendEventBarrage result.
+         * @member {number} result
+         * @memberof msg.GW2C_AckSendEventBarrage
+         * @instance
+         */
+        GW2C_AckSendEventBarrage.prototype.result = 0;
+
+        /**
+         * Creates a new GW2C_AckSendEventBarrage instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckSendEventBarrage
+         * @static
+         * @param {msg.IGW2C_AckSendEventBarrage=} [properties] Properties to set
+         * @returns {msg.GW2C_AckSendEventBarrage} GW2C_AckSendEventBarrage instance
+         */
+        GW2C_AckSendEventBarrage.create = function create(properties) {
+            return new GW2C_AckSendEventBarrage(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckSendEventBarrage message. Does not implicitly {@link msg.GW2C_AckSendEventBarrage.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckSendEventBarrage
+         * @static
+         * @param {msg.IGW2C_AckSendEventBarrage} message GW2C_AckSendEventBarrage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckSendEventBarrage.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.result != null && message.hasOwnProperty("result"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckSendEventBarrage message, length delimited. Does not implicitly {@link msg.GW2C_AckSendEventBarrage.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckSendEventBarrage
+         * @static
+         * @param {msg.IGW2C_AckSendEventBarrage} message GW2C_AckSendEventBarrage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckSendEventBarrage.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckSendEventBarrage message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckSendEventBarrage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckSendEventBarrage} GW2C_AckSendEventBarrage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckSendEventBarrage.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckSendEventBarrage();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.result = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckSendEventBarrage message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckSendEventBarrage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckSendEventBarrage} GW2C_AckSendEventBarrage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckSendEventBarrage.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckSendEventBarrage message.
+         * @function verify
+         * @memberof msg.GW2C_AckSendEventBarrage
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckSendEventBarrage.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.result != null && message.hasOwnProperty("result"))
+                if (!$util.isInteger(message.result))
+                    return "result: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckSendEventBarrage message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckSendEventBarrage
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckSendEventBarrage} GW2C_AckSendEventBarrage
+         */
+        GW2C_AckSendEventBarrage.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckSendEventBarrage)
+                return object;
+            var message = new $root.msg.GW2C_AckSendEventBarrage();
+            if (object.result != null)
+                message.result = object.result >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckSendEventBarrage message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckSendEventBarrage
+         * @static
+         * @param {msg.GW2C_AckSendEventBarrage} message GW2C_AckSendEventBarrage
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckSendEventBarrage.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.result = 0;
+            if (message.result != null && message.hasOwnProperty("result"))
+                object.result = message.result;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckSendEventBarrage to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckSendEventBarrage
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckSendEventBarrage.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckSendEventBarrage;
+    })();
+
     msg.C2GW_AddDeliveryAddress = (function() {
 
         /**

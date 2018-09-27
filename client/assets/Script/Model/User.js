@@ -68,6 +68,9 @@ UserModel.prototype.SubtractGold = function (gold) {
 }
 
 UserModel.prototype.SetGold = function (gold) {
+    if (isNaN(gold)) {
+        return;
+    }
     Tools.SetValueInObj(this.userInfo, 'base.gold', gold)
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, gold);
 }
