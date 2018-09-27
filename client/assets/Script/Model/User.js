@@ -1,20 +1,22 @@
 let Define = require('../Util/Define');
 let Platform = require('../Platform/CommonGame');
 let Tools = require('../Util/Tools');
+let UIName = require('../Util/UIName');
 let NetWorkController = require('../Controller/NetWorkController');
 let NotificationController = require('../Controller/NotificationController');
-let ConfigController = require('../Controller/ConfigController');
-let HttpUtil = require('../Util/HttpUtil');
+let ViewController = require('../Controller/ViewController');
 
 var UserModel = function () {
     this.loginInfo = null;
     this.userInfo = {};
+    this.offLineReward = null;
 }
 
 UserModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_SendUserInfo', this, this.onGW2C_SendUserInfo);
     NetWorkController.AddListener('msg.GW2C_RetLogin', this, this.onGW2C_RetLogin);
     NetWorkController.AddListener('msg.GW2C_UpdateGold', this, this.onGW2C_UpdateGold);
+    NetWorkController.AddListener('msg.GW2C_OfflineReward', this, this.onGW2C_OfflineReward);
 
     NotificationController.On(Define.EVENT_KEY.USERINFO_ADDGOLD, this, this.AddGold);
     NotificationController.On(Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, this, this.SubtractGold);
@@ -79,6 +81,10 @@ UserModel.prototype.GetGold = function () {
     return Tools.GetValueInObj(this.userInfo, 'base.gold') || 0;
 }
 
+UserModel.prototype.GetOffLineReward = function () {
+    return this.offLineReward;
+}
+
 /**
  * 消息处理接口
  */
@@ -100,6 +106,11 @@ UserModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
 UserModel.prototype.onGW2C_UpdateGold = function (msgid, data) {
     let value = data.num || 0;
     this.SetGold(value)
+}
+
+UserModel.prototype.onGW2C_OfflineReward = function (msgid, data) {
+    this.offLineReward = data;
+    ViewController.openView(UIName.UI_OFFLINEREWARD);
 }
 
 module.exports = new UserModel();
