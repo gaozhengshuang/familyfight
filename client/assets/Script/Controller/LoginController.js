@@ -5,7 +5,9 @@ let NotificationController = require('./NotificationController');
 let Tools = require("../Util/Tools");
 let moment = require("moment/moment");
 let Define = require("../Util/Define");
-let PlatformDefine = require('../Util/PlatformDefine');
+let UIName = require("../Util/UIName");
+let Platform = require("../Platform/CommonGame");
+let ViewController = require("../Controller/ViewController");
 
 var LoginController = function () {
     this.sendHeartBeatTime = 0;
@@ -28,7 +30,7 @@ LoginController.prototype.Init = function (cb) {
 }
 
 LoginController.prototype.ConnectToLoginServer = function (cb) {
-    let url = PlatformDefine.WSPrefix + PlatformDefine.LoginHost + '/' + PlatformDefine.LoginSuffix;
+    let url = Platform.WSPrefix + Platform.LoginHost + '/' + Platform.LoginSuffix;
     this.loginServerUrl = url;
     NetWorkController.Connect(url, cb);
 }
@@ -43,7 +45,7 @@ LoginController.prototype.onL2C_RetLogin = function (msgid, data) {
     //连接gate server
     console.log(data);
     let UserModel = require('../Model/User');
-    let url = PlatformDefine.WSPrefix + data.host + '/ws_handler';
+    let url = Platform.WSPrefix + data.host + '/ws_handler';
     console.log('onL2c_RetLogin url : ' + url);
     async.waterfall([
         function (anext) {
@@ -133,14 +135,7 @@ LoginController.prototype.Update = function (dt) {
 
 LoginController.prototype._showNetFailed = function (reason) {
     console.log(new Date() + ' [断线重连] 原因 ' + reason);
-    cc.loader.loadRes("Prefab/NetFailedView", function (err, prefab) {
-        if (err) {
-            console.log('[严重错误] 奖励资源加载错误 ' + err);
-        } else {
-            var newNode = cc.instantiate(prefab);
-            cc.director.getScene().getChildByName('Canvas').addChild(newNode);
-        }
-    });
+    ViewController.openView(UIName.UI_NETFAILED);
 }
 
 module.exports = new LoginController();

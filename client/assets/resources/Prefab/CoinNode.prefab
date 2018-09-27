@@ -27,14 +27,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 34
+        "__id__": 32
       },
       {
-        "__id__": 35
+        "__id__": 33
       }
     ],
     "_prefab": {
-      "__id__": 36
+      "__id__": 34
     },
     "_id": "",
     "_opacity": 255,
@@ -203,8 +203,10 @@
     "_fontSize": 30,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "0",
     "_N$horizontalAlign": 0,
@@ -384,24 +386,24 @@
         "__id__": 22
       },
       {
-        "__id__": 26
+        "__id__": 25
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
+        "__id__": 28
+      },
+      {
+        "__id__": 29
+      },
+      {
         "__id__": 30
-      },
-      {
-        "__id__": 31
-      },
-      {
-        "__id__": 32
       }
     ],
     "_prefab": {
-      "__id__": 33
+      "__id__": 31
     },
     "_id": "",
     "_opacity": 255,
@@ -656,7 +658,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 75,
+      "width": 77,
       "height": 40
     },
     "_rotationX": 0,
@@ -688,8 +690,10 @@
     "_fontSize": 30,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "30/50",
     "_N$horizontalAlign": 1,
@@ -721,13 +725,10 @@
     "_components": [
       {
         "__id__": 23
-      },
-      {
-        "__id__": 24
       }
     ],
     "_prefab": {
-      "__id__": 25
+      "__id__": 24
     },
     "_id": "",
     "_opacity": 255,
@@ -778,31 +779,16 @@
     "_fontSize": 16,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "02:30",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0
-  },
-  {
-    "__type__": "cc.LabelOutline",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 22
-    },
-    "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 97,
-      "g": 24,
-      "b": 33,
-      "a": 255
-    },
-    "_width": 0.5
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -827,14 +813,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 27
-      },
-      {
-        "__id__": 28
+        "__id__": 26
       }
     ],
     "_prefab": {
-      "__id__": 29
+      "__id__": 27
     },
     "_id": "",
     "_opacity": 255,
@@ -877,7 +860,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 26
+      "__id__": 25
     },
     "_enabled": true,
     "_useOriginalSize": false,
@@ -885,31 +868,16 @@
     "_fontSize": 24,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "+6",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0
-  },
-  {
-    "__type__": "cc.LabelOutline",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 26
-    },
-    "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 97,
-      "g": 24,
-      "b": 33,
-      "a": 255
-    },
-    "_width": 0.5
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -979,10 +947,10 @@
       "__id__": 23
     },
     "stateLabel": {
-      "__id__": 27
+      "__id__": 26
     },
     "progressBar": {
-      "__id__": 31
+      "__id__": 29
     },
     "curPower": null
   },

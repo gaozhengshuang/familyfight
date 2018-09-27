@@ -55,12 +55,12 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0.5
+      "y": 0.44
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 133,
-      "height": 220
+      "width": 134,
+      "height": 250
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -275,7 +275,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 50,
+      "width": 52,
       "height": 40
     },
     "_rotationX": 0,
@@ -285,7 +285,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 90
+      "y": 120
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -307,8 +307,10 @@
     "_fontSize": 24,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "明玉",
     "_N$horizontalAlign": 1,
@@ -331,7 +333,7 @@
       "b": 255,
       "a": 255
     },
-    "_width": 1
+    "_width": 2
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -440,7 +442,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 71,
+      "width": 74,
       "height": 40
     },
     "_rotationX": 0,
@@ -472,8 +474,10 @@
     "_fontSize": 24,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "X1000",
     "_N$horizontalAlign": 0,
@@ -581,7 +585,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 133,
+      "width": 134,
       "height": 40
     },
     "_rotationX": 0,
@@ -613,8 +617,10 @@
     "_fontSize": 24,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "主位3级解锁",
     "_N$horizontalAlign": 1,
@@ -668,8 +674,8 @@
     "_enabled": true,
     "_layoutSize": {
       "__type__": "cc.Size",
-      "width": 133,
-      "height": 220
+      "width": 134,
+      "height": 250
     },
     "_resize": 1,
     "_N$layoutType": 0,

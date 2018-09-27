@@ -26,24 +26,24 @@
         "__id__": 149
       },
       {
-        "__id__": 171
+        "__id__": 170
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 188
+        "__id__": 184
       },
       {
-        "__id__": 189
+        "__id__": 185
       },
       {
-        "__id__": 190
+        "__id__": 186
       }
     ],
     "_prefab": {
-      "__id__": 191
+      "__id__": 187
     },
     "_id": "",
     "_opacity": 255,
@@ -4594,11 +4594,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 169
+        "__id__": 168
       }
     ],
     "_prefab": {
-      "__id__": 170
+      "__id__": 169
     },
     "_id": "",
     "_opacity": 255,
@@ -4823,7 +4823,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 425,
+      "width": 426,
       "height": 40
     },
     "_rotationX": 0,
@@ -4855,8 +4855,10 @@
     "_fontSize": 26,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "30秒内尽量多的找出两个一样的牌。",
     "_N$horizontalAlign": 1,
@@ -4945,14 +4947,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 165
+        "__id__": 164
       },
       {
-        "__id__": 166
+        "__id__": 165
       }
     ],
     "_prefab": {
-      "__id__": 168
+      "__id__": 167
     },
     "_id": "",
     "_opacity": 255,
@@ -4971,8 +4973,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 147,
-      "height": 50
+      "width": 180,
+      "height": 80
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -5003,13 +5005,10 @@
     "_components": [
       {
         "__id__": 162
-      },
-      {
-        "__id__": 163
       }
     ],
     "_prefab": {
-      "__id__": 164
+      "__id__": 163
     },
     "_id": "",
     "_opacity": 255,
@@ -5028,7 +5027,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 70,
+      "width": 82,
       "height": 50
     },
     "_rotationX": 0,
@@ -5056,35 +5055,20 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
+    "_actualFontSize": 36,
+    "_fontSize": 36,
     "_lineHeight": 50,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "开 始",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0
-  },
-  {
-    "__type__": "cc.LabelOutline",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 161
-    },
-    "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 88,
-      "g": 33,
-      "b": 10,
-      "a": 255
-    },
-    "_width": 1
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -5109,7 +5093,7 @@
       "__uuid__": "71b26da0-97ca-4b0a-81f7-8864ab471847"
     },
     "_type": 1,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -5150,7 +5134,7 @@
     "zoomScale": 0.9,
     "clickEvents": [
       {
-        "__id__": 167
+        "__id__": 166
       }
     ],
     "_N$interactable": true,
@@ -5240,20 +5224,20 @@
     },
     "_children": [
       {
-        "__id__": 172
+        "__id__": 171
       },
       {
-        "__id__": 179
+        "__id__": 177
       },
       {
-        "__id__": 183
+        "__id__": 180
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 187
+      "__id__": 183
     },
     "_id": "",
     "_opacity": 255,
@@ -5296,22 +5280,22 @@
     "_name": "image_linkuptitlebg",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 171
+      "__id__": 170
     },
     "_children": [
       {
-        "__id__": 173
+        "__id__": 172
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 177
+        "__id__": 175
       }
     ],
     "_prefab": {
-      "__id__": 178
+      "__id__": 176
     },
     "_id": "",
     "_opacity": 255,
@@ -5354,21 +5338,18 @@
     "_name": "TitleLabel",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 172
+      "__id__": 171
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 174
-      },
-      {
-        "__id__": 175
+        "__id__": 173
       }
     ],
     "_prefab": {
-      "__id__": 176
+      "__id__": 174
     },
     "_id": "",
     "_opacity": 255,
@@ -5387,7 +5368,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 146,
+      "width": 144,
       "height": 60
     },
     "_rotationX": 0,
@@ -5411,7 +5392,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 173
+      "__id__": 172
     },
     "_enabled": true,
     "_useOriginalSize": false,
@@ -5419,31 +5400,16 @@
     "_fontSize": 36,
     "_lineHeight": 60,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "记忆翻牌",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0
-  },
-  {
-    "__type__": "cc.LabelOutline",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 173
-    },
-    "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 104,
-      "g": 50,
-      "b": 18,
-      "a": 255
-    },
-    "_width": 1
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -5461,7 +5427,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 172
+      "__id__": 171
     },
     "_enabled": true,
     "_spriteFrame": {
@@ -5498,21 +5464,18 @@
     "_name": "CountDownTitleLabel",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 171
+      "__id__": 170
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 180
-      },
-      {
-        "__id__": 181
+        "__id__": 178
       }
     ],
     "_prefab": {
-      "__id__": 182
+      "__id__": 179
     },
     "_id": "",
     "_opacity": 255,
@@ -5531,7 +5494,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 127,
+      "width": 125,
       "height": 40
     },
     "_rotationX": 0,
@@ -5555,7 +5518,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 179
+      "__id__": 177
     },
     "_enabled": true,
     "_useOriginalSize": false,
@@ -5563,31 +5526,16 @@
     "_fontSize": 38,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "倒计时:",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0
-  },
-  {
-    "__type__": "cc.LabelOutline",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 179
-    },
-    "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 104,
-      "g": 50,
-      "b": 18,
-      "a": 255
-    },
-    "_width": 1
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -5605,21 +5553,18 @@
     "_name": "CountDownLabel",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 171
+      "__id__": 170
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 184
-      },
-      {
-        "__id__": 185
+        "__id__": 181
       }
     ],
     "_prefab": {
-      "__id__": 186
+      "__id__": 182
     },
     "_id": "",
     "_opacity": 255,
@@ -5638,7 +5583,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 97,
+      "width": 98,
       "height": 40
     },
     "_rotationX": 0,
@@ -5662,7 +5607,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 183
+      "__id__": 180
     },
     "_enabled": true,
     "_useOriginalSize": false,
@@ -5670,31 +5615,16 @@
     "_fontSize": 38,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "00:15",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 0
-  },
-  {
-    "__type__": "cc.LabelOutline",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 183
-    },
-    "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 104,
-      "g": 50,
-      "b": 18,
-      "a": 255
-    },
-    "_width": 1
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -5769,7 +5699,7 @@
       "__id__": 149
     },
     "countDownLabel": {
-      "__id__": 184
+      "__id__": 181
     },
     "tipRewardViewPrefab": {
       "__uuid__": "ac026e95-2708-4976-84ba-d1fe6b513937"
