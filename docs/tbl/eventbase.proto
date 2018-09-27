@@ -22,13 +22,13 @@ message EventDefine
 	optional uint32 Id = 1; // id
 	
 	
-	optional uint32 Event = 2; // 触发后的事件
+	optional string EventName = 2; // 事件名称
 	
 	
-	optional string EventName = 3; // 事件名称
+	optional string EventPath = 3; // 事件图片路径
 	
 	
-	optional string EventPath = 4; // 事件图片路径
+	repeated string DefaultBarrage = 4; // 默认弹幕 头像_内容
 
 }
 
