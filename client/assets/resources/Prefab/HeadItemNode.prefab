@@ -30,11 +30,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 14
+        "__id__": 13
       }
     ],
     "_prefab": {
-      "__id__": 15
+      "__id__": 14
     },
     "_id": "",
     "_opacity": 255,
@@ -335,13 +335,10 @@
     "_components": [
       {
         "__id__": 11
-      },
-      {
-        "__id__": 12
       }
     ],
     "_prefab": {
-      "__id__": 13
+      "__id__": 12
     },
     "_id": "",
     "_opacity": 255,
@@ -392,31 +389,16 @@
     "_fontSize": 30,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "富察皇后",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
     "_N$overflow": 2
-  },
-  {
-    "__type__": "cc.LabelOutline",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 10
-    },
-    "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "_width": 0.5
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -446,8 +428,8 @@
     "nameLabel": {
       "__id__": 11
     },
-    "info": null,
-    "selectFunc": null
+    "data": null,
+    "target": null
   },
   {
     "__type__": "cc.PrefabInfo",
