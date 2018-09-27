@@ -1462,7 +1462,7 @@
     "node": {
       "__id__": 1
     },
-    "_enabled": true,
+    "_enabled": false,
     "node_playDlg": {
       "__id__": 2
     }
