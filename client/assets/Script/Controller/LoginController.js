@@ -5,7 +5,9 @@ let NotificationController = require('./NotificationController');
 let Tools = require("../Util/Tools");
 let moment = require("moment/moment");
 let Define = require("../Util/Define");
+let UIName = require("../Util/UIName");
 let PlatformDefine = require('../Util/PlatformDefine');
+let ViewController = require("../Controller/ViewController");
 
 var LoginController = function () {
     this.sendHeartBeatTime = 0;
@@ -133,14 +135,7 @@ LoginController.prototype.Update = function (dt) {
 
 LoginController.prototype._showNetFailed = function (reason) {
     console.log(new Date() + ' [断线重连] 原因 ' + reason);
-    cc.loader.loadRes("Prefab/NetFailedView", function (err, prefab) {
-        if (err) {
-            console.log('[严重错误] 奖励资源加载错误 ' + err);
-        } else {
-            var newNode = cc.instantiate(prefab);
-            cc.director.getScene().getChildByName('Canvas').addChild(newNode);
-        }
-    });
+    ViewController.openView(UIName.UI_NETFAILED);
 }
 
 module.exports = new LoginController();
