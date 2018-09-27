@@ -1631,7 +1631,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 98,
+      "width": 124,
       "height": 40
     },
     "_rotationX": 0,
@@ -1660,7 +1660,7 @@
     "_enabled": true,
     "_N$string": "<outline color=#fffffff width=1\n><b><color=#58210a>富察容音</c></b></outline>",
     "_N$horizontalAlign": 0,
-    "_N$fontSize": 24,
+    "_N$fontSize": 30,
     "_N$font": {
       "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
     },
@@ -1779,7 +1779,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 77,
+      "width": 93,
       "height": 40
     },
     "_rotationX": 0,
@@ -1807,8 +1807,8 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
+    "_actualFontSize": 36,
+    "_fontSize": 36,
     "_lineHeight": 40,
     "_enableWrapText": true,
     "_N$file": {
