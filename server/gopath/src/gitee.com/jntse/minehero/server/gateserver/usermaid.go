@@ -94,7 +94,7 @@ func (this *UserMaid) Online(user* GateUser) {
 	//上线了 要给离线奖励了
 	passedtime := user.tm_login - user.tm_logout
 	rewardpersecond := this.CalculateRewardPerSecond()
-	addition := uint64(passedtime / 1000) * rewardpersecond
+	addition := uint64(passedtime) * rewardpersecond
 	user.AddGold(addition, "离线侍女奖励")
 	send := &msg.GW2C_OfflineReward{}
 	send.Gold = pb.Uint64(addition)
