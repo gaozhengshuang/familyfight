@@ -27,14 +27,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 58
+        "__id__": 59
       },
       {
-        "__id__": 59
+        "__id__": 60
       }
     ],
     "_prefab": {
-      "__id__": 60
+      "__id__": 61
     },
     "_id": "",
     "_opacity": 255,
@@ -197,7 +197,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 57
+      "__id__": 58
     },
     "_id": "",
     "_opacity": 255,
@@ -290,7 +290,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 0
+      "y": 88
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -597,7 +597,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 302,
+      "width": 304,
       "height": 60
     },
     "_rotationX": 0,
@@ -607,7 +607,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 300
+      "y": -297
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -629,8 +629,10 @@
     "_fontSize": 50,
     "_lineHeight": 60,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "傅桓约见璎珞",
     "_N$horizontalAlign": 1,
@@ -649,11 +651,11 @@
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 255,
-      "b": 255,
+      "g": 169,
+      "b": 169,
       "a": 255
     },
-    "_width": 1
+    "_width": 2
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -776,21 +778,21 @@
         "__id__": 25
       },
       {
-        "__id__": 46
+        "__id__": 47
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 54
+        "__id__": 55
       },
       {
-        "__id__": 55
+        "__id__": 56
       }
     ],
     "_prefab": {
-      "__id__": 56
+      "__id__": 57
     },
     "_id": "",
     "_opacity": 255,
@@ -850,7 +852,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 45
+      "__id__": 46
     },
     "_id": "",
     "_opacity": 255,
@@ -1261,14 +1263,14 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 41
+        "__id__": 42
       },
       {
-        "__id__": 42
+        "__id__": 43
       }
     ],
     "_prefab": {
-      "__id__": 44
+      "__id__": 45
     },
     "_id": "",
     "_opacity": 255,
@@ -1319,10 +1321,13 @@
     "_components": [
       {
         "__id__": 39
+      },
+      {
+        "__id__": 40
       }
     ],
     "_prefab": {
-      "__id__": 40
+      "__id__": 41
     },
     "_id": "",
     "_opacity": 255,
@@ -1341,7 +1346,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 64,
+      "width": 63,
       "height": 40
     },
     "_rotationX": 0,
@@ -1350,8 +1355,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 3
+      "x": 1.2,
+      "y": 2.1
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1361,21 +1366,45 @@
     "groupIndex": 0
   },
   {
-    "__type__": "cc.RichText",
+    "__type__": "cc.Label",
     "_name": "",
     "_objFlags": 0,
     "node": {
       "__id__": 38
     },
     "_enabled": true,
-    "_N$string": "<outline color=#6f5b0a width=2><b>留 言</b><outline>",
-    "_N$horizontalAlign": 0,
-    "_N$fontSize": 26,
-    "_N$font": null,
-    "_N$maxWidth": 0,
-    "_N$lineHeight": 40,
-    "_N$imageAtlas": null,
-    "_N$handleTouchEvent": true
+    "_useOriginalSize": false,
+    "_actualFontSize": 26,
+    "_fontSize": 26,
+    "_lineHeight": 40,
+    "_enableWrapText": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
+    "_spacingX": 0,
+    "_N$string": "留 言",
+    "_N$horizontalAlign": 1,
+    "_N$verticalAlign": 1,
+    "_N$fontFamily": "Arial",
+    "_N$overflow": 0
+  },
+  {
+    "__type__": "cc.LabelOutline",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 38
+    },
+    "_enabled": true,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 111,
+      "g": 91,
+      "b": 10,
+      "a": 255
+    },
+    "_width": 2
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -1385,7 +1414,7 @@
     "asset": {
       "__uuid__": "a4a9ae85-e264-41cd-ad01-d71d1361ea02"
     },
-    "fileId": "9bVYS8DBhKA6bs4X5EiMvn",
+    "fileId": "dd4ZrT71dLX79wTJxtuJyu",
     "sync": false
   },
   {
@@ -1441,7 +1470,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 43
+        "__id__": 44
       }
     ],
     "_N$interactable": true,
@@ -1510,14 +1539,14 @@
     },
     "_children": [
       {
-        "__id__": 47
+        "__id__": 48
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 53
+      "__id__": 54
     },
     "_id": "",
     "_opacity": 255,
@@ -1560,25 +1589,25 @@
     "_name": "TableView",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 46
+      "__id__": 47
     },
     "_children": [
       {
-        "__id__": 48
+        "__id__": 49
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 50
+        "__id__": 51
       },
       {
-        "__id__": 51
+        "__id__": 52
       }
     ],
     "_prefab": {
-      "__id__": 52
+      "__id__": 53
     },
     "_id": "",
     "_opacity": 255,
@@ -1621,14 +1650,14 @@
     "_name": "content",
     "_objFlags": 0,
     "_parent": {
-      "__id__": 47
+      "__id__": 48
     },
     "_children": [],
     "_tag": -1,
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 49
+      "__id__": 50
     },
     "_id": "",
     "_opacity": 255,
@@ -1682,11 +1711,11 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 47
+      "__id__": 48
     },
     "_enabled": true,
     "content": {
-      "__id__": 48
+      "__id__": 49
     },
     "horizontal": false,
     "vertical": true,
@@ -1724,7 +1753,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 47
+      "__id__": 48
     },
     "_enabled": true,
     "_type": 0,
@@ -1862,10 +1891,10 @@
       "__id__": 33
     },
     "headListNode": {
-      "__id__": 46
+      "__id__": 47
     },
     "tableView": {
-      "__id__": 50
+      "__id__": 51
     },
     "headInfo": null,
     "barragesInfo": [],
