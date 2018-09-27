@@ -1,9 +1,9 @@
 let _ = require('lodash')
 let async = require('async');
 
-let CommonPlatform = require('./Common')
+let CommonPlatform = require('./CommonGame')
 let Define = require('../Util/Define');
-let PlatformDefine = require('../Util/PlatformDefine');
+let Platform = require('../Platform/CommonGame');
 
 let UserModel = require('../Model/User');
 let LoginController = require('../Controller/LoginController');
@@ -44,7 +44,7 @@ let WechatPlatform = _.merge(_.cloneDeep(CommonPlatform), {
             function (res, anext) {
                 console.log(res.code)
                 wx.request({
-                    url: PlatformDefine.RegisteHost,
+                    url: Platform.RegisteHost,
                     data: {
                         gmcmd: 'wx_login',
                         tempauthcode: res.code

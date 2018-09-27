@@ -8,10 +8,9 @@ let Game = {
     TurnGameDefine: require('./Util/TurnGameDefine'),
     Tools: require('./Util/Tools'),
     HttpUtil: require('./Util/HttpUtil'),
-    PlatformDefine: require('./Util/PlatformDefine'),
     Crypto: require('./Util/Crypto'),
 
-    Platform: require('./Platform/Common'),
+    Platform: require('./Platform/CommonGame'),
 
     AudioController: require('./Controller/AudioController'),
     ConfigController: require('./Controller/ConfigController'),

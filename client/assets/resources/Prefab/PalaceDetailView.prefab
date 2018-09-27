@@ -2691,7 +2691,9 @@
     "image_master": {
       "__id__": 45
     },
-    "label_master": null,
+    "label_master": {
+      "__id__": 51
+    },
     "image_palaceCard": {
       "__id__": 48
     },

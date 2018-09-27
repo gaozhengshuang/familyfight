@@ -6,7 +6,7 @@ let Tools = require("../Util/Tools");
 let moment = require("moment/moment");
 let Define = require("../Util/Define");
 let UIName = require("../Util/UIName");
-let PlatformDefine = require('../Util/PlatformDefine');
+let Platform = require("../Platform/CommonGame");
 let ViewController = require("../Controller/ViewController");
 
 var LoginController = function () {
@@ -30,7 +30,7 @@ LoginController.prototype.Init = function (cb) {
 }
 
 LoginController.prototype.ConnectToLoginServer = function (cb) {
-    let url = PlatformDefine.WSPrefix + PlatformDefine.LoginHost + '/' + PlatformDefine.LoginSuffix;
+    let url = Platform.WSPrefix + Platform.LoginHost + '/' + Platform.LoginSuffix;
     this.loginServerUrl = url;
     NetWorkController.Connect(url, cb);
 }
@@ -45,7 +45,7 @@ LoginController.prototype.onL2C_RetLogin = function (msgid, data) {
     //连接gate server
     console.log(data);
     let UserModel = require('../Model/User');
-    let url = PlatformDefine.WSPrefix + data.host + '/ws_handler';
+    let url = Platform.WSPrefix + data.host + '/ws_handler';
     console.log('onL2c_RetLogin url : ' + url);
     async.waterfall([
         function (anext) {

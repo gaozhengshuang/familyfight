@@ -1,5 +1,5 @@
 let Define = require('../Util/Define');
-let PlatformDefine = require('../Util/PlatformDefine');
+let Platform = require('../Platform/CommonGame');
 let Tools = require('../Util/Tools');
 let NetWorkController = require('../Controller/NetWorkController');
 let NotificationController = require('../Controller/NotificationController');
@@ -46,7 +46,7 @@ UserModel.prototype.GetUserName = function () {
 }
 
 UserModel.prototype.GetUser = function (cb) {
-    if (PlatformDefine.PLATFORM == 'Normal') {
+    if (Platform.PLATFORM == 'Normal') {
         Tools.InvokeCallback(cb, null);
     } else {
         if (!Tools.InvokeCallback(window.GetCurrentUser, function (usr) {
