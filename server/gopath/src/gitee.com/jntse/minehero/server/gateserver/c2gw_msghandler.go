@@ -460,7 +460,7 @@ func on_C2GW_ReqTravelView(session network.IBaseNetSession, message interface{})
 	}
 	result := user.travel.OpenTravelView(tmsg.GetOpen())
 	send := &msg.GW2C_AckTravelView{}
-	send.Result = result
+	send.Open = pb.Bool(result)
 	user.SendMsg(send)
 }
 //查询弹幕

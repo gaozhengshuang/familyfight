@@ -133,18 +133,20 @@ export var ProtoId : table.IProtoIdDefine[] = [
 		{ Id : 128, Name : "msg.GW2C_AckEventBarrage" 	},
 		{ Id : 129, Name : "msg.C2GW_ReqSendEventBarrage" 	},
 		{ Id : 130, Name : "msg.GW2C_AckSendEventBarrage" 	},
-		{ Id : 131, Name : "msg.C2GW_AddDeliveryAddress" 	},
-		{ Id : 132, Name : "msg.C2GW_DelDeliveryAddress" 	},
-		{ Id : 133, Name : "msg.C2GW_ChangeDeliveryAddress" 	},
-		{ Id : 134, Name : "msg.GW2C_SendDeliveryAddressList" 	},
-		{ Id : 135, Name : "msg.C2GW_ReqRechargeMoney" 	},
-		{ Id : 136, Name : "msg.GW2C_RetRechargeMoney" 	},
-		{ Id : 137, Name : "msg.C2GW_PlatformRechargeDone" 	},
-		{ Id : 138, Name : "msg.GW2C_SendWechatInfo" 	},
-		{ Id : 139, Name : "msg.C2GW_StartLuckyDraw" 	},
-		{ Id : 140, Name : "msg.GW2C_LuckyDrawHit" 	},
-		{ Id : 141, Name : "msg.GW2C_FreePresentNotify" 	},
-		{ Id : 142, Name : "msg.GW2C_SendTaskList" 	}
+		{ Id : 131, Name : "msg.C2GW_ReqTravelView" 	},
+		{ Id : 132, Name : "msg.GW2C_AckTravelView" 	},
+		{ Id : 133, Name : "msg.C2GW_AddDeliveryAddress" 	},
+		{ Id : 134, Name : "msg.C2GW_DelDeliveryAddress" 	},
+		{ Id : 135, Name : "msg.C2GW_ChangeDeliveryAddress" 	},
+		{ Id : 136, Name : "msg.GW2C_SendDeliveryAddressList" 	},
+		{ Id : 137, Name : "msg.C2GW_ReqRechargeMoney" 	},
+		{ Id : 138, Name : "msg.GW2C_RetRechargeMoney" 	},
+		{ Id : 139, Name : "msg.C2GW_PlatformRechargeDone" 	},
+		{ Id : 140, Name : "msg.GW2C_SendWechatInfo" 	},
+		{ Id : 141, Name : "msg.C2GW_StartLuckyDraw" 	},
+		{ Id : 142, Name : "msg.GW2C_LuckyDrawHit" 	},
+		{ Id : 143, Name : "msg.GW2C_FreePresentNotify" 	},
+		{ Id : 144, Name : "msg.GW2C_SendTaskList" 	}
 	]
 
 

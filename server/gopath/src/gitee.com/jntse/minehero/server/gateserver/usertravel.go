@@ -219,7 +219,7 @@ func (this *UserTravel) RandomEvent() uint32 {
 
 //做tick
 func (this *UserTravel) Tick(user *GateUser, now uint64) {
-	if !this.open && this.travel.nexttime <= now {
+	if !this.opentravelview && this.travel.nexttime <= now {
 		//到时间了 触发事件
 		eventid := this.RandomEvent()
 		if eventid != 0 {
