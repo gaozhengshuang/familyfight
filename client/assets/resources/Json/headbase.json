@@ -2,5 +2,14 @@
 	"Tool": "github.com/davyxu/tabtoy",
 	"Version": "2.8.10",
 	"Head":[
-		{ "Id": 1, "HeadPath": "1001", "Name": "璎珞保护茉莉花" }
+		{ "Id": 1, "HeadPath": "Image/GameScene/headicon/901", "Name": "乾隆" },
+		{ "Id": 2, "HeadPath": "Image/GameScene/headicon/902", "Name": "富察皇后" },
+		{ "Id": 3, "HeadPath": "Image/GameScene/headicon/903", "Name": "傅恒" },
+		{ "Id": 4, "HeadPath": "Image/GameScene/headicon/904", "Name": "璎珞" },
+		{ "Id": 5, "HeadPath": "Image/GameScene/headicon/905", "Name": "娴妃" },
+		{ "Id": 6, "HeadPath": "Image/GameScene/headicon/906", "Name": "纯妃" },
+		{ "Id": 7, "HeadPath": "Image/GameScene/headicon/907", "Name": "尔晴" },
+		{ "Id": 8, "HeadPath": "Image/GameScene/headicon/908", "Name": "高贵妃" },
+		{ "Id": 9, "HeadPath": "Image/GameScene/headicon/909", "Name": "愉妃" },
+		{ "Id": 10, "HeadPath": "Image/GameScene/headicon/910", "Name": "顺妃" }
 	]}
