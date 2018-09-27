@@ -17,6 +17,13 @@ message SimpleCounter {
     optional int64 money_cost_reset = 4;
 }
 
+//房间成员信息
+message RoomMemberInfo
+{
+    optional int64 uid  = 1;                    //玩家id
+    optional string name = 2;                    //玩家名字
+    optional int32 answer = 3;                  //玩家答案
+}
 
 // 微信相关
 message UserWechat {
