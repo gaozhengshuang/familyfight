@@ -39,6 +39,7 @@ var Define = {
         PALACEMAID_UNLOCK: '1008',
         PALACETASK_ACK: '1009',
         PALACEMASTERLVUP_ACK: '1010',
+        OFFLINE_ACK: '1011',
 
         TRAVELDATA_UPDATE: '1100',
         EVENTDATA_UPDATE: '1101',

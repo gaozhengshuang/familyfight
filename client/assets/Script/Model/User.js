@@ -1,10 +1,8 @@
 let Define = require('../Util/Define');
 let Platform = require('../Platform/CommonGame');
 let Tools = require('../Util/Tools');
-let UIName = require('../Util/UIName');
 let NetWorkController = require('../Controller/NetWorkController');
 let NotificationController = require('../Controller/NotificationController');
-let ViewController = require('../Controller/ViewController');
 
 var UserModel = function () {
     this.loginInfo = null;
@@ -110,7 +108,7 @@ UserModel.prototype.onGW2C_UpdateGold = function (msgid, data) {
 
 UserModel.prototype.onGW2C_OfflineReward = function (msgid, data) {
     this.offLineReward = data;
-    ViewController.openView(UIName.UI_OFFLINEREWARD);
+    NotificationController.Emit(Define.EVENT_KEY.OFFLINE_ACK);
 }
 
 module.exports = new UserModel();
