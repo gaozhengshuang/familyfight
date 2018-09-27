@@ -89,7 +89,7 @@ func (this *UserTravel) SynEventids(user *GateUser){
 }
 func (this *UserTravel) CreateNew() {
 	passtime := util.RandBetween(int32(tbl.Common.TravelMinTime), int32(tbl.Common.TravelMaxTime))
-	this.travel.nexttime = uint64(util.CURTIMEMS()) + uint64(passtime)
+	this.travel.nexttime = uint64(util.CURTIME()) + uint64(passtime)
 	this.travel.items = make([]*msg.PairNumItem, 0)
 	for i := 0; i < 3; i++ {
 		this.travel.items = append(this.travel.items, &msg.PairNumItem{ Itemid: pb.Uint32(0), Num: pb.Uint64(0)})

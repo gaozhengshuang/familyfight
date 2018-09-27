@@ -1,5 +1,4 @@
 let Game = require('../../Game');
-let EventBarrageItemNode = require('../Node/EventBarrageItemNode');
 const BarrageInterval = 30;
 const BarragePosY = [70, 0, -70];
 cc.Class({
@@ -25,7 +24,7 @@ cc.Class({
             let child = this.barrageNode.children[i];
             let row = Game._.indexOf(BarragePosY, child.y);
             if (row != -1) {
-                let barrageItem = child.getComponent(EventBarrageItemNode);
+                let barrageItem = child.getComponent('EventBarrageItemNode');
                 let x = barrageItem.GetPosXWithRight();
                 if (barrageItem.GetPosXWithRight() > maxX[row]) {
                     maxX[row] = x;
@@ -39,7 +38,7 @@ cc.Class({
                 if (info != null) {
                     let node = cc.instantiate(this.eventBarrageItemPrefab);
                     this.barrageNode.addChild(node);
-                    let barrageItem = node.getComponent(EventBarrageItemNode);
+                    let barrageItem = node.getComponent('EventBarrageItemNode');
                     barrageItem.Init(info, BarragePosY[i], this.onBarrageClose.bind(this));
                 }
                 break;

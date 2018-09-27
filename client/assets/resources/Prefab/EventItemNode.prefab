@@ -425,7 +425,8 @@
     "idLabel": {
       "__id__": 11
     },
-    "eventData": null
+    "eventData": null,
+    "target": null
   },
   {
     "__type__": "cc.PrefabInfo",
