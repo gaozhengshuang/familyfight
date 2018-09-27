@@ -6,5 +6,6 @@
     "PriceAdditionPerBuy": 1.13,
     "GoldItemId": 50001,
     "TravelMinTime": 1000,
-    "TravelMaxTime": 50000
+    "TravelMaxTime": 50000,
+    "EventBarrageCount": 50
 }

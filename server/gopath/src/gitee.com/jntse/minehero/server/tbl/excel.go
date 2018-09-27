@@ -38,6 +38,7 @@ var TPalaceMapMasterLevelsBase = table.InsTPalaceMapMasterLevelsBaseTable
 var TBallBase = table.InsTBallBaseTable
 var TTurnBrandBase = table.InsTTurnBrandBaseTable
 var TaskBase = table.InsTaskBaseTable
+var THeadBase = table.InsTHeadBaseTable
 var ShopBase = table.InsShopBaseTable
 var TbirckRefreshbase = table.InsTbirckRefreshbaseTable
 var ItemBase = table.InsItemBaseTable

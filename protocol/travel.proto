@@ -28,3 +28,23 @@ message GW2C_AckCheckEvent
 {
     optional uint32 result = 1;
 }
+
+//弹幕数据
+message C2GW_ReqEventBarrage
+{
+    optional uint32 eventid = 1;
+}
+message GW2C_AckEventBarrage
+{
+    repeated string barrages = 1;
+}
+//发送弹幕
+message C2GW_ReqSendEventBarrage
+{
+    optional uint32 eventid = 1;
+    optional string barrage = 2;
+}
+message GW2C_AckSendEventBarrage
+{
+    optional uint32 result = 1;
+}

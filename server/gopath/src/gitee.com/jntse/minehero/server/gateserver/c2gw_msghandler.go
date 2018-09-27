@@ -70,6 +70,8 @@ func (this* C2GWMsgHandler) Init() {
 	//御赐
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPrepareTravel{}, on_C2GW_ReqPrepareTravel)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqCheckEvent{}, on_C2GW_ReqCheckEvent)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqEventBarrage{}, on_C2GW_ReqEventBarrage)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqSendEventBarrage{}, on_C2GW_ReqSendEventBarrage)
 }
 
 // 客户端心跳
@@ -437,6 +439,48 @@ func on_C2GW_ReqCheckEvent(session network.IBaseNetSession, message interface{})
 	}
 	result := user.travel.CheckEvent(user)
 	send := &msg.GW2C_AckCheckEvent{}
+	send.Result = pb.Uint32(result)
+	user.SendMsg(send)
+}
+//查询弹幕
+func on_C2GW_ReqEventBarrage(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqEventBarrage)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	records := user.ReqEventBarrages(tmsg.GetEventid())
+	send := &msg.GW2C_AckEventBarrage{}
+	for _, v := range records {
+		send.Barrages = append(send.Barrages, *pb.String(v))
+	}
+	user.SendMsg(send)
+}
+//发送弹幕
+func on_C2GW_ReqSendEventBarrage(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqSendEventBarrage)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result := user.SendEventBarrage(tmsg.GetEventid(), tmsg.GetBarrage())
+	send := &msg.GW2C_AckSendEventBarrage{}
 	send.Result = pb.Uint32(result)
 	user.SendMsg(send)
 }

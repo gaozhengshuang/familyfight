@@ -1,6 +1,7 @@
 package main
 import (
 	"fmt"
+	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
@@ -8,6 +9,9 @@ import (
 	pb "github.com/golang/protobuf/proto"
 )
 
+const (
+	EventBarragePrefix = "event_barrage"
+)
 // --------------------------------------------------------------------------
 /// @brief 后宫数据
 // --------------------------------------------------------------------------
@@ -140,6 +144,36 @@ func (this *UserTravel) CheckEvent(user* GateUser) (result uint32) {
 	this.travel.eventid = 0
 	this.SynTravelData(user)
 	this.SynEventids(user)
+	return 0
+}
+
+//请求弹幕
+func (this *GateUser) ReqEventBarrages(eventid uint32) []string {
+	//尝试从内存加载 如果没有返回nil
+	str := make([]string, 0)
+	key := fmt.Sprintf("%s_%d", EventBarragePrefix, eventid)
+	rlist, err := Redis().LRange(key, 0, -1).Result()
+	if err != nil {
+		log.Error("加载事件弹幕数据失败 id %d ，err: %s", eventid, err)
+		return str
+	}
+	return rlist
+}
+//发送弹幕
+func (this *GateUser) SendEventBarrage(eventid uint32, barrage string ) uint32 {
+	key := fmt.Sprintf("%s_%d", EventBarragePrefix, eventid)
+	err := Redis().LPush(key, barrage).Err()
+	if err != nil {
+		log.Error("创建事件弹幕数据失败 id: %d ，err: %s", eventid, err)
+		return 1
+	}
+	if uint32(Redis().LLen(key).Val()) > uint32(tbl.Common.EventBarrageCount) {
+		//删除最老的记录
+		err := Redis().BRPop(0, key).Err()
+		if err != nil {
+			log.Error("删除事件弹幕数据失败 id: %d", eventid)
+		}
+	}
 	return 0
 }
 // ========================= 数据处理 ========================= 
