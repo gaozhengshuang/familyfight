@@ -2,7 +2,7 @@
 	"Tool": "github.com/davyxu/tabtoy",
 	"Version": "2.8.10",
 	"Event":[
-		{ "Id": 1, "EventName": "璎珞保护茉莉花", "EventPath": "Image/GameScene/Event/1001", "DefaultBarrage":[ "1_哈哈哈哈", "2_嘻嘻嘻嘻" ] },
-		{ "Id": 2, "EventName": "茉莉花遭雨淋", "EventPath": "Image/GameScene/Event/1002", "DefaultBarrage":[ "1_哈哈哈哈", "2_嘻嘻嘻嘻" ] },
-		{ "Id": 3, "EventName": "宫女感冒", "EventPath": "Image/GameScene/Event/1003", "DefaultBarrage":[ "1_哈哈哈哈", "2_嘻嘻嘻嘻" ] }
+		{ "Id": 1, "EventName": "璎珞保护茉莉花", "EventPath": "Image/GameScene/Event/1001", "DefaultBarrage":[ "1_心疼朕的令妃", "2_皇上你想多了 她不想攀龙  只想附凤。。", "3_确定不忍心？这哗啦啦的", "4_别说话吻我", "5_雨一直下", "6_好一朵美丽的茉莉花", "7_机智如我", "8_竹鼠大军在哪里", "9_男人都是大猪蹄子", "10_什么时候轮到我出现" ] },
+		{ "Id": 2, "EventName": "茉莉花遭雨淋", "EventPath": "Image/GameScene/Event/1002", "DefaultBarrage":[ "1_心疼朕的令妃", "2_皇上你想多了 她不想攀龙  只想附凤。。", "3_确定不忍心？这哗啦啦的", "4_别说话吻我", "5_雨一直下", "6_好一朵美丽的茉莉花", "7_机智如我", "8_竹鼠大军在哪里", "9_男人都是大猪蹄子", "10_什么时候轮到我出现" ] },
+		{ "Id": 3, "EventName": "宫女感冒", "EventPath": "Image/GameScene/Event/1003", "DefaultBarrage":[ "1_心疼朕的令妃", "2_皇上你想多了 她不想攀龙  只想附凤。。", "3_确定不忍心？这哗啦啦的", "4_别说话吻我", "5_雨一直下", "6_好一朵美丽的茉莉花", "7_机智如我", "8_竹鼠大军在哪里", "9_男人都是大猪蹄子", "10_什么时候轮到我出现" ] }
 	]}
