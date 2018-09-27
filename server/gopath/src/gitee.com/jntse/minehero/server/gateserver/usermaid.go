@@ -92,6 +92,10 @@ func (this *UserMaid) GetMaxId() uint32 {
 
 func (this *UserMaid) Online(user* GateUser) {
 	//上线了 要给离线奖励了
+	if user.tm_logout == 0 {
+		user.tm_logout = util.CURTIME()
+		return
+	}
 	passedtime := user.tm_login - user.tm_logout
 	rewardpersecond := this.CalculateRewardPerSecond()
 	addition := uint64(passedtime) * rewardpersecond
