@@ -54,6 +54,7 @@ cc.Class({
         Game.NetWorkController.Send('msg.C2GW_ReqTravelView', { open: true });
         if (Game.TravelModel.eventid != 0) {
             //有事件未查看
+            Game.NetWorkController.Send('msg.C2GW_ReqCheckEvent', {})
             Game.TravelModel.SetOpenEvent(Game.TravelModel.eventid);
             this.openView(Game.UIName.UI_EVENTDETAILVIEW);
         }
