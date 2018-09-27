@@ -1158,7 +1158,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 94,
+      "width": 90,
       "height": 40
     },
     "_rotationX": 0,
@@ -1267,7 +1267,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 73,
+      "width": 69,
       "height": 40
     },
     "_rotationX": 0,
@@ -1376,7 +1376,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 73,
+      "width": 69,
       "height": 40
     },
     "_rotationX": 0,
@@ -3802,8 +3802,12 @@
       {
         "__id__": 17
       },
-      null,
-      null
+      {
+        "__id__": 23
+      },
+      {
+        "__id__": 29
+      }
     ],
     "tabButtons": [
       {

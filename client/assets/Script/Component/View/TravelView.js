@@ -1,5 +1,4 @@
 let Game = require('../../Game');
-let SupplyItemNode = require('../Node/SupplyItemNode');
 const SupplyType = {
     Type_Goods: 0,                  //御用品
     Type_Food: 1,                   //御膳
@@ -106,7 +105,7 @@ cc.Class({
         this.tableView.getCells(function (cells) {
             for (let i = 0; i < cells.length; i++) {
                 let cell = cells[i];
-                let supplyItemNode = cell.getComponent(SupplyItemNode);
+                let supplyItemNode = cell.getComponent('SupplyItemNode');
                 let id = supplyItemNode.GetId()
                 if (id != -1) {
                     id == supplyItem.itemid ? supplyItemNode.Select() : supplyItemNode.Unselect();
