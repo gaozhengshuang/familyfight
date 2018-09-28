@@ -762,8 +762,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 264,
-      "y": 461
+      "x": 263,
+      "y": 363.3
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -2043,6 +2043,7 @@
     },
     "_enabled": true,
     "_url": "",
+    "_data": {},
     "image_master": {
       "__id__": 9
     },
