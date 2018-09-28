@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -4814,6 +4814,7 @@ $root.msg = (function() {
          * @interface IMaidShopData
          * @property {number|null} [id] MaidShopData id
          * @property {number|null} [price] MaidShopData price
+         * @property {number|null} [times] MaidShopData times
          */
 
         /**
@@ -4848,6 +4849,14 @@ $root.msg = (function() {
         MaidShopData.prototype.price = 0;
 
         /**
+         * MaidShopData times.
+         * @member {number} times
+         * @memberof msg.MaidShopData
+         * @instance
+         */
+        MaidShopData.prototype.times = 0;
+
+        /**
          * Creates a new MaidShopData instance using the specified properties.
          * @function create
          * @memberof msg.MaidShopData
@@ -4875,6 +4884,8 @@ $root.msg = (function() {
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.id);
             if (message.price != null && message.hasOwnProperty("price"))
                 writer.uint32(/* id 2, wireType 5 =*/21).float(message.price);
+            if (message.times != null && message.hasOwnProperty("times"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.times);
             return writer;
         };
 
@@ -4914,6 +4925,9 @@ $root.msg = (function() {
                     break;
                 case 2:
                     message.price = reader.float();
+                    break;
+                case 3:
+                    message.times = reader.uint32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -4956,6 +4970,9 @@ $root.msg = (function() {
             if (message.price != null && message.hasOwnProperty("price"))
                 if (typeof message.price !== "number")
                     return "price: number expected";
+            if (message.times != null && message.hasOwnProperty("times"))
+                if (!$util.isInteger(message.times))
+                    return "times: integer expected";
             return null;
         };
 
@@ -4975,6 +4992,8 @@ $root.msg = (function() {
                 message.id = object.id >>> 0;
             if (object.price != null)
                 message.price = Number(object.price);
+            if (object.times != null)
+                message.times = object.times >>> 0;
             return message;
         };
 
@@ -4994,11 +5013,14 @@ $root.msg = (function() {
             if (options.defaults) {
                 object.id = 0;
                 object.price = 0;
+                object.times = 0;
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
             if (message.price != null && message.hasOwnProperty("price"))
                 object.price = options.json && !isFinite(message.price) ? String(message.price) : message.price;
+            if (message.times != null && message.hasOwnProperty("times"))
+                object.times = message.times;
             return object;
         };
 
@@ -18335,13 +18357,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -18590,13 +18606,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
