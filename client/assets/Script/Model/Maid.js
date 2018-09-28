@@ -9,6 +9,7 @@ var MaidModel = function () {
     this.topMaid = 1;
     this._shopMaids = [];
     this.curPass = 1;
+    this.curChapter = 1;
 }
 
 MaidModel.prototype.Init = function (cb) {
@@ -47,6 +48,23 @@ MaidModel.prototype.GetTopPass = function () {
         pass = maidBase.Passlevels;
     } 
     return pass;
+}
+
+MaidModel.prototype.SetCurChapter = function (chapter) {
+    this.curChapter = chapter;
+}
+
+MaidModel.prototype.GetCurChapter = function () {
+    return this.curChapter;
+}
+
+MaidModel.prototype.GetTopChapter = function() {
+    let chapter = 1;
+    let passLvBase = ConfigController.GetConfigById("PassLevels", this.GetTopPass());
+    if (passLvBase) {
+        chapter = passLvBase.ChapterID;
+    }
+    return chapter;
 }
 
 MaidModel.prototype.IsAddMaid = function (_maidId) {

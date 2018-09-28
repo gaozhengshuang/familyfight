@@ -48,6 +48,7 @@ cc.Class({
         this.synchroTime = 10;
 
         Game.MaidModel.SetCurPass(Game.MaidModel.GetTopPass());
+        Game.MaidModel.SetCurChapter(Game.MaidModel.GetTopChapter());
     },
 
     initNotification() {
