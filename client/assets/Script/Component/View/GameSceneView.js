@@ -92,11 +92,11 @@ cc.Class({
     updatePassBg() {
         let passBase = Game.ConfigController.GetConfigById("PassLevels", Game.MaidModel.GetCurPass());
         if (passBase) {
-            this.node_bg.destroyAllChildren();
             cc.loader.loadRes(passBase.MapPrefab, function (err, prefab) {
                 if (err) {
                     console.log('[严重错误] 奖励资源加载错误 ' + err);
                 } else {
+                    this.node_bg.destroyAllChildren();
                     let _view = cc.instantiate(prefab);
                     this.node_bg.addChild(_view);
                 }

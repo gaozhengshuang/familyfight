@@ -5,6 +5,7 @@ cc.Class({
 
     properties: {
         percentLabel: { default: null, type: cc.Label },
+        label_title: { default: null, type: cc.Label },
         loaded: { default: [], type: cc.Boolean },
         targetCanvas: { default: null, type: cc.Canvas },
         loadProgressBar: { default: null, type: cc.ProgressBar },
@@ -13,7 +14,7 @@ cc.Class({
     onLoad() {
         Game.Tools.AutoFit(this.targetCanvas);
         this.loaded = false;
-
+        this.label_title.string = "配置文件加载中...";
         Game.NotificationController.On(Game.Define.EVENT_KEY.CONNECT_TO_GATESERVER, this, this.onLoginComplete);
     },
 
@@ -45,6 +46,7 @@ cc.Class({
         if (Game.GameInstance.loadingCount == Game.GameInstance.totalCount) {
             //配置文件加载完了
             this.loaded = true;
+            this.label_title.string = "资源文件加载中...";
             cc.loader.loadResDir('Image', this._progressCallback.bind(this), this._completeCallback.bind(this));
         }
     },

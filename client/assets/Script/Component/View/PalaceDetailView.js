@@ -163,18 +163,21 @@ cc.Class({
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_PALACEMASTERLVUP);
     },
+
     onOpenTravel(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_TRAVELVIEW);
     },
+
     onOpenEvent(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_EVENTVIEW);
     },
+    
     onReqPalaceTakeBack() {
         Game.NetWorkController.Send('msg.C2GW_ReqPalaceTakeBack',
-            {
-                id: Game.PalaceModel.GetCurPalaceId(),
-            });
+        {
+            id: Game.PalaceModel.GetCurPalaceId(),
+        });
     }
 });
