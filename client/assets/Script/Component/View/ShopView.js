@@ -36,7 +36,9 @@ cc.Class({
 
     initView() {
         this.tableViewComponent.initTableView(this._tableList.length, { array: this._tableList, target: this });
-        this.tableViewComponent.scrollToBottom();
+        if (this._tableList.length > 3) {
+            this.tableViewComponent.scrollToBottom();
+        }
     },
 
     updateTableView() {
