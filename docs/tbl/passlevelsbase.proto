@@ -35,6 +35,12 @@ message PassLevelsDefine
 	
 	
 	optional string MapPrefab = 6; // 地图预制
+	
+	
+	optional int32 ChapterID = 7; // 章节ID
+	
+	
+	optional string ChapterName = 8; // 章节名称
 
 }
 
