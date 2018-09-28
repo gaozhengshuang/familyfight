@@ -129,7 +129,7 @@ cc.Class({
                         iconSprite.spriteFrame = res;
                     }
                 });
-                detailLabel.string = config.Desc;
+                detailLabel.string = '名字: ' + config.Name + '\n详情: ' + config.Desc;
             }
         }
     }
