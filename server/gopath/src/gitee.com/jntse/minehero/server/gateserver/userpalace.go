@@ -43,7 +43,7 @@ func (this *UserPalace) Init() {
 func (this *UserPalace) LoadBin(user *GateUser,bin *msg.Serialize) {
 	palaces := bin.GetPalaces();
 	for _, data := range palaces {
-		palace := this.AddPalace(user,data.GetId())
+		palace, _ := this.AddPalace(user,data.GetId())
 		palace.level = data.GetLevel()
 		for index, v := range data.GetMaids() {
 			palace.maids[index] = v
@@ -67,15 +67,16 @@ func (this *UserPalace) Syn(user* GateUser) {
 	user.SendMsg(send)
 }
 func (this *UserPalace) ChangeMaxLevel(user* GateUser,level uint32) {
-	send := &msg.GW2C_AckPalaceData{ Datas: make([]*msg.PalaceData, 0) }
 	for _, v := range tbl.TPalaceMapBase.PalaceMap {
 		if level == uint32(v.UlockPassId) {
 			//要解锁这一关了
-			palace := this.AddPalace(user,v.Id)
-			send.Datas = append(send.Datas, palace.PackBin())
+			palace, add := this.AddPalace(user,v.Id)
+			if add {
+				this.Syn(user)
+			}
+			return
 		}
 	}
-	user.SendMsg(send)
 }
 // ========================= 消息接口 =========================
 //收取
@@ -226,14 +227,14 @@ func (this *UserPalace) UnlockMaid(user* GateUser, id uint32, index uint32) (res
 }
 // ========================= 数据处理 ========================= 
 // 添加后宫
-func (this *UserPalace) AddPalace(user *GateUser, id uint32) *PalaceData {
+func (this *UserPalace) AddPalace(user *GateUser, id uint32) (palace *PalaceData, add bool) {
 	tmpl := PalaceMgr().GetPalaceConfig(id)
 	if tmpl == nil {
-		return nil
+		return nil,false
 	}
 	palace, ok := this.palaces[id];
 	if ok {
-		return palace
+		return palace, false
 	}
 	palace = &PalaceData{}
 	palace.id = id
@@ -246,6 +247,6 @@ func (this *UserPalace) AddPalace(user *GateUser, id uint32) *PalaceData {
 	mastertmpl := PalaceMgr().GetMasterConfig(id,1)
 	palace.endtime = uint64(util.CURTIME()) + uint64(mastertmpl.WaitTime)
 	this.palaces[id] = palace
-	return palace
+	return palace, true
 }
 
