@@ -43,6 +43,6 @@ cc.Class({
         this._tableList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
             return maid.id;
         });
-        this.tableViewComponent.updateTableView(this._tableList.length, { array: this._tableList, target: this });
+        this.tableViewComponent.updateTableView({ array: this._tableList, target: this });
     },
 });
