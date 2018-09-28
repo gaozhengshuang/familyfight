@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "PassCellView",
+    "_name": "PassCellNode",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -252,7 +252,7 @@
     "sync": false
   },
   {
-    "__type__": "5e646Nn/SRECoAe/eJ96O6m",
+    "__type__": "f80828ZwTpGm6wNWkQyhqkL",
     "_name": "",
     "_objFlags": 0,
     "node": {
