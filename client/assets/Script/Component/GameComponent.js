@@ -4,7 +4,8 @@ var GameComponent = cc.Class({
     extends: cc.Component,
 
     properties: {
-        _url: { default: '' }
+        _url: { default: '' },
+        _data: { default: {} },
     },
 
     /**
@@ -38,8 +39,12 @@ var GameComponent = cc.Class({
         this._url = url;
     },
 
-    openView(ui) {
-        Game.ViewController.openView(ui);
+    setData(data) {
+        this._data = data;
+    },
+
+    openView(ui, data = null) {
+        Game.ViewController.openView(ui, data);
     },
 
     closeView(ui, removeView = false) {

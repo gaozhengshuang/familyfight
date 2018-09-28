@@ -12,18 +12,28 @@ ViewController.prototype.Init = function (cb) {
 /**
  * 打开界面
  */
-ViewController.prototype.openView = function (ui) {
+ViewController.prototype.openView = function (ui, data = null) {
     if (ui != null) {
-        let _view = _.find(this._viewList, function(v) {
+        let _view = null;
+        let _gameComponet = null;
+
+        _view = _.find(this._viewList, function(v) {
             return v.uiname == ui;
         });
 
         if (_view) {
+            _gameComponet = _view.getComponent('GameComponent');
+            if (_gameComponet) {
+                if (data != null) {
+                    _gameComponet.setData(data);        //设置界面数据
+                }
+            }
+            
             _.forEach(this._viewList, function(v) {
                 if (_view.active) {
                     v.active = _view.uiname == v.uiname;
                 }
-                v.setLocalZOrder(_view.uiname == v.uiname ? 2 : 1);
+                v.setLocalZOrder(_view.uiname == v.uiname ? 2 : 1);     //重新打开界面设置显示层级
             });
             _view.active = true;
         } else {
@@ -31,15 +41,18 @@ ViewController.prototype.openView = function (ui) {
                 if (err) {
                     console.log('[严重错误] 奖励资源加载错误 ' + err);
                 } else {
-                    let _view = cc.instantiate(prefab);
+                    _view = cc.instantiate(prefab);
                     _view.uiname = ui;
 
-                    let _gameComponet = _view.getComponent('GameComponent');
+                    _gameComponet = _view.getComponent('GameComponent');
                     if (_gameComponet) {
-                        _gameComponet.initUrl(ui);
+                        _gameComponet.initUrl(ui);      //初始化界面的路径
+                        if (data != null) {
+                            _gameComponet.setData(data);        //设置界面数据
+                        }
                     }
                     
-                    let canvas = cc.director.getScene().getChildByName('Canvas');
+                    let canvas = cc.director.getScene().getChildByName('Canvas');   //设置界面显示位置
                     canvas.getChildByName("ViewLayer").addChild(_view);
                     this._viewList.push(_view);
 
