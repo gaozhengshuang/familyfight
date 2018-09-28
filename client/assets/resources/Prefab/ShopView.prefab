@@ -555,7 +555,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 600,
-      "height": 803
+      "height": 1560
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -708,6 +708,7 @@
     },
     "_enabled": true,
     "_url": "",
+    "_data": {},
     "tableView": {
       "__id__": 12
     }
