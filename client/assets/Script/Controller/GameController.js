@@ -11,15 +11,7 @@ var GameController = function () {
 
 GameController.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_MsgNotify', this, this.onGW2C_MsgNotify);
-    cc.loader.loadRes("Prefab/DialogueNode", function (err, prefab) {
-        if (err) {
-            Tools.InvokeCallback(cb, '[严重错误] 奖励资源加载错误 ' + err);
-        } else {
-            this.dialoguePrefab = prefab;
-            Tools.InvokeCallback(cb, null);
-        }
-    }.bind(this));
-
+    Tools.InvokeCallback(cb, null);
 }
 
 GameController.prototype.RestartRound = function () {
@@ -33,12 +25,6 @@ GameController.prototype.ChangeState = function (state) {
     NotificationController.Emit(Define.EVENT_KEY.CHANGE_GAMESTATE, state);
 }
 
-GameController.prototype.ShowDialogue = function (parent, id) {
-    let node = cc.instantiate(this.dialoguePrefab);
-    let dialogView = node.getComponent('DialogView');
-    parent.addChild(node);
-    dialogView.Init(id);
-}
 /**
  * 消息处理接口
  */

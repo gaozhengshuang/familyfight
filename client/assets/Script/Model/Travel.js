@@ -43,7 +43,6 @@ TravelModel.prototype.SetOpenEvent = function (id) {
  * 消息处理接口
  */
 TravelModel.prototype.onTravelData = function (msgid, data) {
-    console.log(data);
     this.supplyItems = data.data.items;
     this.eventid = data.data.eventid;
     NotificationController.Emit(Define.EVENT_KEY.TRAVELDATA_UPDATE);

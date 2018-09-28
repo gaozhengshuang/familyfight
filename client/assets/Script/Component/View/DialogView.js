@@ -126,7 +126,6 @@ cc.Class({
             case DialogueStatus.Status_Idle:
                 break;
             case DialogueStatus.Status_Dialogue:
-                console.log(this.parentWidget);
                 let oldDialogue = this.dialogue;
                 this.dialogue = this._getNextDialogue();
                 if (this.dialogue == null) {

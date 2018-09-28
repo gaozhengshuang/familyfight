@@ -188,7 +188,7 @@ cc.Class({
     },
 
     showDialoguePlayer(_dialogueId) {
-        Game.GameController.ShowDialogue(this.node, _dialogueId);
+        Game.ViewController.showDialogue(this.node, _dialogueId);
     },
 
     onOpenShopView(event) {

@@ -24,7 +24,7 @@ ItemModel.prototype.GetItems = function () {
 
 ItemModel.prototype.GetItemNumById = function (id) {
     let num = 0;
-    let item = _.find(this.items, { 'itemid': id });
+    let item = _.find(this.items, { 'itemid': parseInt(id) });
     if (item) {
         num = item.num;
     }
@@ -53,6 +53,7 @@ ItemModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
         item.config = _.find(this.itemConfigs, { Id: item.id });
         item.itemid = item.id;
     }
+    console.log(this.items);
 }
 
 ItemModel.prototype.onGW2C_AddPackageItem = function (msgid, data) {
@@ -63,7 +64,7 @@ ItemModel.prototype.onGW2C_AddPackageItem = function (msgid, data) {
         let item = this.items[index];
         item.num += data.num;
     }
-
+    console.log(data);
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEITEMS);
 }
 
