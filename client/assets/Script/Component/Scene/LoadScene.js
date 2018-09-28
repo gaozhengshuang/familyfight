@@ -47,7 +47,7 @@ cc.Class({
             //配置文件加载完了
             this.loaded = true;
             this.label_title.string = "资源文件加载中...";
-            cc.loader.loadResDir('Image', this._progressCallback.bind(this), this._completeCallback.bind(this));
+            cc.loader.loadResDir('Image', cc.SpriteFrame, this._progressCallback.bind(this), this._completeCallback.bind(this));
         }
     },
 
