@@ -10,7 +10,7 @@ export var ItemBaseData : table.IItemBaseDataDefine[] = [
 		{ Id : 20004, Name : "西瓜", Desc : "御膳夏天吃清凉解渴。", Sort : 4, Type : 2, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Item/image_item20004" 	},
 		{ Id : 20005, Name : "红烧猪蹄", Desc : "御膳味道很好。", Sort : 5, Type : 2, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Item/image_item20005" 	},
 		{ Id : 20006, Name : "珍珠粉", Desc : "御膳可以美容养颜。", Sort : 6, Type : 2, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Item/image_item20006" 	},
-		{ Id : 30001, Name : "油布", Desc : "御品用于防雨。", Sort : 1, Type : 2, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Item/image_item30001" 	},
+		{ Id : 30001, Name : "油布", Desc : "御品用于防雨。", Sort : 1, Type : 3, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Item/image_item30001" 	},
 		{ Id : 30002, Name : "剪刀", Desc : "御品用于修剪衣物。", Sort : 2, Type : 3, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Item/image_item30002" 	},
 		{ Id : 30003, Name : "银针", Desc : "御品用于缝制衣物。", Sort : 3, Type : 3, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Item/image_item30003" 	},
 		{ Id : 30004, Name : "簪子", Desc : "御品用于头饰。", Sort : 4, Type : 3, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Item/image_item30004" 	},

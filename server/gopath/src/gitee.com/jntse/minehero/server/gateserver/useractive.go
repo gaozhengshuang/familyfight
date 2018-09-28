@@ -40,7 +40,8 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,reason s
 			this.SendMsg(maidSend)
 			return 0
 		case 4:
-			//小游戏
+			//道具
+			this.AddItem(rid, rvalue, reason)
 			return 0
 		case 5:
 			//小游戏

@@ -1431,7 +1431,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "72f648a9-7ee5-44d6-899f-481a6129b8b6"
+      "__uuid__": "cd567a0c-6cc5-4288-b497-ad3f9e7dbf07"
     },
     "_type": 1,
     "_sizeMode": 0,
@@ -1480,6 +1480,7 @@
     },
     "_enabled": true,
     "_url": "",
+    "_data": {},
     "image_maid": {
       "__id__": 16
     },
