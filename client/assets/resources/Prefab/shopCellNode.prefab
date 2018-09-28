@@ -834,7 +834,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 146,
+      "width": 135,
       "height": 40
     },
     "_rotationX": 0,
@@ -871,7 +871,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "(已购买99个）",
+    "_N$string": "(已购买99个)",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -913,6 +913,9 @@
     },
     "label_name": {
       "__id__": 9
+    },
+    "label_getnum": {
+      "__id__": 26
     }
   },
   {
