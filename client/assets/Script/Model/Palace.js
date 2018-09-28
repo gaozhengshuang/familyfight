@@ -61,7 +61,7 @@ PalaceModel.prototype.onGW2C_AckPalaceData = function (msgid, data) {
 PalaceModel.prototype.onGW2C_RetMaidUnlock = function (msgid, data) {
     if (data.result == 0) {
         for (let i = 0; i < this.palaceDatas.length; i ++){
-            if (this.palaceDatas[i].id = data.data.id) {
+            if (this.palaceDatas[i].id == data.data.id) {
                 this.palaceDatas[i] = data.data;
                 break;
             }
@@ -75,7 +75,7 @@ PalaceModel.prototype.onGW2C_RetPalaceTakeBack = function (msgid, data) {
     if (data.result == 0) {
         this.palaceTakeBack = data;
         for (let i = 0; i < this.palaceDatas.length; i ++){
-            if (this.palaceDatas[i].id = data.data.id) {
+            if (this.palaceDatas[i].id == data.data.id) {
                 this.palaceDatas[i] = data.data;
                 break;
             }
@@ -90,7 +90,7 @@ PalaceModel.prototype.onGW2C_RetPalaceTakeBack = function (msgid, data) {
 PalaceModel.prototype.onGW2C_RetMasterLevelup = function (msgid, data) {
     if (data.result == 0) {
         for (let i = 0; i < this.palaceDatas.length; i ++){
-            if (this.palaceDatas[i].id = data.data.id) {
+            if (this.palaceDatas[i].id == data.data.id) {
                 this.palaceDatas[i] = data.data;
                 break;
             }

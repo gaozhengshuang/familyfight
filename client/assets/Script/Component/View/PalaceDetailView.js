@@ -71,6 +71,7 @@ cc.Class({
 
     updateView() {
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
+
         let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this._data.id);
         if (palaceMapBase) {
             this.masterId = palaceMapBase.Master;
