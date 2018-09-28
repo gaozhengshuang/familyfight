@@ -1,15 +1,15 @@
 {
   "ver": "2.0.0",
-  "uuid": "80b879b2-5f24-4f55-9723-a10638324569",
+  "uuid": "e77723cb-dfbf-4157-9a97-97d77fc3c09d",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "turnbrand_bg": {
+    "gameBg": {
       "ver": "1.0.3",
-      "uuid": "9951ce62-2448-438a-969e-7f535c179b49",
-      "rawTextureUuid": "80b879b2-5f24-4f55-9723-a10638324569",
-      "trimType": "custom",
+      "uuid": "45e5271d-a592-4618-ada4-9f302ae9a3aa",
+      "rawTextureUuid": "e77723cb-dfbf-4157-9a97-97d77fc3c09d",
+      "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
       "offsetX": 0,
