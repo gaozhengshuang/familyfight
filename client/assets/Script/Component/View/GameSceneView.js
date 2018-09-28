@@ -172,8 +172,6 @@ cc.Class({
 
             this._touchPlayer.node.destroy();
             this._findPlayer.node.destroy();
-
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
         }
     },
 
@@ -185,6 +183,7 @@ cc.Class({
 
     findNewPlayer() {
         this.openView(Game.UIName.UI_FINDNEWPLAYER);
+        Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
     },
 
     showDialoguePlayer(_dialogueId) {
