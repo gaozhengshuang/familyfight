@@ -343,9 +343,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 109,
-      "g": 40,
-      "b": 45,
+      "r": 88,
+      "g": 34,
+      "b": 10,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
