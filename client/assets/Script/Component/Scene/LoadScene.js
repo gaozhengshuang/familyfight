@@ -24,6 +24,17 @@ cc.Class({
     start() {
     },
 
+    _progressCallback: function(completeCount, totalCount, res) {    //预加载assets\resources\Image目录下的资源
+        let percent = (completeCount / totalCount).toFixed(2);
+        this.percentLabel.string = Math.ceil(percent * 100) + '%';
+        this.loadProgressBar.progress = percent;
+    },
+
+    _completeCallback: function(err, texture) {     //加载完成回调
+        //打开登录界面
+        Game.Platform.AutoLogin();
+    },
+
     update(dt) {
         if (Game.GameInstance == null || Game.GameInstance.totalCount == 0 || this.loaded) {
             return;
@@ -32,9 +43,9 @@ cc.Class({
         this.percentLabel.string = Math.ceil(percent * 100) + '%';
         this.loadProgressBar.progress = percent;
         if (Game.GameInstance.loadingCount == Game.GameInstance.totalCount) {
-            //加载完了
+            //配置文件加载完了
             this.loaded = true;
-            Game.Platform.AutoLogin();
+            cc.loader.loadResDir('Image', this._progressCallback.bind(this), this._completeCallback.bind(this));
         }
     },
 

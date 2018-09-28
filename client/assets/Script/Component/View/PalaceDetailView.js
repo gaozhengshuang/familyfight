@@ -114,6 +114,7 @@ cc.Class({
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
 
         this.getItemBtnStateView();
+        this.lvUpBtnStateView();
         this.openView(Game.UIName.UI_PALACETASKITEM);
     },
 
@@ -121,6 +122,9 @@ cc.Class({
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
 
         this.lvUpBtnStateView();
+        Game._.forEach(this._palaceMaids, function (v) {
+            v.updateView();
+        });
     },
 
     getItemBtnStateView() {
