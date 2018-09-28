@@ -131,7 +131,7 @@ cc.Class({
         if (Game.TimeController.GetCurTime() >= this._data.endtime) {
             this.label_get.node.active = true;
             this.label_getTime.node.active = false;
-            Game.ResController.SetSprite(this.image_get, "Image/GameScene/Common/button_common");
+            Game.ResController.SetSprite(this.image_get, "Image/GameScene/Common/button_get");
         } else {
             this.label_get.node.active = false;
             this.label_getTime.node.active = true;
