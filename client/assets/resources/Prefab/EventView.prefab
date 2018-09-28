@@ -338,7 +338,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 82,
+      "width": 95,
       "height": 40
     },
     "_rotationX": 0,
@@ -369,13 +369,13 @@
     "_actualFontSize": 40,
     "_fontSize": 40,
     "_lineHeight": 40,
-    "_enableWrapText": false,
+    "_enableWrapText": true,
     "_N$file": {
       "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "查看",
+    "_N$string": "查 看",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -392,11 +392,11 @@
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 255,
-      "b": 255,
+      "g": 235,
+      "b": 131,
       "a": 255
     },
-    "_width": 1
+    "_width": 2
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -847,9 +847,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 109,
-      "g": 40,
-      "b": 45,
+      "r": 88,
+      "g": 34,
+      "b": 10,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -1538,6 +1538,7 @@
     },
     "_enabled": true,
     "_url": "",
+    "_data": {},
     "tableView": {
       "__id__": 35
     }

@@ -14,6 +14,9 @@ const BrandStatus = {
 const MiniGameId = {
     1: Game.UIName.UI_LINKUP
 }
+const MiniGameName = {
+    1: '记忆翻牌'
+}
 
 const TurnTimeDiff = 0.1;
 const TurnDelay = 0.6;
@@ -209,7 +212,7 @@ cc.Class({
         for (let i = 0; i < this.brandViews.length; i++) {
             let view = this.brandViews[i];
             let action = cc.sequence([
-                cc.delayTime(0.5),
+                cc.delayTime(0.1),
                 i == this.clickIndex ?
                     cc.fadeOut(MoveDelay) :
                     cc.moveTo(MoveDelay, view.node.x, -600),
@@ -224,16 +227,19 @@ cc.Class({
         // }
         let node = null;
         let view = null;
-        this._hideBrands();
         switch (config.Type) {
             case Game.TurnGameDefine.REWARD_TYPE.TYPE_GOLD:
                 //金币
                 node = cc.instantiate(this.tipRewardViewPrefab);
                 this.dialogueNode.addChild(node);
                 view = node.getComponent(TipRewardView);
-                view.flap('获得金币+' + config.Value, 1);
+                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>金币+' + config.Value + '</c></c>', 0.5, 1);
                 Game.UserModel.AddGold(config.Value);
                 this.node.runAction(cc.sequence([
+                    cc.delayTime(0.5),
+                    cc.callFunc(function () {
+                        this._hideBrands();
+                    }, this),
                     cc.delayTime(1.2),
                     cc.callFunc(function () {
                         this._randBrandInfo()
@@ -245,9 +251,13 @@ cc.Class({
                 node = cc.instantiate(this.tipRewardViewPrefab);
                 this.dialogueNode.addChild(node);
                 view = node.getComponent(TipRewardView);
-                view.flap('获得体力+' + config.Value, 1);
+                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>体力+' + config.Value + '</c></c>', 0.5, 1);
                 Game.NetWorkController.Send('msg.C2GW_ReqPower');
                 this.node.runAction(cc.sequence([
+                    cc.delayTime(0.5),
+                    cc.callFunc(function () {
+                        this._hideBrands();
+                    }, this),
                     cc.delayTime(1.2),
                     cc.callFunc(function () {
                         this._randBrandInfo()
@@ -255,9 +265,37 @@ cc.Class({
                 ]))
                 break;
             case Game.TurnGameDefine.REWARD_TYPE.TYPE_MINIGAME:
-                //小游戏 
-                this.openView(MiniGameId[config.RewardId]);
+                //小游戏
+                node = cc.instantiate(this.tipRewardViewPrefab);
+                this.dialogueNode.addChild(node);
+                view = node.getComponent(TipRewardView);
+                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】前去-<color=#ed5b5b>' + MiniGameName[config.RewardId] + '</c></c>', 0.5, 1);
+
                 this.node.runAction(cc.sequence([
+                    cc.delayTime(0.5),
+                    cc.callFunc(function () {
+                        this._hideBrands();
+                    }, this),
+                    cc.delayTime(1.2),
+                    cc.callFunc(function () {
+                        this.openView(MiniGameId[config.RewardId]);
+                        this._randBrandInfo()
+                    }, this)
+                ]))
+                break;
+            case Game.TurnGameDefine.REWARD_TYPE.TYPE_ITEM:
+                //物品
+                node = cc.instantiate(this.tipRewardViewPrefab);
+                this.dialogueNode.addChild(node);
+                view = node.getComponent(TipRewardView);
+                let itemConfig = Game.ItemModel.GetItemConfig(config.RewardId)
+                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>' + itemConfig.Name + '+' + config.Value + '</c></c>', 0.5, 1);
+
+                this.node.runAction(cc.sequence([
+                    cc.delayTime(0.5),
+                    cc.callFunc(function () {
+                        this._hideBrands();
+                    }, this),
                     cc.delayTime(1.2),
                     cc.callFunc(function () {
                         this._randBrandInfo()
