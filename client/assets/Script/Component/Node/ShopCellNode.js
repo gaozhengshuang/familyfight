@@ -9,6 +9,7 @@ cc.Class({
         label_gold: { default: null, type: cc.Label },
         label_reward: { default: null, type: cc.Label },
         label_name: { default: null, type: cc.Label },
+        label_getnum: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -36,6 +37,7 @@ cc.Class({
         this._target = data.target;
         this._data = data.array[index];
         this.price = Math.floor(this._data.price);
+        this.label_getnum.string = `(已购买${this._data.times}个)`;
 
         let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", this._data.id);
         if (maidBase) {

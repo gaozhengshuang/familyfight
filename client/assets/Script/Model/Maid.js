@@ -108,7 +108,6 @@ MaidModel.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
 
 MaidModel.prototype.onGW2C_AckMaidShop = function (msgid, data) {
     this._shopMaids = data.shop;
-    console.log(data);
     NotificationController.Emit(Define.EVENT_KEY.MAID_UPDATESHOP);
 }
 
