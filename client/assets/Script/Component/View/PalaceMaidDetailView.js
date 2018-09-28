@@ -12,6 +12,7 @@ cc.Class({
         label_gold: { default:null, type:cc.Label },
         node_buy: { default:null, type:cc.Node },
         image_buy: { default:null, type:cc.Sprite },
+        image_lockbg: { default:null, type:cc.Sprite },
     },
 
     onLoad() {
@@ -50,16 +51,16 @@ cc.Class({
             if (palaceData.maids[this._index]) {     //已经解锁
                 Game.ResController.SetSprite(this.image_maid, maidBase.Path);
                 this.node_buy.active = false;
-                this.label_lockLv.node.active = false;
+                this.image_lockbg.node.active = false;
             } else {
                 if (palaceData.level >= palaceMaidBase.OpenLevel) {     //达到开放等级
                     Game.ResController.SetSprite(this.image_maid, maidBase.Path);
                     this.node_buy.active = true;
-                    this.label_lockLv.node.active = false;
+                    this.image_lockbg.node.active = false;
                 } else {
                     Game.ResController.SetSprite(this.image_maid, "Image/GameScene/Common/image_maidLock");
                     this.node_buy.active = false;
-                    this.label_lockLv.node.active = true;
+                    this.image_lockbg.node.active = true;
                 }
             }
 
