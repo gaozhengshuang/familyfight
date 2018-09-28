@@ -55,7 +55,7 @@ cc.Class({
     },
 
     updateBtnGold() {
-        this.label_gold.string = `+${Game.Tools.UnitConvert(this.price)}`;
+        this.label_gold.string = `${Game.Tools.UnitConvert(this.price)}`;
         if (Game.UserModel.GetGold() >= this.price) {
             Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common");
         } else {

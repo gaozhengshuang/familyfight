@@ -34,7 +34,6 @@ cc.Class({
 
     updateView() {
         this.updateTableView();
-        this.tableView.getComponent(cc.tableView).scrollToRight(1);
     },
 
     updateTableView() {
@@ -48,5 +47,6 @@ cc.Class({
             }
             this.tableView.getComponent(cc.tableView).initTableView(this.passList.length, { array: this.passList, target: this });
         }
+        this.tableView.getComponent(cc.tableView).scrollToRight(1);
     },
 });
