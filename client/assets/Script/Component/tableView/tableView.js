@@ -433,6 +433,12 @@ var tableView = cc.Class({
         }
         this._initTableView();
     },
+    //更新内容 不重置位置   (注：列表个数不同时使用) 待优化 暂时先用
+    updateTableView: function(data) {
+    //    let offset = this.getScrollOffset();
+       this.reload(data);
+    //    this.scrollToOffset(offset);
+    },
     //*************************************************重写ScrollView方法*************************************************//
     // touch event handler
     _onTouchBegan: function (event, captureListeners) {

@@ -80,7 +80,7 @@ cc.Class({
     },
     onSendBarrageClick: function () {
         if (this.barrageEditBox.string == '') {
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>请输入弹幕</color>' });
+            this.showTips("请输入弹幕");
             return;
         }
         let info = this.headInfo.Id + '_' + this.barrageEditBox.string;

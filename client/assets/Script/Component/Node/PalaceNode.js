@@ -48,7 +48,7 @@ cc.Class({
             Game.PalaceModel.SetCurPalaceId(this._data.Id);
             this.openView(Game.UIName.UI_PALACEDETAIL);
         } else {
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>宫殿尚未解锁</color>' });
+            this.showTips("宫殿尚未解锁");
         }
     },
 });

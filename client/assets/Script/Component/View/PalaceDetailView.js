@@ -71,7 +71,7 @@ cc.Class({
 
     updateView() {
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
-
+        
         let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this._data.id);
         if (palaceMapBase) {
             this.masterId = palaceMapBase.Master;
@@ -137,7 +137,7 @@ cc.Class({
             this.label_getTime.node.active = true;
             this.leftTime = this._data.endtime - Game.TimeController.GetCurTime();
             this.label_getTime.string = '生产中\n' + Game.moment.unix(this.leftTime).format('mm:ss');
-            Game.ResController.SetSprite(this.image_get, "Image/GameScene/Common/button_common2");
+            Game.ResController.SetSprite(this.image_get, "Image/GameScene/Common/button_building");
         }
     },
 

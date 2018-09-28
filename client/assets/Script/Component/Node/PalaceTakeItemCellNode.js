@@ -21,7 +21,7 @@ cc.Class({
         if (itemBase) {
             Game.ResController.SetSprite(this.image_item, itemBase.Itempath);
             this.label_name.string = itemBase.Name;
-            this.label_num.string = "X" + this._data.num;
+            this.label_num.string = "+" + this._data.num;
         }
     },
 

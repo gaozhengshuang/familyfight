@@ -88,7 +88,7 @@ UserModel.prototype.GetOffLineReward = function () {
  */
 UserModel.prototype.onGW2C_RetLogin = function (msgid, data) {
     if (data.errcode != null) {
-        NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>' + data.errcode + '</color>' });
+        NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, data.errcode);
     }
 }
 

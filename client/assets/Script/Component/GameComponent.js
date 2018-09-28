@@ -57,6 +57,10 @@ var GameComponent = cc.Class({
 
     onClose() {
         this.closeView(this._url);
+    },
+
+    showTips(data) {
+        Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, data);
     }
 });
 

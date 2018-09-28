@@ -16,7 +16,7 @@ cc.Class({
 
     onEnable() {
         this.initNotification();
-        this.updateView();
+        this.initView();
     },
 
     onDisable() {
@@ -25,20 +25,26 @@ cc.Class({
 
     initData() {
         this.tableViewComponent = this.tableView.getComponent(cc.tableView);
+        this._tableList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
+            return maid.id;
+        });
     },
 
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.MAID_UPDATESHOP, this, this.updateTableView);
     },
 
-    updateView() {
-        this.updateTableView();
+    initView() {
+        this.tableViewComponent.initTableView(this._tableList.length, { array: this._tableList, target: this });
+        if (this._tableList.length > 4) {
+            this.tableViewComponent.scrollToBottom();
+        }
     },
 
     updateTableView() {
-        let _tbList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
+        this._tableList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
             return maid.id;
         });
-        this.tableViewComponent.initTableView(_tbList.length, { array: _tbList, target: this });
+        this.tableViewComponent.updateTableView({ array: this._tableList, target: this });
     },
 });
