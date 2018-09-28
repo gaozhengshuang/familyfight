@@ -8,6 +8,7 @@ cc.Class({
     },
 
     onLoad() {
+        this.initData();
     },
 
     update(dt) {
@@ -22,6 +23,10 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MAID_UPDATESHOP, this, this.updateTableView);
     },
 
+    initData() {
+        this.tableViewComponent = this.tableView.getComponent(cc.tableView);
+    },
+
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.MAID_UPDATESHOP, this, this.updateTableView);
     },
@@ -34,6 +39,6 @@ cc.Class({
         let _tbList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
             return maid.id;
         });
-        this.tableView.getComponent(cc.tableView).initTableView(_tbList.length, { array: _tbList, target: this });
+        this.tableViewComponent.initTableView(_tbList.length, { array: _tbList, target: this });
     },
 });

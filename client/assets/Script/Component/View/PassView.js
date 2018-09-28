@@ -51,7 +51,7 @@ cc.Class({
             this.passList = [];
             for (let i = 0; i < this.passBase.length; i ++) {
                 let info = this.passBase[i];
-                if (info.ChapterID == Game.MaidModel.GetCurChapter()) {
+                if (info.ChapterID == Game.MaidModel.GetCurChapter() && info.Id <= Game.MaidModel.GetTopPass()) {
                     this.passList.push(info);
                 }
             }
@@ -59,18 +59,39 @@ cc.Class({
         }
     },
 
-    OnClickLastChapter() {
-        if (Game.MaidModel.GetCurChapter() > 1) {
-            Game.MaidModel.SetCurChapter(Game.MaidModel.GetCurChapter() - 1);
+    updateCurPass(isNext) {
+        let passIndex = 1;
+        for (let i = 0; i < this.passBase.length; i ++) {
+            let info = this.passBase[i];
+            if (info.ChapterID == Game.MaidModel.GetCurChapter()) {
+                this.passList.push(info);
+                passIndex = info.Id;
+                if (isNext) {break;}
+            }
         }
+        
+        Game.MaidModel.SetCurPass(passIndex);
+        Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW);
+    },
+
+    OnClickLastChapter() {
+        if (Game.MaidModel.GetCurChapter() <= 1) {
+            return;
+        }
+        Game.MaidModel.SetCurChapter(Game.MaidModel.GetCurChapter() - 1);
+
+        this.updateCurPass(false);
         this.updateTableView();
         this.updateChapter();
     },
 
     OnClickNextChapter() {
-        if (Game.MaidModel.GetCurChapter() < Game.MaidModel.GetTopChapter()) {
-            Game.MaidModel.SetCurChapter(Game.MaidModel.GetCurChapter() + 1);
+        if (Game.MaidModel.GetCurChapter() >= Game.MaidModel.GetTopChapter()) {
+            return;
         }
+        Game.MaidModel.SetCurChapter(Game.MaidModel.GetCurChapter() + 1);
+
+        this.updateCurPass(true);
         this.updateTableView();
         this.updateChapter();
     },
