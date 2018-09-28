@@ -68,7 +68,7 @@ cc.Class({
     onBrandClick: function (index) {
         if (this.status == BrandStatus.Status_Wait) {
             if (Game.CurrencyModel.GetPower() < 1) {
-                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>体力不足</color>' });
+                this.showTips("体力不足");
                 return;
             }
             this.clickIndex = index;
@@ -153,7 +153,7 @@ cc.Class({
         if (this.brandInfos.length == 6) {
             this._changeStatus(BrandStatus.Status_Preparing);
         } else {
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>' + '牌子不足6个' + '</color>' });
+            this.showTips("牌子不足6个");
         }
     },
     _initBrands: function () {

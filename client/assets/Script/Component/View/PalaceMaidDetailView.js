@@ -88,7 +88,7 @@ cc.Class({
             });
             Game.UserModel.SubtractGold(this._lockGold);
         } else {
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>' + '金币不足哟!' + '</color>' });
+            this.showTips("金币不足哟!");
         }
     },
 });

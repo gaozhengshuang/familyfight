@@ -129,11 +129,11 @@ let WechatPlatform = _.merge(_.cloneDeep(CommonPlatform), {
             buyQuantity: payment,
             zoneId: 1,
             success: function () {
-                NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>充值成功</color>' });
+                NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, '充值成功');
                 NetWorkController.Send('msg.C2GW_PlatformRechargeDone', {});
             },
             fail: function (info) {
-                NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>' + info.errCode + '</color>' });
+                NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, info.errCode);
             }
         });
     }

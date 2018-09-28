@@ -24,7 +24,7 @@ let CommonPlatform = {
     },
     ShareMessage: function () {
         console.log('ShareMessage');
-        NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, { text: '<color=#ffffff>微信版本才支持分享功能哟</color>' });
+        NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, "微信版本才支持分享功能哟");
     },
     RequestPay: function (payment) {
         console.log('RequestPay ' + payment);
