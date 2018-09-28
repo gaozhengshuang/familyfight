@@ -70,7 +70,7 @@ func (this *UserPalace) ChangeMaxLevel(user* GateUser,level uint32) {
 	for _, v := range tbl.TPalaceMapBase.PalaceMap {
 		if level == uint32(v.UlockPassId) {
 			//要解锁这一关了
-			palace, add := this.AddPalace(user,v.Id)
+			_, add := this.AddPalace(user,v.Id)
 			if add {
 				this.Syn(user)
 			}
