@@ -266,7 +266,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 429,
+      "width": 436,
       "height": 62
     },
     "_rotationX": 0,
@@ -435,7 +435,7 @@
     "asset": {
       "__uuid__": "647d0e9d-4193-4893-b8a5-488b70542c08"
     },
-    "fileId": "25CaNthbROtoZECOPFDPTB",
+    "fileId": "16bEojTV5Hp4B+L+5Zg3YY",
     "sync": false
   },
   {
@@ -526,7 +526,7 @@
     "asset": {
       "__uuid__": "647d0e9d-4193-4893-b8a5-488b70542c08"
     },
-    "fileId": "77j+px1ilB0YZ5C1INBLGk",
+    "fileId": "9bvY2SRGhMYI+2nsbBMcp4",
     "sync": false
   },
   {
@@ -575,7 +575,7 @@
     "asset": {
       "__uuid__": "647d0e9d-4193-4893-b8a5-488b70542c08"
     },
-    "fileId": "cdTleiIJVDGL/wVfNm4qfT",
+    "fileId": "971Zq3HeBLj4RmoYtcv9qy",
     "sync": false
   },
   {
@@ -635,7 +635,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 206,
+      "width": 213,
       "height": 53
     },
     "_rotationX": 0,
@@ -644,7 +644,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 326,
+      "x": 329.5,
       "y": 0
     },
     "_skewX": 0,
@@ -689,7 +689,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 144.2,
+      "width": 149.1,
       "height": 62
     },
     "_rotationX": 0,
@@ -698,8 +698,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -104,
-      "y": 0
+      "x": -107,
+      "y": 4
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -742,7 +742,7 @@
     "asset": {
       "__uuid__": "647d0e9d-4193-4893-b8a5-488b70542c08"
     },
-    "fileId": "16Y9eAOm5AzqdUvUlP9914",
+    "fileId": "20WjJPObFAU6lKP/jJQWnB",
     "sync": false
   },
   {
@@ -833,7 +833,7 @@
     "asset": {
       "__uuid__": "647d0e9d-4193-4893-b8a5-488b70542c08"
     },
-    "fileId": "bdQanaGXRDNax5xPBcPc8e",
+    "fileId": "21zYTQDzRIwaEXh4UDwuiB",
     "sync": false
   },
   {
@@ -880,8 +880,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -14,
-      "y": 0
+      "x": -16,
+      "y": 2
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -922,7 +922,7 @@
     "asset": {
       "__uuid__": "647d0e9d-4193-4893-b8a5-488b70542c08"
     },
-    "fileId": "d6zXoFgY1MJYZc624VUQuX",
+    "fileId": "f710hUBLxJw6XzrKwS/XxI",
     "sync": false
   },
   {
@@ -970,7 +970,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 60,
-      "y": -20
+      "y": -12
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1011,7 +1011,7 @@
     "asset": {
       "__uuid__": "647d0e9d-4193-4893-b8a5-488b70542c08"
     },
-    "fileId": "dcwANUgmxJ2osbxpf8bZ/w",
+    "fileId": "0d3ksWIMlEZZqV0zCqklTF",
     "sync": false
   },
   {
@@ -1059,7 +1059,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 60,
-      "y": 0
+      "y": 3
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1100,7 +1100,7 @@
     "asset": {
       "__uuid__": "647d0e9d-4193-4893-b8a5-488b70542c08"
     },
-    "fileId": "5flrO4ozJPFqYc/HHZ4elC",
+    "fileId": "3bI/QOlDdKiJdbKjeqfIIh",
     "sync": false
   },
   {
@@ -1115,7 +1115,7 @@
       "__uuid__": "fcecd5a0-70f9-4384-bbcd-cce302e330d1"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -1137,7 +1137,7 @@
       "__id__": 16
     },
     "_enabled": true,
-    "_N$totalLength": 206,
+    "_N$totalLength": 213,
     "_N$barSprite": {
       "__id__": 18
     },
@@ -1175,7 +1175,7 @@
     "asset": {
       "__uuid__": "647d0e9d-4193-4893-b8a5-488b70542c08"
     },
-    "fileId": "b41jOhuZ9MjJMz0vlxQyow",
+    "fileId": "3aYWW+uiVOvK6MKldZ+m4Y",
     "sync": false
   },
   {
@@ -1214,7 +1214,7 @@
     "_enabled": true,
     "_layoutSize": {
       "__type__": "cc.Size",
-      "width": 429,
+      "width": 436,
       "height": 62
     },
     "_resize": 1,
@@ -1243,7 +1243,7 @@
     "asset": {
       "__uuid__": "647d0e9d-4193-4893-b8a5-488b70542c08"
     },
-    "fileId": "ddY4mE7mxJn7CjJqE7Ulsc",
+    "fileId": "287zuJQxBMV5iCVHjpyb1I",
     "sync": false
   },
   {

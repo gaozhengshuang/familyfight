@@ -3535,7 +3535,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 429,
+      "width": 436,
       "height": 62
     },
     "_rotationX": 0,
@@ -3704,7 +3704,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "dffkwZcDNKVJimErXIVQSv",
+    "fileId": "79GVC3WoNC84Wx3JD1Rd8T",
     "sync": false
   },
   {
@@ -3795,7 +3795,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "f4hrSmf4RFpKIXQbr11KQF",
+    "fileId": "111O4LLpVCg5UfokbTmAQY",
     "sync": false
   },
   {
@@ -3844,7 +3844,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "018HZ8tTRIZ7/djdNPuN0V",
+    "fileId": "beSCrHAy5BwJOoM7lpyEyJ",
     "sync": false
   },
   {
@@ -3904,8 +3904,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 206,
-      "height": 62
+      "width": 213,
+      "height": 53
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -3913,7 +3913,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 326,
+      "x": 329.5,
       "y": 0
     },
     "_skewX": 0,
@@ -3958,7 +3958,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 144.2,
+      "width": 149.1,
       "height": 62
     },
     "_rotationX": 0,
@@ -3967,8 +3967,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -104,
-      "y": 0
+      "x": -107,
+      "y": 4
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -4011,7 +4011,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "55vHh1vV1NIri4eXkuqYO1",
+    "fileId": "c8CWHYb/FHybnwo7T4ujGv",
     "sync": false
   },
   {
@@ -4102,7 +4102,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "309Fn9BM5CwLNz3ntGNPUk",
+    "fileId": "1aNcgDr0FPQK22wjFKn6eG",
     "sync": false
   },
   {
@@ -4149,8 +4149,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -14,
-      "y": 0
+      "x": -16,
+      "y": 2
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -4191,7 +4191,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "657X4AqPtJqpV+NbENLOfe",
+    "fileId": "45rwm4QapDnIyFbBXw6PyP",
     "sync": false
   },
   {
@@ -4239,7 +4239,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 60,
-      "y": -20
+      "y": -12
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -4280,7 +4280,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "bbSby2ljFL2K0YRl/yp3ms",
+    "fileId": "8dQUc0Lg9GvKRWAV47Xhu8",
     "sync": false
   },
   {
@@ -4328,7 +4328,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 60,
-      "y": 0
+      "y": 3
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -4369,7 +4369,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "02Pku95kJBzZcge5tLAmeP",
+    "fileId": "27X54W7apNc7ahNSdWNjxm",
     "sync": false
   },
   {
@@ -4384,7 +4384,7 @@
       "__uuid__": "fcecd5a0-70f9-4384-bbcd-cce302e330d1"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -4406,7 +4406,7 @@
       "__id__": 122
     },
     "_enabled": true,
-    "_N$totalLength": 206,
+    "_N$totalLength": 213,
     "_N$barSprite": {
       "__id__": 124
     },
@@ -4444,7 +4444,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "8f7EyF4tVNwIT8zjC1ZDdl",
+    "fileId": "f0+j+3FJtKaI4+TOK3BDtm",
     "sync": false
   },
   {
@@ -4483,7 +4483,7 @@
     "_enabled": true,
     "_layoutSize": {
       "__type__": "cc.Size",
-      "width": 429,
+      "width": 436,
       "height": 62
     },
     "_resize": 1,
@@ -4512,7 +4512,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "dfF5SsFYdOj7mszS4U3Jw9",
+    "fileId": "82ftE95/VOQYUOgwyaPKnV",
     "sync": false
   },
   {
@@ -4553,8 +4553,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 116,
-      "height": 75
+      "width": 104,
+      "height": 72
     },
     "_rotationX": 0,
     "_rotationY": 0,
