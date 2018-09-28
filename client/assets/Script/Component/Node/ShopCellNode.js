@@ -13,7 +13,6 @@ cc.Class({
     },
 
     onLoad() {
-        this.price = 0;
     },
 
     onEnable() {
@@ -36,6 +35,7 @@ cc.Class({
         this.node.active = true;
         this._target = data.target;
         this._data = data.array[index];
+        this._index = index;
         this.price = Math.floor(this._data.price);
         this.label_getnum.string = `(已购买${this._data.times}个)`;
 
