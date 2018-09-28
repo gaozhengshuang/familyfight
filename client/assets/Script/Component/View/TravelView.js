@@ -48,7 +48,7 @@ cc.Class({
                 }
             }
         }
-        this.onSwitchTab(null, 0);
+        this.onSwitchTab(null, 1);
         this._updateSupplyView();
         Game.NetWorkController.Send('msg.C2GW_ReqTravelView', { open: true });
         if (Game.TravelModel.eventid != 0) {
