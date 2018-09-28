@@ -3653,7 +3653,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 17,
+      "width": 141,
       "height": 40
     },
     "_rotationX": 0,
@@ -3662,7 +3662,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -43,
+      "x": -50.2,
       "y": -1
     },
     "_skewX": 0,
@@ -3690,7 +3690,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "0",
+    "_N$string": "9999.99万",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -3704,7 +3704,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "eaxkBS6DBC+5qVa02T5Ez7",
+    "fileId": "dffkwZcDNKVJimErXIVQSv",
     "sync": false
   },
   {
@@ -3795,7 +3795,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "9eciBy0mBKQLOIx3sux7vg",
+    "fileId": "f4hrSmf4RFpKIXQbr11KQF",
     "sync": false
   },
   {
@@ -3844,7 +3844,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "0929ds30BP3qYp8d9+QJyF",
+    "fileId": "018HZ8tTRIZ7/djdNPuN0V",
     "sync": false
   },
   {
@@ -4011,7 +4011,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "1fLa+gqnRK0aRRK2dgPxol",
+    "fileId": "55vHh1vV1NIri4eXkuqYO1",
     "sync": false
   },
   {
@@ -4102,7 +4102,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "feIKeDMK1IgYNDHJ8VRlri",
+    "fileId": "309Fn9BM5CwLNz3ntGNPUk",
     "sync": false
   },
   {
@@ -4191,7 +4191,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "618vnLrYdDgoZacPRpw3zN",
+    "fileId": "657X4AqPtJqpV+NbENLOfe",
     "sync": false
   },
   {
@@ -4280,7 +4280,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "5cJk0RyW9L7YxApTPHZM2O",
+    "fileId": "bbSby2ljFL2K0YRl/yp3ms",
     "sync": false
   },
   {
@@ -4369,7 +4369,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "f3OyXRzYpM4aXvpIQNKm6E",
+    "fileId": "02Pku95kJBzZcge5tLAmeP",
     "sync": false
   },
   {
@@ -4444,7 +4444,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "29u6o8lpRL7ZMIPeP9ew/V",
+    "fileId": "8f7EyF4tVNwIT8zjC1ZDdl",
     "sync": false
   },
   {
@@ -4512,7 +4512,7 @@
     "asset": {
       "__uuid__": "58430552-858d-4e2f-b4c4-3ec94af7a430"
     },
-    "fileId": "41ARgbiEpMfrgIYmH2W3bc",
+    "fileId": "dfF5SsFYdOj7mszS4U3Jw9",
     "sync": false
   },
   {
@@ -4756,6 +4756,7 @@
     },
     "_enabled": true,
     "_url": "",
+    "_data": {},
     "brandViews": [
       {
         "__id__": 17
