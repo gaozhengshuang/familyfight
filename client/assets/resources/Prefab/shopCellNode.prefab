@@ -628,7 +628,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 127,
+      "width": 113,
       "height": 40
     },
     "_rotationX": 0,
@@ -637,7 +637,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 12.7,
+      "x": 10,
       "y": 2
     },
     "_skewX": 0,
@@ -665,7 +665,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "+9999.99万",
+    "_N$string": "9999.99万",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
