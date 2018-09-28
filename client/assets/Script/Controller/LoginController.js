@@ -43,10 +43,8 @@ LoginController.prototype.onGW2C_HeartBeat = function (msgid, data) {
 
 LoginController.prototype.onL2C_RetLogin = function (msgid, data) {
     //连接gate server
-    console.log(data);
     let UserModel = require('../Model/User');
     let url = Platform.WSPrefix + data.host + '/ws_handler';
-    console.log('onL2c_RetLogin url : ' + url);
     async.waterfall([
         function (anext) {
             //第一步断开websocket

@@ -9,9 +9,8 @@ cc.Class({
     onLoad() {
     },
     start() {
-        let a = [1, 2, 3, 4, 5];
-        console.log(a.shift());
-        console.log(a);
+        console.log(parseInt('1'))
+        console.log(parseInt(2))
     },
     update(dt) {
     },

@@ -3,10 +3,18 @@ const Tools = require('../Util/Tools');
 
 var ViewController = function () {
     this._viewList = [];
+    this._dialoguePrefab = null;
 }
 
 ViewController.prototype.Init = function (cb) {
-    Tools.InvokeCallback(cb);
+    cc.loader.loadRes("Prefab/DialogueNode", function (err, prefab) {
+        if (err) {
+            Tools.InvokeCallback(cb, '[严重错误] 奖励资源加载错误 ' + err);
+        } else {
+            this._dialoguePrefab = prefab;
+            Tools.InvokeCallback(cb, null);
+        }
+    }.bind(this));
 }
 
 /**
@@ -17,7 +25,7 @@ ViewController.prototype.openView = function (ui, data = null) {
         let _view = null;
         let _gameComponet = null;
 
-        _view = _.find(this._viewList, function(v) {
+        _view = _.find(this._viewList, function (v) {
             return v.uiname == ui;
         });
 
@@ -28,8 +36,8 @@ ViewController.prototype.openView = function (ui, data = null) {
                     _gameComponet.setData(data);        //设置界面数据
                 }
             }
-            
-            _.forEach(this._viewList, function(v) {
+
+            _.forEach(this._viewList, function (v) {
                 if (_view.active) {
                     v.active = _view.uiname == v.uiname;
                 }
@@ -51,7 +59,7 @@ ViewController.prototype.openView = function (ui, data = null) {
                             _gameComponet.setData(data);        //设置界面数据
                         }
                     }
-                    
+
                     let canvas = cc.director.getScene().getChildByName('Canvas');   //设置界面显示位置
                     canvas.getChildByName("ViewLayer").addChild(_view);
                     this._viewList.push(_view);
@@ -60,7 +68,7 @@ ViewController.prototype.openView = function (ui, data = null) {
                 }
             }.bind(this));
         }
-    }  
+    }
 }
 
 /**
@@ -68,10 +76,10 @@ ViewController.prototype.openView = function (ui, data = null) {
  */
 ViewController.prototype.closeView = function (ui, clear = false) {
     if (ui != null) {
-        let _view = _.find(this._viewList, function(v) {
+        let _view = _.find(this._viewList, function (v) {
             return v.uiname == ui;
         });
-        
+
         if (_view) {
             if (clear) {
                 _view.destroy();
@@ -94,10 +102,20 @@ ViewController.prototype.closeAllView = function (clear = false) {
         canvas.getChildByName("ViewLayer").destroyAllChildren();
         this._viewList = [];
     } else {
-        _.forEach(this._viewList, function(v) {
+        _.forEach(this._viewList, function (v) {
             v.active = false;
         })
     }
+}
+
+/**
+ * 打开对话界面
+ */
+ViewController.prototype.showDialogue = function (parent, id) {
+    let node = cc.instantiate(this._dialoguePrefab);
+    let dialogView = node.getComponent('DialogView');
+    parent.addChild(node);
+    dialogView.Init(id);
 }
 
 module.exports = new ViewController();

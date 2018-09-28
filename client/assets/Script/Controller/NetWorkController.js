@@ -69,7 +69,9 @@ NetWorkController.prototype.Send = function (name, obj, cb) {
     let id = this.protoIndexByName[name];
     let head = new Uint8Array([(msg.length + 4) & 0xff, (msg.length + 4) >> 8, id & 0xff, id >> 8,]);
     let info = new Uint8Array(msg.length + 4);
-    console.log('发送 ' + name + ' 消息');
+    if (name != 'msg.C2GW_HeartBeat') {
+        console.log('发送 ' + name + ' 消息');
+    }
     info.set(head, 0);
     info.set(msg, 4);
     this.sock.send(info.buffer);
@@ -168,7 +170,9 @@ NetWorkController.prototype.handleArrayBuffer = function (buffer) {
         }
         let message = proto.decode(msg);
         let obj = proto.toObject(message);
-        console.log('收到 ' + protoName + ' 消息');
+        if (protoName != 'msg.GW2C_HeartBeat') {
+            console.log('收到 ' + protoName + ' 消息');
+        }
         //调用监听函数
         let listenerlist = this.listeners[msgid];
         if (listenerlist != null) {
