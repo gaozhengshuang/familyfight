@@ -3,12 +3,12 @@
 
 module table {
 export var PassLevels : table.IPassLevelsDefine[] = [
-		{ Id : 1, Name : "绣女", Path : "Image/GameScene/Pass/pass_1", NextLevels : 2, DialogueID : 1, MapPrefab : "Prefab/map/map01" 	},
-		{ Id : 2, Name : "作弊", Path : "Image/GameScene/Pass/pass_2", NextLevels : 3, DialogueID : 33, MapPrefab : "Prefab/map/map03" 	},
-		{ Id : 3, Name : "皇后千秋", Path : "Image/GameScene/Pass/pass_4", NextLevels : 4, DialogueID : 7, MapPrefab : "Prefab/map/map02" 	},
-		{ Id : 4, Name : "初入长春宫", Path : "Image/GameScene/Pass/pass_5", NextLevels : 5, DialogueID : 25, MapPrefab : "Prefab/map/map02" 	},
-		{ Id : 5, Name : "作弊", Path : "Image/GameScene/Pass/pass_2", NextLevels : 6, DialogueID : 33, MapPrefab : "Prefab/map/map03" 	},
-		{ Id : 6, Name : "泼水", Path : "Image/GameScene/Pass/pass_3", NextLevels : 7, DialogueID : 25, MapPrefab : "Prefab/map/map04" 	}
+		{ Id : 1, Name : "绣女", Path : "Image/GameScene/Pass/pass_1", NextLevels : 2, DialogueID : 1, MapPrefab : "Prefab/map/map01", ChapterID : 1, ChapterName : "第一章" 	},
+		{ Id : 2, Name : "作弊", Path : "Image/GameScene/Pass/pass_2", NextLevels : 3, DialogueID : 33, MapPrefab : "Prefab/map/map03", ChapterID : 1, ChapterName : "第一章" 	},
+		{ Id : 3, Name : "皇后千秋", Path : "Image/GameScene/Pass/pass_4", NextLevels : 4, DialogueID : 7, MapPrefab : "Prefab/map/map02", ChapterID : 1, ChapterName : "第一章" 	},
+		{ Id : 4, Name : "初入长春宫", Path : "Image/GameScene/Pass/pass_5", NextLevels : 5, DialogueID : 25, MapPrefab : "Prefab/map/map02", ChapterID : 1, ChapterName : "第一章" 	},
+		{ Id : 5, Name : "作弊", Path : "Image/GameScene/Pass/pass_2", NextLevels : 6, DialogueID : 33, MapPrefab : "Prefab/map/map03", ChapterID : 2, ChapterName : "第二章" 	},
+		{ Id : 6, Name : "泼水", Path : "Image/GameScene/Pass/pass_3", NextLevels : 7, DialogueID : 25, MapPrefab : "Prefab/map/map04", ChapterID : 2, ChapterName : "第二章" 	}
 	]
 
 

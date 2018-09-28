@@ -28,12 +28,14 @@ func (this *MaidData) PackBin() *msg.MaidData{
 type MaidShop struct {
 	id 				uint32
 	price 			float32
+	times 			uint32
 }
 
 func (this *MaidShop) PackBin() *msg.MaidShopData{
 	data := &msg.MaidShopData{}
 	data.Id = pb.Uint32(this.id)
 	data.Price = pb.Float32(this.price)
+	data.Times = pb.Uint32(this.times)
 	return data
 }
 
@@ -66,6 +68,7 @@ func (this *UserMaid) LoadBin(user *GateUser,bin *msg.Serialize) {
 		shop := &MaidShop{}
 		shop.id = data.GetId()
 		shop.price = data.GetPrice()
+		shop.times = data.GetTimes()
 		this.shop[data.GetId()] = shop
 	}
 	//计算每个关卡的侍女数量
@@ -147,6 +150,7 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 	//更新价格咯
 	oldprice := shopdata.price
 	shopdata.price = shopdata.price * float32(tbl.Common.PriceAdditionPerBuy)
+	shopdata.times = shopdata.times + 1
 	return 0, maid, uint64(math.Floor(float64(oldprice)))
 }
 
@@ -235,6 +239,7 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 			shop := &MaidShop{}
 			shop.id = uint32(v)
 			shop.price = price
+			shop.times = 0
 			newShop[shop.id] = shop
 		} else {
 			// 继承老的价格
