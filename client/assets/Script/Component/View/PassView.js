@@ -51,7 +51,7 @@ cc.Class({
             this.passList = [];
             for (let i = 0; i < this.passBase.length; i ++) {
                 let info = this.passBase[i];
-                if (info.ChapterID == Game.MaidModel.GetCurChapter()) {
+                if (info.ChapterID == Game.MaidModel.GetCurChapter() && info.Id <= Game.MaidModel.GetTopPass()) {
                     this.passList.push(info);
                 }
             }
