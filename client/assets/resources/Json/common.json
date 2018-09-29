@@ -1,5 +1,5 @@
 {
-    "PowerInit": 10,
+    "PowerInit": 30,
     "PowerMax": 60,
     "PowerAddInterval": 3600,
     "PowerAddition": 6,
