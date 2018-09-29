@@ -96,5 +96,5 @@ func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
 //连连看
 func (this *GateUser) Linkup(score uint32) (gold uint64){
 	//先来简单的，把接口写好
-	return uint64(score) * 1000 
+	return uint64(score) * 30000
 }

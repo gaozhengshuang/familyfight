@@ -120,7 +120,7 @@ cc.Class({
         let node = cc.instantiate(this.tipRewardViewPrefab);
         this.node.addChild(node);
         let view = node.getComponent(TipRewardView);
-        view.flap('<color=#6d282d>获得金币+<color=#ed5b5b>' + data.gold + '</c></c>', 0.5, 1);
+        view.flap('<color=#6d282d>获得金币+<color=#ed5b5b>' + Game.Tools.UnitConvert(data.gold) + '</c></c>', 0.5, 1);
         Game.UserModel.AddGold(data.gold);
         this.node.runAction(cc.sequence([
             cc.delayTime(2),
