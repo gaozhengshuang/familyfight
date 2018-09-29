@@ -1,0 +1,66 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "FlashLight",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.9833333333333333,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": "2",
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "259d90fd-d402-4379-b4ae-63620eaead9e"
+            }
+          },
+          {
+            "frame": 0.15,
+            "value": {
+              "__uuid__": "259d90fd-d402-4379-b4ae-63620eaead9e"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "3b383168-e734-4a82-9283-ea7f76892d52"
+            }
+          },
+          {
+            "frame": 0.55,
+            "value": {
+              "__uuid__": "eae336d7-2fad-4584-a47b-1abef065eabe"
+            }
+          },
+          {
+            "frame": 0.7666666666666667,
+            "value": {
+              "__uuid__": "fe3a76bc-675a-4d45-8a2f-bbea0d607f2e"
+            }
+          },
+          {
+            "frame": 0.9666666666666667,
+            "value": {
+              "__uuid__": "4c1fbb4d-69a1-435f-8d8d-daf68f51dfb0"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": [
+    {
+      "frame": 0,
+      "func": "",
+      "params": []
+    },
+    {
+      "frame": 0,
+      "func": "",
+      "params": []
+    }
+  ]
+}
