@@ -63,7 +63,6 @@ cc.Class({
 
     updateView() {
         let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));     //本地判断剧情初始化
-        console.log("_dialoguePass-->", _dialoguePass);
         
         if (_dialoguePass == null || _dialoguePass.userid != Game.UserModel.GetUserId()) {
             this.showDialoguePlayer(1);
