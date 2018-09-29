@@ -23,11 +23,11 @@ cc.Class({
     },
 
     onDestroy() {
-        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS, this, this.updateTableView);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS, this, this.updateView);
     },
 
     initNotification() {
-        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS, this, this.updateTableView);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS, this, this.updateView);
     },
 
     initData() {
@@ -60,18 +60,37 @@ cc.Class({
     },
 
     updateCurPass(isNext) {
-        let passIndex = 1;
+        let passId = 1;
         for (let i = 0; i < this.passBase.length; i ++) {
             let info = this.passBase[i];
             if (info.ChapterID == Game.MaidModel.GetCurChapter()) {
                 this.passList.push(info);
-                passIndex = info.Id;
+                passId = info.Id;
                 if (isNext) {break;}
             }
         }
         
-        Game.MaidModel.SetCurPass(passIndex);
+        Game.MaidModel.SetCurPass(passId);
         Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW);
+
+        if (isNext) {   //切换新章节弹对话
+            let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));
+            let passBase = Game.ConfigController.GetConfigById("PassLevels", passId);
+            
+            if (_dialoguePass && passBase) {
+                if (passId == Game.MaidModel.GetTopPass() && _dialoguePass.pass < passId) {
+                    if (passBase.DialogueID != 0) {
+                        Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, passBase.DialogueID);
+        
+                        let passData = {
+                            userid: Game.UserModel.GetUserId(),
+                            pass: passId,
+                        };
+                        cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
+                    }
+                }
+            }
+        }
     },
 
     OnClickLastChapter() {
