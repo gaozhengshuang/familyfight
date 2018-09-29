@@ -11,6 +11,10 @@ cc.Class({
     start() {
         console.log(parseInt('1'))
         console.log(parseInt(2))
+
+        let x = { a: 1, b: 2 };
+        let y = { c: 3, b: 4 };
+        console.log(Game._.merge(x, y));
     },
     update(dt) {
     },
