@@ -29,11 +29,17 @@ cc.Class({
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW);
         }
 
-        if (this._data.Id == Game.MaidModel.GetTopPass() && cc.sys.localStorage.getItem('lookTopPass') < this._data.Id) {
+        let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));
+        if (this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.pass < this._data.Id) {
             if (this._data.DialogueID != 0) {
                 Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);
+
+                let passData = {
+                    userid: Game.UserModel.GetUserId(),
+                    pass: this._data.Id,
+                };
+                cc.sys.localStorage.setItem('passData', JSON.stringify(passData));
             }
-            cc.sys.localStorage.setItem('lookTopPass', this._data.Id);
         }
     }
 });
