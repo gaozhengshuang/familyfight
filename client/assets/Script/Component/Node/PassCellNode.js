@@ -38,7 +38,7 @@ cc.Class({
                     userid: Game.UserModel.GetUserId(),
                     pass: this._data.Id,
                 };
-                cc.sys.localStorage.setItem('passData', JSON.stringify(passData));
+                cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
             }
         }
     }
