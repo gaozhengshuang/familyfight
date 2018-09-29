@@ -291,8 +291,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 440,
-      "height": 43
+      "width": 647,
+      "height": 109
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -343,8 +343,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 355,
-      "height": 18
+      "width": 412,
+      "height": 15
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -352,7 +352,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -205,
+      "x": -216.2,
       "y": 1
     },
     "_skewX": 0,
@@ -450,9 +450,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 167,
-      "g": 207,
-      "b": 121,
+      "r": 56,
+      "g": 35,
+      "b": 15,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -472,8 +472,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 175,
-      "y": -450
+      "x": 1.4,
+      "y": -450.8
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -495,8 +495,10 @@
     "_fontSize": 20,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "50%",
     "_N$horizontalAlign": 1,
@@ -524,9 +526,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 80,
+      "g": 40,
+      "b": 40,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -537,7 +539,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 235,
+      "width": 236,
       "height": 40
     },
     "_rotationX": 0,
@@ -569,8 +571,10 @@
     "_fontSize": 30,
     "_lineHeight": 40,
     "_enableWrapText": true,
-    "_N$file": null,
-    "_isSystemFontUsed": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
     "_spacingX": 0,
     "_N$string": "配置文件加载中...",
     "_N$horizontalAlign": 1,
