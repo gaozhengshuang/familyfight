@@ -25,9 +25,6 @@ cc.Class({
 
     initData() {
         this.tableViewComponent = this.tableView.getComponent(cc.tableView);
-        this._tableList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
-            return maid.id;
-        });
     },
 
     initNotification() {
@@ -35,7 +32,10 @@ cc.Class({
     },
 
     initView() {
-        this.tableViewComponent.initTableView(this._tableList.length, { array: this._tableList, target: this });
+        this._tableList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
+            return maid.id;
+        });
+        this.tableViewComponent.initTableView(this._tableList.length, {array: this._tableList, target: this});
         if (this._tableList.length > 4) {
             this.tableViewComponent.scrollToBottom();
         }
@@ -45,6 +45,6 @@ cc.Class({
         this._tableList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
             return maid.id;
         });
-        this.tableViewComponent.updateTableView({ array: this._tableList, target: this });
+        this.tableViewComponent.reloadTableView(this._tableList.length, {array: this._tableList, target: this});
     },
 });

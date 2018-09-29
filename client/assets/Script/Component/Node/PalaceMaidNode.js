@@ -40,7 +40,7 @@ cc.Class({
                     Game.ResController.SetSprite(this.image_maid, maidBase.Path);
                     this.image_gold.node.active = true;
                     this.label_lockLv.string = '';
-                    this.label_gold.string = `X${Game.Tools.UnitConvert(palaceMaidBase.UnlockPrice)}`;
+                    this.label_gold.string = `${Game.Tools.UnitConvert(palaceMaidBase.UnlockPrice)}`;
                 } else {
                     Game.ResController.SetSprite(this.image_maid, "Image/GameScene/Common/image_maidLock");
                     this.image_gold.node.active = false;
