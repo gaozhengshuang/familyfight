@@ -233,7 +233,7 @@ cc.Class({
                 node = cc.instantiate(this.tipRewardViewPrefab);
                 this.dialogueNode.addChild(node);
                 view = node.getComponent(TipRewardView);
-                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>金币+' + config.Value + '</c></c>', 0.5, 1);
+                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>金币+' + Game.Tools.UnitConvert(config.Value) + '</c></c>', 0.5, 1);
                 Game.UserModel.AddGold(config.Value);
                 this.node.runAction(cc.sequence([
                     cc.delayTime(0.5),
