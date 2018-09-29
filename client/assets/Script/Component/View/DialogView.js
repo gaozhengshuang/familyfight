@@ -99,10 +99,10 @@ cc.Class({
     onTouchStart: function (event) {
         if (this.status == DialogueStatus.Status_Wait) {
             //这里才能跳转下一条哦
-            let box = this.dialogueContentNode.getBoundingBoxToWorld();
-            if (box.contains(event.getLocation())) {
-                this._changeDialogueStatus(DialogueStatus.Status_Dialogue);
-            }
+            // let box = this.dialogueContentNode.getBoundingBoxToWorld();
+            // if (box.contains(event.getLocation())) {
+            this._changeDialogueStatus(DialogueStatus.Status_Dialogue);
+            // }
         }
     },
     //根据id 构建对话的列表
