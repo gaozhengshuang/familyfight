@@ -1,0 +1,49 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "FlashNewPass",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.6833333333333333,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "ff9f844f-1edf-4a05-b876-30c783464114"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "f343cdd8-eccb-4282-8253-53ace1cd7674"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "8bc67c2a-93d5-4730-a7f1-14c9415bb8f2"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "5a950d58-3f72-4ebf-b032-574e8d2fc8e8"
+            }
+          },
+          {
+            "frame": 0.6666666666666666,
+            "value": {
+              "__uuid__": "b5a1ae8b-9d63-4efb-b825-9ed242bd2a85"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}
