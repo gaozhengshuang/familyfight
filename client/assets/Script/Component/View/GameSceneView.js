@@ -62,14 +62,16 @@ cc.Class({
     },
 
     updateView() {
-        let _dialoguePass= JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));     //本地判断剧情初始化
+        let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));     //本地判断剧情初始化
+        console.log("_dialoguePass-->", _dialoguePass);
+        
         if (_dialoguePass == null || _dialoguePass.userid != Game.UserModel.GetUserId()) {
             this.showDialoguePlayer(1);
             let passData = {
                 userid: Game.UserModel.GetUserId(),
                 pass: 1,
             };
-            cc.sys.localStorage.setItem('DialoguePass', JSON.stringify(passData));
+            cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
         }
 
         this.updateGameView();
