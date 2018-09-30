@@ -104,7 +104,7 @@ func (this *GateUser) Linkup(score uint32) (gold uint64){
 //箱子数据
 func (this *GateUser) LoadBox(bin *msg.Serialize){
 	this.boxs = make(map[uint32]*BoxData)
-	boxs := bin.GetBox()
+	boxs := bin.GetBoxs()
 	for _, v := range boxs {
 		boxData := &BoxData{}
 		boxData.id = v.GetId()
@@ -142,11 +142,11 @@ func (this *GateUser) GenerateBox(id uint32, num uint32, level uint32) *BoxData{
 		boxData.id = id
 		boxData.num = num
 		boxData.level = level
-		boxData.generatetime = util.CURTIME()
+		boxData.generatetime = uint64(util.CURTIME())
 		this.boxs[id] = boxData
 	} else {
 		boxData.num = boxData.num + num
-		boxData.generatetime = util.CURTIME()
+		boxData.generatetime = uint64(util.CURTIME())
 	}
 	return boxData
 }

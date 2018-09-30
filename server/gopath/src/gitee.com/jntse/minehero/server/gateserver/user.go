@@ -421,9 +421,6 @@ func (this *GateUser) OnDisconnect() {
 	this.online = false
 	this.client = nil
 	this.tm_disconnect = util.CURTIMEMS()
-	if this.IsInRoom() == true {
-		//this.SendRsUserDisconnect()
-	}
 	this.PlatformPushUserOnlineTime()
 }
 
@@ -437,9 +434,6 @@ func (this *GateUser) KickOut(way string) {
 	this.client.Close()
 	this.client = nil
 	this.tm_disconnect = util.CURTIMEMS()
-	if this.IsInRoom() == true {
-		//this.SendRsUserDisconnect()
-	}
 	this.PlatformPushUserOnlineTime()
 }
 
@@ -451,11 +445,6 @@ func (this *GateUser) CheckDisconnectTimeOut(now int64) {
 
 	// 延迟存盘清理
 	if now < this.tm_disconnect+tbl.Global.Disconclean {
-		return
-	}
-
-	// 等待房间关闭
-	if this.IsInRoom() && !this.IsRoomCloseTimeOut() {
 		return
 	}
 
@@ -504,14 +493,6 @@ func (this *GateUser) SendNotify(text string) {
 func (this *GateUser) SendNotify2(text string) {
 	send := &msg.GW2C_MsgNotice{Userid: pb.Uint64(0), Name: pb.String(""), Face: pb.String(""), Type: pb.Int32(int32(msg.NoticeType_Marquee)), Text: pb.String(text)}
 	this.SendMsg(send)
-}
-
-// 发送房间消息
-func (this *GateUser) SendRoomMsg(msg pb.Message) {
-	if this.IsInRoom() == false {
-		log.Error("玩家[%s %d]没有房间信息", this.Name(), this.Id())
-		return
-	}
 }
 
 // 回复客户端
@@ -607,7 +588,7 @@ func (this *GateUser) ChangeMaxLevel(level uint32) {
 	this.palace.ChangeMaxLevel(this, level)
 }
 
-func (this *GateUser) GetCountByLevel(level uint32){
+func (this *GateUser) GetCountByLevel(level uint32) uint32{
 	retCount := this.maid.GetMaidCountByLevel(level)
 	for _, v := range this.boxs {
 		if v.level == level {
