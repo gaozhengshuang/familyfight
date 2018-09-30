@@ -5,7 +5,7 @@ let Tools = require("../Util/Tools");
 let Define = require("../Util/Define");
 
 var MaidModel = function () {
-    this._maids = [];
+    this._maids = null;
     this.topMaid = 1;
     this._shopMaids = [];
     this.curPass = 1;
@@ -106,7 +106,7 @@ MaidModel.prototype.RefreshMoneyMaids = function () {
  * 消息处理接口
  */
 MaidModel.prototype.onGW2C_AckMaids = function (msgid, data) {
-    if (this._maids.length == 0) {
+    if (this._maids == null) {
         this._maids = data.datas || [];
     } else {
         for (let i = 0; i < data.datas.length; i++) {
