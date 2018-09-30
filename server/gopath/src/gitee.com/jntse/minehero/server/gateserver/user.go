@@ -364,6 +364,7 @@ func (this *GateUser) OnCreateNew() {
 	this.maxpower = uint32(tbl.Common.PowerMax)
 	this.nextpowertime = uint64(util.CURTIME()) + uint64(tbl.Common.PowerAddInterval)
 	this.travel.CreateNew()
+	this.GenerateBox(1, 1, 1)
 	this.Save()
 }
 
