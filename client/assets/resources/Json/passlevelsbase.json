@@ -13,5 +13,5 @@
 		{ "Id": 9, "Name": "绣女", "Path": "Image/GameScene/Pass/pass_1", "NextLevels": 10, "DialogueID": 1, "MapPrefab": "Prefab/map/map01", "ChapterID": 3, "ChapterName": "第三章" },
 		{ "Id": 10, "Name": "作弊", "Path": "Image/GameScene/Pass/pass_2", "NextLevels": 11, "DialogueID": 33, "MapPrefab": "Prefab/map/map03", "ChapterID": 3, "ChapterName": "第三章" },
 		{ "Id": 11, "Name": "皇后千秋", "Path": "Image/GameScene/Pass/pass_4", "NextLevels": 12, "DialogueID": 7, "MapPrefab": "Prefab/map/map02", "ChapterID": 3, "ChapterName": "第三章" },
-		{ "Id": 12, "Name": "初入长春宫", "Path": "Image/GameScene/Pass/pass_5", "NextLevels": 13, "DialogueID": 25, "MapPrefab": "Prefab/map/map02", "ChapterID": 3, "ChapterName": "第三章" }
+		{ "Id": 12, "Name": "初入长春宫", "Path": "Image/GameScene/Pass/pass_5", "NextLevels": 0, "DialogueID": 25, "MapPrefab": "Prefab/map/map02", "ChapterID": 3, "ChapterName": "第三章" }
 	]}

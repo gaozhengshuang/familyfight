@@ -503,6 +503,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IC2GW_ReqTurnBrand
          * @property {Array.<number>|null} [ids] C2GW_ReqTurnBrand ids
+         * @property {number|null} [level] C2GW_ReqTurnBrand level
          */
 
         /**
@@ -528,6 +529,14 @@ $root.msg = (function() {
          * @instance
          */
         C2GW_ReqTurnBrand.prototype.ids = $util.emptyArray;
+
+        /**
+         * C2GW_ReqTurnBrand level.
+         * @member {number} level
+         * @memberof msg.C2GW_ReqTurnBrand
+         * @instance
+         */
+        C2GW_ReqTurnBrand.prototype.level = 0;
 
         /**
          * Creates a new C2GW_ReqTurnBrand instance using the specified properties.
@@ -556,6 +565,8 @@ $root.msg = (function() {
             if (message.ids != null && message.ids.length)
                 for (var i = 0; i < message.ids.length; ++i)
                     writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.ids[i]);
+            if (message.level != null && message.hasOwnProperty("level"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.level);
             return writer;
         };
 
@@ -600,6 +611,9 @@ $root.msg = (function() {
                     } else
                         message.ids.push(reader.uint32());
                     break;
+                case 2:
+                    message.level = reader.uint32();
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -642,6 +656,9 @@ $root.msg = (function() {
                     if (!$util.isInteger(message.ids[i]))
                         return "ids: integer[] expected";
             }
+            if (message.level != null && message.hasOwnProperty("level"))
+                if (!$util.isInteger(message.level))
+                    return "level: integer expected";
             return null;
         };
 
@@ -664,6 +681,8 @@ $root.msg = (function() {
                 for (var i = 0; i < object.ids.length; ++i)
                     message.ids[i] = object.ids[i] >>> 0;
             }
+            if (object.level != null)
+                message.level = object.level >>> 0;
             return message;
         };
 
@@ -682,11 +701,15 @@ $root.msg = (function() {
             var object = {};
             if (options.arrays || options.defaults)
                 object.ids = [];
+            if (options.defaults)
+                object.level = 0;
             if (message.ids && message.ids.length) {
                 object.ids = [];
                 for (var j = 0; j < message.ids.length; ++j)
                     object.ids[j] = message.ids[j];
             }
+            if (message.level != null && message.hasOwnProperty("level"))
+                object.level = message.level;
             return object;
         };
 
@@ -712,6 +735,7 @@ $root.msg = (function() {
          * @interface IGW2C_RetTurnBrand
          * @property {number|null} [result] GW2C_RetTurnBrand result
          * @property {number|null} [id] GW2C_RetTurnBrand id
+         * @property {number|Long|null} [gold] GW2C_RetTurnBrand gold
          */
 
         /**
@@ -746,6 +770,14 @@ $root.msg = (function() {
         GW2C_RetTurnBrand.prototype.id = 0;
 
         /**
+         * GW2C_RetTurnBrand gold.
+         * @member {number|Long} gold
+         * @memberof msg.GW2C_RetTurnBrand
+         * @instance
+         */
+        GW2C_RetTurnBrand.prototype.gold = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
          * Creates a new GW2C_RetTurnBrand instance using the specified properties.
          * @function create
          * @memberof msg.GW2C_RetTurnBrand
@@ -773,6 +805,8 @@ $root.msg = (function() {
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
             if (message.id != null && message.hasOwnProperty("id"))
                 writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.id);
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.gold);
             return writer;
         };
 
@@ -812,6 +846,9 @@ $root.msg = (function() {
                     break;
                 case 2:
                     message.id = reader.uint32();
+                    break;
+                case 3:
+                    message.gold = reader.uint64();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -854,6 +891,9 @@ $root.msg = (function() {
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isInteger(message.id))
                     return "id: integer expected";
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                if (!$util.isInteger(message.gold) && !(message.gold && $util.isInteger(message.gold.low) && $util.isInteger(message.gold.high)))
+                    return "gold: integer|Long expected";
             return null;
         };
 
@@ -873,6 +913,15 @@ $root.msg = (function() {
                 message.result = object.result >>> 0;
             if (object.id != null)
                 message.id = object.id >>> 0;
+            if (object.gold != null)
+                if ($util.Long)
+                    (message.gold = $util.Long.fromValue(object.gold)).unsigned = true;
+                else if (typeof object.gold === "string")
+                    message.gold = parseInt(object.gold, 10);
+                else if (typeof object.gold === "number")
+                    message.gold = object.gold;
+                else if (typeof object.gold === "object")
+                    message.gold = new $util.LongBits(object.gold.low >>> 0, object.gold.high >>> 0).toNumber(true);
             return message;
         };
 
@@ -892,11 +941,21 @@ $root.msg = (function() {
             if (options.defaults) {
                 object.result = 0;
                 object.id = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.gold = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.gold = options.longs === String ? "0" : 0;
             }
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
+            if (message.gold != null && message.hasOwnProperty("gold"))
+                if (typeof message.gold === "number")
+                    object.gold = options.longs === String ? String(message.gold) : message.gold;
+                else
+                    object.gold = options.longs === String ? $util.Long.prototype.toString.call(message.gold) : options.longs === Number ? new $util.LongBits(message.gold.low >>> 0, message.gold.high >>> 0).toNumber(true) : message.gold;
             return object;
         };
 
@@ -921,6 +980,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IC2GW_ReqLinkup
          * @property {number|null} [score] C2GW_ReqLinkup score
+         * @property {number|null} [level] C2GW_ReqLinkup level
          */
 
         /**
@@ -945,6 +1005,14 @@ $root.msg = (function() {
          * @instance
          */
         C2GW_ReqLinkup.prototype.score = 0;
+
+        /**
+         * C2GW_ReqLinkup level.
+         * @member {number} level
+         * @memberof msg.C2GW_ReqLinkup
+         * @instance
+         */
+        C2GW_ReqLinkup.prototype.level = 0;
 
         /**
          * Creates a new C2GW_ReqLinkup instance using the specified properties.
@@ -972,6 +1040,8 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.score != null && message.hasOwnProperty("score"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.score);
+            if (message.level != null && message.hasOwnProperty("level"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.level);
             return writer;
         };
 
@@ -1008,6 +1078,9 @@ $root.msg = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.score = reader.uint32();
+                    break;
+                case 2:
+                    message.level = reader.uint32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1047,6 +1120,9 @@ $root.msg = (function() {
             if (message.score != null && message.hasOwnProperty("score"))
                 if (!$util.isInteger(message.score))
                     return "score: integer expected";
+            if (message.level != null && message.hasOwnProperty("level"))
+                if (!$util.isInteger(message.level))
+                    return "level: integer expected";
             return null;
         };
 
@@ -1064,6 +1140,8 @@ $root.msg = (function() {
             var message = new $root.msg.C2GW_ReqLinkup();
             if (object.score != null)
                 message.score = object.score >>> 0;
+            if (object.level != null)
+                message.level = object.level >>> 0;
             return message;
         };
 
@@ -1080,10 +1158,14 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
+            if (options.defaults) {
                 object.score = 0;
+                object.level = 0;
+            }
             if (message.score != null && message.hasOwnProperty("score"))
                 object.score = message.score;
+            if (message.level != null && message.hasOwnProperty("level"))
+                object.level = message.level;
             return object;
         };
 
