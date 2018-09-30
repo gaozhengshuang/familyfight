@@ -5,16 +5,19 @@ import "serialize.proto";
 message C2GW_ReqTurnBrand 
 {
     repeated uint32 ids = 1;
+    optional uint32 level = 2;
 }
 message GW2C_RetTurnBrand 
 {
     optional uint32 result = 1;
     optional uint32 id = 2;
+    optional uint64 gold = 3;
 }
 //连连看
 message C2GW_ReqLinkup
 {
     optional uint32 score = 1;
+    optional uint32 level = 2;
 }
 message GW2C_RetLinkup
 {

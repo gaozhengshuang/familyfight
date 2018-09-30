@@ -8,30 +8,51 @@ import (
 	"gitee.com/jntse/gotoolkit/util"
 	pb "github.com/golang/protobuf/proto"
 	"fmt"
+	"strings"
+	"strconv"
 )
 
 // 获得奖励
-func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,reason string,notify bool) uint32 { 
+func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam uint32,reason string,notify bool) (result uint32, value uint64) { 
 	switch rtype {
 		case 1:
 			//金币
-			return 0
+			value = 0
+			goldrewardratio, find := tbl.TGoldRewardRatioBase.GoldRewardRatioById[rvalue]
+			if !find {
+				this.SendNotify("没有奖励金币的模板哟")
+				return 10, value
+			}
+			ratio := float64(0.0)
+			for _, v := goldrewardratio.RatioByLevel {
+				infos := strings.Split(v, "_")
+				if len(infos) >= 2 {
+					id, _ := strconv.ParseInt(infos[0],10,32)
+					if rparam == uint32(id) {
+						//找到了
+						ratio, _ := strconv.ParseFloat(infos[1], 64)
+						break
+					}
+				}
+			}
+			value = uint64(float64(this.maid.CalculateRewardPerSecond()) * ratio)
+			return 0, value
 		case 2:
 			//体力
 			this.AddPower(rvalue, reason, true,notify)
-			return 0
+			return 0, 0 
 		case 3:
 			//侍女
 			maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[rid] 
 			if !find {
 				this.SendNotify("没有对应的侍女配置")
-				return 1
+				return 1, 0
 			}
 			if reason != "开箱子" {
 				count := this.GetCountByLevel(uint32(maidconfg.Passlevels))
 				if count >= 20 {
 					this.SendNotify("该关卡侍女数量已达上限")
-					return 2
+					return 2, 0
 				}
 			}
 			//可以获得了
@@ -40,25 +61,25 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,reason s
 			maidSend.Datas = append(maidSend.Datas, maid.PackBin())
 			maidSend.Maxid = pb.Uint32(this.maid.GetMaxId())
 			this.SendMsg(maidSend)
-			return 0
+			return 0, 0
 		case 4:
 			//道具
 			this.AddItem(rid, rvalue, reason)
-			return 0
+			return 0, 0
 		case 5:
 			//小游戏
-			return 0
+			return 0, 0
 		default:
-			return 0
+			return 0, 0
 	}
 }
 
 //翻牌子
-func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
+func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id uint32, gold uint64) {
 	// 体力够不够 
 	if this.GetPower() < 1 {
 		this.SendNotify("体力不足")
-		return 1,0
+		return 1,0,0
 	}
 	totalWeight := uint32(0)
 	brands := make([]*table.TurnBrandDefine,0)
@@ -87,12 +108,12 @@ func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
 	}
 	if findbrand == nil {
 		this.SendNotify("未随机到牌子")
-		return 2,0
+		return 2,0,0
 	}
 	//扣体力
 	this.RemovePower(1,"翻牌子消耗")
-	result = this.AddReward(findbrand.Type, findbrand.RewardId, findbrand.Value, "翻牌子奖励", false)
-	return result, findbrand.Id
+	result, gold = this.AddReward(findbrand.Type, findbrand.RewardId, findbrand.Value,level, "翻牌子奖励", false)
+	return result, findbrand.Id, gold
 }
 
 //连连看
@@ -167,7 +188,7 @@ func (this *GateUser) OpenBox(id uint32, num uint32) uint32 {
 		return 3
 	}
 	//开吧
-	result := this.AddReward(boxtmpl.Type, boxtmpl.RewardId, boxtmpl.Value * num, "开箱子", true)
+	result, _ := this.AddReward(boxtmpl.Type, boxtmpl.RewardId, boxtmpl.Value * num,0, "开箱子", true)
 	if result != 0 {
 		return result
 	} else {
