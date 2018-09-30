@@ -48,6 +48,8 @@ cc.Class({
         // this.node.runAction(cc.moveBy(0.2, 0, -1280));
     },
     playOpenAnimation: function () {
+        let spr = this.node.getComponent(cc.Sprite);
+        spr.enabled = false;
         this.animation.play('OpenBox');
     },
     onAnimationStop: function () {

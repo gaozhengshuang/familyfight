@@ -171,7 +171,7 @@ func (this *UserPalace) Levelup(user* GateUser, id uint32) (result uint32, data 
 	//判断道具是否够呢
 	for _, v := range mastertmpl.LevelupCost {
 		if user.bag.GetItemNum(v.id) < v.num {
-			user.SendNotify(fmt.Sprintf("道具 %d 数量不足 %d", v.id, v.num))
+			user.SendNotify(fmt.Sprintf("主位卡牌道具不足"))
 			return 5, nil
 		}
 	}
