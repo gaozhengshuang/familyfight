@@ -28,6 +28,7 @@ let Game = {
     PalaceModel: require('./Model/Palace'),
     ItemModel: require('./Model/Item'),
     TravelModel: require('./Model/Travel'),
+    BoxModel: require('./Model/Box'),
 
     GameInstance: null
 };

@@ -41,6 +41,7 @@ var Define = {
         PALACEMASTERLVUP_ACK: '1010',
         OFFLINE_ACK: '1011',
         OPENBOX_ACK: '1012',
+        BOXDATA_UPDATE: '1013',
 
         TRAVELDATA_UPDATE: '1100',
         EVENTDATA_UPDATE: '1101',

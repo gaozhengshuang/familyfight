@@ -2796,6 +2796,9 @@
     },
     "prefab_player": {
       "__uuid__": "996f9f27-59ba-416d-8417-69615d2edff6"
+    },
+    "prefab_box": {
+      "__uuid__": "2851bc4c-327e-41db-ace1-c1ce4f476866"
     }
   },
   {

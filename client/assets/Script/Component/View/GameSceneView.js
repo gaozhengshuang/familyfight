@@ -8,6 +8,7 @@ cc.Class({
         node_pass: { default: null, type: cc.Node },
         node_bg: { default: null, type: cc.Node },
         prefab_player: { default: null, type: cc.Prefab },
+        prefab_box: { default: null, type: cc.Prefab }
     },
 
     onLoad() {
@@ -43,6 +44,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.OPENBOX_ACK, this, this.ackOpenBox);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.BOXDATA_UPDATE, this, this.updateBoxData);
     },
 
     initData() {
@@ -70,6 +72,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
         Game.NotificationController.On(Game.Define.EVENT_KEY.OPENBOX_ACK, this, this.ackOpenBox);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.BOXDATA_UPDATE, this, this.updateBoxData);
     },
 
     updateView() {
@@ -104,6 +107,13 @@ cc.Class({
                 }
             }
         }
+        let boxDatas = Game.BoxModel.GetBoxsByLevel(Game.MaidModel.GetCurPass())
+        for (let i = 0; i < boxDatas.length; i++) {
+            let data = boxDatas[i];
+            for (let j = 0; j < data.num; j++) {
+                this.createBox(data.id);
+            }
+        }
     },
 
     updatePassBg() {
@@ -130,7 +140,7 @@ cc.Class({
         if (this._boxPlayer != null && this._boxPlayer.node != null) {    //如果是打开盒子的记录盒子的位置
             _posComponent = this._boxPlayer;
         }
-        
+
         let _playerPrefab = cc.instantiate(this.prefab_player);
         if (_playerPrefab) {
             let _player = _playerPrefab.getComponent('PlayerNode');
@@ -139,6 +149,18 @@ cc.Class({
                 this._playerList.push(_player);
             }
             this.node_player.addChild(_playerPrefab);
+        }
+    },
+    createBox(id) {
+        let _boxPrefab = cc.instantiate(this.prefab_box);
+        if (_boxPrefab) {
+            let _box = _boxPrefab.getComponent('BoxNode');
+            if (_box) {
+                _box.setData(this.node_player, id, function (node) {
+                    this._boxPlayer = node;
+                }.bind(this));
+            }
+            this.node_player.addChild(_boxPrefab);
         }
     },
 
@@ -206,10 +228,26 @@ cc.Class({
             this.openView(Game.UIName.UI_OFFLINEREWARD);
         }
     },
-
-    ackOpenBox() {
+    ackOpenBox(result) {
         if (result == 0) {
-            this._boxPlayer.node.destroy();
+            this._boxPlayer.playOpenAnimation();
+        }
+        this._boxPlayer = null;
+    },
+
+    updateBoxData(changeList) {
+        for (let i = 0; i < changeList.length; i++) {
+            let boxData = changeList[i];
+            if (boxData.level == Game.MaidModel.GetCurPass()) {
+                //就是这个关卡关心的宝箱数据
+                if (boxData.num > 0) {
+                    // 新增宝箱
+                    for (let i = 0; i < boxData.num; i++) {
+                        this.createBox(boxData.id);
+                    }
+                }
+                //删除宝箱在其他地方哦 
+            }
         }
     },
 
@@ -226,7 +264,7 @@ cc.Class({
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_SHOP);
     },
-    
+
     onOpenTurnBrand(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_TURNBRAND);
