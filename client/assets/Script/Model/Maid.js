@@ -10,6 +10,7 @@ var MaidModel = function () {
     this._shopMaids = [];
     this.curPass = 1;
     this.curChapter = 1;
+    this._moneyMaids = 0;
 }
 
 MaidModel.prototype.Init = function (cb) {
@@ -17,12 +18,17 @@ MaidModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_AckMergeMaid', this, this.onGW2C_AckMergeMaid);
     NetWorkController.AddListener('msg.GW2C_AckMaidShop', this, this.onGW2C_AckMaidShop);
     NetWorkController.AddListener('msg.GW2C_AckBuyMaid', this, this.onGW2C_AckBuyMaid);
+    NetWorkController.AddListener('msg.GW2C_RetOpenBox', this, this.onGW2C_RetOpenBox);
 
     Tools.InvokeCallback(cb, null);
 }
 
 MaidModel.prototype.GetMaids = function() {
     return this._maids;
+}
+
+MaidModel.prototype.GetMoneyMaids = function() {
+    return this._moneyMaids;
 }
 
 MaidModel.prototype.GetTopMaid = function() {
@@ -83,6 +89,19 @@ MaidModel.prototype.GetMaidNameById = function (_maidId) {
     return name;
 }
 
+MaidModel.prototype.RefreshMoneyMaids = function () {
+    this._moneyMaids = 0;
+    for (let i = 0; i < this._maids.length; i++) {
+        let maid = this._maids[i];
+        let maidBase = ConfigController.GetConfigById("TMaidLevel", maid.id);
+        if (maidBase) {
+            for (let b = 0; b < maid.count; b++) {
+                this._moneyMaids = this._moneyMaids + (maidBase.Reward*2);
+            }
+        }
+    }
+}
+
 /**
  * 消息处理接口
  */
@@ -118,6 +137,8 @@ MaidModel.prototype.onGW2C_AckMaids = function (msgid, data) {
         this.topMaid = data.maxid;
         NotificationController.Emit(Define.EVENT_KEY.FINDNEW_PLAYER);
     }
+
+    this.RefreshMoneyMaids();
 }
 
 MaidModel.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
@@ -133,6 +154,10 @@ MaidModel.prototype.onGW2C_AckBuyMaid = function (msgid, data) {
     if (data.result == 0) {
         NotificationController.Emit(Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, data.price);
     }
+}
+
+MaidModel.prototype.onGW2C_RetOpenBox = function (msgid, data) {
+    NotificationController.Emit(Define.EVENT_KEY.OPENBOX_ACK, data.result);
 }
 
 module.exports = new MaidModel();
