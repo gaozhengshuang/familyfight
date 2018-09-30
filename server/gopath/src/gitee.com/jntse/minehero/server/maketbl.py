@@ -234,6 +234,7 @@ gen.maketbl_excel('TTravelBase','travelbase','Travel.xlsx')
 gen.maketbl_excel('TEventBase','eventbase','Event.xlsx')
 gen.maketbl_excel('THeadBase','headbase','Head.xlsx')
 gen.maketbl_excel('TBoxBase','boxbase','DropBox.xlsx')
+gen.maketbl_excel('TGoldRewardRatioBase','goldrewardratiobase','GoldRewardRatio.xlsx')
 
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')

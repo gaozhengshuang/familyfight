@@ -15,6 +15,7 @@ type IBaseExcel interface {
 // --------------------------------------------------------------------------
 var MusicBase = table.InsMusicBaseTable
 var LevelBasee = table.InsLevelBaseeTable
+var TGoldRewardRatioBase = table.InsTGoldRewardRatioBaseTable
 var TMaidLevelBase = table.InsTMaidLevelBaseTable
 var Question = table.InsQuestionTable
 var TMaidShopBase = table.InsTMaidShopBaseTable

@@ -79,5 +79,5 @@
 		{ "Id": 75, "Name": "琥珀", "Path": "Image/GameScene/Maid/maid_16", "Passlevels": 12, "Reward": 72, "NextID": 76, "ShopShow":[ 61, 62, 63, 64, 65, 66, 67, 68 ], "DialogueID": 28 },
 		{ "Id": 76, "Name": "明玉", "Path": "Image/GameScene/Maid/maid_17", "Passlevels": 12, "Reward": 73, "NextID": 77, "ShopShow":[ 62, 63, 64, 65, 66, 67, 68, 69 ], "DialogueID": 29 },
 		{ "Id": 77, "Name": "璎珞", "Path": "Image/GameScene/Maid/maid_18", "Passlevels": 12, "Reward": 74, "NextID": 78, "ShopShow":[ 63, 64, 65, 66, 67, 68, 69, 70 ], "DialogueID": 30 },
-		{ "Id": 78, "Name": "尔晴", "Path": "Image/GameScene/Maid/maid_19", "Passlevels": 12, "Reward": 75, "NextID": 79, "ShopShow":[ 64, 65, 66, 67, 68, 69, 70, 71 ], "DialogueID": 31 }
+		{ "Id": 78, "Name": "尔晴", "Path": "Image/GameScene/Maid/maid_19", "Passlevels": 12, "Reward": 75, "NextID": 0, "ShopShow":[ 64, 65, 66, 67, 68, 69, 70, 71 ], "DialogueID": 31 }
 	]}

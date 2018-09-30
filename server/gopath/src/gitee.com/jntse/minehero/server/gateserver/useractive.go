@@ -24,13 +24,13 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam u
 				return 10, value
 			}
 			ratio := float64(0.0)
-			for _, v := goldrewardratio.RatioByLevel {
+			for _, v := range goldrewardratio.RatioByLevel {
 				infos := strings.Split(v, "_")
 				if len(infos) >= 2 {
 					id, _ := strconv.ParseInt(infos[0],10,32)
 					if rparam == uint32(id) {
 						//找到了
-						ratio, _ := strconv.ParseFloat(infos[1], 64)
+						ratio, _ = strconv.ParseFloat(infos[1], 64)
 						break
 					}
 				}
