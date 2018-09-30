@@ -5,7 +5,6 @@ import (
 	pb "github.com/golang/protobuf/proto"
 	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/net"
-	"gitee.com/jntse/minehero/pbmsg"
 	_"gitee.com/jntse/gotoolkit/util"
 )
 
