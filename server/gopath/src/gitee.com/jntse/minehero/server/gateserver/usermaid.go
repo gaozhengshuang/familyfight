@@ -297,3 +297,11 @@ func (this *UserMaid) GetLevelByMaid(id uint32) uint32 {
 	}
 	return uint32(maidconfg.Passlevels)
 }
+
+func (this *UserMaid) GetMaxLevel() uint32 {
+	maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[this.maxid]
+	if !find {
+		return 0
+	}
+	return uint32(maidconfg.Passlevels)
+}

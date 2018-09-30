@@ -7,5 +7,6 @@
     "GoldItemId": 50001,
     "TravelMinTime": 1,
     "TravelMaxTime": 10,
-    "EventBarrageCount": 50
+    "EventBarrageCount": 50,
+    "LinkupGoldRewardRatio": 4
 }

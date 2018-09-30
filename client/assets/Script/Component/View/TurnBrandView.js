@@ -37,7 +37,8 @@ cc.Class({
         shuffleTargetWorldPos: { default: cc.v2(0, 0) },
         showTargetWorldPos: { default: cc.v2(0, 0) },
         clickIndex: { default: 0 },
-        rewardId: { default: 0 }
+        rewardId: { default: 0 },
+        rewardGold: { default: 0 }
     },
     onLoad: function () {
         this.brandConfigs = Game.ConfigController.GetConfig('TurnBrand');
@@ -74,7 +75,7 @@ cc.Class({
             this.clickIndex = index;
             this.rewardId = 0;
             //其他状态不响应哦
-            Game.NetWorkController.Send('msg.C2GW_ReqTurnBrand', { ids: Game._.map(this.brandInfos, 'Id') }, function () {
+            Game.NetWorkController.Send('msg.C2GW_ReqTurnBrand', { ids: Game._.map(this.brandInfos, 'Id'), level: Game.MaidModel.GetCurPass() }, function () {
                 this._changeStatus(BrandStatus.Status_Shaking);
             }.bind(this));
         }
@@ -88,6 +89,7 @@ cc.Class({
         }
         else {
             this.rewardId = data.id;
+            this.rewardGold = data.gold;
             let config = Game._.find(this.brandConfigs, { Id: this.rewardId });
             let view = this.brandViews[this.clickIndex];
             view.Init(this.clickIndex, config.Head, config.Name, this.onBrandClick.bind(this));
@@ -233,8 +235,9 @@ cc.Class({
                 node = cc.instantiate(this.tipRewardViewPrefab);
                 this.dialogueNode.addChild(node);
                 view = node.getComponent(TipRewardView);
-                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>金币+' + Game.Tools.UnitConvert(config.Value) + '</c></c>', 0.5, 1);
-                Game.UserModel.AddGold(config.Value);
+                let value = this.rewardGold;
+                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>金币+' + Game.Tools.UnitConvert(value) + '</c></c>', 0.5, 1);
+                Game.UserModel.AddGold(value);
                 this.node.runAction(cc.sequence([
                     cc.delayTime(0.5),
                     cc.callFunc(function () {

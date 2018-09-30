@@ -24,11 +24,12 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam u
 				return 10, value
 			}
 			ratio := float64(0.0)
+			maxlevel := this.maid.GetMaxLevel()
 			for _, v := range goldrewardratio.RatioByLevel {
 				infos := strings.Split(v, "_")
 				if len(infos) >= 2 {
 					id, _ := strconv.ParseInt(infos[0],10,32)
-					if rparam == uint32(id) {
+					if maxlevel == uint32(id) {
 						//找到了
 						ratio, _ = strconv.ParseFloat(infos[1], 64)
 						break
@@ -118,8 +119,25 @@ func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id ui
 
 //连连看
 func (this *GateUser) Linkup(score uint32) (gold uint64){
-	//先来简单的，把接口写好
-	return uint64(score) * 30000
+	goldrewardratio, find := tbl.TGoldRewardRatioBase.GoldRewardRatioById[uint32(tbl.Common.LinkupGoldRewardRatio)]
+	if !find {
+		this.SendNotify("没有奖励金币的模板哟")
+		return 0
+	}
+	maxlevel := this.maid.GetMaxLevel()
+	ratio := float64(0.0)
+	for _, v := range goldrewardratio.RatioByLevel {
+		infos := strings.Split(v, "_")
+		if len(infos) >= 2 {
+			id, _ := strconv.ParseInt(infos[0],10,32)
+			if maxlevel == uint32(id) {
+				//找到了
+				ratio, _ = strconv.ParseFloat(infos[1], 64)
+				break
+			}
+		}
+	}
+	return uint64(score) * uint64(float64(this.maid.CalculateRewardPerSecond()) * ratio)
 }
 
 //箱子数据
