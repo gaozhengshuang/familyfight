@@ -22,7 +22,7 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,reason s
 			return 0
 		case 3:
 			//侍女
-			maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[rid] tbl.TMaidLevelBase.TMaidLevelById[rid]
+			maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[rid] 
 			if !find {
 				this.SendNotify("没有对应的侍女配置")
 				return 1

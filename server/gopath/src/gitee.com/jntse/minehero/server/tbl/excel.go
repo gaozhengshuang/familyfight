@@ -21,6 +21,7 @@ var TMaidShopBase = table.InsTMaidShopBaseTable
 var TbirckInfobase = table.InsTbirckInfobaseTable
 var GiftProBase = table.InsGiftProBaseTable
 var TTravelBase = table.InsTTravelBaseTable
+var TBoxBase = table.InsTBoxBaseTable
 var TPalaceMapMaidBase = table.InsTPalaceMapMaidBaseTable
 var TEventBase = table.InsTEventBaseTable
 var TPalaceMapBase = table.InsTPalaceMapBaseTable
