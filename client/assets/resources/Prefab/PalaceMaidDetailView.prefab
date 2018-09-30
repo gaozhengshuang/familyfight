@@ -816,7 +816,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 99,
+      "width": 127,
       "height": 40
     },
     "_rotationX": 0,
@@ -853,7 +853,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "每秒产10",
+    "_N$string": "每秒产1000",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -914,7 +914,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 147,
+      "x": 164.6,
       "y": 59
     },
     "_skewX": 0,
