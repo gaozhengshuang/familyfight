@@ -5,8 +5,8 @@
     "PowerAddition": 5,
     "PriceAdditionPerBuy": 1.2,
     "GoldItemId": 50001,
-    "TravelMinTime": 1,
-    "TravelMaxTime": 10,
+    "TravelMinTime": 3600,
+    "TravelMaxTime": 7200,
     "EventBarrageCount": 50,
     "LinkupGoldRewardRatio": 4
 }
