@@ -3,7 +3,7 @@
 
 module table {
 export var DropBox : table.IDropBoxDefine[] = [
-		{ Id : 1, BoxPath : "Image/GameScene/Event/1001", Type : 5, RewardId : 1, Value : 1, Interval : 10, Level : 1 	}
+		{ Id : 1, BoxPath : "Image/GameScene/Common/image_box", Type : 3, RewardId : 1, Value : 1, Interval : 10, Level : 1 	}
 	]
 
 
