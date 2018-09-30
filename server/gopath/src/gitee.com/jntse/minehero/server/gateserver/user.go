@@ -18,34 +18,6 @@ import (
 	_ "time"
 )
 
-//const (
-//	StayHall = 1		// 待在大厅
-//	RoomCreating = 2	// 创建房间中
-//	RoomCreateFail  = 3	// 失败
-//	GamePlaying  = 4	// 游戏中
-//	)
-
-// --------------------------------------------------------------------------
-/// @brief 玩家房间简单数据
-// --------------------------------------------------------------------------
-type RoomBase struct {
-	roomid     int64
-	sid_room   int
-	kind       int32
-	gridnum    int32
-	tm_closing int64 // 房间关闭超时
-	creating   bool
-}
-
-func (this *RoomBase) Reset() {
-	this.roomid = 0
-	this.sid_room = 0
-	this.kind = 0
-	this.gridnum = 0
-	this.tm_closing = 0
-	this.creating = false
-}
-
 // --------------------------------------------------------------------------
 /// @brief db数据管理
 // --------------------------------------------------------------------------
@@ -69,6 +41,21 @@ type DBUserData struct {
 	maxpower 	  uint32
 }
 
+type BoxData struct {
+	id			  uint32
+	num 		  uint32
+	level		  uint32
+	generatetime  uint64
+}
+
+func (this *BoxData) PackBin() *msg.BoxData{
+	data := &msg.BoxData{}
+	data.Id = pb.Uint32(this.id)
+	data.Num = pb.Uint32(this.num)
+	data.Level = pb.Uint32(this.level)
+	data.Generatetime = pb.Uint64(this.generatetime)
+	return data
+}
 // --------------------------------------------------------------------------
 /// @brief 玩家
 // --------------------------------------------------------------------------
@@ -83,12 +70,12 @@ type GateUser struct {
 	maid 		  UserMaid
 	palace 		  UserPalace
 	travel 		  UserTravel
+	boxs 		  map[uint32]*BoxData
 	tm_disconnect int64
 	tm_heartbeat  int64                   // 心跳时间
 	tm_asynsave   int64                   // 异步存盘超时
 	savedone      bool                    // 存盘标记
 	cleanup       bool                    // 清理标记
-	roomdata      RoomBase                // 房间信息
 	token         string                  // token
 	asynev        eventque.AsynEventQueue // 异步事件处理
 	fbitemmap     map[int32]int32
@@ -192,43 +179,6 @@ func (this *GateUser) Verifykey() string {
 
 func (this *GateUser) IsOnline() bool {
 	return this.online
-}
-
-func (this *GateUser) GameKind() int32 {
-	return this.roomdata.kind
-}
-
-// 房间id
-func (this *GateUser) RoomId() int64 {
-	return this.roomdata.roomid
-}
-
-// 房间服务器 sid
-func (this *GateUser) RoomSid() int {
-	return this.roomdata.sid_room
-}
-
-// 是否有房间
-func (this *GateUser) IsInRoom() bool {
-	if this.RoomId() != 0 {
-		return true
-	}
-	return false
-}
-
-// 正在创建房间
-func (this *GateUser) IsRoomCreating() bool {
-	return this.roomdata.creating
-}
-
-// 房间关闭中
-func (this *GateUser) IsRoomClosing() bool {
-	return this.roomdata.tm_closing != 0
-}
-
-// 关闭超时, 10秒
-func (this *GateUser) IsRoomCloseTimeOut() bool {
-	return util.CURTIMEMS() > (this.roomdata.tm_closing + 10000)
 }
 
 func (this *GateUser) IsCleanUp() bool {
@@ -349,6 +299,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	this.maid.PackBin(bin)
 	this.palace.PackBin(bin)
 	this.travel.PackBin(bin)
+	this.PackBox(bin)
 	//
 	return bin
 }
@@ -385,6 +336,7 @@ func (this *GateUser) LoadBin() {
 	this.palace.LoadBin(this, this.bin)
 	this.travel.Init()
 	this.travel.LoadBin(this, this.bin)
+	this.LoadBox(this.bin)
 }
 
 // TODO: 存盘可以单独协程
@@ -435,7 +387,6 @@ func (this *GateUser) Online(session network.IBaseNetSession) bool {
 	this.tm_disconnect = 0
 	this.tm_heartbeat = util.CURTIMEMS()
 	this.savedone = false
-	this.roomdata.Reset()
 	this.UpdatePower(uint64(curtime))
 	log.Info("Sid[%d] 账户[%s] 玩家[%d] 名字[%s] 登录成功", this.Sid(), this.account, this.Id(), this.Name())
 	this.maid.Online(this)
@@ -457,7 +408,7 @@ func (this *GateUser) Syn() {
 	this.maid.Syn(this)
 	this.palace.Syn(this)
 	this.travel.Syn(this)
-
+	this.SynBox()
 	this.SendUserBase()
 }
 
@@ -654,4 +605,14 @@ func (this *GateUser) DeliveryState() bool {
 // 最大宫女变化了
 func (this *GateUser) ChangeMaxLevel(level uint32) {
 	this.palace.ChangeMaxLevel(this, level)
+}
+
+func (this *GateUser) GetCountByLevel(level uint32){
+	retCount := this.maid.GetMaidCountByLevel(level)
+	for _, v := range this.boxs {
+		if v.level == level {
+			retCount = retCount + v.num
+		}
+	}
+	return retCount
 }

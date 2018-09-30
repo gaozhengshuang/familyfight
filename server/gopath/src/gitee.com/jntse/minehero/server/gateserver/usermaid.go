@@ -140,7 +140,7 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 		user.SendNotify("没有对应的侍女配置")
 		return 2,nil,0
 	}
-	count := this.GetMaidCountByLevel(uint32(maidconfg.Passlevels))
+	count := user.GetCountByLevel(uint32(maidconfg.Passlevels))
 	if count >= 20 {
 		user.SendNotify("该关卡侍女数量已达上限")
 		return 3,nil,0

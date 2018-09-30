@@ -22,15 +22,17 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,reason s
 			return 0
 		case 3:
 			//侍女
-			maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[rid]
+			maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[rid] tbl.TMaidLevelBase.TMaidLevelById[rid]
 			if !find {
 				this.SendNotify("没有对应的侍女配置")
 				return 1
 			}
-			count := this.maid.GetMaidCountByLevel(uint32(maidconfg.Passlevels))
-			if count >= 20 {
-				this.SendNotify("该关卡侍女数量已达上限")
-				return 2
+			if reason != "开箱子" {
+				count := this.GetCountByLevel(uint32(maidconfg.Passlevels))
+				if count >= 20 {
+					this.SendNotify("该关卡侍女数量已达上限")
+					return 2
+				}
 			}
 			//可以获得了
 			maid := this.maid.AddMaid(this,rid,rvalue)
@@ -97,4 +99,107 @@ func (this *GateUser) TurnBrand(ids []uint32) (result uint32, id uint32) {
 func (this *GateUser) Linkup(score uint32) (gold uint64){
 	//先来简单的，把接口写好
 	return uint64(score) * 30000
+}
+
+//箱子数据
+func (this *GateUser) LoadBox(bin *msg.Serialize){
+	this.boxs = make(map[uint32]*BoxData)
+	boxs := bin.GetBox()
+	for _, v := range boxs {
+		boxData := &BoxData{}
+		boxData.id = v.GetId()
+		boxData.num = v.GetNum()
+		boxData.level = v.GetLevel()
+		boxData.generatetime = v.GetGeneratetime()
+		this.boxs[boxData.id] = boxData
+	}
+}
+
+func (this *GateUser) PackBox(bin *msg.Serialize) {
+	bin.Boxs =  make([]*msg.BoxData,0) 
+	for _, box := range this.boxs {
+		bin.Boxs = append(bin.Boxs, box.PackBin())
+	}
+}
+
+func (this *GateUser) SynBox(){
+	send := &msg.GW2C_AckBoxData{ Box: make([]*msg.BoxData,0) }
+	for _, box := range this.boxs {
+		send.Box = append(send.Box, box.PackBin())
+	}
+	this.SendMsg(send)
+}
+
+func (this *GateUser) GenerateBox(id uint32, num uint32, level uint32) *BoxData{
+	count := this.GetCountByLevel(level)
+	if count + num > 20 {
+		return nil
+	}
+	//看看这关的侍女是不是到最大值了
+	boxData, _ := this.boxs[id]
+	if boxData == nil {
+		boxData := &BoxData{}
+		boxData.id = id
+		boxData.num = num
+		boxData.level = level
+		boxData.generatetime = util.CURTIME()
+		this.boxs[id] = boxData
+	} else {
+		boxData.num = boxData.num + num
+		boxData.generatetime = util.CURTIME()
+	}
+	return boxData
+}
+
+func (this *GateUser) OpenBox(id uint32, num uint32) uint32 {
+	boxtmpl, find := tbl.TBoxBase.DropBoxById[id]
+	if !find {
+		this.SendNotify("未找到箱子配置")
+		return 1
+	}
+	boxData, find := this.boxs[id]
+	if !find {
+		this.SendNotify("您没有这个宝箱")
+		return 2
+	}
+	if boxData.num < num {
+		this.SendNotify("箱子数量不足")
+		return 3
+	}
+	//开吧
+	result := this.AddReward(boxtmpl.Type, boxtmpl.RewardId, boxtmpl.Value * num, "开箱子", true)
+	if result != 0 {
+		return result
+	} else {
+		//扣除吧
+		boxData.num = boxData.num - num
+		this.SynBox()
+		return 0
+	}
+}
+
+func (this *GateUser) TickBox(now uint64) {
+	generated := false
+	for _, v := range tbl.TBoxBase.DropBox {
+		if v.Interval != 0 {
+			//是根据时间差来生成的
+			boxData, find := this.boxs[v.Id]
+			if !find {
+				//没找到， 那给你生成一个
+				boxData = this.GenerateBox(v.Id, 1, v.Level)
+			} else {
+				//找到了 看看时间差
+				if now > boxData.generatetime + v.Interval {
+					boxData = this.GenerateBox(v.Id, 1, v.Level)
+				}
+			}
+			if boxData != nil {
+				//生成哦
+				generated = true
+			}
+		}
+	}
+	if generated {
+		this.SynBox()
+	}
 }

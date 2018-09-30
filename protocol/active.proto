@@ -20,3 +20,17 @@ message GW2C_RetLinkup
 {
     optional uint64 gold = 1;
 }
+//开箱子
+message GW2C_AckBoxData
+{
+    repeated BoxData box = 1; 
+}
+message C2GW_ReqOpenBox
+{
+    optional uint32 id = 1;
+    optional uint32 num = 2;
+}
+message GW2C_RetOpenBox
+{
+    optional uint32 result = 1;
+}

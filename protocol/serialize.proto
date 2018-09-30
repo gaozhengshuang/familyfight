@@ -128,6 +128,14 @@ message TravelData
     repeated PairNumItem items = 2;             //供奉的物品
     optional uint32 eventid = 3;                //触发的事件
 }
+//掉落箱子数据
+message BoxData
+{
+    optional uint32 id = 1;
+    optional uint32 num = 2;
+    optional uint32 level = 3;
+    optional uint64 generatetime = 4;
+}
 message Serialize {
     optional EntityBase entity  = 1;
     optional UserBase   base    = 2;
@@ -136,4 +144,5 @@ message Serialize {
     repeated PalaceData palaces = 5;            //后宫数据
     optional TravelData travel  = 6;            //御赐数据
     repeated uint32 eventids    = 7;            //开启的事件
+    repeated BoxData boxs       = 8;            //掉落的箱子数量
 }
