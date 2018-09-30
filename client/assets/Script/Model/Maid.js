@@ -17,6 +17,7 @@ MaidModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_AckMergeMaid', this, this.onGW2C_AckMergeMaid);
     NetWorkController.AddListener('msg.GW2C_AckMaidShop', this, this.onGW2C_AckMaidShop);
     NetWorkController.AddListener('msg.GW2C_AckBuyMaid', this, this.onGW2C_AckBuyMaid);
+    NetWorkController.AddListener('msg.GW2C_RetOpenBox', this, this.onGW2C_RetOpenBox);
 
     Tools.InvokeCallback(cb, null);
 }
@@ -133,6 +134,10 @@ MaidModel.prototype.onGW2C_AckBuyMaid = function (msgid, data) {
     if (data.result == 0) {
         NotificationController.Emit(Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, data.price);
     }
+}
+
+MaidModel.prototype.onGW2C_RetOpenBox = function (msgid, data) {
+    NotificationController.Emit(Define.EVENT_KEY.OPENBOX_ACK, data.result);
 }
 
 module.exports = new MaidModel();

@@ -51,6 +51,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.OPENBOX_ACK, this, this.ackOpenBox);
     },
 
     initData() {
@@ -77,6 +78,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.OPENBOX_ACK, this, this.ackOpenBox);
     },
 
     updateView() {
@@ -211,6 +213,12 @@ cc.Class({
     offLineOpen() {
         if (Game.UserModel.GetOffLineReward() != null) {
             this.openView(Game.UIName.UI_OFFLINEREWARD);
+        }
+    },
+
+    ackOpenBox() {
+        if (result == 0) {
+            this._boxPlayer.node.destroy();
         }
     },
 

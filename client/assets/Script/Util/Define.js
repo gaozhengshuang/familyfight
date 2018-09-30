@@ -40,6 +40,7 @@ var Define = {
         PALACETASK_ACK: '1009',
         PALACEMASTERLVUP_ACK: '1010',
         OFFLINE_ACK: '1011',
+        OPENBOX_ACK: '1012',
 
         TRAVELDATA_UPDATE: '1100',
         EVENTDATA_UPDATE: '1101',
