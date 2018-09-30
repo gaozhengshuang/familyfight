@@ -195,7 +195,7 @@ cc.Class({
                 if (nextLvPlayer.Passlevels != this._findPlayer.getMaidBase().Passlevels) {
                     let curX = this._findPlayer.node.x;
                     let curY = this._findPlayer.node.y;
-                    cc.loader.loadRes(this._findPlayer.getMaidBase().Path, cc.SpriteFrame, function (err, spriteFrame) {
+                    cc.loader.loadRes(nextLvPlayer.Path, cc.SpriteFrame, function (err, spriteFrame) {
                         var node_newMaid = new cc.Node('newMaid');
                         const sprite = node_newMaid.addComponent(cc.Sprite);
                         sprite.spriteFrame = spriteFrame;
