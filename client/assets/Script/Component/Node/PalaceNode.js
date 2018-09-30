@@ -31,9 +31,9 @@ cc.Class({
             this.node.x = this._data.x;
             this.node.y = this._data.y;
 
-            this.image_head.node.active = Game.MaidModel.GetTopPass() >= this._data.UlockPassId;
+            this.image_head.node.active = Game.MaidModel.GetTopPass() >= this._data.UlockPassId && Game.MaidModel.GetMaids().length > 0;
             Game.ResController.SetSprite(this.image_head, this._data.Headpath);
-            if (Game.MaidModel.GetTopPass() >= this._data.UlockPassId) {
+            if (Game.MaidModel.GetTopPass() >= this._data.UlockPassId && Game.MaidModel.GetMaids().length > 0) {
                 Game.ResController.SetSprite(this.image_palace, this._data.UlockPath);
             } else {
                 Game.ResController.SetSprite(this.image_palace, this._data.Lockpath);
@@ -44,7 +44,7 @@ cc.Class({
     },
 
     onOpenPalaceDetail() {
-        if (Game.MaidModel.GetTopPass() >= this._data.UlockPassId) {
+        if (Game.MaidModel.GetTopPass() >= this._data.UlockPassId && Game.MaidModel.GetMaids().length > 0) {
             Game.PalaceModel.SetCurPalaceId(this._data.Id);
             this.openView(Game.UIName.UI_PALACEDETAIL);
         } else {
