@@ -46,7 +46,5 @@ cc.Class({
                 this.node.active = false;
             }, this)
         ]));
-
-        Game.UserModel.AddGold(this.gold*2);
     }
 });

@@ -21,10 +21,25 @@ cc.Class({
     },
 
     update(dt) {
-        this.mainTime += dt;
-        if (this.mainTime >= this.synchroTime) {
-            this.mainTime = 0;
+        this.curSynchro += dt;
+        if (this.curSynchro >= this.synchroTime) {
+            this.curSynchro = 0;
             Game.NetWorkController.Send('msg.C2GW_UploadTrueGold', { num: Game.UserModel.GetGold() });
+        }
+
+        this.curInterval += dt;
+        if (this.curInterval >= this.intervalTime) {
+            this.curInterval = 0;
+
+            for (let i = 0; i < Game.MaidModel.GetMaids().length; i++) {
+                let player = Game.MaidModel.GetMaids()[i];
+                let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", player.id);
+                if (maidBase) {
+                    for (let b = 0; b < player.count; b++) {
+                        Game.UserModel.AddGold(maidBase.Reward*2);
+                    }
+                }
+            }
         }
     },
 
@@ -42,10 +57,13 @@ cc.Class({
         this._playerList = [];
         this._touchPlayer = null;
         this._findPlayer = null;
+        this._boxPlayer = null;
         this._deleteIndex = 0;
 
-        this.mainTime = 0;
-        this.synchroTime = 10;
+        this.curSynchro = 0;
+        this.synchroTime = 10;  //服务器同步金币时间
+        this.curInterval = 0;
+        this.intervalTime = 2.0;    //刷新本地金币时间
 
         Game.MaidModel.SetCurPass(Game.MaidModel.GetTopPass());
         Game.MaidModel.SetCurChapter(Game.MaidModel.GetTopChapter());
@@ -111,11 +129,20 @@ cc.Class({
     },
 
     createPlayer(playerId) {
+        let _posComponent = null;
+        if (this._findPlayer != null && this._findPlayer.node != null) {    //如果是合成的记录找到女仆的位置
+            _posComponent = this._findPlayer;
+        }
+
+        if (this._boxPlayer != null && this._boxPlayer.node != null) {    //如果是打开盒子的记录盒子的位置
+            _posComponent = this._boxPlayer;
+        }
+        
         let _playerPrefab = cc.instantiate(this.prefab_player);
         if (_playerPrefab) {
             let _player = _playerPrefab.getComponent('PlayerNode');
             if (_player) {
-                _player.setData(this.node_player, this._findPlayer, playerId);
+                _player.setData(this.node_player, _posComponent, playerId);
                 this._playerList.push(_player);
             }
             this.node_player.addChild(_playerPrefab);
