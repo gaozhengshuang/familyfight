@@ -5,7 +5,7 @@ let Tools = require("../Util/Tools");
 let Define = require("../Util/Define");
 
 var MaidModel = function () {
-    this._maids = null;
+    this._maids = [];
     this.topMaid = 1;
     this._shopMaids = [];
     this.curPass = 1;
@@ -23,19 +23,19 @@ MaidModel.prototype.Init = function (cb) {
     Tools.InvokeCallback(cb, null);
 }
 
-MaidModel.prototype.GetMaids = function() {
+MaidModel.prototype.GetMaids = function () {
     return this._maids;
 }
 
-MaidModel.prototype.GetMoneyMaids = function() {
+MaidModel.prototype.GetMoneyMaids = function () {
     return this._moneyMaids;
 }
 
-MaidModel.prototype.GetTopMaid = function() {
+MaidModel.prototype.GetTopMaid = function () {
     return this.topMaid;
 }
 
-MaidModel.prototype.GetShopMaids = function() {
+MaidModel.prototype.GetShopMaids = function () {
     return this._shopMaids;
 }
 
@@ -52,7 +52,7 @@ MaidModel.prototype.GetTopPass = function () {
     let maidBase = ConfigController.GetConfigById("TMaidLevel", this.GetTopMaid());
     if (maidBase) {
         pass = maidBase.Passlevels;
-    } 
+    }
     return pass;
 }
 
@@ -64,7 +64,7 @@ MaidModel.prototype.GetCurChapter = function () {
     return this.curChapter;
 }
 
-MaidModel.prototype.GetTopChapter = function() {
+MaidModel.prototype.GetTopChapter = function () {
     let chapter = 1;
     let passLvBase = ConfigController.GetConfigById("PassLevels", this.GetTopPass());
     if (passLvBase) {
@@ -85,7 +85,7 @@ MaidModel.prototype.GetMaidNameById = function (_maidId) {
     let maidBase = ConfigController.GetConfigById("TMaidLevel", _maidId);
     if (maidBase) {
         name = maidBase.Name;
-    } 
+    }
     return name;
 }
 
@@ -96,7 +96,7 @@ MaidModel.prototype.RefreshMoneyMaids = function () {
         let maidBase = ConfigController.GetConfigById("TMaidLevel", maid.id);
         if (maidBase) {
             for (let b = 0; b < maid.count; b++) {
-                this._moneyMaids = this._moneyMaids + (maidBase.Reward*2);
+                this._moneyMaids = this._moneyMaids + (maidBase.Reward * 2);
             }
         }
     }
@@ -106,17 +106,17 @@ MaidModel.prototype.RefreshMoneyMaids = function () {
  * 消息处理接口
  */
 MaidModel.prototype.onGW2C_AckMaids = function (msgid, data) {
-    if (this._maids == null) {
-        this._maids = data.datas;
+    if (this._maids.length == 0) {
+        this._maids = data.datas || [];
     } else {
-        for (let i = 0; i < data.datas.length; i ++) {
+        for (let i = 0; i < data.datas.length; i++) {
             let isNewPlayer = true;
             let _newMaid = data.datas[i];
-            for (let b = 0; b < this._maids.length; b ++) {
+            for (let b = 0; b < this._maids.length; b++) {
                 let _oldMaid = this._maids[b];
                 if (_newMaid.id == _oldMaid.id) {
                     if (_newMaid.count > _oldMaid.count) {
-                        for (let t = 0; t < _newMaid.count - _oldMaid.count; t ++) {
+                        for (let t = 0; t < _newMaid.count - _oldMaid.count; t++) {
                             this.IsAddMaid(_newMaid.id);
                         }
                     }
@@ -125,7 +125,7 @@ MaidModel.prototype.onGW2C_AckMaids = function (msgid, data) {
                     break;
                 }
             }
-            
+
             if (isNewPlayer) {
                 this._maids.push(_newMaid);
                 this.IsAddMaid(_newMaid.id);

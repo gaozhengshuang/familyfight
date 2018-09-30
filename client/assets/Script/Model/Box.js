@@ -25,6 +25,7 @@ BoxModel.prototype.GetBoxsByLevel = function (level) {
 //箱子数据
 BoxModel.prototype.onAckBoxData = function (msgid, data) {
     let changeList = [];
+    data.box = data.box || [];
     for (let i = 0; i < data.box.length; i++) {
         let newBox = data.box[i];
         let oldBox = _.find(this.boxDatas, { id: newBox.id });
