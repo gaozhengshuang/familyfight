@@ -189,7 +189,7 @@ func (this *GateUser) TickBox(now uint64) {
 				boxData = this.GenerateBox(v.Id, 1, v.Level)
 			} else {
 				//找到了 看看时间差
-				if now > boxData.generatetime + v.Interval {
+				if now > boxData.generatetime + uint64(v.Interval) {
 					boxData = this.GenerateBox(v.Id, 1, v.Level)
 				}
 			}

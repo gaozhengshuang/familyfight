@@ -172,16 +172,6 @@ func (this *UserManager) IsRemove(user *GateUser, now int64) bool {
 func (this *UserManager) OnMatchServerClose() {
 }
 
-// 房间服务器断开
-func (this *UserManager) OnRoomServerClose(sid int) {
-	for _, user := range this.accounts {
-		if sid == user.RoomSid() {
-			user.SendMsg(&msg.BT_GameOver{Roomid:pb.Int64(user.RoomId())})
-			//user.GameEnd(nil , "房间服务器断开")
-		}
-	}
-}
-
 // 本服务器退出
 func (this *UserManager) OnServerClose() {
 	for _, user := range this.accounts {

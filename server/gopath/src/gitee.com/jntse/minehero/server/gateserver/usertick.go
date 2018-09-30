@@ -83,9 +83,6 @@ func (this *GateUser) Tick(now int64) {
 
 // 处理充值订单
 func (this *GateUser) CheckRechargeOrders() {
-	if this.IsInRoom () == true {
-		return
-	}
 	keyorder := fmt.Sprintf("%d_verified_recharge_orders", this.Id())
 	order_amount, err := Redis().SPop(keyorder).Result()
 	if err == redis.Nil {
