@@ -30,7 +30,8 @@ module.exports = {
                 'itembase',
                 'common',
                 'headbase',
-                'eventbase'
+                'eventbase',
+                'boxbase'
             ];
             Editor.log('开始生成JSON');
 
