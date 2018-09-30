@@ -360,8 +360,6 @@ func (this *GateUser) AsynSaveFeedback() {
 // 新用户回调
 func (this *GateUser) OnCreateNew() {
 	//创建新侍女
-	this.maid.AddMaid(this,1,1)
-
 	this.power = uint32(tbl.Common.PowerInit)
 	this.maxpower = uint32(tbl.Common.PowerMax)
 	this.nextpowertime = uint64(util.CURTIME()) + uint64(tbl.Common.PowerAddInterval)
