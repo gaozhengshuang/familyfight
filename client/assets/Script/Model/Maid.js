@@ -10,6 +10,7 @@ var MaidModel = function () {
     this._shopMaids = [];
     this.curPass = 1;
     this.curChapter = 1;
+    this._moneyMaids = 0;
 }
 
 MaidModel.prototype.Init = function (cb) {
@@ -24,6 +25,10 @@ MaidModel.prototype.Init = function (cb) {
 
 MaidModel.prototype.GetMaids = function() {
     return this._maids;
+}
+
+MaidModel.prototype.GetMoneyMaids = function() {
+    return this._moneyMaids;
 }
 
 MaidModel.prototype.GetTopMaid = function() {
@@ -84,6 +89,19 @@ MaidModel.prototype.GetMaidNameById = function (_maidId) {
     return name;
 }
 
+MaidModel.prototype.RefreshMoneyMaids = function () {
+    this._moneyMaids = 0;
+    for (let i = 0; i < this._maids.length; i++) {
+        let maid = this._maids[i];
+        let maidBase = ConfigController.GetConfigById("TMaidLevel", maid.id);
+        if (maidBase) {
+            for (let b = 0; b < maid.count; b++) {
+                this._moneyMaids = this._moneyMaids + (maidBase.Reward*2);
+            }
+        }
+    }
+}
+
 /**
  * 消息处理接口
  */
@@ -119,6 +137,8 @@ MaidModel.prototype.onGW2C_AckMaids = function (msgid, data) {
         this.topMaid = data.maxid;
         NotificationController.Emit(Define.EVENT_KEY.FINDNEW_PLAYER);
     }
+
+    this.RefreshMoneyMaids();
 }
 
 MaidModel.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
