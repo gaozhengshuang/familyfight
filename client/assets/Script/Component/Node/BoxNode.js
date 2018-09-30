@@ -3,6 +3,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
+        clickButton: { default: null, type: cc.Button },
         animation: { default: null, type: cc.Animation },
         parentNode: { default: null, type: cc.Node },
         _data: { default: null },
@@ -19,6 +20,7 @@ cc.Class({
     },
     onItemClick: function () {
         Game.Tools.InvokeCallback(this._clickFunc, this)
+        this.disableClick();
         Game.NetWorkController.Send('msg.C2GW_ReqOpenBox', { id: this._data, num: 1 });
     },
     setData: function (parentNode, data, clickFunc) {
@@ -50,5 +52,11 @@ cc.Class({
     },
     onAnimationStop: function () {
         this.node.destroy();
+    },
+    disableClick: function () {
+        this.clickButton.interactable = false;
+    },
+    enableClick: function () {
+        this.clickButton.interactable = true;
     }
 });

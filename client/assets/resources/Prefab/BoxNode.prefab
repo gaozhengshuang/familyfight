@@ -49,7 +49,7 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0
+      "y": 0.5
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -281,6 +281,9 @@
       "__id__": 1
     },
     "_enabled": true,
+    "clickButton": {
+      "__id__": 7
+    },
     "animation": {
       "__id__": 4
     },

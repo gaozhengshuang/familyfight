@@ -230,7 +230,13 @@ cc.Class({
     },
     ackOpenBox(result) {
         if (result == 0) {
-            this._boxPlayer.playOpenAnimation();
+            if (this._boxPlayer) {
+                this._boxPlayer.playOpenAnimation();
+            }
+        } else {
+            if (this._boxPlayer) {
+                this._boxPlayer.enableClick();
+            }
         }
         this._boxPlayer = null;
     },
