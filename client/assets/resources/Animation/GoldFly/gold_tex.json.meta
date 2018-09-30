@@ -1,0 +1,7 @@
+{
+  "ver": "1.0.0",
+  "uuid": "36edd206-3c49-4b62-ae26-0765aec8690c",
+  "atlasJson": "{\"width\":512,\"imagePath\":\"gold_tex.png\",\"height\":256,\"name\":\"gold\",\"SubTexture\":[{\"frameX\":-18,\"y\":1,\"frameY\":-18,\"frameWidth\":182,\"width\":146,\"frameHeight\":182,\"height\":146,\"name\":\"00000\",\"x\":1},{\"frameX\":-81,\"y\":1,\"frameY\":-13,\"frameWidth\":182,\"width\":38,\"frameHeight\":182,\"height\":156,\"name\":\"00002\",\"x\":363},{\"frameX\":-34,\"y\":1,\"frameY\":-15,\"frameWidth\":182,\"width\":87,\"frameHeight\":182,\"height\":152,\"name\":\"00003\",\"x\":274},{\"frameX\":-43,\"y\":1,\"frameY\":-16,\"frameWidth\":182,\"width\":123,\"frameHeight\":182,\"height\":150,\"name\":\"00001\",\"x\":149}]}",
+  "texture": "9a1e5693-5076-4123-bd25-245dae63ee9b",
+  "subMetas": {}
+}
