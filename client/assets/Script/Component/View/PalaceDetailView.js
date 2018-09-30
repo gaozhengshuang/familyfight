@@ -7,6 +7,7 @@ cc.Class({
         node_maid: { default: null, type: cc.Node },
         image_master: { default: null, type: cc.Sprite },
         label_master: { default: null, type: cc.Label },
+        label_tltie: { default: null, type: cc.Label },
         image_palaceCard: { default: null, type: cc.Sprite },
         image_get: { default: null, type: cc.Sprite },
         label_get: { default: null, type: cc.Label },
@@ -153,6 +154,7 @@ cc.Class({
                     } else {
                         Game.ResController.SetSprite(this.image_lvUp, "Image/GameScene/Common/image_noLvUp");
                     }
+                    this.label_tltie.string = '(' + masterLvUpBase.levelName + ')';
                     this.label_needLvItem.string = Game.ItemModel.GetItemNumById(item_num[0]) + "/" + item_num[1];
                 }
             }
