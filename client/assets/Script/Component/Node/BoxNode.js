@@ -11,6 +11,9 @@ cc.Class({
     onLoad: function () {
         this.animation.on('stop', this.onAnimationStop, this);
     },
+    onDestroy: function () {
+        this.animation.off('stop', this.onAnimationStop, this);
+    },
     update: function (dt) {
         this.node.setLocalZOrder(-this.node.y);
     },
@@ -30,8 +33,17 @@ cc.Class({
         let targetX = moveMinX + Math.floor(Math.random() * (moveMaxX - moveMinX + 1));
         let targetY = moveMinY + Math.floor(Math.random() * (moveMaxY - moveMinY + 1));
         this.node.x = targetX;
-        this.node.y = targetY + 1280;
-        this.node.runAction(cc.moveBy(0.2, 0, -1280));
+        this.node.y = targetY + 200;
+        this.opacity = 0
+        this.node.runAction(cc.sequence([
+            cc.spawn([
+                cc.moveBy(0.2, 0, -200),
+                cc.fadeTo(0.2, 255)
+            ]),
+            cc.scaleTo(0.1, 1.1, 0.9),
+            cc.scaleTo(0.1, 1, 1)
+        ]));
+        // this.node.runAction(cc.moveBy(0.2, 0, -1280));
     },
     playOpenAnimation: function () {
         this.animation.play('OpenBox');
