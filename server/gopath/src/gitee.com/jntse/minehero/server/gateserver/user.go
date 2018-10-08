@@ -81,7 +81,8 @@ type GateUser struct {
 	fbitemmap     map[int32]int32
 	deliverystate bool   // 发货状态
     roomid        int64
-    gameflag      bool
+	gameflag      bool
+	guide		  uint32
 }
 
 func NewGateUser(account, key, token string) *GateUser {
@@ -98,7 +99,8 @@ func NewGateUser(account, key, token string) *GateUser {
 	u.savedone = false
 	u.token = token
     u.roomid = 0
-    u.gameflag = false
+	u.gameflag = false
+	u.guide = 0
 	return u
 }
 
@@ -292,6 +294,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase.GetPower().Power = pb.Uint32(this.power)
 	userbase.GetPower().Nexttime = pb.Uint64(this.nextpowertime)
 	userbase.GetPower().Maxpower = pb.Uint32(this.maxpower)
+	bin.Guideid = pb.Uint32(this.guide)
 	//userbase.Addrlist = this.addrlist[:]
 
 	// 道具信息
@@ -326,6 +329,7 @@ func (this *GateUser) LoadBin() {
 	this.power = userbase.GetPower().GetPower()
 	this.maxpower = userbase.GetPower().GetMaxpower()
 	this.nextpowertime = userbase.GetPower().GetNexttime()
+	this.guide = this.bin.GetGuideid()
 	//this.addrlist = userbase.GetAddrlist()[:]
 	// 道具信息
 	this.bag.Clean()
@@ -409,6 +413,7 @@ func (this *GateUser) Syn() {
 	this.palace.Syn(this)
 	this.travel.Syn(this)
 	this.SynBox()
+	this.SynGuide()
 	this.SendUserBase()
 }
 
@@ -596,4 +601,10 @@ func (this *GateUser) GetCountByLevel(level uint32) uint32{
 		}
 	}
 	return retCount
+}
+
+func (this *GateUser) SynGuide() {
+	send := &msg.GW2C_AckGuideData{}
+	send.Guide = pb.Uint32(this.guide)
+	this.SendMsg(send)
 }
