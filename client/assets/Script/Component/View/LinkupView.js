@@ -17,6 +17,7 @@ cc.Class({
         maskNode: { default: null, type: cc.Node },
         countDownLabel: { default: null, type: cc.Label },
         tipRewardViewPrefab: { default: null, type: cc.Prefab },
+        rewardTimesNode: { default: null, type: cc.Node },
 
         linkInfos: { default: [] },
         status: { default: 0 },
@@ -46,10 +47,16 @@ cc.Class({
         if (this.status != LinkStatus.Status_Idle && this.status != LinkStatus.Status_End) {
             //倒计时
             let lastTime = GameTime - (Game.TimeController.GetCurTime() - this.startTime);
-            this.countDownLabel.string = Game.moment.unix(lastTime).format('mm:ss');
-            if (lastTime <= 0) {
-                this._changeStatus(LinkStatus.Status_End);
+            if (lastTime >= 0) {
+                this.countDownLabel.string = Game.moment.unix(lastTime).format('mm:ss');
+                this.rewardTimesNode.active = true;
+            } else {
+                this.countDownLabel.string = '';
+                this.rewardTimesNode.active = false;
             }
+            // if (lastTime <= 0) {
+            //     this._changeStatus(LinkStatus.Status_End);
+            // }
         }
     },
     onDestroy: function () {
@@ -143,7 +150,8 @@ cc.Class({
                     break;
                 case LinkStatus.Status_End:
                     //计算奖励金币
-                    Game.NetWorkController.Send('msg.C2GW_ReqLinkup', { score: this.matchInfos.length })
+                    let lastTime = GameTime - (Game.TimeController.GetCurTime() - this.startTime);
+                    Game.NetWorkController.Send('msg.C2GW_ReqLinkup', { score: this.matchInfos.length * (lastTime > 0 ? 2 : 1) })
                     // this.closeView(Game.UIName.UI_LINKUP);
                     break;
                 default:

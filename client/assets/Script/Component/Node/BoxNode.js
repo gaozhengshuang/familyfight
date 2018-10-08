@@ -60,5 +60,17 @@ cc.Class({
     },
     enableClick: function () {
         this.clickButton.interactable = true;
+    },
+    //interfaces for guide
+    setNewParent: function (parent) {
+        if (Game._.isFunction(parent.addChild)) {
+            this.parentNode = this.node.parent;
+            parent.addChild(this.node);
+        }
+    },
+    backToOldParent: function () {
+        if (this.parentNode != null && Game._.isFunction(this.parentNode.addChild)) {
+            this.parentNode.addChild(this.node);
+        }
     }
 });

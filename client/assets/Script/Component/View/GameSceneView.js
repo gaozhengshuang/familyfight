@@ -49,6 +49,7 @@ cc.Class({
 
     initData() {
         this._playerList = [];
+        this._boxList = [];
         this._touchPlayer = null;
         this._findPlayer = null;
         this._boxPlayer = null;
@@ -161,6 +162,7 @@ cc.Class({
                 }.bind(this));
             }
             this.node_player.addChild(_boxPrefab);
+            this._boxList.push(_box);
         }
     },
 
@@ -232,6 +234,9 @@ cc.Class({
         if (result == 0) {
             if (this._boxPlayer) {
                 this._boxPlayer.playOpenAnimation();
+                Game._.remove(this._boxList, function (o) {
+                    return o == this._boxPlayer;
+                }.bind(this));
             }
         } else {
             if (this._boxPlayer) {
@@ -280,5 +285,25 @@ cc.Class({
         event.stopPropagationImmediate();
         Game.PalaceModel.SetCurPalaceId(1);
         this.openView(Game.UIName.UI_PALACEDETAIL);
+    },
+
+    //interfaces for guide
+    //获得相应数量的某种女仆
+    getMaidById: function (id, count) {
+        let ret = [];
+        for (let i = this._playerList.length; i++) {
+            let _player = this._playerList[i];
+            if (Game._.get(_player, 'id', -1) == id) {
+                ret.push(_player);
+                if (ret.length >= count) {
+                    break;
+                }
+            }
+        }
+        return ret;
+    },
+    //获得相应数量的轿子
+    getBox: function (count) {
+        return Game._.slice(this._boxList, 0, count);
     }
 });

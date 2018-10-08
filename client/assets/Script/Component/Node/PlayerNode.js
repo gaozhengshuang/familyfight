@@ -6,7 +6,10 @@ cc.Class({
 
     properties: {
         image_maid: { default: null, type: cc.Sprite },
-        prefab_addgold: { default: null, type: addGoldPrefab},
+        prefab_addgold: { default: null, type: addGoldPrefab },
+        node_oldparent: { default: null },
+
+        id: { default: null },
     },
 
     onLoad() {
@@ -65,6 +68,7 @@ cc.Class({
     },
 
     updateView(id) {
+        this.id = id;
         this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel", id);
         if (this.maidBase) {
             this.node_addgold.updateGold(this.maidBase.Reward);
@@ -84,7 +88,7 @@ cc.Class({
         this.moveMaxY = (parentNode.height / 2) - (this.node.height / 2);
         this.moveMinX = -this.moveMaxX;
         this.moveMinY = -this.moveMaxY;
-        
+
         if (posComponent != null && posComponent.node != null) {
             this.node.x = posComponent.node.x;
             this.node.y = posComponent.node.y;
@@ -92,7 +96,7 @@ cc.Class({
             this.node.x = this.moveMinX + Math.floor(Math.random() * (this.moveMaxX - this.moveMinX + 1));
             this.node.y = this.moveMinY + Math.floor(Math.random() * (this.moveMaxY - this.moveMinY + 1));
         }
-        
+
         this._data = data;
     },
 
@@ -144,7 +148,7 @@ cc.Class({
         let targetY = 0;
 
         let ranNum = Math.random();
-        let distance = Math.floor(ranNum*this.moveDistance+10);
+        let distance = Math.floor(ranNum * this.moveDistance + 10);
 
         if (ranNum > 0.5) {
             targetX = this.node.x + distance;
@@ -166,7 +170,7 @@ cc.Class({
                 this.image_maid.node.scaleX = -1;
             }
             this.node.runAction(cc.sequence([
-                cc.moveTo(this.intervalTime/2, targetX, targetY),
+                cc.moveTo(this.intervalTime / 2, targetX, targetY),
                 cc.scaleTo(0.1, 1, 0.8),
                 cc.scaleTo(0.1, 1, 1),
                 cc.callFunc(function () {
@@ -175,6 +179,18 @@ cc.Class({
             ]));
         } else {
             this.updatePosAndAni();
+        }
+    },
+    //interfaces for guide
+    setNewParent: function (parent) {
+        if (Game._.isFunction(parent.addChild)) {
+            this.node_oldparent = this.node.parent;
+            parent.addChild(this.node);
+        }
+    },
+    backToOldParent: function () {
+        if (this.node_oldparent != null && Game._.isFunction(this.node_oldparent.addChild)) {
+            this.node_oldparent.addChild(this.node);
         }
     }
 });
