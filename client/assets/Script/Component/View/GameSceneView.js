@@ -291,7 +291,7 @@ cc.Class({
     //获得相应数量的某种女仆
     getMaidById: function (id, count) {
         let ret = [];
-        for (let i = this._playerList.length; i++) {
+        for (let i = 0; i < this._playerList.length; i++) {
             let _player = this._playerList[i];
             if (Game._.get(_player, 'id', -1) == id) {
                 ret.push(_player);
@@ -302,6 +302,7 @@ cc.Class({
         }
         return ret;
     },
+
     //获得相应数量的轿子
     getBox: function (count) {
         return Game._.slice(this._boxList, 0, count);
