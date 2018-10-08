@@ -77,7 +77,8 @@ func (this *TblLoader) ReloadJson() {
 func (this *TblLoader) Init() {
 
 	// load excels
-    this.LoadExcel(MusicBase, "music.json")
+    this.LoadExcel(TGuide, "guidebase.json")
+	this.LoadExcel(MusicBase, "music.json")
 	this.LoadExcel(LevelBasee, "levelbase.json")
 	this.LoadExcel(TGoldRewardRatioBase, "goldrewardratiobase.json")
 	this.LoadExcel(TMaidLevelBase, "maidlevelbase.json")
