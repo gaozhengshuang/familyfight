@@ -1,9 +1,11 @@
 const _ = require('lodash');
 const Tools = require('../Util/Tools');
 const ConfigController = require('../Controller/ConfigController');
+const NotificationController = require('../Controller/NotificationController');
+let Define = require('../Util/Define');
 
 var GuideController = function () {
-    this._guide = 4;
+    this._guide = 1;
 }
 
 GuideController.prototype.Init = function (cb) {
@@ -12,6 +14,7 @@ GuideController.prototype.Init = function (cb) {
 
 GuideController.prototype.SetGuide = function (guide) {
     this._guide = guide;
+    NotificationController.Emit(Define.EVENT_KEY.GUIDE_ACK);
 }
 
 GuideController.prototype.GetGuide = function() {
