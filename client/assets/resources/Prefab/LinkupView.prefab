@@ -4818,13 +4818,13 @@
     "_cascadeOpacityEnabled": true,
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 0.4882599215846644,
+      "y": 0.48841841264327146
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 426,
-      "height": 40
+      "width": 394.6,
+      "height": 80
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -4832,8 +4832,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": -1,
+      "y": 1
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -4860,11 +4860,11 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "30秒内尽量多的找出两个一样的牌。",
+    "_N$string": "尽快找出两个一样的牌，30秒内完成则2倍奖励。",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
-    "_N$overflow": 0
+    "_N$overflow": 3
   },
   {
     "__type__": "cc.LabelOutline",
@@ -5506,7 +5506,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -50,
+      "x": -94,
       "y": 520
     },
     "_skewX": 0,
@@ -5595,7 +5595,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 30,
+      "x": -14,
       "y": 520
     },
     "_skewX": 0,
@@ -5684,7 +5684,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 150,
+      "x": 107,
       "y": 520
     },
     "_skewX": 0,
