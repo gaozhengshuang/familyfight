@@ -1,8 +1,9 @@
 const _ = require('lodash');
 const Tools = require('../Util/Tools');
+const ConfigController = require('../Controller/ConfigController');
 
 var GuideController = function () {
-    this._guide = 1;
+    this._guide = 4;
 }
 
 GuideController.prototype.Init = function (cb) {
@@ -15,6 +16,10 @@ GuideController.prototype.SetGuide = function (guide) {
 
 GuideController.prototype.GetGuide = function() {
     return this._guide;
+}
+
+GuideController.prototype.IsGuide = function() {
+    return ConfigController.GetConfigById("Guide", this._guide).NextGuide != 0;
 }
 
 module.exports = new GuideController();

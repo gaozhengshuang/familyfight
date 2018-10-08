@@ -422,7 +422,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_dailog",
+    "_name": "label_dialog",
     "_objFlags": 0,
     "_parent": {
       "__id__": 6
@@ -841,6 +841,7 @@
     "_enabled": true,
     "_url": "",
     "_data": {},
+    "_oldparentNode": null,
     "node_dailogbox": {
       "__id__": 6
     },
@@ -850,7 +851,7 @@
     "node_arrow": {
       "__id__": 19
     },
-    "label_dailog": {
+    "label_dialog": {
       "__id__": 14
     }
   },

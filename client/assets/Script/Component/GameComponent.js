@@ -64,6 +64,7 @@ var GameComponent = cc.Class({
     showTips(data) {
         Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, data);
     },
+
     //interfaces for guide
     setNewParent: function (parent) {
         if (Game._.isFunction(parent.addChild)) {
@@ -71,6 +72,7 @@ var GameComponent = cc.Class({
             parent.addChild(this.node);
         }
     },
+    
     backToOldParent: function () {
         if (this._oldparentNode != null && Game._.isFunction(this._oldparentNode.addChild)) {
             this._oldparentNode.addChild(this.node);

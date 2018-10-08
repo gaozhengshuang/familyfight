@@ -35,6 +35,7 @@ cc.Class({
         this._tableList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
             return maid.id;
         });
+        
         this.tableViewComponent.initTableView(this._tableList.length, {array: this._tableList, target: this});
         if (this._tableList.length > 4) {
             this.tableViewComponent.scrollToBottom();

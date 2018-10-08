@@ -3,6 +3,7 @@ let Platform = require('../Platform/CommonGame');
 let Tools = require('../Util/Tools');
 let NetWorkController = require('../Controller/NetWorkController');
 let NotificationController = require('../Controller/NotificationController');
+let GuideController = require('../Controller/GuideController');
 
 var UserModel = function () {
     this.loginInfo = null;
@@ -15,6 +16,7 @@ UserModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_RetLogin', this, this.onGW2C_RetLogin);
     NetWorkController.AddListener('msg.GW2C_UpdateGold', this, this.onGW2C_UpdateGold);
     NetWorkController.AddListener('msg.GW2C_OfflineReward', this, this.onGW2C_OfflineReward);
+    NetWorkController.AddListener('msg.GW2C_AckGuideData', this, this.onGW2C_AckGuideData);
 
     NotificationController.On(Define.EVENT_KEY.USERINFO_ADDGOLD, this, this.AddGold);
     NotificationController.On(Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, this, this.SubtractGold);
@@ -109,6 +111,11 @@ UserModel.prototype.onGW2C_UpdateGold = function (msgid, data) {
 UserModel.prototype.onGW2C_OfflineReward = function (msgid, data) {
     this.offLineReward = data;
     NotificationController.Emit(Define.EVENT_KEY.OFFLINE_ACK);
+}
+
+UserModel.prototype.onGW2C_AckGuideData = function (msgid, data) {
+    GuideController.SetGuide(data);
+    NotificationController.Emit(Define.EVENT_KEY.GUIDE_ACK);
 }
 
 module.exports = new UserModel();

@@ -42,6 +42,7 @@ var Define = {
         OFFLINE_ACK: '1011',
         OPENBOX_ACK: '1012',
         BOXDATA_UPDATE: '1013',
+        GUIDE_ACK: '1014',
 
         TRAVELDATA_UPDATE: '1100',
         EVENTDATA_UPDATE: '1101',

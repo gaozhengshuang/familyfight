@@ -226,10 +226,11 @@ cc.Class({
     },
 
     offLineOpen() {
-        if (Game.UserModel.GetOffLineReward() != null) {
+        if (Game.UserModel.GetOffLineReward() != null && !Game.GuideController.IsGuide()) {
             this.openView(Game.UIName.UI_OFFLINEREWARD);
         }
     },
+
     ackOpenBox(result) {
         if (result == 0) {
             if (this._boxPlayer) {
