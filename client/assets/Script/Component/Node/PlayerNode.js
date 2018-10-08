@@ -2,12 +2,11 @@ const addGoldPrefab = require('../Node/AddGoldNode');
 const Game = require('../../Game');
 
 cc.Class({
-    extends: cc.Component,
+    extends: cc.GameComponent,
 
     properties: {
         image_maid: { default: null, type: cc.Sprite },
         prefab_addgold: { default: null, type: addGoldPrefab },
-        node_oldparent: { default: null },
 
         id: { default: null },
     },
@@ -181,16 +180,5 @@ cc.Class({
             this.updatePosAndAni();
         }
     },
-    //interfaces for guide
-    setNewParent: function (parent) {
-        if (Game._.isFunction(parent.addChild)) {
-            this.node_oldparent = this.node.parent;
-            parent.addChild(this.node);
-        }
-    },
-    backToOldParent: function () {
-        if (this.node_oldparent != null && Game._.isFunction(this.node_oldparent.addChild)) {
-            this.node_oldparent.addChild(this.node);
-        }
-    }
+
 });

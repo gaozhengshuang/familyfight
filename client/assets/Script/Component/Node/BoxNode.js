@@ -1,6 +1,6 @@
 let Game = require('../../Game');
 cc.Class({
-    extends: cc.Component,
+    extends: cc.GameComponent,
 
     properties: {
         clickButton: { default: null, type: cc.Button },
@@ -61,16 +61,4 @@ cc.Class({
     enableClick: function () {
         this.clickButton.interactable = true;
     },
-    //interfaces for guide
-    setNewParent: function (parent) {
-        if (Game._.isFunction(parent.addChild)) {
-            this.parentNode = this.node.parent;
-            parent.addChild(this.node);
-        }
-    },
-    backToOldParent: function () {
-        if (this.parentNode != null && Game._.isFunction(this.parentNode.addChild)) {
-            this.parentNode.addChild(this.node);
-        }
-    }
 });
