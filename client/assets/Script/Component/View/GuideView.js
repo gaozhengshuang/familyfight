@@ -14,6 +14,9 @@ cc.Class({
         this.guideBase = null;
         this.guideNode = null;
         this.isFind = false;
+        this._oldGuide = 0;
+
+        this.initNotification();
     },
 
     start() {
@@ -26,7 +29,23 @@ cc.Class({
         }
     },
 
+    initNotification() {
+        Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateGuide);
+    },
+
     updateGuide() {
+        if (this._oldGuide != 0 && this.guideNode != null) {    //把父节点变化过的按钮还回去
+            let oldGuideBase = Game.ConfigController.GetConfigById("Guide", this._oldGuide)
+            if (oldGuideBase && oldGuideBase.Type == 1) {
+                if (this.guideBase.prefab == "Prefab/GameSceneView") {
+                    this.guideNode.parent = cc.director.getScene().getChildByName('Canvas').getChildByName("GameSceneView");
+                } else {
+                    this.guideNode.parent = Game.ViewController.getViewByName(oldGuideBase.prefab);
+                }
+            }
+        }
+        this._oldGuide = Game.GuideController.GetGuide();
+
         this.guideBase = Game.ConfigController.GetConfigById("Guide", Game.GuideController.GetGuide());
         if (this.guideBase) {
             this.isFind = true;
@@ -62,6 +81,7 @@ cc.Class({
                 break;
         }
 
+        this.node_arrow.active = this.guideBase.IsFinger == 1;
         this.label_dialog.string = this.guideBase.Dialog;
     },
 });
