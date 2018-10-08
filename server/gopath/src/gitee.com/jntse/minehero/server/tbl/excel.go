@@ -13,6 +13,7 @@ type IBaseExcel interface {
 // --------------------------------------------------------------------------
 /// @brief 为excel config 实例取一个别名
 // --------------------------------------------------------------------------
+var TGuide = table.InsTGuideTable
 var MusicBase = table.InsMusicBaseTable
 var LevelBasee = table.InsLevelBaseeTable
 var TGoldRewardRatioBase = table.InsTGoldRewardRatioBaseTable
