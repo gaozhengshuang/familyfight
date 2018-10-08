@@ -109,6 +109,47 @@ ViewController.prototype.closeAllView = function (clear = false) {
 }
 
 /**
+ * 获得View目标
+ */
+ViewController.prototype.getViewByName = function (ui) {
+    let _view = null;
+    if (ui != null) {
+        _view = _.find(this._viewList, function (v) {
+            return v.uiname == ui;
+        });
+    }
+    return _view;
+}
+
+/**
+ * 传入ui路径跟name获得node
+ */
+ViewController.prototype.seekChildByName = function (ui, name) {
+    //遍历方法
+    let _find = function (node, name) {
+        if (node.name == name) {
+            return node;
+        }
+    
+        for (let i = 0; i < node.children.length; i ++) {
+            let res = _find(node.children[i], name);
+            if (res != null) {
+                return res;
+            }
+        }
+    
+        return null;
+    }
+
+    let _child = null;
+    let _view = this.getViewByName(ui);
+    if (_view) {
+        _child = _find(_view, name);
+    }
+    return _child;
+}
+
+/**
  * 打开对话界面
  */
 ViewController.prototype.showDialogue = function (parent, id) {

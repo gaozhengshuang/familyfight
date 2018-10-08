@@ -26,6 +26,7 @@ cc.Class({
             Game.ResController,
             Game.TimeController,
             Game.ViewController,
+            Game.GuideController,
         ];
 
         this.models = [
