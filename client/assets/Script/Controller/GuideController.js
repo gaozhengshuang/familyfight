@@ -32,7 +32,13 @@ GuideController.prototype.IsGuide = function () {
 
 GuideController.prototype.SendGuide = function (guide) {
     if (this.IsGuide()) {
-        NetWorkController.Send('msg.C2GW_UpdateGuideData', { guide: guide });
+        let config = this.GetGuideConfig(guide);
+        if (config.Upload) {
+            NetWorkController.Send('msg.C2GW_UpdateGuideData', { guide: guide });
+        } else {
+            this.SetGuide(guide);
+        }
+
     }
 }
 
