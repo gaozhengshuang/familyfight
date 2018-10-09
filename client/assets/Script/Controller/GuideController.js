@@ -6,7 +6,7 @@ const Define = require('../Util/Define');
 const NetWorkController = require('../Controller/NetWorkController');
 
 var GuideController = function () {
-    this._guide = 1;
+    this._guide = 4;
 }
 
 GuideController.prototype.Init = function (cb) {

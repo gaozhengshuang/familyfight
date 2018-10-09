@@ -35,13 +35,19 @@ cc.Class({
 
     updateGuide() {
         if (this._oldGuide != 0 && this.guideNode != null) {    //把父节点变化过的按钮还回去
-            let oldGuideBase = Game.ConfigController.GetConfigById("Guide", this._oldGuide)
+            let oldGuideBase = Game.ConfigController.GetConfigById("Guide", this._oldGuide);
             if (oldGuideBase && oldGuideBase.Type == 1) {
+                let newParent = null;
                 if (this.guideBase.prefab == "Prefab/GameSceneView") {
-                    this.guideNode.parent = cc.director.getScene().getChildByName('Canvas').getChildByName("GameSceneView");
+                    newParent = cc.director.getScene().getChildByName('Canvas').getChildByName("GameSceneView");
                 } else {
-                    this.guideNode.parent = Game.ViewController.getViewByName(oldGuideBase.prefab);
+                    newParent = Game.ViewController.getViewByName(oldGuideBase.prefab);
                 }
+
+                let oldWorldPosition = this.guideNode.parent.convertToWorldSpaceAR(this.guideNode.position);
+                let newWordPosition = newParent.convertToNodeSpaceAR(oldWorldPosition);
+                this.guideNode.position = newWordPosition;
+                this.guideNode.parent = newParent;
             }
         }
         this._oldGuide = Game.GuideController.GetGuide();
@@ -66,19 +72,23 @@ cc.Class({
                     Game.ViewController.openView(this.guideBase.prefab);
                     this.guideNode = Game.ViewController.seekChildByName(this.guideBase.prefab, this.guideBase.ButtonName);
                 }
-                
-                if (this.guideNode) {   //找到节点设置手指指向的位置
-                    this.isFind = false;
-                    this.node_arrow.x = this.guideNode.x;
-                    this.node_arrow.y = this.guideNode.y;
-
-                    this.guideNode.parent = this.node_guideChild;
-                }
                 break;
 
             case 2:     //点击任意处关闭的引导
                 this.isFind = false;
                 break;
+        }
+
+        if (this.guideNode) {   //找到节点设置手指指向的位置
+            this.isFind = false;
+
+            let oldWorldPosition = this.guideNode.parent.convertToWorldSpaceAR(this.guideNode.position);
+            let newWordPosition = this.node_guideChild.convertToNodeSpaceAR(oldWorldPosition);
+            this.guideNode.position = newWordPosition;
+            this.guideNode.parent = this.node_guideChild;
+
+            this.node_arrow.x = newWordPosition.x;
+            this.node_arrow.y = newWordPosition.y;
         }
 
         this.node_arrow.active = this.guideBase.IsFinger == 1;
