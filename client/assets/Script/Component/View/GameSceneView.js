@@ -82,7 +82,7 @@ cc.Class({
             if (!Game.GuideController.IsGuide()) {
                 this.showDialoguePlayer(1);
             }
-            
+
             let passData = {
                 userid: Game.UserModel.GetUserId(),
                 lookPass: 1,
@@ -287,6 +287,9 @@ cc.Class({
     onOpenTurnBrand(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_TURNBRAND);
+        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 11) {
+            Game.GuideController.NextGuide();
+        }
     },
 
     onOpenPalace(event) {
