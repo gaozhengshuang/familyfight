@@ -296,8 +296,8 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 0,
-    "_scaleY": 0,
+    "_scaleX": 0.6,
+    "_scaleY": 0.6,
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
@@ -954,9 +954,7 @@
     "node_dailogbox": {
       "__id__": 8
     },
-    "anima_dialogueShow": {
-      "__id__": 18
-    },
+    "anima_dialogueShow": null,
     "node_guideChild": {
       "__id__": 20
     },
