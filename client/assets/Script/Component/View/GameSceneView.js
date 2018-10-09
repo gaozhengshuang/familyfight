@@ -287,7 +287,7 @@ cc.Class({
     onOpenTurnBrand(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_TURNBRAND);
-        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 11) {
+        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 12) {
             Game.GuideController.NextGuide();
         }
     },

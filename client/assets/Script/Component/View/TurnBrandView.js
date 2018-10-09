@@ -79,7 +79,7 @@ cc.Class({
         }
     },
     onGoBackClick: function () {
-        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 13) {
+        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 14) {
             Game.GuideController.NextGuide();
         }
         this.closeView(Game.UIName.UI_TURNBRAND);
@@ -247,7 +247,7 @@ cc.Class({
                     }, this),
                     cc.delayTime(1.2),
                     cc.callFunc(function () {
-                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 12) {
+                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 13) {
                             Game.GuideController.NextGuide();
                         }
                         this._randBrandInfo()
@@ -269,7 +269,7 @@ cc.Class({
                     }, this),
                     cc.delayTime(1.2),
                     cc.callFunc(function () {
-                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 12) {
+                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 13) {
                             Game.GuideController.NextGuide();
                         }
                         this._randBrandInfo()
@@ -290,7 +290,7 @@ cc.Class({
                     }, this),
                     cc.delayTime(1.2),
                     cc.callFunc(function () {
-                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 12) {
+                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 13) {
                             Game.GuideController.NextGuide();
                         }
                         this.openView(MiniGameId[config.RewardId]);
@@ -313,7 +313,7 @@ cc.Class({
                     }, this),
                     cc.delayTime(1.2),
                     cc.callFunc(function () {
-                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 12) {
+                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 13) {
                             Game.GuideController.NextGuide();
                         }
                         this._randBrandInfo()
