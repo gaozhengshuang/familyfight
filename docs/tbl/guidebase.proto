@@ -25,31 +25,34 @@ message GuideDefine
 	optional uint32 NextGuide = 2; // 下一步引导
 	
 	
-	optional uint32 Type = 3; // （0轿子仆人，1指向位置固定2点空地结束3轿子4仆人）
+	optional uint32 Type = 3; // （1指向位置固定2点空地结束3轿子4仆人5空白）
 	
 	
-	optional uint32 IsFinger = 4; // （0无手指，1有手指）
+	optional uint32 IsDialog = 4; // （0无对话，1有对话）
 	
 	
-	optional string Dialog = 5; // 谈话内容
+	optional uint32 IsFinger = 5; // （0无手指，1有手指）
 	
 	
-	optional string prefab = 6; // 预制路径（例：Prefab/GameSceneView)
+	optional string Dialog = 6; // 谈话内容
 	
 	
-	optional string ButtonName = 7; // 点击目标名字（例：btn_shop)
+	optional string prefab = 7; // 预制路径（例：Prefab/GameSceneView)
 	
 	
-	optional string PersonXY = 8; // 人物坐标显示
+	optional string ButtonName = 8; // 点击目标名字（例：btn_shop)
 	
 	
-	optional string FingerXY = 9; // 手指坐标
+	optional string PersonXY = 9; // 人物坐标显示
 	
 	
-	optional string MaidInfo = 10; // 仆人id_仆人数量
+	optional string FingerXY = 10; // 手指坐标
 	
 	
-	optional bool Upload = 11; // 上传服务器
+	optional string MaidInfo = 11; // 仆人id_仆人数量
+	
+	
+	optional bool Upload = 12; // 上传服务器
 
 }
 
