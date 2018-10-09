@@ -25,7 +25,7 @@ message GuideDefine
 	optional uint32 NextGuide = 2; // 下一步引导
 	
 	
-	optional uint32 Type = 3; // （0轿子仆人，1指向位置固定2点空地结束）
+	optional uint32 Type = 3; // （0轿子仆人，1指向位置固定2点空地结束3轿子4仆人）
 	
 	
 	optional uint32 IsFinger = 4; // （0无手指，1有手指）
@@ -38,6 +38,12 @@ message GuideDefine
 	
 	
 	optional string ButtonName = 7; // 点击目标名字（例：btn_shop)
+	
+	
+	optional string PersonXY = 8; // 人物坐标显示
+	
+	
+	optional string MaidInfo = 9; // 仆人id_仆人数量
 
 }
 
