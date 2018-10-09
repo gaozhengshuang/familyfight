@@ -52,10 +52,12 @@ cc.Class({
         for (let i = 0; i < this.guideNodes.length; i++) {
             let guideNode = this.guideNodes[i];
 
-            oldWorldPosition = guideNode.parent.convertToWorldSpaceAR(guideNode.position);
-            newWordPosition = tagretParent.convertToNodeSpaceAR(oldWorldPosition);
-            guideNode.position = newWordPosition;
-            guideNode.parent = tagretParent;
+            if (guideNode && guideNode.parent != null) {
+                oldWorldPosition = guideNode.parent.convertToWorldSpaceAR(guideNode.position);
+                newWordPosition = tagretParent.convertToNodeSpaceAR(oldWorldPosition);
+                guideNode.position = newWordPosition;
+                guideNode.parent = tagretParent;
+            }
         }
 
         if (newWordPosition) {   //设置手指位置(多个位置暂时不支持)
