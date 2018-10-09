@@ -152,6 +152,7 @@ cc.Class({
             this.node_player.addChild(_playerPrefab);
         }
     },
+
     createBox(id) {
         let _boxPrefab = cc.instantiate(this.prefab_box);
         if (_boxPrefab) {
@@ -275,6 +276,7 @@ cc.Class({
     onOpenShopView(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_SHOP);
+        Game.GuideController.SendGuide(5);
     },
 
     onOpenTurnBrand(event) {

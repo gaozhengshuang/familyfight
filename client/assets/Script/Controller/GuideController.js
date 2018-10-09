@@ -2,7 +2,8 @@ const _ = require('lodash');
 const Tools = require('../Util/Tools');
 const ConfigController = require('../Controller/ConfigController');
 const NotificationController = require('../Controller/NotificationController');
-let Define = require('../Util/Define');
+const Define = require('../Util/Define');
+const NetWorkController = require('../Controller/NetWorkController');
 
 var GuideController = function () {
     this._guide = 1;
@@ -23,6 +24,12 @@ GuideController.prototype.GetGuide = function() {
 
 GuideController.prototype.IsGuide = function() {
     return ConfigController.GetConfigById("Guide", this._guide).NextGuide != 0;
+}
+
+GuideController.prototype.SendGuide = function(guide) {
+    if (this.IsGuide()) {
+        NetWorkController.Send('msg.C2GW_UpdateGuideData', {guide: guide});
+    }
 }
 
 module.exports = new GuideController();
