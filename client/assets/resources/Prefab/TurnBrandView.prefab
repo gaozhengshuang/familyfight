@@ -4734,7 +4734,7 @@
     "_cascadeOpacityEnabled": true,
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": 0.5,
       "y": 0.5
     },
     "_contentSize": {
@@ -4748,7 +4748,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -360,
+      "x": -308,
       "y": 462
     },
     "_skewX": 0,
@@ -4943,6 +4943,7 @@
     "_enabled": true,
     "_url": "",
     "_data": {},
+    "_oldparentNode": null,
     "brandViews": [
       {
         "__id__": 23
@@ -4972,9 +4973,6 @@
     "dialogueNode": {
       "__id__": 156
     },
-    "tipRewardViewPrefab": {
-      "__uuid__": "ac026e95-2708-4976-84ba-d1fe6b513937"
-    },
     "status": 1,
     "brandInfos": [],
     "brandConfigs": [],
@@ -4989,7 +4987,8 @@
       "y": 0
     },
     "clickIndex": 0,
-    "rewardId": 0
+    "rewardId": 0,
+    "rewardGold": 0
   },
   {
     "__type__": "cc.BlockInputEvents",
