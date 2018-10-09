@@ -79,6 +79,11 @@ cc.Class({
     updateView() {
         this.guideNodes = [];
         let guideNode = null;
+
+        if (this.guideBase.prefab != "Prefab/GameSceneView") {      //打开引导的目标界面(下线直接恢复)
+            Game.ViewController.openView(this.guideBase.prefab);
+        }
+
         let canvas = cc.director.getScene().getChildByName('Canvas');
         let gameSceneViewNode = canvas.getChildByName("GameSceneView");
         let gameSceneView = gameSceneViewNode.getComponent('GameSceneView');
@@ -141,7 +146,6 @@ cc.Class({
 
         if (this.guideNodes.length > 0) {   //打开引导页面
             this.isFind = false;
-            Game.ViewController.openView(this.guideBase.prefab);
             this.resetNode(this.node_guideChild);
         }
 
