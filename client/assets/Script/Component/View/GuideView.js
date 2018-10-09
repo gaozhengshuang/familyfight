@@ -32,7 +32,7 @@ cc.Class({
     onClose() {
         if (this.guideBase) {    //关闭界面把按钮重置节点
             if (this.guideBase.NextGuide == 0) {
-                if (this._oldGuide != 0 && this.guideNodes.length > 0) {    
+                if (this._oldGuide != 0 && this.guideNodes.length > 0) {
                     let oldGuideBase = Game.ConfigController.GetConfigById("Guide", this._oldGuide);
                     let newParent = null;
                     if (oldGuideBase && oldGuideBase.Type == 1) {
@@ -57,15 +57,15 @@ cc.Class({
         let oldWorldPosition = null;
         let newWordPosition = null;
 
-        for (let i = 0; i < this.guideNodes.length; i ++) {
+        for (let i = 0; i < this.guideNodes.length; i++) {
             let guideNode = this.guideNodes[i];
-            
+
             oldWorldPosition = guideNode.parent.convertToWorldSpaceAR(guideNode.position);
             newWordPosition = newParent.convertToNodeSpaceAR(oldWorldPosition);
             guideNode.position = newWordPosition;
             guideNode.parent = newParent;
         }
-        
+
         if (newWordPosition) {   //设置手指位置(多个位置暂时不支持)
             this.node_arrow.x = newWordPosition.x;
             this.node_arrow.y = newWordPosition.y;
@@ -113,11 +113,44 @@ cc.Class({
             case 3:     //轿子引导
                 this.isFind = false;
                 let gameSceneViewNode = canvas.getChildByName("GameSceneView");
+                if (gameSceneViewNode == null) {
+                    break;
+                }
                 let gameSceneView = gameSceneViewNode.getComponent('GameSceneView');
-                guideNode = gameSceneView.getBox(1)[0].node;
+                if (gameSceneView == null) {
+                    break;
+                }
+                let boxList = gameSceneView.getBox(1);
+                if (boxList == null || boxList.length == 0) {
+                    break;
+                }
+                guideNode = boxList[0].node;
+                if (guideNode == null) {
+                    break;
+                }
                 guideNode.stopAllActions();
                 break;
-
+            case 4:     //侍女
+                this.isFind = false;
+                let gameSceneViewNode = canvas.getChildByName("GameSceneView");
+                if (gameSceneViewNode == null) {
+                    break;
+                }
+                let gameSceneView = gameSceneViewNode.getComponent('GameSceneView');
+                if (gameSceneView == null) {
+                    break;
+                }
+                let maidInfo = this.guideBase.MaidInfo;
+                let maidList = gameSceneView.getMaidById();
+                if (boxList == null || boxList.length == 0) {
+                    break;
+                }
+                guideNode = boxList[0].node;
+                if (guideNode == null) {
+                    break;
+                }
+                guideNode.stopAllActions();
+                break;
             default:
                 break;
         }
@@ -125,7 +158,7 @@ cc.Class({
         if (guideNode) {   //打开引导页面
             this.guideNodes.push(guideNode);
             this.isFind = false;
-            Game.ViewController.openView(this.guideBase.prefab);            
+            Game.ViewController.openView(this.guideBase.prefab);
             this.resetNode(this.node_guideChild);
         }
 
@@ -135,7 +168,7 @@ cc.Class({
         let _boxpos = this.guideBase.PersonXY.split(",");   //人物位置
         if (_boxpos.length > 0) {
             this.node_dailogbox.x = Number(_boxpos[0]);
-            this.node_dailogbox.y = Number(_boxpos[1]);   
+            this.node_dailogbox.y = Number(_boxpos[1]);
         }
     },
 });
