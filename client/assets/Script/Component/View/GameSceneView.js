@@ -308,6 +308,7 @@ cc.Class({
 
     //获得相应数量的轿子
     getBox: function (count) {
-        return Game._.slice(this._boxList, 0, count);
+        let ret = Game._.slice(this._boxList, 0, count);
+        return ret;
     }
 });

@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -6840,6 +6840,7 @@ $root.msg = (function() {
          * @property {msg.ITravelData|null} [travel] Serialize travel
          * @property {Array.<number>|null} [eventids] Serialize eventids
          * @property {Array.<msg.IBoxData>|null} [boxs] Serialize boxs
+         * @property {number|null} [guideid] Serialize guideid
          */
 
         /**
@@ -6925,6 +6926,14 @@ $root.msg = (function() {
         Serialize.prototype.boxs = $util.emptyArray;
 
         /**
+         * Serialize guideid.
+         * @member {number} guideid
+         * @memberof msg.Serialize
+         * @instance
+         */
+        Serialize.prototype.guideid = 0;
+
+        /**
          * Creates a new Serialize instance using the specified properties.
          * @function create
          * @memberof msg.Serialize
@@ -6967,6 +6976,8 @@ $root.msg = (function() {
             if (message.boxs != null && message.boxs.length)
                 for (var i = 0; i < message.boxs.length; ++i)
                     $root.msg.BoxData.encode(message.boxs[i], writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
+            if (message.guideid != null && message.hasOwnProperty("guideid"))
+                writer.uint32(/* id 9, wireType 0 =*/72).uint32(message.guideid);
             return writer;
         };
 
@@ -7035,6 +7046,9 @@ $root.msg = (function() {
                     if (!(message.boxs && message.boxs.length))
                         message.boxs = [];
                     message.boxs.push($root.msg.BoxData.decode(reader, reader.uint32()));
+                    break;
+                case 9:
+                    message.guideid = reader.uint32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -7121,6 +7135,9 @@ $root.msg = (function() {
                         return "boxs." + error;
                 }
             }
+            if (message.guideid != null && message.hasOwnProperty("guideid"))
+                if (!$util.isInteger(message.guideid))
+                    return "guideid: integer expected";
             return null;
         };
 
@@ -7188,6 +7205,8 @@ $root.msg = (function() {
                     message.boxs[i] = $root.msg.BoxData.fromObject(object.boxs[i]);
                 }
             }
+            if (object.guideid != null)
+                message.guideid = object.guideid >>> 0;
             return message;
         };
 
@@ -7215,6 +7234,7 @@ $root.msg = (function() {
                 object.item = null;
                 object.maid = null;
                 object.travel = null;
+                object.guideid = 0;
             }
             if (message.entity != null && message.hasOwnProperty("entity"))
                 object.entity = $root.msg.EntityBase.toObject(message.entity, options);
@@ -7241,6 +7261,8 @@ $root.msg = (function() {
                 for (var j = 0; j < message.boxs.length; ++j)
                     object.boxs[j] = $root.msg.BoxData.toObject(message.boxs[j], options);
             }
+            if (message.guideid != null && message.hasOwnProperty("guideid"))
+                object.guideid = message.guideid;
             return object;
         };
 
@@ -19355,13 +19377,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -19610,13 +19626,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -33231,6 +33241,380 @@ $root.msg = (function() {
         };
 
         return GW2C_SendTaskList;
+    })();
+
+    msg.C2GW_UpdateGuideData = (function() {
+
+        /**
+         * Properties of a C2GW_UpdateGuideData.
+         * @memberof msg
+         * @interface IC2GW_UpdateGuideData
+         * @property {number|null} [guide] C2GW_UpdateGuideData guide
+         */
+
+        /**
+         * Constructs a new C2GW_UpdateGuideData.
+         * @memberof msg
+         * @classdesc Represents a C2GW_UpdateGuideData.
+         * @implements IC2GW_UpdateGuideData
+         * @constructor
+         * @param {msg.IC2GW_UpdateGuideData=} [properties] Properties to set
+         */
+        function C2GW_UpdateGuideData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_UpdateGuideData guide.
+         * @member {number} guide
+         * @memberof msg.C2GW_UpdateGuideData
+         * @instance
+         */
+        C2GW_UpdateGuideData.prototype.guide = 0;
+
+        /**
+         * Creates a new C2GW_UpdateGuideData instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_UpdateGuideData
+         * @static
+         * @param {msg.IC2GW_UpdateGuideData=} [properties] Properties to set
+         * @returns {msg.C2GW_UpdateGuideData} C2GW_UpdateGuideData instance
+         */
+        C2GW_UpdateGuideData.create = function create(properties) {
+            return new C2GW_UpdateGuideData(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_UpdateGuideData message. Does not implicitly {@link msg.C2GW_UpdateGuideData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_UpdateGuideData
+         * @static
+         * @param {msg.IC2GW_UpdateGuideData} message C2GW_UpdateGuideData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_UpdateGuideData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.guide != null && message.hasOwnProperty("guide"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.guide);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_UpdateGuideData message, length delimited. Does not implicitly {@link msg.C2GW_UpdateGuideData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_UpdateGuideData
+         * @static
+         * @param {msg.IC2GW_UpdateGuideData} message C2GW_UpdateGuideData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_UpdateGuideData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_UpdateGuideData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_UpdateGuideData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_UpdateGuideData} C2GW_UpdateGuideData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_UpdateGuideData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_UpdateGuideData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.guide = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_UpdateGuideData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_UpdateGuideData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_UpdateGuideData} C2GW_UpdateGuideData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_UpdateGuideData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_UpdateGuideData message.
+         * @function verify
+         * @memberof msg.C2GW_UpdateGuideData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_UpdateGuideData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.guide != null && message.hasOwnProperty("guide"))
+                if (!$util.isInteger(message.guide))
+                    return "guide: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_UpdateGuideData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_UpdateGuideData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_UpdateGuideData} C2GW_UpdateGuideData
+         */
+        C2GW_UpdateGuideData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_UpdateGuideData)
+                return object;
+            var message = new $root.msg.C2GW_UpdateGuideData();
+            if (object.guide != null)
+                message.guide = object.guide >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_UpdateGuideData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_UpdateGuideData
+         * @static
+         * @param {msg.C2GW_UpdateGuideData} message C2GW_UpdateGuideData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_UpdateGuideData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.guide = 0;
+            if (message.guide != null && message.hasOwnProperty("guide"))
+                object.guide = message.guide;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_UpdateGuideData to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_UpdateGuideData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_UpdateGuideData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_UpdateGuideData;
+    })();
+
+    msg.GW2C_AckGuideData = (function() {
+
+        /**
+         * Properties of a GW2C_AckGuideData.
+         * @memberof msg
+         * @interface IGW2C_AckGuideData
+         * @property {number|null} [guide] GW2C_AckGuideData guide
+         */
+
+        /**
+         * Constructs a new GW2C_AckGuideData.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckGuideData.
+         * @implements IGW2C_AckGuideData
+         * @constructor
+         * @param {msg.IGW2C_AckGuideData=} [properties] Properties to set
+         */
+        function GW2C_AckGuideData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckGuideData guide.
+         * @member {number} guide
+         * @memberof msg.GW2C_AckGuideData
+         * @instance
+         */
+        GW2C_AckGuideData.prototype.guide = 0;
+
+        /**
+         * Creates a new GW2C_AckGuideData instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckGuideData
+         * @static
+         * @param {msg.IGW2C_AckGuideData=} [properties] Properties to set
+         * @returns {msg.GW2C_AckGuideData} GW2C_AckGuideData instance
+         */
+        GW2C_AckGuideData.create = function create(properties) {
+            return new GW2C_AckGuideData(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckGuideData message. Does not implicitly {@link msg.GW2C_AckGuideData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckGuideData
+         * @static
+         * @param {msg.IGW2C_AckGuideData} message GW2C_AckGuideData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckGuideData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.guide != null && message.hasOwnProperty("guide"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.guide);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckGuideData message, length delimited. Does not implicitly {@link msg.GW2C_AckGuideData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckGuideData
+         * @static
+         * @param {msg.IGW2C_AckGuideData} message GW2C_AckGuideData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckGuideData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckGuideData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckGuideData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckGuideData} GW2C_AckGuideData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckGuideData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckGuideData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.guide = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckGuideData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckGuideData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckGuideData} GW2C_AckGuideData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckGuideData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckGuideData message.
+         * @function verify
+         * @memberof msg.GW2C_AckGuideData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckGuideData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.guide != null && message.hasOwnProperty("guide"))
+                if (!$util.isInteger(message.guide))
+                    return "guide: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckGuideData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckGuideData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckGuideData} GW2C_AckGuideData
+         */
+        GW2C_AckGuideData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckGuideData)
+                return object;
+            var message = new $root.msg.GW2C_AckGuideData();
+            if (object.guide != null)
+                message.guide = object.guide >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckGuideData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckGuideData
+         * @static
+         * @param {msg.GW2C_AckGuideData} message GW2C_AckGuideData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckGuideData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.guide = 0;
+            if (message.guide != null && message.hasOwnProperty("guide"))
+                object.guide = message.guide;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckGuideData to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckGuideData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckGuideData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckGuideData;
     })();
 
     return msg;

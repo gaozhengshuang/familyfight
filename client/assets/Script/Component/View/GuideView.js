@@ -59,6 +59,7 @@ cc.Class({
     },
 
     updateView() {
+        let canvas = cc.director.getScene().getChildByName('Canvas');
         switch (this.guideBase.Type) {
             case 0:     //仆人和轿子的引导
                 this.isFind = false;
@@ -66,7 +67,6 @@ cc.Class({
 
             case 1:     //点击目标的引导
                 if (this.guideBase.prefab == "Prefab/GameSceneView") {
-                    let canvas = cc.director.getScene().getChildByName('Canvas');
                     this.guideNode = canvas.getChildByName("GameSceneView").getChildByName(this.guideBase.ButtonName);
                 } else {
                     Game.ViewController.openView(this.guideBase.prefab);
@@ -76,6 +76,17 @@ cc.Class({
 
             case 2:     //点击任意处关闭的引导
                 this.isFind = false;
+                break;
+
+            case 3:     //轿子引导
+                this.isFind = false;
+                let gameSceneViewNode = canvas.getChildByName("GameSceneView");
+                let gameSceneView = gameSceneViewNode.getComponent('GameSceneView');
+                this.guideNode = gameSceneView.getBox(1)[0].node;
+                this.guideNode.stopAllActions();
+                break;
+
+            default:
                 break;
         }
 
