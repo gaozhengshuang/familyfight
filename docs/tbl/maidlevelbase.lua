@@ -4,8 +4,8 @@
 module table {
 export var TMaidLevel : table.ITMaidLevelDefine[] = [
 		{ Id : 1, Name : "瘦秀女", Path : "Image/GameScene/Maid/maid_1", Passlevels : 1, Reward : 1, NextID : 2, ShopShow : [ 1 ], DialogueID : 0, RoleDescribe : "" 	},
-		{ Id : 2, Name : "胖秀女", Path : "Image/GameScene/Maid/maid_2", Passlevels : 1, Reward : 2, NextID : 3, ShopShow : [ 1 ], DialogueID : 2, RoleDescribe : "" 	},
-		{ Id : 3, Name : "黑秀女", Path : "Image/GameScene/Maid/maid_3", Passlevels : 1, Reward : 3, NextID : 4, ShopShow : [ 1 ], DialogueID : 3, RoleDescribe : "" 	},
+		{ Id : 2, Name : "胖秀女", Path : "Image/GameScene/Maid/maid_2", Passlevels : 1, Reward : 2, NextID : 3, ShopShow : [ 1 ], DialogueID : 0, RoleDescribe : "" 	},
+		{ Id : 3, Name : "黑秀女", Path : "Image/GameScene/Maid/maid_3", Passlevels : 1, Reward : 3, NextID : 4, ShopShow : [ 1 ], DialogueID : 0, RoleDescribe : "" 	},
 		{ Id : 4, Name : "陆晚晚", Path : "Image/GameScene/Maid/maid_4", Passlevels : 1, Reward : 4, NextID : 5, ShopShow : [ 1 ], DialogueID : 4, RoleDescribe : "" 	},
 		{ Id : 5, Name : "纳兰淳雪", Path : "Image/GameScene/Maid/maid_5", Passlevels : 1, Reward : 5, NextID : 6, ShopShow : [ 1 ], DialogueID : 5, RoleDescribe : "" 	},
 		{ Id : 6, Name : "乌雅青黛", Path : "Image/GameScene/Maid/maid_6", Passlevels : 1, Reward : 6, NextID : 7, ShopShow : [ 1, 2 ], DialogueID : 6, RoleDescribe : "" 	},
