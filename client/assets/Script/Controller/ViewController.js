@@ -124,7 +124,7 @@ ViewController.prototype.getViewByName = function (ui) {
 /**
  * 传入ui路径跟name获得node
  */
-ViewController.prototype.seekChildByName = function (ui, name) {
+ViewController.prototype.seekChildByName = function (children, name) {
     //遍历方法
     let _find = function (node, name) {
         if (node.name == name) {
@@ -142,9 +142,8 @@ ViewController.prototype.seekChildByName = function (ui, name) {
     }
 
     let _child = null;
-    let _view = this.getViewByName(ui);
-    if (_view) {
-        _child = _find(_view, name);
+    if (children) {
+        _child = _find(children, name);
     }
     return _child;
 }
