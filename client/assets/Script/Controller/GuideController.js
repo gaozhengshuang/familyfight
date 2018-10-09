@@ -43,7 +43,12 @@ GuideController.prototype.SendGuide = function (guide) {
 }
 
 GuideController.prototype.NextGuide = function () {
-    this.SendGuide(ConfigController.GetConfigById("Guide", this._guide).NextGuide);
+    let nextGuide = ConfigController.GetConfigById("Guide", this._guide).NextGuide;
+    if (nextGuide != 0) {
+        this.SendGuide(nextGuide);
+    } else {
+        NotificationController.Emit(Define.EVENT_KEY.GUIDE_OVER);
+    }
 }
 
 module.exports = new GuideController();

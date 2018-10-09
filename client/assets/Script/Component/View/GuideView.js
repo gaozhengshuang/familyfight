@@ -48,6 +48,7 @@ cc.Class({
 
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateGuide);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_OVER, this, this.onClose);
     },
 
     resetNode(tagretParent) {
@@ -71,7 +72,7 @@ cc.Class({
         }
     },
 
-    updateGuide() {
+    updateGuide() {        
         if (this._oldParent != null && this.guideNodes.length > 0) {    //把父节点变化过的按钮还回去
             this.resetNode(this._oldParent);
         }
