@@ -2,7 +2,7 @@
 	"Tool": "github.com/davyxu/tabtoy",
 	"Version": "2.8.10",
 	"TMaidShop":[
-		{ "Id": 1, "Price": 10 },
+		{ "Id": 1, "Price": 1 },
 		{ "Id": 2, "Price": 15 },
 		{ "Id": 3, "Price": 23 },
 		{ "Id": 4, "Price": 34 },

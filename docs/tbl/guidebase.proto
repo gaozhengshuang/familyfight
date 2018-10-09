@@ -43,7 +43,10 @@ message GuideDefine
 	optional string PersonXY = 8; // 人物坐标显示
 	
 	
-	optional string MaidInfo = 9; // 仆人id_仆人数量
+	optional string FingerXY = 9; // 手指坐标
+	
+	
+	optional string MaidInfo = 10; // 仆人id_仆人数量
 
 }
 
