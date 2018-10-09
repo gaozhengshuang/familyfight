@@ -149,6 +149,22 @@ ViewController.prototype.seekChildByName = function (children, name) {
 }
 
 /**
+ *  是否已经打开传入的界面
+ */
+ViewController.prototype.isOpen = function(ui) {
+    let isActive = false;
+    if (ui != null) {
+        let _view = _.find(this._viewList, function (v) {
+            return v.uiname == ui;
+        });
+        if (_view) {
+            isActive = _view.active;
+        }
+    }
+    return isActive;
+}
+
+/**
  * 打开对话界面
  */
 ViewController.prototype.showDialogue = function (parent, id) {
