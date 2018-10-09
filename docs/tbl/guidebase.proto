@@ -47,6 +47,9 @@ message GuideDefine
 	
 	
 	optional string MaidInfo = 10; // 仆人id_仆人数量
+	
+	
+	optional bool Upload = 11; // 上传服务器
 
 }
 
