@@ -217,6 +217,7 @@ var tableView = cc.Class({
     _setCellAttr: function (cell, index) {
         cell.setSiblingIndex(index >= cell.tag ? this._cellCount : 0);
         cell.tag = index;
+        cell.name = "cell_"+ (index+1);
     },
     _addCellsToView: function () {
         for (var index = 0; index <= this._maxCellIndex; ++index) {
