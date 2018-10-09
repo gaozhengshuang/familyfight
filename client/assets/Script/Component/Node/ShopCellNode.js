@@ -51,6 +51,7 @@ cc.Class({
     buyShop() {
         if (Game.UserModel.GetGold() >= this.price) {
             Game.NetWorkController.Send('msg.C2GW_ReqBuyMaid', {maidid: this._data.id});
+            Game.GuideController.NextGuide();
         } else {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, "金币不足哟!");
         }
