@@ -154,8 +154,17 @@ cc.Class({
                 }
                 break;
             
-            case 5:     //空白遮罩层啥也不干
-                this.isFind = false;
+            case 5:     //空白遮罩层 没有对话框和手指(用来播动画的时候用)
+                if (this.guideBase.prefab == "Prefab/GameSceneView") {
+                    guideNode = Game.ViewController.seekChildByName(canvas.getChildByName("GameSceneView"), this.guideBase.ButtonName);
+                } else {
+                    guideNode = Game.ViewController.seekChildByName(Game.ViewController.getViewByName(this.guideBase.prefab), this.guideBase.ButtonName);
+                }
+
+                if (guideNode) {
+                    this.guideNodes.push(guideNode);
+                    this._oldParent = guideNode.parent;     //记录之前的父节点
+                }
                 break;
 
             default:
