@@ -37,6 +37,10 @@ cc.Class({
                     this.resetNode(this._oldParent);
                 }
                 this.node.destroy();
+            } else {
+                if (this.guideBase.Type == 2) {
+                    Game.GuideController.NextGuide();
+                }
             }
         }
     },
@@ -101,6 +105,13 @@ cc.Class({
 
             case 2:     //点击任意处关闭的引导
                 this.isFind = false;
+                if (this.guideBase.FingerXY) {
+                    let _fingerpos = this.guideBase.FingerXY.split(",");   //手指位置
+                    if (_fingerpos.length > 0) {
+                        this.node_arrow.x = Number(_fingerpos[0]);
+                        this.node_arrow.y = Number(_fingerpos[1]);
+                    }
+                }
                 break;
 
             case 3:     //轿子引导
