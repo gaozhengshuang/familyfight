@@ -15,6 +15,7 @@ cc.Class({
         this.guideNodes = [];
         this.isFind = false;
         this._oldGuide = 0;
+        this._oldParent = null;
 
         this.initNotification();
     },
@@ -32,17 +33,8 @@ cc.Class({
     onClose() {
         if (this.guideBase) {    //关闭界面把按钮重置节点
             if (this.guideBase.NextGuide == 0) {
-                if (this._oldGuide != 0 && this.guideNodes.length > 0) {    
-                    let oldGuideBase = Game.ConfigController.GetConfigById("Guide", this._oldGuide);
-                    let newParent = null;
-                    if (oldGuideBase && oldGuideBase.Type == 1) {
-                        if (this.guideBase.prefab == "Prefab/GameSceneView") {
-                            newParent = cc.director.getScene().getChildByName('Canvas').getChildByName("GameSceneView");
-                        } else {
-                            newParent = Game.ViewController.getViewByName(oldGuideBase.prefab);
-                        }
-                    }
-                    this.resetNode(newParent);
+                if (this._oldParent != null && this.guideNodes.length > 0) {    
+                    this.resetNode(this._oldParent);
                 }
                 this.node.destroy();
             }
@@ -53,7 +45,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateGuide);
     },
 
-    resetNode(newParent) {
+    resetNode(tagretParent) {
         let oldWorldPosition = null;
         let newWordPosition = null;
 
@@ -61,9 +53,9 @@ cc.Class({
             let guideNode = this.guideNodes[i];
             
             oldWorldPosition = guideNode.parent.convertToWorldSpaceAR(guideNode.position);
-            newWordPosition = newParent.convertToNodeSpaceAR(oldWorldPosition);
+            newWordPosition = tagretParent.convertToNodeSpaceAR(oldWorldPosition);
             guideNode.position = newWordPosition;
-            guideNode.parent = newParent;
+            guideNode.parent = tagretParent;
         }
         
         if (newWordPosition) {   //设置手指位置(多个位置暂时不支持)
@@ -73,17 +65,8 @@ cc.Class({
     },
 
     updateGuide() {
-        if (this._oldGuide != 0 && this.guideNodes.length > 0) {    //把父节点变化过的按钮还回去
-            let oldGuideBase = Game.ConfigController.GetConfigById("Guide", this._oldGuide);
-            let newParent = null;
-            if (oldGuideBase && oldGuideBase.Type == 1) {
-                if (this.guideBase.prefab == "Prefab/GameSceneView") {
-                    newParent = cc.director.getScene().getChildByName('Canvas').getChildByName("GameSceneView");
-                } else {
-                    newParent = Game.ViewController.getViewByName(oldGuideBase.prefab);
-                }
-            }
-            this.resetNode(newParent);
+        if (this._oldParent != null && this.guideNodes.length > 0) {    //把父节点变化过的按钮还回去
+            this.resetNode(this._oldParent);
         }
         this._oldGuide = Game.GuideController.GetGuide();
 
@@ -123,8 +106,10 @@ cc.Class({
         }
 
         if (guideNode) {   //打开引导页面
-            this.guideNodes.push(guideNode);
             this.isFind = false;
+
+            this._oldParent = guideNode.parent;     //记录之前的父节点
+            this.guideNodes.push(guideNode);
             Game.ViewController.openView(this.guideBase.prefab);            
             this.resetNode(this.node_guideChild);
         }
