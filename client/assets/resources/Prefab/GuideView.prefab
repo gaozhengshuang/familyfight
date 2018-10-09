@@ -33,11 +33,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 27
+        "__id__": 28
       }
     ],
     "_prefab": {
-      "__id__": 28
+      "__id__": 29
     },
     "_id": "",
     "_opacity": 255,
@@ -598,9 +598,13 @@
     ],
     "_tag": -1,
     "_active": true,
-    "_components": [],
+    "_components": [
+      {
+        "__id__": 26
+      }
+    ],
     "_prefab": {
-      "__id__": 26
+      "__id__": 27
     },
     "_id": "",
     "_opacity": 255,
@@ -821,6 +825,24 @@
     "sync": false
   },
   {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 19
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "ff59726a-0287-4337-ba6f-a232c5ece7a2"
+    },
+    "_clips": [
+      {
+        "__uuid__": "ff59726a-0287-4337-ba6f-a232c5ece7a2"
+      }
+    ],
+    "playOnLoad": false
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -839,9 +861,6 @@
       "__id__": 1
     },
     "_enabled": true,
-    "_url": "",
-    "_data": {},
-    "_oldparentNode": null,
     "node_dailogbox": {
       "__id__": 6
     },
