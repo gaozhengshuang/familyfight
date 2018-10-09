@@ -135,6 +135,7 @@ cc.Class({
                     this._oldParent = guideNode.parent;     //记录之前的父节点
                 }
                 break;
+
             case 4:     //侍女
                 this.isFind = false;
                 if (gameSceneView == null) {
@@ -152,7 +153,13 @@ cc.Class({
                     this._oldParent = maidNode.node.parent;     //记录之前的父节点
                 }
                 break;
+            
+            case 5:     //空白遮罩层啥也不干
+                this.isFind = false;
+                break;
+
             default:
+                this.isFind = false;
                 break;
         }
 
@@ -163,12 +170,16 @@ cc.Class({
 
         //界面设置
         this.node_arrow.active = this.guideBase.IsFinger == 1;
-        this.label_dialog.string = this.guideBase.Dialog;
-        let _boxpos = this.guideBase.PersonXY.split(",");   //人物位置
-        if (_boxpos.length > 0) {
-            this.node_dailogbox.x = Number(_boxpos[0]);
-            this.node_dailogbox.y = Number(_boxpos[1]);
+        this.node_dailogbox.active = this.guideBase.IsDialog == 1;
+        if (this.guideBase.Type != 5) {
+            this.label_dialog.string = this.guideBase.Dialog;
+            let _boxpos = this.guideBase.PersonXY.split(",");   //人物位置
+            if (_boxpos.length > 0) {
+                this.node_dailogbox.x = Number(_boxpos[0]);
+                this.node_dailogbox.y = Number(_boxpos[1]);
+            }
         }
+        
         this.anima_dialogueShow.play();
     },
 });
