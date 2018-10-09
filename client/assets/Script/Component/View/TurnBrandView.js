@@ -1,6 +1,5 @@
 let Game = require('../../Game');
 let BrandItemView = require('./BrandItemView');
-let TipRewardView = require('./TipRewardView');
 
 const BrandStatus = {
     Status_Idle: 1,                 //初始化
@@ -29,7 +28,6 @@ cc.Class({
         shuffleTargetNode: { default: null, type: cc.Node },
         showTargetNode: { default: null, type: cc.Node },
         dialogueNode: { default: null, type: cc.Node },
-        tipRewardViewPrefab: { default: null, type: cc.Prefab },
 
         status: { default: BrandStatus.Status_Idle },
         brandInfos: { default: [] },
@@ -235,11 +233,12 @@ cc.Class({
         switch (config.Type) {
             case Game.TurnGameDefine.REWARD_TYPE.TYPE_GOLD:
                 //金币
-                node = cc.instantiate(this.tipRewardViewPrefab);
-                this.dialogueNode.addChild(node);
-                view = node.getComponent(TipRewardView);
                 let value = this.rewardGold;
-                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>金币+' + Game.Tools.UnitConvert(value) + '</c></c>', 0.5, 1);
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+                    info: '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>金币+' + Game.Tools.UnitConvert(value) + '</c></c>',
+                    alive: 0.5,
+                    delay: 1
+                });
                 Game.UserModel.AddGold(value);
                 this.node.runAction(cc.sequence([
                     cc.delayTime(0.5),
@@ -257,10 +256,11 @@ cc.Class({
                 break;
             case Game.TurnGameDefine.REWARD_TYPE.TYPE_POWER:
                 //体力
-                node = cc.instantiate(this.tipRewardViewPrefab);
-                this.dialogueNode.addChild(node);
-                view = node.getComponent(TipRewardView);
-                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>体力+' + config.Value + '</c></c>', 0.5, 1);
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+                    info: '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>体力+' + config.Value + '</c></c>',
+                    alive: 0.5,
+                    delay: 1
+                });
                 Game.NetWorkController.Send('msg.C2GW_ReqPower');
                 this.node.runAction(cc.sequence([
                     cc.delayTime(0.5),
@@ -278,11 +278,11 @@ cc.Class({
                 break;
             case Game.TurnGameDefine.REWARD_TYPE.TYPE_MINIGAME:
                 //小游戏
-                node = cc.instantiate(this.tipRewardViewPrefab);
-                this.dialogueNode.addChild(node);
-                view = node.getComponent(TipRewardView);
-                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】前去-<color=#ed5b5b>' + MiniGameName[config.RewardId] + '</c></c>', 0.5, 1);
-
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+                    info: '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】前去-<color=#ed5b5b>' + MiniGameName[config.RewardId] + '</c></c>',
+                    alive: 0.5,
+                    delay: 1
+                });
                 this.node.runAction(cc.sequence([
                     cc.delayTime(0.5),
                     cc.callFunc(function () {
@@ -300,12 +300,12 @@ cc.Class({
                 break;
             case Game.TurnGameDefine.REWARD_TYPE.TYPE_ITEM:
                 //物品
-                node = cc.instantiate(this.tipRewardViewPrefab);
-                this.dialogueNode.addChild(node);
-                view = node.getComponent(TipRewardView);
                 let itemConfig = Game.ItemModel.GetItemConfig(config.RewardId)
-                view.flap('<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>' + itemConfig.Name + '+' + config.Value + '</c></c>', 0.5, 1);
-
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+                    info: '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>' + itemConfig.Name + '+' + config.Value + '</c></c>',
+                    alive: 0.5,
+                    delay: 1
+                });
                 this.node.runAction(cc.sequence([
                     cc.delayTime(0.5),
                     cc.callFunc(function () {

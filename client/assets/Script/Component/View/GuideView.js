@@ -158,8 +158,8 @@ cc.Class({
         }
 
         if (this.guideBase.prefab != "Prefab/GameSceneView" && this.openFirst) {      //打开引导的目标界面(下线直接恢复)
-            this.openFirst = false;
             if (!Game.ViewController.isOpen(this.guideBase.prefab)) {
+                this.openFirst = false;
                 Game.ViewController.openView(this.guideBase.prefab);
             }
         }
