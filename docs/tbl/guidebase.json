@@ -15,5 +15,5 @@
 		{ "Id": 11, "NextGuide": 12, "Type": 1, "IsFinger": 1, "Dialog": "解锁了翻牌子，请点击打开看看。", "prefab": "Prefab/GameSceneView", "ButtonName": "btn_turnbrand", "PersonXY": "0,233" },
 		{ "Id": 12, "NextGuide": 13, "Type": 1, "IsFinger": 1, "Dialog": "尝试点击翻牌子，可以获取更多金币。（获得的金币数跟你拥有的宫女等级数量有关）", "prefab": "Prefab/TurnBrandView", "ButtonName": "BrandNodeParent4", "PersonXY": "0,233" },
 		{ "Id": 13, "NextGuide": 14, "Type": 1, "IsFinger": 1, "Dialog": "运气真好！获得了很多钱，让我们返回去继续升级宫女吧。", "prefab": "Prefab/TurnBrandView", "ButtonName": "BackButton", "PersonXY": "0,-276" },
-		{ "Id": 14, "NextGuide": 0, "Type": 2, "IsFinger": 0, "Dialog": "让我们接着解锁新的关卡，可以开启新的功能。", "PersonXY": "0,233" }
+		{ "Id": 14, "NextGuide": 0, "Type": 2, "IsFinger": 1, "Dialog": "让我们接着解锁新的关卡，可以开启新的功能。", "PersonXY": "0,233", "FingerXY": "217,-78" }
 	]}
