@@ -23,6 +23,11 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MAID_UPDATESHOP, this, this.updateTableView);
     },
 
+    onClose() {
+        this.closeView(this._url);
+        Game.GuideController.NextGuide();
+    },
+
     initData() {
         this.tableViewComponent = this.tableView.getComponent(cc.tableView);
     },
