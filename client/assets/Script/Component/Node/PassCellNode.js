@@ -43,6 +43,7 @@ cc.Class({
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW);
         }
+        Game.GuideController.NextGuide();
 
         let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));
         if (this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.pass < this._data.Id) {

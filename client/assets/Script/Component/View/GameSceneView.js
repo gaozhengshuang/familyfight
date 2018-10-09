@@ -268,10 +268,9 @@ cc.Class({
     },
 
     findNewPlayer() {
-        if (Game.GuideController.IsGuide()) {
-            return;
+        if (!Game.GuideController.IsGuide()) {
+            this.openView(Game.UIName.UI_FINDNEWPLAYER);
         }
-        this.openView(Game.UIName.UI_FINDNEWPLAYER);
         Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
     },
 
