@@ -15,7 +15,7 @@
 		{ "Id": 11, "NextGuide": 12, "Type": 2, "IsDialog": 1, "IsFinger": 1, "Dialog": "原来在这里，合并高等级宫女不仅可以开启新关卡，还能解锁新功能。", "PersonXY": "0,233", "FingerXY": "217,-78", "Upload": true },
 		{ "Id": 12, "NextGuide": 13, "Type": 1, "IsDialog": 1, "IsFinger": 1, "Dialog": "恭喜解锁了翻牌子功能，请点击打开看看。", "prefab": "Prefab/GameSceneView", "ButtonName": "btn_turnbrand", "PersonXY": "0,-241", "Upload": true },
 		{ "Id": 13, "NextGuide": 14, "Type": 1, "IsDialog": 1, "IsFinger": 1, "Dialog": "尝试点击翻牌子，可以获取更多金币。（获得的金币数跟你拥有的宫女等级数量有关）", "prefab": "Prefab/TurnBrandView", "ButtonName": "BrandNodeParent4", "PersonXY": "0,233", "Upload": false },
-		{ "Id": 14, "NextGuide": 15, "Type": 5, "IsDialog": 0, "IsFinger": 0, "Upload": false },
+		{ "Id": 14, "NextGuide": 15, "Type": 5, "IsDialog": 0, "IsFinger": 0, "prefab": "Prefab/TurnBrandView", "ButtonName": "BrandNodeParent4", "Upload": false },
 		{ "Id": 15, "NextGuide": 16, "Type": 1, "IsDialog": 1, "IsFinger": 1, "Dialog": "运气真好！获得了很多钱，让我们返回去继续升级宫女吧。", "prefab": "Prefab/TurnBrandView", "ButtonName": "BackButton", "PersonXY": "0,-276", "Upload": false },
 		{ "Id": 16, "NextGuide": 0, "Type": 1, "IsDialog": 1, "IsFinger": 1, "Dialog": "让我们回到第一关继续合并升级宫女吧！", "prefab": "Prefab/GameSceneView", "ButtonName": "cell_1", "PersonXY": "0,233", "Upload": true }
 	]}
