@@ -5,6 +5,7 @@ cc.Class({
 
     properties: {
         node_dailogbox: { default: null, type: cc.Node },
+        anima_dialogueShow: { default: null, type: cc.Animation },
         node_guideChild: { default: null, type: cc.Node },
         node_arrow: { default: null, type: cc.Node },
         label_dialog: { default: null, type: cc.Label },
@@ -96,7 +97,7 @@ cc.Class({
                 } else {
                     guideNode = Game.ViewController.seekChildByName(Game.ViewController.getViewByName(this.guideBase.prefab), this.guideBase.ButtonName);
                 }
-                
+
                 if (guideNode) {
                     this.guideNodes.push(guideNode);
                     this._oldParent = guideNode.parent;     //记录之前的父节点
@@ -167,5 +168,6 @@ cc.Class({
             this.node_dailogbox.x = Number(_boxpos[0]);
             this.node_dailogbox.y = Number(_boxpos[1]);
         }
+        this.anima_dialogueShow.play();
     },
 });

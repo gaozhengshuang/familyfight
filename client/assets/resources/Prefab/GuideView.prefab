@@ -954,6 +954,9 @@
     "node_dailogbox": {
       "__id__": 8
     },
+    "anima_dialogueShow": {
+      "__id__": 18
+    },
     "node_guideChild": {
       "__id__": 20
     },
