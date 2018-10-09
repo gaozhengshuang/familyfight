@@ -100,7 +100,7 @@ func NewGateUser(account, key, token string) *GateUser {
 	u.token = token
     u.roomid = 0
 	u.gameflag = false
-	u.guide = 0
+	u.guide = 1
 	return u
 }
 
@@ -367,6 +367,7 @@ func (this *GateUser) OnCreateNew() {
 	this.power = uint32(tbl.Common.PowerInit)
 	this.maxpower = uint32(tbl.Common.PowerMax)
 	this.nextpowertime = uint64(util.CURTIME()) + uint64(tbl.Common.PowerAddInterval)
+	this.guide = 1
 	this.travel.CreateNew()
 	this.GenerateBox(1, 1, 1)
 	this.Save()
