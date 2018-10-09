@@ -16,7 +16,6 @@ cc.Class({
         this.isFind = false;
         this._oldGuide = 0;
         this._oldParent = null;
-        this.openFirst = false;
 
         this.initNotification();
     },
@@ -72,8 +71,6 @@ cc.Class({
     },
 
     updateGuide() {
-        this.openFirst = true;
-
         if (this._oldParent != null && this.guideNodes.length > 0) {    //把父节点变化过的按钮还回去
             this.resetNode(this._oldParent);
         }
@@ -155,13 +152,6 @@ cc.Class({
                 break;
             default:
                 break;
-        }
-
-        if (this.guideBase.prefab != "Prefab/GameSceneView" && this.openFirst) {      //打开引导的目标界面(下线直接恢复)
-            if (!Game.ViewController.isOpen(this.guideBase.prefab)) {
-                this.openFirst = false;
-                Game.ViewController.openView(this.guideBase.prefab);
-            }
         }
 
         if (this.guideNodes.length > 0) {
