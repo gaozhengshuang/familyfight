@@ -114,7 +114,7 @@ UserModel.prototype.onGW2C_OfflineReward = function (msgid, data) {
 }
 
 UserModel.prototype.onGW2C_AckGuideData = function (msgid, data) {
-    GuideController.SetGuide(data);
+    GuideController.SetGuide(data.guide);
 }
 
 module.exports = new UserModel();

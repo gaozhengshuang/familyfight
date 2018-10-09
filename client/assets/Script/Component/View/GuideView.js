@@ -15,6 +15,7 @@ cc.Class({
         this.guideNode = null;
         this.isFind = false;
         this._oldGuide = 0;
+        this._oldParent = null;
 
         this.initNotification();
     },
@@ -30,35 +31,41 @@ cc.Class({
     },
 
     onClose() {
-        this.resetNode();
-        this.node.destroy();
+        if (this.guideBase) {
+            if (this.guideBase.NextGuide == 0) {
+                this.resetNode(this._oldParent, this.node_guideChild);
+                this.node.destroy();
+            }
+        }
     },
 
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateGuide);
     },
 
-    resetNode() {
+    resetNode(oldParent, newParent) {
+        let oldWorldPosition = oldParent.parent.convertToWorldSpaceAR(oldParent.position);
+        let newWordPosition = newParent.convertToNodeSpaceAR(oldWorldPosition);
+        this.guideNode.position = newWordPosition;
+        this.guideNode.parent = newParent;
+
+        this.node_arrow.x = newWordPosition.x;
+        this.node_arrow.y = newWordPosition.y;
+    },
+
+    updateGuide() {
         if (this._oldGuide != 0 && this.guideNode != null) {    //把父节点变化过的按钮还回去
             let oldGuideBase = Game.ConfigController.GetConfigById("Guide", this._oldGuide);
+            let newParent = null;
             if (oldGuideBase && oldGuideBase.Type == 1) {
-                let newParent = null;
                 if (this.guideBase.prefab == "Prefab/GameSceneView") {
                     newParent = cc.director.getScene().getChildByName('Canvas').getChildByName("GameSceneView");
                 } else {
                     newParent = Game.ViewController.getViewByName(oldGuideBase.prefab);
                 }
-
-                let oldWorldPosition = this.guideNode.parent.convertToWorldSpaceAR(this.guideNode.position);
-                let newWordPosition = newParent.convertToNodeSpaceAR(oldWorldPosition);
-                this.guideNode.position = newWordPosition;
-                this.guideNode.parent = newParent;
             }
+            this.resetNode(this._oldParent, newParent);
         }
-    },
-
-    updateGuide() {
-        this.resetNode();
         this._oldGuide = Game.GuideController.GetGuide();
 
         this.guideBase = Game.ConfigController.GetConfigById("Guide", Game.GuideController.GetGuide());
@@ -70,29 +77,11 @@ cc.Class({
     updateView() {
         let canvas = cc.director.getScene().getChildByName('Canvas');
         switch (this.guideBase.Type) {
-            case 0:     //仆人和轿子的引导
-                this.isFind = false;
-                break;
-
             case 1:     //点击目标的引导
                 if (this.guideBase.prefab == "Prefab/GameSceneView") {
                     this.guideNode = canvas.getChildByName("GameSceneView").getChildByName(this.guideBase.ButtonName);
                 } else {
                     this.guideNode = Game.ViewController.seekChildByName(this.guideBase.prefab, this.guideBase.ButtonName);
-                }
-
-                if (this.guideNode) {   //找到节点设置手指指向的位置
-                    Game.ViewController.openView(this.guideBase.prefab);
-
-                    this.isFind = false;
-        
-                    let oldWorldPosition = this.guideNode.parent.convertToWorldSpaceAR(this.guideNode.position);
-                    let newWordPosition = this.node_guideChild.convertToNodeSpaceAR(oldWorldPosition);
-                    this.guideNode.position = newWordPosition;
-                    this.guideNode.parent = this.node_guideChild;
-        
-                    this.node_arrow.x = newWordPosition.x;
-                    this.node_arrow.y = newWordPosition.y;
                 }
                 break;
 
@@ -110,6 +99,14 @@ cc.Class({
 
             default:
                 break;
+        }
+
+        if (this.guideNode) {   //打开引导页面 设置手指位置
+            this.isFind = false;
+            this._oldParent = this.guideNode;
+
+            Game.ViewController.openView(this.guideBase.prefab);            
+            this.resetNode(this.guideNode, this.node_guideChild);
         }
 
         //界面设置
