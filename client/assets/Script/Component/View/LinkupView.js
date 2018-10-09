@@ -1,6 +1,5 @@
 let Game = require('../../Game');
 let LinkItemNode = require('../Node/LinkItemNode');
-let TipRewardView = require('./TipRewardView');
 
 const LinkStatus = {
     Status_Idle: 1,
@@ -16,7 +15,6 @@ cc.Class({
         linkItemNodes: { default: [], type: [LinkItemNode] },
         maskNode: { default: null, type: cc.Node },
         countDownLabel: { default: null, type: cc.Label },
-        tipRewardViewPrefab: { default: null, type: cc.Prefab },
         rewardTimesNode: { default: null, type: cc.Node },
 
         linkInfos: { default: [] },
@@ -124,10 +122,11 @@ cc.Class({
         }
     },
     onRetLinkup: function (msgid, data) {
-        let node = cc.instantiate(this.tipRewardViewPrefab);
-        this.node.addChild(node);
-        let view = node.getComponent(TipRewardView);
-        view.flap('<color=#6d282d>获得金币+<color=#ed5b5b>' + Game.Tools.UnitConvert(data.gold) + '</c></c>', 0.5, 1);
+        Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+            info: '<color=#6d282d>获得金币+<color=#ed5b5b>' + Game.Tools.UnitConvert(data.gold) + '</c></c>',
+            alive: 0.5,
+            delay: 1
+        });
         Game.UserModel.AddGold(data.gold);
         this.node.runAction(cc.sequence([
             cc.delayTime(2),

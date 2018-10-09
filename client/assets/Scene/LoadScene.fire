@@ -895,6 +895,9 @@
     "notifyPrefab": {
       "__uuid__": "15bf0e6a-304c-4836-9d97-b4e2049a71f5"
     },
+    "rewardPrefab": {
+      "__uuid__": "ac026e95-2708-4976-84ba-d1fe6b513937"
+    },
     "barragePositionIndex": 0
   }
 ]

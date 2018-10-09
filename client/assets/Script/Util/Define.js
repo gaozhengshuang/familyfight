@@ -18,8 +18,7 @@ var Define = {
         NET_CLOSE: '301',
 
         TIP_TIPS: '401',
-        TIP_BARRAGE: '402',
-        TIP_RESULT: '403',
+        TIP_REWARD: '402',
 
         MUSIC_CHANGE: '500',
         EFFECT_CHANGE: '501',
