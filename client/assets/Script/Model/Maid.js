@@ -1,8 +1,11 @@
-let NetWorkController = require('../Controller/NetWorkController');
-let NotificationController = require('../Controller/NotificationController');
-let ConfigController = require('../Controller/ConfigController');
-let Tools = require("../Util/Tools");
-let Define = require("../Util/Define");
+const _ = require('lodash');
+
+const NetWorkController = require('../Controller/NetWorkController');
+const NotificationController = require('../Controller/NotificationController');
+const ConfigController = require('../Controller/ConfigController');
+const GuideController = require('../Controller/GuideController');
+const Tools = require("../Util/Tools");
+const Define = require("../Util/Define");
 
 var MaidModel = function () {
     this._maids = null;
@@ -142,6 +145,10 @@ MaidModel.prototype.onGW2C_AckMaids = function (msgid, data) {
 }
 
 MaidModel.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
+    let guideConf = GuideController.GetGuideConfig(GuideController._guide);
+    if (_.get(guideConf, 'Type', 0) == 4) {
+        GuideController.NextGuide();
+    }
     NotificationController.Emit(Define.EVENT_KEY.MERGEPLAYER_ACK, data.result);
 }
 
@@ -157,6 +164,10 @@ MaidModel.prototype.onGW2C_AckBuyMaid = function (msgid, data) {
 }
 
 MaidModel.prototype.onGW2C_RetOpenBox = function (msgid, data) {
+    let guideConf = GuideController.GetGuideConfig(GuideController._guide);
+    if (_.get(guideConf, 'Type', 0) == 3) {
+        GuideController.NextGuide();
+    }
     NotificationController.Emit(Define.EVENT_KEY.OPENBOX_ACK, data.result);
 }
 

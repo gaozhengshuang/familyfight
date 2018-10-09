@@ -18,18 +18,26 @@ GuideController.prototype.SetGuide = function (guide) {
     NotificationController.Emit(Define.EVENT_KEY.GUIDE_ACK);
 }
 
-GuideController.prototype.GetGuide = function() {
+GuideController.prototype.GetGuide = function () {
     return this._guide;
 }
 
-GuideController.prototype.IsGuide = function() {
+GuideController.prototype.GetGuideConfig = function (id) {
+    return ConfigController.GetConfigById("Guide", id);
+}
+
+GuideController.prototype.IsGuide = function () {
     return ConfigController.GetConfigById("Guide", this._guide).NextGuide != 0;
 }
 
-GuideController.prototype.SendGuide = function(guide) {
+GuideController.prototype.SendGuide = function (guide) {
     if (this.IsGuide()) {
-        NetWorkController.Send('msg.C2GW_UpdateGuideData', {guide: guide});
+        NetWorkController.Send('msg.C2GW_UpdateGuideData', { guide: guide });
     }
+}
+
+GuideController.prototype.NextGuide = function () {
+    this.SendGuide(ConfigController.GetConfigById("Guide", this._guide).NextGuide);
 }
 
 module.exports = new GuideController();

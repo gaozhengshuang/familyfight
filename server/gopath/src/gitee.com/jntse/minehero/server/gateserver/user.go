@@ -369,7 +369,7 @@ func (this *GateUser) OnCreateNew() {
 	this.nextpowertime = uint64(util.CURTIME()) + uint64(tbl.Common.PowerAddInterval)
 	this.guide = 1
 	this.travel.CreateNew()
-	this.GenerateBox(1, 1, 1)
+	this.GenerateBox(1, 2, 1)
 	this.Save()
 }
 

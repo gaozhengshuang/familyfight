@@ -33,7 +33,7 @@ cc.Class({
     onClose() {
         if (this.guideBase) {    //关闭界面把按钮重置节点
             if (this.guideBase.NextGuide == 0) {
-                if (this._oldParent != null && this.guideNodes.length > 0) {    
+                if (this._oldParent != null && this.guideNodes.length > 0) {
                     this.resetNode(this._oldParent);
                 }
                 this.node.destroy();
@@ -80,12 +80,18 @@ cc.Class({
         this.guideNodes = [];
         let guideNode = null;
         let canvas = cc.director.getScene().getChildByName('Canvas');
+        let gameSceneViewNode = canvas.getChildByName("GameSceneView");
+        let gameSceneView = gameSceneViewNode.getComponent('GameSceneView');
         switch (this.guideBase.Type) {
             case 1:     //点击目标的引导
                 if (this.guideBase.prefab == "Prefab/GameSceneView") {
                     guideNode = canvas.getChildByName("GameSceneView").getChildByName(this.guideBase.ButtonName);
                 } else {
                     guideNode = Game.ViewController.seekChildByName(this.guideBase.prefab, this.guideBase.ButtonName);
+                }
+                if (guideNode) {
+                    this.guideNodes.push(guideNode);
+                    this._oldParent = guideNode.parent;     //记录之前的父节点
                 }
                 break;
 
@@ -95,11 +101,6 @@ cc.Class({
 
             case 3:     //轿子引导
                 this.isFind = false;
-                let gameSceneViewNode = canvas.getChildByName("GameSceneView");
-                if (gameSceneViewNode == null) {
-                    break;
-                }
-                let gameSceneView = gameSceneViewNode.getComponent('GameSceneView');
                 if (gameSceneView == null) {
                     break;
                 }
@@ -112,38 +113,35 @@ cc.Class({
                     break;
                 }
                 guideNode.stopAllActions();
+                if (guideNode) {
+                    this.guideNodes.push(guideNode);
+                    this._oldParent = guideNode.parent;     //记录之前的父节点
+                }
                 break;
             case 4:     //侍女
                 this.isFind = false;
-                let gameSceneViewNode = canvas.getChildByName("GameSceneView");
-                if (gameSceneViewNode == null) {
-                    break;
-                }
-                let gameSceneView = gameSceneViewNode.getComponent('GameSceneView');
                 if (gameSceneView == null) {
                     break;
                 }
-                let maidInfo = this.guideBase.MaidInfo;
-                let maidList = gameSceneView.getMaidById();
-                if (boxList == null || boxList.length == 0) {
+                let maidInfos = (this.guideBase.MaidInfo || '').split('_');
+                let maidList = gameSceneView.getMaidById(parseInt(maidInfos[0] || '1'), parseInt(maidInfos[1] || '1'));
+                if (maidList == null || maidList.length == 0) {
                     break;
                 }
-                guideNode = boxList[0].node;
-                if (guideNode == null) {
-                    break;
+                for (let i = 0; i < maidList.length; i++) {
+                    let maidNode = maidList[i];
+                    maidNode.node.stopAllActions();
+                    this.guideNodes.push(maidNode.node);
+                    this._oldParent = maidNode.node.parent;     //记录之前的父节点
                 }
-                guideNode.stopAllActions();
                 break;
             default:
                 break;
         }
 
-        if (guideNode) {   //打开引导页面
+        if (this.guideNodes.length > 0) {   //打开引导页面
             this.isFind = false;
-
-            this._oldParent = guideNode.parent;     //记录之前的父节点
-            this.guideNodes.push(guideNode);
-            Game.ViewController.openView(this.guideBase.prefab);            
+            Game.ViewController.openView(this.guideBase.prefab);
             this.resetNode(this.node_guideChild);
         }
 
