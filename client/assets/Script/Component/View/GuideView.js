@@ -72,6 +72,18 @@ cc.Class({
                     Game.ViewController.openView(this.guideBase.prefab);
                     this.guideNode = Game.ViewController.seekChildByName(this.guideBase.prefab, this.guideBase.ButtonName);
                 }
+
+                if (this.guideNode) {   //找到节点设置手指指向的位置
+                    this.isFind = false;
+        
+                    let oldWorldPosition = this.guideNode.parent.convertToWorldSpaceAR(this.guideNode.position);
+                    let newWordPosition = this.node_guideChild.convertToNodeSpaceAR(oldWorldPosition);
+                    this.guideNode.position = newWordPosition;
+                    this.guideNode.parent = this.node_guideChild;
+        
+                    this.node_arrow.x = newWordPosition.x;
+                    this.node_arrow.y = newWordPosition.y;
+                }
                 break;
 
             case 2:     //点击任意处关闭的引导
@@ -79,19 +91,13 @@ cc.Class({
                 break;
         }
 
-        if (this.guideNode) {   //找到节点设置手指指向的位置
-            this.isFind = false;
-
-            let oldWorldPosition = this.guideNode.parent.convertToWorldSpaceAR(this.guideNode.position);
-            let newWordPosition = this.node_guideChild.convertToNodeSpaceAR(oldWorldPosition);
-            this.guideNode.position = newWordPosition;
-            this.guideNode.parent = this.node_guideChild;
-
-            this.node_arrow.x = newWordPosition.x;
-            this.node_arrow.y = newWordPosition.y;
-        }
-
+        //界面设置
         this.node_arrow.active = this.guideBase.IsFinger == 1;
         this.label_dialog.string = this.guideBase.Dialog;
+        let pos = this.guideBase.PersonXY.split(",");   //人物位置
+        if (pos.length > 0) {
+            this.node_dailogbox.x = Number(pos[0]);
+            this.node_dailogbox.y = Number(pos[1]);   
+        }
     },
 });
