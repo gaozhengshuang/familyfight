@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -19377,13 +19377,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -19632,13 +19626,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -33449,6 +33437,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IGW2C_AckGuideData
          * @property {number|null} [guide] GW2C_AckGuideData guide
+         * @property {boolean|null} [firstsyn] GW2C_AckGuideData firstsyn
          */
 
         /**
@@ -33473,6 +33462,14 @@ $root.msg = (function() {
          * @instance
          */
         GW2C_AckGuideData.prototype.guide = 0;
+
+        /**
+         * GW2C_AckGuideData firstsyn.
+         * @member {boolean} firstsyn
+         * @memberof msg.GW2C_AckGuideData
+         * @instance
+         */
+        GW2C_AckGuideData.prototype.firstsyn = false;
 
         /**
          * Creates a new GW2C_AckGuideData instance using the specified properties.
@@ -33500,6 +33497,8 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.guide != null && message.hasOwnProperty("guide"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.guide);
+            if (message.firstsyn != null && message.hasOwnProperty("firstsyn"))
+                writer.uint32(/* id 2, wireType 0 =*/16).bool(message.firstsyn);
             return writer;
         };
 
@@ -33536,6 +33535,9 @@ $root.msg = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.guide = reader.uint32();
+                    break;
+                case 2:
+                    message.firstsyn = reader.bool();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -33575,6 +33577,9 @@ $root.msg = (function() {
             if (message.guide != null && message.hasOwnProperty("guide"))
                 if (!$util.isInteger(message.guide))
                     return "guide: integer expected";
+            if (message.firstsyn != null && message.hasOwnProperty("firstsyn"))
+                if (typeof message.firstsyn !== "boolean")
+                    return "firstsyn: boolean expected";
             return null;
         };
 
@@ -33592,6 +33597,8 @@ $root.msg = (function() {
             var message = new $root.msg.GW2C_AckGuideData();
             if (object.guide != null)
                 message.guide = object.guide >>> 0;
+            if (object.firstsyn != null)
+                message.firstsyn = Boolean(object.firstsyn);
             return message;
         };
 
@@ -33608,10 +33615,14 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
+            if (options.defaults) {
                 object.guide = 0;
+                object.firstsyn = false;
+            }
             if (message.guide != null && message.hasOwnProperty("guide"))
                 object.guide = message.guide;
+            if (message.firstsyn != null && message.hasOwnProperty("firstsyn"))
+                object.firstsyn = message.firstsyn;
             return object;
         };
 
