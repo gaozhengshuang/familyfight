@@ -52,7 +52,7 @@ message GuideDefine
 	optional string MaidInfo = 11; // 仆人id_仆人数量
 	
 	
-	optional bool Upload = 12; // 上传服务器
+	optional uint32 Resetid = 12; // 重置id
 
 }
 
