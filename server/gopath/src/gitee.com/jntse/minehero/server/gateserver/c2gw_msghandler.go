@@ -271,6 +271,8 @@ func on_C2GW_ReqMergeMaid(session network.IBaseNetSession, message interface{}) 
 		user.SendMsg(updateSend)
 	}
 	send.Result = pb.Uint32(result)
+	send.Touchid = pb.String(tmsg.GetTouchid())
+	send.Findid = pb.String(tmsg.GetFindid())
 	user.SendMsg(send)
 }
 //更新货币

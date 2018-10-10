@@ -26,11 +26,14 @@ message GW2C_AckBuyMaid
 message C2GW_ReqMergeMaid
 {
     optional uint32 maidid = 1;
+    optional string touchid = 2;
+    optional string findid = 3;
 }
-
 message GW2C_AckMergeMaid
 {
     optional uint32 result = 1;
+    optional string touchid = 2;
+    optional string findid = 3;
 }
 
 message GW2C_OfflineReward
