@@ -65,10 +65,10 @@ var Define = {
         TYPE_GOLD: 5
     },
     GUIDE_DEFINE: {
-        OPEN_TURNBRAND: 14,
-        CLICK_TURNBRAND: 15,
-        SHOW_TURNBRANDREWARD: 16,
-        CLOSE_TURNBRAND: 17,
+        OPEN_TURNBRAND: 15,
+        CLICK_TURNBRAND: 16,
+        SHOW_TURNBRANDREWARD: 17,
+        CLOSE_TURNBRAND: 18,
     }
 }
 
