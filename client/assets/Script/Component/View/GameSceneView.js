@@ -201,26 +201,34 @@ cc.Class({
                 if (nextLvPlayer.Passlevels != this._findPlayer.getMaidBase().Passlevels) {
                     let curX = this._findPlayer.node.x;
                     let curY = this._findPlayer.node.y;
-                    cc.loader.loadRes(nextLvPlayer.Path, cc.SpriteFrame, function (err, spriteFrame) {
-                        var node_newMaid = new cc.Node('newMaid');
-                        const sprite = node_newMaid.addComponent(cc.Sprite);
-                        sprite.spriteFrame = spriteFrame;
-                        this.node_player.addChild(node_newMaid);
 
-                        node_newMaid.x = curX;
-                        node_newMaid.y = curY;
+                    let passBase = Game.ConfigController.GetConfigById("PassLevels", nextLvPlayer.Passlevels);
+                    if (passBase) {
+                        let passCellNode = Game.ViewController.seekChildByName(this.node, "cell_"+ passBase.Index);
+                        let oldWorldPosition = passCellNode.parent.convertToWorldSpaceAR(passCellNode.position);
+                        let newWordPosition = this.node_player.convertToNodeSpaceAR(oldWorldPosition);
 
-                        node_newMaid.runAction(cc.sequence([
-                            cc.spawn([
-                                cc.moveTo(0.6, 0, 400),
-                                cc.scaleTo(0.6, 0, 0),
-                            ]),
-                            cc.callFunc(function () {
-                                node_newMaid.destroy();
-                                node_newMaid = null;
-                            }, this)
-                        ]));
-                    }.bind(this));
+                        cc.loader.loadRes(nextLvPlayer.Path, cc.SpriteFrame, function (err, spriteFrame) {
+                            var node_newMaid = new cc.Node('newMaid');
+                            const sprite = node_newMaid.addComponent(cc.Sprite);
+                            sprite.spriteFrame = spriteFrame;
+                            this.node_player.addChild(node_newMaid);
+
+                            node_newMaid.x = curX;
+                            node_newMaid.y = curY;
+
+                            node_newMaid.runAction(cc.sequence([
+                                cc.spawn([
+                                    cc.moveTo(0.8, newWordPosition.x, newWordPosition.y),
+                                    cc.scaleTo(0.8, 0.2, 0.2),
+                                ]),
+                                cc.callFunc(function () {
+                                    node_newMaid.destroy();
+                                    node_newMaid = null;
+                                }, this)
+                            ]));
+                        }.bind(this));
+                    }
                 }
             }
 
@@ -268,9 +276,7 @@ cc.Class({
     },
 
     findNewPlayer() {
-        if (!Game.GuideController.IsGuide()) {
-            this.openView(Game.UIName.UI_FINDNEWPLAYER);
-        }
+        this.openView(Game.UIName.UI_FINDNEWPLAYER);
         Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
     },
 
