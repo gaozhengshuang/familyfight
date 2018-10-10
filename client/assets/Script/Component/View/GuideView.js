@@ -54,7 +54,6 @@ cc.Class({
     resetNode(tagretParent) {
         let oldWorldPosition = null;
         let newWordPosition = null;
-
         for (let i = 0; i < this.guideNodes.length; i++) {
             let guideNode = this.guideNodes[i];
 
@@ -66,10 +65,21 @@ cc.Class({
             }
         }
 
-        if (newWordPosition) {   //设置手指位置(多个位置暂时不支持)
-            this.node_arrow.x = newWordPosition.x;
-            this.node_arrow.y = newWordPosition.y;
+        if (this.guideBase.IsFinger == 1) { //设置手指位置(多个位置暂时不支持)
+            if (this.guideBase.ButtonName != null) {
+                let fingerNode = Game.ViewController.seekChildByName(tagretParent, this.guideBase.ButtonName);
+                if (fingerNode) {   
+                    this.node_arrow.x = fingerNode.x;
+                    this.node_arrow.y = fingerNode.y;
+                }
+            } else {
+                if (newWordPosition) {
+                    this.node_arrow.x = newWordPosition.x;
+                    this.node_arrow.y = newWordPosition.y;
+                }
+            }
         }
+        
     },
 
     updateGuide() {        
@@ -93,12 +103,7 @@ cc.Class({
         let gameSceneView = gameSceneViewNode.getComponent('GameSceneView');
         switch (this.guideBase.Type) {
             case 1:     //点击目标的引导
-                if (this.guideBase.prefab == "Prefab/GameSceneView") {
-                    guideNode = Game.ViewController.seekChildByName(canvas.getChildByName("GameSceneView"), this.guideBase.ButtonName);
-                } else {
-                    guideNode = Game.ViewController.seekChildByName(Game.ViewController.getViewByName(this.guideBase.prefab), this.guideBase.ButtonName);
-                }
-
+                guideNode = this.findGuideNode();
                 if (guideNode) {
                     this.guideNodes.push(guideNode);
                     this._oldParent = guideNode.parent;     //记录之前的父节点
@@ -155,12 +160,7 @@ cc.Class({
                 break;
             
             case 5:     //空白遮罩层 没有对话框和手指(用来播动画的时候用)
-                if (this.guideBase.prefab == "Prefab/GameSceneView") {
-                    guideNode = Game.ViewController.seekChildByName(canvas.getChildByName("GameSceneView"), this.guideBase.ButtonName);
-                } else {
-                    guideNode = Game.ViewController.seekChildByName(Game.ViewController.getViewByName(this.guideBase.prefab), this.guideBase.ButtonName);
-                }
-
+                guideNode = this.findGuideNode();
                 if (guideNode) {
                     this.guideNodes.push(guideNode);
                     this._oldParent = guideNode.parent;     //记录之前的父节点
@@ -191,4 +191,14 @@ cc.Class({
         
         this.anima_dialogueShow.play();
     },
+
+    findGuideNode() {
+        let _node = null;
+        if (this.guideBase.prefab == "Prefab/GameSceneView") {
+            _node = Game.ViewController.seekChildByName(cc.director.getScene().getChildByName('Canvas').getChildByName("GameSceneView"), this.guideBase.ViewName);
+        } else {
+            _node = Game.ViewController.seekChildByName(Game.ViewController.getViewByName(this.guideBase.prefab), this.guideBase.ViewName);
+        }
+        return _node;
+    }
 });
