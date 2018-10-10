@@ -50,6 +50,7 @@ cc.Class({
 
     buyShop() {
         if (Game.UserModel.GetGold() >= this.price) {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, this.price);
             Game.NetWorkController.Send('msg.C2GW_ReqBuyMaid', {maidid: this._data.id});
             Game.GuideController.NextGuide();
         } else {
