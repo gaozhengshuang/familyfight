@@ -31,7 +31,7 @@ cc.Class({
         let moveMaxY = (parentNode.height / 2) - (this.node.height / 2);
         let moveMinX = -moveMaxX;
         let moveMinY = -moveMaxY;
-        moveMaxX -= 200;
+        moveMaxY -= 200;
 
         let targetX = moveMinX + Math.floor(Math.random() * (moveMaxX - moveMinX + 1));
         let targetY = moveMinY + Math.floor(Math.random() * (moveMaxY - moveMinY + 1));
