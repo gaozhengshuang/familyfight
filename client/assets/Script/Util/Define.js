@@ -19,6 +19,7 @@ var Define = {
 
         TIP_TIPS: '401',
         TIP_REWARD: '402',
+        TIP_PLAYGOLDFLY: '403',
 
         MUSIC_CHANGE: '500',
         EFFECT_CHANGE: '501',

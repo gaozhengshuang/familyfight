@@ -242,6 +242,7 @@ cc.Class({
                     alive: 0.5,
                     delay: 1
                 });
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
                 Game.UserModel.AddGold(value);
                 this.node.runAction(cc.sequence([
                     cc.delayTime(0.5),

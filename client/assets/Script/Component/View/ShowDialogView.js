@@ -7,6 +7,7 @@ cc.Class({
         tipParentNode: { default: null, type: cc.Node },
         notifyPrefab: { default: null, type: cc.Prefab },
         rewardPrefab: { default: null, type: cc.Prefab },
+        goldFlyAnima: { default: null, type: dragonBones.ArmatureDisplay },
         barragePositionIndex: { default: 0, type: cc.Integer },
     },
 
@@ -17,6 +18,7 @@ cc.Class({
     start() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.TIP_TIPS, this, this.onShowTips);
         Game.NotificationController.On(Game.Define.EVENT_KEY.TIP_REWARD, this, this.onShowReward);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY, this, this.onPlayGoldFly);
     },
 
     update(dt) {
@@ -45,4 +47,10 @@ cc.Class({
         }
     },
     //奖励提示代码--------------------------------------end-------------------------------------
+
+    onPlayGoldFly(position) {
+        this.goldFlyAnima.node.active = true;
+        this.goldFlyAnima.node.position = (position || cc.v2(0, 400));
+        this.goldFlyAnima.playAnimation('newAnimation', 1);
+    }
 });

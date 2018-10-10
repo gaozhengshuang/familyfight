@@ -226,12 +226,16 @@ func (this *GateUser) TickBox(now uint64) {
 			if !find {
 				//没找到， 那给你生成一个
 				boxData = this.GenerateBox(v.Id, 1, v.Level)
-				generated = true
+				if boxData != nil {
+					generated = true
+				}
 			} else {
 				//找到了 看看时间差
 				if now > boxData.generatetime + uint64(v.Interval) {
 					boxData = this.GenerateBox(v.Id, 1, v.Level)
-					generated = true
+					if boxData != nil {
+						generated = true
+					}
 				}
 			}
 		}
