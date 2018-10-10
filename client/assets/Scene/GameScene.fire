@@ -2896,7 +2896,9 @@
     "node_player": {
       "__id__": 70
     },
-    "node_pass": null,
+    "node_pass": {
+      "__id__": 40
+    },
     "node_bg": {
       "__id__": 4
     },
