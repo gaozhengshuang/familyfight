@@ -15,7 +15,7 @@ cc.Class({
         linkItemNodes: { default: [], type: [LinkItemNode] },
         maskNode: { default: null, type: cc.Node },
         countDownLabel: { default: null, type: cc.Label },
-        rewardTimesNode: { default: null, type: cc.Node },
+        rewardTimesLabel: { default: null, type: cc.Label },
 
         linkInfos: { default: [] },
         status: { default: 0 },
@@ -47,10 +47,10 @@ cc.Class({
             let lastTime = GameTime - (Game.TimeController.GetCurTime() - this.startTime);
             if (lastTime >= 0) {
                 this.countDownLabel.string = Game.moment.unix(lastTime).format('mm:ss');
-                this.rewardTimesNode.active = true;
+                this.rewardTimesLabel.string = 'x 2倍';
             } else {
                 this.countDownLabel.string = '';
-                this.rewardTimesNode.active = false;
+                this.rewardTimesLabel.string = 'x 1倍';
             }
             // if (lastTime <= 0) {
             //     this._changeStatus(LinkStatus.Status_End);
