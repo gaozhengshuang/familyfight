@@ -23068,6 +23068,8 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IC2GW_ReqMergeMaid
          * @property {number|null} [maidid] C2GW_ReqMergeMaid maidid
+         * @property {string|null} [touchid] C2GW_ReqMergeMaid touchid
+         * @property {string|null} [findid] C2GW_ReqMergeMaid findid
          */
 
         /**
@@ -23092,6 +23094,22 @@ $root.msg = (function() {
          * @instance
          */
         C2GW_ReqMergeMaid.prototype.maidid = 0;
+
+        /**
+         * C2GW_ReqMergeMaid touchid.
+         * @member {string} touchid
+         * @memberof msg.C2GW_ReqMergeMaid
+         * @instance
+         */
+        C2GW_ReqMergeMaid.prototype.touchid = "";
+
+        /**
+         * C2GW_ReqMergeMaid findid.
+         * @member {string} findid
+         * @memberof msg.C2GW_ReqMergeMaid
+         * @instance
+         */
+        C2GW_ReqMergeMaid.prototype.findid = "";
 
         /**
          * Creates a new C2GW_ReqMergeMaid instance using the specified properties.
@@ -23119,6 +23137,10 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.maidid != null && message.hasOwnProperty("maidid"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.maidid);
+            if (message.touchid != null && message.hasOwnProperty("touchid"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.touchid);
+            if (message.findid != null && message.hasOwnProperty("findid"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.findid);
             return writer;
         };
 
@@ -23155,6 +23177,12 @@ $root.msg = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.maidid = reader.uint32();
+                    break;
+                case 2:
+                    message.touchid = reader.string();
+                    break;
+                case 3:
+                    message.findid = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -23194,6 +23222,12 @@ $root.msg = (function() {
             if (message.maidid != null && message.hasOwnProperty("maidid"))
                 if (!$util.isInteger(message.maidid))
                     return "maidid: integer expected";
+            if (message.touchid != null && message.hasOwnProperty("touchid"))
+                if (!$util.isString(message.touchid))
+                    return "touchid: string expected";
+            if (message.findid != null && message.hasOwnProperty("findid"))
+                if (!$util.isString(message.findid))
+                    return "findid: string expected";
             return null;
         };
 
@@ -23211,6 +23245,10 @@ $root.msg = (function() {
             var message = new $root.msg.C2GW_ReqMergeMaid();
             if (object.maidid != null)
                 message.maidid = object.maidid >>> 0;
+            if (object.touchid != null)
+                message.touchid = String(object.touchid);
+            if (object.findid != null)
+                message.findid = String(object.findid);
             return message;
         };
 
@@ -23227,10 +23265,17 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
+            if (options.defaults) {
                 object.maidid = 0;
+                object.touchid = "";
+                object.findid = "";
+            }
             if (message.maidid != null && message.hasOwnProperty("maidid"))
                 object.maidid = message.maidid;
+            if (message.touchid != null && message.hasOwnProperty("touchid"))
+                object.touchid = message.touchid;
+            if (message.findid != null && message.hasOwnProperty("findid"))
+                object.findid = message.findid;
             return object;
         };
 
@@ -23255,6 +23300,8 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IGW2C_AckMergeMaid
          * @property {number|null} [result] GW2C_AckMergeMaid result
+         * @property {string|null} [touchid] GW2C_AckMergeMaid touchid
+         * @property {string|null} [findid] GW2C_AckMergeMaid findid
          */
 
         /**
@@ -23279,6 +23326,22 @@ $root.msg = (function() {
          * @instance
          */
         GW2C_AckMergeMaid.prototype.result = 0;
+
+        /**
+         * GW2C_AckMergeMaid touchid.
+         * @member {string} touchid
+         * @memberof msg.GW2C_AckMergeMaid
+         * @instance
+         */
+        GW2C_AckMergeMaid.prototype.touchid = "";
+
+        /**
+         * GW2C_AckMergeMaid findid.
+         * @member {string} findid
+         * @memberof msg.GW2C_AckMergeMaid
+         * @instance
+         */
+        GW2C_AckMergeMaid.prototype.findid = "";
 
         /**
          * Creates a new GW2C_AckMergeMaid instance using the specified properties.
@@ -23306,6 +23369,10 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.result != null && message.hasOwnProperty("result"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
+            if (message.touchid != null && message.hasOwnProperty("touchid"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.touchid);
+            if (message.findid != null && message.hasOwnProperty("findid"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.findid);
             return writer;
         };
 
@@ -23342,6 +23409,12 @@ $root.msg = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.result = reader.uint32();
+                    break;
+                case 2:
+                    message.touchid = reader.string();
+                    break;
+                case 3:
+                    message.findid = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -23381,6 +23454,12 @@ $root.msg = (function() {
             if (message.result != null && message.hasOwnProperty("result"))
                 if (!$util.isInteger(message.result))
                     return "result: integer expected";
+            if (message.touchid != null && message.hasOwnProperty("touchid"))
+                if (!$util.isString(message.touchid))
+                    return "touchid: string expected";
+            if (message.findid != null && message.hasOwnProperty("findid"))
+                if (!$util.isString(message.findid))
+                    return "findid: string expected";
             return null;
         };
 
@@ -23398,6 +23477,10 @@ $root.msg = (function() {
             var message = new $root.msg.GW2C_AckMergeMaid();
             if (object.result != null)
                 message.result = object.result >>> 0;
+            if (object.touchid != null)
+                message.touchid = String(object.touchid);
+            if (object.findid != null)
+                message.findid = String(object.findid);
             return message;
         };
 
@@ -23414,10 +23497,17 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
+            if (options.defaults) {
                 object.result = 0;
+                object.touchid = "";
+                object.findid = "";
+            }
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
+            if (message.touchid != null && message.hasOwnProperty("touchid"))
+                object.touchid = message.touchid;
+            if (message.findid != null && message.hasOwnProperty("findid"))
+                object.findid = message.findid;
             return object;
         };
 
