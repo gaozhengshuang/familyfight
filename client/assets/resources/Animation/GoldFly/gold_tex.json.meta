@@ -1,7 +1,7 @@
 {
   "ver": "1.0.0",
   "uuid": "7195198e-42cc-48ba-9568-790d59fb3a71",
-  "atlasJson": "{\"width\":512,\"imagePath\":\"gold_tex.png\",\"height\":256,\"name\":\"gold\",\"SubTexture\":[{\"y\":1,\"frameX\":-43,\"frameHeight\":182,\"frameY\":-16,\"width\":123,\"frameWidth\":182,\"height\":150,\"name\":\"00001\",\"x\":149},{\"y\":1,\"frameX\":-81,\"frameHeight\":182,\"frameY\":-13,\"width\":38,\"frameWidth\":182,\"height\":156,\"name\":\"00002\",\"x\":363},{\"y\":1,\"frameX\":-18,\"frameHeight\":182,\"frameY\":-18,\"width\":146,\"frameWidth\":182,\"height\":146,\"name\":\"00000\",\"x\":1},{\"y\":1,\"frameX\":-34,\"frameHeight\":182,\"frameY\":-15,\"width\":87,\"frameWidth\":182,\"height\":152,\"name\":\"00003\",\"x\":274}]}",
+  "atlasJson": "{\"width\":512,\"imagePath\":\"gold_tex.png\",\"height\":256,\"name\":\"gold\",\"SubTexture\":[{\"y\":1,\"frameX\":-34,\"frameHeight\":182,\"frameY\":-15,\"width\":87,\"frameWidth\":182,\"height\":152,\"name\":\"00003\",\"x\":274},{\"y\":1,\"frameX\":-43,\"frameHeight\":182,\"frameY\":-16,\"width\":123,\"frameWidth\":182,\"height\":150,\"name\":\"00001\",\"x\":149},{\"y\":1,\"frameX\":-81,\"frameHeight\":182,\"frameY\":-13,\"width\":38,\"frameWidth\":182,\"height\":156,\"name\":\"00002\",\"x\":363},{\"y\":1,\"frameX\":-18,\"frameHeight\":182,\"frameY\":-18,\"width\":146,\"frameWidth\":182,\"height\":146,\"name\":\"00000\",\"x\":1}]}",
   "texture": "d54628b1-c564-4eba-a351-418d518f0280",
   "subMetas": {}
 }
