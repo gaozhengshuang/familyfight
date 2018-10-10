@@ -46,12 +46,12 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": -0.7
+      "y": -0.86
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 492,
-      "height": 166
+      "width": 478,
+      "height": 147
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -108,8 +108,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 492,
-      "height": 166
+      "width": 478,
+      "height": 147
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -258,8 +258,8 @@
     "_enabled": true,
     "_layoutSize": {
       "__type__": "cc.Size",
-      "width": 492,
-      "height": 166
+      "width": 478,
+      "height": 147
     },
     "_resize": 1,
     "_N$layoutType": 0,
