@@ -135,20 +135,20 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 		user.SendNotify("没有对应的商店信息")
 		return 1,nil,0
 	}
+	oldprice := shopdata.price
 	maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[id]
 	if !find {
 		user.SendNotify("没有对应的侍女配置")
-		return 2,nil,0
+		return 2,nil,uint64(math.Floor(float64(oldprice)))
 	}
 	count := user.GetCountByLevel(uint32(maidconfg.Passlevels))
 	if count >= 20 {
 		user.SendNotify("该关卡侍女数量已达上限")
-		return 3,nil,0
+		return 3,nil,uint64(math.Floor(float64(oldprice)))
 	}
 	//可以买了
 	maid := this.AddMaid(user,id,1)
 	//更新价格咯
-	oldprice := shopdata.price
 	shopdata.price = shopdata.price * float32(tbl.Common.PriceAdditionPerBuy)
 	shopdata.times = shopdata.times + 1
 	return 0, maid, uint64(math.Floor(float64(oldprice)))
