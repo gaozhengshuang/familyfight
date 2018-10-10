@@ -4,7 +4,7 @@
 module table {
 export var Guide : table.IGuideDefine[] = [
 		{ Id : 1, NextGuide : 2, Type : 3, IsDialog : 1, IsFinger : 1, Dialog : "欢迎来到后宫！我们先打开轿子获取一个宫女。", prefab : "", ButtonName : "", PersonXY : "0,429", FingerXY : "", MaidInfo : "", Upload : true 	},
-		{ Id : 2, NextGuide : 3, Type : 1, IsDialog : 1, IsFinger : 1, Dialog : "您获得新形象！请点击关闭按钮关闭。", prefab : "Prefab/ShopView", ButtonName : "button_shopclose", PersonXY : "0,-466", FingerXY : "", MaidInfo : "", Upload : true 	},
+		{ Id : 2, NextGuide : 3, Type : 1, IsDialog : 1, IsFinger : 1, Dialog : "您获得新形象！请点击关闭按钮关闭。", prefab : "Prefab/PalaceTakeItemView", ButtonName : "button_close", PersonXY : "0,-466", FingerXY : "", MaidInfo : "", Upload : true 	},
 		{ Id : 3, NextGuide : 4, Type : 3, IsDialog : 1, IsFinger : 1, Dialog : "再次打开轿子获取第二个宫女。", prefab : "", ButtonName : "", PersonXY : "0,429", FingerXY : "", MaidInfo : "", Upload : true 	},
 		{ Id : 4, NextGuide : 5, Type : 4, IsDialog : 1, IsFinger : 0, Dialog : "当有两个一样宫女以后，可以用手把两个宫女拖到一起，合并升级宫女。", prefab : "", ButtonName : "", PersonXY : "0,429", FingerXY : "", MaidInfo : "1_2", Upload : true 	},
 		{ Id : 5, NextGuide : 6, Type : 1, IsDialog : 1, IsFinger : 1, Dialog : "恭喜获得新形象！请点击关闭按钮关闭。", prefab : "Prefab/PalaceTakeItemView", ButtonName : "button_close", PersonXY : "0,-466", FingerXY : "", MaidInfo : "", Upload : true 	},
