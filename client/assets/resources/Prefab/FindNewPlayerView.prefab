@@ -548,7 +548,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "button_shopclose",
+    "_name": "button_close",
     "_objFlags": 0,
     "_parent": {
       "__id__": 6
@@ -1227,6 +1227,7 @@
     "_enabled": true,
     "_url": "",
     "_data": {},
+    "_oldparentNode": null,
     "image_maid": {
       "__id__": 23
     },
