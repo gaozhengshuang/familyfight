@@ -45,5 +45,6 @@ cc.Class({
         }
         
         this.closeView(Game.UIName.UI_FINDNEWPLAYER);
+        Game.GuideController.NextGuide();
     }
 });
