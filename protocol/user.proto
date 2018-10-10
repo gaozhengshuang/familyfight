@@ -70,4 +70,5 @@ message C2GW_UpdateGuideData
 message GW2C_AckGuideData
 {
     optional uint32 guide = 1;
+    optional bool firstsyn = 2;
 }

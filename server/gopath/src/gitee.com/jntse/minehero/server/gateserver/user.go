@@ -414,7 +414,7 @@ func (this *GateUser) Syn() {
 	this.palace.Syn(this)
 	this.travel.Syn(this)
 	this.SynBox()
-	this.SynGuide()
+	this.SynGuide(true)
 	this.SendUserBase()
 }
 
@@ -604,8 +604,9 @@ func (this *GateUser) GetCountByLevel(level uint32) uint32{
 	return retCount
 }
 
-func (this *GateUser) SynGuide() {
+func (this *GateUser) SynGuide(firstsyn bool) {
 	send := &msg.GW2C_AckGuideData{}
 	send.Guide = pb.Uint32(this.guide)
+	send.Firstsyn = pb.Bool(firstsyn)
 	this.SendMsg(send)
 }

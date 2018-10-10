@@ -3,10 +3,10 @@
 
 module table {
 export var TurnBrand : table.ITurnBrandDefine[] = [
-		{ Id : 1, Name : "皇上", Head : "Image/Head/2_round", Type : 5, RewardId : 1, Value : 1, Dialogue : 0, Weight : 5 	},
+		{ Id : 1, Name : "皇上", Head : "Image/Head/2_round", Type : 5, RewardId : 1, Value : 1, Dialogue : 0, Weight : 10 	},
 		{ Id : 2, Name : "皇后", Head : "Image/Head/1_round", Type : 2, RewardId : 0, Value : 5, Dialogue : 14, Weight : 2 	},
-		{ Id : 3, Name : "侍卫", Head : "Image/Head/5_round", Type : 1, RewardId : 0, Value : 3, Dialogue : 0, Weight : 13 	},
-		{ Id : 4, Name : "贵妃", Head : "Image/Head/4_round", Type : 4, RewardId : 10001, Value : 1, Dialogue : 0, Weight : 10 	},
+		{ Id : 3, Name : "侍卫", Head : "Image/Head/5_round", Type : 1, RewardId : 0, Value : 3, Dialogue : 0, Weight : 10 	},
+		{ Id : 4, Name : "贵妃", Head : "Image/Head/4_round", Type : 4, RewardId : 10001, Value : 1, Dialogue : 0, Weight : 8 	},
 		{ Id : 5, Name : "太监", Head : "Image/Head/3_round", Type : 1, RewardId : 0, Value : 1, Dialogue : 0, Weight : 40 	},
 		{ Id : 6, Name : "太医", Head : "Image/Head/6_round", Type : 1, RewardId : 0, Value : 2, Dialogue : 0, Weight : 30 	}
 	]

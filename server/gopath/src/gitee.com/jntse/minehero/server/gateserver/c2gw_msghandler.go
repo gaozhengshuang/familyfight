@@ -545,5 +545,5 @@ func on_C2GW_UpdateGuideData(session network.IBaseNetSession, message interface{
 		return
 	}
 	user.guide = tmsg.GetGuide()
-	user.SynGuide()
+	user.SynGuide(false)
 }
