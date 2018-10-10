@@ -40,19 +40,22 @@ message GuideDefine
 	optional string prefab = 7; // 预制路径（例：Prefab/GameSceneView)
 	
 	
-	optional string ButtonName = 8; // 点击目标名字（例：btn_shop)
+	optional string ViewName = 8; // 配谁亮谁（例：view）
 	
 	
-	optional string PersonXY = 9; // 人物坐标显示
+	optional string ButtonName = 9; // 点击目标名字（例：btn_shop)
 	
 	
-	optional string FingerXY = 10; // 手指坐标
+	optional string PersonXY = 10; // 人物坐标显示
 	
 	
-	optional string MaidInfo = 11; // 仆人id_仆人数量
+	optional string FingerXY = 11; // 手指坐标
 	
 	
-	optional uint32 Resetid = 12; // 重置id
+	optional string MaidInfo = 12; // 仆人id_仆人数量
+	
+	
+	optional uint32 Resetid = 13; // 重置id
 
 }
 
