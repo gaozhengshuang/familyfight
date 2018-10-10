@@ -9,19 +9,10 @@ cc.Class({
         label_name: { default: null, type: cc.Label },
     },
 
-    onLoad() {
-    },
-
     start() {
         this.updateView()
     },
 
-    update(dt) {
-    },
-
-    onDestroy() {
-    },
-    
     setData(data) {
         this._data = data;
     },
@@ -46,7 +37,8 @@ cc.Class({
     onOpenPalaceDetail() {
         if (Game.MaidModel.GetTopPass() >= this._data.UlockPassId && Game.MaidModel.GetMaids().length > 0) {
             Game.PalaceModel.SetCurPalaceId(this._data.Id);
-            this.openView(Game.UIName.UI_PALACEDETAIL);
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.PALACEDATA_ACK);
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.PALACEMAP_CLOSE);
         } else {
             this.showTips("宫殿尚未解锁");
         }

@@ -14,16 +14,12 @@ cc.Class({
     },
 
     onEnable() {
+        this.initNotification();
         this.updateView();
     },
 
-    start() {
-    },
-
-    update(dt) {
-    },
-
-    onDestroy() {
+    onDisable() {
+        this.removeNotification();
     },
 
     initData() {
@@ -43,6 +39,14 @@ cc.Class({
                 this.palaceList.push(_palace);
             }
         }.bind(this));
+    },
+
+    initNotification() {
+        Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEMAP_CLOSE, this, this.onClose);
+    },
+
+    removeNotification() {
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEMAP_CLOSE, this, this.onClose);
     },
 
     updateView() {

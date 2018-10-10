@@ -55,7 +55,7 @@ PalaceModel.prototype.GetPalaceTakeBack = function() {
 PalaceModel.prototype.onGW2C_AckPalaceData = function (msgid, data) {
     this.palaceDatas = data.datas;
 
-    NotificationController.Emit(Define.EVENT_KEY.PALACEDATA_ACK)
+    NotificationController.Emit(Define.EVENT_KEY.PALACEDATA_ACK);
 }
 
 PalaceModel.prototype.onGW2C_RetMaidUnlock = function (msgid, data) {
@@ -67,7 +67,7 @@ PalaceModel.prototype.onGW2C_RetMaidUnlock = function (msgid, data) {
             }
         }
     
-        NotificationController.Emit(Define.EVENT_KEY.PALACEMAID_UNLOCK)
+        NotificationController.Emit(Define.EVENT_KEY.PALACEMAID_UNLOCK);
     }
 }
 
