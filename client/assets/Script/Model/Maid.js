@@ -158,8 +158,8 @@ MaidModel.prototype.onGW2C_AckMaidShop = function (msgid, data) {
 }
 
 MaidModel.prototype.onGW2C_AckBuyMaid = function (msgid, data) {
-    if (data.result == 0) {
-        NotificationController.Emit(Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, data.price);
+    if (data.result != 0) {     //失败返回购买的货币
+        NotificationController.Emit(Define.EVENT_KEY.USERINFO_ADDGOLD, data.price);
     }
 }
 
