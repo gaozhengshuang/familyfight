@@ -202,7 +202,13 @@ cc.Class({
 
                     let passBase = Game.ConfigController.GetConfigById("PassLevels", nextLvPlayer.Passlevels);
                     if (passBase) {
-                        let passCellNode = Game.ViewController.seekChildByName(this.node, "cell_"+ passBase.Index);
+                        let passCellNode = null;
+                        if (passBase.Index == 1) {
+                            passCellNode = Game.ViewController.seekChildByName(this.node, "button_jiantouright");
+                        } else {
+                            passCellNode = Game.ViewController.seekChildByName(this.node, "cell_"+ passBase.Index);
+                        }
+                        
                         let oldWorldPosition = passCellNode.parent.convertToWorldSpaceAR(passCellNode.position);
                         let newWordPosition = this.node_player.convertToNodeSpaceAR(oldWorldPosition);
 
