@@ -79,9 +79,7 @@ cc.Class({
     updateView() {
         let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));     //本地判断剧情初始化
         if (_dialoguePass == null || _dialoguePass.userid != Game.UserModel.GetUserId()) {
-            if (!Game.GuideController.IsGuide()) {
-                this.showDialoguePlayer(1);
-            }
+            this.showDialoguePlayer(1);
 
             let passData = {
                 userid: Game.UserModel.GetUserId(),
@@ -281,13 +279,15 @@ cc.Class({
     },
 
     showDialoguePlayer(_dialogueId) {
-        Game.ViewController.showDialogue(this.node, _dialogueId);
+        if (!Game.GuideController.IsGuide()) {
+            Game.ViewController.showDialogue(this.node, _dialogueId);
+        }
     },
 
     onOpenShopView(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_SHOP);
-        Game.GuideController.SendGuide(5);
+        Game.GuideController.NextGuide();
     },
 
     onOpenTurnBrand(event) {
