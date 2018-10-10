@@ -76,13 +76,13 @@ cc.Class({
             Game.NetWorkController.Send('msg.C2GW_ReqTurnBrand', { ids: Game.GuideController.IsGuide() ? [5, 5, 5, 5, 5, 5] : Game._.map(this.brandInfos, 'Id'), level: Game.MaidModel.GetCurPass() }, function () {
                 this._changeStatus(BrandStatus.Status_Shaking);
             }.bind(this));
-            if (Game.GuideController.IsGuide() && Game.GuideController._guide == 13) {
+            if (Game.GuideController.IsGuide() && Game.GuideController._guide == Game.Define.GUIDE_DEFINE.CLICK_TURNBRAND) {
                 Game.GuideController.NextGuide();
             }
         }
     },
     onGoBackClick: function () {
-        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 15) {
+        if (Game.GuideController.IsGuide() && Game.GuideController._guide == Game.Define.GUIDE_DEFINE.CLOSE_TURNBRAND) {
             Game.GuideController.NextGuide();
         }
         this.closeView(Game.UIName.UI_TURNBRAND);
@@ -250,7 +250,7 @@ cc.Class({
                     }, this),
                     cc.delayTime(1.2),
                     cc.callFunc(function () {
-                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 14) {
+                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == Game.Define.GUIDE_DEFINE.SHOW_TURNBRANDREWARD) {
                             Game.GuideController.NextGuide();
                         }
                         this._randBrandInfo()
@@ -272,7 +272,7 @@ cc.Class({
                     }, this),
                     cc.delayTime(1.2),
                     cc.callFunc(function () {
-                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 14) {
+                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == Game.Define.GUIDE_DEFINE.SHOW_TURNBRANDREWARD) {
                             Game.GuideController.NextGuide();
                         }
                         this._randBrandInfo()
@@ -293,7 +293,7 @@ cc.Class({
                     }, this),
                     cc.delayTime(1.2),
                     cc.callFunc(function () {
-                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 14) {
+                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == Game.Define.GUIDE_DEFINE.SHOW_TURNBRANDREWARD) {
                             Game.GuideController.NextGuide();
                         }
                         this.openView(MiniGameId[config.RewardId]);
@@ -316,7 +316,7 @@ cc.Class({
                     }, this),
                     cc.delayTime(1.2),
                     cc.callFunc(function () {
-                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == 14) {
+                        if (Game.GuideController.IsGuide() && Game.GuideController._guide == Game.Define.GUIDE_DEFINE.SHOW_TURNBRANDREWARD) {
                             Game.GuideController.NextGuide();
                         }
                         this._randBrandInfo()

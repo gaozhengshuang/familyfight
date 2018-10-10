@@ -63,6 +63,12 @@ var Define = {
         TYPE_TRAVELGOOD: 3,
         TYPE_TRAVELCLOTH: 4,
         TYPE_GOLD: 5
+    },
+    GUIDE_DEFINE: {
+        OPEN_TURNBRAND: 14,
+        CLICK_TURNBRAND: 15,
+        SHOW_TURNBRANDREWARD: 16,
+        CLOSE_TURNBRAND: 17,
     }
 }
 

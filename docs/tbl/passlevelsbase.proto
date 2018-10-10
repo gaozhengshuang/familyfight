@@ -41,6 +41,9 @@ message PassLevelsDefine
 	
 	
 	optional string ChapterName = 8; // 章节名称
+	
+	
+	optional int32 Index = 9; // 关卡索引
 
 }
 
