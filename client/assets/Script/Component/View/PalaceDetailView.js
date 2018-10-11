@@ -77,7 +77,7 @@ cc.Class({
             this.masterId = palaceMapBase.Master;
             Game.ResController.SetSprite(this.image_master, palaceMapBase.Headpath);
             Game.ResController.SetSprite(this.image_palaceCard, palaceMapBase.BannerPath);
-            this.label_master.string = Game.MaidModel.GetMaidNameById(palaceMapBase.Master);
+            this.label_master.string = Game.MaidModel.GetPersonNameById(palaceMapBase.Master);
 
             this._palaceMaids = [];     //创建宫殿里的女仆形象
             this.node_maid.destroyAllChildren();

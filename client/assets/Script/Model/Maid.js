@@ -92,6 +92,15 @@ MaidModel.prototype.GetMaidNameById = function (_maidId) {
     return name;
 }
 
+MaidModel.prototype.GetPersonNameById = function (_personId) {
+    let name = '';
+    let personBase = ConfigController.GetConfigById("PalacePersonnel", _personId);
+    if (personBase) {
+        name = personBase.Name;
+    }
+    return name;
+}
+
 MaidModel.prototype.RefreshMoneyMaids = function () {
     this._moneyMaids = 0;
     for (let i = 0; i < this._maids.length; i++) {
