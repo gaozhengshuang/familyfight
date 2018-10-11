@@ -1,4 +1,3 @@
-const addGoldPrefab = require('../Node/AddGoldNode');
 const Game = require('../../Game');
 
 cc.Class({
@@ -6,8 +5,7 @@ cc.Class({
 
     properties: {
         image_maid: { default: null, type: cc.Sprite },
-        prefab_addgold: { default: null, type: addGoldPrefab },
-
+        prefab_addgold: { default: null, type: cc.Prefab },
         id: { default: null },
     },
 
@@ -53,7 +51,8 @@ cc.Class({
 
     touchEnd(event) {
         this.updateEvent(false);
-
+        this.touchAddGold();
+        
         Game.NotificationController.Emit(Game.Define.EVENT_KEY.MERGE_PLAYER, this);
     },
 
@@ -63,7 +62,14 @@ cc.Class({
 
     initView() {
         //创建金币动画
-        this.node_addgold = this.prefab_addgold.getComponent('AddGoldNode');
+        let _addGoldPrefab = cc.instantiate(this.prefab_addgold);
+        if (_addGoldPrefab) {
+            _addGoldPrefab.y = 80;
+            this.node_addgold = _addGoldPrefab.getComponent('AddGoldNode');
+            if (this.node_addgold) {
+                this.node.addChild(_addGoldPrefab);
+            }
+        }
     },
 
     updateView(id) {
@@ -181,4 +187,17 @@ cc.Class({
         }
     },
 
+    touchAddGold() {
+        if (this.maidBase) {
+            let _addGoldPrefab = cc.instantiate(this.prefab_addgold);
+            if (_addGoldPrefab) {
+                _addGoldPrefab.y = 80;
+                let node_addgold = _addGoldPrefab.getComponent('AddGoldNode');
+                if (node_addgold) {
+                    this.node.addChild(_addGoldPrefab);
+                }
+                node_addgold.addGoldAndDestroy(this.maidBase.Reward);
+            }
+        }
+    }
 });

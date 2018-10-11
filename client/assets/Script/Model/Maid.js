@@ -149,7 +149,7 @@ MaidModel.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
     if (_.get(guideConf, 'Type', 0) == 4) {
         GuideController.NextGuide();
     }
-    NotificationController.Emit(Define.EVENT_KEY.MERGEPLAYER_ACK, data.result);
+    NotificationController.Emit(Define.EVENT_KEY.MERGEPLAYER_ACK, data);
 }
 
 MaidModel.prototype.onGW2C_AckMaidShop = function (msgid, data) {

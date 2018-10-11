@@ -50,7 +50,6 @@ cc.Class({
     initData() {
         this._playerList = [];
         this._boxList = [];
-        this._touchPlayer = null;
         this._findPlayer = null;
         this._boxPlayer = null;
         this._deleteIndex = 0;
@@ -169,16 +168,18 @@ cc.Class({
     },
 
     findPlayerAndMerge(_player) {
-        this._touchPlayer = _player;
-
         for (let i = 0; i < this._playerList.length; i++) {
             let findPlayer = this._playerList[i];
 
-            if (this._touchPlayer.node.uuid != findPlayer.node.uuid) {
-                if (this._touchPlayer.node.getBoundingBox().intersects(findPlayer.node.getBoundingBox())) {
-                    if (this._touchPlayer.getPlayerId() == findPlayer.getPlayerId()) {
+            if (_player.node.uuid != findPlayer.node.uuid) {
+                if (_player.node.getBoundingBox().intersects(findPlayer.node.getBoundingBox())) {
+                    if (_player.getPlayerId() == findPlayer.getPlayerId()) {
                         this._findPlayer = findPlayer;
-                        Game.NetWorkController.Send('msg.C2GW_ReqMergeMaid', { maidid: findPlayer.getPlayerId() });
+                        Game.NetWorkController.Send('msg.C2GW_ReqMergeMaid', {
+                            maidid: findPlayer.getPlayerId(),
+                            touchid: _player.node.uuid,
+                            findid: findPlayer.node.uuid
+                        });
                         break;
                     }
                 }
@@ -186,13 +187,8 @@ cc.Class({
         }
     },
 
-    ackMergePlayer(result) {
-        if (result == 0) {
-            //删除掉合成成功的女仆
-            Game._.remove(this._playerList, function (player) {
-                return player.node.uuid == this._touchPlayer.node.uuid || player.node.uuid == this._findPlayer.node.uuid;
-            }.bind(this))
-
+    ackMergePlayer(data) {
+        if (data.result == 0) {
             //升级后的女仆没在此关卡后的动画
             let nextLvPlayer = Game.ConfigController.GetConfigById("TMaidLevel", this._findPlayer.getMaidBase().NextID);
             if (nextLvPlayer) {
@@ -236,8 +232,14 @@ cc.Class({
                 }
             }
 
-            this._touchPlayer.node.destroy();
-            this._findPlayer.node.destroy();
+            //删除掉合成成功的女仆
+            let i = this._playerList.length;
+            while(i--){
+                if(this._playerList[i].node.uuid == data.touchid || this._playerList[i].node.uuid == data.findid) {
+                    this._playerList[i].node.destroy();
+                    this._playerList.splice(i,1);
+                }
+            }
         }
     },
 
