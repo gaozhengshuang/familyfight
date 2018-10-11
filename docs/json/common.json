@@ -1,7 +1,7 @@
 {
     "PowerInit": 20,
     "PowerMax": 20,
-    "PowerAddInterval": 3600,
+    "PowerAddInterval": 1800,
     "PowerAddition": 5,
     "PriceAdditionPerBuy": 1.25,
     "GoldItemId": 50001,
