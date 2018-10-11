@@ -5,9 +5,8 @@ cc.Class({
     properties: {
         clickButton: { default: null, type: cc.Button },
         animation: { default: null, type: cc.Animation },
-        parentNode: { default: null, type: cc.Node },
-        _data: { default: null },
-        _clickFunc: { default: null }
+        _parentNode: { default: null, type: cc.Node },
+        _clickFunc: { default: null },
     },
     onLoad: function () {
         this.animation.on('stop', this.onAnimationStop, this);
@@ -26,7 +25,7 @@ cc.Class({
     setData: function (parentNode, data, clickFunc) {
         this._data = data;
         this._clickFunc = clickFunc;
-        this.parentNode = parentNode;
+        this._parentNode = parentNode;
         let moveMaxX = (parentNode.width / 2) - (this.node.width / 2);
         let moveMaxY = (parentNode.height / 2) - (this.node.height / 2);
         let moveMinX = -moveMaxX;
