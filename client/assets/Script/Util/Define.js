@@ -71,6 +71,9 @@ var Define = {
         CLICK_TURNBRAND: 16,
         SHOW_TURNBRANDREWARD: 17,
         CLOSE_TURNBRAND: 18,
+        BUTTON_OPENSHOP: 6,
+        BUTTON_OPENTURNBRAND: 15,
+        BUTTON_OPENPALACE: 19
     }
 }
 
