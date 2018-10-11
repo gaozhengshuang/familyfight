@@ -114,25 +114,25 @@ MaidModel.prototype.RefreshMoneyMaids = function () {
     }
 }
 
-MaidModel.prototype.GetPassCurProduct = function(pass) {
-    let product = 0;
+MaidModel.prototype.GetPassCurEfficiency = function(pass) {
+    let efficiency = 0;
     for (let i = 0; i < this._maids.length; i++) {
         let maid = this._maids[i];
         let maidBase = ConfigController.GetConfigById("TMaidLevel", maid.id);
         if (maidBase) {
             if (maidBase.Passlevels == pass) {
                 for (let b = 0; b < maid.count; b++) {
-                    product += maidBase.Reward;
+                    efficiency += maidBase.Reward;
                 }
             }
         }
     }
     
-    return product;
+    return efficiency;
 }
 
-MaidModel.prototype.GetPassMaxProduct = function(pass) {
-    let product = 0;
+MaidModel.prototype.GetPassMaxEfficiency = function(pass) {
+    let efficiency = 0;
     let passMaxMaid = null;
     for (let i = 0; i < this._maids.length; i++) {
         let maid = this._maids[i];
@@ -145,9 +145,9 @@ MaidModel.prototype.GetPassMaxProduct = function(pass) {
     }
     
     if (passMaxMaid) {
-        product = passMaxMaid.Reward * 20;
+        efficiency = passMaxMaid.Reward * 20;
     }
-    return product;
+    return efficiency;
 }
 
 /**

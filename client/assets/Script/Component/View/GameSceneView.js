@@ -15,8 +15,10 @@ cc.Class({
         button_palace: { default: null, type: cc.Button },
 
         label_allincomenum: { default: null, type: cc.Label },
-        label_maxincomenum: { default: null, type: cc.Label },
-        label_maxspacenum: { default: null, type: cc.Label },
+        label_curEfficiency: { default: null, type: cc.Label },
+        label_maxEfficiency: { default: null, type: cc.Label },
+        label_curMaidNum: { default: null, type: cc.Label },
+        label_maxMaidNum: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -48,7 +50,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW, this, this.updateGameView);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.ackMergePlayer);
-        Game.NotificationController.Off(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updateProductDetail);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updateEfficiency);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
@@ -78,7 +80,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.ADD_PLAYER, this, this.createPlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW, this, this.updateGameView);
         Game.NotificationController.On(Game.Define.EVENT_KEY.MERGEPLAYER_ACK, this, this.ackMergePlayer);
-        Game.NotificationController.On(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updateProductDetail);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.UPDATE_PLAYER, this, this.updateEfficiency);
         Game.NotificationController.On(Game.Define.EVENT_KEY.FINDNEW_PLAYER, this, this.findNewPlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this, this.showDialoguePlayer);
         Game.NotificationController.On(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
@@ -107,7 +109,7 @@ cc.Class({
         this.updatePlayer();
         this.updatePassBg();
         this.updateBottomButton();
-        this.updateProductDetail();
+        this.updateEfficiency();
     },
 
     updatePlayer() {
@@ -335,10 +337,12 @@ cc.Class({
         this.openView(Game.UIName.UI_PALACE);
     },
 
-    updateProductDetail() {     //更新效率和仆人个数
-        this.label_maxspacenum.string = `${this._playerList.length}/20`;
+    updateEfficiency() {     //更新效率和仆人个数
         this.label_allincomenum.string = Game.Tools.UnitConvert(Game.MaidModel.GetMoneyMaids());
-        this.label_maxincomenum.string = Game.MaidModel.GetPassCurProduct(Game.MaidModel.GetCurPass()) + "/" + Game.MaidModel.GetPassMaxProduct(Game.MaidModel.GetCurPass());
+        this.label_curEfficiency.string = Game.MaidModel.GetPassCurEfficiency(Game.MaidModel.GetCurPass());
+        this.label_maxEfficiency.string = "/" + Game.MaidModel.GetPassMaxEfficiency(Game.MaidModel.GetCurPass());
+        this.label_curMaidNum.string = `${this._playerList.length}`;
+        this.label_maxMaidNum.string = '/20';
     },
 
     //interfaces for guide
