@@ -1582,7 +1582,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 720,
-      "height": 1280
+      "height": 1120
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -1591,7 +1591,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": -154
+      "y": -79
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1781,7 +1781,7 @@
     "Direction": 0,
     "pageChangeEvents": [],
     "_N$cell": {
-      "__uuid__": "739a5082-c6b4-44e9-8c1e-8ed1f1701b84"
+      "__uuid__": "1b8254b7-2e05-4b19-8923-4a2f783830e7"
     },
     "_N$ScrollModel": 1,
     "_N$ViewType": 0
