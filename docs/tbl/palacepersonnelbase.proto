@@ -10,12 +10,12 @@ message TPalacePersonnel
 {	
 	
 	
-	repeated Palace PersonnelDefine Palace Personnel = 1; // Palace Personnel
+	repeated PalacePersonnelDefine PalacePersonnel = 1; // PalacePersonnel
 
 }
 
-// Defined in table: Palace Personnel
-message Palace PersonnelDefine
+// Defined in table: PalacePersonnel
+message PalacePersonnelDefine
 {	
 	
 	
