@@ -44,7 +44,6 @@ var Define = {
         BOXDATA_UPDATE: '1013',
         GUIDE_ACK: '1014',
         GUIDE_OVER: '1015',
-        PALACEMAP_CLOSE: '1016',
 
         TRAVELDATA_UPDATE: '1100',
         EVENTDATA_UPDATE: '1101',
@@ -71,6 +70,9 @@ var Define = {
         CLICK_TURNBRAND: 16,
         SHOW_TURNBRANDREWARD: 17,
         CLOSE_TURNBRAND: 18,
+        BUTTON_OPENSHOP: 6,
+        BUTTON_OPENTURNBRAND: 15,
+        BUTTON_OPENPALACE: 19
     }
 }
 

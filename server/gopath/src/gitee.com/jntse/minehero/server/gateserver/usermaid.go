@@ -171,9 +171,11 @@ func (this *UserMaid) MergeMaid(user *GateUser,id uint32) (result uint32,removed
 		user.SendNotify("没有下一级的配置了")
 		return 2,nil,nil
 	}
-	if user.GetCountByLevel(uint32(nextconfig.Passlevels)) >= 20 {
-		user.SendNotify("下一关侍女数量已达上限")
-		return 6,nil,nil
+	if uint32(maidconfg.Passlevels) != uint32(nextconfig.Passlevels){
+		if user.GetCountByLevel(uint32(nextconfig.Passlevels)) >= 20 {
+			user.SendNotify("下一关侍女数量已达上限")
+			return 6,nil,nil
+		}
 	}
 	maid, ok := this.maids[id]
 	if !ok {

@@ -8,7 +8,11 @@ cc.Class({
         node_pass: { default: null, type: cc.Node },
         node_bg: { default: null, type: cc.Node },
         prefab_player: { default: null, type: cc.Prefab },
-        prefab_box: { default: null, type: cc.Prefab }
+        prefab_box: { default: null, type: cc.Prefab },
+
+        button_shop: { default: null, type: cc.Button },
+        button_turnbrand: { default: null, type: cc.Button },
+        button_palace: { default: null, type: cc.Button }
     },
 
     onLoad() {
@@ -45,6 +49,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.OPENBOX_ACK, this, this.ackOpenBox);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.BOXDATA_UPDATE, this, this.updateBoxData);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
     },
 
     initData() {
@@ -73,6 +78,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
         Game.NotificationController.On(Game.Define.EVENT_KEY.OPENBOX_ACK, this, this.ackOpenBox);
         Game.NotificationController.On(Game.Define.EVENT_KEY.BOXDATA_UPDATE, this, this.updateBoxData);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
     },
 
     updateView() {
@@ -94,6 +100,7 @@ cc.Class({
     updateGameView() {
         this.updatePlayer();
         this.updatePassBg();
+        this.updateBottomButton();
     },
 
     updatePlayer() {
@@ -130,6 +137,11 @@ cc.Class({
                 }
             }.bind(this));
         }
+    },
+    updateBottomButton() {
+        this.button_shop.node.active = Game.GuideController.IsShopOpen()
+        this.button_turnbrand.node.active = Game.GuideController.IsTurnBrandOpen()
+        this.button_palace.node.active = Game.GuideController.IsPalaceOpen()
     },
 
     createPlayer(playerId) {
@@ -202,9 +214,9 @@ cc.Class({
                         if (passBase.Index == 1) {
                             passCellNode = Game.ViewController.seekChildByName(this.node, "button_jiantouright");
                         } else {
-                            passCellNode = Game.ViewController.seekChildByName(this.node, "cell_"+ passBase.Index);
+                            passCellNode = Game.ViewController.seekChildByName(this.node, "cell_" + passBase.Index);
                         }
-                        
+
                         let oldWorldPosition = passCellNode.parent.convertToWorldSpaceAR(passCellNode.position);
                         let newWordPosition = this.node_player.convertToNodeSpaceAR(oldWorldPosition);
 
@@ -234,10 +246,10 @@ cc.Class({
 
             //删除掉合成成功的女仆
             let i = this._playerList.length;
-            while(i--){
-                if(this._playerList[i].node.uuid == data.touchid || this._playerList[i].node.uuid == data.findid) {
+            while (i--) {
+                if (this._playerList[i].node.uuid == data.touchid || this._playerList[i].node.uuid == data.findid) {
                     this._playerList[i].node.destroy();
-                    this._playerList.splice(i,1);
+                    this._playerList.splice(i, 1);
                 }
             }
         }
@@ -308,8 +320,7 @@ cc.Class({
 
     onOpenPalace(event) {
         event.stopPropagationImmediate();
-        Game.PalaceModel.SetCurPalaceId(1);
-        this.openView(Game.UIName.UI_PALACEDETAIL);
+        this.openView(Game.UIName.UI_PALACE);
     },
 
     //interfaces for guide
