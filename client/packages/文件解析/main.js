@@ -32,7 +32,8 @@ module.exports = {
                 'headbase',
                 'eventbase',
                 'boxbase',
-                "guidebase"
+                'guidebase',
+                'palacepersonnelbase'
             ];
             Editor.log('开始生成JSON');
 

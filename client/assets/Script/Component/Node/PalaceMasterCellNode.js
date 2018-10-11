@@ -23,10 +23,10 @@ cc.Class({
         if (this._palaceData) {
             this._masterLvUpBase = Game.PalaceModel.GetPalaceMasterLvUpBase(this._data.Master, this._palaceData.level);
             if (this._masterLvUpBase) {
-                this.label_masterName.string = Game.MaidModel.GetMaidNameById(this._data.Master) + '(' + this._masterLvUpBase.levelName + ')';
+                this.label_masterName.string = Game.MaidModel.GetPersonNameById(this._data.Master) + '(' + this._masterLvUpBase.levelName + ')';
             }
         } else {
-            this.label_masterName.string = Game.MaidModel.GetMaidNameById(this._data.Master) + "(娴贵人)";
+            this.label_masterName.string = Game.MaidModel.GetPersonNameById(this._data.Master) + "(娴贵人)";
         }
 
         if (Game.MaidModel.GetTopPass() >= this._data.UlockPassId) {
@@ -38,7 +38,7 @@ cc.Class({
             this.label_palaceName.node.color = cc.color(120, 120, 120);
             this.label_masterName.node.color = cc.color(120, 120, 120);
 
-            this.label_unlockTxt.string = `第${this._data.UlockPassId}关解锁`
+            this.label_unlockTxt.string = `第${this._data.UlockPassId}关解锁`;
         }
     },
 

@@ -46,7 +46,7 @@ cc.Class({
         let palaceData = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
         let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", palaceData.id);
         let palaceMaidBase = Game.ConfigController.GetConfigById("PalaceMapMaid", palaceMapBase.Maids[this._index]);
-        let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", palaceMapBase.Maids[this._index]);
+        let maidBase = Game.ConfigController.GetConfigById("PalacePersonnel", palaceMapBase.Maids[this._index]);
         if (palaceData && palaceMapBase && palaceMaidBase && maidBase) {
             if (palaceData.maids[this._index]) {     //已经解锁
                 Game.ResController.SetSprite(this.image_maid, maidBase.Path);

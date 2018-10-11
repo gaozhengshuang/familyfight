@@ -1,0 +1,26 @@
+{
+	"Tool": "github.com/davyxu/tabtoy",
+	"Version": "2.8.10",
+	"PalacePersonnel":[
+		{ "Id": 1, "Name": "富察容音", "Path": "Image/GameScene/halfbody/1", "RoleDescribe": "乾隆的结发妻子。" },
+		{ "Id": 2, "Name": "高宁馨", "Path": "Image/GameScene/halfbody/12", "RoleDescribe": "为人嚣张跋扈" },
+		{ "Id": 3, "Name": "辉发那拉", "Path": "Image/GameScene/halfbody/13", "RoleDescribe": "乾隆的第二任皇后" },
+		{ "Id": 4, "Name": "魏璎珞", "Path": "Image/GameScene/halfbody/4" },
+		{ "Id": 5, "Name": "愉妃", "Path": "Image/GameScene/halfbody/1" },
+		{ "Id": 6, "Name": "苏静好", "Path": "Image/GameScene/halfbody/13" },
+		{ "Id": 7, "Name": "顺嫔", "Path": "Image/GameScene/halfbody/1" },
+		{ "Id": 8, "Name": "嘉嫔", "Path": "Image/GameScene/halfbody/12" },
+		{ "Id": 9, "Name": "纳兰淳雪", "Path": "Image/GameScene/halfbody/14" },
+		{ "Id": 10, "Name": "陆晚晚", "Path": "Image/GameScene/halfbody/6" },
+		{ "Id": 11, "Name": "容妃", "Path": "Image/GameScene/halfbody/12" },
+		{ "Id": 12, "Name": "怡嫔", "Path": "Image/GameScene/halfbody/13" },
+		{ "Id": 100, "Name": "明玉", "Path": "Image/GameScene/Maid/maid_17" },
+		{ "Id": 101, "Name": "尔晴", "Path": "Image/GameScene/Maid/maid_19" },
+		{ "Id": 102, "Name": "璎珞", "Path": "Image/GameScene/Maid/maid_18" },
+		{ "Id": 200, "Name": "夏荷", "Path": "Image/GameScene/Maid/maid_15" },
+		{ "Id": 201, "Name": "春然", "Path": "Image/GameScene/Maid/maid_16" },
+		{ "Id": 202, "Name": "芳草", "Path": "Image/GameScene/Maid/maid_17" },
+		{ "Id": 300, "Name": "莫心", "Path": "Image/GameScene/Maid/maid_15" },
+		{ "Id": 301, "Name": "墨兰", "Path": "Image/GameScene/Maid/maid_16" },
+		{ "Id": 302, "Name": "芝兰", "Path": "Image/GameScene/Maid/maid_19" }
+	]}

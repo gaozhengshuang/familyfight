@@ -2,7 +2,7 @@
 // Version: 2.8.10
 
 module table {
-export var Palace Personnel : table.IPalace PersonnelDefine[] = [
+export var PalacePersonnel : table.IPalacePersonnelDefine[] = [
 		{ Id : 1, Name : "富察容音", Path : "Image/GameScene/halfbody/1", RoleDescribe : "乾隆的结发妻子。" 	},
 		{ Id : 2, Name : "高宁馨", Path : "Image/GameScene/halfbody/12", RoleDescribe : "为人嚣张跋扈" 	},
 		{ Id : 3, Name : "辉发那拉", Path : "Image/GameScene/halfbody/13", RoleDescribe : "乾隆的第二任皇后" 	},
@@ -28,12 +28,12 @@ export var Palace Personnel : table.IPalace PersonnelDefine[] = [
 
 
 // Id
-export var Palace PersonnelById : game.Dictionary<table.IPalace PersonnelDefine> = {}
-function readPalace PersonnelById(){
-  for(let rec of Palace Personnel) {
-    Palace PersonnelById[rec.Id] = rec; 
+export var PalacePersonnelById : game.Dictionary<table.IPalacePersonnelDefine> = {}
+function readPalacePersonnelById(){
+  for(let rec of PalacePersonnel) {
+    PalacePersonnelById[rec.Id] = rec; 
   }
 }
-readPalace PersonnelById();
+readPalacePersonnelById();
 }
 
