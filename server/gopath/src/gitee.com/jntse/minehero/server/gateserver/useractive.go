@@ -218,6 +218,9 @@ func (this *GateUser) OpenBox(id uint32, num uint32) uint32 {
 }
 
 func (this *GateUser) TickBox(now uint64) {
+	if this.guide != 0 && this.guide < 10 {
+		return
+	}
 	generated := false
 	for _, v := range tbl.TBoxBase.DropBox {
 		if v.Interval != 0 {
@@ -231,6 +234,7 @@ func (this *GateUser) TickBox(now uint64) {
 				}
 			} else {
 				//找到了 看看时间差
+				//看看能不能掉
 				if now > boxData.generatetime + uint64(v.Interval) {
 					boxData = this.GenerateBox(v.Id, 1, v.Level)
 					if boxData != nil {
