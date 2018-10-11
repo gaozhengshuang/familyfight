@@ -24,7 +24,6 @@ cc.Class({
 
     initData() {
         this.initY = 0;
-        this.gold = 0;
     },
 
     initView() {
@@ -33,8 +32,7 @@ cc.Class({
     },
 
     updateGold(gold) {
-        this.gold = gold;
-        this.label_gold.string = `+${Game.Tools.UnitConvert(this.gold*2)}`;
+        this.label_gold.string = `+${Game.Tools.UnitConvert(gold*2)}`;
     },
 
     playGoldAni() {
@@ -44,6 +42,20 @@ cc.Class({
             cc.moveTo(1.0, this.node.x, this.node.y + 50),
             cc.callFunc(function () {
                 this.node.active = false;
+            }, this)
+        ]));
+    },
+
+    addGoldAndDestroy(gold) {
+        this.label_gold.string = `+${Game.Tools.UnitConvert(gold*2)}`;
+        Game.UserModel.AddGold(gold*2);
+
+        this.node.active = true;
+        this.node.y = this.initY;
+        this.node.runAction(cc.sequence([
+            cc.moveTo(1.0, this.node.x, this.node.y + 50),
+            cc.callFunc(function () {
+                this.node.destroy();
             }, this)
         ]));
     }
