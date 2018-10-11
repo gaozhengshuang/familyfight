@@ -320,8 +320,7 @@ cc.Class({
 
     onOpenPalace(event) {
         event.stopPropagationImmediate();
-        Game.PalaceModel.SetCurPalaceId(1);
-        this.openView(Game.UIName.UI_PALACEDETAIL);
+        this.openView(Game.UIName.UI_PALACE);
     },
 
     //interfaces for guide
