@@ -28,31 +28,25 @@ message PalaceMapDefine
 	optional string BannerPath = 3; // 宫殿匾路径
 	
 	
-	optional string UlockPath = 4; // 解锁图片路径
+	optional int32 UlockPassId = 4; // 解锁关卡（配置关卡ID)
 	
 	
-	optional string Lockpath = 5; // 锁定图片路径
+	optional int32 x = 5; // 位置显示x
 	
 	
-	optional int32 UlockPassId = 6; // 解锁关卡（配置关卡ID)
+	optional int32 y = 6; // 位置显示y
 	
 	
-	optional int32 x = 7; // 位置显示x
+	optional string Headpath = 7; // 头像图片路径
 	
 	
-	optional int32 y = 8; // 位置显示y
+	optional uint32 Master = 8; // 主子的id
 	
 	
-	optional string Headpath = 9; // 头像图片路径
+	repeated uint32 Maids = 9; // 女仆id们
 	
 	
-	optional uint32 Master = 10; // 主子的id
-	
-	
-	repeated uint32 Maids = 11; // 女仆id们
-	
-	
-	repeated string MaidsXY = 12; // 女仆坐标显示
+	repeated string MaidsXY = 10; // 女仆坐标显示
 
 }
 
