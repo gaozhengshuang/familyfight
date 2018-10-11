@@ -1938,8 +1938,10 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceDetailView",
+    "target": {
+      "__id__": 1
+    },
+    "component": "PalaceView",
     "handler": "onOpenTravel",
     "customEventData": ""
   },
@@ -2095,8 +2097,10 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceDetailView",
+    "target": {
+      "__id__": 1
+    },
+    "component": "PalaceView",
     "handler": "onOpenEvent",
     "customEventData": ""
   },

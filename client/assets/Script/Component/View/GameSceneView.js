@@ -149,9 +149,9 @@ cc.Class({
     },
 
     updateBottomButton() {
-        this.button_shop.node.active = Game.GuideController.IsShopOpen()
-        this.button_turnbrand.node.active = Game.GuideController.IsTurnBrandOpen()
-        this.button_palace.node.active = Game.GuideController.IsPalaceOpen()
+        this.button_shop.node.active = Game.GuideController.IsShopOpen();
+        this.button_turnbrand.node.active = Game.GuideController.IsTurnBrandOpen();
+        this.button_palace.node.active = Game.GuideController.IsPalaceOpen();
     },
 
     createPlayer(playerId) {

@@ -32,4 +32,15 @@ cc.Class({
         
         this.tableViewComponent.initTableView(this.palaceList.length, {array: this.palaceList, target: this});
     },
+    
+    onOpenTravel(event) {
+        event.stopPropagationImmediate();
+        this.openView(Game.UIName.UI_TRAVELVIEW);
+    },
+
+    onOpenEvent(event) {
+        event.stopPropagationImmediate();
+        this.openView(Game.UIName.UI_EVENTVIEW);
+    },
+
 });

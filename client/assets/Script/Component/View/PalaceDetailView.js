@@ -175,11 +175,6 @@ cc.Class({
         this.openView(Game.UIName.UI_EVENTVIEW);
     },
 
-    onOpenMap(event) {
-        event.stopPropagationImmediate();
-        this.openView(Game.UIName.UI_PALACE);
-    },
-    
     onReqPalaceTakeBack() {
         Game.NetWorkController.Send('msg.C2GW_ReqPalaceTakeBack',
         {
