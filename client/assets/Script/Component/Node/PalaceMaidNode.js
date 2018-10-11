@@ -29,7 +29,7 @@ cc.Class({
     updateView() {
         let palaceData = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
         let palaceMaidBase = Game.ConfigController.GetConfigById("PalaceMapMaid", this._maidId);
-        let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", this._maidId);
+        let maidBase = Game.ConfigController.GetConfigById("PalacePersonnel", this._maidId);
         if (palaceData && palaceMaidBase && maidBase) {
             if (palaceData.maids[this._index]) {     //已经解锁
                 Game.ResController.SetSprite(this.image_maid, maidBase.Path);

@@ -63,7 +63,7 @@ cc.Class({
                 }
 
                 this.label_tltie.string = '(' + masterLvUpBase.levelName + ')';
-                let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", palaceMapBase.Master);
+                let maidBase = Game.ConfigController.GetConfigById("PalacePersonnel", palaceMapBase.Master);
                 if (maidBase) {
                     this.label_name.string = maidBase.Name;
                     this.label_detail.string = maidBase.RoleDescribe;

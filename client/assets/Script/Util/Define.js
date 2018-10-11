@@ -44,6 +44,7 @@ var Define = {
         BOXDATA_UPDATE: '1013',
         GUIDE_ACK: '1014',
         GUIDE_OVER: '1015',
+        UPDATE_PLAYER: '1016',
 
         TRAVELDATA_UPDATE: '1100',
         EVENTDATA_UPDATE: '1101',

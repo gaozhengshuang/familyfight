@@ -92,6 +92,15 @@ MaidModel.prototype.GetMaidNameById = function (_maidId) {
     return name;
 }
 
+MaidModel.prototype.GetPersonNameById = function (_personId) {
+    let name = '';
+    let personBase = ConfigController.GetConfigById("PalacePersonnel", _personId);
+    if (personBase) {
+        name = personBase.Name;
+    }
+    return name;
+}
+
 MaidModel.prototype.RefreshMoneyMaids = function () {
     this._moneyMaids = 0;
     for (let i = 0; i < this._maids.length; i++) {
@@ -99,10 +108,46 @@ MaidModel.prototype.RefreshMoneyMaids = function () {
         let maidBase = ConfigController.GetConfigById("TMaidLevel", maid.id);
         if (maidBase) {
             for (let b = 0; b < maid.count; b++) {
-                this._moneyMaids = this._moneyMaids + (maidBase.Reward * 2);
+                this._moneyMaids += maidBase.Reward;
             }
         }
     }
+}
+
+MaidModel.prototype.GetPassCurProduct = function(pass) {
+    let product = 0;
+    for (let i = 0; i < this._maids.length; i++) {
+        let maid = this._maids[i];
+        let maidBase = ConfigController.GetConfigById("TMaidLevel", maid.id);
+        if (maidBase) {
+            if (maidBase.Passlevels == pass) {
+                for (let b = 0; b < maid.count; b++) {
+                    product += maidBase.Reward;
+                }
+            }
+        }
+    }
+    
+    return product;
+}
+
+MaidModel.prototype.GetPassMaxProduct = function(pass) {
+    let product = 0;
+    let passMaxMaid = null;
+    for (let i = 0; i < this._maids.length; i++) {
+        let maid = this._maids[i];
+        let maidBase = ConfigController.GetConfigById("TMaidLevel", maid.id);
+        if (maidBase) {
+            if (maidBase.Passlevels == pass) {
+                passMaxMaid = maidBase;
+            }
+        }
+    }
+    
+    if (passMaxMaid) {
+        product = passMaxMaid.Reward * 20;
+    }
+    return product;
 }
 
 /**
