@@ -572,9 +572,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 145,
-      "g": 127,
-      "b": 129,
+      "r": 88,
+      "g": 33,
+      "b": 10,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -649,6 +649,7 @@
     "_enabled": true,
     "_url": "",
     "_data": {},
+    "_oldparentNode": null,
     "image_maid": {
       "__id__": 3
     },

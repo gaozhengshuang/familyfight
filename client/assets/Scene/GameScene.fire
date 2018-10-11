@@ -302,7 +302,7 @@
       "__id__": 21
     },
     "_id": "0eIweUrotPB6LhcGk4bLbx",
-    "_opacity": 255,
+    "_opacity": 200,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -1060,7 +1060,7 @@
       "__id__": 43
     },
     "_id": "4egoQZ9bhAjKT1A5VGNw3V",
-    "_opacity": 255,
+    "_opacity": 200,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
