@@ -43,7 +43,16 @@ cc.Class({
     updateChapter() {
         this.label_chapter.string = `第${Game.MaidModel.GetCurChapter()}章`;
         this.image_lastBtn.node.active = Game.MaidModel.GetCurChapter() > 1;
-        this.image_nextBtn.node.active = Game.MaidModel.GetCurChapter() < Game.MaidModel.GetTopChapter();
+
+        let passBase = Game.ConfigController.GetConfigById("PassLevels", Game.MaidModel.GetTopPass());
+        if (passBase) {
+            if (Game.MaidModel.GetCurChapter() < Game.MaidModel.GetTopChapter()) {
+                Game.ResController.SetSprite(this.image_nextBtn, "Image/GameScene/Common/button_next");
+            } else {
+                Game.ResController.SetSprite(this.image_nextBtn, "Image/GameScene/Common/button_nextgray");
+            }
+            this.image_nextBtn.node.active = Game.MaidModel.GetCurChapter() < Game.MaidModel.GetTopChapter() || passBase.Index == 4;
+        }
     },
 
     updateTableView() {
@@ -51,7 +60,8 @@ cc.Class({
             this.passList = [];
             for (let i = 0; i < this.passBase.length; i ++) {
                 let info = this.passBase[i];
-                if (info.ChapterID == Game.MaidModel.GetCurChapter() && info.Id <= Game.MaidModel.GetTopPass()) {
+                let visibleId = Game.MaidModel.GetTopPass() + 1;    //策划需求要显示下一个未解锁的关卡
+                if (info.ChapterID == Game.MaidModel.GetCurChapter() && info.Id <= visibleId) {
                     this.passList.push(info);
                 }
             }
@@ -105,13 +115,13 @@ cc.Class({
     },
 
     OnClickNextChapter() {
-        if (Game.MaidModel.GetCurChapter() >= Game.MaidModel.GetTopChapter()) {
-            return;
-        }
-        Game.MaidModel.SetCurChapter(Game.MaidModel.GetCurChapter() + 1);
+        if (Game.MaidModel.GetCurChapter() < Game.MaidModel.GetTopChapter()) {      //策划需求如当前关卡是该章节最高关卡则显示灰色下一章节的按钮
+            Game.MaidModel.SetCurChapter(Game.MaidModel.GetCurChapter() + 1);
 
-        this.updateCurPass(true);
-        this.updateTableView();
-        this.updateChapter();
+            this.updateCurPass(true);
+            this.updateTableView();
+            this.updateChapter();
+        } else {
+        }
     },
 });

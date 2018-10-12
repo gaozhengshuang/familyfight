@@ -6,6 +6,7 @@ cc.Class({
     properties: {
         passClickTrue_img: { default: null, type: cc.Sprite },
         pass_img: { default: null, type: cc.Sprite },
+        pass_button: { default: null, type: cc.Button },
         animation_light: { default: null, type: cc.Animation }
     },
 
@@ -22,6 +23,8 @@ cc.Class({
         this.passClickTrue_img.node.active = Game.MaidModel.GetCurPass() == this._data.Id;
         Game.ResController.SetSprite(this.pass_img, this._data.Path);
 
+        this.pass_button.interactable = Game.MaidModel.GetTopPass() >= this._data.Id;
+
         let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));    //判断关卡第一次开放
         if ((this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.lookPass < this._data.Id)) {
             let passData = {
@@ -36,27 +39,30 @@ cc.Class({
         }
     },
 
-    clicked() {
-        if (this._data.Id != Game.MaidModel.GetCurPass()) {
-            Game.MaidModel.SetCurPass(this._data.Id);
-
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW);
-        }
-        Game.GuideController.NextGuide();
-
-        let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));
-        if (this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.pass < this._data.Id) {
-            if (this._data.DialogueID != 0) {
-                let passData = {
-                    userid: Game.UserModel.GetUserId(),
-                    lookPass: _dialoguePass.lookPass,
-                    pass: this._data.Id,
-                };
-                cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
-                
-                Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);
+    clicked() {        
+        if (Game.MaidModel.GetTopPass() >= this._data.Id) {     //已经解锁的关卡
+            if (this._data.Id != Game.MaidModel.GetCurPass()) {
+                Game.MaidModel.SetCurPass(this._data.Id);
+    
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW);
             }
+            Game.GuideController.NextGuide();
+    
+            let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));
+            if (this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.pass < this._data.Id) {
+                if (this._data.DialogueID != 0) {
+                    let passData = {
+                        userid: Game.UserModel.GetUserId(),
+                        lookPass: _dialoguePass.lookPass,
+                        pass: this._data.Id,
+                    };
+                    cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
+                    
+                    Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);
+                }
+            }
+        } else {
         }
     },
 
