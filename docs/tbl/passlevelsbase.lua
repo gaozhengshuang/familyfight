@@ -6,16 +6,16 @@ export var PassLevels : table.IPassLevelsDefine[] = [
 		{ Id : 1, Name : "选秀女", Path : "Image/GameScene/Pass/pass_1", NextLevels : 2, DialogueID : 0, MapPrefab : "Prefab/map/map05", ChapterID : 1, ChapterName : "第一章", Index : 1 	},
 		{ Id : 2, Name : "步步生莲", Path : "Image/GameScene/Pass/pass_7", NextLevels : 3, DialogueID : 0, MapPrefab : "Prefab/map/map01", ChapterID : 1, ChapterName : "第一章", Index : 2 	},
 		{ Id : 3, Name : "作弊", Path : "Image/GameScene/Pass/pass_2", NextLevels : 4, DialogueID : 33, MapPrefab : "Prefab/map/map03", ChapterID : 1, ChapterName : "第一章", Index : 3 	},
-		{ Id : 4, Name : "皇后千秋", Path : "Image/GameScene/Pass/pass_4", NextLevels : 5, DialogueID : 7, MapPrefab : "Prefab/map/map02", ChapterID : 1, ChapterName : "第一章", Index : 4 	},
-		{ Id : 5, Name : "作弊", Path : "Image/GameScene/Pass/pass_2", NextLevels : 6, DialogueID : 33, MapPrefab : "Prefab/map/map05", ChapterID : 2, ChapterName : "第二章", Index : 1 	},
-		{ Id : 6, Name : "初入长春宫", Path : "Image/GameScene/Pass/pass_5", NextLevels : 7, DialogueID : 25, MapPrefab : "Prefab/map/map06", ChapterID : 2, ChapterName : "第二章", Index : 2 	},
-		{ Id : 7, Name : "泼水", Path : "Image/GameScene/Pass/pass_3", NextLevels : 8, DialogueID : 25, MapPrefab : "Prefab/map/map04", ChapterID : 2, ChapterName : "第二章", Index : 3 	},
-		{ Id : 8, Name : "皇后千秋", Path : "Image/GameScene/Pass/pass_4", NextLevels : 9, DialogueID : 7, MapPrefab : "Prefab/map/map02", ChapterID : 2, ChapterName : "第二章", Index : 4 	},
-		{ Id : 9, Name : "作弊", Path : "Image/GameScene/Pass/pass_2", NextLevels : 10, DialogueID : 33, MapPrefab : "Prefab/map/map03", ChapterID : 3, ChapterName : "第三章", Index : 1 	},
-		{ Id : 10, Name : "绣女", Path : "Image/GameScene/Pass/pass_1", NextLevels : 11, DialogueID : 1, MapPrefab : "Prefab/map/map01", ChapterID : 3, ChapterName : "第三章", Index : 2 	},
-		{ Id : 11, Name : "作弊", Path : "Image/GameScene/Pass/pass_2", NextLevels : 12, DialogueID : 33, MapPrefab : "Prefab/map/map04", ChapterID : 3, ChapterName : "第三章", Index : 3 	},
-		{ Id : 12, Name : "皇后千秋", Path : "Image/GameScene/Pass/pass_4", NextLevels : 13, DialogueID : 7, MapPrefab : "Prefab/map/map05", ChapterID : 3, ChapterName : "第三章", Index : 4 	},
-		{ Id : 13, Name : "初入长春宫", Path : "Image/GameScene/Pass/pass_5", NextLevels : 0, DialogueID : 25, MapPrefab : "Prefab/map/map06", ChapterID : 4, ChapterName : "第四章", Index : 1 	}
+		{ Id : 4, Name : "泼水", Path : "Image/GameScene/Pass/pass_3", NextLevels : 5, DialogueID : 7, MapPrefab : "Prefab/map/map02", ChapterID : 1, ChapterName : "第一章", Index : 4 	},
+		{ Id : 5, Name : "绣坊比赛", Path : "Image/GameScene/Pass/pass_2", NextLevels : 6, DialogueID : 33, MapPrefab : "Prefab/map/map05", ChapterID : 2, ChapterName : "第二章", Index : 1 	},
+		{ Id : 6, Name : "皇后千秋", Path : "Image/GameScene/Pass/pass_4", NextLevels : 7, DialogueID : 25, MapPrefab : "Prefab/map/map06", ChapterID : 2, ChapterName : "第二章", Index : 2 	},
+		{ Id : 7, Name : "初入长春宫", Path : "Image/GameScene/Pass/pass_5", NextLevels : 8, DialogueID : 25, MapPrefab : "Prefab/map/map04", ChapterID : 2, ChapterName : "第二章", Index : 3 	},
+		{ Id : 8, Name : "喂药", Path : "Image/GameScene/Pass/pass_6", NextLevels : 9, DialogueID : 7, MapPrefab : "Prefab/map/map02", ChapterID : 2, ChapterName : "第二章", Index : 4 	},
+		{ Id : 9, Name : "新叶有毒", Path : "Image/GameScene/Pass/pass_8", NextLevels : 10, DialogueID : 33, MapPrefab : "Prefab/map/map03", ChapterID : 3, ChapterName : "第三章", Index : 1 	},
+		{ Id : 10, Name : "神树挠痒痒", Path : "Image/GameScene/Pass/pass_9", NextLevels : 11, DialogueID : 1, MapPrefab : "Prefab/map/map01", ChapterID : 3, ChapterName : "第三章", Index : 2 	},
+		{ Id : 11, Name : "李玉踢屁股", Path : "Image/GameScene/Pass/pass_10", NextLevels : 12, DialogueID : 33, MapPrefab : "Prefab/map/map04", ChapterID : 3, ChapterName : "第三章", Index : 3 	},
+		{ Id : 12, Name : "幽会", Path : "Image/GameScene/Pass/pass_11", NextLevels : 13, DialogueID : 7, MapPrefab : "Prefab/map/map05", ChapterID : 3, ChapterName : "第三章", Index : 4 	},
+		{ Id : 13, Name : "贵妃抄书", Path : "Image/GameScene/Pass/pass_12", NextLevels : 0, DialogueID : 25, MapPrefab : "Prefab/map/map06", ChapterID : 4, ChapterName : "第四章", Index : 1 	}
 	]
 
 
