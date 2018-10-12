@@ -3,7 +3,7 @@
     "PowerMax": 20,
     "PowerAddInterval": 1800,
     "PowerAddition": 5,
-    "PriceAdditionPerBuy": 1.5,
+    "PriceAdditionPerBuy": 1.3,
     "GoldItemId": 50001,
     "TravelMinTime": 3600,
     "TravelMaxTime": 7200,
