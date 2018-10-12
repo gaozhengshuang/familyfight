@@ -28,9 +28,11 @@ cc.Class({
 
                     let madiInfo = Game._.find(Game.MaidModel.GetMaids(), {id: passMaids[i].Id});
                     if (madiInfo) {
-                        image_maid.node.color = cc.color(255, 255, 255, 255);
+                        image_maid.node.color = cc.color(255, 255, 255);
+                        image_maid.node.opacity = 255;
                     } else {
-                        image_maid.node.color = cc.color(0, 0, 0, 160);
+                        image_maid.node.color = cc.color(0, 0, 0);
+                        image_maid.node.opacity = 160;
                     }
                 }
             }            
