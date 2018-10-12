@@ -11,13 +11,13 @@ cc.Class({
         this.tableView.initTableView(events.length, { array: events, target: this });
     },
     onItemClick: function (eventid) {
-        // if (Game.TravelModel.IsEventOpen(eventid)) {
+        if (Game.TravelModel.IsEventOpen(eventid)) {
             //打开事件吧
             Game.TravelModel.SetOpenEvent(eventid);
             this.openView(Game.UIName.UI_EVENTDETAILVIEW);
-        // } else {
-        //     //提示
-        //     Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, "该事件尚未解锁!");
-        // }
+        } else {
+            //提示
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, "该事件尚未解锁!");
+        }
     }
 });
