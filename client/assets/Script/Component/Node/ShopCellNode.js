@@ -43,7 +43,7 @@ cc.Class({
         if (maidBase) {
             Game.ResController.SetSprite(this.image_maid, maidBase.Path);
             this.label_name.string = maidBase.Name;
-            this.label_reward.string = `${maidBase.Reward}金币/秒`;
+            this.label_reward.string = `${Game.Tools.UnitConvert(maidBase.Reward)}金币/秒`;
         }
         this.updateBtnGold();
     },
