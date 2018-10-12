@@ -6,7 +6,6 @@ cc.Class({
     properties: {
         passClickTrue_img: { default: null, type: cc.Sprite },
         pass_img: { default: null, type: cc.Sprite },
-        pass_button: { default: null, type: cc.Button },
         animation_light: { default: null, type: cc.Animation }
     },
 
@@ -21,9 +20,12 @@ cc.Class({
         this._data = data.array[index];
 
         this.passClickTrue_img.node.active = Game.MaidModel.GetCurPass() == this._data.Id;
-        Game.ResController.SetSprite(this.pass_img, this._data.Path);
-
-        this.pass_button.interactable = Game.MaidModel.GetTopPass() >= this._data.Id;
+        
+        if (Game.MaidModel.GetTopPass() >= this._data.Id) {
+            Game.ResController.SetSprite(this.pass_img, this._data.Path);
+        } else {
+            Game.ResController.SetSprite(this.pass_img, "Image/GameScene/Common/button_unlockpass");
+        }
 
         let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));    //判断关卡第一次开放
         if ((this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.lookPass < this._data.Id)) {
