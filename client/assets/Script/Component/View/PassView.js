@@ -122,6 +122,7 @@ cc.Class({
             this.updateTableView();
             this.updateChapter();
         } else {
+            this.openView(Game.UIName.UI_PASSDETAILVIEW);
         }
     },
 });

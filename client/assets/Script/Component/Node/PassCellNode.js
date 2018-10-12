@@ -63,6 +63,7 @@ cc.Class({
                 }
             }
         } else {
+            Game.ViewController.openView(Game.UIName.UI_PASSDETAILVIEW);
         }
     },
 
