@@ -33,7 +33,7 @@ cc.Class({
             }
         }.bind(this));
     },
-    TurnBackWithAnima: function (turnDelay, cb) {
+    TurnBackWithAnima: function (delay, turnDelay, cb) {
         this.backNode.stopAllActions();
         this.frontNode.stopAllActions();
         if (turnDelay == null && turnDelay == 0.0) {
@@ -43,6 +43,7 @@ cc.Class({
         } else {
             //播动画
             this.frontNode.runAction(cc.sequence(
+                delay == 0 ? cc.show() : cc.delayTime(delay),
                 cc.scaleTo(turnDelay / 2, 0, 1),
                 cc.callFunc(function () {
                     this.frontNode.active = false;
@@ -57,7 +58,7 @@ cc.Class({
             ));
         }
     },
-    TurnFrontWithAnima: function (turnDelay, cb) {
+    TurnFrontWithAnima: function (delay, turnDelay, cb) {
         this.backNode.stopAllActions();
         this.frontNode.stopAllActions();
         if (turnDelay == null && turnDelay == 0.0) {
@@ -67,6 +68,7 @@ cc.Class({
         } else {
             //播动画
             this.backNode.runAction(cc.sequence(
+                delay == 0 ? cc.show() : cc.delayTime(delay),
                 cc.scaleTo(turnDelay / 2, 0, 1),
                 cc.callFunc(function () {
                     this.frontNode.active = true;

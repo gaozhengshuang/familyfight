@@ -8,6 +8,7 @@ const LinkStatus = {
     Status_End: 4,
 }
 const GameTime = 30;
+const WrongShowTime = 0.3;
 cc.Class({
     extends: cc.GameComponent,
 
@@ -32,7 +33,7 @@ cc.Class({
             let view = this.linkItemNodes[i];
             view.StopAllAction();
             view.SetOpacity(255);
-            view.TurnBackWithAnima(0.0);
+            view.TurnBackWithAnima(0, 0.0);
         }
         this.maskNode.active = true;
         this.firstItem = null;
@@ -87,12 +88,12 @@ cc.Class({
             if (this.firstItem == null) {
                 //第一个反过来的
                 this.firstItem = linkItem;
-                this.firstItem.TurnFrontWithAnima(0.6);
+                this.firstItem.TurnFrontWithAnima(0, 0.6);
             } else if (this.secondItem == null) {
                 //第二个翻过来的
                 this.secondItem = linkItem;
                 this._changeStatus(LinkStatus.Status_Judge);
-                this.secondItem.TurnFrontWithAnima(0.6, function () {
+                this.secondItem.TurnFrontWithAnima(0, 0.6, function () {
                     //都反过来了
                     if (this.firstItem.value == this.secondItem.value) {
                         //选对咯
@@ -110,8 +111,8 @@ cc.Class({
                         }
                     } else {
                         //选错了 翻回去
-                        this.firstItem.TurnBackWithAnima(0.6);
-                        this.secondItem.TurnBackWithAnima(0.6, function () {
+                        this.firstItem.TurnBackWithAnima(WrongShowTime, 0.6);
+                        this.secondItem.TurnBackWithAnima(WrongShowTime, 0.6, function () {
                             this._changeStatus(LinkStatus.Status_Wait);
                             this.firstItem = null;
                             this.secondItem = null;
@@ -163,7 +164,7 @@ cc.Class({
         this.linkInfos = Game._.shuffle([1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6]);
         for (let i = 0; i < this.linkItemNodes.length; i++) {
             let item = this.linkItemNodes[i];
-            item.TurnBackWithAnima(0.0);
+            item.TurnBackWithAnima(0, 0.0);
             item.Init(i, this.linkInfos[i], this.onLinkItemClick.bind(this));
         }
     }
