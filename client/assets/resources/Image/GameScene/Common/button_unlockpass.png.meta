@@ -1,14 +1,14 @@
 {
   "ver": "2.0.0",
-  "uuid": "5d308a6a-16dc-496c-afd1-3da46fe2f1d1",
+  "uuid": "475d007d-f7c1-4afd-aeb0-d251214e443f",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "pass_16": {
+    "button_unlockpass": {
       "ver": "1.0.3",
-      "uuid": "e2305d37-8829-4d92-bf61-5d6825859464",
-      "rawTextureUuid": "5d308a6a-16dc-496c-afd1-3da46fe2f1d1",
+      "uuid": "9e3a3c67-0a69-470f-83db-38d7c616fdf8",
+      "rawTextureUuid": "475d007d-f7c1-4afd-aeb0-d251214e443f",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
