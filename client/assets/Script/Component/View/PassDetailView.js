@@ -25,6 +25,13 @@ cc.Class({
                     label_name.string = passMaids[i].Name;
                     label_next.node.active = (i == (passMaids.length-1));
                     Game.ResController.SetSprite(image_maid, passMaids[i].Path);
+
+                    let madiInfo = Game._.find(Game.MaidModel.GetMaids(), {id: passMaids[i].Id});
+                    if (madiInfo) {
+                        image_maid.node.color = cc.color(255, 255, 255, 255);
+                    } else {
+                        image_maid.node.color = cc.color(0, 0, 0, 160);
+                    }
                 }
             }            
         }
