@@ -31,7 +31,7 @@ message TMaidLevelDefine
 	optional int32 Passlevels = 4; // 所属关卡（配置关卡ID)
 	
 	
-	optional int32 Reward = 5; // 产生的收益/秒
+	optional uint64 Reward = 5; // 产生的收益/秒
 	
 	
 	optional int32 NextID = 6; // 合成后的ID
