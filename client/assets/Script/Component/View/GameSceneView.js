@@ -338,9 +338,9 @@ cc.Class({
     },
 
     updateEfficiency() {     //更新效率和仆人个数
-        this.label_allincomenum.string = Game.Tools.UnitConvert(Game.MaidModel.GetMoneyMaids());
-        this.label_curEfficiency.string = Game.MaidModel.GetPassCurEfficiency(Game.MaidModel.GetCurPass());
-        this.label_maxEfficiency.string = "/" + Game.MaidModel.GetPassMaxEfficiency(Game.MaidModel.GetCurPass());
+        this.label_allincomenum.string = Game.Tools.UnitConvert(Game.MaidModel.GetMoneyMaids() * 3600);
+        this.label_curEfficiency.string = Game.Tools.UnitConvert(Game.MaidModel.GetPassCurEfficiency(Game.MaidModel.GetCurPass()) * 3600);
+        this.label_maxEfficiency.string = "/" + Game.Tools.UnitConvert(Game.MaidModel.GetPassMaxEfficiency(Game.MaidModel.GetCurPass()) * 3600);
         this.label_curMaidNum.string = `${this._playerList.length}`;
         this.label_maxMaidNum.string = '/20';
     },
