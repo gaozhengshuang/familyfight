@@ -27,6 +27,12 @@ cc.Class({
             Game.ResController.SetSprite(this.pass_img, "Image/GameScene/Common/button_unlockpass");
         }
 
+        if (this._data.Id == Game.MaidModel.GetCurPass()) {
+            this.node.setScale(1.2);
+        } else {
+            this.node.setScale(1);
+        }
+
         let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));    //判断关卡第一次开放
         if ((this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.lookPass < this._data.Id)) {
             let passData = {
