@@ -35,7 +35,7 @@ cc.Class({
         }.bind(this));
         this.nameLabel.string = headConfig.Name + ':';
         this.contentLabel.string = infos[1];
-        this.node.position = cc.v2(360, posY);
+        this.node.position = cc.v2(500, posY);
     },
     GetPosXWithRight: function () {
         return this.node.x + this.node.width;

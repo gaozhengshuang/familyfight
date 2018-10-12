@@ -32,7 +32,7 @@ cc.Class({
             }
         }
         for (let i = 0; i < maxX.length; i++) {
-            if (maxX[i] < 360 - BarrageInterval) {
+            if (maxX[i] < 500 - BarrageInterval) {
                 //构造这一行的弹幕
                 let info = this._popBarrageInfo();
                 if (info != null) {
