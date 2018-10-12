@@ -4883,7 +4883,8 @@
     "_enabled": true,
     "_url": "",
     "_data": {},
-    "_oldparentNode": null
+    "_oldparentNode": null,
+    "maxMaid": 8
   },
   {
     "__type__": "cc.PrefabInfo",

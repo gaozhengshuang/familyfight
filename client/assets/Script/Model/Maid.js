@@ -114,6 +114,19 @@ MaidModel.prototype.RefreshMoneyMaids = function () {
     }
 }
 
+MaidModel.prototype.GetMaidsByPass = function (pass) {
+    let maidList = [];
+    let maidBaseList = ConfigController.GetConfig("TMaidLevel");
+    if (maidBaseList) {
+        for (let i = 0; i < maidBaseList.length; i++) {
+            if (maidBaseList[i].Passlevels == pass) {
+                maidList.push(maidBaseList[i]);
+            }
+        }
+    }
+    return maidList;
+}
+
 MaidModel.prototype.GetPassCurEfficiency = function(pass) {
     let efficiency = 0;
     for (let i = 0; i < this._maids.length; i++) {
