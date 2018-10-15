@@ -128,6 +128,22 @@ let Tools = {
         f = Math.round(x * 100) / 100;
         return f;
     },
+    toMoney: function(nums) {
+        //类型介绍: 0个位，1"万", 2"亿", 3"兆", 4"京", 5"垓", 6"秭", 7"穰", 8"沟", 9"涧", 10"正", 11"载", 12"极"
+        let money = 0;
+        for (let i = 0; i < nums.length; i ++) {
+            let num = nums[i];
+            let numInfo = num.split('_');
+            if (numInfo) {
+                if (numInfo[0] == 0) {
+                    money += Number(numInfo[1]);
+                } else {
+                    money += Number(Math.pow(10000, numInfo[0]) * numInfo[1]);
+                }
+            }
+        }
+        return this.UnitConvert(money);
+    },
     zeroPadding: function (tbl) {
         return function (num, n) {
             return (0 >= (n = n - num.toString().length)) ? num.toString() : (tbl[n] || (tbl[n] = Array(n + 1).join('0'))) + num.toString();

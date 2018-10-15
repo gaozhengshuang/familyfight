@@ -28,7 +28,7 @@ cc.Class({
 
     start() {
         this.updateView();
-        this.offLineOpen();
+        this.offLineOpen();  
     },
 
     update(dt) {
