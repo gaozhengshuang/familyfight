@@ -303,6 +303,7 @@ func on_C2GW_ReqPower(session network.IBaseNetSession, message interface{}) {
 	user.NotifyPower()
 }
 func on_C2GW_UploadBigGold(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_UploadBigGold)
 	user := ExtractSessionUser(session)
 	if user == nil {
 		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))

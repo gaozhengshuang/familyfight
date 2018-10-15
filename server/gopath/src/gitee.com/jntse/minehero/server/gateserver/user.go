@@ -331,7 +331,7 @@ func (this *GateUser) LoadBin() {
 	this.power = userbase.GetPower().GetPower()
 	this.maxpower = userbase.GetPower().GetMaxpower()
 	this.nextpowertime = userbase.GetPower().GetNexttime()
-	this.biggold = userbase.GetGiggold()[:]
+	this.biggold = userbase.GetBiggold()[:]
 	this.guide = this.bin.GetGuideid()
 	//this.addrlist = userbase.GetAddrlist()[:]
 	// 道具信息

@@ -52,6 +52,15 @@ func (this *GateUser) TimesBigGold(golds map[uint32]uint32, times uint32) map[ui
 	}
 	return golds
 }
+func (this *GateUser) MaxIndexBigGold(golds map[uint32]uint32) uint32 {
+	ret := uint32(0)
+	for i, _ := range golds{
+		if i > ret {
+			ret = i
+		}
+	}
+	return ret
+}
 //进位
 func (this *GateUser) CarryBigGold(goldObj map[uint32]uint32, maxIndex uint32) map[uint32]uint32 {
 	carry := 0

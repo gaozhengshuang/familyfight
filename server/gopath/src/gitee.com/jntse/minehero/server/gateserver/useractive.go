@@ -38,7 +38,7 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam u
 			}
 			goldObj := this.maid.CalculateRewardPerSecond(this)
 			goldObj = this.TimesBigGold(goldObj, uint32(ratio))
-			goldObj = this.CarryBigGold(goldObj)
+			goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
 			value = this.ParseBigGoldToArr(goldObj)
 			return 0, value
 		case 2:
@@ -83,7 +83,7 @@ func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id ui
 	// 体力够不够 
 	if this.GetPower() < 1 {
 		this.SendNotify("体力不足")
-		return 1,0,0
+		return 1,0,[]
 	}
 	totalWeight := uint32(0)
 	brands := make([]*table.TurnBrandDefine,0)
@@ -112,7 +112,7 @@ func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id ui
 	}
 	if findbrand == nil {
 		this.SendNotify("未随机到牌子")
-		return 2,0,0
+		return 2,0,[]
 	}
 	//扣体力
 	this.RemovePower(1,"翻牌子消耗")
@@ -121,11 +121,11 @@ func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id ui
 }
 
 //连连看
-func (this *GateUser) Linkup(score uint32) (gold uint64){
+func (this *GateUser) Linkup(score uint32) (gold []string){
 	goldrewardratio, find := tbl.TGoldRewardRatioBase.GoldRewardRatioById[uint32(tbl.Common.LinkupGoldRewardRatio)]
 	if !find {
 		this.SendNotify("没有奖励金币的模板哟")
-		return 0
+		return []
 	}
 	maxlevel := this.maid.GetMaxLevel()
 	ratio := float64(0.0)
@@ -141,9 +141,9 @@ func (this *GateUser) Linkup(score uint32) (gold uint64){
 		}
 	}
 	goldObj := this.maid.CalculateRewardPerSecond(this)
-	goldObj = this.TimesBigGold(goldObj, Uint32(ratio))
-	goldObj = this.TimesBigGold(goldObj, Uint32(score))
-	goldObj = this.CarryBigGold(goldObj)
+	goldObj = this.TimesBigGold(goldObj, uint32(ratio))
+	goldObj = this.TimesBigGold(goldObj, uint32(score))
+	goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
 	return this.ParseBigGoldToArr(goldObj)
 }
 
