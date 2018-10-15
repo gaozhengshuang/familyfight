@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const moment = require('moment');
+const bigInteger = require('big-integer');
 
 let Tools = {
     GetRandomInt: function (min, max) {
@@ -106,19 +107,10 @@ let Tools = {
         }
         return 0;
     },
-    UnitConvert: function (num) {
+    UnitConvert: function (bigint) {
         let moneyUnits = ["", "万", "亿", "兆", "京", "垓", "秭", "穰", "沟", "涧", "正", "载", "极"];
-        let dividend = 10000;
-        let curentNum = num; //转换数字 
-        let curentUnit = moneyUnits[0]; //转换单位 
-
-        for (let i = 0; i < moneyUnits.length; i++) {
-            curentUnit = moneyUnits[i];
-            if (Math.floor(curentNum / dividend) <= 0 || i >= moneyUnits.length - 1) { break; }
-            curentNum = curentNum / dividend;
-        }
-
-        return this.toDecimal(curentNum) + curentUnit;
+        let nums = bigint.toArray(10000).value;
+        return nums.length > 1 ? this.toDecimal((nums[0] + nums[1]/10000)) + moneyUnits[nums.length - 1]: arr[0];
     },
     toDecimal: function (x) {
         var f = parseFloat(x);
@@ -128,21 +120,27 @@ let Tools = {
         f = Math.round(x * 100) / 100;
         return f;
     },
-    toMoney: function(nums) {
-        //类型介绍: 0个位，1"万", 2"亿", 3"兆", 4"京", 5"垓", 6"秭", 7"穰", 8"沟", 9"涧", 10"正", 11"载", 12"极"
-        let money = 0;
-        for (let i = 0; i < nums.length; i ++) {
-            let num = nums[i];
-            let numInfo = num.split('_');
-            if (numInfo) {
-                if (numInfo[0] == 0) {
-                    money += Number(numInfo[1]);
-                } else {
-                    money += Number(Math.pow(10000, numInfo[0]) * numInfo[1]);
-                }
-            }
+    toIntMoney: function(nums) {
+        let obj = {};
+        let maxKey = 0;
+        _.forEach(nums,function(n){
+            let k = parseInt(n.split('_')[0]);
+            obj[k] = parseInt(n.split('_')[1]);
+            maxKey = k > maxKey ? k : maxKey;
+        });
+        let arr = [];
+        for(let i = maxKey;i >= 0;i --){
+            arr.push(obj[i] || 0);
         }
-        return this.UnitConvert(money);
+        return bigInteger.fromArray(arr, 10000);
+    },
+    toArrayMoney: function(bigint){
+        let arr = bigint.toArray(10000).value;
+        let ret = [];
+        for(let i = 0; i < arr.length;i++){
+            ret.push((arr.length - i - 1) + '_' + arr[i]);
+        }
+        return ret;
     },
     zeroPadding: function (tbl) {
         return function (num, n) {
