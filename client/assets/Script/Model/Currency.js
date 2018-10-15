@@ -9,12 +9,14 @@ const Define = require("../Util/Define");
 var Currency = function () {
     this.powerData = {}
     this.bigGolds = ['0_0'];
+    this.offLineReward = null;
 }
 
 Currency.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_SendUserInfo', this, this.onGW2C_SendUserInfo);
     NetWorkController.AddListener('msg.GW2C_UpdatePower', this, this.onGW2C_UpdatePower);
     NetWorkController.AddListener('msg.GW2C_UpdateBigGold', this, this.onGW2C_UpdateBigGold);
+    NetWorkController.AddListener('msg.GW2C_OfflineReward', this, this.onGW2C_OfflineReward);
 
     NotificationController.On(Define.EVENT_KEY.USERINFO_ADDGOLD, this, this.AddGold);
     NotificationController.On(Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, this, this.SubtractGold);
@@ -77,6 +79,10 @@ Currency.prototype.onGW2C_UpdatePower = function (msgid, data) {
 Currency.prototype.onGW2C_UpdateBigGold = function (msgid, data) {
     let value = data.golds || ["0_0"];
     this.SetGold(value)
+}
+Currency.prototype.onGW2C_OfflineReward = function (msgid, data) {
+    this.offLineReward = data;
+    NotificationController.Emit(Define.EVENT_KEY.OFFLINE_ACK);
 }
 
 module.exports = new Currency();

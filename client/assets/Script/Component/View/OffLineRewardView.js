@@ -8,11 +8,11 @@ cc.Class({
     },
 
     onLoad() {
-        this.label_gold.string = Game.Tools.UnitConvert(Game.UserModel.GetOffLineReward().gold);
+        this.label_gold.string = Game.Tools.UnitConvert(Game.CurrencyModel.offLineReward.golds);
     },
 
     onClosePanel() {
-        Game.CurrencyModel.AddGold(Game.UserModel.GetOffLineReward().gold);
+        Game.CurrencyModel.AddGold(Game.CurrencyModel.offLineReward.golds);
         this.closeView(Game.UIName.UI_OFFLINEREWARD, true);
     }
 });

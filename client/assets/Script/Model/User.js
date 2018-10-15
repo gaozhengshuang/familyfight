@@ -8,14 +8,12 @@ let GuideController = require('../Controller/GuideController');
 var UserModel = function () {
     this.loginInfo = null;
     this.userInfo = {};
-    this.offLineReward = null;
 }
 
 UserModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_SendUserInfo', this, this.onGW2C_SendUserInfo);
     NetWorkController.AddListener('msg.GW2C_RetLogin', this, this.onGW2C_RetLogin);
     NetWorkController.AddListener('msg.GW2C_UpdateGold', this, this.onGW2C_UpdateGold);
-    NetWorkController.AddListener('msg.GW2C_OfflineReward', this, this.onGW2C_OfflineReward);
     NetWorkController.AddListener('msg.GW2C_AckGuideData', this, this.onGW2C_AckGuideData);
 
     Tools.InvokeCallback(cb);
@@ -56,10 +54,6 @@ UserModel.prototype.GetUser = function (cb) {
     }
 }
 
-UserModel.prototype.GetOffLineReward = function () {
-    return this.offLineReward;
-}
-
 /**
  * 消息处理接口
  */
@@ -81,11 +75,6 @@ UserModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
 UserModel.prototype.onGW2C_UpdateGold = function (msgid, data) {
     // let value = data.num || ["0_0"];
     // this.SetGold(value)
-}
-
-UserModel.prototype.onGW2C_OfflineReward = function (msgid, data) {
-    this.offLineReward = data;
-    NotificationController.Emit(Define.EVENT_KEY.OFFLINE_ACK);
 }
 
 UserModel.prototype.onGW2C_AckGuideData = function (msgid, data) {

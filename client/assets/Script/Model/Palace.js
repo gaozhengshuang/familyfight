@@ -38,14 +38,14 @@ PalaceModel.prototype.GetPalaceCurMaidIndex = function () {
 }
 
 PalaceModel.prototype.GetPalaceDataById = function (id) {
-    return _.find(this.palaceDatas, {'id': id});
+    return _.find(this.palaceDatas, { 'id': id });
 }
 
-PalaceModel.prototype.GetPalaceMasterLvUpBase = function(MasterId, level) {
-    return _.find(ConfigController.GetConfig('PalaceMapMasterLevels'), {'MasterId': MasterId, 'Level': level});
+PalaceModel.prototype.GetPalaceMasterLvUpBase = function (MasterId, level) {
+    return _.find(ConfigController.GetConfig('PalaceMapMasterLevels'), { 'MasterId': MasterId, 'Level': level });
 }
 
-PalaceModel.prototype.GetPalaceTakeBack = function() {
+PalaceModel.prototype.GetPalaceTakeBack = function () {
     return this.palaceTakeBack;
 }
 
@@ -60,13 +60,13 @@ PalaceModel.prototype.onGW2C_AckPalaceData = function (msgid, data) {
 
 PalaceModel.prototype.onGW2C_RetMaidUnlock = function (msgid, data) {
     if (data.result == 0) {
-        for (let i = 0; i < this.palaceDatas.length; i ++){
+        for (let i = 0; i < this.palaceDatas.length; i++) {
             if (this.palaceDatas[i].id == data.data.id) {
                 this.palaceDatas[i] = data.data;
                 break;
             }
         }
-    
+
         NotificationController.Emit(Define.EVENT_KEY.PALACEMAID_UNLOCK);
     }
 }
@@ -74,28 +74,31 @@ PalaceModel.prototype.onGW2C_RetMaidUnlock = function (msgid, data) {
 PalaceModel.prototype.onGW2C_RetPalaceTakeBack = function (msgid, data) {
     if (data.result == 0) {
         this.palaceTakeBack = data;
-        for (let i = 0; i < this.palaceDatas.length; i ++){
+        for (let i = 0; i < this.palaceDatas.length; i++) {
             if (this.palaceDatas[i].id == data.data.id) {
                 this.palaceDatas[i] = data.data;
                 break;
             }
         }
-        
-        let goldInfo = _.find(data.items, {'itemid': 50001});
-        NotificationController.Emit(Define.EVENT_KEY.USERINFO_ADDGOLD, goldInfo.num);
+        let goldInfo = {
+            itemid: 50001,
+            num: data.gold
+        };
+        this.palaceTakeBack.items.push(goldInfo);
+        NotificationController.Emit(Define.EVENT_KEY.USERINFO_ADDGOLD, data.gold);
         NotificationController.Emit(Define.EVENT_KEY.PALACETASK_ACK);
     }
 }
 
 PalaceModel.prototype.onGW2C_RetMasterLevelup = function (msgid, data) {
     if (data.result == 0) {
-        for (let i = 0; i < this.palaceDatas.length; i ++){
+        for (let i = 0; i < this.palaceDatas.length; i++) {
             if (this.palaceDatas[i].id == data.data.id) {
                 this.palaceDatas[i] = data.data;
                 break;
             }
         }
-    
+
         NotificationController.Emit(Define.EVENT_KEY.PALACEMASTERLVUP_ACK);
     }
 }
