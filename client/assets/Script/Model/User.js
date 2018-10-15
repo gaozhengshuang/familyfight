@@ -17,10 +17,6 @@ UserModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_UpdateGold', this, this.onGW2C_UpdateGold);
     NetWorkController.AddListener('msg.GW2C_OfflineReward', this, this.onGW2C_OfflineReward);
     NetWorkController.AddListener('msg.GW2C_AckGuideData', this, this.onGW2C_AckGuideData);
-    NetWorkController.AddListener('msg.GW2C_UpdateBigGold', this, this.onGW2C_UpdateBigGold)
-
-    NotificationController.On(Define.EVENT_KEY.USERINFO_ADDGOLD, this, this.AddGold);
-    NotificationController.On(Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, this, this.SubtractGold);
 
     Tools.InvokeCallback(cb);
 }
@@ -58,28 +54,6 @@ UserModel.prototype.GetUser = function (cb) {
             Tools.InvokeCallback(cb, null);
         }
     }
-}
-
-UserModel.prototype.AddGold = function (gold) {
-    let value = Tools.toBigIntMoney(this.GetGold()).add(Tools.toBigIntMoney(gold));
-    this.SetGold(Tools.toLocalMoney(value));
-}
-
-UserModel.prototype.SubtractGold = function (gold) {
-    let value = Tools.toBigIntMoney(this.GetGold()).subtract(Tools.toBigIntMoney(gold));
-    this.SetGold(Tools.toLocalMoney(value));
-}
-
-UserModel.prototype.SetGold = function (gold) {
-    if (isNaN(gold)) {
-        return;
-    }
-    Tools.SetValueInObj(this.userInfo, 'base.biggold', gold);
-    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, gold);
-}
-
-UserModel.prototype.GetGold = function () {
-    return Tools.GetValueInObj(this.userInfo, 'base.biggold') || ["0_0"];
 }
 
 UserModel.prototype.GetOffLineReward = function () {
@@ -121,10 +95,6 @@ UserModel.prototype.onGW2C_AckGuideData = function (msgid, data) {
         guideId = GuideController.GetGuideConfig(data.guide).Resetid;
     }
     GuideController.SetGuide(guideId);
-}
-UserModel.prototype.onGW2C_UpdateBigGold = function (msgid, data) {
-    let value = data.golds || ["0_0"];
-    this.SetGold(value)
 }
 
 module.exports = new UserModel();

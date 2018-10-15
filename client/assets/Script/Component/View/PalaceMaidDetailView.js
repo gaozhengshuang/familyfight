@@ -64,7 +64,7 @@ cc.Class({
                 }
             }
 
-            if (Game.UserModel.GetGold() >= palaceMaidBase.UnlockPrice) {
+            if (Game.CurrencyModel.GetGold() >= palaceMaidBase.UnlockPrice) {
                 Game.ResController.SetSprite(this.image_buy, "Image/GameScene/Common/button_common");
             } else {
                 Game.ResController.SetSprite(this.image_buy, "Image/GameScene/Common/button_common2");
@@ -81,13 +81,13 @@ cc.Class({
     },
 
     onReqMaidUnlock() {
-        if (Game.UserModel.GetGold() >= this._lockGold) {
+        if (Game.CurrencyModel.GetGold() >= this._lockGold) {
             Game.NetWorkController.Send('msg.C2GW_ReqMaidUnlock', 
             {
                 id: Game.PalaceModel.GetCurPalaceId(),
                 index: this._index
             });
-            Game.UserModel.SubtractGold(this._lockGold);
+            Game.CurrencyModel.SubtractGold(this._lockGold);
         } else {
             this.showTips("金币不足哟!");
         }

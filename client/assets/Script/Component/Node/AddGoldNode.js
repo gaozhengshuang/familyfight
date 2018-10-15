@@ -50,7 +50,7 @@ cc.Class({
     addGoldAndDestroy(gold) {
         let _gold = Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(gold).multiply(2));
         this.label_gold.string = `+${Game.Tools.UnitConvert(_gold)}`;
-        Game.UserModel.AddGold(_gold);
+        Game.CurrencyModel.AddGold(_gold);
 
         this.node.active = true;
         this.node.y = this.initY;

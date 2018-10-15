@@ -35,13 +35,13 @@ cc.Class({
         this.curSynchro += dt;
         if (this.curSynchro >= this.synchroTime) {
             this.curSynchro = 0;
-            Game.NetWorkController.Send('msg.C2GW_UploadBigGold', { golds: Game.UserModel.GetGold() });
+            Game.NetWorkController.Send('msg.C2GW_UploadBigGold', { golds: Game.CurrencyModel.GetGold() });
         }
 
         this.curInterval += dt;
         if (this.curInterval >= this.intervalTime) {
             this.curInterval = 0;
-            Game.UserModel.AddGold(Game.MaidModel.GetMoneyMaids() * this.intervalTime);
+            Game.CurrencyModel.AddGold(Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids()).multiply(Game.bigInteger(this.intervalTime))));
         }
     },
 

@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const bigInteger = require('big-integer');
 
 const NetWorkController = require('../Controller/NetWorkController');
 const NotificationController = require('../Controller/NotificationController');
@@ -128,7 +129,7 @@ MaidModel.prototype.GetMaidsByPass = function (pass) {
     return maidList;
 }
 
-MaidModel.prototype.GetPassCurEfficiency = function(pass) {
+MaidModel.prototype.GetPassCurEfficiency = function (pass) {
     let efficiency = ["0_0"];
     for (let i = 0; i < this._maids.length; i++) {
         let maid = this._maids[i];
@@ -142,11 +143,11 @@ MaidModel.prototype.GetPassCurEfficiency = function(pass) {
             }
         }
     }
-    
+
     return efficiency;
 }
 
-MaidModel.prototype.GetPassMaxEfficiency = function(pass) {
+MaidModel.prototype.GetPassMaxEfficiency = function (pass) {
     let efficiency = ["0_0"];
     let passMaxMaid = null;
     for (let i = 0; i < this._maids.length; i++) {
@@ -158,7 +159,7 @@ MaidModel.prototype.GetPassMaxEfficiency = function(pass) {
             }
         }
     }
-    
+
     if (passMaxMaid) {
         let reward = Tools.toBigIntMoney(passMaxMaid.Reward).multiply(20);
         efficiency = Tools.toLocalMoney(reward);
@@ -214,7 +215,13 @@ MaidModel.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
 }
 
 MaidModel.prototype.onGW2C_AckMaidShop = function (msgid, data) {
-    this._shopMaids = data.shop;
+    this._shopMaids = data.shop || [];
+    let priceAdd = ConfigController.GetConfig('PriceAdditionPerBuy');
+    for (let i = 0; i < this._shopMaids.length; i++) {
+        let info = this._shopMaids[i];
+        let price = Tools.toBigIntMoney(info.price).multiply(bigInteger(Math.floor(Math.pow(priceAdd, info.times))));
+        info.price = Tools.toLocalMoney(price);
+    }
     NotificationController.Emit(Define.EVENT_KEY.MAID_UPDATESHOP);
 }
 

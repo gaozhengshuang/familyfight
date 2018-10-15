@@ -36,7 +36,7 @@ cc.Class({
         this._target = data.target;
         this._data = data.array[index];
         this._index = index;
-        this.price = Math.floor(this._data.price);
+        this.price = this._data.price;
         this.label_getnum.string = `(已购买${this._data.times}个)`;
 
         let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", this._data.id);
@@ -49,9 +49,9 @@ cc.Class({
     },
 
     buyShop() {
-        if (Game.UserModel.GetGold() >= this.price) {
+        if (Game.CurrencyModel.CompareGold(this.price) >= 0) {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, this.price);
-            Game.NetWorkController.Send('msg.C2GW_ReqBuyMaid', {maidid: this._data.id});
+            Game.NetWorkController.Send('msg.C2GW_ReqBuyMaid', { maidid: this._data.id });
             Game.GuideController.NextGuide();
         } else {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, "金币不足哟!");
@@ -60,7 +60,7 @@ cc.Class({
 
     updateBtnGold() {
         this.label_gold.string = `${Game.Tools.UnitConvert(this.price)}`;
-        if (Game.UserModel.GetGold() >= this.price) {
+        if (Game.CurrencyModel.CompareGold(this.price) >= 0) {
             Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common");
         } else {
             Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common2");

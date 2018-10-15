@@ -129,7 +129,7 @@ cc.Class({
             delay: 1
         });
         Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
-        Game.UserModel.AddGold(data.gold);
+        Game.CurrencyModel.AddGold(data.gold);
         this.node.runAction(cc.sequence([
             cc.delayTime(2),
             cc.callFunc(function () {

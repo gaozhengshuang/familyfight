@@ -12,7 +12,7 @@ cc.Class({
     },
 
     start() {
-        this.updateGold(Game.UserModel.GetGold());
+        this.updateGold(Game.CurrencyModel.GetGold());
     },
 
     update(dt) {

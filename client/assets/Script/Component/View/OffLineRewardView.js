@@ -12,7 +12,7 @@ cc.Class({
     },
 
     onClosePanel() {
-        Game.UserModel.AddGold(Game.UserModel.GetOffLineReward().gold);
+        Game.CurrencyModel.AddGold(Game.UserModel.GetOffLineReward().gold);
         this.closeView(Game.UIName.UI_OFFLINEREWARD, true);
     }
 });

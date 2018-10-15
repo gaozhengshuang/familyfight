@@ -99,8 +99,8 @@ func (this *GateUser) CarryBigGold(goldObj map[uint32]uint32, maxIndex uint32) m
 		if carry == 0 {
 			break
 		}
-		newGold := uint32(math.Floor(float64(carry / 10000)))
-		carry = carry % 10000
+		newGold = carry % 10000
+		carry = uint32(math.Floor(float64(carry / 10000)))
 		goldObj[carryIndex] = newGold
 		carryIndex = carryIndex + 1
 	}
