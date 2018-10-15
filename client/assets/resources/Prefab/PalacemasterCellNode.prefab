@@ -536,7 +536,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 189,
+      "width": 271,
       "height": 40
     },
     "_rotationX": 0,
@@ -573,7 +573,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "第999章解锁",
+    "_N$string": "第999章第4关解锁",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
