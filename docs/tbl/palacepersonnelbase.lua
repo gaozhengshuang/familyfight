@@ -18,12 +18,21 @@ export var PalacePersonnel : table.IPalacePersonnelDefine[] = [
 		{ Id : 100, Name : "明玉", Path : "Image/GameScene/Maid/maid_17", RoleDescribe : "" 	},
 		{ Id : 101, Name : "尔晴", Path : "Image/GameScene/Maid/maid_19", RoleDescribe : "" 	},
 		{ Id : 102, Name : "璎珞", Path : "Image/GameScene/Maid/maid_18", RoleDescribe : "" 	},
+		{ Id : 103, Name : "珍珠", Path : "Image/GameScene/Maid/maid_17", RoleDescribe : "" 	},
+		{ Id : 104, Name : "翡翠", Path : "Image/GameScene/Maid/maid_19", RoleDescribe : "" 	},
+		{ Id : 105, Name : "玛瑙", Path : "Image/GameScene/Maid/maid_18", RoleDescribe : "" 	},
 		{ Id : 200, Name : "夏荷", Path : "Image/GameScene/Maid/maid_15", RoleDescribe : "" 	},
 		{ Id : 201, Name : "春然", Path : "Image/GameScene/Maid/maid_16", RoleDescribe : "" 	},
 		{ Id : 202, Name : "芳草", Path : "Image/GameScene/Maid/maid_17", RoleDescribe : "" 	},
+		{ Id : 203, Name : "芷荷", Path : "Image/GameScene/Maid/maid_15", RoleDescribe : "" 	},
+		{ Id : 204, Name : "香卉", Path : "Image/GameScene/Maid/maid_16", RoleDescribe : "" 	},
+		{ Id : 205, Name : "秋春", Path : "Image/GameScene/Maid/maid_17", RoleDescribe : "" 	},
 		{ Id : 300, Name : "莫心", Path : "Image/GameScene/Maid/maid_15", RoleDescribe : "" 	},
 		{ Id : 301, Name : "墨兰", Path : "Image/GameScene/Maid/maid_16", RoleDescribe : "" 	},
-		{ Id : 302, Name : "芝兰", Path : "Image/GameScene/Maid/maid_19", RoleDescribe : "" 	}
+		{ Id : 302, Name : "芝兰", Path : "Image/GameScene/Maid/maid_19", RoleDescribe : "" 	},
+		{ Id : 303, Name : "晓兰", Path : "Image/GameScene/Maid/maid_15", RoleDescribe : "" 	},
+		{ Id : 304, Name : "绮兰", Path : "Image/GameScene/Maid/maid_16", RoleDescribe : "" 	},
+		{ Id : 305, Name : "听兰", Path : "Image/GameScene/Maid/maid_19", RoleDescribe : "" 	}
 	]
 
 

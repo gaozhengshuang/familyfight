@@ -103,7 +103,20 @@ export var TDialogue : table.ITDialogueDefine[] = [
 		{ Id : 98, Index : 49, HeadSprite : [ "Image/Head/1", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "张院判", NameLocation : 2, Content : "回禀皇后娘娘，这药的确是枇杷膏。" 	},
 		{ Id : 99, Index : 50, HeadSprite : [ "Image/Head/1" ], HeadLocation : [ 1 ], Name : "愉贵人", NameLocation : 1, Content : "皇后娘娘，一切都是我的错。是我跟怡嫔姐姐商量，现在月份小还不敢确定。等确定了再前来禀报。" 	},
 		{ Id : 100, Index : 50, HeadSprite : [ "Image/Head/1", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "高贵妃", NameLocation : 2, Content : "皇后娘娘，您都听到了，愉贵人自己都说月份太小，太医诊断是常事。" 	},
-		{ Id : 101, Index : 50, HeadSprite : [ "Image/Head/1", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "高贵妃", NameLocation : 2, Content : "至于怡嫔，诬陷嫔妾，需交由臣妾处理。" 	}
+		{ Id : 101, Index : 50, HeadSprite : [ "Image/Head/1", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "高贵妃", NameLocation : 2, Content : "至于怡嫔，诬陷嫔妾，需交由臣妾处理。" 	},
+		{ Id : 102, Index : 51, HeadSprite : [ "Image/Head/8" ], HeadLocation : [ 1 ], Name : "吉祥", NameLocation : 1, Content : "璎珞你怎么知道我生日啊，从哪里弄来的面条。" 	},
+		{ Id : 103, Index : 51, HeadSprite : [ "Image/Head/8", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "璎珞", NameLocation : 2, Content : "我用绣品跟大厨房换来的，你入宫的时候报过生辰，我记下了。" 	},
+		{ Id : 104, Index : 52, HeadSprite : [ "Image/Head/4" ], HeadLocation : [ 1 ], Name : "璎珞", NameLocation : 1, Content : "来这方丝帕送给你。祝你年年有今日，岁岁有哦今朝。" 	},
+		{ Id : 105, Index : 52, HeadSprite : [ "Image/Head/4", "Image/Head/8" ], HeadLocation : [ 1, 2 ], Name : "吉祥", NameLocation : 2, Content : "谢谢你璎珞。好漂亮的手帕。" 	},
+		{ Id : 106, Index : 53, HeadSprite : [ "Image/Head/11" ], HeadLocation : [ 1 ], Name : "吴总管", NameLocation : 1, Content : "我说这盗贼怎么都抓不到。原来是你。" 	},
+		{ Id : 107, Index : 53, HeadSprite : [ "Image/Head/11", "Image/Head/8" ], HeadLocation : [ 1, 2 ], Name : "吉祥", NameLocation : 2, Content : "怎么会这样。这金丝语线真不是我偷的。是玲珑要送我生日礼物。" 	},
+		{ Id : 108, Index : 54, HeadSprite : [ "Image/Head/4" ], HeadLocation : [ 1 ], Name : "璎珞", NameLocation : 1, Content : "绣活儿好坏，全凭本事。玲珑不如我们进行一场比试。" 	},
+		{ Id : 109, Index : 54, HeadSprite : [ "Image/Head/4", "Image/Head/7" ], HeadLocation : [ 1, 2 ], Name : "玲珑", NameLocation : 2, Content : "好，你若要比，我就陪你比。" 	},
+		{ Id : 110, Index : 55, HeadSprite : [ "Image/Head/2" ], HeadLocation : [ 1 ], Name : "皇上", NameLocation : 1, Content : "这是什么，怎么有跟针在朕的衣服里！" 	},
+		{ Id : 111, Index : 55, HeadSprite : [ "Image/Head/2", "Image/Head/3" ], HeadLocation : [ 1, 2 ], Name : "李玉", NameLocation : 2, Content : "肯定是造办处这帮奴才个顶个的废物。竟然伤了龙体。" 	},
+		{ Id : 112, Index : 55, HeadSprite : [ "Image/Head/2", "Image/Head/3" ], HeadLocation : [ 1, 2 ], Name : "皇上", NameLocation : 2, Content : "查，凡涉事人等，严惩不带。" 	},
+		{ Id : 113, Index : 56, HeadSprite : [ "Image/Head/11" ], HeadLocation : [ 1 ], Name : "吴总管", NameLocation : 1, Content : "让你给皇上做常服，尽然领口漏了一根银针。" 	},
+		{ Id : 114, Index : 56, HeadSprite : [ "Image/Head/11", "Image/Head/7" ], HeadLocation : [ 1, 2 ], Name : "玲珑", NameLocation : 2, Content : "我不知道，一定是璎珞。这件衣服是璎珞做的，我偷她的衣服去交差的。" 	}
 	]
 
 

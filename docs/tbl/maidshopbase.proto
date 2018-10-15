@@ -22,7 +22,7 @@ message TMaidShopDefine
 	optional uint32 Id = 1; // id
 	
 	
-	optional uint64 Price = 2; // 价格
+	repeated string Price = 2; // 价格（0个、1万、2亿、3兆、4京、5垓、6秭、7穰、8沟、9涧、10正、11载 、12极）
 
 }
 
