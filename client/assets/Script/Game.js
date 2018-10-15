@@ -2,6 +2,7 @@ let Game = {
     async: require('async'),
     moment: require('moment'),
     _: require('lodash'),
+    bigInteger: require('big-integer'),
 
     Define: require('./Util/Define'),
     UIName: require('./Util/UIName'),

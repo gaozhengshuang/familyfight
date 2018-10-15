@@ -32,7 +32,8 @@ cc.Class({
     },
 
     updateGold(gold) {
-        this.label_gold.string = `+${Game.Tools.UnitConvert(gold*2)}`;
+        let _gold = Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(gold).multiply(2));
+        this.label_gold.string = `+${Game.Tools.UnitConvert(_gold)}`;
     },
 
     playGoldAni() {
@@ -47,8 +48,9 @@ cc.Class({
     },
 
     addGoldAndDestroy(gold) {
-        this.label_gold.string = `+${Game.Tools.UnitConvert(gold*2)}`;
-        Game.UserModel.AddGold(gold*2);
+        let _gold = Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(gold).multiply(2));
+        this.label_gold.string = `+${Game.Tools.UnitConvert(_gold)}`;
+        Game.UserModel.AddGold(_gold);
 
         this.node.active = true;
         this.node.y = this.initY;

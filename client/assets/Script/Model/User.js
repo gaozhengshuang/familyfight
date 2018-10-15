@@ -60,25 +60,25 @@ UserModel.prototype.GetUser = function (cb) {
 }
 
 UserModel.prototype.AddGold = function (gold) {
-    let value = this.GetGold() + gold;
-    this.SetGold(value);
+    let value = Tools.toBigIntMoney(this.GetGold()).add(Tools.toBigIntMoney(gold));
+    this.SetGold(Tools.toLocalMoney(value));
 }
 
 UserModel.prototype.SubtractGold = function (gold) {
-    let value = this.GetGold() - gold;
-    this.SetGold(value);
+    let value = Tools.toBigIntMoney(this.GetGold()).subtract(Tools.toBigIntMoney(gold));
+    this.SetGold(Tools.toLocalMoney(value));
 }
 
 UserModel.prototype.SetGold = function (gold) {
     if (isNaN(gold)) {
         return;
     }
-    Tools.SetValueInObj(this.userInfo, 'base.gold', gold)
+    Tools.SetValueInObj(this.userInfo, 'base.gold', gold);
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, gold);
 }
 
 UserModel.prototype.GetGold = function () {
-    return Tools.GetValueInObj(this.userInfo, 'base.gold') || 0;
+    return Tools.GetValueInObj(this.userInfo, 'base.gold') || ["0_0"];
 }
 
 UserModel.prototype.GetOffLineReward = function () {
@@ -98,13 +98,13 @@ UserModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
     this.userInfo = data;
     NotificationController.Emit(Define.EVENT_KEY.CONNECT_TO_GATESERVER);
     
-    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, Tools.GetValueInObj(this.userInfo, 'base.gold') || 0);
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, Tools.GetValueInObj(this.userInfo, 'base.gold') || ["0_0"]);
     let Game = require('../Game');
     Game.Platform.SendUserInfo();
 }
 
 UserModel.prototype.onGW2C_UpdateGold = function (msgid, data) {
-    let value = data.num || 0;
+    let value = data.num || ["0_0"];
     this.SetGold(value)
 }
 
