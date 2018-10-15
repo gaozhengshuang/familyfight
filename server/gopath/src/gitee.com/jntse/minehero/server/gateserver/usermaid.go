@@ -34,7 +34,7 @@ type MaidShop struct {
 func (this *MaidShop) PackBin() *msg.MaidShopData{
 	data := &msg.MaidShopData{}
 	data.Id = pb.Uint32(this.id)
-	data.Price = pb.Float32(this.price)
+	data.Price = this.price
 	data.Times = pb.Uint32(this.times)
 	return data
 }
@@ -105,7 +105,7 @@ func (this *UserMaid) Online(user* GateUser) {
 	addition := user.TimesBigGold(rewardpersecond,uint32(passedtime))
 	user.AddBigGold(addition, "离线侍女奖励")
 	send := &msg.GW2C_OfflineReward{}
-	send.Golds = user.ParseBigGoldToArr(user.CarryBigGold(addition))
+	send.Golds = user.ParseBigGoldToArr(user.CarryBigGold(addition, user.MaxIndexBigGold(addition)))
 	user.SendMsg(send)
 }
 
@@ -129,29 +129,33 @@ func (this *UserMaid) SynMaidShop(user* GateUser) {
 }
 // ========================= 消息接口 ========================= 
 //购买侍女 
-func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition *MaidData,price uint64){
+func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition *MaidData,price []string]){
+	price = make([]string, 0)
 	shopdata, find := this.shop[id]
 	if !find {
 		user.SendNotify("没有对应的商店信息")
-		return 1,nil,0
+		return 1,nil,price
 	}
 	oldprice := shopdata.price
 	maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[id]
 	if !find {
 		user.SendNotify("没有对应的侍女配置")
-		return 2,nil,uint64(math.Floor(float64(oldprice)))
+		return 2,nil,price
 	}
 	count := user.GetCountByLevel(uint32(maidconfg.Passlevels))
 	if count >= 20 {
 		user.SendNotify("该关卡侍女数量已达上限")
-		return 3,nil,uint64(math.Floor(float64(oldprice)))
+		return 3,nil,price
 	}
 	//可以买了
 	maid := this.AddMaid(user,id,1)
 	//更新价格咯
-	shopdata.price = shopdata.price * float32(tbl.Common.PriceAdditionPerBuy)
+	oldpriceObj, maxIndex := user.ParseBigGoldToObj(oldprice)
+	times := math.Pow(float64(tbl.Common.PriceAdditionPerBuy), float64(shopdata.times))
+	oldpriceObj = user.TimesBigGold(oldpriceObj, uint32(times))
+	oldpriceObj = user.CarryBigGold(oldpriceObj, maxIndex)
 	shopdata.times = shopdata.times + 1
-	return 0, maid, uint64(math.Floor(float64(oldprice)))
+	return 0, maid, user.ParseBigGoldToArr(oldpriceObj)
 }
 
 //合并侍女
@@ -243,9 +247,9 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 		if !find {
 			//找不到初始化价格
 			maidshop, find := tbl.TMaidShopBase.TMaidShopById[uint32(v)]
-			price := float32(0)
+			price := make([]string, 0)
 			if find {
-				price = float32(maidshop.Price)
+				price = maidshop.Price
 			}
 			shop := &MaidShop{}
 			shop.id = uint32(v)
@@ -273,7 +277,7 @@ func (this *UserMaid) CalculateRewardPerSecond(user *GateUser) map[uint32]uint32
 		if !find {
 			continue
 		}
-		rewardObj := user.ParseBigGoldToObj(maidconfg.Reward)
+		rewardObj, _ := user.ParseBigGoldToObj(maidconfg.Reward)
 		for i, o := range rewardObj {
 			value, find := retObj[i]
 			if find {

@@ -238,7 +238,7 @@ func on_C2GW_ReqBuyMaid(session network.IBaseNetSession, message interface{}) {
 		user.SendMsg(updateSend)
 	}
 	send.Result = pb.Uint32(result)
-	send.Price = pb.Uint64(price)
+	send.Price = price
 	user.SendMsg(send)
 
 	user.maid.SynMaidShop(user)
