@@ -21,7 +21,7 @@ cc.Class({
         if (itemBase) {
             Game.ResController.SetSprite(this.image_item, itemBase.Itempath);
             this.label_name.string = itemBase.Name;
-            if (itemBase.itemid == 50001) {
+            if (this._data.itemid == 50001) {
                 this.label_num.string = `+${Game.Tools.UnitConvert(this._data.num)}`;
             } else {
                 this.label_num.string = `+${this._data.num}`;
