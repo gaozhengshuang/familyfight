@@ -22,7 +22,6 @@ type PalaceMasterConf struct {
 type PalaceMaidConf struct {
 	Id				uint32
 	OpenLevel 		uint32
-	UnlockPrice 	uint32
 	GoldAddition 	uint32
 	ItemProb 		uint32
 	ItemGroup 		[]*IdAndNumber
@@ -71,7 +70,6 @@ func (this *PalaceManager) Init() {
 				conf := &PalaceMaidConf{}
 				conf.Id = maidtmpl.Id
 				conf.OpenLevel = maidtmpl.OpenLevel
-				conf.UnlockPrice = maidtmpl.UnlockPrice
 				conf.GoldAddition = maidtmpl.GoldAddition
 				conf.ItemProb = maidtmpl.ItemProb
 				conf.ItemGroup = make([]*IdAndNumber, 0)

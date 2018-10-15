@@ -27,7 +27,7 @@ func (this *MaidData) PackBin() *msg.MaidData{
 // --------------------------------------------------------------------------
 type MaidShop struct {
 	id 				uint32
-	price 			float32
+	price 			[]string
 	times 			uint32
 }
 
