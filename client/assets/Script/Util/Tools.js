@@ -107,10 +107,10 @@ let Tools = {
         }
         return 0;
     },
-    UnitConvert: function (bigint) {
+    UnitConvert: function (nums) {
         let moneyUnits = ["", "万", "亿", "兆", "京", "垓", "秭", "穰", "沟", "涧", "正", "载", "极"];
-        let nums = bigint.toArray(10000).value;
-        return nums.length > 1 ? this.toDecimal((nums[0] + nums[1]/10000)) + moneyUnits[nums.length - 1]: arr[0];
+        let money = this.toBigIntMoney(nums).toArray(10000).value;
+        return money.length > 1 ? this.toDecimal((money[0] + money[1]/10000)) + moneyUnits[money.length - 1] : money[0];
     },
     toDecimal: function (x) {
         var f = parseFloat(x);
@@ -120,24 +120,24 @@ let Tools = {
         f = Math.round(x * 100) / 100;
         return f;
     },
-    toIntMoney: function(nums) {
+    toBigIntMoney: function(nums) {
         let obj = {};
         let maxKey = 0;
-        _.forEach(nums,function(n){
+        _.forEach(nums,function(n) {
             let k = parseInt(n.split('_')[0]);
             obj[k] = parseInt(n.split('_')[1]);
             maxKey = k > maxKey ? k : maxKey;
         });
         let arr = [];
-        for(let i = maxKey;i >= 0;i --){
+        for(let i = maxKey; i >= 0; i --) {
             arr.push(obj[i] || 0);
         }
         return bigInteger.fromArray(arr, 10000);
     },
-    toArrayMoney: function(bigint){
+    toLocalMoney: function(bigint) {
         let arr = bigint.toArray(10000).value;
         let ret = [];
-        for(let i = 0; i < arr.length;i++){
+        for(let i = 0; i < arr.length; i ++) {
             ret.push((arr.length - i - 1) + '_' + arr[i]);
         }
         return ret;
