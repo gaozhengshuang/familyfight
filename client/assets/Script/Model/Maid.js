@@ -13,7 +13,7 @@ var MaidModel = function () {
     this._shopMaids = [];
     this.curPass = 1;
     this.curChapter = 1;
-    this._moneyMaids = 0;
+    this._moneyMaids = ["0_0"];
 }
 
 MaidModel.prototype.Init = function (cb) {
@@ -102,13 +102,14 @@ MaidModel.prototype.GetPersonNameById = function (_personId) {
 }
 
 MaidModel.prototype.RefreshMoneyMaids = function () {
-    this._moneyMaids = 0;
+    this._moneyMaids = ["0_0"];
     for (let i = 0; i < this._maids.length; i++) {
         let maid = this._maids[i];
         let maidBase = ConfigController.GetConfigById("TMaidLevel", maid.id);
         if (maidBase) {
             for (let b = 0; b < maid.count; b++) {
-                this._moneyMaids += maidBase.Reward;
+                let reward = Tools.toBigIntMoney(this._moneyMaids).add(Tools.toBigIntMoney(maidBase.Reward));
+                this._moneyMaids = Tools.toLocalMoney(reward);
             }
         }
     }
@@ -128,14 +129,15 @@ MaidModel.prototype.GetMaidsByPass = function (pass) {
 }
 
 MaidModel.prototype.GetPassCurEfficiency = function(pass) {
-    let efficiency = 0;
+    let efficiency = ["0_0"];
     for (let i = 0; i < this._maids.length; i++) {
         let maid = this._maids[i];
         let maidBase = ConfigController.GetConfigById("TMaidLevel", maid.id);
         if (maidBase) {
             if (maidBase.Passlevels == pass) {
                 for (let b = 0; b < maid.count; b++) {
-                    efficiency += maidBase.Reward;
+                    let reward = Tools.toBigIntMoney(efficiency).add(Tools.toBigIntMoney(maidBase.Reward));
+                    efficiency = Tools.toLocalMoney(reward);
                 }
             }
         }
@@ -145,7 +147,7 @@ MaidModel.prototype.GetPassCurEfficiency = function(pass) {
 }
 
 MaidModel.prototype.GetPassMaxEfficiency = function(pass) {
-    let efficiency = 0;
+    let efficiency = ["0_0"];
     let passMaxMaid = null;
     for (let i = 0; i < this._maids.length; i++) {
         let maid = this._maids[i];
@@ -158,7 +160,8 @@ MaidModel.prototype.GetPassMaxEfficiency = function(pass) {
     }
     
     if (passMaxMaid) {
-        efficiency = passMaxMaid.Reward * 20;
+        let reward = Tools.toBigIntMoney(passMaxMaid.Reward).multiply(20);
+        efficiency = Tools.toLocalMoney(reward);
     }
     return efficiency;
 }
