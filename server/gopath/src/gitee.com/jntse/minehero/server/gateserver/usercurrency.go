@@ -111,7 +111,7 @@ func (this *GateUser) ParseBigGoldToObj(arr []string)(retObj map[uint32]uint32, 
 	maxIndex = 0
 	for _, v := range arr {
 		infos := strings.Split(v, "_")
-		if len(infos) > 2 {
+		if len(infos) >= 2 {
 			index, _ := strconv.ParseInt(infos[0], 10, 32)
 			value, _ := strconv.ParseInt(infos[1], 10, 32)
 			if uint32(index) > maxIndex {

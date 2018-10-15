@@ -103,12 +103,12 @@ func (this *UserMaid) Online(user* GateUser) {
 	passedtime := user.tm_login - user.tm_logout
 	rewardpersecond := this.CalculateRewardPerSecond(user)
 	addition := user.TimesBigGold(rewardpersecond,uint32(passedtime))
-	if len(addition) > 0 {
+	// if len(addition) > 0 {
 		user.AddBigGold(addition, "离线侍女奖励")
 		send := &msg.GW2C_OfflineReward{}
 		send.Golds = user.ParseBigGoldToArr(user.CarryBigGold(addition, user.MaxIndexBigGold(addition)))
 		user.SendMsg(send)
-	}
+	// }
 }
 
 func (this *UserMaid) Syn(user* GateUser) {
