@@ -101,17 +101,17 @@ func (this *GateUser) ParseBigGoldToObj(arr []string)(retObj map[uint32]uint32, 
 		if len(infos) > 2 {
 			index, _ := strconv.ParseInt(infos[0], 10, 32)
 			value, _ := strconv.ParseInt(infos[1], 10, 32)
-			if index > maxIndex {
-				maxIndex = index
+			if uint32(index) > maxIndex {
+				maxIndex = uint32(index)
 			}
-			retObj[index] = value
+			retObj[uint32(index)] = uint32(value)
 		}
 	}
 	return retObj, maxIndex
 }
 func (this *GateUser) ParseBigGoldToArr(obj map[uint32]uint32) []string{
 	retArr := make([]string, 0)
-	maxIndex := 0
+	maxIndex := uint32(0)
 	for i, _ := range obj{
 		if i > maxIndex {
 			maxIndex = i
@@ -128,7 +128,7 @@ func (this *GateUser) ParseBigGoldToArr(obj map[uint32]uint32) []string{
 	return retArr
 }
 func (this *GateUser) GetBigGold() []string { return this.biggold }
-func (this *GateUser) SetBigGold(biggold []string) {
+func (this *GateUser) SetBigGold(biggold []string, reason) {
 	this.biggold = biggold[:]
 	log.Info("玩家[%d] 设置biggold 原因[%s]", this.Id(), reason)
 	send := &msg.GW2C_UpdateBigGold{Golds: this.GetBigGold()[:]}
@@ -148,7 +148,7 @@ func (this *GateUser) AddBigGold(additionObj map[uint32]uint32, reason string) {
 		}
 	}
 	//加好了 进位
-	this.biggold = this.ParseBigGoldToArr(this.CarryBigGold(goldObj))
+	this.biggold = this.ParseBigGoldToArr(this.CarryBigGold(goldObj, maxIndex))
 	log.Info("玩家[%d] 添加biggold 原因[%s]", this.Id(), reason)
 	send := &msg.GW2C_UpdateBigGold{Golds: this.GetBigGold()[:]}
 	this.SendMsg(send)

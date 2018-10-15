@@ -21,7 +21,7 @@ message C2GW_ReqLinkup
 }
 message GW2C_RetLinkup
 {
-    optional uint64 gold = 1;
+    repeated string gold = 1;
 }
 //开箱子
 message GW2C_AckBoxData
