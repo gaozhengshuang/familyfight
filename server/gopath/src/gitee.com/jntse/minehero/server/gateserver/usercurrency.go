@@ -63,8 +63,8 @@ func (this *GateUser) MaxIndexBigGold(golds map[uint32]uint32) uint32 {
 }
 //进位
 func (this *GateUser) CarryBigGold(goldObj map[uint32]uint32, maxIndex uint32) map[uint32]uint32 {
-	carry := 0
-	for i := 0;i <= maxIndex; i++ {
+	carry := uint32(0)
+	for i := uint32(0);i <= maxIndex; i++ {
 		gold, find := goldObj[i]
 		if find {
 			newGold := gold + carry
@@ -97,10 +97,10 @@ func (this *GateUser) ParseBigGoldToObj(arr []string)(retObj map[uint32]uint32, 
 	retObj = make(map[uint32]uint32)
 	maxIndex = 0
 	for _, v := range arr {
-		infos := strings.Split(v, '_')
+		infos := strings.Split(v, "_")
 		if len(infos) > 2 {
-			index := strconv.ParseInt(infos[0], 10, 32)
-			value := strconv.ParseInt(infos[1], 10, 32)
+			index, _ := strconv.ParseInt(infos[0], 10, 32)
+			value, _ := strconv.ParseInt(infos[1], 10, 32)
 			if index > maxIndex {
 				maxIndex = index
 			}
