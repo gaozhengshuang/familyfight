@@ -48,9 +48,9 @@ func (this *GateUser) RemoveGold(gold uint64, reason string ) bool {
 func (this *GateUser) TimesBigGold(golds map[uint32]uint32, times uint32) map[uint32]uint32 {
 	ret := make(map[uint32]uint32)
 	for i, v := range golds {
-		golds[i] = v * times
+		ret[i] = v * times
 	}
-	return golds
+	return ret
 }
 func (this *GateUser) MaxIndexBigGold(golds map[uint32]uint32) uint32 {
 	ret := uint32(0)

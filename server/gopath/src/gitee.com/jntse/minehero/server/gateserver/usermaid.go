@@ -270,7 +270,6 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 }
 
 func (this *UserMaid) CalculateRewardPerSecond(user *GateUser) map[uint32]uint32 {
-	ret := uint64(0)
 	retObj := make(map[uint32]uint32, 0)
 	for _, v := range this.maids {
 		maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[v.id]
