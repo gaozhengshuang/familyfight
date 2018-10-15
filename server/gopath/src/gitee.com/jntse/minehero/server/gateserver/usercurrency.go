@@ -128,9 +128,9 @@ func (this *GateUser) ParseBigGoldToArr(obj map[uint32]uint32) []string{
 	return retArr
 }
 func (this *GateUser) GetBigGold() []string { return this.biggold }
-func (this *GateUser) SetBigGold(biggold []string, reason) {
+func (this *GateUser) SetBigGold(biggold []string) {
 	this.biggold = biggold[:]
-	log.Info("玩家[%d] 设置biggold 原因[%s]", this.Id(), reason)
+	log.Info("玩家[%d] 设置biggold", this.Id())
 	send := &msg.GW2C_UpdateBigGold{Golds: this.GetBigGold()[:]}
 	this.SendMsg(send)
 }
