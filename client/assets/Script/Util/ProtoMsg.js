@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -735,7 +735,7 @@ $root.msg = (function() {
          * @interface IGW2C_RetTurnBrand
          * @property {number|null} [result] GW2C_RetTurnBrand result
          * @property {number|null} [id] GW2C_RetTurnBrand id
-         * @property {number|Long|null} [gold] GW2C_RetTurnBrand gold
+         * @property {Array.<string>|null} [gold] GW2C_RetTurnBrand gold
          */
 
         /**
@@ -747,6 +747,7 @@ $root.msg = (function() {
          * @param {msg.IGW2C_RetTurnBrand=} [properties] Properties to set
          */
         function GW2C_RetTurnBrand(properties) {
+            this.gold = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -771,11 +772,11 @@ $root.msg = (function() {
 
         /**
          * GW2C_RetTurnBrand gold.
-         * @member {number|Long} gold
+         * @member {Array.<string>} gold
          * @memberof msg.GW2C_RetTurnBrand
          * @instance
          */
-        GW2C_RetTurnBrand.prototype.gold = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+        GW2C_RetTurnBrand.prototype.gold = $util.emptyArray;
 
         /**
          * Creates a new GW2C_RetTurnBrand instance using the specified properties.
@@ -805,8 +806,9 @@ $root.msg = (function() {
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
             if (message.id != null && message.hasOwnProperty("id"))
                 writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.id);
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.gold);
+            if (message.gold != null && message.gold.length)
+                for (var i = 0; i < message.gold.length; ++i)
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.gold[i]);
             return writer;
         };
 
@@ -848,7 +850,9 @@ $root.msg = (function() {
                     message.id = reader.uint32();
                     break;
                 case 3:
-                    message.gold = reader.uint64();
+                    if (!(message.gold && message.gold.length))
+                        message.gold = [];
+                    message.gold.push(reader.string());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -891,9 +895,13 @@ $root.msg = (function() {
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isInteger(message.id))
                     return "id: integer expected";
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                if (!$util.isInteger(message.gold) && !(message.gold && $util.isInteger(message.gold.low) && $util.isInteger(message.gold.high)))
-                    return "gold: integer|Long expected";
+            if (message.gold != null && message.hasOwnProperty("gold")) {
+                if (!Array.isArray(message.gold))
+                    return "gold: array expected";
+                for (var i = 0; i < message.gold.length; ++i)
+                    if (!$util.isString(message.gold[i]))
+                        return "gold: string[] expected";
+            }
             return null;
         };
 
@@ -913,15 +921,13 @@ $root.msg = (function() {
                 message.result = object.result >>> 0;
             if (object.id != null)
                 message.id = object.id >>> 0;
-            if (object.gold != null)
-                if ($util.Long)
-                    (message.gold = $util.Long.fromValue(object.gold)).unsigned = true;
-                else if (typeof object.gold === "string")
-                    message.gold = parseInt(object.gold, 10);
-                else if (typeof object.gold === "number")
-                    message.gold = object.gold;
-                else if (typeof object.gold === "object")
-                    message.gold = new $util.LongBits(object.gold.low >>> 0, object.gold.high >>> 0).toNumber(true);
+            if (object.gold) {
+                if (!Array.isArray(object.gold))
+                    throw TypeError(".msg.GW2C_RetTurnBrand.gold: array expected");
+                message.gold = [];
+                for (var i = 0; i < object.gold.length; ++i)
+                    message.gold[i] = String(object.gold[i]);
+            }
             return message;
         };
 
@@ -938,24 +944,21 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
+            if (options.arrays || options.defaults)
+                object.gold = [];
             if (options.defaults) {
                 object.result = 0;
                 object.id = 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.gold = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.gold = options.longs === String ? "0" : 0;
             }
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                if (typeof message.gold === "number")
-                    object.gold = options.longs === String ? String(message.gold) : message.gold;
-                else
-                    object.gold = options.longs === String ? $util.Long.prototype.toString.call(message.gold) : options.longs === Number ? new $util.LongBits(message.gold.low >>> 0, message.gold.high >>> 0).toNumber(true) : message.gold;
+            if (message.gold && message.gold.length) {
+                object.gold = [];
+                for (var j = 0; j < message.gold.length; ++j)
+                    object.gold[j] = message.gold[j];
+            }
             return object;
         };
 
@@ -1189,7 +1192,7 @@ $root.msg = (function() {
          * Properties of a GW2C_RetLinkup.
          * @memberof msg
          * @interface IGW2C_RetLinkup
-         * @property {number|Long|null} [gold] GW2C_RetLinkup gold
+         * @property {Array.<string>|null} [gold] GW2C_RetLinkup gold
          */
 
         /**
@@ -1201,6 +1204,7 @@ $root.msg = (function() {
          * @param {msg.IGW2C_RetLinkup=} [properties] Properties to set
          */
         function GW2C_RetLinkup(properties) {
+            this.gold = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -1209,11 +1213,11 @@ $root.msg = (function() {
 
         /**
          * GW2C_RetLinkup gold.
-         * @member {number|Long} gold
+         * @member {Array.<string>} gold
          * @memberof msg.GW2C_RetLinkup
          * @instance
          */
-        GW2C_RetLinkup.prototype.gold = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+        GW2C_RetLinkup.prototype.gold = $util.emptyArray;
 
         /**
          * Creates a new GW2C_RetLinkup instance using the specified properties.
@@ -1239,8 +1243,9 @@ $root.msg = (function() {
         GW2C_RetLinkup.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.gold);
+            if (message.gold != null && message.gold.length)
+                for (var i = 0; i < message.gold.length; ++i)
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.gold[i]);
             return writer;
         };
 
@@ -1276,7 +1281,9 @@ $root.msg = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.gold = reader.uint64();
+                    if (!(message.gold && message.gold.length))
+                        message.gold = [];
+                    message.gold.push(reader.string());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1313,9 +1320,13 @@ $root.msg = (function() {
         GW2C_RetLinkup.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                if (!$util.isInteger(message.gold) && !(message.gold && $util.isInteger(message.gold.low) && $util.isInteger(message.gold.high)))
-                    return "gold: integer|Long expected";
+            if (message.gold != null && message.hasOwnProperty("gold")) {
+                if (!Array.isArray(message.gold))
+                    return "gold: array expected";
+                for (var i = 0; i < message.gold.length; ++i)
+                    if (!$util.isString(message.gold[i]))
+                        return "gold: string[] expected";
+            }
             return null;
         };
 
@@ -1331,15 +1342,13 @@ $root.msg = (function() {
             if (object instanceof $root.msg.GW2C_RetLinkup)
                 return object;
             var message = new $root.msg.GW2C_RetLinkup();
-            if (object.gold != null)
-                if ($util.Long)
-                    (message.gold = $util.Long.fromValue(object.gold)).unsigned = true;
-                else if (typeof object.gold === "string")
-                    message.gold = parseInt(object.gold, 10);
-                else if (typeof object.gold === "number")
-                    message.gold = object.gold;
-                else if (typeof object.gold === "object")
-                    message.gold = new $util.LongBits(object.gold.low >>> 0, object.gold.high >>> 0).toNumber(true);
+            if (object.gold) {
+                if (!Array.isArray(object.gold))
+                    throw TypeError(".msg.GW2C_RetLinkup.gold: array expected");
+                message.gold = [];
+                for (var i = 0; i < object.gold.length; ++i)
+                    message.gold[i] = String(object.gold[i]);
+            }
             return message;
         };
 
@@ -1356,17 +1365,13 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.gold = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.gold = options.longs === String ? "0" : 0;
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                if (typeof message.gold === "number")
-                    object.gold = options.longs === String ? String(message.gold) : message.gold;
-                else
-                    object.gold = options.longs === String ? $util.Long.prototype.toString.call(message.gold) : options.longs === Number ? new $util.LongBits(message.gold.low >>> 0, message.gold.high >>> 0).toNumber(true) : message.gold;
+            if (options.arrays || options.defaults)
+                object.gold = [];
+            if (message.gold && message.gold.length) {
+                object.gold = [];
+                for (var j = 0; j < message.gold.length; ++j)
+                    object.gold[j] = message.gold[j];
+            }
             return object;
         };
 
@@ -3949,6 +3954,7 @@ $root.msg = (function() {
          * @property {msg.ILuckyDrawHistory|null} [luckydraw] UserBase luckydraw
          * @property {number|Long|null} [gold] UserBase gold
          * @property {msg.IPowerData|null} [power] UserBase power
+         * @property {Array.<string>|null} [biggold] UserBase biggold
          */
 
         /**
@@ -3961,6 +3967,7 @@ $root.msg = (function() {
          */
         function UserBase(properties) {
             this.addrlist = [];
+            this.biggold = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -4120,6 +4127,14 @@ $root.msg = (function() {
         UserBase.prototype.power = null;
 
         /**
+         * UserBase biggold.
+         * @member {Array.<string>} biggold
+         * @memberof msg.UserBase
+         * @instance
+         */
+        UserBase.prototype.biggold = $util.emptyArray;
+
+        /**
          * Creates a new UserBase instance using the specified properties.
          * @function create
          * @memberof msg.UserBase
@@ -4182,6 +4197,9 @@ $root.msg = (function() {
                 writer.uint32(/* id 18, wireType 0 =*/144).uint64(message.gold);
             if (message.power != null && message.hasOwnProperty("power"))
                 $root.msg.PowerData.encode(message.power, writer.uint32(/* id 19, wireType 2 =*/154).fork()).ldelim();
+            if (message.biggold != null && message.biggold.length)
+                for (var i = 0; i < message.biggold.length; ++i)
+                    writer.uint32(/* id 20, wireType 2 =*/162).string(message.biggold[i]);
             return writer;
         };
 
@@ -4274,6 +4292,11 @@ $root.msg = (function() {
                     break;
                 case 19:
                     message.power = $root.msg.PowerData.decode(reader, reader.uint32());
+                    break;
+                case 20:
+                    if (!(message.biggold && message.biggold.length))
+                        message.biggold = [];
+                    message.biggold.push(reader.string());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -4383,6 +4406,13 @@ $root.msg = (function() {
                 if (error)
                     return "power." + error;
             }
+            if (message.biggold != null && message.hasOwnProperty("biggold")) {
+                if (!Array.isArray(message.biggold))
+                    return "biggold: array expected";
+                for (var i = 0; i < message.biggold.length; ++i)
+                    if (!$util.isString(message.biggold[i]))
+                        return "biggold: string[] expected";
+            }
             return null;
         };
 
@@ -4480,6 +4510,13 @@ $root.msg = (function() {
                     throw TypeError(".msg.UserBase.power: object expected");
                 message.power = $root.msg.PowerData.fromObject(object.power);
             }
+            if (object.biggold) {
+                if (!Array.isArray(object.biggold))
+                    throw TypeError(".msg.UserBase.biggold: array expected");
+                message.biggold = [];
+                for (var i = 0; i < object.biggold.length; ++i)
+                    message.biggold[i] = String(object.biggold[i]);
+            }
             return message;
         };
 
@@ -4496,8 +4533,10 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
+            if (options.arrays || options.defaults) {
                 object.addrlist = [];
+                object.biggold = [];
+            }
             if (options.defaults) {
                 object.level = 0;
                 object.exp = 0;
@@ -4580,6 +4619,11 @@ $root.msg = (function() {
                     object.gold = options.longs === String ? $util.Long.prototype.toString.call(message.gold) : options.longs === Number ? new $util.LongBits(message.gold.low >>> 0, message.gold.high >>> 0).toNumber(true) : message.gold;
             if (message.power != null && message.hasOwnProperty("power"))
                 object.power = $root.msg.PowerData.toObject(message.power, options);
+            if (message.biggold && message.biggold.length) {
+                object.biggold = [];
+                for (var j = 0; j < message.biggold.length; ++j)
+                    object.biggold[j] = message.biggold[j];
+            }
             return object;
         };
 
@@ -5500,7 +5544,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IMaidShopData
          * @property {number|null} [id] MaidShopData id
-         * @property {number|null} [price] MaidShopData price
+         * @property {Array.<string>|null} [price] MaidShopData price
          * @property {number|null} [times] MaidShopData times
          */
 
@@ -5513,6 +5557,7 @@ $root.msg = (function() {
          * @param {msg.IMaidShopData=} [properties] Properties to set
          */
         function MaidShopData(properties) {
+            this.price = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -5529,11 +5574,11 @@ $root.msg = (function() {
 
         /**
          * MaidShopData price.
-         * @member {number} price
+         * @member {Array.<string>} price
          * @memberof msg.MaidShopData
          * @instance
          */
-        MaidShopData.prototype.price = 0;
+        MaidShopData.prototype.price = $util.emptyArray;
 
         /**
          * MaidShopData times.
@@ -5569,8 +5614,9 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.id != null && message.hasOwnProperty("id"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.id);
-            if (message.price != null && message.hasOwnProperty("price"))
-                writer.uint32(/* id 2, wireType 5 =*/21).float(message.price);
+            if (message.price != null && message.price.length)
+                for (var i = 0; i < message.price.length; ++i)
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.price[i]);
             if (message.times != null && message.hasOwnProperty("times"))
                 writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.times);
             return writer;
@@ -5611,7 +5657,9 @@ $root.msg = (function() {
                     message.id = reader.uint32();
                     break;
                 case 2:
-                    message.price = reader.float();
+                    if (!(message.price && message.price.length))
+                        message.price = [];
+                    message.price.push(reader.string());
                     break;
                 case 3:
                     message.times = reader.uint32();
@@ -5654,9 +5702,13 @@ $root.msg = (function() {
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isInteger(message.id))
                     return "id: integer expected";
-            if (message.price != null && message.hasOwnProperty("price"))
-                if (typeof message.price !== "number")
-                    return "price: number expected";
+            if (message.price != null && message.hasOwnProperty("price")) {
+                if (!Array.isArray(message.price))
+                    return "price: array expected";
+                for (var i = 0; i < message.price.length; ++i)
+                    if (!$util.isString(message.price[i]))
+                        return "price: string[] expected";
+            }
             if (message.times != null && message.hasOwnProperty("times"))
                 if (!$util.isInteger(message.times))
                     return "times: integer expected";
@@ -5677,8 +5729,13 @@ $root.msg = (function() {
             var message = new $root.msg.MaidShopData();
             if (object.id != null)
                 message.id = object.id >>> 0;
-            if (object.price != null)
-                message.price = Number(object.price);
+            if (object.price) {
+                if (!Array.isArray(object.price))
+                    throw TypeError(".msg.MaidShopData.price: array expected");
+                message.price = [];
+                for (var i = 0; i < object.price.length; ++i)
+                    message.price[i] = String(object.price[i]);
+            }
             if (object.times != null)
                 message.times = object.times >>> 0;
             return message;
@@ -5697,15 +5754,19 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
+            if (options.arrays || options.defaults)
+                object.price = [];
             if (options.defaults) {
                 object.id = 0;
-                object.price = 0;
                 object.times = 0;
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
-            if (message.price != null && message.hasOwnProperty("price"))
-                object.price = options.json && !isFinite(message.price) ? String(message.price) : message.price;
+            if (message.price && message.price.length) {
+                object.price = [];
+                for (var j = 0; j < message.price.length; ++j)
+                    object.price[j] = message.price[j];
+            }
             if (message.times != null && message.hasOwnProperty("times"))
                 object.times = message.times;
             return object;
@@ -15168,6 +15229,412 @@ $root.msg = (function() {
         return GW2C_UpdateTrueGold;
     })();
 
+    msg.C2GW_UploadBigGold = (function() {
+
+        /**
+         * Properties of a C2GW_UploadBigGold.
+         * @memberof msg
+         * @interface IC2GW_UploadBigGold
+         * @property {Array.<string>|null} [golds] C2GW_UploadBigGold golds
+         */
+
+        /**
+         * Constructs a new C2GW_UploadBigGold.
+         * @memberof msg
+         * @classdesc Represents a C2GW_UploadBigGold.
+         * @implements IC2GW_UploadBigGold
+         * @constructor
+         * @param {msg.IC2GW_UploadBigGold=} [properties] Properties to set
+         */
+        function C2GW_UploadBigGold(properties) {
+            this.golds = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_UploadBigGold golds.
+         * @member {Array.<string>} golds
+         * @memberof msg.C2GW_UploadBigGold
+         * @instance
+         */
+        C2GW_UploadBigGold.prototype.golds = $util.emptyArray;
+
+        /**
+         * Creates a new C2GW_UploadBigGold instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_UploadBigGold
+         * @static
+         * @param {msg.IC2GW_UploadBigGold=} [properties] Properties to set
+         * @returns {msg.C2GW_UploadBigGold} C2GW_UploadBigGold instance
+         */
+        C2GW_UploadBigGold.create = function create(properties) {
+            return new C2GW_UploadBigGold(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_UploadBigGold message. Does not implicitly {@link msg.C2GW_UploadBigGold.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_UploadBigGold
+         * @static
+         * @param {msg.IC2GW_UploadBigGold} message C2GW_UploadBigGold message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_UploadBigGold.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.golds != null && message.golds.length)
+                for (var i = 0; i < message.golds.length; ++i)
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.golds[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_UploadBigGold message, length delimited. Does not implicitly {@link msg.C2GW_UploadBigGold.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_UploadBigGold
+         * @static
+         * @param {msg.IC2GW_UploadBigGold} message C2GW_UploadBigGold message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_UploadBigGold.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_UploadBigGold message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_UploadBigGold
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_UploadBigGold} C2GW_UploadBigGold
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_UploadBigGold.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_UploadBigGold();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.golds && message.golds.length))
+                        message.golds = [];
+                    message.golds.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_UploadBigGold message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_UploadBigGold
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_UploadBigGold} C2GW_UploadBigGold
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_UploadBigGold.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_UploadBigGold message.
+         * @function verify
+         * @memberof msg.C2GW_UploadBigGold
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_UploadBigGold.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.golds != null && message.hasOwnProperty("golds")) {
+                if (!Array.isArray(message.golds))
+                    return "golds: array expected";
+                for (var i = 0; i < message.golds.length; ++i)
+                    if (!$util.isString(message.golds[i]))
+                        return "golds: string[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_UploadBigGold message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_UploadBigGold
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_UploadBigGold} C2GW_UploadBigGold
+         */
+        C2GW_UploadBigGold.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_UploadBigGold)
+                return object;
+            var message = new $root.msg.C2GW_UploadBigGold();
+            if (object.golds) {
+                if (!Array.isArray(object.golds))
+                    throw TypeError(".msg.C2GW_UploadBigGold.golds: array expected");
+                message.golds = [];
+                for (var i = 0; i < object.golds.length; ++i)
+                    message.golds[i] = String(object.golds[i]);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_UploadBigGold message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_UploadBigGold
+         * @static
+         * @param {msg.C2GW_UploadBigGold} message C2GW_UploadBigGold
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_UploadBigGold.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.golds = [];
+            if (message.golds && message.golds.length) {
+                object.golds = [];
+                for (var j = 0; j < message.golds.length; ++j)
+                    object.golds[j] = message.golds[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_UploadBigGold to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_UploadBigGold
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_UploadBigGold.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_UploadBigGold;
+    })();
+
+    msg.GW2C_UpdateBigGold = (function() {
+
+        /**
+         * Properties of a GW2C_UpdateBigGold.
+         * @memberof msg
+         * @interface IGW2C_UpdateBigGold
+         * @property {Array.<string>|null} [golds] GW2C_UpdateBigGold golds
+         */
+
+        /**
+         * Constructs a new GW2C_UpdateBigGold.
+         * @memberof msg
+         * @classdesc Represents a GW2C_UpdateBigGold.
+         * @implements IGW2C_UpdateBigGold
+         * @constructor
+         * @param {msg.IGW2C_UpdateBigGold=} [properties] Properties to set
+         */
+        function GW2C_UpdateBigGold(properties) {
+            this.golds = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_UpdateBigGold golds.
+         * @member {Array.<string>} golds
+         * @memberof msg.GW2C_UpdateBigGold
+         * @instance
+         */
+        GW2C_UpdateBigGold.prototype.golds = $util.emptyArray;
+
+        /**
+         * Creates a new GW2C_UpdateBigGold instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_UpdateBigGold
+         * @static
+         * @param {msg.IGW2C_UpdateBigGold=} [properties] Properties to set
+         * @returns {msg.GW2C_UpdateBigGold} GW2C_UpdateBigGold instance
+         */
+        GW2C_UpdateBigGold.create = function create(properties) {
+            return new GW2C_UpdateBigGold(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_UpdateBigGold message. Does not implicitly {@link msg.GW2C_UpdateBigGold.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_UpdateBigGold
+         * @static
+         * @param {msg.IGW2C_UpdateBigGold} message GW2C_UpdateBigGold message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_UpdateBigGold.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.golds != null && message.golds.length)
+                for (var i = 0; i < message.golds.length; ++i)
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.golds[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_UpdateBigGold message, length delimited. Does not implicitly {@link msg.GW2C_UpdateBigGold.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_UpdateBigGold
+         * @static
+         * @param {msg.IGW2C_UpdateBigGold} message GW2C_UpdateBigGold message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_UpdateBigGold.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_UpdateBigGold message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_UpdateBigGold
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_UpdateBigGold} GW2C_UpdateBigGold
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_UpdateBigGold.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_UpdateBigGold();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 2:
+                    if (!(message.golds && message.golds.length))
+                        message.golds = [];
+                    message.golds.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_UpdateBigGold message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_UpdateBigGold
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_UpdateBigGold} GW2C_UpdateBigGold
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_UpdateBigGold.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_UpdateBigGold message.
+         * @function verify
+         * @memberof msg.GW2C_UpdateBigGold
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_UpdateBigGold.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.golds != null && message.hasOwnProperty("golds")) {
+                if (!Array.isArray(message.golds))
+                    return "golds: array expected";
+                for (var i = 0; i < message.golds.length; ++i)
+                    if (!$util.isString(message.golds[i]))
+                        return "golds: string[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_UpdateBigGold message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_UpdateBigGold
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_UpdateBigGold} GW2C_UpdateBigGold
+         */
+        GW2C_UpdateBigGold.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_UpdateBigGold)
+                return object;
+            var message = new $root.msg.GW2C_UpdateBigGold();
+            if (object.golds) {
+                if (!Array.isArray(object.golds))
+                    throw TypeError(".msg.GW2C_UpdateBigGold.golds: array expected");
+                message.golds = [];
+                for (var i = 0; i < object.golds.length; ++i)
+                    message.golds[i] = String(object.golds[i]);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_UpdateBigGold message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_UpdateBigGold
+         * @static
+         * @param {msg.GW2C_UpdateBigGold} message GW2C_UpdateBigGold
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_UpdateBigGold.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.golds = [];
+            if (message.golds && message.golds.length) {
+                object.golds = [];
+                for (var j = 0; j < message.golds.length; ++j)
+                    object.golds[j] = message.golds[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_UpdateBigGold to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_UpdateBigGold
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_UpdateBigGold.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_UpdateBigGold;
+    })();
+
     msg.C2GW_ReqPower = (function() {
 
         /**
@@ -19377,13 +19844,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -19632,13 +20093,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -22856,7 +23311,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IGW2C_AckBuyMaid
          * @property {number|null} [result] GW2C_AckBuyMaid result
-         * @property {number|Long|null} [price] GW2C_AckBuyMaid price
+         * @property {Array.<string>|null} [price] GW2C_AckBuyMaid price
          */
 
         /**
@@ -22868,6 +23323,7 @@ $root.msg = (function() {
          * @param {msg.IGW2C_AckBuyMaid=} [properties] Properties to set
          */
         function GW2C_AckBuyMaid(properties) {
+            this.price = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -22884,11 +23340,11 @@ $root.msg = (function() {
 
         /**
          * GW2C_AckBuyMaid price.
-         * @member {number|Long} price
+         * @member {Array.<string>} price
          * @memberof msg.GW2C_AckBuyMaid
          * @instance
          */
-        GW2C_AckBuyMaid.prototype.price = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+        GW2C_AckBuyMaid.prototype.price = $util.emptyArray;
 
         /**
          * Creates a new GW2C_AckBuyMaid instance using the specified properties.
@@ -22916,8 +23372,9 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.result != null && message.hasOwnProperty("result"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
-            if (message.price != null && message.hasOwnProperty("price"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.price);
+            if (message.price != null && message.price.length)
+                for (var i = 0; i < message.price.length; ++i)
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.price[i]);
             return writer;
         };
 
@@ -22956,7 +23413,9 @@ $root.msg = (function() {
                     message.result = reader.uint32();
                     break;
                 case 2:
-                    message.price = reader.uint64();
+                    if (!(message.price && message.price.length))
+                        message.price = [];
+                    message.price.push(reader.string());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -22996,9 +23455,13 @@ $root.msg = (function() {
             if (message.result != null && message.hasOwnProperty("result"))
                 if (!$util.isInteger(message.result))
                     return "result: integer expected";
-            if (message.price != null && message.hasOwnProperty("price"))
-                if (!$util.isInteger(message.price) && !(message.price && $util.isInteger(message.price.low) && $util.isInteger(message.price.high)))
-                    return "price: integer|Long expected";
+            if (message.price != null && message.hasOwnProperty("price")) {
+                if (!Array.isArray(message.price))
+                    return "price: array expected";
+                for (var i = 0; i < message.price.length; ++i)
+                    if (!$util.isString(message.price[i]))
+                        return "price: string[] expected";
+            }
             return null;
         };
 
@@ -23016,15 +23479,13 @@ $root.msg = (function() {
             var message = new $root.msg.GW2C_AckBuyMaid();
             if (object.result != null)
                 message.result = object.result >>> 0;
-            if (object.price != null)
-                if ($util.Long)
-                    (message.price = $util.Long.fromValue(object.price)).unsigned = true;
-                else if (typeof object.price === "string")
-                    message.price = parseInt(object.price, 10);
-                else if (typeof object.price === "number")
-                    message.price = object.price;
-                else if (typeof object.price === "object")
-                    message.price = new $util.LongBits(object.price.low >>> 0, object.price.high >>> 0).toNumber(true);
+            if (object.price) {
+                if (!Array.isArray(object.price))
+                    throw TypeError(".msg.GW2C_AckBuyMaid.price: array expected");
+                message.price = [];
+                for (var i = 0; i < object.price.length; ++i)
+                    message.price[i] = String(object.price[i]);
+            }
             return message;
         };
 
@@ -23041,21 +23502,17 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults) {
+            if (options.arrays || options.defaults)
+                object.price = [];
+            if (options.defaults)
                 object.result = 0;
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.price = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.price = options.longs === String ? "0" : 0;
-            }
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
-            if (message.price != null && message.hasOwnProperty("price"))
-                if (typeof message.price === "number")
-                    object.price = options.longs === String ? String(message.price) : message.price;
-                else
-                    object.price = options.longs === String ? $util.Long.prototype.toString.call(message.price) : options.longs === Number ? new $util.LongBits(message.price.low >>> 0, message.price.high >>> 0).toNumber(true) : message.price;
+            if (message.price && message.price.length) {
+                object.price = [];
+                for (var j = 0; j < message.price.length; ++j)
+                    object.price[j] = message.price[j];
+            }
             return object;
         };
 
@@ -23543,7 +24000,7 @@ $root.msg = (function() {
          * Properties of a GW2C_OfflineReward.
          * @memberof msg
          * @interface IGW2C_OfflineReward
-         * @property {number|Long|null} [gold] GW2C_OfflineReward gold
+         * @property {Array.<string>|null} [golds] GW2C_OfflineReward golds
          */
 
         /**
@@ -23555,6 +24012,7 @@ $root.msg = (function() {
          * @param {msg.IGW2C_OfflineReward=} [properties] Properties to set
          */
         function GW2C_OfflineReward(properties) {
+            this.golds = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -23562,12 +24020,12 @@ $root.msg = (function() {
         }
 
         /**
-         * GW2C_OfflineReward gold.
-         * @member {number|Long} gold
+         * GW2C_OfflineReward golds.
+         * @member {Array.<string>} golds
          * @memberof msg.GW2C_OfflineReward
          * @instance
          */
-        GW2C_OfflineReward.prototype.gold = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+        GW2C_OfflineReward.prototype.golds = $util.emptyArray;
 
         /**
          * Creates a new GW2C_OfflineReward instance using the specified properties.
@@ -23593,8 +24051,9 @@ $root.msg = (function() {
         GW2C_OfflineReward.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.gold);
+            if (message.golds != null && message.golds.length)
+                for (var i = 0; i < message.golds.length; ++i)
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.golds[i]);
             return writer;
         };
 
@@ -23630,7 +24089,9 @@ $root.msg = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.gold = reader.uint64();
+                    if (!(message.golds && message.golds.length))
+                        message.golds = [];
+                    message.golds.push(reader.string());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -23667,9 +24128,13 @@ $root.msg = (function() {
         GW2C_OfflineReward.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                if (!$util.isInteger(message.gold) && !(message.gold && $util.isInteger(message.gold.low) && $util.isInteger(message.gold.high)))
-                    return "gold: integer|Long expected";
+            if (message.golds != null && message.hasOwnProperty("golds")) {
+                if (!Array.isArray(message.golds))
+                    return "golds: array expected";
+                for (var i = 0; i < message.golds.length; ++i)
+                    if (!$util.isString(message.golds[i]))
+                        return "golds: string[] expected";
+            }
             return null;
         };
 
@@ -23685,15 +24150,13 @@ $root.msg = (function() {
             if (object instanceof $root.msg.GW2C_OfflineReward)
                 return object;
             var message = new $root.msg.GW2C_OfflineReward();
-            if (object.gold != null)
-                if ($util.Long)
-                    (message.gold = $util.Long.fromValue(object.gold)).unsigned = true;
-                else if (typeof object.gold === "string")
-                    message.gold = parseInt(object.gold, 10);
-                else if (typeof object.gold === "number")
-                    message.gold = object.gold;
-                else if (typeof object.gold === "object")
-                    message.gold = new $util.LongBits(object.gold.low >>> 0, object.gold.high >>> 0).toNumber(true);
+            if (object.golds) {
+                if (!Array.isArray(object.golds))
+                    throw TypeError(".msg.GW2C_OfflineReward.golds: array expected");
+                message.golds = [];
+                for (var i = 0; i < object.golds.length; ++i)
+                    message.golds[i] = String(object.golds[i]);
+            }
             return message;
         };
 
@@ -23710,17 +24173,13 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
-                if ($util.Long) {
-                    var long = new $util.Long(0, 0, true);
-                    object.gold = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
-                } else
-                    object.gold = options.longs === String ? "0" : 0;
-            if (message.gold != null && message.hasOwnProperty("gold"))
-                if (typeof message.gold === "number")
-                    object.gold = options.longs === String ? String(message.gold) : message.gold;
-                else
-                    object.gold = options.longs === String ? $util.Long.prototype.toString.call(message.gold) : options.longs === Number ? new $util.LongBits(message.gold.low >>> 0, message.gold.high >>> 0).toNumber(true) : message.gold;
+            if (options.arrays || options.defaults)
+                object.golds = [];
+            if (message.golds && message.golds.length) {
+                object.golds = [];
+                for (var j = 0; j < message.golds.length; ++j)
+                    object.golds[j] = message.golds[j];
+            }
             return object;
         };
 
@@ -27427,6 +27886,7 @@ $root.msg = (function() {
          * @property {number|null} [result] GW2C_RetPalaceTakeBack result
          * @property {Array.<msg.IPairNumItem>|null} [items] GW2C_RetPalaceTakeBack items
          * @property {msg.IPalaceData|null} [data] GW2C_RetPalaceTakeBack data
+         * @property {Array.<string>|null} [gold] GW2C_RetPalaceTakeBack gold
          */
 
         /**
@@ -27439,6 +27899,7 @@ $root.msg = (function() {
          */
         function GW2C_RetPalaceTakeBack(properties) {
             this.items = [];
+            this.gold = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -27468,6 +27929,14 @@ $root.msg = (function() {
          * @instance
          */
         GW2C_RetPalaceTakeBack.prototype.data = null;
+
+        /**
+         * GW2C_RetPalaceTakeBack gold.
+         * @member {Array.<string>} gold
+         * @memberof msg.GW2C_RetPalaceTakeBack
+         * @instance
+         */
+        GW2C_RetPalaceTakeBack.prototype.gold = $util.emptyArray;
 
         /**
          * Creates a new GW2C_RetPalaceTakeBack instance using the specified properties.
@@ -27500,6 +27969,9 @@ $root.msg = (function() {
                     $root.msg.PairNumItem.encode(message.items[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             if (message.data != null && message.hasOwnProperty("data"))
                 $root.msg.PalaceData.encode(message.data, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.gold != null && message.gold.length)
+                for (var i = 0; i < message.gold.length; ++i)
+                    writer.uint32(/* id 4, wireType 2 =*/34).string(message.gold[i]);
             return writer;
         };
 
@@ -27544,6 +28016,11 @@ $root.msg = (function() {
                     break;
                 case 3:
                     message.data = $root.msg.PalaceData.decode(reader, reader.uint32());
+                    break;
+                case 4:
+                    if (!(message.gold && message.gold.length))
+                        message.gold = [];
+                    message.gold.push(reader.string());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -27597,6 +28074,13 @@ $root.msg = (function() {
                 if (error)
                     return "data." + error;
             }
+            if (message.gold != null && message.hasOwnProperty("gold")) {
+                if (!Array.isArray(message.gold))
+                    return "gold: array expected";
+                for (var i = 0; i < message.gold.length; ++i)
+                    if (!$util.isString(message.gold[i]))
+                        return "gold: string[] expected";
+            }
             return null;
         };
 
@@ -27629,6 +28113,13 @@ $root.msg = (function() {
                     throw TypeError(".msg.GW2C_RetPalaceTakeBack.data: object expected");
                 message.data = $root.msg.PalaceData.fromObject(object.data);
             }
+            if (object.gold) {
+                if (!Array.isArray(object.gold))
+                    throw TypeError(".msg.GW2C_RetPalaceTakeBack.gold: array expected");
+                message.gold = [];
+                for (var i = 0; i < object.gold.length; ++i)
+                    message.gold[i] = String(object.gold[i]);
+            }
             return message;
         };
 
@@ -27645,8 +28136,10 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
+            if (options.arrays || options.defaults) {
                 object.items = [];
+                object.gold = [];
+            }
             if (options.defaults) {
                 object.result = 0;
                 object.data = null;
@@ -27660,6 +28153,11 @@ $root.msg = (function() {
             }
             if (message.data != null && message.hasOwnProperty("data"))
                 object.data = $root.msg.PalaceData.toObject(message.data, options);
+            if (message.gold && message.gold.length) {
+                object.gold = [];
+                for (var j = 0; j < message.gold.length; ++j)
+                    object.gold[j] = message.gold[j];
+            }
             return object;
         };
 

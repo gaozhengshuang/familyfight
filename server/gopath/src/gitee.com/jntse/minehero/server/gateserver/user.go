@@ -295,7 +295,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase.GetPower().Power = pb.Uint32(this.power)
 	userbase.GetPower().Nexttime = pb.Uint64(this.nextpowertime)
 	userbase.GetPower().Maxpower = pb.Uint32(this.maxpower)
-	userbase.Biggold = this.biggold[:]
+	userbase.Biggold = this.biggold
 	bin.Guideid = pb.Uint32(this.guide)
 	//userbase.Addrlist = this.addrlist[:]
 

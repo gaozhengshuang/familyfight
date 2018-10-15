@@ -17,6 +17,7 @@ UserModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_UpdateGold', this, this.onGW2C_UpdateGold);
     NetWorkController.AddListener('msg.GW2C_OfflineReward', this, this.onGW2C_OfflineReward);
     NetWorkController.AddListener('msg.GW2C_AckGuideData', this, this.onGW2C_AckGuideData);
+    NetWorkController.AddListener('msg.GW2C_UpdateBigGold', this, this.onGW2C_UpdateBigGold)
 
     NotificationController.On(Define.EVENT_KEY.USERINFO_ADDGOLD, this, this.AddGold);
     NotificationController.On(Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, this, this.SubtractGold);
@@ -73,12 +74,12 @@ UserModel.prototype.SetGold = function (gold) {
     if (isNaN(gold)) {
         return;
     }
-    Tools.SetValueInObj(this.userInfo, 'base.gold', gold);
+    Tools.SetValueInObj(this.userInfo, 'base.biggold', gold);
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, gold);
 }
 
 UserModel.prototype.GetGold = function () {
-    return Tools.GetValueInObj(this.userInfo, 'base.gold') || ["0_0"];
+    return Tools.GetValueInObj(this.userInfo, 'base.biggold') || ["0_0"];
 }
 
 UserModel.prototype.GetOffLineReward = function () {
@@ -97,15 +98,15 @@ UserModel.prototype.onGW2C_RetLogin = function (msgid, data) {
 UserModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
     this.userInfo = data;
     NotificationController.Emit(Define.EVENT_KEY.CONNECT_TO_GATESERVER);
-    
-    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, Tools.GetValueInObj(this.userInfo, 'base.gold') || ["0_0"]);
+
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, Tools.GetValueInObj(this.userInfo, 'base.biggold') || ["0_0"]);
     let Game = require('../Game');
     Game.Platform.SendUserInfo();
 }
 
 UserModel.prototype.onGW2C_UpdateGold = function (msgid, data) {
-    let value = data.num || ["0_0"];
-    this.SetGold(value)
+    // let value = data.num || ["0_0"];
+    // this.SetGold(value)
 }
 
 UserModel.prototype.onGW2C_OfflineReward = function (msgid, data) {
@@ -115,11 +116,15 @@ UserModel.prototype.onGW2C_OfflineReward = function (msgid, data) {
 
 UserModel.prototype.onGW2C_AckGuideData = function (msgid, data) {
     let guideId = data.guide;
-    
+
     if (data.firstsyn) {
         guideId = GuideController.GetGuideConfig(data.guide).Resetid;
     }
     GuideController.SetGuide(guideId);
+}
+UserModel.prototype.onGW2C_UpdateBigGold = function (msgid, data) {
+    let value = data.golds || ["0_0"];
+    this.SetGold(value)
 }
 
 module.exports = new UserModel();

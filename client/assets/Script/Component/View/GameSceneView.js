@@ -35,7 +35,7 @@ cc.Class({
         this.curSynchro += dt;
         if (this.curSynchro >= this.synchroTime) {
             this.curSynchro = 0;
-            Game.NetWorkController.Send('msg.C2GW_UploadTrueGold', { num: Game.UserModel.GetGold() });
+            Game.NetWorkController.Send('msg.C2GW_UploadBigGold', { golds: Game.UserModel.GetGold() });
         }
 
         this.curInterval += dt;
