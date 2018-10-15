@@ -16,6 +16,7 @@ message GW2C_RetPalaceTakeBack
     optional uint32 result = 1;
     repeated PairNumItem items = 2;
     optional PalaceData data = 3;
+    repeated string gold = 4;
 }
 //升级
 message C2GW_ReqMasterLevelup

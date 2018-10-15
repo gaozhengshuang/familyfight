@@ -80,34 +80,35 @@ func (this *UserPalace) ChangeMaxLevel(user* GateUser,level uint32) {
 }
 // ========================= 消息接口 =========================
 //收取
-func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items []*msg.PairNumItem, data *msg.PalaceData){
+func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items []*msg.PairNumItem, data *msg.PalaceData, gold []string){
 	items = make([]*msg.PairNumItem,0)
+	gold = make([]string, 0)
 	palace, find := this.palaces[id]
 	if !find {
 		user.SendNotify("后宫尚未开启")
-		return 1,items,nil
+		return 1,items,nil,gold
 	}
 	palacetmpl := PalaceMgr().GetPalaceConfig(id)
 	if palacetmpl == nil {
 		user.SendNotify("没有后宫配置")
-		return 1,items,nil
+		return 1,items,nil,gold
 	}
 	mastertmpl := PalaceMgr().GetMasterConfig(id, palace.level)
 	if mastertmpl == nil {
 		user.SendNotify("没有主子配置")
-		return 2,items,nil
+		return 2,items,nil,gold
 	}
 	maidsconfig := PalaceMgr().GetMaidConfig(id)
 	if len(maidsconfig) == 0 {
 		user.SendNotify("没有女仆配置")
-		return 3,items,nil
+		return 3,items,nil,gold
 	}
 	if palace.endtime > uint64(util.CURTIME()) {
 		user.SendNotify("时间还未到")
-		return 4,items,nil
+		return 4,items,nil,gold
 	}
 	//可以收取了 根据宫女计算金币和物品吧
-	gold := uint64(0)
+	goldObj := make(map[uint32]uint32)
 	for i, v := range maidsconfig {
 		if i >= len(palace.maids) {
 			continue
@@ -117,7 +118,9 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 		}
 		//这个宫女开启了
 		//计算金币
-		gold = gold + uint64(v.GoldAddition) * uint64(mastertmpl.WaitTime)
+		addition := user.ParseBigGoldToObj(v.GoldAddition)
+		addition = user.TimesBigGold(addition,uint32(mastertmpl.WaitTime))
+		goldObj = user.MergeBigGold(goldObj, addition)
 		rand := uint32(util.RandBetween(0, 9999))
 		if rand <= v.ItemProb {
 			//获得物品
@@ -140,10 +143,10 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 	palace.endtime = uint64(util.CURTIME()) + uint64(mastertmpl.WaitTime)
 	//
 	retitems := make([]*msg.PairNumItem,0)
-	retitems = append(retitems, &msg.PairNumItem{ Itemid: pb.Uint32(uint32(tbl.Common.GoldItemID)), Num: pb.Uint64(gold)})
+	// retitems = append(retitems, &msg.PairNumItem{ Itemid: pb.Uint32(uint32(tbl.Common.GoldItemID)), Num: pb.Uint64(gold)})
 	retitems = append(retitems, items...)
-
-	return 0, retitems, palace.PackBin()
+	goldObj = user.CarryBigGold(goldObj, user.MaxIndexBigGold(goldObj))
+	return 0, retitems, palace.PackBin(), user.ParseBigGoldToArr(goldObj)
 }
 
 //升级

@@ -61,6 +61,19 @@ func (this *GateUser) MaxIndexBigGold(golds map[uint32]uint32) uint32 {
 	}
 	return ret
 }
+//合并 不进位
+func (this *GateUser) MergeBigGold(src map[uint32]uint32, tar map[uint32]uint32) map[uint32]uint32{
+	ret := src[:]
+	for i, v := range tar {
+		o, find := ret[i]
+		if find {
+			ret[i] = o + v
+		} else {
+			ret[i] = v
+		}
+	}
+	return ret
+}
 //进位
 func (this *GateUser) CarryBigGold(goldObj map[uint32]uint32, maxIndex uint32) map[uint32]uint32 {
 	carry := uint32(0)
@@ -135,20 +148,10 @@ func (this *GateUser) SetBigGold(biggold []string) {
 	this.SendMsg(send)
 }
 func (this *GateUser) AddBigGold(additionObj map[uint32]uint32, reason string) {
-	goldObj, maxIndex := this.ParseBigGoldToObj(this.GetBigGold())
-	for i, v := range additionObj {
-		gold, find := goldObj[i]
-		if find {
-			goldObj[i] = gold + v
-		} else {
-			if i > maxIndex{
-				maxIndex = i
-			}
-			goldObj[i] = v
-		}
-	}
+	goldObj, _ := this.ParseBigGoldToObj(this.GetBigGold())
+	goldObj = this.MergeBigGold(goldObj, additionObj)
 	//加好了 进位
-	this.biggold = this.ParseBigGoldToArr(this.CarryBigGold(goldObj, maxIndex))
+	this.biggold = this.ParseBigGoldToArr(this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj)))
 	log.Info("玩家[%d] 添加biggold 原因[%s]", this.Id(), reason)
 	send := &msg.GW2C_UpdateBigGold{Golds: this.GetBigGold()[:]}
 	this.SendMsg(send)
