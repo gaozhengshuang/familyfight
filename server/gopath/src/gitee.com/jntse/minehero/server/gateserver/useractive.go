@@ -13,11 +13,11 @@ import (
 )
 
 // 获得奖励
-func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam uint32,reason string,notify bool) (result uint32, value uint64) { 
+func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam uint32,reason string,notify bool) (result uint32, value []string) { 
+	value = make([]string, 0)
 	switch rtype {
 		case 1:
 			//金币
-			value = 0
 			goldrewardratio, find := tbl.TGoldRewardRatioBase.GoldRewardRatioById[rvalue]
 			if !find {
 				this.SendNotify("没有奖励金币的模板哟")
@@ -36,24 +36,27 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam u
 					}
 				}
 			}
-			value = uint64(float64(this.maid.CalculateRewardPerSecond()) * ratio)
+			goldObj := this.maid.CalculateRewardPerSecond(this)
+			goldObj = this.TimesBigGold(goldObj, uint32(ratio))
+			goldObj = this.CarryBigGold(goldObj)
+			value = this.ParseBigGoldToArr(goldObj)
 			return 0, value
 		case 2:
 			//体力
 			this.AddPower(rvalue, reason, true,notify)
-			return 0, 0 
+			return 0, value 
 		case 3:
 			//侍女
 			maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[rid] 
 			if !find {
 				this.SendNotify("没有对应的侍女配置")
-				return 1, 0
+				return 1, value
 			}
 			if reason != "开箱子" {
 				count := this.GetCountByLevel(uint32(maidconfg.Passlevels))
 				if count >= 20 {
 					this.SendNotify("该关卡侍女数量已达上限")
-					return 2, 0
+					return 2, value
 				}
 			}
 			//可以获得了
@@ -62,21 +65,21 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam u
 			maidSend.Datas = append(maidSend.Datas, maid.PackBin())
 			maidSend.Maxid = pb.Uint32(this.maid.GetMaxId())
 			this.SendMsg(maidSend)
-			return 0, 0
+			return 0, value
 		case 4:
 			//道具
 			this.AddItem(rid, rvalue, reason)
-			return 0, 0
+			return 0, value
 		case 5:
 			//小游戏
-			return 0, 0
+			return 0, value
 		default:
-			return 0, 0
+			return 0, value
 	}
 }
 
 //翻牌子
-func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id uint32, gold uint64) {
+func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id uint32, gold []string) {
 	// 体力够不够 
 	if this.GetPower() < 1 {
 		this.SendNotify("体力不足")
@@ -137,7 +140,11 @@ func (this *GateUser) Linkup(score uint32) (gold uint64){
 			}
 		}
 	}
-	return uint64(score) * uint64(float64(this.maid.CalculateRewardPerSecond()) * ratio)
+	goldObj := this.maid.CalculateRewardPerSecond(this)
+	goldObj = this.TimesBigGold(goldObj, Uint32(ratio))
+	goldObj = this.TimesBigGold(goldObj, Uint32(score))
+	goldObj = this.CarryBigGold(goldObj)
+	return this.ParseBigGoldToArr(goldObj)
 }
 
 //箱子数据

@@ -24,6 +24,16 @@ message GW2C_UpdateTrueGold {
     optional uint64 num = 1;
 }
 
+//新的biggold
+message C2GW_UploadBigGold
+{
+    repeated string golds = 1;
+}
+message GW2C_UpdateBigGold
+{
+    repeated string golds = 2;
+}
+
 //更新体力值
 message C2GW_ReqPower 
 {

@@ -101,11 +101,11 @@ func (this *UserMaid) Online(user* GateUser) {
 		return
 	}
 	passedtime := user.tm_login - user.tm_logout
-	rewardpersecond := this.CalculateRewardPerSecond()
-	addition := uint64(passedtime) * rewardpersecond
-	user.AddGold(addition, "离线侍女奖励")
+	rewardpersecond := this.CalculateRewardPerSecond(user)
+	addition := user.TimesBigGold(rewardpersecond,uint32(passedtime))
+	user.AddBigGold(addition, "离线侍女奖励")
 	send := &msg.GW2C_OfflineReward{}
-	send.Gold = pb.Uint64(addition)
+	send.Golds = user.ParseBigGoldToArr(user.CarryBigGold(addition))
 	user.SendMsg(send)
 }
 
@@ -265,16 +265,25 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 	this.SynMaidShop(user)
 }
 
-func (this *UserMaid) CalculateRewardPerSecond() uint64 {
+func (this *UserMaid) CalculateRewardPerSecond(user *GateUser) map[uint32]uint32 {
 	ret := uint64(0)
+	retObj := make(map[uint32]uint32, 0)
 	for _, v := range this.maids {
 		maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[v.id]
 		if !find {
 			continue
 		}
-		ret = ret + uint64(maidconfg.Reward) * uint64(v.count)
+		rewardObj := user.ParseBigGoldToObj(maidconfg.Reward)
+		for i, o := range rewardObj {
+			value, find := retObj[i]
+			if find {
+				retObj[i] = value + uint32(o) * uint32(v.count)
+			} else {
+				retObj[i] = uint32(o) * uint32(v.count)
+			}
+		}
 	}
-	return ret
+	return retObj
 }
 //重新计算关卡中的侍女数量
 func (this *UserMaid) CalculateMaidCountByLevel(level uint32) {

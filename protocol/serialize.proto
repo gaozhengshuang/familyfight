@@ -71,6 +71,7 @@ message UserBase {
     optional LuckyDrawHistory luckydraw = 17;   // 抽奖
     optional uint64     gold            = 18;   //金币
     optional PowerData  power           = 19;   //体力
+    repeated string     biggold         = 20;   //大钱    
 }
 
 message UserAddress {

@@ -39,6 +39,7 @@ type DBUserData struct {
 	power 		  uint32 
 	nextpowertime uint64
 	maxpower 	  uint32
+	biggold 	  []string
 }
 
 type BoxData struct {
@@ -294,6 +295,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase.GetPower().Power = pb.Uint32(this.power)
 	userbase.GetPower().Nexttime = pb.Uint64(this.nextpowertime)
 	userbase.GetPower().Maxpower = pb.Uint32(this.maxpower)
+	userbase.Biggold = this.biggold[:]
 	bin.Guideid = pb.Uint32(this.guide)
 	//userbase.Addrlist = this.addrlist[:]
 
@@ -329,6 +331,7 @@ func (this *GateUser) LoadBin() {
 	this.power = userbase.GetPower().GetPower()
 	this.maxpower = userbase.GetPower().GetMaxpower()
 	this.nextpowertime = userbase.GetPower().GetNexttime()
+	this.biggold = userbase.GetGiggold()[:]
 	this.guide = this.bin.GetGuideid()
 	//this.addrlist = userbase.GetAddrlist()[:]
 	// 道具信息

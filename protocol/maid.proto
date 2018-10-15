@@ -38,5 +38,5 @@ message GW2C_AckMergeMaid
 
 message GW2C_OfflineReward
 {
-    optional uint64 gold = 1;
+    repeated string golds = 1;
 }

@@ -60,6 +60,7 @@ func (this* C2GWMsgHandler) Init() {
 	//货币
 	this.msgparser.RegistProtoMsg(msg.C2GW_UploadTrueGold{}, on_C2GW_UploadTrueGold)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPower{}, on_C2GW_ReqPower)
+	this.msgparser.RegistProtoMsg(msg.C2GW_UploadBigGold{}, on_C2GW_UploadBigGold)
 	//活动
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTurnBrand{}, on_C2GW_ReqTurnBrand)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqLinkup{}, on_C2GW_ReqLinkup)
@@ -301,6 +302,15 @@ func on_C2GW_ReqPower(session network.IBaseNetSession, message interface{}) {
 	}
 	user.NotifyPower()
 }
+func on_C2GW_UploadBigGold(session network.IBaseNetSession, message interface{}) {
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+	user.SetBigGold(tmsg.GetGolds())
+}
 //翻牌子
 func on_C2GW_ReqTurnBrand(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_ReqTurnBrand)
@@ -320,7 +330,7 @@ func on_C2GW_ReqTurnBrand(session network.IBaseNetSession, message interface{}) 
 	send := &msg.GW2C_RetTurnBrand{}
 	send.Result = pb.Uint32(result)
 	send.Id = pb.Uint32(id)
-	send.Gold = pb.Uint64(gold)
+	send.Gold = gold[:]
 	user.SendMsg(send)
 }
 //连连看
