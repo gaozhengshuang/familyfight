@@ -118,7 +118,7 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 		}
 		//这个宫女开启了
 		//计算金币
-		addition := user.ParseBigGoldToObj(v.GoldAddition)
+		addition, _ := user.ParseBigGoldToObj(v.GoldAddition)
 		addition = user.TimesBigGold(addition,uint32(mastertmpl.WaitTime))
 		goldObj = user.MergeBigGold(goldObj, addition)
 		rand := uint32(util.RandBetween(0, 9999))

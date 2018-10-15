@@ -63,7 +63,7 @@ func (this *GateUser) MaxIndexBigGold(golds map[uint32]uint32) uint32 {
 }
 //合并 不进位
 func (this *GateUser) MergeBigGold(src map[uint32]uint32, tar map[uint32]uint32) map[uint32]uint32{
-	ret := src[:]
+	ret := src
 	for i, v := range tar {
 		o, find := ret[i]
 		if find {
