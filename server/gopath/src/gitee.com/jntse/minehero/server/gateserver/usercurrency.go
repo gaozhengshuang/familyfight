@@ -131,7 +131,7 @@ func (this *GateUser) ParseBigGoldToArr(obj map[uint32]uint32) []string{
 		}
 	}
 	for i := int32(maxIndex); i >= 0; i-- {
-		v, find := obj[i]
+		v, find := obj[uint32(i)]
 		if find {
 			retArr = append(retArr, fmt.Sprintf("%d_%d", i, v))
 		} else {
