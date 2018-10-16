@@ -19,6 +19,7 @@ var LevelBasee = table.InsLevelBaseeTable
 var TGoldRewardRatioBase = table.InsTGoldRewardRatioBaseTable
 var TMaidLevelBase = table.InsTMaidLevelBaseTable
 var Question = table.InsQuestionTable
+var TFunctionOpen = table.InsTFunctionOpenTable
 var TMaidShopBase = table.InsTMaidShopBaseTable
 var TbirckInfobase = table.InsTbirckInfobaseTable
 var GiftProBase = table.InsGiftProBaseTable

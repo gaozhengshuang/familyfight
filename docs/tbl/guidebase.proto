@@ -22,40 +22,43 @@ message GuideDefine
 	optional uint32 Id = 1; // 引导id
 	
 	
-	optional uint32 NextGuide = 2; // 下一步引导
+	optional uint32 Type = 2; // （1指向位置固定2点空地结束3轿子4仆人5空白）
 	
 	
-	optional uint32 Type = 3; // （1指向位置固定2点空地结束3轿子4仆人5空白）
+	optional uint32 IsDialog = 3; // （0无对话，1有对话）
 	
 	
-	optional uint32 IsDialog = 4; // （0无对话，1有对话）
+	optional uint32 IsFinger = 4; // （0无手指，1有手指）
 	
 	
-	optional uint32 IsFinger = 5; // （0无手指，1有手指）
+	optional string Dialog = 5; // 谈话内容
 	
 	
-	optional string Dialog = 6; // 谈话内容
+	optional string prefab = 6; // 预制路径（例：Prefab/GameSceneView)
 	
 	
-	optional string prefab = 7; // 预制路径（例：Prefab/GameSceneView)
+	optional string ViewName = 7; // 配谁亮谁（例：view）
 	
 	
-	optional string ViewName = 8; // 配谁亮谁（例：view）
+	optional string ButtonName = 8; // 点击目标名字（例：btn_shop)
 	
 	
-	optional string ButtonName = 9; // 点击目标名字（例：btn_shop)
+	optional string PersonXY = 9; // 人物坐标显示
 	
 	
-	optional string PersonXY = 10; // 人物坐标显示
+	optional string FingerXY = 10; // 手指坐标
 	
 	
-	optional string FingerXY = 11; // 手指坐标
+	optional string MaidInfo = 11; // 仆人id_仆人数量
 	
 	
-	optional string MaidInfo = 12; // 仆人id_仆人数量
+	optional uint32 Resetid = 12; // 重置id
 	
 	
-	optional uint32 Resetid = 13; // 重置id
+	optional uint32 ConditionType = 13; // 条件类型 1 关卡解锁 2 引导完成
+	
+	
+	optional uint32 ConditionValue = 14; // 条件值
 
 }
 
