@@ -20,9 +20,9 @@ cc.Class({
         label_curMaidNum: { default: null, type: cc.Label },
         label_maxMaidNum: { default: null, type: cc.Label },
 
-        Label_shopUnlock: { default: null, type: cc.Label },
-        Label_turnbrandUnlock: { default: null, type: cc.Label },
-        Label_palaceUnlock: { default: null, type: cc.Label },
+        label_shopUnlock: { default: null, type: cc.Label },
+        label_turnbrandUnlock: { default: null, type: cc.Label },
+        label_palaceUnlock: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -153,15 +153,15 @@ cc.Class({
     updateBottomButton() {
         let shopLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.SHOP);
         this.button_shop.interactable = shopLock;
-        this.Label_shopUnlock.node.active = !shopLock;
+        this.label_shopUnlock.node.active = !shopLock;
 
         let turnbrandLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.TURNBRAND);
         this.button_turnbrand.interactable = turnbrandLock;
-        this.Label_turnbrandUnlock.node.active = !turnbrandLock;
+        this.label_turnbrandUnlock.node.active = !turnbrandLock;
 
         let palaceLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.PALACE);
         this.button_palace.interactable = palaceLock;
-        this.Label_palaceUnlock.node.active = !palaceLock;
+        this.label_palaceUnlock.node.active = !palaceLock;
     },
 
     createPlayer(playerId) {

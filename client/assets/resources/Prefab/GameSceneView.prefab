@@ -4309,13 +4309,13 @@
     "label_maxMaidNum": {
       "__id__": 27
     },
-    "Label_shopUnlock": {
+    "label_shopUnlock": {
       "__id__": 112
     },
-    "Label_turnbrandUnlock": {
+    "label_turnbrandUnlock": {
       "__id__": 121
     },
-    "Label_palaceUnlock": {
+    "label_palaceUnlock": {
       "__id__": 130
     }
   },

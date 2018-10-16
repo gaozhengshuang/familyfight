@@ -4413,13 +4413,13 @@
     "label_maxMaidNum": {
       "__id__": 29
     },
-    "Label_shopUnlock": {
+    "label_shopUnlock": {
       "__id__": 114
     },
-    "Label_turnbrandUnlock": {
+    "label_turnbrandUnlock": {
       "__id__": 123
     },
-    "Label_palaceUnlock": {
+    "label_palaceUnlock": {
       "__id__": 132
     }
   },

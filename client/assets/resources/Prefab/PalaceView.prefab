@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "",
+    "_name": "PalaceView",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -2024,7 +2024,7 @@
       }
     ],
     "_N$interactable": true,
-    "_N$enableAutoGrayEffect": false,
+    "_N$enableAutoGrayEffect": true,
     "_N$normalColor": {
       "__type__": "cc.Color",
       "r": 214,
@@ -2296,7 +2296,7 @@
       }
     ],
     "_N$interactable": true,
-    "_N$enableAutoGrayEffect": false,
+    "_N$enableAutoGrayEffect": true,
     "_N$normalColor": {
       "__type__": "cc.Color",
       "r": 214,
@@ -2354,6 +2354,18 @@
     "_oldparentNode": null,
     "tableView": {
       "__id__": 47
+    },
+    "button_handbook": {
+      "__id__": 64
+    },
+    "button_bestowed": {
+      "__id__": 73
+    },
+    "label_handbookUnlock": {
+      "__id__": 60
+    },
+    "label_bestowedUnlock": {
+      "__id__": 69
     }
   },
   {
