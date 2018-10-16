@@ -15,7 +15,7 @@ type UserGuide struct {
 }
 //加载数据
 func (this *UserGuide) LoadBin(user *GateUser,bin *msg.Serialize) {
-	this.guides = make([]* GuideData, 0)
+	this.guides = make([]uint32, 0)
 	guides := bin.GetGuides()
 	for _, data := range guides {
 		this.guides = append(this.guides, data)
@@ -131,7 +131,7 @@ func (this *UserGuide) NewGuide(trigtype uint32, trigvalue uint32) uint32 {
 	guideIndexs := this.CalculateGuideIndex()
 	//没有还在跑的引导，看看未开始的引导中有没有可以开启的
 	for i, v := range GuideMgr().guidesConf {
-		result := guideIndexs & 1 << i
+		result := guideIndexs & uint64(1 << uint64(i))
 		if result > 0 {
 			continue
 		}
