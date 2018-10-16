@@ -2,9 +2,6 @@ package main
 
 import (
 	"gitee.com/jntse/minehero/server/tbl"
-	"gitee.com/jntse/minehero/server/tbl/excel"
-	"strings"
-	"strconv"
 )
 type GuideCondType uint32
 const (

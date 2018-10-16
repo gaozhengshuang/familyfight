@@ -84,7 +84,6 @@ type GateUser struct {
 	deliverystate bool   // 发货状态
     roomid        int64
 	gameflag      bool
-	guide		  uint32
 }
 
 func NewGateUser(account, key, token string) *GateUser {

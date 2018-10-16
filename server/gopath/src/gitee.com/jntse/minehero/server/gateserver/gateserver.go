@@ -93,7 +93,7 @@ func PalaceMgr() *PalaceManager {
 }
 
 func GuideMgr() *GuideManager {
-	return *GateSvr().guidemgr
+	return &GateSvr().guidemgr
 }
 
 //func CountMgr() *CountManager {
