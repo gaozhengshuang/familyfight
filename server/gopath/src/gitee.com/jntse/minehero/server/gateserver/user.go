@@ -101,7 +101,6 @@ func NewGateUser(account, key, token string) *GateUser {
 	u.token = token
     u.roomid = 0
 	u.gameflag = false
-	u.guide = 1
 	return u
 }
 
@@ -296,7 +295,6 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	userbase.GetPower().Nexttime = pb.Uint64(this.nextpowertime)
 	userbase.GetPower().Maxpower = pb.Uint32(this.maxpower)
 	userbase.Biggold = this.biggold
-	bin.Guideid = pb.Uint32(this.guide)
 	//userbase.Addrlist = this.addrlist[:]
 
 	// 道具信息
@@ -333,7 +331,6 @@ func (this *GateUser) LoadBin() {
 	this.maxpower = userbase.GetPower().GetMaxpower()
 	this.nextpowertime = userbase.GetPower().GetNexttime()
 	this.biggold = userbase.GetBiggold()[:]
-	this.guide = this.bin.GetGuideid()
 	//this.addrlist = userbase.GetAddrlist()[:]
 	// 道具信息
 	this.bag.Clean()
@@ -372,7 +369,6 @@ func (this *GateUser) OnCreateNew() {
 	this.power = uint32(tbl.Common.PowerInit)
 	this.maxpower = uint32(tbl.Common.PowerMax)
 	this.nextpowertime = uint64(util.CURTIME()) + uint64(tbl.Common.PowerAddInterval)
-	this.guide = 1
 	this.travel.CreateNew()
 	this.GenerateBox(1, 2, 1)
 	this.Save()

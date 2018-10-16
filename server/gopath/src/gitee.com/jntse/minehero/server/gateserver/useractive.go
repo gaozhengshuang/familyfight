@@ -227,7 +227,7 @@ func (this *GateUser) OpenBox(id uint32, num uint32) uint32 {
 }
 
 func (this *GateUser) TickBox(now uint64) {
-	if this.guide != 0 && this.guide < 10 {
+	if this.guide.IsGuidePass(10) {
 		return
 	}
 	generated := false

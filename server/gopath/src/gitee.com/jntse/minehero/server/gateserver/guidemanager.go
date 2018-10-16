@@ -3,11 +3,10 @@ package main
 import (
 	"gitee.com/jntse/minehero/server/tbl"
 )
-type GuideCondType uint32
 const (
-	Type_None			GuideCondType = 0
-	Type_Level   		GuideCondType = 1
-	Type_Guide			GuideCondType = 2
+	Type_None			uint32 = 0
+	Type_Level   		uint32 = 1
+	Type_Guide			uint32 = 2
 )
 
 /*
@@ -54,16 +53,16 @@ func (this *GuideManager) Init() {
 		switch v.ConditionType {
 			case Type_Guide:
 				preGuide := this.GetGuideById(conf.condvalue)
-				if preGuide != null {
+				if preGuide != nil {
 					guideGroup := this.guidesConf[preGuide.index]
 					conf.startid = preGuide.startid
 					conf.index = preGuide.index
-					guideGroup = append(guideGroup, guideGroup)
+					guideGroup = append(guideGroup, conf)
 				}
 				break
 			default:
 				conf.startid = conf.id
-				conf.index = len(this.guidesConf)
+				conf.index = uint32(len(this.guidesConf))
 				guideGroup := make([]*GuideConf, 0)
 				guideGroup = append(guideGroup, conf)
 				this.guidesConf = append(this.guidesConf, guideGroup)

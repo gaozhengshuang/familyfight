@@ -7,7 +7,6 @@ import (
 // --------------------------------------------------------------------------
 /// @brief 引导数据
 // --------------------------------------------------------------------------
-
 // --------------------------------------------------------------------------
 /// @brief 玩家引导数据
 // --------------------------------------------------------------------------
@@ -34,6 +33,22 @@ func (this *UserGuide) Syn(user* GateUser) {
 	nextid := this.GetNextGuide(user, true, Type_None, 0)
 	send := &msg.GW2C_AckGuideData{ Guide: pb.Uint32(nextid) }
 	user.SendMsg(send)
+}
+func (this *UserGuide) IsGuidePass(id uint32) bool {
+	guideConf := GuideMgr().GetGuideById(id)
+	if guideConf == nil {
+		return false
+	}
+	for _, v := range this.guides {
+		startId, find := GuideMgr().GetStartId(v)
+		if find {
+			if startId == guideConf.startid {
+				//就是这一组
+				return v >= id		
+			}
+		}
+	}
+	return false
 }
 // ========================= 消息接口 =========================
 func (this *UserGuide) UpdateGuide(user* GateUser,id uint32) uint32 {
