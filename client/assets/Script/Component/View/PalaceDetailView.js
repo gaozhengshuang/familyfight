@@ -15,6 +15,13 @@ cc.Class({
         image_lvUp: { default: null, type: cc.Sprite },
         label_needLvItem: { default: null, type: cc.Label },
         prefab_maid: { default: null, type: cc.Prefab },
+
+        button_bestowed: { default: null, type: cc.Button },
+        button_build: { default: null, type: cc.Button },
+        button_sleep: { default: null, type: cc.Button },
+        label_bestowedUnlock: { default: null, type: cc.Label },
+        label_buildUnlock: { default: null, type: cc.Label },
+        label_sleepUnlock: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -24,6 +31,7 @@ cc.Class({
     onEnable() {
         this.initNotification();
         this.updateView();
+        this.updateBottomButton();
     },
 
     onDisable() {
@@ -160,6 +168,20 @@ cc.Class({
         }
     },
 
+    updateBottomButton() {
+        let bestowedLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.BESTOWED);
+        this.button_bestowed.interactable = bestowedLock;
+        this.label_bestowedUnlock.node.active = !bestowedLock;
+
+        let buildLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.BUILD);
+        this.button_build.interactable = buildLock;
+        this.label_buildUnlock.node.active = !buildLock;
+
+        let sleepLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.SLEEP);
+        this.button_sleep.interactable = sleepLock;
+        this.label_sleepUnlock.node.active = !sleepLock;
+    },
+
     onOpenLvUp(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_PALACEMASTERLVUP);
@@ -173,6 +195,14 @@ cc.Class({
     onOpenEvent(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_EVENTVIEW);
+    },
+
+    onOpenSleep(event) {
+        event.stopPropagationImmediate();
+    },
+
+    onOpenBuild(event) {
+        event.stopPropagationImmediate();
     },
 
     onReqPalaceTakeBack() {

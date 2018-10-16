@@ -6,6 +6,7 @@ cc.Class({
     properties: {
         image_maid: { default: null, type: cc.Sprite },
         label_name: { default: null, type: cc.Label },
+        label_sharenum: { default: null, type: cc.Label},
     },
 
     onLoad() {
@@ -34,6 +35,7 @@ cc.Class({
         if (this.maidBase) {
             Game.ResController.SetSprite(this.image_maid, this.maidBase.Path);
             this.label_name.string = this.maidBase.Name;
+            this.label_sharenum.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(this.maidBase.Reward).multiply(3600 * 12)));
         }
     },
 

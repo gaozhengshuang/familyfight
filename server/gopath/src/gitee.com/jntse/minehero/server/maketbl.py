@@ -237,6 +237,7 @@ gen.maketbl_excel('TBoxBase','boxbase','DropBox.xlsx')
 gen.maketbl_excel('TGoldRewardRatioBase','goldrewardratiobase','GoldRewardRatio.xlsx')
 gen.maketbl_excel('TGuide','guidebase','Guide.xlsx')
 gen.maketbl_excel('TPalacePersonnel','palacepersonnelbase','PalacePersonnel.xlsx')
+gen.maketbl_excel('TFunctionOpen','functionopenbase', 'FunctionOpen.xlsx')
 
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')

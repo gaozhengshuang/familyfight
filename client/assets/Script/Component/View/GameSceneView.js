@@ -19,6 +19,10 @@ cc.Class({
         label_maxEfficiency: { default: null, type: cc.Label },
         label_curMaidNum: { default: null, type: cc.Label },
         label_maxMaidNum: { default: null, type: cc.Label },
+
+        label_shopUnlock: { default: null, type: cc.Label },
+        label_turnbrandUnlock: { default: null, type: cc.Label },
+        label_palaceUnlock: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -56,7 +60,6 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.OPENBOX_ACK, this, this.ackOpenBox);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.BOXDATA_UPDATE, this, this.updateBoxData);
-        Game.NotificationController.Off(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
     },
 
     initData() {
@@ -86,7 +89,6 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.OFFLINE_ACK, this, this.offLineOpen);
         Game.NotificationController.On(Game.Define.EVENT_KEY.OPENBOX_ACK, this, this.ackOpenBox);
         Game.NotificationController.On(Game.Define.EVENT_KEY.BOXDATA_UPDATE, this, this.updateBoxData);
-        Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
     },
 
     updateView() {
@@ -103,12 +105,12 @@ cc.Class({
         }
 
         this.updateGameView();
+        this.updateBottomButton();
     },
 
     updateGameView() {
         this.updatePlayer();
         this.updatePassBg();
-        this.updateBottomButton();
         this.updateEfficiency();
     },
 
@@ -149,9 +151,17 @@ cc.Class({
     },
 
     updateBottomButton() {
-        this.button_shop.node.active = Game.GuideController.IsShopOpen();
-        this.button_turnbrand.node.active = Game.GuideController.IsTurnBrandOpen();
-        this.button_palace.node.active = Game.GuideController.IsPalaceOpen();
+        let shopLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.SHOP);
+        this.button_shop.interactable = shopLock;
+        this.label_shopUnlock.node.active = !shopLock;
+
+        let turnbrandLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.TURNBRAND);
+        this.button_turnbrand.interactable = turnbrandLock;
+        this.label_turnbrandUnlock.node.active = !turnbrandLock;
+
+        let palaceLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.PALACE);
+        this.button_palace.interactable = palaceLock;
+        this.label_palaceUnlock.node.active = !palaceLock;
     },
 
     createPlayer(playerId) {
@@ -309,6 +319,7 @@ cc.Class({
 
     findNewPlayer() {
         this.openView(Game.UIName.UI_FINDNEWPLAYER);
+        this.updateBottomButton();
         Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
     },
 
@@ -346,7 +357,7 @@ cc.Class({
 
         let maxEfficiency = Game.Tools.toBigIntMoney(Game.MaidModel.GetPassMaxEfficiency(Game.MaidModel.GetCurPass())).multiply(3600);
         this.label_maxEfficiency.string = "/" + Game.Tools.UnitConvert(Game.Tools.toLocalMoney(maxEfficiency));
-        
+
         this.label_curMaidNum.string = `${this._playerList.length}`;
         this.label_maxMaidNum.string = '/20';
     },

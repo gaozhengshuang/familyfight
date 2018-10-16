@@ -1517,6 +1517,9 @@
     },
     "label_name": {
       "__id__": 26
+    },
+    "label_sharenum": {
+      "__id__": 41
     }
   },
   {

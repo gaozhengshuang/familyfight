@@ -16,6 +16,12 @@ GuideController.prototype.Init = function (cb) {
 GuideController.prototype.SetGuide = function (guide) {
     this._guide = guide;
     NotificationController.Emit(Define.EVENT_KEY.GUIDE_ACK);
+
+    if (guide != 0) {
+        NotificationController.Emit(Define.EVENT_KEY.GUIDE_OPEN);
+    } else {
+        NotificationController.Emit(Define.EVENT_KEY.GUIDE_OVER);
+    }
 }
 
 GuideController.prototype.GetGuide = function () {
@@ -27,41 +33,35 @@ GuideController.prototype.GetGuideConfig = function (id) {
 }
 
 GuideController.prototype.IsGuide = function () {
-    return ConfigController.GetConfigById("Guide", this._guide).NextGuide != 0;
+    return this._guide != 0;
 }
 
 GuideController.prototype.SendGuide = function (guide) {
     if (this.IsGuide()) {
-        console.log(guide);
         NetWorkController.Send('msg.C2GW_UpdateGuideData', { guide: guide });
     }
 }
 
 GuideController.prototype.NextGuide = function () {
-    let nextGuide = ConfigController.GetConfigById("Guide", this._guide).NextGuide;
-    if (nextGuide != 0) {
-        this.SendGuide(nextGuide);
-    } else {
-        NotificationController.Emit(Define.EVENT_KEY.GUIDE_OVER);
-    }
+    this.SendGuide(this._guide);
 }
 
-GuideController.prototype.IsShopOpen = function () {
-    return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENSHOP);
-}
+// GuideController.prototype.IsShopOpen = function () {
+//     return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENSHOP);
+// }
 
-GuideController.prototype.IsTurnBrandOpen = function () {
-    return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENTURNBRAND);
-}
+// GuideController.prototype.IsTurnBrandOpen = function () {
+//     return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENTURNBRAND);
+// }
 
-GuideController.prototype.IsPalaceOpen = function () {
-    return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENPALACE);
-}
+// GuideController.prototype.IsPalaceOpen = function () {
+//     return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENPALACE);
+// }
 
-GuideController.prototype.IsGuidePass = function (id) {
-    if (this.IsGuide()) {
-        return this._guide >= id;
-    }
-    return true;
-}
+// GuideController.prototype.IsGuidePass = function (id) {
+//     if (this.IsGuide()) {
+//         return this._guide >= id;
+//     }
+//     return true;
+// }
 module.exports = new GuideController();

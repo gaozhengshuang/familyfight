@@ -60,6 +60,15 @@ MaidModel.prototype.GetTopPass = function () {
     return pass;
 }
 
+MaidModel.prototype.IsOpenFunction = function (type) {
+    let isOpen = false;
+    let openbase = ConfigController.GetConfigById("FunctionOpen", type);
+    if (openbase) {
+        isOpen = this.GetTopPass() >= openbase.OpenLevels;
+    }
+    return isOpen;
+}
+
 MaidModel.prototype.SetCurChapter = function (chapter) {
     this.curChapter = chapter;
 }

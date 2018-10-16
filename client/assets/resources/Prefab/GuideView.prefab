@@ -223,7 +223,7 @@
       "__id__": 1
     },
     "component": "GuideView",
-    "handler": "onClose",
+    "handler": "onClickBg",
     "customEventData": ""
   },
   {

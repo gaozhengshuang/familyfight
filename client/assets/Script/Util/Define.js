@@ -43,8 +43,9 @@ var Define = {
         OPENBOX_ACK: '1012',
         BOXDATA_UPDATE: '1013',
         GUIDE_ACK: '1014',
-        GUIDE_OVER: '1015',
-        UPDATE_PLAYER: '1016',
+        GUIDE_OPEN: '1015',
+        GUIDE_OVER: '1016',
+        UPDATE_PLAYER: '1017',
 
         TRAVELDATA_UPDATE: '1100',
         EVENTDATA_UPDATE: '1101',
@@ -74,7 +75,17 @@ var Define = {
         BUTTON_OPENSHOP: 6,
         BUTTON_OPENTURNBRAND: 15,
         BUTTON_OPENPALACE: 19
-    }
+    },
+    FUNCTION_UNLOCK: {
+        SHOP: 1,
+        TURNBRAND: 2,
+        PALACE: 3,
+        BESTOWED: 4,
+        HANDBOOK: 5,
+        BUILD: 6,
+        RANDOMX: 7,
+        SLEEP: 8
+    },
 }
 
 module.exports = Define;
