@@ -103,8 +103,8 @@ cc.Class({
             Game.MaidModel.SetCurPass(1);
             Game.MaidModel.SetCurChapter(1);
         } else {
-            Game.MaidModel.SetCurPass(_dialoguePass.lookPass);
-            Game.MaidModel.SetCurChapter(Game.ConfigController.GetConfigById("PassLevels", _dialoguePass.lookPass).ChapterID);
+            Game.MaidModel.SetCurPass(_dialoguePass.pass);
+            Game.MaidModel.SetCurChapter(Game.ConfigController.GetConfigById("PassLevels", _dialoguePass.pass).ChapterID);
         }
 
         this.updateGameView();
