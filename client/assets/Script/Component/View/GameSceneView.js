@@ -5,7 +5,6 @@ cc.Class({
 
     properties: {
         node_player: { default: null, type: cc.Node },
-        node_pass: { default: null, type: cc.Node },
         node_bg: { default: null, type: cc.Node },
         prefab_player: { default: null, type: cc.Prefab },
         prefab_box: { default: null, type: cc.Prefab },

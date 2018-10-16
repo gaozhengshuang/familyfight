@@ -15,6 +15,7 @@ GuideController.prototype.Init = function (cb) {
 
 GuideController.prototype.SetGuide = function (guide) {
     this._guide = guide;
+    
     NotificationController.Emit(Define.EVENT_KEY.GUIDE_ACK);
 
     if (guide != 0) {
