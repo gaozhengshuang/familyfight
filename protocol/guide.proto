@@ -1,0 +1,16 @@
+package msg;
+import "serialize.proto";
+//引导消息
+message C2GW_UpdateGuideData
+{
+    optional uint32 guide = 1;
+}
+message GW2C_AckGuideData
+{
+    optional uint32 guide = 1;
+}
+//点击关卡
+message C2GW_NotifyOpenLevel
+{
+    optional uint32 level = 1;
+}

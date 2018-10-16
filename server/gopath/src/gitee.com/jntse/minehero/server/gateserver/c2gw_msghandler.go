@@ -77,6 +77,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqSendEventBarrage{}, on_C2GW_ReqSendEventBarrage)
 	//引导
 	this.msgparser.RegistProtoMsg(msg.C2GW_UpdateGuideData{}, on_C2GW_UpdateGuideData)
+	this.msgparser.RegistProtoMsg(msg.C2GW_NotifyOpenLevel{}, on_C2GW_NotifyOpenLevel)
 }
 
 // 客户端心跳
@@ -558,6 +559,28 @@ func on_C2GW_UpdateGuideData(session network.IBaseNetSession, message interface{
 		session.Close()
 		return
 	}
-	user.guide = tmsg.GetGuide()
-	user.SynGuide(false)
+	nextid := user.guide.UpdateGuide(user, tmsg.GetGuide())
+	send := &msg.GW2C_AckGuideData{ Guide: pb.Uint32(nextid) }
+	user.SendMsg(send)
+}
+//开启新关卡
+func on_C2GW_NotifyOpenLevel(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_NotifyOpenLevel)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	nextid := user.guide.OpenNewLevel(user, tmsg.GetLevel())
+	if nextid != 0 {
+		send := &msg.GW2C_AckGuideData{ Guide: pb.Uint32(nextid) }
+		user.SendMsg(send)
+	}
 }

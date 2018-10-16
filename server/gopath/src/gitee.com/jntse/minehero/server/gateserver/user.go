@@ -71,6 +71,7 @@ type GateUser struct {
 	maid 		  UserMaid
 	palace 		  UserPalace
 	travel 		  UserTravel
+	guide 		  UserGuide
 	boxs 		  map[uint32]*BoxData
 	tm_disconnect int64
 	tm_heartbeat  int64                   // 心跳时间
@@ -304,6 +305,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	this.maid.PackBin(bin)
 	this.palace.PackBin(bin)
 	this.travel.PackBin(bin)
+	this.guide.PackBin(bin)
 	this.PackBox(bin)
 	//
 	return bin
@@ -343,6 +345,7 @@ func (this *GateUser) LoadBin() {
 	this.palace.LoadBin(this, this.bin)
 	this.travel.Init()
 	this.travel.LoadBin(this, this.bin)
+	this.guide.LoadBin(this, this.bin)
 	this.LoadBox(this.bin)
 }
 
@@ -416,8 +419,8 @@ func (this *GateUser) Syn() {
 	this.maid.Syn(this)
 	this.palace.Syn(this)
 	this.travel.Syn(this)
+	this.guide.Syn(this)
 	this.SynBox()
-	this.SynGuide(true)
 	this.SendUserBase()
 }
 
@@ -605,11 +608,4 @@ func (this *GateUser) GetCountByLevel(level uint32) uint32{
 		}
 	}
 	return retCount
-}
-
-func (this *GateUser) SynGuide(firstsyn bool) {
-	send := &msg.GW2C_AckGuideData{}
-	send.Guide = pb.Uint32(this.guide)
-	send.Firstsyn = pb.Bool(firstsyn)
-	this.SendMsg(send)
 }
