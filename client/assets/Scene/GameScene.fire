@@ -4379,7 +4379,6 @@
     "node_player": {
       "__id__": 107
     },
-    "node_pass": null,
     "node_bg": {
       "__id__": 4
     },
@@ -4559,6 +4558,7 @@
     },
     "GuideLayer": {
       "__id__": 142
-    }
+    },
+    "GuideView": null
   }
 ]

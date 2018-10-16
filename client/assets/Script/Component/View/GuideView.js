@@ -92,7 +92,7 @@ cc.Class({
             this.resetNode(this._oldParent);
         }
         this._oldGuide = Game.GuideController.GetGuide();
-
+        
         this.guideBase = Game.ConfigController.GetConfigById("Guide", Game.GuideController.GetGuide());
         if (this.guideBase) {
             this.isFind = true;

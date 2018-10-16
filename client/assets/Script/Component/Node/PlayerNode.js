@@ -47,20 +47,28 @@ cc.Class({
         var delta = event.touch.getDelta();
         this.node.x += delta.x;
         this.node.y += delta.y;
+
+        this.isMove = true;
     },
 
     touchEnd(event) {
         this.updateEvent(false);
-        this.touchAddGold();
-        
-        Game.NotificationController.Emit(Game.Define.EVENT_KEY.MERGE_PLAYER, this);
+        if (this.isMove) {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.MERGE_PLAYER, this);
+        } else {
+            this.touchAddGold();
+        }
+        this.isMove = false;
     },
 
     touchCancel(event) {
         this.updateEvent(false);
+        this.isMove = false;
     },
 
     initView() {
+        this.isMove = false;    //判断是否滑动了
+
         //创建金币动画
         let _addGoldPrefab = cc.instantiate(this.prefab_addgold);
         if (_addGoldPrefab) {
