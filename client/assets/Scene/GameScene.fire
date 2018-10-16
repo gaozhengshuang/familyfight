@@ -3740,7 +3740,7 @@
       }
     ],
     "_N$interactable": true,
-    "_N$enableAutoGrayEffect": false,
+    "_N$enableAutoGrayEffect": true,
     "_N$normalColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -4024,7 +4024,7 @@
       }
     ],
     "_N$interactable": true,
-    "_N$enableAutoGrayEffect": false,
+    "_N$enableAutoGrayEffect": true,
     "_N$normalColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -4308,7 +4308,7 @@
       }
     ],
     "_N$interactable": true,
-    "_N$enableAutoGrayEffect": false,
+    "_N$enableAutoGrayEffect": true,
     "_N$normalColor": {
       "__type__": "cc.Color",
       "r": 255,
@@ -4412,6 +4412,15 @@
     },
     "label_maxMaidNum": {
       "__id__": 29
+    },
+    "Label_shopUnlock": {
+      "__id__": 114
+    },
+    "Label_turnbrandUnlock": {
+      "__id__": 123
+    },
+    "Label_palaceUnlock": {
+      "__id__": 132
     }
   },
   {

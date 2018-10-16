@@ -75,7 +75,17 @@ var Define = {
         BUTTON_OPENSHOP: 6,
         BUTTON_OPENTURNBRAND: 15,
         BUTTON_OPENPALACE: 19
-    }
+    },
+    FUNCTION_UNLOCK: {
+        SHOP: 1,
+        TURNBRAND: 2,
+        PALACE: 3,
+        BESTOWED: 4,
+        HANDBOOK: 5,
+        BUILD: 6,
+        RANDOMX: 7,
+        FAVORITISM: 8
+    },
 }
 
 module.exports = Define;

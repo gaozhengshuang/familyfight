@@ -46,22 +46,22 @@ GuideController.prototype.NextGuide = function () {
     this.SendGuide(this._guide);
 }
 
-GuideController.prototype.IsShopOpen = function () {
-    return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENSHOP);
-}
+// GuideController.prototype.IsShopOpen = function () {
+//     return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENSHOP);
+// }
 
-GuideController.prototype.IsTurnBrandOpen = function () {
-    return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENTURNBRAND);
-}
+// GuideController.prototype.IsTurnBrandOpen = function () {
+//     return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENTURNBRAND);
+// }
 
-GuideController.prototype.IsPalaceOpen = function () {
-    return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENPALACE);
-}
+// GuideController.prototype.IsPalaceOpen = function () {
+//     return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENPALACE);
+// }
 
-GuideController.prototype.IsGuidePass = function (id) {
-    if (this.IsGuide()) {
-        return this._guide >= id;
-    }
-    return true;
-}
+// GuideController.prototype.IsGuidePass = function (id) {
+//     if (this.IsGuide()) {
+//         return this._guide >= id;
+//     }
+//     return true;
+// }
 module.exports = new GuideController();
