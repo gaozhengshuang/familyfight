@@ -32,7 +32,7 @@ cc.Class({
 
     start() {
         this.updateView();
-        this.offLineOpen();  
+        this.offLineOpen();
     },
 
     update(dt) {
@@ -338,9 +338,7 @@ cc.Class({
     onOpenTurnBrand(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_TURNBRAND);
-        if (Game.GuideController.IsGuide() && Game.GuideController._guide == Game.Define.GUIDE_DEFINE.OPEN_TURNBRAND) {
-            Game.GuideController.NextGuide();
-        }
+        Game.GuideController.NextGuide();
     },
 
     onOpenPalace(event) {
