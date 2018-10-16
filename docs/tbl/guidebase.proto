@@ -55,7 +55,7 @@ message GuideDefine
 	optional uint32 Resetid = 12; // 重置id
 	
 	
-	optional uint32 ConditionType = 13; // 条件类型 1 关卡解锁 2 引导完成
+	optional uint32 ConditionType = 13; // 条件类型 0无条件引导 1 关卡解锁 2 引导完成
 	
 	
 	optional uint32 ConditionValue = 14; // 条件值

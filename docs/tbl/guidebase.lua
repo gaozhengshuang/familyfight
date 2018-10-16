@@ -3,7 +3,7 @@
 
 module table {
 export var Guide : table.IGuideDefine[] = [
-		{ Id : 101, Type : 3, IsDialog : 1, IsFinger : 1, Dialog : "欢迎来到后宫！我们先打开轿子获取一个宫女。", prefab : "", ViewName : "", ButtonName : "", PersonXY : "0,429", FingerXY : "", MaidInfo : "", Resetid : 101, ConditionType : 1, ConditionValue : 1 	},
+		{ Id : 101, Type : 3, IsDialog : 1, IsFinger : 1, Dialog : "欢迎来到后宫！我们先打开轿子获取一个宫女。", prefab : "", ViewName : "", ButtonName : "", PersonXY : "0,429", FingerXY : "", MaidInfo : "", Resetid : 101, ConditionType : 0, ConditionValue : 0 	},
 		{ Id : 102, Type : 1, IsDialog : 1, IsFinger : 1, Dialog : "您获得新形象！请点击关闭按钮关闭。", prefab : "Prefab/FindNewPlayerView", ViewName : "view", ButtonName : "button_close", PersonXY : "0,-466", FingerXY : "", MaidInfo : "", Resetid : 103, ConditionType : 2, ConditionValue : 101 	},
 		{ Id : 103, Type : 3, IsDialog : 1, IsFinger : 1, Dialog : "再次打开轿子获取第二个宫女。", prefab : "", ViewName : "", ButtonName : "", PersonXY : "0,429", FingerXY : "", MaidInfo : "", Resetid : 103, ConditionType : 2, ConditionValue : 102 	},
 		{ Id : 104, Type : 4, IsDialog : 1, IsFinger : 0, Dialog : "当有两个一样宫女以后，可以用手把两个宫女拖到一起，合并升级宫女。", prefab : "", ViewName : "", ButtonName : "", PersonXY : "0,429", FingerXY : "", MaidInfo : "1_2", Resetid : 104, ConditionType : 2, ConditionValue : 103 	},
