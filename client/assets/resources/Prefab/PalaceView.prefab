@@ -2327,7 +2327,7 @@
       "__id__": 1
     },
     "component": "PalaceView",
-    "handler": "onOpenTravel",
+    "handler": "onOpenRandomX",
     "customEventData": ""
   },
   {
@@ -2358,13 +2358,13 @@
     "button_handbook": {
       "__id__": 64
     },
-    "button_bestowed": {
+    "button_randomx": {
       "__id__": 73
     },
     "label_handbookUnlock": {
       "__id__": 60
     },
-    "label_bestowedUnlock": {
+    "label_randomxUnlock": {
       "__id__": 69
     }
   },
