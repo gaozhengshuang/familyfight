@@ -1,6 +1,7 @@
 package main
 import (
 	"gitee.com/jntse/minehero/pbmsg"
+	"gitee.com/jntse/gotoolkit/log"
 	pb "github.com/golang/protobuf/proto"
 )
 
@@ -114,6 +115,7 @@ func (this *UserGuide) CalculateGuideIndex() uint64 {
 
 func (this *UserGuide) UnFinishGuide(reset bool) uint32 {
 	for _, v := range this.guides {
+		log.Info("UserGuide UnFinishGuide ======> %d ", v)
 		guideConf := GuideMgr().GetGuideById(v)
 		if !GuideMgr().IsGuideGroupComplete(v) {
 			//未完成
