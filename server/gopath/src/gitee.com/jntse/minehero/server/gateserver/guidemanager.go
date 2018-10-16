@@ -58,6 +58,7 @@ func (this *GuideManager) Init() {
 					conf.startid = preGuide.startid
 					conf.index = preGuide.index
 					guideGroup = append(guideGroup, conf)
+					this.guidesConf[preGuide.index] = guideGroup
 				}
 				break
 			default:
