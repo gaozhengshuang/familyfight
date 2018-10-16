@@ -78,12 +78,7 @@ UserModel.prototype.onGW2C_UpdateGold = function (msgid, data) {
 }
 
 UserModel.prototype.onGW2C_AckGuideData = function (msgid, data) {
-    let guideId = data.guide;
-
-    if (data.firstsyn) {
-        guideId = GuideController.GetGuideConfig(data.guide).Resetid;
-    }
-    GuideController.SetGuide(guideId);
+    GuideController.SetGuide(data.guide);
 }
 
 module.exports = new UserModel();
