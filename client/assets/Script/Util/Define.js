@@ -84,7 +84,7 @@ var Define = {
         HANDBOOK: 5,
         BUILD: 6,
         RANDOMX: 7,
-        FAVORITISM: 8
+        SLEEP: 8
     },
 }
 
