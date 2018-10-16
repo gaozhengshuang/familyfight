@@ -27,8 +27,8 @@ cc.Class({
         cc.loader.loadRes("Prefab/GuideView", function (err, prefab) {
             let _view = cc.instantiate(prefab);
             if (_view) {
-                _view.active = Game.GuideController.IsGuide();
                 this.GuideLayer.addChild(_view);
+                _view.active = Game.GuideController.IsGuide();
             }
         }.bind(this));
     },
