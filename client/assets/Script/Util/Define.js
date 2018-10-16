@@ -43,8 +43,9 @@ var Define = {
         OPENBOX_ACK: '1012',
         BOXDATA_UPDATE: '1013',
         GUIDE_ACK: '1014',
-        GUIDE_OVER: '1015',
-        UPDATE_PLAYER: '1016',
+        GUIDE_OPEN: '1015',
+        GUIDE_OVER: '1016',
+        UPDATE_PLAYER: '1017',
 
         TRAVELDATA_UPDATE: '1100',
         EVENTDATA_UPDATE: '1101',

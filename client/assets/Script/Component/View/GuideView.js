@@ -31,24 +31,29 @@ cc.Class({
         }
     },
 
-    onClose() {
-        if (this.guideBase) {    //关闭界面把按钮重置节点
-            if (this.guideBase.NextGuide == 0) {
-                if (this._oldParent != null && this.guideNodes.length > 0) {
-                    this.resetNode(this._oldParent);
-                }
-                this.node.destroy();
-            } else {
-                if (this.guideBase.Type == 2) {
-                    Game.GuideController.NextGuide();
-                }
+    onOpen() {
+        this.node.active = true;
+        this.updateGuide();
+    },
+
+    onOver() {
+        if (this._oldParent != null && this.guideNodes.length > 0) {    //关闭界面把按钮重置节点
+            this.resetNode(this._oldParent);
+        }
+        this.node.active = false;
+    },
+
+    onClickBg() {
+        if (this.guideBase) {
+            if (this.guideBase.Type == 2) {
+                Game.GuideController.NextGuide();
             }
         }
     },
 
     initNotification() {
-        Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateGuide);
-        Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_OVER, this, this.onClose);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_OPEN, this, this.onOpen);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_OVER, this, this.onOver);
     },
 
     resetNode(tagretParent) {
