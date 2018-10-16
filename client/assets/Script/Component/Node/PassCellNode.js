@@ -45,6 +45,12 @@ cc.Class({
             this.animation_light.node.active = true;
             this.animation_light.play("FlashNewPass");
         }
+
+        if (this._data.Id == Game.MaidModel.GetCurPass() && this._data.Id == Game.MaidModel.GetTopPass()) {     //最高关卡给服务器发送引导需要的数据
+            Game.NetWorkController.Send('msg.C2GW_NotifyOpenLevel', {
+                level: this._data.Id,
+            });
+        }
     },
 
     clicked() {        
@@ -68,10 +74,6 @@ cc.Class({
                     cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
                     
                     Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);
-
-                    Game.NetWorkController.Send('msg.C2GW_NotifyOpenLevel', {
-                        level: this._data.Id,
-                    });
                 }
             }
         } else {
