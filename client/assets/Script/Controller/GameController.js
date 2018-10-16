@@ -3,6 +3,7 @@ const Tools = require('../Util/Tools');
 const NotificationController = require('./NotificationController');
 const TurnGameDefine = require('../Util/TurnGameDefine');
 const NetWorkController = require('../Controller/NetWorkController');
+const ConfigController = require('../Controller/ConfigController');
 
 var GameController = function () {
     this.state = TurnGameDefine.GAME_STATE.STATE_PREPARING;

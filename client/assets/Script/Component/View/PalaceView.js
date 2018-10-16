@@ -5,6 +5,10 @@ cc.Class({
 
     properties: {
         tableView: { default: null, type: cc.Node },
+        button_handbook: { default: null, type: cc.Button },
+        button_randomx: { default: null, type: cc.Button },
+        label_handbookUnlock: { default: null, type: cc.Label },
+        label_randomxUnlock: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -13,6 +17,7 @@ cc.Class({
 
     onEnable() {
         this.updateView();
+        this.updateBottomButton();
     },
 
     onDisable() {
@@ -32,6 +37,16 @@ cc.Class({
         
         this.tableViewComponent.initTableView(this.palaceList.length, {array: this.palaceList, target: this});
     },
+
+    updateBottomButton() {
+        let handbookLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.HANDBOOK);
+        this.button_handbook.interactable = handbookLock;
+        this.label_handbookUnlock.node.active = !handbookLock;
+
+        let randomxLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.RANDOMX);
+        this.button_randomx.interactable = randomxLock;
+        this.label_randomxUnlock.node.active = !randomxLock;
+    },
     
     onOpenTravel(event) {
         event.stopPropagationImmediate();
@@ -43,4 +58,7 @@ cc.Class({
         this.openView(Game.UIName.UI_EVENTVIEW);
     },
 
+    onOpenRandomX(event) {
+        event.stopPropagationImmediate();
+    }
 });

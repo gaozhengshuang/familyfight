@@ -33,7 +33,8 @@ module.exports = {
                 'eventbase',
                 'boxbase',
                 'guidebase',
-                'palacepersonnelbase'
+                'palacepersonnelbase',
+                'functionopenbase'
             ];
             Editor.log('开始生成JSON');
 

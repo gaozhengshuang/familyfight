@@ -115,5 +115,17 @@
 		{ "Id": 111, "Index": 55, "HeadSprite":[ "Image/Head/2", "Image/Head/3" ], "HeadLocation":[ 1, 2 ], "Name": "李玉", "NameLocation": 2, "Content": "肯定是造办处这帮奴才个顶个的废物。竟然伤了龙体。" },
 		{ "Id": 112, "Index": 55, "HeadSprite":[ "Image/Head/2", "Image/Head/3" ], "HeadLocation":[ 1, 2 ], "Name": "皇上", "NameLocation": 2, "Content": "查，凡涉事人等，严惩不带。" },
 		{ "Id": 113, "Index": 56, "HeadSprite":[ "Image/Head/11" ], "HeadLocation":[ 1 ], "Name": "吴总管", "NameLocation": 1, "Content": "让你给皇上做常服，尽然领口漏了一根银针。" },
-		{ "Id": 114, "Index": 56, "HeadSprite":[ "Image/Head/11", "Image/Head/7" ], "HeadLocation":[ 1, 2 ], "Name": "玲珑", "NameLocation": 2, "Content": "我不知道，一定是璎珞。这件衣服是璎珞做的，我偷她的衣服去交差的。" }
+		{ "Id": 114, "Index": 56, "HeadSprite":[ "Image/Head/11", "Image/Head/7" ], "HeadLocation":[ 1, 2 ], "Name": "玲珑", "NameLocation": 2, "Content": "我不知道，一定是璎珞。这件衣服是璎珞做的，我偷她的衣服去交差的。" },
+		{ "Id": 115, "Index": 57, "HeadSprite":[ "Image/Head/0" ], "HeadLocation":[ 1 ], "Name": "旁白", "NameLocation": 1, "Content": "最近秀坊的绣女们到处议论说璎珞跟侍卫有染。" },
+		{ "Id": 116, "Index": 57, "HeadSprite":[ "Image/Head/0", "Image/Head/7" ], "HeadLocation":[ 1, 2 ], "Name": "锦绣", "NameLocation": 2, "Content": "璎珞这肚子呀，可大着呢。" },
+		{ "Id": 117, "Index": 58, "HeadSprite":[ "Image/Head/9" ], "HeadLocation":[ 1 ], "Name": "方姑姑", "NameLocation": 1, "Content": "你和侍卫勾搭成奸，珠胎暗结。锦绣就是人证，物证就是你的肚子。" },
+		{ "Id": 118, "Index": 59, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 1 ], "Name": "璎珞", "NameLocation": 1, "Content": "若证明我无罪。告状的人如何处置。" },
+		{ "Id": 119, "Index": 59, "HeadSprite":[ "Image/Head/4", "Image/Head/11" ], "HeadLocation":[ 1, 2 ], "Name": "吴总管", "NameLocation": 2, "Content": "空口白牙诬陷他人，一通乱棍，逐出紫禁城。" },
+		{ "Id": 120, "Index": 59, "HeadSprite":[ "Image/Head/4", "Image/Head/9" ], "HeadLocation":[ 1, 2 ], "Name": "严嬷嬷", "NameLocation": 2, "Content": "魏姑娘的确肚子大了。" },
+		{ "Id": 121, "Index": 60, "HeadSprite":[ "Image/Head/15" ], "HeadLocation":[ 1 ], "Name": "众绣女", "NameLocation": 1, "Content": "怎么这样啊，干出这样丑事，人品不端正，绣工再好也没用。" },
+		{ "Id": 122, "Index": 60, "HeadSprite":[ "Image/Head/15", "Image/Head/9" ], "HeadLocation":[ 1, 2 ], "Name": "严嬷嬷", "NameLocation": 2, "Content": "别吵了，魏璎珞还是清白之身。" },
+		{ "Id": 123, "Index": 61, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 1 ], "Name": "璎珞", "NameLocation": 1, "Content": "如今真相大白。证明我是清白的。" },
+		{ "Id": 124, "Index": 61, "HeadSprite":[ "Image/Head/4", "Image/Head/11" ], "HeadLocation":[ 1, 2 ], "Name": "吴总管", "NameLocation": 2, "Content": "宫女锦绣，嫉妒同僚，挑拨离间，仗二十罚入辛者库。宫女方妮子，诬陷他人，犯了口业，仗四十，逐出宫去。" },
+		{ "Id": 125, "Index": 62, "HeadSprite":[ "Image/Head/4" ], "HeadLocation":[ 1 ], "Name": "璎珞", "NameLocation": 1, "Content": "张嬷嬷，这是我从方姑姑哪里得到的玉佩，你看下上面写的什么。" },
+		{ "Id": 126, "Index": 62, "HeadSprite":[ "Image/Head/4", "Image/Head/9" ], "HeadLocation":[ 1, 2 ], "Name": "张嬷嬷", "NameLocation": 2, "Content": "富察哈喇，这是皇上得妻弟富察傅恒的玉佩。" }
 	]}

@@ -48,11 +48,22 @@ cc.Class({
     },
 
     addGoldAndDestroy(gold) {
-        let _gold = Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(gold).multiply(2));
-        this.label_gold.string = `+${Game.Tools.UnitConvert(_gold)}`;
+        let _scale = 1;
+        let _gold = 0;
+
+        if (Math.ceil(Math.random() * 10) <= 2) {
+            _scale = 1.4;
+            _gold = Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(gold).multiply(20));
+            this.label_gold.string = `暴击+${Game.Tools.UnitConvert(_gold)}`;
+        } else {
+            _scale = 1;
+            _gold = Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(gold).multiply(2));
+            this.label_gold.string = `+${Game.Tools.UnitConvert(_gold)}`;
+        }
         Game.CurrencyModel.AddGold(_gold);
 
         this.node.active = true;
+        this.node.scale = _scale;
         this.node.y = this.initY;
         this.node.runAction(cc.sequence([
             cc.moveTo(1.0, this.node.x, this.node.y + 50),
