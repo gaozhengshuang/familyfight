@@ -68,6 +68,10 @@ cc.Class({
                     cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
                     
                     Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);
+
+                    Game.NetWorkController.Send('msg.C2GW_NotifyOpenLevel', {
+                        level: this._data.Id,
+                    });
                 }
             }
         } else {
