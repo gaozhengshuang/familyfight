@@ -73,9 +73,6 @@ cc.Class({
         this.synchroTime = 10;  //服务器同步金币时间
         this.curInterval = 0;
         this.intervalTime = 2.0;    //刷新本地金币时间
-
-        Game.MaidModel.SetCurPass(Game.MaidModel.GetTopPass());
-        Game.MaidModel.SetCurChapter(Game.MaidModel.GetTopChapter());
     },
 
     initNotification() {
@@ -102,6 +99,12 @@ cc.Class({
                 pass: 1,
             };
             cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
+
+            Game.MaidModel.SetCurPass(1);
+            Game.MaidModel.SetCurChapter(1);
+        } else {
+            Game.MaidModel.SetCurPass(_dialoguePass.lookPass);
+            Game.MaidModel.SetCurChapter(Game.ConfigController.GetConfigById("PassLevels", _dialoguePass.lookPass).ChapterID);
         }
 
         this.updateGameView();
