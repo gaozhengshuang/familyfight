@@ -284,7 +284,7 @@ cc.Class({
     },
 
     offLineOpen() {
-        if (Game.CurrencyModel.offLineReward != null && !Game.GuideController.IsGuide()) {
+        if (Game.CurrencyModel.offLineReward != null) {
             this.openView(Game.UIName.UI_OFFLINEREWARD);
         }
     },

@@ -13,6 +13,11 @@ cc.Class({
 
     onClosePanel() {
         Game.CurrencyModel.AddGold(Game.CurrencyModel.offLineReward.golds);
+        Game.CurrencyModel.offLineReward = null;
         this.closeView(Game.UIName.UI_OFFLINEREWARD, true);
+
+        if (Game.GuideController.IsGuide()) {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.GUIDE_OPEN);
+        }
     }
 });
