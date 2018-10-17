@@ -20142,6 +20142,214 @@ $root.msg = (function() {
         return RS2GW_MsgTransfer;
     })();
 
+    msg.GW2C_PushGuideData = (function() {
+
+        /**
+         * Properties of a GW2C_PushGuideData.
+         * @memberof msg
+         * @interface IGW2C_PushGuideData
+         * @property {Array.<number>|null} [guides] GW2C_PushGuideData guides
+         */
+
+        /**
+         * Constructs a new GW2C_PushGuideData.
+         * @memberof msg
+         * @classdesc Represents a GW2C_PushGuideData.
+         * @implements IGW2C_PushGuideData
+         * @constructor
+         * @param {msg.IGW2C_PushGuideData=} [properties] Properties to set
+         */
+        function GW2C_PushGuideData(properties) {
+            this.guides = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_PushGuideData guides.
+         * @member {Array.<number>} guides
+         * @memberof msg.GW2C_PushGuideData
+         * @instance
+         */
+        GW2C_PushGuideData.prototype.guides = $util.emptyArray;
+
+        /**
+         * Creates a new GW2C_PushGuideData instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_PushGuideData
+         * @static
+         * @param {msg.IGW2C_PushGuideData=} [properties] Properties to set
+         * @returns {msg.GW2C_PushGuideData} GW2C_PushGuideData instance
+         */
+        GW2C_PushGuideData.create = function create(properties) {
+            return new GW2C_PushGuideData(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_PushGuideData message. Does not implicitly {@link msg.GW2C_PushGuideData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_PushGuideData
+         * @static
+         * @param {msg.IGW2C_PushGuideData} message GW2C_PushGuideData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_PushGuideData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.guides != null && message.guides.length)
+                for (var i = 0; i < message.guides.length; ++i)
+                    writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.guides[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_PushGuideData message, length delimited. Does not implicitly {@link msg.GW2C_PushGuideData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_PushGuideData
+         * @static
+         * @param {msg.IGW2C_PushGuideData} message GW2C_PushGuideData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_PushGuideData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_PushGuideData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_PushGuideData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_PushGuideData} GW2C_PushGuideData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_PushGuideData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_PushGuideData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.guides && message.guides.length))
+                        message.guides = [];
+                    if ((tag & 7) === 2) {
+                        var end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.guides.push(reader.uint32());
+                    } else
+                        message.guides.push(reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_PushGuideData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_PushGuideData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_PushGuideData} GW2C_PushGuideData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_PushGuideData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_PushGuideData message.
+         * @function verify
+         * @memberof msg.GW2C_PushGuideData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_PushGuideData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.guides != null && message.hasOwnProperty("guides")) {
+                if (!Array.isArray(message.guides))
+                    return "guides: array expected";
+                for (var i = 0; i < message.guides.length; ++i)
+                    if (!$util.isInteger(message.guides[i]))
+                        return "guides: integer[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_PushGuideData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_PushGuideData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_PushGuideData} GW2C_PushGuideData
+         */
+        GW2C_PushGuideData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_PushGuideData)
+                return object;
+            var message = new $root.msg.GW2C_PushGuideData();
+            if (object.guides) {
+                if (!Array.isArray(object.guides))
+                    throw TypeError(".msg.GW2C_PushGuideData.guides: array expected");
+                message.guides = [];
+                for (var i = 0; i < object.guides.length; ++i)
+                    message.guides[i] = object.guides[i] >>> 0;
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_PushGuideData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_PushGuideData
+         * @static
+         * @param {msg.GW2C_PushGuideData} message GW2C_PushGuideData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_PushGuideData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.guides = [];
+            if (message.guides && message.guides.length) {
+                object.guides = [];
+                for (var j = 0; j < message.guides.length; ++j)
+                    object.guides[j] = message.guides[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_PushGuideData to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_PushGuideData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_PushGuideData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_PushGuideData;
+    })();
+
     msg.C2GW_UpdateGuideData = (function() {
 
         /**
