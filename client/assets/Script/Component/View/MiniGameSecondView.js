@@ -18,15 +18,10 @@ cc.Class({
     update(dt) {
         if (this._gameType == GameSecondStatus.Status_Stop) {
             this._gameTime += dt;
-            this._millisecond += dt;
-            if (this._millisecond > 1) {
-                this._millisecond = 0;
-            } 
 
             if (this._gameTime > 20) {      //超过20秒自动停止
                 this._gameType = GameSecondStatus.Status_Reset;
                 this._gameTime = 20;
-                this._millisecond = 0;
                 this.sendGameData();
             }
             this.refreshTime();
@@ -44,7 +39,6 @@ cc.Class({
 
     initData() {
         this._gameTime = 0;
-        this._millisecond = 0;
         this._gameType = GameSecondStatus.Status_Start;
     },
 
@@ -74,18 +68,44 @@ cc.Class({
     },
 
     refreshTime() {
-        let millscond = Math.floor(this._millisecond * 100);
-        if (millscond == 0) {
-            millscond = '00';
-        } else if (millscond < 10) {
-            millscond = '0' + millscond;
-        }
+        let millscond = this._gameTime.toFixed(2);
+        millscond = millscond.toString().split('.')[1];
         this.label_second.string = Game.moment.unix(this._gameTime).format('ss') + ':' + millscond;
     },
 
     onGW2C_AckTenSecond(msgid, data) {
         if (data.result == 0) {
+            let _rewardType = 0;
+            if (data.gold != null) {
+                _rewardType = Game.TurnGameDefine.REWARD_TYPE.TYPE_GOLD;
+            } else if (data.items != null) {
+                _rewardType = Game.TurnGameDefine.REWARD_TYPE.TYPE_ITEM;
+            }
 
+            switch (_rewardType) {
+                case Game.TurnGameDefine.REWARD_TYPE.TYPE_GOLD:
+                    //金币
+                    let value = data.gold;
+                    Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+                        info: '<color=#ed5b5b>获得金币+' + Game.Tools.UnitConvert(value) + '</c></c>',
+                        alive: 0.5,
+                        delay: 1
+                    });
+                    Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
+                    Game.CurrencyModel.AddGold(value);
+                    break;
+                case Game.TurnGameDefine.REWARD_TYPE.TYPE_ITEM:
+                    //物品
+                    let itemConfig = Game.ItemModel.GetItemConfig(data.items[0]);
+                    if (itemConfig) {
+                        Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+                            info: '<color=#ed5b5b>获得' + itemConfig.Name + '+' + data.items[0].num + '</c></c>',
+                            alive: 0.5,
+                            delay: 1
+                        });
+                    }
+                    break;
+            }
         }
     },
 
@@ -94,7 +114,7 @@ cc.Class({
             this.showTips("体力不足");
             return;
         }
-        
+
         switch(this._gameType) {
             case GameSecondStatus.Status_Start:
                 this._gameType = GameSecondStatus.Status_Stop;
@@ -113,6 +133,18 @@ cc.Class({
     },
 
     sendGameData() {
+        if (this._gameTime > 10) {
+            if (this._gameTime - 10 < 0.03) {
+                this._gameTime = 10;
+                this.refreshTime();
+            }
+        } else {
+            if (10 - this._gameTime < 0.03) {
+                this._gameTime = 10;
+                this.refreshTime();
+            }
+        }
+
         Game.NetWorkController.Send('msg.C2GW_ReqTenSecond', {
             hit: this._gameTime == 10,
         });
