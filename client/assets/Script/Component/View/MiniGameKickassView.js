@@ -55,7 +55,12 @@ cc.Class({
     onAckKickAss: function (msgid, data) {
         if (data.result == 0) {
             if (this.status == KickAssStatus.Status_Settlement) {
-                this._changeStatus(KickAssStatus.Status_End);
+                this.shoeNode.runAction(cc.sequence([
+                    cc.moveTo(KickInterval, 0, ShoeInitY),
+                    cc.callFunc(function () {
+                        this._changeStatus(KickAssStatus.Status_End);
+                    }, this)
+                ]));
             }
             //加金币
             Game.CurrencyModel.AddGold(data.gold);
@@ -119,7 +124,8 @@ cc.Class({
                     this.backButtonNode.active = false;
                     //发消息
                     let box = this.reddotNode.getBoundingBoxToWorld();
-                    let hit = box.contains(this.aimNode.parent.convertToNodeSpaceAR(this.aimNode.position));
+                    let pos = this.aimNode.parent.convertToWorldSpaceAR(this.aimNode.position);
+                    let hit = box.contains(pos);
                     Game.NetWorkController.Send('msg.C2GW_ReqKickAss', { hit: hit });
                     break;
                 case KickAssStatus.Status_End:

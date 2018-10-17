@@ -5613,9 +5613,11 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceView",
-    "handler": "onOpenEvent",
+    "target": {
+      "__id__": 1
+    },
+    "component": "TurnBrandView",
+    "handler": "onOpenKickAss",
     "customEventData": ""
   },
   {
