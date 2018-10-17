@@ -4,6 +4,7 @@ let Tools = require('../Util/Tools');
 let Define = require('../Util/Define');
 let ConfigController = require('../Controller/ConfigController');
 let ViewController = require('../Controller/ViewController');
+let UIName = require('../Util/UIName');
 let _ = require('lodash');
 
 let TravelModel = function () {
@@ -52,7 +53,7 @@ TravelModel.prototype.onTravelData = function (msgid, data) {
         //有事件未查看
         NetWorkController.Send('msg.C2GW_ReqCheckEvent', {})
         this.SetOpenEvent(this.eventid);
-        ViewController.openView(Game.UIName.UI_EVENTDETAILVIEW, { showBarrage: false });
+        ViewController.openView(UIName.UI_EVENTDETAILVIEW, { showBarrage: false });
     }
 }
 
