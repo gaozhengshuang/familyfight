@@ -2,7 +2,7 @@
 	"Tool": "github.com/davyxu/tabtoy",
 	"Version": "2.8.10",
 	"PalaceMapMaid":[
-		{ "Id": 300, "OpenLevel": 1, "UnlockPrice":[ "0_1" ], "GoldAddition":[ "0_30" ], "ItemGroup":[ "10001_1", "20001_1", "20002_1", "20003_1", "20004_1", "20005_1", "20006_1" ], "ItemProb": 10000, "Describe": "主要产出御膳道具" },
+		{ "Id": 300, "OpenLevel": 1, "UnlockPrice":[ "0_1" ], "GoldAddition":[ "0_30" ], "ItemGroup":[ "20001_1", "20002_1", "20004_1", "20005_1", "20006_1" ], "ItemProb": 10000, "Describe": "主要产出御膳道具" },
 		{ "Id": 301, "OpenLevel": 2, "UnlockPrice":[ "1_60", "0_0000" ], "GoldAddition":[ "0_60" ], "ItemGroup":[ "30001_1", "30002_1", "30003_1", "30004_1", "30005_1", "30006_1", "30007_1", "30008_1" ], "ItemProb": 10000, "Describe": "主要产出御品道具" },
 		{ "Id": 302, "OpenLevel": 3, "UnlockPrice":[ "1_100", "0_0000" ], "GoldAddition":[ "0_100" ], "ItemGroup":[ "40001_1", "40002_1", "40003_1", "40004_1", "40005_1" ], "ItemProb": 10000, "Describe": "主要产出服装道具" },
 		{ "Id": 303, "OpenLevel": 4, "UnlockPrice":[ "1_120", "0_0000" ], "GoldAddition":[ "0_120" ], "ItemGroup":[ "10001_1", "20001_1", "20002_1", "20003_1", "20004_1", "20005_1", "20006_1" ], "ItemProb": 10000, "Describe": "主要产出御膳道具" },
