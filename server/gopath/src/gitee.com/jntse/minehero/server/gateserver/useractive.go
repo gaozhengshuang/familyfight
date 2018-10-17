@@ -271,7 +271,7 @@ func (this *GateUser) TenSecond(hit bool) (result uint32, gold []string, items [
 		//奖励物品
 		for _, v := range tbl.Common.TenSecondItemReward {
 			if len(v) >= 2 {
-				result, _ := this.AddReward(4, uint32(v[0]), uint32(v[1]), 0, "十秒游戏奖励", true)
+				_, _ := this.AddReward(4, uint32(v[0]), uint32(v[1]), 0, "十秒游戏奖励", true)
 				items = append(items, &msg.PairNumItem{ Itemid: pb.Uint32( uint32(v[0])), Num: pb.Uint64(uint64(v[1])) })
 			}
 		}
