@@ -8,14 +8,14 @@ cc.Class({
         label_btnStart: { default: null, type: cc.Label },
     },
 
-    onLoad() {
-        this.initData();
-    },
-
     update(dt) {
+        if (this.isStart) {
+
+        }
     },
 
     onEnable() {
+        this.initData();
         this.initNotification();
         this.initView();
     },
@@ -25,7 +25,8 @@ cc.Class({
     },
 
     initData() {
-        
+        this._gameTime = 0;
+        this.isStart = false;
     },
 
     initNotification() {
@@ -33,10 +34,25 @@ cc.Class({
     },
 
     initView() {
-        
+        if (this.isStart) {
+            this.label_btnStart.string = "开始";
+        } else {
+            this.label_btnStart.string = "停";
+        }
+
+        this.refreshTime();
+    },
+
+    refreshTime() {
+
     },
 
     onClickStartOrStop() {
-        
+        if (this.isStart) {
+            this.label_btnStart.string = "开始";
+        } else {
+            this.label_btnStart.string = "停";
+        }
+        this.isStart = !this.isStart;
     }
 });
