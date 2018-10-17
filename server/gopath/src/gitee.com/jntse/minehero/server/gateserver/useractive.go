@@ -257,12 +257,10 @@ func (this *GateUser) TickBox(now uint64) {
 		this.SynBox()
 	}
 }
-
+//十秒小游戏
 func (this *GateUser) TenSecond(hit bool) (result uint32, gold []string, items []*msg.PairNumItem) {
 	gold = make([]string, 0)
 	items = make([]*msg.PairNumItem, 0)
-	return 0, gold, item
-	this.ActiveReward(1, &gold,&items)
 	// 体力够不够 
 	if this.GetPower() < 1 {
 		this.SendNotify("体力不足")
@@ -271,7 +269,7 @@ func (this *GateUser) TenSecond(hit bool) (result uint32, gold []string, items [
 	//可以了
 	if hit {
 		//成功物品
-		for _, v := range tbl.Common.TenSeceondGoldRatio {
+		for _, v := range tbl.Common.TenSecondWinReward.Item {
 			if len(v) >= 2 {
 				this.AddReward(4, uint32(v[0]), uint32(v[1]), 0, "十秒游戏奖励", true)
 				items = append(items, &msg.PairNumItem{ Itemid: pb.Uint32( uint32(v[0])), Num: pb.Uint64(uint64(v[1])) })
@@ -280,11 +278,37 @@ func (this *GateUser) TenSecond(hit bool) (result uint32, gold []string, items [
 	} else {
 		//奖励金币
 		goldObj := this.maid.CalculateRewardPerSecond(this)
-		goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.TenSeceondGoldRatio))
+		goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.TenSeceondLoseRatio.Gold))
 		goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
 		gold = this.ParseBigGoldToArr(goldObj)
 	}
 	//扣体力
 	this.RemovePower(1,"十秒游戏消耗")
 	return 0, gold, items
+}
+//踢屁股
+func (this *GateUser) KickAss (hit bool) (result uint32, gold []string) {
+	gold = make([]string, 0)
+	// 体力够不够 
+	if this.GetPower() < 1 {
+		this.SendNotify("体力不足")
+		return 1, gold
+	}
+	//可以了
+	if hit {
+		//成功物品
+		goldObj := this.maid.CalculateRewardPerSecond(this)
+		goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.KickAssWinReward.Gold))
+		goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
+		gold = this.ParseBigGoldToArr(goldObj)
+	} else {
+		//奖励金币
+		goldObj := this.maid.CalculateRewardPerSecond(this)
+		goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.KickAssLoseReward.Gold))
+		goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
+		gold = this.ParseBigGoldToArr(goldObj)
+	}
+	//扣体力
+	this.RemovePower(1,"踢屁股消耗")
+	return 0, gold
 }

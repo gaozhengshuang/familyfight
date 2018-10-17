@@ -126,6 +126,9 @@ func (this *UserTravel) PrepareTravel(user* GateUser, items []*msg.PairNumItem) 
 		}
 	}
 	this.SynTravelData(user)
+	if len(this.eventids) == 0 {
+		this.travel.nexttime = uint64(util.CURTIME())
+	}
 	return 0
 }
 
