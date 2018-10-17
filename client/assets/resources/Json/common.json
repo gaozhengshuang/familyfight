@@ -8,5 +8,15 @@
     "TravelMinTime": 3600,
     "TravelMaxTime": 7200,
     "EventBarrageCount": 50,
-    "LinkupGoldRewardRatio": 4
+    "连连看金币奖励系数id": "",
+    "LinkupGoldRewardRatio": 4,
+    "十秒小游戏金币奖励系数": "",
+    "TenSeceondGoldRatio": 300,
+    "十秒小游戏物品奖励": "",
+    "TenSecondItemReward": [
+        [
+            1001,
+            1
+        ]
+    ]
 }

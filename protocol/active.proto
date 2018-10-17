@@ -1,5 +1,6 @@
 package msg;
 import "serialize.proto";
+import "define.proto";
 
 // 大转盘 抽签
 message C2GW_ReqTurnBrand 
@@ -44,6 +45,7 @@ message C2GW_ReqTenSecond
 }
 message GW2C_AckTenSecond
 {
-    repeated PairNumItem items = 1;
-    repeated string gold = 2;
+    optional uint32 result = 1;
+    repeated PairNumItem items = 2;
+    repeated string gold = 3;
 }
