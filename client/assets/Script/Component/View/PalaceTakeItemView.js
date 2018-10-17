@@ -23,4 +23,9 @@ cc.Class({
         });
         this.tableView.getComponent(cc.tableView).initTableView(_tbList.length, { array: _tbList, target: this });
     },
+
+    onClose() {
+        this.closeView(this._url);
+        Game.GuideController.NextGuide();
+    }
 });
