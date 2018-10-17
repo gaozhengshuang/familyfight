@@ -26,6 +26,9 @@ message FunctionOpenDefine
 	
 	
 	optional int32 OpenLevels = 3; // 开启关卡ID
+	
+	
+	optional int32 OpenType = 4; // 开启类型1引导 2关卡
 
 }
 
