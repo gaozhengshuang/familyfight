@@ -38,7 +38,11 @@ cc.Class({
             this.label_palaceName.node.color = cc.color(120, 120, 120);
             this.label_masterName.node.color = cc.color(120, 120, 120);
 
-            this.label_unlockTxt.string = `第${this._data.UlockPassId}关解锁`;
+            let passBase = Game.ConfigController.GetConfigById("PassLevels", this._data.UlockPassId);
+            if (passBase) {
+                this.label_unlockTxt.string = `第${passBase.ChapterID}章第${this._data.UlockPassId}关解锁`;
+            }
+            
         }
     },
 

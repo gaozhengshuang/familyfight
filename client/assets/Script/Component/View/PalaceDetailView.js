@@ -217,5 +217,6 @@ cc.Class({
         {
             id: Game.PalaceModel.GetCurPalaceId(),
         });
+        Game.GuideController.NextGuide();
     }
 });
