@@ -96,7 +96,7 @@ cc.Class({
                     break;
                 case Game.TurnGameDefine.REWARD_TYPE.TYPE_ITEM:
                     //物品
-                    let itemConfig = Game.ItemModel.GetItemConfig(data.items[0]);
+                    let itemConfig = Game.ItemModel.GetItemConfig(data.items[0].itemid);
                     if (itemConfig) {
                         Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
                             info: '<color=#ed5b5b>获得' + itemConfig.Name + '+' + data.items[0].num + '</c></c>',
