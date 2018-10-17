@@ -10,7 +10,7 @@ cc.Class({
         target: { default: null }
     },
     init: function (index, data, reload, group) {
-        this.node.name = 'EventItemNode_' + (index + 1);
+        this.node.name = 'EventItemNode__' + (index + 1);
         this.target = data.target;
         if (index >= data.array.length) {
             this.node.active = false;

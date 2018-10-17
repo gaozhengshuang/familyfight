@@ -812,7 +812,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 720,
-      "height": 370
+      "height": 100
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -881,7 +881,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 320
+      "y": 50
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1543,7 +1543,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [],
     "_prefab": {
       "__id__": 54
@@ -1821,7 +1821,7 @@
     "_layoutSize": {
       "__type__": "cc.Size",
       "width": 720,
-      "height": 370
+      "height": 100
     },
     "_resize": 1,
     "_N$layoutType": 2,
