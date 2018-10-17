@@ -86,6 +86,7 @@ cc.Class({
         this.headListNode.active = true;
     },
     onSendBarrageClick: function () {
+        Game.GuideController.NextGuide();
         if (this.barrageEditBox.string == '') {
             this.showTips("请输入弹幕");
             return;
@@ -96,6 +97,10 @@ cc.Class({
     onHeadItemClick: function (info) {
         this._changeHeadInfo(info);
         this.headListNode.active = false;
+    },
+    onClose: function () {
+        Game.GuideController.NextGuide();
+        this.closeView(this._url);
     },
     //事件回调
     onAckEventBarrage: function (msgid, data) {
