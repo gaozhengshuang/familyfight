@@ -18,15 +18,10 @@ cc.Class({
     update(dt) {
         if (this._gameType == GameSecondStatus.Status_Stop) {
             this._gameTime += dt;
-            this._millisecond += dt;
-            if (this._millisecond > 1) {
-                this._millisecond = 0;
-            } 
 
             if (this._gameTime > 20) {      //超过20秒自动停止
                 this._gameType = GameSecondStatus.Status_Reset;
                 this._gameTime = 20;
-                this._millisecond = 0;
                 this.sendGameData();
             }
             this.refreshTime();
@@ -44,7 +39,6 @@ cc.Class({
 
     initData() {
         this._gameTime = 0;
-        this._millisecond = 0;
         this._gameType = GameSecondStatus.Status_Start;
     },
 
@@ -74,12 +68,8 @@ cc.Class({
     },
 
     refreshTime() {
-        let millscond = Math.floor(this._millisecond * 100);
-        if (millscond == 0) {
-            millscond = '00';
-        } else if (millscond < 10) {
-            millscond = '0' + millscond;
-        }
+        let millscond = this._gameTime.toFixed(2);
+        millscond = millscond.toString().split('.')[1];
         this.label_second.string = Game.moment.unix(this._gameTime).format('ss') + ':' + millscond;
     },
 
@@ -146,13 +136,11 @@ cc.Class({
         if (this._gameTime > 10) {
             if (this._gameTime - 10 < 0.03) {
                 this._gameTime = 10;
-                this._millisecond = 0;
                 this.refreshTime();
             }
         } else {
             if (10 - this._gameTime < 0.03) {
                 this._gameTime = 10;
-                this._millisecond = 0;
                 this.refreshTime();
             }
         }
