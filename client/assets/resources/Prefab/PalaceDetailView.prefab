@@ -1285,7 +1285,7 @@
     "_cascadeOpacityEnabled": true,
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": 0.5,
       "y": 0.5
     },
     "_contentSize": {
@@ -1299,7 +1299,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -360,
+      "x": -308.3,
       "y": 524
     },
     "_skewX": 0,
@@ -1405,10 +1405,8 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": {
-      "__id__": 1
-    },
-    "component": "PalaceDetailView",
+    "target": null,
+    "component": "PalaceView",
     "handler": "onClose",
     "customEventData": ""
   },
@@ -1420,7 +1418,7 @@
     "asset": {
       "__uuid__": "647d0e9d-4193-4893-b8a5-488b70542c08"
     },
-    "fileId": "5b3cGotTxDVZxlRYDnnEOt",
+    "fileId": "ffkTOUZRpAt7+r/lq9NB9M",
     "sync": false
   },
   {

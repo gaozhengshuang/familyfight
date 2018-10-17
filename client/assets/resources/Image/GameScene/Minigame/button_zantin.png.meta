@@ -1,0 +1,30 @@
+{
+  "ver": "2.0.0",
+  "uuid": "1520a0ff-c134-467c-8347-d8ee074b9115",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "button_zantin": {
+      "ver": "1.0.3",
+      "uuid": "27ccc062-7412-428c-89c1-7dec156bdef7",
+      "rawTextureUuid": "1520a0ff-c134-467c-8347-d8ee074b9115",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -0.5,
+      "offsetY": 0,
+      "trimX": 1,
+      "trimY": 0,
+      "width": 573,
+      "height": 129,
+      "rawWidth": 576,
+      "rawHeight": 129,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
