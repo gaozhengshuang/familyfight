@@ -129,6 +129,7 @@ func (this *UserTravel) PrepareTravel(user* GateUser, items []*msg.PairNumItem) 
 	if len(this.eventids) == 0 {
 		this.travel.nexttime = uint64(util.CURTIME())
 	}
+	this.Tick(user, uint64(util.CURTIME()))
 	return 0
 }
 
