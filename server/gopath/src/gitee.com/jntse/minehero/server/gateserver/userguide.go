@@ -70,7 +70,9 @@ func (this *UserGuide) OpenNewLevel(user* GateUser, level uint32) uint32 {
 	if unfinishGuide != 0 {
 		return 0
 	}
-	return this.NewGuide(Type_Level, level)
+	nextid := this.NewGuide(Type_Level, level)
+	this.curguide = nextid
+	return nextid
 }
 // ========================= 数据处理 =========================
 func (this *UserGuide) GetNextGuide(user* GateUser, reset bool,trigtype uint32, trigvalue uint32) uint32{
