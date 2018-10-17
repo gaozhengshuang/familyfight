@@ -13,8 +13,6 @@ let GuideConf = function () {
 
 var GuideController = function () {
     this._guide = 1;
-    this._guideMap = [];
-    this._guideConf = {};
     this._guideData = [];
 }
 
@@ -83,22 +81,7 @@ GuideController.prototype.IsGuideComplete = function (guide) {
     if (this._guide == guide) {
         return true;
     }
-    let conf = this._guideConf[guide]
-    if (conf == null) {
-        return false;
-    }
-    for (let i = 0; i < this._guideData.length; i++) {
-        let _guide = this._guideData[i];
-        let _conf = this._guideConf[_guide];
-        if (_conf == null) {
-            continue;
-        }
-        if (_conf.startid == conf.startid) {
-            //就是这一组
-            return _guide >= guide;
-        }
-    }
-    return false;
+    return _.indexOf(this._guideData, guide) != -1;
 }
 
 GuideController.prototype.onPushGuideData = function (msgid, data) {
