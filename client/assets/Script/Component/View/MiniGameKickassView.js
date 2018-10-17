@@ -1,33 +1,31 @@
-const Game = require('../../Game'); 
+const Game = require('../../Game');
+const KickAssStatus = {
+    Status_Idle: 1,
+    Status_Moving: 2,
+    Status_Kick: 3,
+    Status_End: 4,
+}
+const EunuchMoveX = 280;
+const EunuchSpeed = 100;
+const KickInterval = 0.5;
+const ShoeInitY = -220;
 
 cc.Class({
-    extends: cc.Component,
+    extends: cc.GameComponent,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
+        backButtonNode: { default: null, type: cc.Node },
+        eunuchNode: { default: null, type: cc.Node },
+        tipNode: { default: null, type: cc.Node },
+        shoeNode: { default: null, type: cc.Node },
+        actionButtonLabel: { default: null, type: cc.Label },
+
+        status: { default: KickAssStatus.Status_Idle }
     },
-
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {},
-
-    start() {
-
+    onLoad: function () {
+        Game.NetWorkController.AddListener('msg.GW2C_AckKickAss', this, this.onAckKickAss);
     },
+    onAckKickAss: function (msgid, data) {
 
-    // update (dt) {},
+    }
 });

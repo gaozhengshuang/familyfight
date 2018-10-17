@@ -6,7 +6,7 @@ import (
 const (
 	Type_None			uint32 = 0
 	Type_Level   		uint32 = 1
-	Type_Guide			uint32 = 2
+	Type_NonActive		uint32 = 2
 )
 
 /*
@@ -49,7 +49,7 @@ func (this *GuideManager) Init() {
 		conf.condvalue = v.ConditionValue
 		conf.resetid = v.Resetid
 		conf.nextid = v.NextId
-		if conf.condtype != Type_Guide {
+		if conf.condtype != Type_NonActive {
 			this.startGuide = append(this.startGuide, conf)
 		}
 		this.guidesMap[conf.id] = conf
