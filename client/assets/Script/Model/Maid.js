@@ -64,7 +64,11 @@ MaidModel.prototype.IsOpenFunction = function (type) {
     let isOpen = false;
     let openbase = ConfigController.GetConfigById("FunctionOpen", type);
     if (openbase) {
-        isOpen = this.GetTopPass() >= openbase.OpenLevels;
+        if (openbase.OpenType == 1) {
+            isOpen = GuideController.IsGuideComplete(openbase.OpenLevels);
+        } else {
+            isOpen = this.GetTopPass() >= openbase.OpenLevels;
+        }
     }
     return isOpen;
 }
