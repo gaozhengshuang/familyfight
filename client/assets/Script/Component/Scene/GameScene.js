@@ -28,7 +28,7 @@ cc.Class({
             let _view = cc.instantiate(prefab);
             if (_view) {
                 this.GuideLayer.addChild(_view);
-                _view.active = Game.GuideController.IsGuide();
+                _view.active = Game.GuideController.IsGuide() && Game.CurrencyModel.offLineReward == null;
             }
         }.bind(this));
     },
