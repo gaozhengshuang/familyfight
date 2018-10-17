@@ -10,13 +10,25 @@
     "EventBarrageCount": 50,
     "连连看金币奖励系数id": "",
     "LinkupGoldRewardRatio": 4,
-    "十秒小游戏金币奖励系数": "",
-    "TenSeceondGoldRatio": 300,
-    "十秒小游戏物品奖励": "",
-    "TenSecondItemReward": [
-        [
-            1001,
-            1
+    "十秒小游戏失败奖励": "",
+    "TenSeceondGoldRatio": {
+        "Gold": 300
+    },
+    "十秒小游戏成功奖励": "",
+    "TenSecondItemReward": {
+        "Item": [
+            [
+                1001,
+                1
+            ]
         ]
-    ]
+    },
+    "踢屁股成功奖励金币系数": "",
+    "KickAssWinReward": {
+        "Gold": 1800
+    },
+    "踢屁股失败奖励系数": "",
+    "KickAssLoseReward": {
+        "Gold": 600
+    }
 }
