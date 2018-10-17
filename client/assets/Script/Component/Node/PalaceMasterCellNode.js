@@ -47,6 +47,7 @@ cc.Class({
             Game.PalaceModel.SetCurPalaceId(this._data.Id);
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.PALACEDATA_ACK);
             Game.ViewController.openView(Game.UIName.UI_PALACEDETAIL);
+            Game.GuideController.NextGuide();
         } else {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, "宫殿尚未解锁");
         }

@@ -65,14 +65,14 @@ cc.Class({
     
             let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));
             if (this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.pass < this._data.Id) {
-                if (this._data.DialogueID != 0) {
-                    let passData = {
-                        userid: Game.UserModel.GetUserId(),
-                        lookPass: _dialoguePass.lookPass,
-                        pass: this._data.Id,
-                    };
-                    cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
-                    
+                let passData = {
+                    userid: Game.UserModel.GetUserId(),
+                    lookPass: _dialoguePass.lookPass,
+                    pass: this._data.Id,
+                };
+                cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
+                
+                if (this._data.DialogueID != 0) {                    
                     Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);
                 }
             }

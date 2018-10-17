@@ -348,6 +348,7 @@ cc.Class({
     onOpenPalace(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_PALACE);
+        Game.GuideController.NextGuide();
     },
 
     updateEfficiency() {     //更新效率和仆人个数
