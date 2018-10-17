@@ -315,5 +315,8 @@ cc.Class({
             default:
                 break;
         }
-    }
+    },
+    onOpenGameSecond() {
+        this.openView(Game.UIName.UI_MINIGAMESECOND);
+    },
 });
