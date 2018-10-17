@@ -15,6 +15,7 @@ var UIName = {
     UI_EVENTDETAILVIEW: 'Prefab/EventDetailView',
     UI_OFFLINEREWARD: 'Prefab/OffLineRewardView',
     UI_PASSDETAILVIEW: 'Prefab/PassDetailView',
+    UI_MINIGAMESECOND: 'Prefab/MiniGameSecondView',
 }
 
 module.exports = UIName;

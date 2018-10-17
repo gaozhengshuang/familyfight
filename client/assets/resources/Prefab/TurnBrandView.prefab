@@ -5089,7 +5089,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "button_handbook",
+    "_name": "button_gameSecond",
     "_objFlags": 0,
     "_parent": {
       "__id__": 158
@@ -5341,9 +5341,11 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceView",
-    "handler": "onOpenEvent",
+    "target": {
+      "__id__": 1
+    },
+    "component": "TurnBrandView",
+    "handler": "onOpenGameSecond",
     "customEventData": ""
   },
   {
