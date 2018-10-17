@@ -185,24 +185,29 @@ cc.Class({
     onOpenLvUp(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_PALACEMASTERLVUP);
+        Game.GuideController.NextGuide();
     },
 
     onOpenTravel(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_TRAVELVIEW);
+        Game.GuideController.NextGuide();
     },
 
     onOpenEvent(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_EVENTVIEW);
+        Game.GuideController.NextGuide();
     },
 
     onOpenSleep(event) {
         event.stopPropagationImmediate();
+        Game.GuideController.NextGuide();
     },
 
     onOpenBuild(event) {
         event.stopPropagationImmediate();
+        Game.GuideController.NextGuide();
     },
 
     onReqPalaceTakeBack() {

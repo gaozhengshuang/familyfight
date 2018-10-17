@@ -51,14 +51,17 @@ cc.Class({
     onOpenTravel(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_TRAVELVIEW);
+        Game.GuideController.NextGuide();
     },
 
     onOpenEvent(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_EVENTVIEW);
+        Game.GuideController.NextGuide();
     },
 
     onOpenRandomX(event) {
         event.stopPropagationImmediate();
+        Game.GuideController.NextGuide();
     }
 });
