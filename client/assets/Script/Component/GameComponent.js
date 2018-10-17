@@ -72,7 +72,7 @@ var GameComponent = cc.Class({
             parent.addChild(this.node);
         }
     },
-    
+
     backToOldParent: function () {
         if (this._oldparentNode != null && Game._.isFunction(this._oldparentNode.addChild)) {
             this._oldparentNode.addChild(this.node);
