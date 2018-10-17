@@ -337,7 +337,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 367,
+      "width": 236,
       "height": 100
     },
     "_rotationX": 0,
@@ -374,7 +374,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "00:00:00",
+    "_N$string": "00:00",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -2941,6 +2941,9 @@
     },
     "label_btnStart": {
       "__id__": 87
+    },
+    "button_back": {
+      "__id__": 76
     }
   },
   {
