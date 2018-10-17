@@ -16,11 +16,13 @@ cc.Class({
     },
 
     onEnable() {
+        this.initNotification();
         this.updateView();
         this.updateBottomButton();
     },
 
     onDisable() {
+        this.removeNotification();
     },
 
     initData() {
@@ -28,6 +30,14 @@ cc.Class({
         this.palaceMapBase = Game.ConfigController.GetConfig("PalaceMap");
 
         this.tableViewComponent = this.tableView.getComponent(cc.tableView);
+    },
+
+    initNotification() {
+        Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
+    },
+
+    removeNotification() {
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
     },
 
     updateView() {
