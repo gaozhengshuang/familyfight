@@ -497,7 +497,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 0
+      "y": 247
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -2764,8 +2764,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 261,
-      "height": 83
+      "width": 400,
+      "height": 120
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -2774,7 +2774,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 2,
-      "y": -40
+      "y": -400
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -2821,7 +2821,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 114,
       "height": 48
     },
     "_rotationX": 0,
@@ -2858,7 +2858,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "开始",
+    "_N$string": "开 始",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -2904,7 +2904,7 @@
       "__uuid__": "6e0665df-8e34-4edd-9e7a-8393ecfb04fb"
     },
     "_type": 0,
-    "_sizeMode": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
