@@ -3275,6 +3275,9 @@
     "reddotNode": {
       "__id__": 8
     },
+    "rewardLabel": {
+      "__id__": 27
+    },
     "status": 1,
     "speed": 600
   },
