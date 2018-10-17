@@ -391,9 +391,11 @@ func on_C2GW_ReqTenSecond(session network.IBaseNetSession, message interface{}) 
 		session.Close()
 		return
 	}
-	result := user.OpenBox(tmsg.GetId(), tmsg.GetNum())
-	send := &msg.GW2C_RetOpenBox{}
+	result, gold, items := user.TenSecond(tmsg.GetHit())
+	send := &msg.GW2C_AckTenSecond{}
 	send.Result = pb.Uint32(result)
+	send.Items = items
+	send.Gold = gold
 	user.SendMsg(send)
 }
 //收取

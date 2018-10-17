@@ -258,6 +258,30 @@ func (this *GateUser) TickBox(now uint64) {
 	}
 }
 
-func (this *GateUser) TenSecond(hit bool) (gold []string, items []*msg.PairNumItem) {
-
+func (this *GateUser) TenSecond(hit bool) (result uint32, gold []string, items []*msg.PairNumItem) {
+	gold = make([]string, 0)
+	items = make([]*msg.PairNumItem, 0)
+	// 体力够不够 
+	if this.GetPower() < 1 {
+		this.SendNotify("体力不足")
+		return 1, gold, itmes
+	}
+	//可以了
+	if hit {
+		//奖励物品
+		for _, v := range tbl.Common.TenSecondItemReward {
+			if len(v) >= 2 {
+				result, _ := this.AddReward(4, uint32(v[0]), uint32(v[1]), 0, "十秒游戏奖励", true)
+				items = append(items, &msg.PairNumItem{ Itemid: pb.Uint32( uint32(v[0])), Num: pb.Uint64(uint64(v[1])) })
+			}
+		}
+	} else {
+		//奖励金币
+		goldObj := this.maid.CalculateRewardPerSecond(this)
+		goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.TenSeceondGoldRatio))
+		gold = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
+	}
+	//扣体力
+	this.RemovePower(1,"十秒游戏消耗")
+	return 0, gold, items
 }
