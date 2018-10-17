@@ -38,6 +38,11 @@ cc.Class({
         this.removeNotification();
     },
 
+    onClose() {
+        this.closeView(this._url);
+        Game.GuideController.NextGuide();
+    },
+
     update(dt) {
         this.mainTime += dt;
         if (this.mainTime >= this.synchroTime) {
