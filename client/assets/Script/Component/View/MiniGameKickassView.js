@@ -23,6 +23,7 @@ cc.Class({
         actionButtonNode: { default: null, type: cc.Node },
         aimNode: { default: null, type: cc.Node },
         reddotNode: { default: null, type: cc.Node },
+        rewardLabel: { default: null, type: cc.Label },
 
         status: { default: KickAssStatus.Status_Idle },
         speed: { default: EunuchSpeed }
@@ -48,20 +49,22 @@ cc.Class({
     },
     onEnable: function () {
         this._changeStatus(KickAssStatus.Status_Idle);
+        let allincomenum = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids()).multiply(Game.ConfigController.GetConfig('KickAssWinReward').Gold);
+        this.rewardLabel.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(allincomenum));
     },
     onDestroy: function () {
         Game.NetWorkController.RemoveListener('msg.GW2C_AckKickAss', this, this.onAckKickAss);
     },
     onAckKickAss: function (msgid, data) {
+        if (this.status == KickAssStatus.Status_Settlement) {
+            this.shoeNode.runAction(cc.sequence([
+                cc.moveTo(KickInterval, 0, ShoeInitY),
+                cc.callFunc(function () {
+                    this._changeStatus(KickAssStatus.Status_End);
+                }, this)
+            ]));
+        }
         if (data.result == 0) {
-            if (this.status == KickAssStatus.Status_Settlement) {
-                this.shoeNode.runAction(cc.sequence([
-                    cc.moveTo(KickInterval, 0, ShoeInitY),
-                    cc.callFunc(function () {
-                        this._changeStatus(KickAssStatus.Status_End);
-                    }, this)
-                ]));
-            }
             //加金币
             Game.CurrencyModel.AddGold(data.gold);
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
@@ -75,12 +78,20 @@ cc.Class({
     onActionClick: function () {
         switch (this.status) {
             case KickAssStatus.Status_Idle:
+                if (Game.CurrencyModel.GetPower() < 1) {
+                    this.showTips("体力不足");
+                    return;
+                }
                 this._changeStatus(KickAssStatus.Status_Moving);
                 break;
             case KickAssStatus.Status_Moving:
                 this._changeStatus(KickAssStatus.Status_Kick);
                 break;
             case KickAssStatus.Status_End:
+                if (Game.CurrencyModel.GetPower() < 1) {
+                    this.showTips("体力不足");
+                    return;
+                }
                 this._changeStatus(KickAssStatus.Status_Moving);
                 break;
         }
