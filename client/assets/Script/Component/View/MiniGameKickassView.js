@@ -3,7 +3,8 @@ const KickAssStatus = {
     Status_Idle: 1,
     Status_Moving: 2,
     Status_Kick: 3,
-    Status_End: 4,
+    Status_Settlement: 4,
+    Status_End: 5
 }
 const EunuchMoveX = 280;
 const EunuchSpeed = 100;
@@ -19,13 +20,117 @@ cc.Class({
         tipNode: { default: null, type: cc.Node },
         shoeNode: { default: null, type: cc.Node },
         actionButtonLabel: { default: null, type: cc.Label },
+        actionButtonNode: { default: null, type: cc.Node },
+        aimNode: { default: null, type: cc.Node },
+        reddotNode: { default: null, type: cc.Node },
 
-        status: { default: KickAssStatus.Status_Idle }
+        status: { default: KickAssStatus.Status_Idle },
+        speed: { default: EunuchSpeed }
     },
     onLoad: function () {
         Game.NetWorkController.AddListener('msg.GW2C_AckKickAss', this, this.onAckKickAss);
     },
+    update: function (dt) {
+        if (this.status == KickAssStatus.Status_Moving || this.status == KickAssStatus.Status_Kick) {
+            let addition = this.speed * dt;
+            let targetx = this.eunuchNode.x + addition;
+            if (targetx < -EunuchMoveX) {
+                //要到右边了
+                this.speed = EunuchSpeed;
+                this.eunuchNode.x = -EunuchMoveX;
+            } else if (targetx > EunuchMoveX) {
+                this.speed = -EunuchSpeed;
+                this.eunuchNode.x = EunuchMoveX;
+            } else {
+                this.eunuchNode.x = targetx;
+            }
+        }
+    },
+    onEnable: function () {
+        this._changeStatus(KickAssStatus.Status_Idle);
+    },
+    onDestroy: function () {
+        Game.NetWorkController.RemoveListener('msg.GW2C_AckKickAss', this, this.onAckKickAss);
+    },
     onAckKickAss: function (msgid, data) {
-
-    }
+        if (data.result == 0) {
+            if (this.status == KickAssStatus.Status_Settlement) {
+                this._changeStatus(KickAssStatus.Status_End);
+            }
+            //加金币
+            Game.CurrencyModel.AddGold(data.gold);
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+                info: '<color=#6d282d>获得金币+<color=#ed5b5b>' + Game.Tools.UnitConvert(data.gold) + '</c></c>',
+                alive: 0.5,
+                delay: 1
+            });
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
+        }
+    },
+    onActionClick: function () {
+        switch (this.status) {
+            case KickAssStatus.Status_Idle:
+                this._changeStatus(KickAssStatus.Status_Moving);
+                break;
+            case KickAssStatus.Status_Moving:
+                this._changeStatus(KickAssStatus.Status_Kick);
+                break;
+            case KickAssStatus.Status_End:
+                this._changeStatus(KickAssStatus.Status_Moving);
+                break;
+        }
+    },
+    onGoBackClick: function () {
+        this.closeView(Game.UIName.UI_MINIGAMEKICKASS);
+    },
+    _changeStatus: function (status) {
+        if (this.status != status) {
+            this.status = status;
+            switch (status) {
+                case KickAssStatus.Status_Idle:
+                    this.tipNode.active = true;
+                    this.actionButtonLabel.string = '开始';
+                    this.backButtonNode.active = true;
+                    this.eunuchNode.x = 0;
+                    this.shoeNode.y = ShoeInitY;
+                    this.actionButtonNode.active = true;
+                    break;
+                case KickAssStatus.Status_Moving:
+                    this.tipNode.active = false;
+                    this.actionButtonLabel.string = '踢他';
+                    this.backButtonNode.active = false;
+                    this.shoeNode.y = ShoeInitY;
+                    this.actionButtonNode.active = true;
+                    break;
+                case KickAssStatus.Status_Kick:
+                    this.tipNode.active = false;
+                    this.actionButtonNode.active = false;
+                    this.backButtonNode.active = false;
+                    this.shoeNode.runAction(cc.sequence([
+                        cc.moveTo(KickInterval, this.aimNode.position),
+                        cc.callFunc(function () {
+                            this._changeStatus(KickAssStatus.Status_Settlement)
+                        }, this)
+                    ]));
+                    break;
+                case KickAssStatus.Status_Settlement:
+                    this.tipNode.active = false;
+                    this.actionButtonNode.active = false;
+                    this.backButtonNode.active = false;
+                    //发消息
+                    let box = this.reddotNode.getBoundingBoxToWorld();
+                    let hit = box.contains(this.aimNode.parent.convertToNodeSpaceAR(this.aimNode.position));
+                    Game.NetWorkController.Send('msg.C2GW_ReqKickAss', { hit: hit });
+                    break;
+                case KickAssStatus.Status_End:
+                    this.tipNode.active = false;
+                    this.actionButtonNode.active = true;
+                    this.actionButtonLabel.string = '再来一次';
+                    this.shoeNode.y = ShoeInitY;
+                    this.backButtonNode.active = true;
+                default:
+                    break;
+            }
+        }
+    },
 });

@@ -7757,6 +7757,260 @@ $root.msg = (function() {
         return BoxData;
     })();
 
+    msg.GuideData = (function() {
+
+        /**
+         * Properties of a GuideData.
+         * @memberof msg
+         * @interface IGuideData
+         * @property {Array.<number>|null} [guidesdata] GuideData guidesdata
+         * @property {number|null} [curguide] GuideData curguide
+         * @property {number|null} [maxlevel] GuideData maxlevel
+         */
+
+        /**
+         * Constructs a new GuideData.
+         * @memberof msg
+         * @classdesc Represents a GuideData.
+         * @implements IGuideData
+         * @constructor
+         * @param {msg.IGuideData=} [properties] Properties to set
+         */
+        function GuideData(properties) {
+            this.guidesdata = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GuideData guidesdata.
+         * @member {Array.<number>} guidesdata
+         * @memberof msg.GuideData
+         * @instance
+         */
+        GuideData.prototype.guidesdata = $util.emptyArray;
+
+        /**
+         * GuideData curguide.
+         * @member {number} curguide
+         * @memberof msg.GuideData
+         * @instance
+         */
+        GuideData.prototype.curguide = 0;
+
+        /**
+         * GuideData maxlevel.
+         * @member {number} maxlevel
+         * @memberof msg.GuideData
+         * @instance
+         */
+        GuideData.prototype.maxlevel = 0;
+
+        /**
+         * Creates a new GuideData instance using the specified properties.
+         * @function create
+         * @memberof msg.GuideData
+         * @static
+         * @param {msg.IGuideData=} [properties] Properties to set
+         * @returns {msg.GuideData} GuideData instance
+         */
+        GuideData.create = function create(properties) {
+            return new GuideData(properties);
+        };
+
+        /**
+         * Encodes the specified GuideData message. Does not implicitly {@link msg.GuideData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GuideData
+         * @static
+         * @param {msg.IGuideData} message GuideData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GuideData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.guidesdata != null && message.guidesdata.length)
+                for (var i = 0; i < message.guidesdata.length; ++i)
+                    writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.guidesdata[i]);
+            if (message.curguide != null && message.hasOwnProperty("curguide"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.curguide);
+            if (message.maxlevel != null && message.hasOwnProperty("maxlevel"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.maxlevel);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GuideData message, length delimited. Does not implicitly {@link msg.GuideData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GuideData
+         * @static
+         * @param {msg.IGuideData} message GuideData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GuideData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GuideData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GuideData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GuideData} GuideData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GuideData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GuideData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.guidesdata && message.guidesdata.length))
+                        message.guidesdata = [];
+                    if ((tag & 7) === 2) {
+                        var end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.guidesdata.push(reader.uint32());
+                    } else
+                        message.guidesdata.push(reader.uint32());
+                    break;
+                case 2:
+                    message.curguide = reader.uint32();
+                    break;
+                case 3:
+                    message.maxlevel = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GuideData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GuideData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GuideData} GuideData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GuideData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GuideData message.
+         * @function verify
+         * @memberof msg.GuideData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GuideData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.guidesdata != null && message.hasOwnProperty("guidesdata")) {
+                if (!Array.isArray(message.guidesdata))
+                    return "guidesdata: array expected";
+                for (var i = 0; i < message.guidesdata.length; ++i)
+                    if (!$util.isInteger(message.guidesdata[i]))
+                        return "guidesdata: integer[] expected";
+            }
+            if (message.curguide != null && message.hasOwnProperty("curguide"))
+                if (!$util.isInteger(message.curguide))
+                    return "curguide: integer expected";
+            if (message.maxlevel != null && message.hasOwnProperty("maxlevel"))
+                if (!$util.isInteger(message.maxlevel))
+                    return "maxlevel: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GuideData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GuideData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GuideData} GuideData
+         */
+        GuideData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GuideData)
+                return object;
+            var message = new $root.msg.GuideData();
+            if (object.guidesdata) {
+                if (!Array.isArray(object.guidesdata))
+                    throw TypeError(".msg.GuideData.guidesdata: array expected");
+                message.guidesdata = [];
+                for (var i = 0; i < object.guidesdata.length; ++i)
+                    message.guidesdata[i] = object.guidesdata[i] >>> 0;
+            }
+            if (object.curguide != null)
+                message.curguide = object.curguide >>> 0;
+            if (object.maxlevel != null)
+                message.maxlevel = object.maxlevel >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GuideData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GuideData
+         * @static
+         * @param {msg.GuideData} message GuideData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GuideData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.guidesdata = [];
+            if (options.defaults) {
+                object.curguide = 0;
+                object.maxlevel = 0;
+            }
+            if (message.guidesdata && message.guidesdata.length) {
+                object.guidesdata = [];
+                for (var j = 0; j < message.guidesdata.length; ++j)
+                    object.guidesdata[j] = message.guidesdata[j];
+            }
+            if (message.curguide != null && message.hasOwnProperty("curguide"))
+                object.curguide = message.curguide;
+            if (message.maxlevel != null && message.hasOwnProperty("maxlevel"))
+                object.maxlevel = message.maxlevel;
+            return object;
+        };
+
+        /**
+         * Converts this GuideData to JSON.
+         * @function toJSON
+         * @memberof msg.GuideData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GuideData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GuideData;
+    })();
+
     msg.Serialize = (function() {
 
         /**
@@ -7771,7 +8025,7 @@ $root.msg = (function() {
          * @property {msg.ITravelData|null} [travel] Serialize travel
          * @property {Array.<number>|null} [eventids] Serialize eventids
          * @property {Array.<msg.IBoxData>|null} [boxs] Serialize boxs
-         * @property {Array.<number>|null} [guides] Serialize guides
+         * @property {msg.IGuideData|null} [guide] Serialize guide
          */
 
         /**
@@ -7786,7 +8040,6 @@ $root.msg = (function() {
             this.palaces = [];
             this.eventids = [];
             this.boxs = [];
-            this.guides = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -7858,12 +8111,12 @@ $root.msg = (function() {
         Serialize.prototype.boxs = $util.emptyArray;
 
         /**
-         * Serialize guides.
-         * @member {Array.<number>} guides
+         * Serialize guide.
+         * @member {msg.IGuideData|null|undefined} guide
          * @memberof msg.Serialize
          * @instance
          */
-        Serialize.prototype.guides = $util.emptyArray;
+        Serialize.prototype.guide = null;
 
         /**
          * Creates a new Serialize instance using the specified properties.
@@ -7908,9 +8161,8 @@ $root.msg = (function() {
             if (message.boxs != null && message.boxs.length)
                 for (var i = 0; i < message.boxs.length; ++i)
                     $root.msg.BoxData.encode(message.boxs[i], writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
-            if (message.guides != null && message.guides.length)
-                for (var i = 0; i < message.guides.length; ++i)
-                    writer.uint32(/* id 9, wireType 0 =*/72).uint32(message.guides[i]);
+            if (message.guide != null && message.hasOwnProperty("guide"))
+                $root.msg.GuideData.encode(message.guide, writer.uint32(/* id 9, wireType 2 =*/74).fork()).ldelim();
             return writer;
         };
 
@@ -7981,14 +8233,7 @@ $root.msg = (function() {
                     message.boxs.push($root.msg.BoxData.decode(reader, reader.uint32()));
                     break;
                 case 9:
-                    if (!(message.guides && message.guides.length))
-                        message.guides = [];
-                    if ((tag & 7) === 2) {
-                        var end2 = reader.uint32() + reader.pos;
-                        while (reader.pos < end2)
-                            message.guides.push(reader.uint32());
-                    } else
-                        message.guides.push(reader.uint32());
+                    message.guide = $root.msg.GuideData.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -8075,12 +8320,10 @@ $root.msg = (function() {
                         return "boxs." + error;
                 }
             }
-            if (message.guides != null && message.hasOwnProperty("guides")) {
-                if (!Array.isArray(message.guides))
-                    return "guides: array expected";
-                for (var i = 0; i < message.guides.length; ++i)
-                    if (!$util.isInteger(message.guides[i]))
-                        return "guides: integer[] expected";
+            if (message.guide != null && message.hasOwnProperty("guide")) {
+                var error = $root.msg.GuideData.verify(message.guide);
+                if (error)
+                    return "guide." + error;
             }
             return null;
         };
@@ -8149,12 +8392,10 @@ $root.msg = (function() {
                     message.boxs[i] = $root.msg.BoxData.fromObject(object.boxs[i]);
                 }
             }
-            if (object.guides) {
-                if (!Array.isArray(object.guides))
-                    throw TypeError(".msg.Serialize.guides: array expected");
-                message.guides = [];
-                for (var i = 0; i < object.guides.length; ++i)
-                    message.guides[i] = object.guides[i] >>> 0;
+            if (object.guide != null) {
+                if (typeof object.guide !== "object")
+                    throw TypeError(".msg.Serialize.guide: object expected");
+                message.guide = $root.msg.GuideData.fromObject(object.guide);
             }
             return message;
         };
@@ -8176,7 +8417,6 @@ $root.msg = (function() {
                 object.palaces = [];
                 object.eventids = [];
                 object.boxs = [];
-                object.guides = [];
             }
             if (options.defaults) {
                 object.entity = null;
@@ -8184,6 +8424,7 @@ $root.msg = (function() {
                 object.item = null;
                 object.maid = null;
                 object.travel = null;
+                object.guide = null;
             }
             if (message.entity != null && message.hasOwnProperty("entity"))
                 object.entity = $root.msg.EntityBase.toObject(message.entity, options);
@@ -8210,11 +8451,8 @@ $root.msg = (function() {
                 for (var j = 0; j < message.boxs.length; ++j)
                     object.boxs[j] = $root.msg.BoxData.toObject(message.boxs[j], options);
             }
-            if (message.guides && message.guides.length) {
-                object.guides = [];
-                for (var j = 0; j < message.guides.length; ++j)
-                    object.guides[j] = message.guides[j];
-            }
+            if (message.guide != null && message.hasOwnProperty("guide"))
+                object.guide = $root.msg.GuideData.toObject(message.guide, options);
             return object;
         };
 

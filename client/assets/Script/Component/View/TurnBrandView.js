@@ -319,4 +319,7 @@ cc.Class({
     onOpenGameSecond() {
         this.openView(Game.UIName.UI_MINIGAMESECOND);
     },
+    onOpenKickAss() {
+        this.openView(Game.UIName.UI_MINIGAMEKICKASS);
+    }
 });

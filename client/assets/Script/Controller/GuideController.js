@@ -17,28 +17,6 @@ var GuideController = function () {
 }
 
 GuideController.prototype.Init = function (cb) {
-    let guides = ConfigController.GetConfig('Guide');
-    for (let i = 0; i < guides.length; i++) {
-        let guide = guides[i];
-        let conf = new GuideConf();
-        let guideGroup = [];
-        conf.id = guide.Id;
-        if (guide.ConditionType == 2) {
-            let preGuide = this._guideConf[guide.ConditionValue];
-            if (preGuide) {
-                conf.index = preGuide.index;
-                conf.startid = preGuide.startid;
-            }
-            guideGroup = this._guideMap[conf.index];
-            guideGroup.push(conf);
-        } else {
-            conf.index = this._guideMap.length;
-            conf.startid = conf.id;
-            guideGroup.push(conf);
-            this._guideMap.push(guideGroup);
-        }
-        this._guideConf[conf.id] = conf;
-    }
     NetWorkController.AddListener('msg.GW2C_PushGuideData', this, this.onPushGuideData);
     Tools.InvokeCallback(cb, null);
 }

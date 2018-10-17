@@ -27,14 +27,11 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 109
-      },
-      {
-        "__id__": 110
+        "__id__": 105
       }
     ],
     "_prefab": {
-      "__id__": 111
+      "__id__": 106
     },
     "_id": "",
     "_opacity": 255,
@@ -304,7 +301,7 @@
     "_scaleY": 0.7,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 8,
+      "x": 0,
       "y": 73
     },
     "_skewX": 0,
@@ -2765,8 +2762,8 @@
     "target": {
       "__id__": 1
     },
-    "component": "PalaceView",
-    "handler": "onClose",
+    "component": "MiniGameKickassView",
+    "handler": "onGoBackClick",
     "customEventData": ""
   },
   {
@@ -2981,23 +2978,20 @@
     "_children": [
       {
         "__id__": 97
-      },
-      {
-        "__id__": 101
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 105
+        "__id__": 101
       },
       {
-        "__id__": 106
+        "__id__": 102
       }
     ],
     "_prefab": {
-      "__id__": 108
+      "__id__": 104
     },
     "_id": "",
     "_opacity": 255,
@@ -3145,115 +3139,6 @@
     "sync": false
   },
   {
-    "__type__": "cc.Node",
-    "_name": "Label_ulock",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 96
-    },
-    "_children": [],
-    "_tag": -1,
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 102
-      },
-      {
-        "__id__": 103
-      }
-    ],
-    "_prefab": {
-      "__id__": 104
-    },
-    "_id": "",
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 83,
-      "g": 31,
-      "b": 31,
-      "a": 255
-    },
-    "_cascadeOpacityEnabled": true,
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 52,
-      "height": 48
-    },
-    "_rotationX": 0,
-    "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
-    "_position": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 5
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_localZOrder": 0,
-    "_globalZOrder": 0,
-    "_opacityModifyRGB": false,
-    "groupIndex": 0
-  },
-  {
-    "__type__": "cc.Label",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 101
-    },
-    "_enabled": true,
-    "_useOriginalSize": false,
-    "_actualFontSize": 48,
-    "_fontSize": 48,
-    "_lineHeight": 48,
-    "_enableWrapText": true,
-    "_N$file": {
-      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
-    },
-    "_isSystemFontUsed": false,
-    "_spacingX": 0,
-    "_N$string": "踢",
-    "_N$horizontalAlign": 1,
-    "_N$verticalAlign": 1,
-    "_N$fontFamily": "Arial",
-    "_N$overflow": 0
-  },
-  {
-    "__type__": "cc.LabelOutline",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 101
-    },
-    "_enabled": true,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 246,
-      "b": 138,
-      "a": 255
-    },
-    "_width": 2
-  },
-  {
-    "__type__": "cc.PrefabInfo",
-    "root": {
-      "__id__": 1
-    },
-    "asset": {
-      "__uuid__": "c0a350f4-6c86-494a-a4cf-1d8936ea428c"
-    },
-    "fileId": "c2TwruESVBhLAmG3n31buV",
-    "sync": false
-  },
-  {
     "__type__": "cc.Sprite",
     "_name": "",
     "_objFlags": 0,
@@ -3306,7 +3191,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 107
+        "__id__": 103
       }
     ],
     "_N$interactable": true,
@@ -3340,8 +3225,8 @@
     "target": {
       "__id__": 1
     },
-    "component": "PalaceView",
-    "handler": "onOpenEvent",
+    "component": "MiniGameKickassView",
+    "handler": "onActionClick",
     "customEventData": ""
   },
   {
@@ -3356,7 +3241,7 @@
     "sync": false
   },
   {
-    "__type__": "5b3fbWdhW5EKatjpzK6+cRM",
+    "__type__": "23538StduZAlpfx9PvPIhTQ",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -3366,27 +3251,32 @@
     "_url": "",
     "_data": {},
     "_oldparentNode": null,
-    "tableView": null,
-    "button_handbook": {
-      "__id__": 106
+    "backButtonNode": {
+      "__id__": 84
     },
-    "button_randomx": null,
-    "label_handbookUnlock": {
+    "eunuchNode": {
+      "__id__": 7
+    },
+    "tipNode": {
+      "__id__": 36
+    },
+    "shoeNode": {
+      "__id__": 13
+    },
+    "actionButtonLabel": {
       "__id__": 98
     },
-    "label_randomxUnlock": null
-  },
-  {
-    "__type__": "9c827Ff719G4oql+MIFvI57",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
+    "actionButtonNode": {
+      "__id__": 96
     },
-    "_enabled": false,
-    "node_playDlg": {
-      "__id__": 2
-    }
+    "aimNode": {
+      "__id__": 16
+    },
+    "reddotNode": {
+      "__id__": 8
+    },
+    "status": 1,
+    "speed": 100
   },
   {
     "__type__": "cc.PrefabInfo",
