@@ -4,6 +4,5 @@
 	"PalaceMap":[
 		{ "Id": 1, "Name": "永和宫", "BannerPath": "Image/GameScene/Palace/image_palaceCard1", "UlockPassId": 2, "x": 300, "y": 122, "Headpath": "Image/GameScene/halfbody/13", "Master": 3, "Maids":[ 300, 301, 302, 303, 304, 305 ], "MaidsXY":[ "-222,-106", "0,-106", "222,-106", "-222,-350", "0,-350", "222,-350" ] },
 		{ "Id": 2, "Name": "储秀宫", "BannerPath": "Image/GameScene/Palace/image_palaceCard2", "UlockPassId": 6, "x": -165, "y": 242, "Headpath": "Image/GameScene/halfbody/12", "Master": 2, "Maids":[ 200, 201, 202, 203, 204, 205 ], "MaidsXY":[ "-222,-106", "0,-106", "222,-106", "-222,-350", "0,-350", "222,-350" ] },
-		{ "Id": 3, "Name": "长春宫", "BannerPath": "Image/GameScene/Palace/image_palaceCard3", "UlockPassId": 10, "x": -300, "y": 122, "Headpath": "Image/GameScene/halfbody/1", "Master": 1, "Maids":[ 100, 101, 102, 103, 104, 105 ], "MaidsXY":[ "-222,-106", "0,-106", "222,-106", "-222,-350", "0,-350", "222,-350" ] },
-		{ "Id": 4, "Name": "钟粹宫", "BannerPath": "Image/GameScene/Palace/image_palaceCard3", "UlockPassId": 14, "x": 165, "y": 242, "Headpath": "Image/GameScene/halfbody/1", "Master": 6, "Maids":[ 100, 101, 102, 103, 104, 105 ], "MaidsXY":[ "-222,-106", "0,-106", "222,-106", "-222,-350", "0,-350", "222,-350" ] }
+		{ "Id": 3, "Name": "长春宫", "BannerPath": "Image/GameScene/Palace/image_palaceCard3", "UlockPassId": 10, "x": -300, "y": 122, "Headpath": "Image/GameScene/halfbody/1", "Master": 1, "Maids":[ 100, 101, 102, 103, 104, 105 ], "MaidsXY":[ "-222,-106", "0,-106", "222,-106", "-222,-350", "0,-350", "222,-350" ] }
 	]}
