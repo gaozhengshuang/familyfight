@@ -11,11 +11,12 @@
     "连连看金币奖励系数id": "",
     "LinkupGoldRewardRatio": 4,
     "十秒小游戏失败奖励": "",
-    "TenSeceondGoldRatio": {
+
+    "TenSeceondLoseRatio": {
         "Gold": 660
     },
     "十秒小游戏成功奖励": "",
-    "TenSecondItemReward": {
+    "TenSecondWinReward": {
         "Item": [
             [
                 1001,
