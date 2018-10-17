@@ -2451,6 +2451,419 @@ $root.msg = (function() {
         return GW2C_AckTenSecond;
     })();
 
+    msg.C2GW_ReqKickAss = (function() {
+
+        /**
+         * Properties of a C2GW_ReqKickAss.
+         * @memberof msg
+         * @interface IC2GW_ReqKickAss
+         * @property {boolean|null} [hit] C2GW_ReqKickAss hit
+         */
+
+        /**
+         * Constructs a new C2GW_ReqKickAss.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqKickAss.
+         * @implements IC2GW_ReqKickAss
+         * @constructor
+         * @param {msg.IC2GW_ReqKickAss=} [properties] Properties to set
+         */
+        function C2GW_ReqKickAss(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_ReqKickAss hit.
+         * @member {boolean} hit
+         * @memberof msg.C2GW_ReqKickAss
+         * @instance
+         */
+        C2GW_ReqKickAss.prototype.hit = false;
+
+        /**
+         * Creates a new C2GW_ReqKickAss instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqKickAss
+         * @static
+         * @param {msg.IC2GW_ReqKickAss=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqKickAss} C2GW_ReqKickAss instance
+         */
+        C2GW_ReqKickAss.create = function create(properties) {
+            return new C2GW_ReqKickAss(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqKickAss message. Does not implicitly {@link msg.C2GW_ReqKickAss.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqKickAss
+         * @static
+         * @param {msg.IC2GW_ReqKickAss} message C2GW_ReqKickAss message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqKickAss.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.hit != null && message.hasOwnProperty("hit"))
+                writer.uint32(/* id 1, wireType 0 =*/8).bool(message.hit);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqKickAss message, length delimited. Does not implicitly {@link msg.C2GW_ReqKickAss.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqKickAss
+         * @static
+         * @param {msg.IC2GW_ReqKickAss} message C2GW_ReqKickAss message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqKickAss.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqKickAss message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqKickAss
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqKickAss} C2GW_ReqKickAss
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqKickAss.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqKickAss();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.hit = reader.bool();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqKickAss message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqKickAss
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqKickAss} C2GW_ReqKickAss
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqKickAss.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqKickAss message.
+         * @function verify
+         * @memberof msg.C2GW_ReqKickAss
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqKickAss.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.hit != null && message.hasOwnProperty("hit"))
+                if (typeof message.hit !== "boolean")
+                    return "hit: boolean expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqKickAss message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqKickAss
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqKickAss} C2GW_ReqKickAss
+         */
+        C2GW_ReqKickAss.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqKickAss)
+                return object;
+            var message = new $root.msg.C2GW_ReqKickAss();
+            if (object.hit != null)
+                message.hit = Boolean(object.hit);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqKickAss message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqKickAss
+         * @static
+         * @param {msg.C2GW_ReqKickAss} message C2GW_ReqKickAss
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqKickAss.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.hit = false;
+            if (message.hit != null && message.hasOwnProperty("hit"))
+                object.hit = message.hit;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_ReqKickAss to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqKickAss
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqKickAss.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqKickAss;
+    })();
+
+    msg.GW2C_AckKickAss = (function() {
+
+        /**
+         * Properties of a GW2C_AckKickAss.
+         * @memberof msg
+         * @interface IGW2C_AckKickAss
+         * @property {number|null} [result] GW2C_AckKickAss result
+         * @property {Array.<string>|null} [gold] GW2C_AckKickAss gold
+         */
+
+        /**
+         * Constructs a new GW2C_AckKickAss.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckKickAss.
+         * @implements IGW2C_AckKickAss
+         * @constructor
+         * @param {msg.IGW2C_AckKickAss=} [properties] Properties to set
+         */
+        function GW2C_AckKickAss(properties) {
+            this.gold = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckKickAss result.
+         * @member {number} result
+         * @memberof msg.GW2C_AckKickAss
+         * @instance
+         */
+        GW2C_AckKickAss.prototype.result = 0;
+
+        /**
+         * GW2C_AckKickAss gold.
+         * @member {Array.<string>} gold
+         * @memberof msg.GW2C_AckKickAss
+         * @instance
+         */
+        GW2C_AckKickAss.prototype.gold = $util.emptyArray;
+
+        /**
+         * Creates a new GW2C_AckKickAss instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckKickAss
+         * @static
+         * @param {msg.IGW2C_AckKickAss=} [properties] Properties to set
+         * @returns {msg.GW2C_AckKickAss} GW2C_AckKickAss instance
+         */
+        GW2C_AckKickAss.create = function create(properties) {
+            return new GW2C_AckKickAss(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckKickAss message. Does not implicitly {@link msg.GW2C_AckKickAss.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckKickAss
+         * @static
+         * @param {msg.IGW2C_AckKickAss} message GW2C_AckKickAss message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckKickAss.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.result != null && message.hasOwnProperty("result"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
+            if (message.gold != null && message.gold.length)
+                for (var i = 0; i < message.gold.length; ++i)
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.gold[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckKickAss message, length delimited. Does not implicitly {@link msg.GW2C_AckKickAss.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckKickAss
+         * @static
+         * @param {msg.IGW2C_AckKickAss} message GW2C_AckKickAss message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckKickAss.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckKickAss message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckKickAss
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckKickAss} GW2C_AckKickAss
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckKickAss.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckKickAss();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.result = reader.uint32();
+                    break;
+                case 2:
+                    if (!(message.gold && message.gold.length))
+                        message.gold = [];
+                    message.gold.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckKickAss message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckKickAss
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckKickAss} GW2C_AckKickAss
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckKickAss.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckKickAss message.
+         * @function verify
+         * @memberof msg.GW2C_AckKickAss
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckKickAss.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.result != null && message.hasOwnProperty("result"))
+                if (!$util.isInteger(message.result))
+                    return "result: integer expected";
+            if (message.gold != null && message.hasOwnProperty("gold")) {
+                if (!Array.isArray(message.gold))
+                    return "gold: array expected";
+                for (var i = 0; i < message.gold.length; ++i)
+                    if (!$util.isString(message.gold[i]))
+                        return "gold: string[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckKickAss message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckKickAss
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckKickAss} GW2C_AckKickAss
+         */
+        GW2C_AckKickAss.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckKickAss)
+                return object;
+            var message = new $root.msg.GW2C_AckKickAss();
+            if (object.result != null)
+                message.result = object.result >>> 0;
+            if (object.gold) {
+                if (!Array.isArray(object.gold))
+                    throw TypeError(".msg.GW2C_AckKickAss.gold: array expected");
+                message.gold = [];
+                for (var i = 0; i < object.gold.length; ++i)
+                    message.gold[i] = String(object.gold[i]);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckKickAss message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckKickAss
+         * @static
+         * @param {msg.GW2C_AckKickAss} message GW2C_AckKickAss
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckKickAss.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.gold = [];
+            if (options.defaults)
+                object.result = 0;
+            if (message.result != null && message.hasOwnProperty("result"))
+                object.result = message.result;
+            if (message.gold && message.gold.length) {
+                object.gold = [];
+                for (var j = 0; j < message.gold.length; ++j)
+                    object.gold[j] = message.gold[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckKickAss to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckKickAss
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckKickAss.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckKickAss;
+    })();
+
     msg.EntityBase = (function() {
 
         /**
