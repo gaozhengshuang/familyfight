@@ -44,7 +44,7 @@ func (this *UserGuide) Syn(user* GateUser) {
 	this.PushGuideData(user)
 }
 func (this *UserGuide) IsGuidePass(id uint32) bool {
-	for _, v := this.guides {
+	for _, v := range this.guides {
 		if v == id {
 			return true
 		}
