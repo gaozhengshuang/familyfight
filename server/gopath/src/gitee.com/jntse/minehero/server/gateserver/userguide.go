@@ -34,6 +34,7 @@ func (this *UserGuide) Syn(user* GateUser) {
 	nextid := this.GetNextGuide(user, true, Type_None, 0)
 	send := &msg.GW2C_AckGuideData{ Guide: pb.Uint32(nextid) }
 	user.SendMsg(send)
+	this.PushGuideData(user)
 }
 func (this *UserGuide) IsGuidePass(id uint32) bool {
 	guideConf := GuideMgr().GetGuideById(id)
@@ -70,6 +71,7 @@ func (this *UserGuide) UpdateGuide(user* GateUser,id uint32) uint32 {
 	} else {
 		this.guides[index] = id
 	}
+	this.PushGuideData(user)
 	return this.GetNextGuide(user, false, Type_Guide, id)
 }
 func (this *UserGuide) OpenNewLevel(user* GateUser, level uint32) uint32 {
@@ -143,4 +145,12 @@ func (this *UserGuide) NewGuide(trigtype uint32, trigvalue uint32) uint32 {
 		}
 	}
 	return 0
+}
+
+func (this *UserGuide) PushGuideData(user *GateUser){
+	send := &msg.GW2C_PushGuideData{ Guides: make([]uint32, 0) }
+	for _, v := range this.guides {
+		send.Guides = append(send.Guides, v)
+	}
+	user.SendMsg(send);
 }

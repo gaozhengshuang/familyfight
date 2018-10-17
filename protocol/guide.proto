@@ -1,5 +1,9 @@
 package msg;
 import "serialize.proto";
+message GW2C_PushGuideData
+{
+    repeated uint32 guides = 1;
+}
 //引导消息
 message C2GW_UpdateGuideData
 {
