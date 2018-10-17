@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -1992,6 +1992,463 @@ $root.msg = (function() {
         };
 
         return GW2C_RetOpenBox;
+    })();
+
+    msg.C2GW_ReqTenSecond = (function() {
+
+        /**
+         * Properties of a C2GW_ReqTenSecond.
+         * @memberof msg
+         * @interface IC2GW_ReqTenSecond
+         * @property {boolean|null} [hit] C2GW_ReqTenSecond hit
+         */
+
+        /**
+         * Constructs a new C2GW_ReqTenSecond.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqTenSecond.
+         * @implements IC2GW_ReqTenSecond
+         * @constructor
+         * @param {msg.IC2GW_ReqTenSecond=} [properties] Properties to set
+         */
+        function C2GW_ReqTenSecond(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_ReqTenSecond hit.
+         * @member {boolean} hit
+         * @memberof msg.C2GW_ReqTenSecond
+         * @instance
+         */
+        C2GW_ReqTenSecond.prototype.hit = false;
+
+        /**
+         * Creates a new C2GW_ReqTenSecond instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqTenSecond
+         * @static
+         * @param {msg.IC2GW_ReqTenSecond=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqTenSecond} C2GW_ReqTenSecond instance
+         */
+        C2GW_ReqTenSecond.create = function create(properties) {
+            return new C2GW_ReqTenSecond(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqTenSecond message. Does not implicitly {@link msg.C2GW_ReqTenSecond.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqTenSecond
+         * @static
+         * @param {msg.IC2GW_ReqTenSecond} message C2GW_ReqTenSecond message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqTenSecond.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.hit != null && message.hasOwnProperty("hit"))
+                writer.uint32(/* id 1, wireType 0 =*/8).bool(message.hit);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqTenSecond message, length delimited. Does not implicitly {@link msg.C2GW_ReqTenSecond.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqTenSecond
+         * @static
+         * @param {msg.IC2GW_ReqTenSecond} message C2GW_ReqTenSecond message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqTenSecond.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqTenSecond message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqTenSecond
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqTenSecond} C2GW_ReqTenSecond
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqTenSecond.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqTenSecond();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.hit = reader.bool();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqTenSecond message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqTenSecond
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqTenSecond} C2GW_ReqTenSecond
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqTenSecond.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqTenSecond message.
+         * @function verify
+         * @memberof msg.C2GW_ReqTenSecond
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqTenSecond.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.hit != null && message.hasOwnProperty("hit"))
+                if (typeof message.hit !== "boolean")
+                    return "hit: boolean expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqTenSecond message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqTenSecond
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqTenSecond} C2GW_ReqTenSecond
+         */
+        C2GW_ReqTenSecond.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqTenSecond)
+                return object;
+            var message = new $root.msg.C2GW_ReqTenSecond();
+            if (object.hit != null)
+                message.hit = Boolean(object.hit);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqTenSecond message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqTenSecond
+         * @static
+         * @param {msg.C2GW_ReqTenSecond} message C2GW_ReqTenSecond
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqTenSecond.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.hit = false;
+            if (message.hit != null && message.hasOwnProperty("hit"))
+                object.hit = message.hit;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_ReqTenSecond to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqTenSecond
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqTenSecond.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqTenSecond;
+    })();
+
+    msg.GW2C_AckTenSecond = (function() {
+
+        /**
+         * Properties of a GW2C_AckTenSecond.
+         * @memberof msg
+         * @interface IGW2C_AckTenSecond
+         * @property {number|null} [result] GW2C_AckTenSecond result
+         * @property {Array.<msg.IPairNumItem>|null} [items] GW2C_AckTenSecond items
+         * @property {Array.<string>|null} [gold] GW2C_AckTenSecond gold
+         */
+
+        /**
+         * Constructs a new GW2C_AckTenSecond.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckTenSecond.
+         * @implements IGW2C_AckTenSecond
+         * @constructor
+         * @param {msg.IGW2C_AckTenSecond=} [properties] Properties to set
+         */
+        function GW2C_AckTenSecond(properties) {
+            this.items = [];
+            this.gold = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckTenSecond result.
+         * @member {number} result
+         * @memberof msg.GW2C_AckTenSecond
+         * @instance
+         */
+        GW2C_AckTenSecond.prototype.result = 0;
+
+        /**
+         * GW2C_AckTenSecond items.
+         * @member {Array.<msg.IPairNumItem>} items
+         * @memberof msg.GW2C_AckTenSecond
+         * @instance
+         */
+        GW2C_AckTenSecond.prototype.items = $util.emptyArray;
+
+        /**
+         * GW2C_AckTenSecond gold.
+         * @member {Array.<string>} gold
+         * @memberof msg.GW2C_AckTenSecond
+         * @instance
+         */
+        GW2C_AckTenSecond.prototype.gold = $util.emptyArray;
+
+        /**
+         * Creates a new GW2C_AckTenSecond instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckTenSecond
+         * @static
+         * @param {msg.IGW2C_AckTenSecond=} [properties] Properties to set
+         * @returns {msg.GW2C_AckTenSecond} GW2C_AckTenSecond instance
+         */
+        GW2C_AckTenSecond.create = function create(properties) {
+            return new GW2C_AckTenSecond(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckTenSecond message. Does not implicitly {@link msg.GW2C_AckTenSecond.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckTenSecond
+         * @static
+         * @param {msg.IGW2C_AckTenSecond} message GW2C_AckTenSecond message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckTenSecond.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.result != null && message.hasOwnProperty("result"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
+            if (message.items != null && message.items.length)
+                for (var i = 0; i < message.items.length; ++i)
+                    $root.msg.PairNumItem.encode(message.items[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.gold != null && message.gold.length)
+                for (var i = 0; i < message.gold.length; ++i)
+                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.gold[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckTenSecond message, length delimited. Does not implicitly {@link msg.GW2C_AckTenSecond.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckTenSecond
+         * @static
+         * @param {msg.IGW2C_AckTenSecond} message GW2C_AckTenSecond message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckTenSecond.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckTenSecond message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckTenSecond
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckTenSecond} GW2C_AckTenSecond
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckTenSecond.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckTenSecond();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.result = reader.uint32();
+                    break;
+                case 2:
+                    if (!(message.items && message.items.length))
+                        message.items = [];
+                    message.items.push($root.msg.PairNumItem.decode(reader, reader.uint32()));
+                    break;
+                case 3:
+                    if (!(message.gold && message.gold.length))
+                        message.gold = [];
+                    message.gold.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckTenSecond message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckTenSecond
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckTenSecond} GW2C_AckTenSecond
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckTenSecond.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckTenSecond message.
+         * @function verify
+         * @memberof msg.GW2C_AckTenSecond
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckTenSecond.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.result != null && message.hasOwnProperty("result"))
+                if (!$util.isInteger(message.result))
+                    return "result: integer expected";
+            if (message.items != null && message.hasOwnProperty("items")) {
+                if (!Array.isArray(message.items))
+                    return "items: array expected";
+                for (var i = 0; i < message.items.length; ++i) {
+                    var error = $root.msg.PairNumItem.verify(message.items[i]);
+                    if (error)
+                        return "items." + error;
+                }
+            }
+            if (message.gold != null && message.hasOwnProperty("gold")) {
+                if (!Array.isArray(message.gold))
+                    return "gold: array expected";
+                for (var i = 0; i < message.gold.length; ++i)
+                    if (!$util.isString(message.gold[i]))
+                        return "gold: string[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckTenSecond message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckTenSecond
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckTenSecond} GW2C_AckTenSecond
+         */
+        GW2C_AckTenSecond.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckTenSecond)
+                return object;
+            var message = new $root.msg.GW2C_AckTenSecond();
+            if (object.result != null)
+                message.result = object.result >>> 0;
+            if (object.items) {
+                if (!Array.isArray(object.items))
+                    throw TypeError(".msg.GW2C_AckTenSecond.items: array expected");
+                message.items = [];
+                for (var i = 0; i < object.items.length; ++i) {
+                    if (typeof object.items[i] !== "object")
+                        throw TypeError(".msg.GW2C_AckTenSecond.items: object expected");
+                    message.items[i] = $root.msg.PairNumItem.fromObject(object.items[i]);
+                }
+            }
+            if (object.gold) {
+                if (!Array.isArray(object.gold))
+                    throw TypeError(".msg.GW2C_AckTenSecond.gold: array expected");
+                message.gold = [];
+                for (var i = 0; i < object.gold.length; ++i)
+                    message.gold[i] = String(object.gold[i]);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckTenSecond message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckTenSecond
+         * @static
+         * @param {msg.GW2C_AckTenSecond} message GW2C_AckTenSecond
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckTenSecond.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults) {
+                object.items = [];
+                object.gold = [];
+            }
+            if (options.defaults)
+                object.result = 0;
+            if (message.result != null && message.hasOwnProperty("result"))
+                object.result = message.result;
+            if (message.items && message.items.length) {
+                object.items = [];
+                for (var j = 0; j < message.items.length; ++j)
+                    object.items[j] = $root.msg.PairNumItem.toObject(message.items[j], options);
+            }
+            if (message.gold && message.gold.length) {
+                object.gold = [];
+                for (var j = 0; j < message.gold.length; ++j)
+                    object.gold[j] = message.gold[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckTenSecond to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckTenSecond
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckTenSecond.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckTenSecond;
     })();
 
     msg.EntityBase = (function() {
@@ -19865,13 +20322,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -20120,13 +20571,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
