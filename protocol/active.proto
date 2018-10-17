@@ -37,3 +37,13 @@ message GW2C_RetOpenBox
 {
     optional uint32 result = 1;
 }
+//十秒
+message C2GW_ReqTenSecond
+{
+    optional bool hit = 1;
+}
+message GW2C_AckTenSecond
+{
+    repeated PairNumItem items = 1;
+    repeated string gold = 2;
+}

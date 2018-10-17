@@ -29,12 +29,6 @@ cc.Class({
         this.idLabel.string = Game.Tools.zeroPadding(this.eventData.Id, 3);
     },
     onItemClick: function () {
-        // if (this._checkEventOpen()) {
-        //     //打开事件吧
-        // } else {
-        //     //提示
-        // }
-        // this.openView(Game.UIName.UI_EVENTDETAILVIEW);
         Game.Tools.InvokeCallback(this.target.onItemClick.bind(this.target), this.eventData.Id)
     },
     _checkEventOpen: function () {

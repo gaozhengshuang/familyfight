@@ -1,0 +1,55 @@
+
+yingluo.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: true
+  xy: 319, 278
+  size: 232, 355
+  orig: 232, 355
+  offset: 0, 0
+  index: -1
+yingluo_eye_close
+  rotate: false
+  xy: 676, 467
+  size: 135, 43
+  orig: 135, 43
+  offset: 0, 0
+  index: -1
+yingluo_eye_copen
+  rotate: true
+  xy: 221, 34
+  size: 163, 66
+  orig: 163, 66
+  offset: 0, 0
+  index: -1
+yingluo_hand_left
+  rotate: false
+  xy: 676, 354
+  size: 55, 111
+  orig: 55, 111
+  offset: 0, 0
+  index: -1
+yingluo_hand_right
+  rotate: false
+  xy: 2, 2
+  size: 217, 195
+  orig: 217, 195
+  offset: 0, 0
+  index: -1
+yingluo_head
+  rotate: false
+  xy: 2, 199
+  size: 315, 311
+  orig: 315, 311
+  offset: 0, 0
+  index: -1
+yingluo_shadow
+  rotate: false
+  xy: 319, 142
+  size: 411, 134
+  orig: 411, 134
+  offset: 0, 0
+  index: -1

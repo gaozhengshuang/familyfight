@@ -257,3 +257,7 @@ func (this *GateUser) TickBox(now uint64) {
 		this.SynBox()
 	}
 }
+
+func (this *GateUser) TenSecond(hit bool) (gold []string, items []*msg.PairNumItem) {
+
+}

@@ -1873,6 +1873,7 @@
     "_enabled": true,
     "_url": "",
     "_data": {},
+    "_oldparentNode": null,
     "eventSprite": {
       "__id__": 9
     },
@@ -1897,10 +1898,14 @@
     "tableView": {
       "__id__": 51
     },
+    "bottomNode": {
+      "__id__": 24
+    },
     "headInfo": null,
     "barragesInfo": [],
     "eventid": 0,
-    "eventConfig": null
+    "eventConfig": null,
+    "showBarrage": true
   },
   {
     "__type__": "9c827Ff719G4oql+MIFvI57",

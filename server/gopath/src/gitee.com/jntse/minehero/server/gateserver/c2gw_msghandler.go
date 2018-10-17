@@ -65,6 +65,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTurnBrand{}, on_C2GW_ReqTurnBrand)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqLinkup{}, on_C2GW_ReqLinkup)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqOpenBox{}, on_C2GW_ReqOpenBox)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTenSecond{}, on_C2GW_ReqTenSecond)
 	//后宫
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPalaceTakeBack{}, on_C2GW_ReqPalaceTakeBack)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMasterLevelup{}, on_C2GW_ReqMasterLevelup)
@@ -375,7 +376,26 @@ func on_C2GW_ReqOpenBox(session network.IBaseNetSession, message interface{}) {
 	send.Result = pb.Uint32(result)
 	user.SendMsg(send)
 }
+//十秒小游戏
+func on_C2GW_ReqTenSecond(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqTenSecond)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
 
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result := user.OpenBox(tmsg.GetId(), tmsg.GetNum())
+	send := &msg.GW2C_RetOpenBox{}
+	send.Result = pb.Uint32(result)
+	user.SendMsg(send)
+}
 //收取
 func on_C2GW_ReqPalaceTakeBack(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_ReqPalaceTakeBack)

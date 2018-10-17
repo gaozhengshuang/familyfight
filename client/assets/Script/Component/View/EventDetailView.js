@@ -12,13 +12,18 @@ cc.Class({
         barrageEditBox: { default: null, type: cc.EditBox },
         headListNode: { default: null, type: cc.Node },
         tableView: { default: null, type: cc.tableView },
+        bottomNode: { default: null, type: cc.Node },
 
         headInfo: { default: {} },
         barragesInfo: { default: [] },
         eventid: { default: 0 },
         eventConfig: { default: null },
+        showBarrage: { default: true }
     },
     update: function (dt) {
+        if (!this.showBarrage) {
+            return;
+        }
         let maxX = [0, 0, 0];
         for (let i = 0; i < this.barrageNode.childrenCount; i++) {
             let child = this.barrageNode.children[i];
@@ -48,6 +53,8 @@ cc.Class({
     onEnable: function () {
         Game.NetWorkController.AddListener('msg.GW2C_AckEventBarrage', this, this.onAckEventBarrage);
         Game.NetWorkController.AddListener('msg.GW2C_AckSendEventBarrage', this, this.onAckSendEventBarrage);
+        this.showBarrage = Game._.get(this, '_data.showBarrage', true);
+        this.bottomNode.active = this.showBarrage;
         this.eventid = Game.TravelModel.openEvent;
         //事件数据
         this.eventConfig = Game.TravelModel.GetEventConfig(this.eventid);

@@ -55,7 +55,7 @@ cc.Class({
             //有事件未查看
             Game.NetWorkController.Send('msg.C2GW_ReqCheckEvent', {})
             Game.TravelModel.SetOpenEvent(Game.TravelModel.eventid);
-            this.openView(Game.UIName.UI_EVENTDETAILVIEW);
+            this.openView(Game.UIName.UI_EVENTDETAILVIEW, { showBarrage: false });
         }
     },
     onDisable: function () {
