@@ -1,7 +1,6 @@
 package main
 import (
 	"gitee.com/jntse/minehero/pbmsg"
-	"gitee.com/jntse/gotoolkit/log"
 	pb "github.com/golang/protobuf/proto"
 )
 
@@ -32,10 +31,10 @@ func (this *UserGuide) PackBin(bin *msg.Serialize) {
 	bin.Guide = &msg.GuideData{}
 	bin.Guide.Guidesdata = make([]uint32, 0)
 	for _, guide := range this.guides {
-		bin.Guidesdata = append(bin.Guidesdata, guide)
+		bin.Guide.Guidesdata = append(bin.Guide.Guidesdata, guide)
 	}
 	bin.Guide.Curguide = pb.Uint32(this.curguide)
-	bind.Guide.Maxlevel = pb.Uint32(this.maxlevel)
+	bin.Guide.Maxlevel = pb.Uint32(this.maxlevel)
 }
 // ========================= 对外接口 ========================= 
 func (this *UserGuide) Syn(user* GateUser) {
