@@ -18,6 +18,7 @@ cc.Class({
     update(dt) {
     },
     init(index, data, reload, group) {
+        this.node.name = 'SupplyItemNode_' + (index + 1);
         this.target = data.target;
         this.index = index;
         if (index >= data.array.length) {
