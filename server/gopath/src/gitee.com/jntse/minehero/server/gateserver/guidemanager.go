@@ -29,46 +29,30 @@ type GuideConf struct {
 	id				uint32
 	condtype 		uint32
 	condvalue 		uint32
-	startid 		uint32		//一列中的一个引导的id
-	index 			uint32		//在这一组的哪一个index上
 	resetid			uint32
+	nextid 			uint32
 }
 
 //引导管理器
 type GuideManager struct {
-	guidesConf     		[][]*GuideConf
 	guidesMap			map[uint32]*GuideConf
+	startGuide			[]uint32
 }
 
 func (this *GuideManager) Init() {
-	this.guidesConf = make([][]*GuideConf, 0)
 	this.guidesMap = make(map[uint32]*GuideConf)
+	this.startGuide = make([]*GuideConf, 0)
 	for _, v := range tbl.TGuide.Guide {
 		conf := &GuideConf{}
 		conf.id = v.Id
 		conf.condtype = v.ConditionType
 		conf.condvalue = v.ConditionValue
 		conf.resetid = v.Resetid
-		this.guidesMap[conf.id] = conf
-		switch v.ConditionType {
-			case Type_Guide:
-				preGuide := this.GetGuideById(conf.condvalue)
-				if preGuide != nil {
-					guideGroup := this.guidesConf[preGuide.index]
-					conf.startid = preGuide.startid
-					conf.index = preGuide.index
-					guideGroup = append(guideGroup, conf)
-					this.guidesConf[preGuide.index] = guideGroup
-				}
-				break
-			default:
-				conf.startid = conf.id
-				conf.index = uint32(len(this.guidesConf))
-				guideGroup := make([]*GuideConf, 0)
-				guideGroup = append(guideGroup, conf)
-				this.guidesConf = append(this.guidesConf, guideGroup)
-				break
+		conf.nextid = v.NextId
+		if conf.condtype != Type_Guide {
+			this.startGuide = append(this.startGuide, conf)
 		}
+		this.guidesMap[conf.id] = conf
 	}
 }
 
@@ -82,9 +66,7 @@ func (this *GuideManager) IsGuideGroupComplete(id uint32) bool {
 	if guideConf == nil {
 		return false
 	}
-	guideGroup := this.guidesConf[guideConf.index]
-	lastGuide := guideGroup[len(guideGroup) - 1]
-	return guideConf.id == lastGuide.id
+	return guideConf.nextid == 0
 }
 
 func (this *GuideManager) GetNextGuide(id uint32) uint32{
@@ -92,25 +74,5 @@ func (this *GuideManager) GetNextGuide(id uint32) uint32{
 	if guideConf == nil {
 		return 0
 	}
-	guideGroup := this.guidesConf[guideConf.index]
-	find := false
-	nextid := uint32(0)
-	for _, v := range guideGroup {
-		if find {
-			nextid = v.id
-			break
-		}
-		if v.id == id {
-			find = true
-		}
-	}
-	return nextid
-}
-
-func (this *GuideManager) GetStartId(id uint32) (result uint32 , find bool){
-	guideConf := this.GetGuideById(id)
-	if guideConf == nil {
-		return 0, false
-	}
-	return guideConf.startid, true
+	return guideConf.nextid
 }

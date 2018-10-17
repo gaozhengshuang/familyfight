@@ -146,5 +146,6 @@ message Serialize {
     optional TravelData travel  = 6;            //御赐数据
     repeated uint32 eventids    = 7;            //开启的事件
     repeated BoxData boxs       = 8;            //掉落的箱子数量、
-    repeated uint32 guides   = 9;               //引导数据
+    repeated uint32 guidesdata  = 9;            //完成的引导
+    optional uint32 curguide    = 10;           //最近完成的引导
 }
