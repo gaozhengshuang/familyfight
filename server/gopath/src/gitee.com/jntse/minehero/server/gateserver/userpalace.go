@@ -246,7 +246,6 @@ func (this *UserPalace) AddPalace(user *GateUser, id uint32) (palace *PalaceData
 	for i := 0;i < len(tmpl.Maids); i++ {
 		palace.maids = append(palace.maids, false)
 	}
-	mastertmpl := PalaceMgr().GetMasterConfig(id,1)
 	palace.endtime = uint64(util.CURTIME())
 	this.palaces[id] = palace
 	return palace, true
