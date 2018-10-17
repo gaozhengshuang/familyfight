@@ -11,6 +11,7 @@ cc.Class({
         this.tableView.initTableView(events.length, { array: events, target: this });
     },
     onItemClick: function (eventid) {
+        Game.GuideController.NextGuide();
         if (Game.TravelModel.IsEventOpen(eventid)) {
             //打开事件吧
             Game.TravelModel.SetOpenEvent(eventid);

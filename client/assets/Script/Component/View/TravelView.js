@@ -78,6 +78,7 @@ cc.Class({
     },
     onConfirm: function () {
         Game.NetWorkController.Send('msg.C2GW_ReqPrepareTravel', { items: this.supplyData });
+        Game.GuideController.NextGuide();
     },
     onPreClose: function () {
         Game.NetWorkController.Send('msg.C2GW_ReqTravelView', { open: false });
@@ -113,6 +114,7 @@ cc.Class({
             }
         }.bind(this));
         this._updateSupplyView();
+        Game.GuideController.NextGuide();
     },
     _updateSupplyView: function () {
         for (let i = 0; i < 3; i++) {
