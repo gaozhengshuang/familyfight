@@ -102,7 +102,7 @@ GuideController.prototype.IsGuideComplete = function (guide) {
 }
 
 GuideController.prototype.onPushGuideData = function (msgid, data) {
-    this._guideData = _.cloneDeep(data.guides);
+    this._guideData = _.cloneDeep(data.guides) || [];
 }
 // GuideController.prototype.IsShopOpen = function () {
 //     return this.IsGuidePass(Define.GUIDE_DEFINE.BUTTON_OPENSHOP);
