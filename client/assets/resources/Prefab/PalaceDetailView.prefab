@@ -1405,8 +1405,10 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceView",
+    "target": {
+      "__id__": 1
+    },
+    "component": "PalaceDetailView",
     "handler": "onClose",
     "customEventData": ""
   },
