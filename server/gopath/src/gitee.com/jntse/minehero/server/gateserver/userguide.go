@@ -39,6 +39,7 @@ func (this *UserGuide) PackBin(bin *msg.Serialize) {
 // ========================= 对外接口 ========================= 
 func (this *UserGuide) Syn(user* GateUser) {
 	nextid := this.GetNextGuide(user, true, Type_Level, this.maxlevel)
+	this.curguide = nextid
 	send := &msg.GW2C_AckGuideData{ Guide: pb.Uint32(nextid) }
 	user.SendMsg(send)
 	this.PushGuideData(user)
@@ -57,8 +58,9 @@ func (this *UserGuide) UpdateGuide(user* GateUser,id uint32) uint32 {
 		this.guides = append(this.guides, id)
 		this.PushGuideData(user)
 	}
-	this.curguide = id
-	return this.GetNextGuide(user, false, Type_NonActive, id)
+	nextid := this.GetNextGuide(user, false, Type_NonActive, id)
+	this.curguide = nextid
+	return nextid
 }
 func (this *UserGuide) OpenNewLevel(user* GateUser, level uint32) uint32 {
 	unfinishGuide := this.UnFinishGuide(false)
@@ -106,7 +108,6 @@ func (this *UserGuide) UnFinishGuide(reset bool) uint32 {
 	} else {
 		return guideConf.nextid
 	}
-	return 0
 }
 
 func (this *UserGuide) NewGuide(trigtype uint32, trigvalue uint32) uint32 {
