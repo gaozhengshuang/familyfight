@@ -13,7 +13,7 @@ cc.Class({
     },
 
     start() {
-        this.openGuide();
+        // this.openGuide();
     },
 
     update(dt) {
