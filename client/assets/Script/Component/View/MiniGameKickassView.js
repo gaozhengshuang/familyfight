@@ -7,7 +7,7 @@ const KickAssStatus = {
     Status_End: 5
 }
 const EunuchMoveX = 280;
-const EunuchSpeed = 100;
+const EunuchSpeed = 300;
 const KickInterval = 0.5;
 const ShoeInitY = -220;
 
