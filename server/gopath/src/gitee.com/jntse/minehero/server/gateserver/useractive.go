@@ -264,7 +264,7 @@ func (this *GateUser) TenSecond(hit bool) (result uint32, gold []string, items [
 	// 体力够不够 
 	if this.GetPower() < 1 {
 		this.SendNotify("体力不足")
-		return 1, gold, itmes
+		return 1, gold, items
 	}
 	//可以了
 	if hit {
@@ -279,7 +279,8 @@ func (this *GateUser) TenSecond(hit bool) (result uint32, gold []string, items [
 		//奖励金币
 		goldObj := this.maid.CalculateRewardPerSecond(this)
 		goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.TenSeceondGoldRatio))
-		gold = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
+		goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
+		gold = this.ParseBigGoldToArr(goldObj)
 	}
 	//扣体力
 	this.RemovePower(1,"十秒游戏消耗")
