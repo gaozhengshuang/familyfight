@@ -3276,7 +3276,7 @@
       "__id__": 8
     },
     "status": 1,
-    "speed": 100
+    "speed": 600
   },
   {
     "__type__": "cc.PrefabInfo",
