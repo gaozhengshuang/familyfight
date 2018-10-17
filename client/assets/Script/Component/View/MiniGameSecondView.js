@@ -143,6 +143,20 @@ cc.Class({
     },
 
     sendGameData() {
+        if (this._gameTime > 10) {
+            if (this._gameTime - 10 < 0.03) {
+                this._gameTime = 10;
+                this._millisecond = 0;
+                this.refreshTime();
+            }
+        } else {
+            if (10 - this._gameTime < 0.03) {
+                this._gameTime = 10;
+                this._millisecond = 0;
+                this.refreshTime();
+            }
+        }
+
         Game.NetWorkController.Send('msg.C2GW_ReqTenSecond', {
             hit: this._gameTime == 10,
         });
