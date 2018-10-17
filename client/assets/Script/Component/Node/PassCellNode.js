@@ -45,12 +45,6 @@ cc.Class({
             this.animation_light.node.active = true;
             this.animation_light.play("FlashNewPass");
         }
-
-        if (this._data.Id == Game.MaidModel.GetCurPass() && this._data.Id == Game.MaidModel.GetTopPass()) {     //最高关卡给服务器发送引导需要的数据
-            Game.NetWorkController.Send('msg.C2GW_NotifyOpenLevel', {
-                level: this._data.Id,
-            });
-        }
     },
 
     clicked() {        
@@ -60,20 +54,27 @@ cc.Class({
     
                 Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
                 Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW);
-            }
-            Game.GuideController.NextGuide();
-    
-            let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));
-            if (this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.pass < this._data.Id) {
-                let passData = {
-                    userid: Game.UserModel.GetUserId(),
-                    lookPass: _dialoguePass.lookPass,
-                    pass: this._data.Id,
-                };
-                cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
-                
-                if (this._data.DialogueID != 0) {                    
-                    Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);
+
+                if (this._data.Id == Game.MaidModel.GetCurPass() && this._data.Id == Game.MaidModel.GetTopPass()) {     //最高关卡给服务器发送引导需要的数据
+                    Game.NetWorkController.Send('msg.C2GW_NotifyOpenLevel', {
+                        level: this._data.Id,
+                    });
+                }
+            
+                Game.GuideController.NextGuide();
+        
+                let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));
+                if (this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.pass < this._data.Id) {
+                    let passData = {
+                        userid: Game.UserModel.GetUserId(),
+                        lookPass: _dialoguePass.lookPass,
+                        pass: this._data.Id,
+                    };
+                    cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
+                    
+                    if (this._data.DialogueID != 0) {                    
+                        Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);
+                    }
                 }
             }
         } else {
