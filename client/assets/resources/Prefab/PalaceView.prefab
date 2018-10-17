@@ -1302,7 +1302,7 @@
     "_cascadeOpacityEnabled": true,
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": 0.5,
       "y": 0.5
     },
     "_contentSize": {
@@ -1316,7 +1316,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -360,
+      "x": -308.3,
       "y": 524
     },
     "_skewX": 0,
@@ -1437,7 +1437,7 @@
     "asset": {
       "__uuid__": "cb17f135-932a-44d4-babb-5121646e1c7f"
     },
-    "fileId": "30F0GyfqlNk62cxYOqyk16",
+    "fileId": "7eZ0tpzOFEGr6eBP+28GtV",
     "sync": false
   },
   {
