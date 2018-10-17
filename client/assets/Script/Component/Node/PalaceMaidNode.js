@@ -55,5 +55,6 @@ cc.Class({
     openDetail() {
         Game.PalaceModel.SetPalaceCurMaidIndex(this._index);
         this.openView(Game.UIName.UI_PALACEMAIDDETAIL);
+        Game.GuideController.NextGuide();
     },
 });

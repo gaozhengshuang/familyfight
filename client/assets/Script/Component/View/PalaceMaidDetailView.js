@@ -89,6 +89,8 @@ cc.Class({
             });
             Game.CurrencyModel.SubtractGold(this._lockGold);
             this.onClose();
+
+            Game.GuideController.NextGuide();
         } else {
             this.showTips("金币不足哟!");
         }
