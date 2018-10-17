@@ -93,6 +93,8 @@ cc.Class({
                 let maidId = palaceMapBase.Maids[i];
                 let _maidPrefab = cc.instantiate(this.prefab_maid);
                 if (_maidPrefab) {
+                    _maidPrefab.name = `PalaceMaidNode${i+1}`;
+                    
                     let _maid = _maidPrefab.getComponent('PalaceMaidNode');
                     if (_maid) {
                         _maid.setData(maidId, i);
