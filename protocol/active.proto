@@ -1,5 +1,6 @@
 package msg;
 import "serialize.proto";
+import "define.proto"
 
 // 大转盘 抽签
 message C2GW_ReqTurnBrand 
