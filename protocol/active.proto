@@ -49,3 +49,13 @@ message GW2C_AckTenSecond
     repeated PairNumItem items = 2;
     repeated string gold = 3;
 }
+//踢屁股
+message C2GW_ReqKickAss
+{
+    optional bool hit = 1;
+}
+message GW2C_AckKickAss
+{
+    optional uint32 result = 1;
+    repeated string gold = 2;
+}
