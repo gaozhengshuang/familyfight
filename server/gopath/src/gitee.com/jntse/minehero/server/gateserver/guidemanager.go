@@ -6,7 +6,7 @@ import (
 const (
 	Type_None			uint32 = 0
 	Type_Level   		uint32 = 1
-	Type_Guide			uint32 = 2
+	Type_NonActive		uint32 = 2
 )
 
 /*
@@ -41,7 +41,7 @@ type GuideManager struct {
 
 func (this *GuideManager) Init() {
 	this.guidesMap = make(map[uint32]*GuideConf)
-	this.startGuide = make([]*GuideConf, 0)
+	this.startGuide = make([]uint32, 0)
 	for _, v := range tbl.TGuide.Guide {
 		conf := &GuideConf{}
 		conf.id = v.Id
@@ -49,8 +49,8 @@ func (this *GuideManager) Init() {
 		conf.condvalue = v.ConditionValue
 		conf.resetid = v.Resetid
 		conf.nextid = v.NextId
-		if conf.condtype != Type_Guide {
-			this.startGuide = append(this.startGuide, conf)
+		if conf.condtype != Type_NonActive {
+			this.startGuide = append(this.startGuide, conf.id)
 		}
 		this.guidesMap[conf.id] = conf
 	}

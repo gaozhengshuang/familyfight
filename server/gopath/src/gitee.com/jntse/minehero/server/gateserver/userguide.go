@@ -1,7 +1,6 @@
 package main
 import (
 	"gitee.com/jntse/minehero/pbmsg"
-	"gitee.com/jntse/gotoolkit/log"
 	pb "github.com/golang/protobuf/proto"
 )
 
@@ -14,33 +13,38 @@ import (
 type UserGuide struct {
 	guides			[]uint32
 	curguide        uint32
+	maxlevel		uint32
 }
 //加载数据
 func (this *UserGuide) LoadBin(user *GateUser,bin *msg.Serialize) {
 	this.guides = make([]uint32, 0)
-	guides := bin.GetGuidesdata()
+	guidedata := bin.GetGuide()
+	guides := guidedata.GetGuidesdata()
 	for _, data := range guides {
 		this.guides = append(this.guides, data)
 	}
-	this.curguide = bin.GetCurguide()
+	this.curguide = guidedata.GetCurguide()
+	this.maxlevel = guidedata.GetMaxlevel()
 }
 
 func (this *UserGuide) PackBin(bin *msg.Serialize) {
-	bin.Guidesdata = make([]uint32, 0)
+	bin.Guide = &msg.GuideData{}
+	bin.Guide.Guidesdata = make([]uint32, 0)
 	for _, guide := range this.guides {
-		bin.Guidesdata = append(bin.Guidesdata, guide)
+		bin.Guide.Guidesdata = append(bin.Guide.Guidesdata, guide)
 	}
-	bin.Curguide = pb.Uint32(this.curguide)
+	bin.Guide.Curguide = pb.Uint32(this.curguide)
+	bin.Guide.Maxlevel = pb.Uint32(this.maxlevel)
 }
 // ========================= 对外接口 ========================= 
 func (this *UserGuide) Syn(user* GateUser) {
-	nextid := this.GetNextGuide(user, true, Type_None, 0)
+	nextid := this.GetNextGuide(user, true, Type_Level, this.maxlevel)
 	send := &msg.GW2C_AckGuideData{ Guide: pb.Uint32(nextid) }
 	user.SendMsg(send)
 	this.PushGuideData(user)
 }
 func (this *UserGuide) IsGuidePass(id uint32) bool {
-	for _, v := this.guides {
+	for _, v := range this.guides {
 		if v == id {
 			return true
 		}
@@ -54,10 +58,13 @@ func (this *UserGuide) UpdateGuide(user* GateUser,id uint32) uint32 {
 		this.PushGuideData(user)
 	}
 	this.curguide = id
-	return this.GetNextGuide(user, false, Type_Guide, id)
+	return this.GetNextGuide(user, false, Type_NonActive, id)
 }
 func (this *UserGuide) OpenNewLevel(user* GateUser, level uint32) uint32 {
 	unfinishGuide := this.UnFinishGuide(false)
+	if level > this.maxlevel {
+		this.maxlevel = level
+	}
 	if unfinishGuide != 0 {
 		return 0
 	}

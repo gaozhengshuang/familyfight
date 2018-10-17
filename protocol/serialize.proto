@@ -137,6 +137,12 @@ message BoxData
     optional uint32 level = 3;
     optional uint64 generatetime = 4;
 }
+message GuideData
+{
+    repeated uint32 guidesdata  = 1;            //完成的引导
+    optional uint32 curguide    = 2;            //最近完成的引导
+    optional uint32 maxlevel    = 3;            //点击过的最大关卡
+}
 message Serialize {
     optional EntityBase entity  = 1;
     optional UserBase   base    = 2;
@@ -145,7 +151,6 @@ message Serialize {
     repeated PalaceData palaces = 5;            //后宫数据
     optional TravelData travel  = 6;            //御赐数据
     repeated uint32 eventids    = 7;            //开启的事件
-    repeated BoxData boxs       = 8;            //掉落的箱子数量、
-    repeated uint32 guidesdata  = 9;            //完成的引导
-    optional uint32 curguide    = 10;           //最近完成的引导
+    repeated BoxData boxs       = 8;            //掉落的箱子数量
+    optional GuideData guide    = 9;
 }
