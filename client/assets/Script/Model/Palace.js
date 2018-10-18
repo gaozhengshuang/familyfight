@@ -17,7 +17,8 @@ PalaceModel.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_RetMaidUnlock', this, this.onGW2C_RetMaidUnlock);
     NetWorkController.AddListener('msg.GW2C_RetPalaceTakeBack', this, this.onGW2C_RetPalaceTakeBack);
     NetWorkController.AddListener('msg.GW2C_RetMasterLevelup', this, this.onGW2C_RetMasterLevelup);
-
+    NetWorkController.AddListener('msg.GW2C_AckPartLevelup', this, this.onGW2C_AckPartLevelup);
+    
     Tools.InvokeCallback(cb, null);
 }
 
@@ -102,6 +103,19 @@ PalaceModel.prototype.onGW2C_RetMasterLevelup = function (msgid, data) {
         }
 
         NotificationController.Emit(Define.EVENT_KEY.PALACEMASTERLVUP_ACK);
+    }
+}
+
+PalaceModel.prototype.onGW2C_AckPartLevelup = function (msgid, data) {
+    if (data.result == 0) {
+        for (let i = 0; i < this.palaceDatas.length; i++) {
+            if (this.palaceDatas[i].id == data.datas.id) {
+                this.palaceDatas[i] = data.datas;
+                break;
+            }
+        }
+
+        NotificationController.Emit(Define.EVENT_KEY.PARTLVUP_ACK);
     }
 }
 

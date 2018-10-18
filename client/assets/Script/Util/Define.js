@@ -46,6 +46,7 @@ var Define = {
         GUIDE_OPEN: '1015',
         GUIDE_OVER: '1016',
         UPDATE_PLAYER: '1017',
+        PARTLVUP_ACK: '1018',
 
         TRAVELDATA_UPDATE: '1100',
         EVENTDATA_UPDATE: '1101',
