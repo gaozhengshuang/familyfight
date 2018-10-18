@@ -15,6 +15,8 @@ type PalaceData struct {
 	level 			uint32
 	maids			[]bool
 	endtime			uint64
+	parts 			[]uint32
+	charm 			uint32
 }
 
 func (this *PalaceData) PackBin() *msg.PalaceData{
@@ -26,6 +28,11 @@ func (this *PalaceData) PackBin() *msg.PalaceData{
 		data.Maids = append(data.Maids, v)
 	}
 	data.Endtime = pb.Uint64(this.endtime)
+	data.Partslevel = make([]uint32, 0)
+	for _, v := range this.parts {
+		data.Partslevel = append(data.Partslevel, v)
+	}
+	data.Charm = pb.Uint32(this.charm)
 	return data
 }
 
@@ -49,6 +56,10 @@ func (this *UserPalace) LoadBin(user *GateUser,bin *msg.Serialize) {
 			palace.maids[index] = v
 		}
 		palace.endtime = data.GetEndtime()
+		for index, v := range data.GetPartslevel() {
+			palace.parts[index] = v
+		}
+		palace.charm = data.GetCharm()
 	}
 }
 
@@ -103,6 +114,17 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 		user.SendNotify("没有女仆配置")
 		return 3,items,nil,gold
 	}
+	palaceopend := false
+	for _, v := range palace.maids {
+		palaceopend = (palaceopend || v)
+		if palaceopend {
+			break
+		}
+	}
+	if !palaceopend {
+		user.SendNotify("尚未解锁侍女")
+		return 5,items,nil,gold
+	}
 	if palace.endtime > uint64(util.CURTIME()) {
 		user.SendNotify("时间还未到")
 		return 4,items,nil,gold
@@ -145,6 +167,10 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 	retitems := make([]*msg.PairNumItem,0)
 	// retitems = append(retitems, &msg.PairNumItem{ Itemid: pb.Uint32(uint32(tbl.Common.GoldItemID)), Num: pb.Uint64(gold)})
 	retitems = append(retitems, items...)
+	//计算收取百分比
+	goldObj = user.TimesBigGold(goldObj, palace.charm + 100)
+	goldObj = user.DivideBigGold(goldObj, 100)
+
 	goldObj = user.CarryBigGold(goldObj, user.MaxIndexBigGold(goldObj))
 	return 0, retitems, palace.PackBin(), user.ParseBigGoldToArr(goldObj)
 }
@@ -228,6 +254,43 @@ func (this *UserPalace) UnlockMaid(user* GateUser, id uint32, index uint32) (res
 	palace.maids[index] = true
 	return 0, palace.PackBin()
 }
+
+//升级部件
+func (this *UserPalace) PartLevelup(user *GateUser,id uint32, index uint32) (result uint32, data *msg.PalaceData){
+	if index < PalacePartType_Start || index >= PalacepartType_End {
+		user.SendNotify("后宫没有该配件")
+		return 1, nil
+	}
+	partid := this.GetPalacePartId(id, index)
+	if partid == 0 {
+		user.SendNotify("后宫没有该配件")
+		return 1, nil
+	}
+	palace, _ := this.palaces[id]
+	if palace == nil {
+		user.SendNotify("后宫尚未开启")
+		return 2, nil
+	}
+	level := palace.parts[index]
+	curtmpl := PalaceMgr().GetPartConfig(palace.id, level)
+	if curtmpl == nil {
+		user.SendNotify("未找到配件配置")
+		return 3, nil
+	} 
+	if len(curtmpl.Cost) == 0 {
+		user.SendNotify("该配件已满级")
+		return 4, nil
+	}
+	nexttmpl := PalaceMgr().GetPartConfig(palace.id, level + 1)
+	if nexttmpl == nil {
+		user.SendNotify("该配件已满级")
+		return 4, nil
+	}
+	//可以了 价格啥的就客户端判断了
+	palace.parts[index] = level + 1
+	palace.charm = this.CalculateCharm(user, id)
+	return 0, palace.PackBin()
+}
 // ========================= 数据处理 ========================= 
 // 添加后宫
 func (this *UserPalace) AddPalace(user *GateUser, id uint32) (palace *PalaceData, add bool) {
@@ -247,7 +310,44 @@ func (this *UserPalace) AddPalace(user *GateUser, id uint32) (palace *PalaceData
 		palace.maids = append(palace.maids, false)
 	}
 	palace.endtime = uint64(util.CURTIME())
-	this.palaces[id] = palace
+	palace.parts = make([]uint32, 0)
+	for i := PalacePartType_Start; i < PalacepartType_End; i++ {
+		palace.parts = append(palace.parts, 1)
+	}
+	palace.charm = 0
 	return palace, true
 }
 
+// 查询后宫部件id 
+func (this *UserPalace) GetPalacePartId(id uint32, index uint32) uint32 {
+	palace, _ := this.palaces[id];
+	if palace == nil {
+		return 0
+	}
+	tmpl := PalaceMgr().GetPalaceConfig(palace.id)
+	if tmpl == nil {
+		return 0
+	}
+	if index >= len(tmpl.Parts) {
+		return 0
+	}
+	return tmpl.Parts[index]
+}
+// 重新计算后宫魅力
+func (this *UserPalace) CalculateCharm(user *GateUser, id uint32) uint32{
+	palace, _ := this.palaces[id];
+	if palace == nil {
+		return
+	}
+	charm := uint32(0)
+	for i, v := range palace.parts {
+		partid := this.GetPalacePartId(i)
+		if partid != 0 {
+			partconf := PalaceMgr().GetPartConfig(partid, v)
+			if partconf != nil {
+				charm = charm + partconf.Charm
+			}
+		}
+	}
+	return charm
+}

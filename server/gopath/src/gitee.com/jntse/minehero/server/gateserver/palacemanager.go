@@ -7,6 +7,16 @@ import (
 	"strconv"
 )
 
+const (
+	PalacePartType_Start 			uint32 = 0
+	PalacePartType_PingFeng 		uint32 = 0
+	PalacePartType_DengLong 		uint32 = 1
+	PalacePartType_LanChuan			uint32 = 2
+	PalacePartType_KeYi				uint32 = 3
+	PalacePartType_DiTan			uint32 = 4
+	PalacepartType_End 				uint32 = 5
+)
+
 type IdAndNumber struct {
 	id				uint32
 	num 			uint32
@@ -27,18 +37,25 @@ type PalaceMaidConf struct {
 	ItemGroup 		[]*IdAndNumber
 	TotalWeight 	uint32
 }
-
+type PalacePartConf struct {
+	Id 				uint32
+	Level 			uint32
+	Cost 			[]string
+	Charm			uint32
+}
 //后宫管理器
 type PalaceManager struct {
 	palacetmpls     	map[uint32]*table.PalaceMapDefine
 	mastertmpls 		map[uint32]map[uint32]*PalaceMasterConf
 	maidtmpls			map[uint32][]*PalaceMaidConf
+	parttmpls  			map[uint32]map[uint32]*PalacePartConf
 }
 
 func (this *PalaceManager) Init() {
 	this.palacetmpls = make(map[uint32]*table.PalaceMapDefine)
 	this.mastertmpls = make(map[uint32]map[uint32]*PalaceMasterConf)
 	this.maidtmpls = make(map[uint32][]*PalaceMaidConf)
+	this.parttmpls = make(map[uint32]map[uint32]*PalacePartConf)
 	for _, v := range tbl.TPalaceMapBase.PalaceMap {
 		this.palacetmpls[v.Id] = v
 		//处理主子配置
@@ -88,6 +105,20 @@ func (this *PalaceManager) Init() {
 		}
 		this.maidtmpls[v.Id] = maidtmpls
 	}
+
+	for _, v := range tbl.TPalacePartBase.PalacePartsById {
+		partconf := &PalacePartConf{}
+		partconf.Id = v.PartId
+		partconf.Level = v.Level
+		partconf.Cost = v.Cost[:]
+		partconf.Charm = v.Charm
+		partgroup, find := this.parttmpls[partconf.Id]
+		if !find {
+			partgroup = make(map[uint32]*PalacePartConf)
+			this.parttmpls[partconf.Id] = partgroup
+		}
+		partgroup[partconf.Level] = partconf
+	}
 }
 
 // 获得后宫的配置
@@ -108,4 +139,13 @@ func (this *PalaceManager) GetMasterConfig(pid uint32, level uint32) *PalaceMast
 func (this *PalaceManager) GetMaidConfig(pid uint32 ) []*PalaceMaidConf {
 	maids, _ := this.maidtmpls[pid]
 	return maids
+}
+//获得后宫部件配置
+func (this *PalaceManager) GetPartConfig(pid uint32, level uint32) *PalacePartConf {
+	parts, find := this.parttmpls[pid]
+	if !find {
+		return nil
+	}
+	tmpl, _ := parts[level]
+	return tmpl
 }

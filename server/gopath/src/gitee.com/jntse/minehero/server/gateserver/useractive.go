@@ -73,6 +73,10 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam u
 		case 5:
 			//小游戏
 			return 0, value
+		case 6:
+			//小游戏的游戏币
+			this.currency.AddMiniGameCoin(rid, rvalue, reason, true)
+			return 0, rvalue
 		default:
 			return 0, value
 	}
@@ -262,8 +266,8 @@ func (this *GateUser) TenSecond(hit bool) (result uint32, gold []string, items [
 	gold = make([]string, 0)
 	items = make([]*msg.PairNumItem, 0)
 	// 体力够不够 
-	if this.GetPower() < 1 {
-		this.SendNotify("体力不足")
+	if this.currency.GetMiniGameCoin(MiniGameCoinType_TenSecond) < 1 {
+		this.SendNotify("游戏币不足")
 		return 1, gold, items
 	}
 	//可以了
@@ -283,15 +287,15 @@ func (this *GateUser) TenSecond(hit bool) (result uint32, gold []string, items [
 		gold = this.ParseBigGoldToArr(goldObj)
 	}
 	//扣体力
-	this.RemovePower(1,"十秒游戏消耗")
+	this.currency.RemoveMiniGameCoin(MiniGameCoinType_TenSecond, 1,"十秒游戏消耗", true)
 	return 0, gold, items
 }
 //踢屁股
 func (this *GateUser) KickAss (hit bool) (result uint32, gold []string) {
 	gold = make([]string, 0)
 	// 体力够不够 
-	if this.GetPower() < 1 {
-		this.SendNotify("体力不足")
+	if this.currency.GetMiniGameCoin(MiniGameCoinType_KickAss) < 1 {
+		this.SendNotify("游戏币不足")
 		return 1, gold
 	}
 	//可以了
@@ -309,6 +313,6 @@ func (this *GateUser) KickAss (hit bool) (result uint32, gold []string) {
 		gold = this.ParseBigGoldToArr(goldObj)
 	}
 	//扣体力
-	this.RemovePower(1,"踢屁股消耗")
+	this.currency.RemoveMiniGameCoin(MiniGameCoinType_KickAss, 1,"踢屁股消耗", true)
 	return 0, gold
 }

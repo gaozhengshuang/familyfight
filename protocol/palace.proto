@@ -48,5 +48,5 @@ message C2GW_ReqPartLevelup
 message GW2C_AckPartLevelup
 {
     optional uint32 result = 1;
-    optional PalaceData datas = 2;
+    optional PalaceData data = 2;
 }

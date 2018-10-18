@@ -12,6 +12,76 @@ import (
 	"strings"
 )
 
+const (
+	MiniGameCoinType_Start 					uint32 = 0
+	MiniGameCoinType_TenSecond 				uint32 = 0
+	MiniGameCoinType_KickAss 				uint32 = 1
+	MiniGameCoinType_End 					uint32 = 2
+)
+
+type UserCurrency struct {
+	minigamecoin 			[]uint32
+	user 					*GateUser
+}
+
+func (this *UserCurrency) Init(user *GateUser) {
+	this.minigamecoin = make([]uint32, MiniGameCoinType_End)
+	this.user = user
+}
+
+
+func (this *UserCurrency) LoadBin(base *msg.UserBase) {
+	this.minigamecoin = make([]uint32, 0)
+	for _, v := range base.GetGamecoin(){
+		this.minigamecoin = append(this.minigamecoin, v)
+	}
+}
+
+func (this *UserCurrency) PackBin(base *msg.UserBase) {
+	base.Gamecoin = make([]uint32, 0)
+	for _, v := range this.minigamecoin {
+		base.Gamecoin = append(base.Gamecoin, v)
+	}
+}
+
+func (this *UserCurrency) SynMiniGameCoin(){
+	send := &msg.GW2C_UpdateMiniGameCoin{}
+	send.Gamecoin = make([]uint32, 0)
+	for _, v := range this.minigamecoin {
+		send.Gamecoin = append(send.Gamecoin, v)
+	}
+	this.user.SendMsg(send)
+}
+
+func (this *UserCurrency) GetMiniGameCoin(gametype uint32) uint32 {
+	if gametype >= len(this.minigamecoin){
+		return 0
+	}
+	return this.minigamecoin[gametype]
+}
+func (this *UserCurrency) AddMiniGameCoin(gametype uint32, addition uint32, reason string, notify bool){
+	if gametype >= len(this.minigamecoin){
+		return
+	}
+	this.minigamecoin[gametype] = this.minigamecoin[gametype] + addition
+	log.Info("玩家[%d] 添加小游戏币[%d] 增加[%d] 库存[%d] 原因[%s]", this.Id(), gametype, addition, this.minigamecoin[gametype], reason)
+	if notify {
+		this.SynMiniGameCoin()
+	}
+}
+func (this *UserCurrency) RemoveMiniGameCoin(gametype uint32,reduction uint32,reason string, notify bool ) bool {
+	if this.GetMiniGameCoin(gametype) < reduction {
+		return false
+	}
+	this.minigamecoin[gametype] = this.minigamecoin[gametype] - reduction
+	log.Info("玩家[%d] 扣除小游戏币[%d] 减少[%d] 库存[%d] 原因[%s]", this.Id(), gametype, reduction, this.minigamecoin[gametype], reason)
+	if notify {
+		this.SynMiniGameCoin()
+	}
+	return true
+}
+
+
 // money
 func (this *GateUser) GetMoney() uint32   { return this.money }
 func (this *GateUser) AddMoney(gold uint32, reason string) {
@@ -49,6 +119,13 @@ func (this *GateUser) TimesBigGold(golds map[uint32]uint32, times uint32) map[ui
 	ret := make(map[uint32]uint32)
 	for i, v := range golds {
 		ret[i] = v * times
+	}
+	return ret
+}
+func (this *GateUser) DivideBigGold(golds map[uint32]uint32, divisor uint32) map[uint32]uint32 {
+	ret := make(map[uint32]uint32)
+	for i, v := range golds {
+		ret[i] = v / divisor
 	}
 	return ret
 }

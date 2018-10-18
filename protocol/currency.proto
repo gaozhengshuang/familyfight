@@ -41,3 +41,12 @@ message C2GW_ReqPower
 message GW2C_UpdatePower {
     optional PowerData power = 1;
 }
+
+//小游戏货币值
+message C2GW_ReqMiniGameCoin
+{
+}
+message GW2C_UpdateMiniGameCoin
+{
+    repeated uint32 gamecoin = 1;
+}
