@@ -23,6 +23,7 @@ cc.Class({
 
     onEnable() {
         this.initNotification();
+        this.initView();
     },
 
     onDisable() {
@@ -30,11 +31,18 @@ cc.Class({
     },
 
     initData() {
-
+        this._data = null;
     },
 
     initNotification() {
         // Game.NetWorkController.AddListener('msg.GW2C_AckTenSecond', this, this.onGW2C_AckTenSecond);
     },
 
+    initView() {
+        this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
+        let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this._data.id);
+        if (palaceMapBase) {
+            Game.ResController.SetSprite(this.image_palaceCard, palaceMapBase.BannerPath);
+        }
+    }
 });

@@ -221,10 +221,22 @@ cc.Class({
     },
 
     onReqPalaceTakeBack() {
-        Game.NetWorkController.Send('msg.C2GW_ReqPalaceTakeBack',
-        {
-            id: Game.PalaceModel.GetCurPalaceId(),
-        });
-        Game.GuideController.NextGuide();
+        let isUnlockMaid = false;
+        for (let i = 0; i < this._data.maids.length; i ++) {
+            let maidInfo = this._data.maids[i];
+            if (maidInfo) {
+                isUnlockMaid = true;
+                break;
+            }
+        }
+        if (isUnlockMaid) {
+            Game.NetWorkController.Send('msg.C2GW_ReqPalaceTakeBack',
+            {
+                id: Game.PalaceModel.GetCurPalaceId(),
+            });
+            Game.GuideController.NextGuide();
+        } else {
+            this.showTips("请先解锁宫女!");
+        }
     }
 });
