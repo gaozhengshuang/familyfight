@@ -40,7 +40,7 @@ cc.Class({
 
             let passBase = Game.ConfigController.GetConfigById("PassLevels", this._data.UlockPassId);
             if (passBase) {
-                this.label_unlockTxt.string = `第${passBase.ChapterID}章第${this._data.UlockPassId}关解锁`;
+                this.label_unlockTxt.string = `第${passBase.ChapterID}章第${passBase.Index}关解锁`;
             }
             
         }
