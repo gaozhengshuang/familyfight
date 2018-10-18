@@ -54,17 +54,17 @@ func (this *UserCurrency) SynMiniGameCoin(){
 }
 
 func (this *UserCurrency) GetMiniGameCoin(gametype uint32) uint32 {
-	if gametype >= len(this.minigamecoin){
+	if gametype >= uint32(len(this.minigamecoin)){
 		return 0
 	}
 	return this.minigamecoin[gametype]
 }
 func (this *UserCurrency) AddMiniGameCoin(gametype uint32, addition uint32, reason string, notify bool){
-	if gametype >= len(this.minigamecoin){
+	if gametype >= uint32(len(this.minigamecoin)){
 		return
 	}
 	this.minigamecoin[gametype] = this.minigamecoin[gametype] + addition
-	log.Info("玩家[%d] 添加小游戏币[%d] 增加[%d] 库存[%d] 原因[%s]", this.Id(), gametype, addition, this.minigamecoin[gametype], reason)
+	log.Info("玩家[%d] 添加小游戏币[%d] 增加[%d] 库存[%d] 原因[%s]", this.user.Id(), gametype, addition, this.minigamecoin[gametype], reason)
 	if notify {
 		this.SynMiniGameCoin()
 	}
@@ -74,7 +74,7 @@ func (this *UserCurrency) RemoveMiniGameCoin(gametype uint32,reduction uint32,re
 		return false
 	}
 	this.minigamecoin[gametype] = this.minigamecoin[gametype] - reduction
-	log.Info("玩家[%d] 扣除小游戏币[%d] 减少[%d] 库存[%d] 原因[%s]", this.Id(), gametype, reduction, this.minigamecoin[gametype], reason)
+	log.Info("玩家[%d] 扣除小游戏币[%d] 减少[%d] 库存[%d] 原因[%s]", this.user.Id(), gametype, reduction, this.minigamecoin[gametype], reason)
 	if notify {
 		this.SynMiniGameCoin()
 	}

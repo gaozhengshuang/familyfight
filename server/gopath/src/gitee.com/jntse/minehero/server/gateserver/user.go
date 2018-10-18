@@ -93,7 +93,7 @@ func NewGateUser(account, key, token string) *GateUser {
 	u.maid.Init()
 	u.palace.Init()
 	u.travel.Init()
-	u.currency.Init(this)
+	u.currency.Init(u)
 	u.tickers.Init(u.OnTicker10ms, u.OnTicker100ms, u.OnTicker1s, u.OnTicker5s, u.OnTicker1m)
 	u.cleanup = false
 	u.tm_disconnect = 0

@@ -76,7 +76,7 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam u
 		case 6:
 			//小游戏的游戏币
 			this.currency.AddMiniGameCoin(rid, rvalue, reason, true)
-			return 0, rvalue
+			return 0, value
 		default:
 			return 0, value
 	}

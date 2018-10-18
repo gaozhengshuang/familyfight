@@ -328,7 +328,7 @@ func (this *UserPalace) GetPalacePartId(id uint32, index uint32) uint32 {
 	if tmpl == nil {
 		return 0
 	}
-	if index >= len(tmpl.Parts) {
+	if index >= uint32(len(tmpl.Parts)) {
 		return 0
 	}
 	return tmpl.Parts[index]
@@ -337,11 +337,11 @@ func (this *UserPalace) GetPalacePartId(id uint32, index uint32) uint32 {
 func (this *UserPalace) CalculateCharm(user *GateUser, id uint32) uint32{
 	palace, _ := this.palaces[id];
 	if palace == nil {
-		return
+		return 0
 	}
 	charm := uint32(0)
 	for i, v := range palace.parts {
-		partid := this.GetPalacePartId(i)
+		partid := this.GetPalacePartId(id, i)
 		if partid != 0 {
 			partconf := PalaceMgr().GetPartConfig(partid, v)
 			if partconf != nil {
