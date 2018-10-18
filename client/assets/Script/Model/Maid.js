@@ -173,7 +173,7 @@ MaidModel.prototype.GetPassMaxEfficiency = function (pass) {
         }
     }
 
-    passList = _.sortBy(passList, function(info) {
+    passList = _.sortBy(passList, function (info) {
         return info.Id;
     });
 
@@ -236,7 +236,8 @@ MaidModel.prototype.onGW2C_AckMaidShop = function (msgid, data) {
     let priceAdd = ConfigController.GetConfig('PriceAdditionPerBuy');
     for (let i = 0; i < this._shopMaids.length; i++) {
         let info = this._shopMaids[i];
-        let price = Tools.toBigIntMoney(info.price).multiply(bigInteger(Math.floor(Math.pow(priceAdd, info.times))));
+        let config = ConfigController.GetConfigById('TMaidShop', info.id);
+        let price = Tools.toBigIntMoney(config.Price).multiply(bigInteger(Math.floor(Math.pow(priceAdd, info.times))));
         info.price = Tools.toLocalMoney(price);
     }
     NotificationController.Emit(Define.EVENT_KEY.MAID_UPDATESHOP);

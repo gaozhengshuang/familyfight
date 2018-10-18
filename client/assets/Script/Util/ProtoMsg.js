@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -6414,7 +6414,6 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IMaidShopData
          * @property {number|null} [id] MaidShopData id
-         * @property {Array.<string>|null} [price] MaidShopData price
          * @property {number|null} [times] MaidShopData times
          */
 
@@ -6427,7 +6426,6 @@ $root.msg = (function() {
          * @param {msg.IMaidShopData=} [properties] Properties to set
          */
         function MaidShopData(properties) {
-            this.price = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -6441,14 +6439,6 @@ $root.msg = (function() {
          * @instance
          */
         MaidShopData.prototype.id = 0;
-
-        /**
-         * MaidShopData price.
-         * @member {Array.<string>} price
-         * @memberof msg.MaidShopData
-         * @instance
-         */
-        MaidShopData.prototype.price = $util.emptyArray;
 
         /**
          * MaidShopData times.
@@ -6484,11 +6474,8 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.id != null && message.hasOwnProperty("id"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.id);
-            if (message.price != null && message.price.length)
-                for (var i = 0; i < message.price.length; ++i)
-                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.price[i]);
             if (message.times != null && message.hasOwnProperty("times"))
-                writer.uint32(/* id 3, wireType 0 =*/24).uint32(message.times);
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.times);
             return writer;
         };
 
@@ -6527,11 +6514,6 @@ $root.msg = (function() {
                     message.id = reader.uint32();
                     break;
                 case 2:
-                    if (!(message.price && message.price.length))
-                        message.price = [];
-                    message.price.push(reader.string());
-                    break;
-                case 3:
                     message.times = reader.uint32();
                     break;
                 default:
@@ -6572,13 +6554,6 @@ $root.msg = (function() {
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isInteger(message.id))
                     return "id: integer expected";
-            if (message.price != null && message.hasOwnProperty("price")) {
-                if (!Array.isArray(message.price))
-                    return "price: array expected";
-                for (var i = 0; i < message.price.length; ++i)
-                    if (!$util.isString(message.price[i]))
-                        return "price: string[] expected";
-            }
             if (message.times != null && message.hasOwnProperty("times"))
                 if (!$util.isInteger(message.times))
                     return "times: integer expected";
@@ -6599,13 +6574,6 @@ $root.msg = (function() {
             var message = new $root.msg.MaidShopData();
             if (object.id != null)
                 message.id = object.id >>> 0;
-            if (object.price) {
-                if (!Array.isArray(object.price))
-                    throw TypeError(".msg.MaidShopData.price: array expected");
-                message.price = [];
-                for (var i = 0; i < object.price.length; ++i)
-                    message.price[i] = String(object.price[i]);
-            }
             if (object.times != null)
                 message.times = object.times >>> 0;
             return message;
@@ -6624,19 +6592,12 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.price = [];
             if (options.defaults) {
                 object.id = 0;
                 object.times = 0;
             }
             if (message.id != null && message.hasOwnProperty("id"))
                 object.id = message.id;
-            if (message.price && message.price.length) {
-                object.price = [];
-                for (var j = 0; j < message.price.length; ++j)
-                    object.price[j] = message.price[j];
-            }
             if (message.times != null && message.hasOwnProperty("times"))
                 object.times = message.times;
             return object;
@@ -20973,13 +20934,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -21228,13 +21183,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
