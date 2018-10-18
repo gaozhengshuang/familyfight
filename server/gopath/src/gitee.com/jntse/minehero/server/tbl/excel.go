@@ -29,6 +29,7 @@ var TPalaceMapBase = table.InsTPalaceMapBaseTable
 var TMaidLevelBase = table.InsTMaidLevelBaseTable
 var ProtoMsgIndex = table.InsProtoMsgIndexTable
 var TDialogueBase = table.InsTDialogueBaseTable
+var TPalacePartBase = table.InsTPalacePartBaseTable
 var TBallGiftbase = table.InsTBallGiftbaseTable
 var TPassLevelsBase = table.InsTPassLevelsBaseTable
 var TPalacePersonnel = table.InsTPalacePersonnelTable

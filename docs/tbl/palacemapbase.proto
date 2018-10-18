@@ -47,6 +47,9 @@ message PalaceMapDefine
 	
 	
 	repeated string MaidsXY = 10; // 女仆坐标显示
+	
+	
+	repeated uint32 Parts = 11; // 0 屏风 1 灯笼 2 栏窗 3 客椅 4 地毯
 
 }
 

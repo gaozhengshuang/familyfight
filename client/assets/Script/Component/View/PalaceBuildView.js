@@ -1,13 +1,5 @@
 const Game = require('../../Game');
 
-const PartsType = {
-    screen: 0,                 //屏风
-    lantern: 1,                 //灯笼
-    window: 2,                 //栏窗
-    chair: 3,                 //客椅
-    carpet: 4,                 //地毯
-}
-
 cc.Class({
     extends: cc.GameComponent,
 
