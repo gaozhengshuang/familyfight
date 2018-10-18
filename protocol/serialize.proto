@@ -104,8 +104,7 @@ message MaidData
 message MaidShopData
 {
     optional uint32 id = 1;
-    repeated string price = 2;
-    optional uint32 times = 3;
+    optional uint32 times = 2;
 }
 
 message MaidBin
