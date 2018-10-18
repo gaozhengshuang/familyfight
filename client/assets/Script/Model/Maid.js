@@ -162,19 +162,23 @@ MaidModel.prototype.GetPassCurEfficiency = function (pass) {
 
 MaidModel.prototype.GetPassMaxEfficiency = function (pass) {
     let efficiency = ["0_0"];
-    let passMaxMaid = null;
+    let passList = [];
     for (let i = 0; i < this._maids.length; i++) {
         let maid = this._maids[i];
         let maidBase = ConfigController.GetConfigById("TMaidLevel", maid.id);
         if (maidBase) {
             if (maidBase.Passlevels == pass) {
-                passMaxMaid = maidBase;
+                passList.push(maidBase);
             }
         }
     }
 
-    if (passMaxMaid) {
-        let reward = Tools.toBigIntMoney(passMaxMaid.Reward).multiply(20);
+    passList = _.sortBy(passList, function(info) {
+        return info.Id;
+    });
+
+    if (passList.length > 0) {
+        let reward = Tools.toBigIntMoney(passList[passList.length - 1].Reward).multiply(20);
         efficiency = Tools.toLocalMoney(reward);
     }
     return efficiency;
