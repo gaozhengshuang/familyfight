@@ -50,6 +50,11 @@ message PowerData {
     optional uint64 nexttime = 2;       //下次增加体力的时机
     optional uint32 maxpower = 3;       //最大体力值
 }
+message MiniGameCoinsData 
+{
+    optional uint32 tensecond = 1;      //十秒小游戏
+    optional uint32 kickass = 2;        //踢屁股
+}
 
 message UserBase {
     optional uint32     level   = 1;
@@ -71,7 +76,8 @@ message UserBase {
     optional LuckyDrawHistory luckydraw = 17;   // 抽奖
     optional uint64     gold            = 18;   //金币
     optional PowerData  power           = 19;   //体力
-    repeated string     biggold         = 20;   //大钱    
+    repeated string     biggold         = 20;   //大钱
+    optional MiniGameCoinsData gamecoin = 21;   //小游戏的游戏币
 }
 
 message UserAddress {
@@ -120,6 +126,8 @@ message PalaceData
     optional uint32 level = 2;
     repeated bool maids = 3;
     optional uint64 endtime = 4;
+    repeated uint32 partslevel = 5;
+    optional uint32 charm = 6;   
 }
 //御赐数据
 message TravelData
