@@ -28,6 +28,7 @@ cc.Class({
         shuffleTargetNode: { default: null, type: cc.Node },
         showTargetNode: { default: null, type: cc.Node },
         dialogueNode: { default: null, type: cc.Node },
+        miniGameCoinLabel: { default: [], type: [cc.Label] },
 
         status: { default: BrandStatus.Status_Idle },
         brandInfos: { default: [] },
@@ -47,6 +48,7 @@ cc.Class({
             view.TurnBackWithAnima(0.0);
         }
         Game.NetWorkController.AddListener('msg.GW2C_RetTurnBrand', this, this.onRetTurnBrand);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
     onEnable: function () {
         for (let i = 0; i < this.brandViews.length; i++) {
@@ -55,11 +57,13 @@ cc.Class({
         }
         this.status = 0;
         this._randBrandInfo();
+        this.updateMiniGameCoin();
     },
     update: function (dt) {
     },
     onDestroy: function () {
         Game.NetWorkController.RemoveListener('msg.GW2C_RetTurnBrand', this, this.onRetTurnBrand);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
     onDisable: function () {
         this.node.stopAllActions();
@@ -103,6 +107,12 @@ cc.Class({
     onShakeEnd: function () {
         if (this.status == BrandStatus.Status_Shaking) {
             this._changeStatus(BrandStatus.Status_ShakeEnd)
+        }
+    },
+    updateMiniGameCoin: function () {
+        for (let i = 0; i < this.miniGameCoinLabel.length; i++) {
+            let label = this.miniGameCoinLabel[i];
+            label.string = Game.CurrencyModel.GetMiniGameCoin(i) + '次';
         }
     },
     _changeStatus: function (status) {

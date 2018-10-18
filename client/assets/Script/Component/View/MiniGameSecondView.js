@@ -13,6 +13,7 @@ cc.Class({
         label_second: { default: null, type: cc.Label },
         label_btnStart: { default: null, type: cc.Label },
         button_back: { default: null, type: cc.Button },
+        label_coin: { default: null, type: cc.Label }
     },
 
     update(dt) {
@@ -35,6 +36,7 @@ cc.Class({
 
     onDisable() {
         Game.NetWorkController.RemoveListener('msg.GW2C_AckTenSecond', this, this.onGW2C_AckTenSecond);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
 
     initData() {
@@ -44,16 +46,18 @@ cc.Class({
 
     initNotification() {
         Game.NetWorkController.AddListener('msg.GW2C_AckTenSecond', this, this.onGW2C_AckTenSecond);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
 
     resetGame() {
         this.initData();
         this.refreshStatus();
         this.refreshTime();
+        this.updateMiniGameCoin();
     },
 
     refreshStatus() {
-        switch(this._gameType) {
+        switch (this._gameType) {
             case GameSecondStatus.Status_Start:
                 this.label_btnStart.string = "开始";
                 break;
@@ -71,6 +75,9 @@ cc.Class({
         let millscond = this._gameTime.toFixed(2);
         millscond = millscond.toString().split('.')[1];
         this.label_second.string = Game.moment.unix(this._gameTime).format('ss') + ':' + millscond;
+    },
+    updateMiniGameCoin() {
+        this.label_coin.string = '剩余次数:' + Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TENSECOND);
     },
 
     onGW2C_AckTenSecond(msgid, data) {
@@ -115,7 +122,7 @@ cc.Class({
             return;
         }
 
-        switch(this._gameType) {
+        switch (this._gameType) {
             case GameSecondStatus.Status_Start:
                 this._gameType = GameSecondStatus.Status_Stop;
                 break;

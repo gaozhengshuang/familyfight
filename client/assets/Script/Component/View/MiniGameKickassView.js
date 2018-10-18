@@ -24,12 +24,14 @@ cc.Class({
         aimNode: { default: null, type: cc.Node },
         reddotNode: { default: null, type: cc.Node },
         rewardLabel: { default: null, type: cc.Label },
+        coinLabel: { default: null, type: cc.Label },
 
         status: { default: KickAssStatus.Status_Idle },
         speed: { default: EunuchSpeed }
     },
     onLoad: function () {
         Game.NetWorkController.AddListener('msg.GW2C_AckKickAss', this, this.onAckKickAss);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
     update: function (dt) {
         if (this.status == KickAssStatus.Status_Moving || this.status == KickAssStatus.Status_Kick) {
@@ -51,9 +53,11 @@ cc.Class({
         this._changeStatus(KickAssStatus.Status_Idle);
         let allincomenum = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids()).multiply(Game.ConfigController.GetConfig('KickAssWinReward').Gold);
         this.rewardLabel.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(allincomenum));
+        this.updateMiniGameCoin();
     },
     onDestroy: function () {
         Game.NetWorkController.RemoveListener('msg.GW2C_AckKickAss', this, this.onAckKickAss);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
     onAckKickAss: function (msgid, data) {
         if (this.status == KickAssStatus.Status_Settlement) {
@@ -98,6 +102,9 @@ cc.Class({
     },
     onGoBackClick: function () {
         this.closeView(Game.UIName.UI_MINIGAMEKICKASS);
+    },
+    updateMiniGameCoin: function () {
+        this.coinLabel.string = '剩余次数:' + Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TENSECOND);
     },
     _changeStatus: function (status) {
         if (this.status != status) {

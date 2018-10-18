@@ -6,10 +6,19 @@ const UserModel = require('./User');
 const Tools = require("../Util/Tools");
 const Define = require("../Util/Define");
 
+const DefaultMiniGameCoin = function () {
+    let ret = [];
+    for (let i = Define.MINIGAMETYPE.START; i < Define.MINIGAMETYPE.END; i++) {
+        ret.push(0);
+    }
+    return ret;
+}
+
 var Currency = function () {
     this.powerData = {}
     this.bigGolds = ['0_0'];
     this.offLineReward = null;
+    this.miniGameCoin = DefaultMiniGameCoin();
 }
 
 Currency.prototype.Init = function (cb) {
@@ -23,6 +32,7 @@ Currency.prototype.Init = function (cb) {
 
     Tools.InvokeCallback(cb, null);
 }
+
 
 Currency.prototype.GetPower = function () {
     return Tools.GetValueInObj(this.powerData, 'power') || 0
@@ -65,13 +75,18 @@ Currency.prototype.GetGold = function () {
 Currency.prototype.CompareGold = function (gold) {
     return Tools.toBigIntMoney(this.GetGold()).compare(Tools.toBigIntMoney(gold));
 }
+Currency.prototype.GetMiniGameCoin = function (gametype) {
+    return this.miniGameCoin[gametype] || 0;
+}
 /**
  * 消息处理接口
  */
 Currency.prototype.onGW2C_SendUserInfo = function (msgid, data) {
     this.powerData = Tools.GetValueInObj(data, 'base.power');
     this.SetGold(Tools.GetValueInObj(data, 'base.biggold') || ['0_0']);
+    this.miniGameCoin = _.get(data, 'base.gamecoin', DefaultMiniGameCoin());
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEPOWER);
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN);
 }
 Currency.prototype.onGW2C_UpdatePower = function (msgid, data) {
     this.powerData = data.power;
@@ -81,6 +96,10 @@ Currency.prototype.onGW2C_UpdatePower = function (msgid, data) {
 Currency.prototype.onGW2C_UpdateBigGold = function (msgid, data) {
     let value = data.golds || ["0_0"];
     this.SetGold(value)
+}
+Currency.prototype.onGW2C_UpdateMiniGameCoin = function (msgid, data) {
+    this.miniGameCoin = data.gamecoin || DefaultMiniGameCoin();
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN);
 }
 Currency.prototype.onGW2C_OfflineReward = function (msgid, data) {
     this.offLineReward = data;
