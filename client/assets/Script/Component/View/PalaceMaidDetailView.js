@@ -64,7 +64,7 @@ cc.Class({
                 }
             }
 
-            if (Game.CurrencyModel.GetGold() >= palaceMaidBase.UnlockPrice) {
+            if (Game.CurrencyModel.CompareGold(palaceMaidBase.UnlockPrice) >= 0) {
                 Game.ResController.SetSprite(this.image_buy, "Image/GameScene/Common/button_common");
             } else {
                 Game.ResController.SetSprite(this.image_buy, "Image/GameScene/Common/button_common2");
@@ -81,7 +81,7 @@ cc.Class({
     },
 
     onReqMaidUnlock() {
-        if (Game.CurrencyModel.GetGold() >= this._lockGold) {
+        if (Game.CurrencyModel.CompareGold(this._lockGold) >= 0) {
             Game.NetWorkController.Send('msg.C2GW_ReqMaidUnlock', 
             {
                 id: Game.PalaceModel.GetCurPalaceId(),
