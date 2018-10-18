@@ -39,6 +39,7 @@ Currency.prototype.GetMaxPower = function () {
 Currency.prototype.GetPowerAddition = function () {
     return ConfigController.GetConfig('PowerAddition') || 0
 }
+
 Currency.prototype.AddGold = function (gold) {
     let value = Tools.toBigIntMoney(this.GetGold()).add(Tools.toBigIntMoney(gold));
     this.SetGold(Tools.toLocalMoney(value));
@@ -60,6 +61,7 @@ Currency.prototype.SetGold = function (gold) {
 Currency.prototype.GetGold = function () {
     return this.bigGolds;
 }
+
 Currency.prototype.CompareGold = function (gold) {
     return Tools.toBigIntMoney(this.GetGold()).compare(Tools.toBigIntMoney(gold));
 }
