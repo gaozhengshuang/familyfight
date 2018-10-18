@@ -16,7 +16,8 @@ var UIName = {
     UI_OFFLINEREWARD: 'Prefab/OffLineRewardView',
     UI_PASSDETAILVIEW: 'Prefab/PassDetailView',
     UI_MINIGAMESECOND: 'Prefab/MiniGameSecondView',
-    UI_MINIGAMEKICKASS: 'Prefab/MiniGamekickassView'
+    UI_MINIGAMEKICKASS: 'Prefab/MiniGamekickassView',
+    UI_PALACEBUILD: 'Prefab/PalaceBuildView',
 }
 
 module.exports = UIName;

@@ -216,6 +216,7 @@ cc.Class({
 
     onOpenBuild(event) {
         event.stopPropagationImmediate();
+        this.openView(Game.UIName.UI_PALACEBUILD);
         Game.GuideController.NextGuide();
     },
 

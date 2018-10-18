@@ -221,6 +221,7 @@ MaidModel.prototype.onGW2C_AckMaids = function (msgid, data) {
     }
 
     this.RefreshMoneyMaids();
+    NotificationController.Emit(Define.EVENT_KEY.UPDATE_PLAYER);
 }
 
 MaidModel.prototype.onGW2C_AckMergeMaid = function (msgid, data) {
