@@ -39,3 +39,14 @@ message GW2C_RetMaidUnlock
     optional uint32 result = 1;
     optional PalaceData data = 2;
 }
+//升级部件
+message C2GW_ReqPartLevelup
+{
+    optional uint32 id = 1;
+    optional uint32 index = 2;
+}
+message GW2C_AckPartLevelup
+{
+    optional uint32 result = 1;
+    optional PalaceData datas = 2;
+}
