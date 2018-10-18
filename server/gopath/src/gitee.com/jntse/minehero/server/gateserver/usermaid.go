@@ -27,14 +27,12 @@ func (this *MaidData) PackBin() *msg.MaidData{
 // --------------------------------------------------------------------------
 type MaidShop struct {
 	id 				uint32
-	price 			[]string
 	times 			uint32
 }
 
 func (this *MaidShop) PackBin() *msg.MaidShopData{
 	data := &msg.MaidShopData{}
 	data.Id = pb.Uint32(this.id)
-	data.Price = this.price
 	data.Times = pb.Uint32(this.times)
 	return data
 }
@@ -67,7 +65,6 @@ func (this *UserMaid) LoadBin(user *GateUser,bin *msg.Serialize) {
 	for _, data := range maidbin.GetShop() {
 		shop := &MaidShop{}
 		shop.id = data.GetId()
-		shop.price = data.GetPrice()
 		shop.times = data.GetTimes()
 		this.shop[data.GetId()] = shop
 	}
@@ -138,7 +135,12 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 		user.SendNotify("没有对应的商店信息")
 		return 1,nil,price
 	}
-	oldprice := shopdata.price
+	maidshop, find := tbl.TMaidShopBase.TMaidShopById[id]
+	if !find {
+		user.SendNotify("没有对应的商店信息")
+		return 1,nil,price
+	}
+	price = maidshop.Price
 	maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[id]
 	if !find {
 		user.SendNotify("没有对应的侍女配置")
@@ -152,7 +154,7 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 	//可以买了
 	maid := this.AddMaid(user,id,1)
 	//更新价格咯
-	oldpriceObj, maxIndex := user.ParseBigGoldToObj(oldprice)
+	oldpriceObj, maxIndex := user.ParseBigGoldToObj(price)
 	times := math.Pow(float64(tbl.Common.PriceAdditionPerBuy), float64(shopdata.times))
 	oldpriceObj = user.TimesBigGold(oldpriceObj, uint32(times))
 	oldpriceObj = user.CarryBigGold(oldpriceObj, maxIndex)
@@ -248,14 +250,8 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 		oldshop, find := this.shop[uint32(v)]
 		if !find {
 			//找不到初始化价格
-			maidshop, find := tbl.TMaidShopBase.TMaidShopById[uint32(v)]
-			price := make([]string, 0)
-			if find {
-				price = maidshop.Price
-			}
 			shop := &MaidShop{}
 			shop.id = uint32(v)
-			shop.price = price
 			shop.times = 0
 			newShop[shop.id] = shop
 		} else {
