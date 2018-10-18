@@ -13,6 +13,7 @@ var Define = {
         USERINFO_UPDATEITEMS: '201',
         USERINFO_ADDGOLD: '202',
         USERINFO_SUBTRACTGOLD: '203',
+        USERINFO_UPDATEMINIGAMECOIN: '204',
 
         NET_OPEN: '300',
         NET_CLOSE: '301',
@@ -83,6 +84,12 @@ var Define = {
         RANDOMX: 7,
         SLEEP: 8
     },
+    MINIGAMETYPE: {
+        START: 0,
+        TENSECOND: 0,
+        KICKASS: 1,
+        END: 2,
+    }
 }
 
 module.exports = Define;

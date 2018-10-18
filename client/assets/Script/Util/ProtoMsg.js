@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -4799,216 +4799,6 @@ $root.msg = (function() {
         return PowerData;
     })();
 
-    msg.MiniGameCoinsData = (function() {
-
-        /**
-         * Properties of a MiniGameCoinsData.
-         * @memberof msg
-         * @interface IMiniGameCoinsData
-         * @property {number|null} [tensecond] MiniGameCoinsData tensecond
-         * @property {number|null} [kickass] MiniGameCoinsData kickass
-         */
-
-        /**
-         * Constructs a new MiniGameCoinsData.
-         * @memberof msg
-         * @classdesc Represents a MiniGameCoinsData.
-         * @implements IMiniGameCoinsData
-         * @constructor
-         * @param {msg.IMiniGameCoinsData=} [properties] Properties to set
-         */
-        function MiniGameCoinsData(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * MiniGameCoinsData tensecond.
-         * @member {number} tensecond
-         * @memberof msg.MiniGameCoinsData
-         * @instance
-         */
-        MiniGameCoinsData.prototype.tensecond = 0;
-
-        /**
-         * MiniGameCoinsData kickass.
-         * @member {number} kickass
-         * @memberof msg.MiniGameCoinsData
-         * @instance
-         */
-        MiniGameCoinsData.prototype.kickass = 0;
-
-        /**
-         * Creates a new MiniGameCoinsData instance using the specified properties.
-         * @function create
-         * @memberof msg.MiniGameCoinsData
-         * @static
-         * @param {msg.IMiniGameCoinsData=} [properties] Properties to set
-         * @returns {msg.MiniGameCoinsData} MiniGameCoinsData instance
-         */
-        MiniGameCoinsData.create = function create(properties) {
-            return new MiniGameCoinsData(properties);
-        };
-
-        /**
-         * Encodes the specified MiniGameCoinsData message. Does not implicitly {@link msg.MiniGameCoinsData.verify|verify} messages.
-         * @function encode
-         * @memberof msg.MiniGameCoinsData
-         * @static
-         * @param {msg.IMiniGameCoinsData} message MiniGameCoinsData message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        MiniGameCoinsData.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.tensecond != null && message.hasOwnProperty("tensecond"))
-                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.tensecond);
-            if (message.kickass != null && message.hasOwnProperty("kickass"))
-                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.kickass);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified MiniGameCoinsData message, length delimited. Does not implicitly {@link msg.MiniGameCoinsData.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof msg.MiniGameCoinsData
-         * @static
-         * @param {msg.IMiniGameCoinsData} message MiniGameCoinsData message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        MiniGameCoinsData.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a MiniGameCoinsData message from the specified reader or buffer.
-         * @function decode
-         * @memberof msg.MiniGameCoinsData
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {msg.MiniGameCoinsData} MiniGameCoinsData
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        MiniGameCoinsData.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.MiniGameCoinsData();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.tensecond = reader.uint32();
-                    break;
-                case 2:
-                    message.kickass = reader.uint32();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a MiniGameCoinsData message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof msg.MiniGameCoinsData
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {msg.MiniGameCoinsData} MiniGameCoinsData
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        MiniGameCoinsData.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a MiniGameCoinsData message.
-         * @function verify
-         * @memberof msg.MiniGameCoinsData
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        MiniGameCoinsData.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.tensecond != null && message.hasOwnProperty("tensecond"))
-                if (!$util.isInteger(message.tensecond))
-                    return "tensecond: integer expected";
-            if (message.kickass != null && message.hasOwnProperty("kickass"))
-                if (!$util.isInteger(message.kickass))
-                    return "kickass: integer expected";
-            return null;
-        };
-
-        /**
-         * Creates a MiniGameCoinsData message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof msg.MiniGameCoinsData
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {msg.MiniGameCoinsData} MiniGameCoinsData
-         */
-        MiniGameCoinsData.fromObject = function fromObject(object) {
-            if (object instanceof $root.msg.MiniGameCoinsData)
-                return object;
-            var message = new $root.msg.MiniGameCoinsData();
-            if (object.tensecond != null)
-                message.tensecond = object.tensecond >>> 0;
-            if (object.kickass != null)
-                message.kickass = object.kickass >>> 0;
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a MiniGameCoinsData message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof msg.MiniGameCoinsData
-         * @static
-         * @param {msg.MiniGameCoinsData} message MiniGameCoinsData
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        MiniGameCoinsData.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.tensecond = 0;
-                object.kickass = 0;
-            }
-            if (message.tensecond != null && message.hasOwnProperty("tensecond"))
-                object.tensecond = message.tensecond;
-            if (message.kickass != null && message.hasOwnProperty("kickass"))
-                object.kickass = message.kickass;
-            return object;
-        };
-
-        /**
-         * Converts this MiniGameCoinsData to JSON.
-         * @function toJSON
-         * @memberof msg.MiniGameCoinsData
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        MiniGameCoinsData.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return MiniGameCoinsData;
-    })();
-
     msg.UserBase = (function() {
 
         /**
@@ -5035,7 +4825,7 @@ $root.msg = (function() {
          * @property {number|Long|null} [gold] UserBase gold
          * @property {msg.IPowerData|null} [power] UserBase power
          * @property {Array.<string>|null} [biggold] UserBase biggold
-         * @property {msg.IMiniGameCoinsData|null} [gamecoin] UserBase gamecoin
+         * @property {Array.<number>|null} [gamecoin] UserBase gamecoin
          */
 
         /**
@@ -5049,6 +4839,7 @@ $root.msg = (function() {
         function UserBase(properties) {
             this.addrlist = [];
             this.biggold = [];
+            this.gamecoin = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -5217,11 +5008,11 @@ $root.msg = (function() {
 
         /**
          * UserBase gamecoin.
-         * @member {msg.IMiniGameCoinsData|null|undefined} gamecoin
+         * @member {Array.<number>} gamecoin
          * @memberof msg.UserBase
          * @instance
          */
-        UserBase.prototype.gamecoin = null;
+        UserBase.prototype.gamecoin = $util.emptyArray;
 
         /**
          * Creates a new UserBase instance using the specified properties.
@@ -5289,8 +5080,9 @@ $root.msg = (function() {
             if (message.biggold != null && message.biggold.length)
                 for (var i = 0; i < message.biggold.length; ++i)
                     writer.uint32(/* id 20, wireType 2 =*/162).string(message.biggold[i]);
-            if (message.gamecoin != null && message.hasOwnProperty("gamecoin"))
-                $root.msg.MiniGameCoinsData.encode(message.gamecoin, writer.uint32(/* id 21, wireType 2 =*/170).fork()).ldelim();
+            if (message.gamecoin != null && message.gamecoin.length)
+                for (var i = 0; i < message.gamecoin.length; ++i)
+                    writer.uint32(/* id 21, wireType 0 =*/168).uint32(message.gamecoin[i]);
             return writer;
         };
 
@@ -5390,7 +5182,14 @@ $root.msg = (function() {
                     message.biggold.push(reader.string());
                     break;
                 case 21:
-                    message.gamecoin = $root.msg.MiniGameCoinsData.decode(reader, reader.uint32());
+                    if (!(message.gamecoin && message.gamecoin.length))
+                        message.gamecoin = [];
+                    if ((tag & 7) === 2) {
+                        var end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.gamecoin.push(reader.uint32());
+                    } else
+                        message.gamecoin.push(reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -5508,9 +5307,11 @@ $root.msg = (function() {
                         return "biggold: string[] expected";
             }
             if (message.gamecoin != null && message.hasOwnProperty("gamecoin")) {
-                var error = $root.msg.MiniGameCoinsData.verify(message.gamecoin);
-                if (error)
-                    return "gamecoin." + error;
+                if (!Array.isArray(message.gamecoin))
+                    return "gamecoin: array expected";
+                for (var i = 0; i < message.gamecoin.length; ++i)
+                    if (!$util.isInteger(message.gamecoin[i]))
+                        return "gamecoin: integer[] expected";
             }
             return null;
         };
@@ -5616,10 +5417,12 @@ $root.msg = (function() {
                 for (var i = 0; i < object.biggold.length; ++i)
                     message.biggold[i] = String(object.biggold[i]);
             }
-            if (object.gamecoin != null) {
-                if (typeof object.gamecoin !== "object")
-                    throw TypeError(".msg.UserBase.gamecoin: object expected");
-                message.gamecoin = $root.msg.MiniGameCoinsData.fromObject(object.gamecoin);
+            if (object.gamecoin) {
+                if (!Array.isArray(object.gamecoin))
+                    throw TypeError(".msg.UserBase.gamecoin: array expected");
+                message.gamecoin = [];
+                for (var i = 0; i < object.gamecoin.length; ++i)
+                    message.gamecoin[i] = object.gamecoin[i] >>> 0;
             }
             return message;
         };
@@ -5640,6 +5443,7 @@ $root.msg = (function() {
             if (options.arrays || options.defaults) {
                 object.addrlist = [];
                 object.biggold = [];
+                object.gamecoin = [];
             }
             if (options.defaults) {
                 object.level = 0;
@@ -5672,7 +5476,6 @@ $root.msg = (function() {
                 } else
                     object.gold = options.longs === String ? "0" : 0;
                 object.power = null;
-                object.gamecoin = null;
             }
             if (message.level != null && message.hasOwnProperty("level"))
                 object.level = message.level;
@@ -5729,8 +5532,11 @@ $root.msg = (function() {
                 for (var j = 0; j < message.biggold.length; ++j)
                     object.biggold[j] = message.biggold[j];
             }
-            if (message.gamecoin != null && message.hasOwnProperty("gamecoin"))
-                object.gamecoin = $root.msg.MiniGameCoinsData.toObject(message.gamecoin, options);
+            if (message.gamecoin && message.gamecoin.length) {
+                object.gamecoin = [];
+                for (var j = 0; j < message.gamecoin.length; ++j)
+                    object.gamecoin[j] = message.gamecoin[j];
+            }
             return object;
         };
 
@@ -17380,6 +17186,374 @@ $root.msg = (function() {
         return GW2C_UpdatePower;
     })();
 
+    msg.C2GW_ReqMiniGameCoin = (function() {
+
+        /**
+         * Properties of a C2GW_ReqMiniGameCoin.
+         * @memberof msg
+         * @interface IC2GW_ReqMiniGameCoin
+         */
+
+        /**
+         * Constructs a new C2GW_ReqMiniGameCoin.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqMiniGameCoin.
+         * @implements IC2GW_ReqMiniGameCoin
+         * @constructor
+         * @param {msg.IC2GW_ReqMiniGameCoin=} [properties] Properties to set
+         */
+        function C2GW_ReqMiniGameCoin(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new C2GW_ReqMiniGameCoin instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqMiniGameCoin
+         * @static
+         * @param {msg.IC2GW_ReqMiniGameCoin=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqMiniGameCoin} C2GW_ReqMiniGameCoin instance
+         */
+        C2GW_ReqMiniGameCoin.create = function create(properties) {
+            return new C2GW_ReqMiniGameCoin(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqMiniGameCoin message. Does not implicitly {@link msg.C2GW_ReqMiniGameCoin.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqMiniGameCoin
+         * @static
+         * @param {msg.IC2GW_ReqMiniGameCoin} message C2GW_ReqMiniGameCoin message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqMiniGameCoin.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqMiniGameCoin message, length delimited. Does not implicitly {@link msg.C2GW_ReqMiniGameCoin.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqMiniGameCoin
+         * @static
+         * @param {msg.IC2GW_ReqMiniGameCoin} message C2GW_ReqMiniGameCoin message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqMiniGameCoin.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqMiniGameCoin message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqMiniGameCoin
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqMiniGameCoin} C2GW_ReqMiniGameCoin
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqMiniGameCoin.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqMiniGameCoin();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqMiniGameCoin message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqMiniGameCoin
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqMiniGameCoin} C2GW_ReqMiniGameCoin
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqMiniGameCoin.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqMiniGameCoin message.
+         * @function verify
+         * @memberof msg.C2GW_ReqMiniGameCoin
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqMiniGameCoin.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqMiniGameCoin message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqMiniGameCoin
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqMiniGameCoin} C2GW_ReqMiniGameCoin
+         */
+        C2GW_ReqMiniGameCoin.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqMiniGameCoin)
+                return object;
+            return new $root.msg.C2GW_ReqMiniGameCoin();
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqMiniGameCoin message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqMiniGameCoin
+         * @static
+         * @param {msg.C2GW_ReqMiniGameCoin} message C2GW_ReqMiniGameCoin
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqMiniGameCoin.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this C2GW_ReqMiniGameCoin to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqMiniGameCoin
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqMiniGameCoin.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqMiniGameCoin;
+    })();
+
+    msg.GW2C_UpdateMiniGameCoin = (function() {
+
+        /**
+         * Properties of a GW2C_UpdateMiniGameCoin.
+         * @memberof msg
+         * @interface IGW2C_UpdateMiniGameCoin
+         * @property {Array.<number>|null} [gamecoin] GW2C_UpdateMiniGameCoin gamecoin
+         */
+
+        /**
+         * Constructs a new GW2C_UpdateMiniGameCoin.
+         * @memberof msg
+         * @classdesc Represents a GW2C_UpdateMiniGameCoin.
+         * @implements IGW2C_UpdateMiniGameCoin
+         * @constructor
+         * @param {msg.IGW2C_UpdateMiniGameCoin=} [properties] Properties to set
+         */
+        function GW2C_UpdateMiniGameCoin(properties) {
+            this.gamecoin = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_UpdateMiniGameCoin gamecoin.
+         * @member {Array.<number>} gamecoin
+         * @memberof msg.GW2C_UpdateMiniGameCoin
+         * @instance
+         */
+        GW2C_UpdateMiniGameCoin.prototype.gamecoin = $util.emptyArray;
+
+        /**
+         * Creates a new GW2C_UpdateMiniGameCoin instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_UpdateMiniGameCoin
+         * @static
+         * @param {msg.IGW2C_UpdateMiniGameCoin=} [properties] Properties to set
+         * @returns {msg.GW2C_UpdateMiniGameCoin} GW2C_UpdateMiniGameCoin instance
+         */
+        GW2C_UpdateMiniGameCoin.create = function create(properties) {
+            return new GW2C_UpdateMiniGameCoin(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_UpdateMiniGameCoin message. Does not implicitly {@link msg.GW2C_UpdateMiniGameCoin.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_UpdateMiniGameCoin
+         * @static
+         * @param {msg.IGW2C_UpdateMiniGameCoin} message GW2C_UpdateMiniGameCoin message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_UpdateMiniGameCoin.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gamecoin != null && message.gamecoin.length)
+                for (var i = 0; i < message.gamecoin.length; ++i)
+                    writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.gamecoin[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_UpdateMiniGameCoin message, length delimited. Does not implicitly {@link msg.GW2C_UpdateMiniGameCoin.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_UpdateMiniGameCoin
+         * @static
+         * @param {msg.IGW2C_UpdateMiniGameCoin} message GW2C_UpdateMiniGameCoin message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_UpdateMiniGameCoin.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_UpdateMiniGameCoin message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_UpdateMiniGameCoin
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_UpdateMiniGameCoin} GW2C_UpdateMiniGameCoin
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_UpdateMiniGameCoin.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_UpdateMiniGameCoin();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.gamecoin && message.gamecoin.length))
+                        message.gamecoin = [];
+                    if ((tag & 7) === 2) {
+                        var end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.gamecoin.push(reader.uint32());
+                    } else
+                        message.gamecoin.push(reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_UpdateMiniGameCoin message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_UpdateMiniGameCoin
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_UpdateMiniGameCoin} GW2C_UpdateMiniGameCoin
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_UpdateMiniGameCoin.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_UpdateMiniGameCoin message.
+         * @function verify
+         * @memberof msg.GW2C_UpdateMiniGameCoin
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_UpdateMiniGameCoin.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gamecoin != null && message.hasOwnProperty("gamecoin")) {
+                if (!Array.isArray(message.gamecoin))
+                    return "gamecoin: array expected";
+                for (var i = 0; i < message.gamecoin.length; ++i)
+                    if (!$util.isInteger(message.gamecoin[i]))
+                        return "gamecoin: integer[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_UpdateMiniGameCoin message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_UpdateMiniGameCoin
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_UpdateMiniGameCoin} GW2C_UpdateMiniGameCoin
+         */
+        GW2C_UpdateMiniGameCoin.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_UpdateMiniGameCoin)
+                return object;
+            var message = new $root.msg.GW2C_UpdateMiniGameCoin();
+            if (object.gamecoin) {
+                if (!Array.isArray(object.gamecoin))
+                    throw TypeError(".msg.GW2C_UpdateMiniGameCoin.gamecoin: array expected");
+                message.gamecoin = [];
+                for (var i = 0; i < object.gamecoin.length; ++i)
+                    message.gamecoin[i] = object.gamecoin[i] >>> 0;
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_UpdateMiniGameCoin message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_UpdateMiniGameCoin
+         * @static
+         * @param {msg.GW2C_UpdateMiniGameCoin} message GW2C_UpdateMiniGameCoin
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_UpdateMiniGameCoin.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.gamecoin = [];
+            if (message.gamecoin && message.gamecoin.length) {
+                object.gamecoin = [];
+                for (var j = 0; j < message.gamecoin.length; ++j)
+                    object.gamecoin[j] = message.gamecoin[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_UpdateMiniGameCoin to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_UpdateMiniGameCoin
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_UpdateMiniGameCoin.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_UpdateMiniGameCoin;
+    })();
+
     msg.GW2L_ReqRegist = (function() {
 
         /**
@@ -21237,13 +21411,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -21492,13 +21660,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -31393,7 +31555,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IGW2C_AckPartLevelup
          * @property {number|null} [result] GW2C_AckPartLevelup result
-         * @property {msg.IPalaceData|null} [datas] GW2C_AckPartLevelup datas
+         * @property {msg.IPalaceData|null} [data] GW2C_AckPartLevelup data
          */
 
         /**
@@ -31420,12 +31582,12 @@ $root.msg = (function() {
         GW2C_AckPartLevelup.prototype.result = 0;
 
         /**
-         * GW2C_AckPartLevelup datas.
-         * @member {msg.IPalaceData|null|undefined} datas
+         * GW2C_AckPartLevelup data.
+         * @member {msg.IPalaceData|null|undefined} data
          * @memberof msg.GW2C_AckPartLevelup
          * @instance
          */
-        GW2C_AckPartLevelup.prototype.datas = null;
+        GW2C_AckPartLevelup.prototype.data = null;
 
         /**
          * Creates a new GW2C_AckPartLevelup instance using the specified properties.
@@ -31453,8 +31615,8 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.result != null && message.hasOwnProperty("result"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
-            if (message.datas != null && message.hasOwnProperty("datas"))
-                $root.msg.PalaceData.encode(message.datas, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            if (message.data != null && message.hasOwnProperty("data"))
+                $root.msg.PalaceData.encode(message.data, writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
             return writer;
         };
 
@@ -31493,7 +31655,7 @@ $root.msg = (function() {
                     message.result = reader.uint32();
                     break;
                 case 2:
-                    message.datas = $root.msg.PalaceData.decode(reader, reader.uint32());
+                    message.data = $root.msg.PalaceData.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -31533,10 +31695,10 @@ $root.msg = (function() {
             if (message.result != null && message.hasOwnProperty("result"))
                 if (!$util.isInteger(message.result))
                     return "result: integer expected";
-            if (message.datas != null && message.hasOwnProperty("datas")) {
-                var error = $root.msg.PalaceData.verify(message.datas);
+            if (message.data != null && message.hasOwnProperty("data")) {
+                var error = $root.msg.PalaceData.verify(message.data);
                 if (error)
-                    return "datas." + error;
+                    return "data." + error;
             }
             return null;
         };
@@ -31555,10 +31717,10 @@ $root.msg = (function() {
             var message = new $root.msg.GW2C_AckPartLevelup();
             if (object.result != null)
                 message.result = object.result >>> 0;
-            if (object.datas != null) {
-                if (typeof object.datas !== "object")
-                    throw TypeError(".msg.GW2C_AckPartLevelup.datas: object expected");
-                message.datas = $root.msg.PalaceData.fromObject(object.datas);
+            if (object.data != null) {
+                if (typeof object.data !== "object")
+                    throw TypeError(".msg.GW2C_AckPartLevelup.data: object expected");
+                message.data = $root.msg.PalaceData.fromObject(object.data);
             }
             return message;
         };
@@ -31578,12 +31740,12 @@ $root.msg = (function() {
             var object = {};
             if (options.defaults) {
                 object.result = 0;
-                object.datas = null;
+                object.data = null;
             }
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
-            if (message.datas != null && message.hasOwnProperty("datas"))
-                object.datas = $root.msg.PalaceData.toObject(message.datas, options);
+            if (message.data != null && message.hasOwnProperty("data"))
+                object.data = $root.msg.PalaceData.toObject(message.data, options);
             return object;
         };
 
