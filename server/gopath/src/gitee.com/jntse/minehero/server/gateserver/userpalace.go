@@ -341,7 +341,7 @@ func (this *UserPalace) CalculateCharm(user *GateUser, id uint32) uint32{
 	}
 	charm := uint32(0)
 	for i, v := range palace.parts {
-		partid := this.GetPalacePartId(id, i)
+		partid := this.GetPalacePartId(id, uint32(i))
 		if partid != 0 {
 			partconf := PalaceMgr().GetPartConfig(partid, v)
 			if partconf != nil {
