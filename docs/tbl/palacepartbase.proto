@@ -32,6 +32,9 @@ message PalacePartsDefine
 	
 	
 	optional uint32 Charm = 5; // 对应的魅力
+	
+	
+	optional string PartName = 6; // 家具名字
 
 }
 
