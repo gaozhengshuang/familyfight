@@ -187,8 +187,6 @@ cc.Class({
             }
             this.node_player.addChild(_playerPrefab);
         }
-
-        Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_PLAYER);
     },
 
     createBox(id) {
@@ -278,8 +276,6 @@ cc.Class({
                     this._playerList.splice(i, 1);
                 }
             }
-
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_PLAYER);
         }
     },
 
