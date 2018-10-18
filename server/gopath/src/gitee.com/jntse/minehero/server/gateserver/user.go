@@ -40,6 +40,7 @@ type DBUserData struct {
 	nextpowertime uint64
 	maxpower 	  uint32
 	biggold 	  []string
+	currency 	  UserCurrency
 }
 
 type BoxData struct {
@@ -92,6 +93,7 @@ func NewGateUser(account, key, token string) *GateUser {
 	u.maid.Init()
 	u.palace.Init()
 	u.travel.Init()
+	u.currency.Init(u)
 	u.tickers.Init(u.OnTicker10ms, u.OnTicker100ms, u.OnTicker1s, u.OnTicker5s, u.OnTicker1m)
 	u.cleanup = false
 	u.tm_disconnect = 0
@@ -303,6 +305,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	this.palace.PackBin(bin)
 	this.travel.PackBin(bin)
 	this.guide.PackBin(bin)
+	this.currency.PackBin(userbase)
 	this.PackBox(bin)
 	//
 	return bin
@@ -342,6 +345,7 @@ func (this *GateUser) LoadBin() {
 	this.travel.Init()
 	this.travel.LoadBin(this, this.bin)
 	this.guide.LoadBin(this, this.bin)
+	this.currency.LoadBin(userbase)
 	this.LoadBox(this.bin)
 }
 
@@ -370,6 +374,7 @@ func (this *GateUser) OnCreateNew() {
 	this.maxpower = uint32(tbl.Common.PowerMax)
 	this.nextpowertime = uint64(util.CURTIME()) + uint64(tbl.Common.PowerAddInterval)
 	this.travel.CreateNew()
+	this.currency.Init(this)
 	this.GenerateBox(1, 2, 1)
 	this.Save()
 }

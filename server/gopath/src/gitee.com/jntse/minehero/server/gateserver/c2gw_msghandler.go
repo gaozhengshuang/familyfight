@@ -61,6 +61,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_UploadTrueGold{}, on_C2GW_UploadTrueGold)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPower{}, on_C2GW_ReqPower)
 	this.msgparser.RegistProtoMsg(msg.C2GW_UploadBigGold{}, on_C2GW_UploadBigGold)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMiniGameCoin{}, on_C2GW_ReqMiniGameCoin)
 	//活动
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTurnBrand{}, on_C2GW_ReqTurnBrand)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqLinkup{}, on_C2GW_ReqLinkup)
@@ -71,6 +72,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPalaceTakeBack{}, on_C2GW_ReqPalaceTakeBack)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMasterLevelup{}, on_C2GW_ReqMasterLevelup)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMaidUnlock{}, on_C2GW_ReqMaidUnlock)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPartLevelup{}, on_C2GW_ReqPartLevelup)
 	//御赐
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPrepareTravel{}, on_C2GW_ReqPrepareTravel)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqCheckEvent{}, on_C2GW_ReqCheckEvent)
@@ -315,6 +317,15 @@ func on_C2GW_UploadBigGold(session network.IBaseNetSession, message interface{})
 	}
 	user.SetBigGold(tmsg.GetGolds())
 }
+func on_C2GW_ReqMiniGameCoin(session network.IBaseNetSession, message interface{}) {
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+	user.currency.SynMiniGameCoin()
+}
 //翻牌子
 func on_C2GW_ReqTurnBrand(session network.IBaseNetSession, message interface{}) {
 	tmsg := message.(*msg.C2GW_ReqTurnBrand)
@@ -483,6 +494,27 @@ func on_C2GW_ReqMaidUnlock(session network.IBaseNetSession, message interface{})
 	}
 	result, data := user.palace.UnlockMaid(user, tmsg.GetId(), tmsg.GetIndex())
 	send := &msg.GW2C_RetMaidUnlock{}
+	send.Result = pb.Uint32(result)
+	send.Data = data
+	user.SendMsg(send)
+}
+//升级配件
+func on_C2GW_ReqPartLevelup(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqPartLevelup)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result, data := user.palace.PartLevelup(user, tmsg.GetId(), tmsg.GetIndex())
+	send := &msg.GW2C_AckPartLevelup{}
 	send.Result = pb.Uint32(result)
 	send.Data = data
 	user.SendMsg(send)
