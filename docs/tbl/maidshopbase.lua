@@ -3,7 +3,7 @@
 
 module table {
 export var TMaidShop : table.ITMaidShopDefine[] = [
-		{ Id : 1, Price : [ "0_10" ] 	},
+		{ Id : 1, Price : [ "0_1" ] 	},
 		{ Id : 2, Price : [ "0_15" ] 	},
 		{ Id : 3, Price : [ "0_23" ] 	},
 		{ Id : 4, Price : [ "0_34" ] 	},
