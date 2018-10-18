@@ -55,12 +55,12 @@
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0.44
+      "y": 0.61
     },
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 134,
-      "height": 250
+      "height": 181.5
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -285,7 +285,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 120
+      "y": -62
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -677,7 +677,7 @@
     "_layoutSize": {
       "__type__": "cc.Size",
       "width": 134,
-      "height": 250
+      "height": 181.5
     },
     "_resize": 1,
     "_N$layoutType": 0,
