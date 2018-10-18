@@ -80,11 +80,13 @@ PalaceModel.prototype.onGW2C_RetPalaceTakeBack = function (msgid, data) {
                 break;
             }
         }
-        let goldInfo = {
-            itemid: 50001,
-            num: data.gold
-        };
-        this.palaceTakeBack.items.push(goldInfo);
+        if (this.palaceTakeBack.items) {
+            let goldInfo = {
+                itemid: 50001,
+                num: data.gold
+            };
+            this.palaceTakeBack.items.push(goldInfo);
+        }
         NotificationController.Emit(Define.EVENT_KEY.USERINFO_ADDGOLD, data.gold);
         NotificationController.Emit(Define.EVENT_KEY.PALACETASK_ACK);
     }
