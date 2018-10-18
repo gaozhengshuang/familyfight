@@ -28,7 +28,7 @@ message TurnBrandDefine
 	optional string Head = 3; // 图片路径
 	
 	
-	optional uint32 Type = 4; // 奖励类型(1 金币 2 体力 3 侍女 4 道具 5 小游戏事件)
+	optional uint32 Type = 4; // 奖励类型(1 金币 2 体力 3 侍女 4 道具 5 小游戏事件6小游戏币)
 	
 	
 	optional uint32 RewardId = 5; // 道具id
