@@ -73,9 +73,10 @@ cc.Class({
         if (this.guideBase.IsFinger == 1) { //设置手指位置(多个位置暂时不支持)
             if (this.guideBase.ButtonName != null) {
                 let fingerNode = Game.ViewController.seekChildByName(tagretParent, this.guideBase.ButtonName);
-                if (fingerNode) {   
-                    this.node_arrow.x = fingerNode.x;
-                    this.node_arrow.y = fingerNode.y;
+                if (fingerNode) {
+                    let worldPos = fingerNode.parent.convertToWorldSpaceAR(fingerNode.position);
+                    let arrPos = this.node_arrow.parent.convertToNodeSpaceAR(worldPos);
+                    this.node_arrow.position = arrPos;
                 }
             } else {
                 if (newWordPosition) {
@@ -84,15 +85,15 @@ cc.Class({
                 }
             }
         }
-        
+
     },
 
-    updateGuide() {        
+    updateGuide() {
         if (this._oldParent != null && this.guideNodes.length > 0) {    //把父节点变化过的按钮还回去
             this.resetNode(this._oldParent);
         }
         this._oldGuide = Game.GuideController.GetGuide();
-        
+
         this.guideBase = Game.ConfigController.GetConfigById("Guide", Game.GuideController.GetGuide());
         if (this.guideBase) {
             this.isFind = true;
@@ -163,7 +164,7 @@ cc.Class({
                     this._oldParent = maidNode.node.parent;     //记录之前的父节点
                 }
                 break;
-            
+
             case 5:     //空白遮罩层 没有对话框和手指(用来播动画的时候用)
                 guideNode = this.findGuideNode();
                 if (guideNode) {
@@ -193,7 +194,7 @@ cc.Class({
                 this.node_dailogbox.y = Number(_boxpos[1]);
             }
         }
-        
+
         this.anima_dialogueShow.play();
     },
 
