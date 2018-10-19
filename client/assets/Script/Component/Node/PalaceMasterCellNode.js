@@ -15,6 +15,18 @@ cc.Class({
         label_lovenum: { default: null, type: cc.Label },
     },
 
+    onEnable() {
+        this.initNotification();
+    },
+
+    onDisable() {
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharmOrLove);
+    },
+
+    initNotification() {
+        Game.NotificationController.On(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharmOrLove);
+    },
+
     init(index, data, reload, group) {
         this._target = data.target;
         this._data = data.array[index];
@@ -29,6 +41,7 @@ cc.Class({
             if (this._masterLvUpBase) {
                 this.label_masterName.string = Game.MaidModel.GetPersonNameById(this._data.Master) + '(' + this._masterLvUpBase.levelName + ')';
             }
+            this.label_charmnum.string = this._palaceData.charm;
         } else {
             this.label_masterName.string = Game.MaidModel.GetPersonNameById(this._data.Master) + "(娴贵人)";
         }
@@ -38,6 +51,7 @@ cc.Class({
             this.label_masterName.node.color = cc.color(88, 34, 10);
 
             this.label_unlockTxt.string = '';
+            this.node_charmBg.active = true;
         } else {
             this.label_palaceName.node.color = cc.color(120, 120, 120);
             this.label_masterName.node.color = cc.color(120, 120, 120);
@@ -46,7 +60,7 @@ cc.Class({
             if (passBase) {
                 this.label_unlockTxt.string = `第${passBase.ChapterID}章第${passBase.Index}关解锁`;
             }
-            
+            this.node_charmBg.active = false;
         }
     },
 
@@ -58,6 +72,12 @@ cc.Class({
             Game.GuideController.NextGuide();
         } else {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, "宫殿尚未解锁");
+        }
+    },
+
+    updateCharmOrLove() {
+        if (this._palaceData) {
+            this.label_charmnum.string = this._palaceData.charm;
         }
     }
 });

@@ -83,7 +83,7 @@ cc.Class({
         switch (this.status) {
             case KickAssStatus.Status_Idle:
                 if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.KICKASS) < 1) {
-                    this.showTips("体力不足");
+                    this.showTips("游戏次数不足");
                     return;
                 }
                 this._changeStatus(KickAssStatus.Status_Moving);
@@ -93,7 +93,7 @@ cc.Class({
                 break;
             case KickAssStatus.Status_End:
                 if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.KICKASS) < 1) {
-                    this.showTips("体力不足");
+                    this.showTips("游戏次数不足");
                     return;
                 }
                 this._changeStatus(KickAssStatus.Status_Moving);
