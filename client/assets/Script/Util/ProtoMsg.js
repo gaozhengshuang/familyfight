@@ -6947,6 +6947,7 @@ $root.msg = (function() {
          * @property {number|Long|null} [endtime] PalaceData endtime
          * @property {Array.<number>|null} [partslevel] PalaceData partslevel
          * @property {number|null} [charm] PalaceData charm
+         * @property {Array.<string>|null} [golds] PalaceData golds
          */
 
         /**
@@ -6960,6 +6961,7 @@ $root.msg = (function() {
         function PalaceData(properties) {
             this.maids = [];
             this.partslevel = [];
+            this.golds = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -7015,6 +7017,14 @@ $root.msg = (function() {
         PalaceData.prototype.charm = 0;
 
         /**
+         * PalaceData golds.
+         * @member {Array.<string>} golds
+         * @memberof msg.PalaceData
+         * @instance
+         */
+        PalaceData.prototype.golds = $util.emptyArray;
+
+        /**
          * Creates a new PalaceData instance using the specified properties.
          * @function create
          * @memberof msg.PalaceData
@@ -7052,6 +7062,9 @@ $root.msg = (function() {
                     writer.uint32(/* id 5, wireType 0 =*/40).uint32(message.partslevel[i]);
             if (message.charm != null && message.hasOwnProperty("charm"))
                 writer.uint32(/* id 6, wireType 0 =*/48).uint32(message.charm);
+            if (message.golds != null && message.golds.length)
+                for (var i = 0; i < message.golds.length; ++i)
+                    writer.uint32(/* id 7, wireType 2 =*/58).string(message.golds[i]);
             return writer;
         };
 
@@ -7118,6 +7131,11 @@ $root.msg = (function() {
                 case 6:
                     message.charm = reader.uint32();
                     break;
+                case 7:
+                    if (!(message.golds && message.golds.length))
+                        message.golds = [];
+                    message.golds.push(reader.string());
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -7179,6 +7197,13 @@ $root.msg = (function() {
             if (message.charm != null && message.hasOwnProperty("charm"))
                 if (!$util.isInteger(message.charm))
                     return "charm: integer expected";
+            if (message.golds != null && message.hasOwnProperty("golds")) {
+                if (!Array.isArray(message.golds))
+                    return "golds: array expected";
+                for (var i = 0; i < message.golds.length; ++i)
+                    if (!$util.isString(message.golds[i]))
+                        return "golds: string[] expected";
+            }
             return null;
         };
 
@@ -7223,6 +7248,13 @@ $root.msg = (function() {
             }
             if (object.charm != null)
                 message.charm = object.charm >>> 0;
+            if (object.golds) {
+                if (!Array.isArray(object.golds))
+                    throw TypeError(".msg.PalaceData.golds: array expected");
+                message.golds = [];
+                for (var i = 0; i < object.golds.length; ++i)
+                    message.golds[i] = String(object.golds[i]);
+            }
             return message;
         };
 
@@ -7242,6 +7274,7 @@ $root.msg = (function() {
             if (options.arrays || options.defaults) {
                 object.maids = [];
                 object.partslevel = [];
+                object.golds = [];
             }
             if (options.defaults) {
                 object.id = 0;
@@ -7274,6 +7307,11 @@ $root.msg = (function() {
             }
             if (message.charm != null && message.hasOwnProperty("charm"))
                 object.charm = message.charm;
+            if (message.golds && message.golds.length) {
+                object.golds = [];
+                for (var j = 0; j < message.golds.length; ++j)
+                    object.golds[j] = message.golds[j];
+            }
             return object;
         };
 
