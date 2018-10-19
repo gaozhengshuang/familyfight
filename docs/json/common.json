@@ -3,7 +3,7 @@
     "PowerMax": 20,
     "PowerAddInterval": 1800,
     "PowerAddition": 5,
-    "PriceAdditionPerBuy": 1.2,
+    "PriceAdditionPerBuy": 1.25,
     "GoldItemId": 50001,
     "TravelMinTime": 3600,
     "TravelMaxTime": 7200,
@@ -17,6 +17,7 @@
     },
     "十秒小游戏成功奖励": "",
     "TenSecondWinReward": {
+		"Gold": 1260,
         "Item": [
             [
                 10001,
