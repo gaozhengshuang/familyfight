@@ -39,6 +39,7 @@ cc.Class({
                 this.label_frunitureDetail.string = this.palacePartBase.PartName + "Lv" + this.palacePartBase.Level;
                 if (this.palacePartBase.Cost != null && this.palacePartBase.Cost.length > 0) {
                     this.label_goldnum.string = "x" + Game.Tools.UnitConvert(this.palacePartBase.Cost);
+                    this.button_levelup.interactable = Game.CurrencyModel.CompareGold(this.palacePartBase.Cost) >= 0;
                     this.button_levelup.node.active = true;
                 } else {
                     this.button_levelup.node.active = false;
@@ -48,12 +49,16 @@ cc.Class({
     },
 
     onLvUp() {
-        Game.NetWorkController.Send('msg.C2GW_ReqPartLevelup',
-        {
-            id: Game.PalaceModel.GetCurPalaceId(),
-            index: this.partId,
-        });
+        if (Game.CurrencyModel.CompareGold(this.palacePartBase.Cost) >= 0) {
+            Game.NetWorkController.Send('msg.C2GW_ReqPartLevelup',
+            {
+                id: Game.PalaceModel.GetCurPalaceId(),
+                index: this.partId,
+            });
 
-        Game.CurrencyModel.SubtractGold(this.palacePartBase.Cost);
+            Game.CurrencyModel.SubtractGold(this.palacePartBase.Cost);
+        } else {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, "金币不足哟!");
+        }
     },
 });
