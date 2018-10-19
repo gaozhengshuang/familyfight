@@ -2638,7 +2638,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_get",
+    "_name": "label_getnum",
     "_objFlags": 0,
     "_parent": {
       "__id__": 76
@@ -4512,6 +4512,9 @@
     "label_get": {
       "__id__": 78
     },
+    "label_getnum": {
+      "__id__": 84
+    },
     "label_getTime": {
       "__id__": 81
     },
@@ -4544,6 +4547,12 @@
     },
     "label_maidPercentage": {
       "__id__": 137
+    },
+    "label_curEfficiency": {
+      "__id__": 65
+    },
+    "label_maxEfficiency": {
+      "__id__": 68
     }
   },
   {
