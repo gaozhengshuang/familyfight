@@ -26,6 +26,7 @@ Currency.prototype.Init = function (cb) {
     NetWorkController.AddListener('msg.GW2C_UpdatePower', this, this.onGW2C_UpdatePower);
     NetWorkController.AddListener('msg.GW2C_UpdateBigGold', this, this.onGW2C_UpdateBigGold);
     NetWorkController.AddListener('msg.GW2C_OfflineReward', this, this.onGW2C_OfflineReward);
+    NetWorkController.AddListener('msg.GW2C_UpdateMiniGameCoin', this, this.onGW2C_UpdateMiniGameCoin);
 
     NotificationController.On(Define.EVENT_KEY.USERINFO_ADDGOLD, this, this.AddGold);
     NotificationController.On(Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, this, this.SubtractGold);
