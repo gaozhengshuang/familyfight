@@ -52,5 +52,6 @@ cc.Class({
     },
 
     onOpenDetail() {
+        this.openView(Game.UIName.UI_PALACEBUILDDETAIL, this.partId);
     },
 });
