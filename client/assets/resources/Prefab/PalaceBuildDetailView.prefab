@@ -398,7 +398,7 @@
     "target": {
       "__id__": 1
     },
-    "component": "PalaceMaidDetailView",
+    "component": "PalaceBuildDetailView",
     "handler": "onClose",
     "customEventData": ""
   },
@@ -506,7 +506,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_name",
+    "_name": "label_title",
     "_objFlags": 0,
     "_parent": {
       "__id__": 6
@@ -1603,8 +1603,8 @@
     "target": {
       "__id__": 1
     },
-    "component": "PalaceMaidDetailView",
-    "handler": "onReqMaidUnlock",
+    "component": "PalaceBuildDetailView",
+    "handler": "onLvUp",
     "customEventData": ""
   },
   {
@@ -1668,7 +1668,7 @@
     }
   },
   {
-    "__type__": "95be64rW7JBaZ6/2o+UjlH1",
+    "__type__": "b71b3TTDapI2KBr532YhDvv",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -1678,29 +1678,24 @@
     "_url": "",
     "_data": {},
     "_oldparentNode": null,
-    "image_maid": {
-      "__id__": 22
-    },
-    "label_name": {
+    "label_title": {
       "__id__": 16
     },
-    "label_findNum": {
-      "__id__": 32
+    "image_furniture": {
+      "__id__": 22
     },
-    "label_findDetail": {
+    "label_frunitureDetail": {
       "__id__": 25
     },
-    "label_lockLv": null,
-    "label_gold": {
+    "button_levelup": {
+      "__id__": 48
+    },
+    "label_goldnum": {
       "__id__": 42
     },
-    "node_buy": {
-      "__id__": 36
-    },
-    "image_buy": {
-      "__id__": 47
-    },
-    "image_lockbg": null
+    "label_charmNum": {
+      "__id__": 32
+    }
   },
   {
     "__type__": "cc.PrefabInfo",
