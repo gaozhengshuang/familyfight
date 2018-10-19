@@ -155,7 +155,19 @@ export var TDialogue : table.ITDialogueDefine[] = [
 		{ Id : 150, Index : 73, HeadSprite : [ "Image/Head/4", "Image/Head/12" ], HeadLocation : [ 1, 2 ], Name : "高贵妃", NameLocation : 2, Content : "你过来，本宫这碗赏你了。还有这些碗，吃完了再走。" 	},
 		{ Id : 151, Index : 73, HeadSprite : [ "Image/Head/4", "Image/Head/12" ], HeadLocation : [ 1, 2 ], Name : "璎珞", NameLocation : 2, Content : "贵妃娘娘人太好了，都不嫌弃奴才吃的多。" 	},
 		{ Id : 152, Index : 74, HeadSprite : [ "Image/Head/12" ], HeadLocation : [ 1 ], Name : "高贵妃", NameLocation : 1, Content : "赶紧让她滚，本宫看着就心烦。" 	},
-		{ Id : 153, Index : 74, HeadSprite : [ "Image/Head/12" ], HeadLocation : [ 1 ], Name : "高贵妃", NameLocation : 2, Content : "之后问问内务府，这都招进来什么人，这不就半个傻子，我累了，都退下吧。" 	}
+		{ Id : 153, Index : 74, HeadSprite : [ "Image/Head/12" ], HeadLocation : [ 1 ], Name : "高贵妃", NameLocation : 2, Content : "之后问问内务府，这都招进来什么人，这不就半个傻子，我累了，都退下吧。" 	},
+		{ Id : 154, Index : 75, HeadSprite : [ "Image/Head/7" ], HeadLocation : [ 1 ], Name : "芝兰", NameLocation : 1, Content : "怡嫔，奴才替贵妃娘娘问话。为何要掌你的嘴。" 	},
+		{ Id : 155, Index : 76, HeadSprite : [ "Image/Head/15" ], HeadLocation : [ 1 ], Name : "怡嫔", NameLocation : 1, Content : "嫔妾污蔑贵妃，以下犯上。" 	},
+		{ Id : 156, Index : 76, HeadSprite : [ "Image/Head/15", "Image/Head/7" ], HeadLocation : [ 1, 2 ], Name : "芝兰", NameLocation : 2, Content : "贵妃娘娘再问，记住今后慎言了吗？" 	},
+		{ Id : 157, Index : 76, HeadSprite : [ "Image/Head/4", "Image/Head/12" ], HeadLocation : [ 1, 2 ], Name : "怡嫔", NameLocation : 2, Content : "嫔妾铭记于心。" 	},
+		{ Id : 158, Index : 77, HeadSprite : [ "Image/Head/16" ], HeadLocation : [ 1 ], Name : "愉贵人", NameLocation : 1, Content : "不要打了，姐姐因为我犯错。贵妃娘娘要罚就罚我。要打就打我吧" 	},
+		{ Id : 159, Index : 77, HeadSprite : [ "Image/Head/16", "Image/Head/8" ], HeadLocation : [ 1, 2 ], Name : "宫女", NameLocation : 2, Content : "贵人，快回去吧。" 	},
+		{ Id : 160, Index : 78, HeadSprite : [ "Image/Head/16" ], HeadLocation : [ 1 ], Name : "愉贵人", NameLocation : 1, Content : "枇杷膏里有毒的，为什么验不出来。" 	},
+		{ Id : 161, Index : 78, HeadSprite : [ "Image/Head/16", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "璎珞", NameLocation : 2, Content : "枇杷新叶有毒。" 	},
+		{ Id : 162, Index : 79, HeadSprite : [ "Image/Head/9" ], HeadLocation : [ 1 ], Name : "张嬷嬷", NameLocation : 1, Content : "璎珞你在胡说什么。不知道的事情不要乱说。" 	},
+		{ Id : 163, Index : 79, HeadSprite : [ "Image/Head/9", "Image/Head/4" ], HeadLocation : [ 1, 2 ], Name : "璎珞", NameLocation : 2, Content : "奴才幼时很爱吃枇杷，误吃了果核，呼吸困难。后来游医告诉我，枇杷的老叶无毒，新叶跟果核有毒。" 	},
+		{ Id : 164, Index : 80, HeadSprite : [ "Image/Head/13" ], HeadLocation : [ 1 ], Name : "愉贵人", NameLocation : 1, Content : "原来是这样，你随我去见皇后。" 	},
+		{ Id : 165, Index : 80, HeadSprite : [ "Image/Head/13", "Image/Head/9" ], HeadLocation : [ 1, 2 ], Name : "张嬷嬷", NameLocation : 2, Content : "贵人万万不可，难道一个小小宫女的话比张院判还准。璎珞你什么话都敢说，不想要命了。" 	}
 	]
 
 
