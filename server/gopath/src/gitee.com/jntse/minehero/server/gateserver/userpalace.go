@@ -271,7 +271,8 @@ func (this *UserPalace) PartLevelup(user *GateUser,id uint32, index uint32) (res
 		return 2, nil
 	}
 	level := palace.parts[index]
-	curtmpl := PalaceMgr().GetPartConfig(palace.id, level)
+
+	curtmpl := PalaceMgr().GetPartConfig(partid, level)
 	if curtmpl == nil {
 		user.SendNotify(fmt.Sprintf("未找到配件配置 id : %d level : %d", palace.id, level))
 		return 3, nil
@@ -280,7 +281,7 @@ func (this *UserPalace) PartLevelup(user *GateUser,id uint32, index uint32) (res
 		user.SendNotify("该配件已满级")
 		return 4, nil
 	}
-	nexttmpl := PalaceMgr().GetPartConfig(palace.id, level + 1)
+	nexttmpl := PalaceMgr().GetPartConfig(partid, level + 1)
 	if nexttmpl == nil {
 		user.SendNotify("该配件已满级")
 		return 4, nil
