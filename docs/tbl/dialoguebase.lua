@@ -92,7 +92,7 @@ export var TDialogue : table.ITDialogueDefine[] = [
 		{ Id : 87, Index : 43, HeadSprite : [ "Image/GameScene/halfbody/4" ], HeadLocation : [ 1 ], Name : "璎珞", NameLocation : 1, Content : "我，魏璎珞天生脾气爆，不好惹。谁要再叽叽歪歪，我有的是法子对付她。" 	},
 		{ Id : 88, Index : 44, HeadSprite : [ "Image/GameScene/halfbody/9" ], HeadLocation : [ 1 ], Name : "方姑姑", NameLocation : 1, Content : "大半夜的，都在闹什么？" 	},
 		{ Id : 89, Index : 44, HeadSprite : [ "Image/GameScene/halfbody/9", "Image/GameScene/halfbody/4" ], HeadLocation : [ 1, 2 ], Name : "璎珞", NameLocation : 2, Content : "没什么。是我刚刚不小心，把茶壶打翻了，湿了床上的被褥。" 	},
-		{ Id : 90, Index : 44, HeadSprite : [ "Image/GameScene/halfbody/9", "Image/GameScene/halfbody/4" ], HeadLocation : [ 1 ], Name : "方姑姑", NameLocation : 2, Content : "今儿晚上你就把被褥翻过来盖吧，记住，不许再出声，否则一并挨罚，听见没！" 	},
+		{ Id : 90, Index : 44, HeadSprite : [ "Image/GameScene/halfbody/9", "Image/GameScene/halfbody/4" ], HeadLocation : [ 1, 2 ], Name : "方姑姑", NameLocation : 1, Content : "今儿晚上你就把被褥翻过来盖吧，记住，不许再出声，否则一并挨罚，听见没！" 	},
 		{ Id : 91, Index : 45, HeadSprite : [ "Image/GameScene/halfbody/12" ], HeadLocation : [ 1 ], Name : "高贵妃", NameLocation : 1, Content : "刘太医！还不快给愉贵人喂药？" 	},
 		{ Id : 92, Index : 46, HeadSprite : [ "Image/GameScene/halfbody/1" ], HeadLocation : [ 1 ], Name : "皇后", NameLocation : 1, Content : "刘太医，你给愉贵人喝的是什么。" 	},
 		{ Id : 93, Index : 46, HeadSprite : [ "Image/GameScene/halfbody/1", "Image/GameScene/halfbody/11" ], HeadLocation : [ 1, 2 ], Name : "刘太医", NameLocation : 2, Content : "回禀皇后娘娘，臣给愉贵人诊治，发现是咳疾，喝的枇杷膏" 	},
