@@ -65,6 +65,7 @@ Currency.prototype.SetGold = function (gold) {
     if (!_.isArray(gold)) {
         return;
     }
+
     this.bigGolds = gold;
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, gold);
 }
