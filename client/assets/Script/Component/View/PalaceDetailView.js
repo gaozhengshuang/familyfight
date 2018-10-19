@@ -207,6 +207,7 @@ cc.Class({
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
         this.label_maidPercentage.string = `${this._data.charm}%`;
 
+        this.getItemBtnStateView();
         this.updateEfficiency();
     },
 
@@ -221,8 +222,11 @@ cc.Class({
             maxEfficiency = maxEfficiency.add(Game.Tools.toBigIntMoney(v.getMaidBase().GoldAddition));
         }.bind(this));
 
-        this.label_curEfficiency.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(curEfficiency.multiply(3600)));
-        this.label_maxEfficiency.string = "/" + Game.Tools.UnitConvert(Game.Tools.toLocalMoney(maxEfficiency.multiply(3600)));
+        curEfficiency = curEfficiency.multiply(100 + this._data.charm);  //加成效率
+        maxEfficiency = curEfficiency.multiply(100 + this._data.charm);  //加成效率
+
+        this.label_curEfficiency.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(curEfficiency.multiply(36)));
+        this.label_maxEfficiency.string = "/" + Game.Tools.UnitConvert(Game.Tools.toLocalMoney(maxEfficiency.multiply(36)));
     },
 
     onOpenLvUp(event) {
