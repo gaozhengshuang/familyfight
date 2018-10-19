@@ -5,12 +5,13 @@ cc.Class({
     properties: {
         eventSprite: { default: null, type: cc.Sprite },
         idLabel: { default: null, type: cc.Label },
+        eventNode: { default: null, type: cc.Node },
 
         eventData: { default: null },
         target: { default: null }
     },
     init: function (index, data, reload, group) {
-        this.node.name = 'EventItemNode__' + (index + 1);
+        this.eventNode.name = 'EventItemNode__' + (index + 1);
         this.target = data.target;
         if (index >= data.array.length) {
             this.node.active = false;
