@@ -9,6 +9,10 @@ cc.Class({
         label_palaceName: { default: null, type: cc.Label },
         label_masterName: { default: null, type: cc.Label },
         label_unlockTxt: { default: null, type: cc.Label },
+        node_charmBg: { default: null, type: cc.Node },
+        label_charmnum: { default: null, type: cc.Label },
+        node_loveBg: { default: null, type: cc.Node },
+        label_lovenum: { default: null, type: cc.Label },
     },
 
     init(index, data, reload, group) {

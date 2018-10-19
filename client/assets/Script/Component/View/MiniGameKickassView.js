@@ -82,7 +82,7 @@ cc.Class({
     onActionClick: function () {
         switch (this.status) {
             case KickAssStatus.Status_Idle:
-                if (Game.CurrencyModel.GetPower() < 1) {
+                if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.KICKASS) < 1) {
                     this.showTips("体力不足");
                     return;
                 }
@@ -92,7 +92,7 @@ cc.Class({
                 this._changeStatus(KickAssStatus.Status_Kick);
                 break;
             case KickAssStatus.Status_End:
-                if (Game.CurrencyModel.GetPower() < 1) {
+                if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.KICKASS) < 1) {
                     this.showTips("体力不足");
                     return;
                 }

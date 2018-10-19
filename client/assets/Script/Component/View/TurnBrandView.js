@@ -322,6 +322,24 @@ cc.Class({
                     }, this)
                 ]))
                 break;
+            case Game.TurnGameDefine.REWARD_TYPE.TYPE_MINIGAEMCOIN:
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+                    info: '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>小游戏次数+' + config.Value + '</c></c>',
+                    alive: 0.5,
+                    delay: 1
+                });
+                this.node.runAction(cc.sequence([
+                    cc.delayTime(0.5),
+                    cc.callFunc(function () {
+                        this._hideBrands();
+                    }, this),
+                    cc.delayTime(1.2),
+                    cc.callFunc(function () {
+                        Game.GuideController.NextGuide();
+                        this._randBrandInfo()
+                    }, this)
+                ]))
+                break;
             default:
                 break;
         }

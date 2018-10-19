@@ -140,26 +140,29 @@ func (this *UserMaid) BuyMaid(user *GateUser,id uint32) (result uint32 ,addition
 		user.SendNotify("没有对应的商店信息")
 		return 1,nil,price
 	}
-	price = maidshop.Price
 	maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[id]
 	if !find {
 		user.SendNotify("没有对应的侍女配置")
 		return 2,nil,price
 	}
-	count := user.GetCountByLevel(uint32(maidconfg.Passlevels))
-	if count >= 20 {
-		user.SendNotify("该关卡侍女数量已达上限")
-		return 3,nil,price
-	}
-	//可以买了
-	maid := this.AddMaid(user,id,1)
-	//更新价格咯
+	price = maidshop.Price
+	//计算价格
 	oldpriceObj, maxIndex := user.ParseBigGoldToObj(price)
 	times := math.Pow(float64(tbl.Common.PriceAdditionPerBuy), float64(shopdata.times))
 	oldpriceObj = user.TimesBigGold(oldpriceObj, uint32(times))
 	oldpriceObj = user.CarryBigGold(oldpriceObj, maxIndex)
+	price = user.ParseBigGoldToArr(oldpriceObj)
+
+	count := user.GetCountByLevel(uint32(maidconfg.Passlevels))
+	if count >= 20 {
+		user.SendNotify("该关卡侍女数量已达上限")
+		return 3,nil,price
+	}	
+	//可以买了
+	maid := this.AddMaid(user,id,1)
+	//更新价格咯
 	shopdata.times = shopdata.times + 1
-	return 0, maid, user.ParseBigGoldToArr(oldpriceObj)
+	return 0, maid, price
 }
 
 //合并侍女
