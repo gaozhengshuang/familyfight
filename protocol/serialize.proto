@@ -123,6 +123,7 @@ message PalaceData
     optional uint64 endtime = 4;
     repeated uint32 partslevel = 5;
     optional uint32 charm = 6;   
+    repeated string golds = 7;
 }
 //御赐数据
 message TravelData

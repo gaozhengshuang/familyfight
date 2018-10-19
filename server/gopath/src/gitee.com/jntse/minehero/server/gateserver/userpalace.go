@@ -17,6 +17,7 @@ type PalaceData struct {
 	endtime			uint64
 	parts 			[]uint32
 	charm 			uint32
+	golds 			[]string
 }
 
 func (this *PalaceData) PackBin() *msg.PalaceData{
@@ -33,6 +34,10 @@ func (this *PalaceData) PackBin() *msg.PalaceData{
 		data.Partslevel = append(data.Partslevel, v)
 	}
 	data.Charm = pb.Uint32(this.charm)
+	data.Golds = make([]string, 0)
+	for _, v := range this.golds {
+		data.Golds = append(data.Golds, v)
+	}
 	return data
 }
 
@@ -60,6 +65,9 @@ func (this *UserPalace) LoadBin(user *GateUser,bin *msg.Serialize) {
 			palace.parts[index] = v
 		}
 		palace.charm = data.GetCharm()
+		for _, v := range data.GetGolds() {
+			palace.golds = append(palace.golds, v)
+		}
 	}
 }
 
@@ -130,7 +138,6 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 		return 4,items,nil,gold
 	}
 	//可以收取了 根据宫女计算金币和物品吧
-	goldObj := make(map[uint32]uint32)
 	for i, v := range maidsconfig {
 		if i >= len(palace.maids) {
 			continue
@@ -139,10 +146,6 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 			continue
 		}
 		//这个宫女开启了
-		//计算金币
-		addition, _ := user.ParseBigGoldToObj(v.GoldAddition)
-		addition = user.TimesBigGold(addition,uint32(mastertmpl.WaitTime))
-		goldObj = user.MergeBigGold(goldObj, addition)
 		rand := uint32(util.RandBetween(0, 9999))
 		if rand <= v.ItemProb {
 			//获得物品
@@ -163,16 +166,10 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 	}
 	// 重新计时吧
 	palace.endtime = uint64(util.CURTIME()) + uint64(mastertmpl.WaitTime)
-	//
 	retitems := make([]*msg.PairNumItem,0)
 	// retitems = append(retitems, &msg.PairNumItem{ Itemid: pb.Uint32(uint32(tbl.Common.GoldItemID)), Num: pb.Uint64(gold)})
 	retitems = append(retitems, items...)
-	//计算收取百分比
-	goldObj = user.TimesBigGold(goldObj, palace.charm + 100)
-	goldObj = user.DivideBigGold(goldObj, 100)
-
-	goldObj = user.CarryBigGold(goldObj, user.MaxIndexBigGold(goldObj))
-	return 0, retitems, palace.PackBin(), user.ParseBigGoldToArr(goldObj)
+	return 0, retitems, palace.PackBin(), palace.golds
 }
 
 //升级
@@ -209,6 +206,7 @@ func (this *UserPalace) Levelup(user* GateUser, id uint32) (result uint32, data 
 	//重新计算结束时间
 	starttime := palace.endtime - uint64(mastertmpl.WaitTime)
 	palace.endtime = starttime + uint64(nextmastertmpl.WaitTime)
+	palace.golds = this.CalculateTakeBackGolds(user, id)
 	//扣除道具
 	for _, v := range mastertmpl.LevelupCost {
 		user.RemoveItem(v.id, v.num, "升级后宫消耗")
@@ -252,6 +250,7 @@ func (this *UserPalace) UnlockMaid(user* GateUser, id uint32, index uint32) (res
 	}
 	//钱就前端判断了
 	palace.maids[index] = true
+	palace.golds = this.CalculateTakeBackGolds(user, id)
 	return 0, palace.PackBin()
 }
 
@@ -274,7 +273,7 @@ func (this *UserPalace) PartLevelup(user *GateUser,id uint32, index uint32) (res
 	level := palace.parts[index]
 	curtmpl := PalaceMgr().GetPartConfig(palace.id, level)
 	if curtmpl == nil {
-		user.SendNotify("未找到配件配置")
+		user.SendNotify(fmt.Sprintf("未找到配件配置 id : %d level : %d", palace.id, level))
 		return 3, nil
 	} 
 	if len(curtmpl.Cost) == 0 {
@@ -289,6 +288,7 @@ func (this *UserPalace) PartLevelup(user *GateUser,id uint32, index uint32) (res
 	//可以了 价格啥的就客户端判断了
 	palace.parts[index] = level + 1
 	palace.charm = this.CalculateCharm(user, id)
+	palace.golds = this.CalculateTakeBackGolds(user, id)
 	return 0, palace.PackBin()
 }
 // ========================= 数据处理 ========================= 
@@ -315,6 +315,7 @@ func (this *UserPalace) AddPalace(user *GateUser, id uint32) (palace *PalaceData
 		palace.parts = append(palace.parts, 1)
 	}
 	palace.charm = 0
+	palace.golds = make([]string, 0)
 	this.palaces[id] = palace
 	return palace, true
 }
@@ -351,4 +352,41 @@ func (this *UserPalace) CalculateCharm(user *GateUser, id uint32) uint32{
 		}
 	}
 	return charm
+}
+//重新计算后宫可收获的货币
+func (this *UserPalace) CalculateTakeBackGolds(user *GateUser, id uint32) []string {
+	golds := make([]string, 0)
+	palace, find := this.palaces[id]
+	if !find {
+		return golds
+	}
+	maidsconfig := PalaceMgr().GetMaidConfig(id)
+	if maidsconfig == nil || len(maidsconfig) == 0 {
+		return golds
+	}
+	mastertmpl := PalaceMgr().GetMasterConfig(id, palace.level)
+	if mastertmpl == nil {
+		return golds
+	}
+	//可以收取了 根据宫女计算金币和物品吧
+	goldObj := make(map[uint32]uint32)
+	for i, v := range maidsconfig {
+		if i >= len(palace.maids) {
+			continue
+		}
+		if !palace.maids[i] {
+			continue
+		}
+		//这个宫女开启了
+		//计算金币
+		addition, _ := user.ParseBigGoldToObj(v.GoldAddition)
+		goldObj = user.MergeBigGold(goldObj, addition)
+	}
+	//计算收取百分比
+	goldObj = user.TimesBigGold(goldObj,uint32(mastertmpl.WaitTime))
+	goldObj = user.TimesBigGold(goldObj, palace.charm + 100)
+	goldObj = user.DivideBigGold(goldObj, 100)
+	goldObj = user.CarryBigGold(goldObj, user.MaxIndexBigGold(goldObj))
+	golds = user.ParseBigGoldToArr(goldObj)
+	return golds
 }

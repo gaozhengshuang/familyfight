@@ -103,6 +103,9 @@ cc.Class({
             // if (box.contains(event.getLocation())) {
             this._changeDialogueStatus(DialogueStatus.Status_Dialogue);
             // }
+        } else if (this.status == DialogueStatus.Status_Dialogue) {
+            //正在对话，说完把 
+            this.contentLabel.string = this.dialogue.Content;
         }
     },
     //根据id 构建对话的列表
