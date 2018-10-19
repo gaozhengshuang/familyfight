@@ -112,7 +112,8 @@ cc.Class({
     updateMiniGameCoin: function () {
         for (let i = 0; i < this.miniGameCoinLabel.length; i++) {
             let label = this.miniGameCoinLabel[i];
-            label.string = Game.CurrencyModel.GetMiniGameCoin(i) + '次';
+            let times = Game.CurrencyModel.GetMiniGameCoin(i);
+            label.string = (times == 0 ? '' : (times + '次'));
         }
     },
     _changeStatus: function (status) {
@@ -328,6 +329,7 @@ cc.Class({
                     alive: 0.5,
                     delay: 1
                 });
+                Game.NetWorkController.Send('msg.C2GW_ReqMiniGameCoin');
                 this.node.runAction(cc.sequence([
                     cc.delayTime(0.5),
                     cc.callFunc(function () {

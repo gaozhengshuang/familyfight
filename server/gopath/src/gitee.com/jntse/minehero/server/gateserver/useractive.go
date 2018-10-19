@@ -77,7 +77,7 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam u
 			//小游戏的游戏币
 			//随机一个类型
 			gametype := uint32(util.RandBetween(int32(MiniGameCoinType_Start),int32(MiniGameCoinType_End) - 1))
-			this.currency.AddMiniGameCoin(gametype, rvalue, reason, true)
+			this.currency.AddMiniGameCoin(gametype, rvalue, reason, notify)
 			return 0, value
 		default:
 			return 0, value
