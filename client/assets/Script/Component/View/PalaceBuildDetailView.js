@@ -26,25 +26,33 @@ cc.Class({
     },
 
     updateView() {
-        // this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
-        // let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this._data.id);
-        // let palacePartConfig = Game.ConfigController.GetConfig("PalaceParts");
-        // if (palacePartConfig && palaceMapBase && this._data) {
-        //     let palacePartBase = Game._.find(palacePartConfig, {"PartId": palaceMapBase.Parts[this.partId], "Level": this._data.partslevel[this.partId]});
-        //     if (palacePartBase) {
-        //         if (palacePartBase.Cost != null && palacePartBase.Cost.length > 0) {
-        //             this.label_partAndLv.string = palacePartBase.PartName + " Lv" + palacePartBase.Level;
-        //             this.label_gold.string = Game.Tools.UnitConvert(palacePartBase.Cost);
-        //             this.node_price.active = true;
-        //         } else {
-        //             this.label_partAndLv.string = palacePartBase.PartName + " LvMax" ;
-        //             this.node_price.active = false;
-        //         }
-        //     }
-        // }        
+        this.partId = this._data;
+
+        let palaceData = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
+        let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", palaceData.id);
+        let palacePartConfig = Game.ConfigController.GetConfig("PalaceParts");
+        if (palacePartConfig && palaceMapBase && palaceData) {
+            let palacePartBase = Game._.find(palacePartConfig, {"PartId": palaceMapBase.Parts[this.partId], "Level": palaceData.partslevel[this.partId]});
+            if (palacePartBase) {
+                Game.ResController.SetSprite(this.image_furniture, palacePartBase.PartPath);
+                this.label_title.string = palacePartBase.PartName + "详情";
+                this.label_frunitureDetail.string = palacePartBase.PartName + "Lv" + palacePartBase.Level;
+                this.label_charmNum.string = "魅力值+" + palacePartBase.Charm;
+                if (palacePartBase.Cost != null && palacePartBase.Cost.length > 0) {
+                    this.label_goldnum.string = "x" + Game.Tools.UnitConvert(palacePartBase.Cost);
+                    this.button_levelup.node.active = true;
+                } else {
+                    this.button_levelup.node.active = false;
+                }
+            }
+        }        
     },
 
     onLvUp() {
-
+        Game.NetWorkController.Send('msg.C2GW_ReqPartLevelup',
+        {
+            id: Game.PalaceModel.GetCurPalaceId(),
+            index: this.partId,
+        });
     },
 });
