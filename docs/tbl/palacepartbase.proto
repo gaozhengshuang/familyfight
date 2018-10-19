@@ -35,6 +35,9 @@ message PalacePartsDefine
 	
 	
 	optional string PartName = 6; // 家具名字
+	
+	
+	optional string PartPath = 7; // 图片路径
 
 }
 

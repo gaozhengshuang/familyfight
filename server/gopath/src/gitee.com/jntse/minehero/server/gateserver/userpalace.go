@@ -315,6 +315,7 @@ func (this *UserPalace) AddPalace(user *GateUser, id uint32) (palace *PalaceData
 		palace.parts = append(palace.parts, 1)
 	}
 	palace.charm = 0
+	this.palaces[id] = palace
 	return palace, true
 }
 
