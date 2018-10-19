@@ -1,0 +1,62 @@
+
+taijian.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Pendant
+  rotate: false
+  xy: 325, 577
+  size: 39, 148
+  orig: 39, 148
+  offset: 0, 0
+  index: -1
+body
+  rotate: false
+  xy: 2, 153
+  size: 321, 572
+  orig: 321, 572
+  offset: 0, 0
+  index: -1
+expression
+  rotate: false
+  xy: 2, 2
+  size: 20, 43
+  orig: 20, 43
+  offset: 0, 0
+  index: -1
+eye_close
+  rotate: false
+  xy: 746, 972
+  size: 41, 36
+  orig: 41, 36
+  offset: 0, 0
+  index: -1
+eye_open
+  rotate: false
+  xy: 638, 853
+  size: 48, 46
+  orig: 48, 46
+  offset: 0, 0
+  index: -1
+foot_left
+  rotate: false
+  xy: 2, 47
+  size: 90, 104
+  orig: 90, 104
+  offset: 0, 0
+  index: -1
+foot_right
+  rotate: false
+  xy: 638, 901
+  size: 106, 107
+  orig: 106, 107
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 2, 727
+  size: 634, 281
+  orig: 634, 281
+  offset: 0, 0
+  index: -1
