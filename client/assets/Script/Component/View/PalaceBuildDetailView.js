@@ -32,13 +32,13 @@ cc.Class({
         let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", palaceData.id);
         let palacePartConfig = Game.ConfigController.GetConfig("PalaceParts");
         if (palacePartConfig && palaceMapBase && palaceData) {
-            let palacePartBase = Game._.find(palacePartConfig, {"PartId": palaceMapBase.Parts[this.partId], "Level": palaceData.partslevel[this.partId]});
-            if (palacePartBase) {
-                Game.ResController.SetSprite(this.image_furniture, palacePartBase.PartPath);
-                this.label_title.string = palacePartBase.PartName + "详情";
-                this.label_frunitureDetail.string = palacePartBase.PartName + "Lv" + palacePartBase.Level;
-                if (palacePartBase.Cost != null && palacePartBase.Cost.length > 0) {
-                    this.label_goldnum.string = "x" + Game.Tools.UnitConvert(palacePartBase.Cost);
+            this.palacePartBase = Game._.find(palacePartConfig, {"PartId": palaceMapBase.Parts[this.partId], "Level": palaceData.partslevel[this.partId]});
+            if (this.palacePartBase) {
+                Game.ResController.SetSprite(this.image_furniture, this.palacePartBase.PartPath);
+                this.label_title.string = this.palacePartBase.PartName + "详情";
+                this.label_frunitureDetail.string = this.palacePartBase.PartName + "Lv" + this.palacePartBase.Level;
+                if (this.palacePartBase.Cost != null && this.palacePartBase.Cost.length > 0) {
+                    this.label_goldnum.string = "x" + Game.Tools.UnitConvert(this.palacePartBase.Cost);
                     this.button_levelup.node.active = true;
                 } else {
                     this.button_levelup.node.active = false;
@@ -53,5 +53,7 @@ cc.Class({
             id: Game.PalaceModel.GetCurPalaceId(),
             index: this.partId,
         });
+
+        Game.CurrencyModel.SubtractGold(this.palacePartBase.Cost);
     },
 });
