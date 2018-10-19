@@ -646,7 +646,7 @@
     "Direction": 0,
     "pageChangeEvents": [],
     "_N$cell": {
-      "__uuid__": "739a5082-c6b4-44e9-8c1e-8ed1f1701b84"
+      "__uuid__": "727fe638-1271-4634-ba0e-9b090be931c4"
     },
     "_N$ScrollModel": 1,
     "_N$ViewType": 0
@@ -709,6 +709,7 @@
     "_enabled": true,
     "_url": "",
     "_data": {},
+    "_oldparentNode": null,
     "tableView": {
       "__id__": 12
     }
