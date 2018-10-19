@@ -118,7 +118,7 @@ cc.Class({
 
     onClickStartOrStop() {
         if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TENSECOND) < 1) {
-            this.showTips("游戏次数不足");
+            this.showTips("前去翻牌子获得游戏次数");
             return;
         }
 
