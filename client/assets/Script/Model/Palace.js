@@ -109,8 +109,8 @@ PalaceModel.prototype.onGW2C_RetMasterLevelup = function (msgid, data) {
 PalaceModel.prototype.onGW2C_AckPartLevelup = function (msgid, data) {
     if (data.result == 0) {
         for (let i = 0; i < this.palaceDatas.length; i++) {
-            if (this.palaceDatas[i].id == data.datas.id) {
-                this.palaceDatas[i] = data.datas;
+            if (this.palaceDatas[i].id == data.data.id) {
+                this.palaceDatas[i] = data.data;
                 break;
             }
         }
