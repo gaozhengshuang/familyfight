@@ -118,7 +118,7 @@ cc.Class({
 
     onClickStartOrStop() {
         if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TENSECOND) < 1) {
-            this.showTips("体力不足");
+            this.showTips("游戏次数不足");
             return;
         }
 
