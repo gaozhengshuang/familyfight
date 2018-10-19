@@ -117,7 +117,7 @@ cc.Class({
     },
 
     onClickStartOrStop() {
-        if (Game.CurrencyModel.GetPower() < 1) {
+        if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TENSECOND) < 1) {
             this.showTips("体力不足");
             return;
         }

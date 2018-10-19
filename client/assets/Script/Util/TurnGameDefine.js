@@ -7,7 +7,8 @@ var Define = {
         TYPE_POWER: 2,
         TYPE_MAID: 3,
         TYPE_ITEM: 4,
-        TYPE_MINIGAME: 5
+        TYPE_MINIGAME: 5,
+        TYPE_MINIGAEMCOIN: 6
     }
 }
 

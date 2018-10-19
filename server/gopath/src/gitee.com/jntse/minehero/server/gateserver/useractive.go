@@ -281,6 +281,10 @@ func (this *GateUser) TenSecond(hit bool) (result uint32, gold []string, items [
 				items = append(items, &msg.PairNumItem{ Itemid: pb.Uint32( uint32(v[0])), Num: pb.Uint64(uint64(v[1])) })
 			}
 		}
+		goldObj := this.maid.CalculateRewardPerSecond(this)
+		goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.TenSecondWinReward.Gold))
+		goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
+		gold = this.ParseBigGoldToArr(goldObj)
 	} else {
 		//奖励金币
 		goldObj := this.maid.CalculateRewardPerSecond(this)
