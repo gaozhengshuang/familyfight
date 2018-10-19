@@ -258,6 +258,8 @@ cc.Class({
                     this._playerList.splice(i, 1);
                 }
             }
+
+            this.updateEfficiency();
         }
     },
 
