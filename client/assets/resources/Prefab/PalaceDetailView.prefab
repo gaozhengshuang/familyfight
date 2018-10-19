@@ -4541,6 +4541,9 @@
     },
     "label_sleepUnlock": {
       "__id__": 122
+    },
+    "label_maidPercentage": {
+      "__id__": 137
     }
   },
   {

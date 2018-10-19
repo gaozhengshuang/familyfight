@@ -22,6 +22,7 @@ cc.Class({
         label_bestowedUnlock: { default: null, type: cc.Label },
         label_buildUnlock: { default: null, type: cc.Label },
         label_sleepUnlock: { default: null, type: cc.Label },
+        label_maidPercentage: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -32,6 +33,7 @@ cc.Class({
         this.initNotification();
         this.updateView();
         this.updateBottomButton();
+        this.updateCharmOrLove();
     },
 
     onDisable() {
@@ -75,6 +77,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.PALACETASK_ACK, this, this.updateGetState);
         Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEMASTERLVUP_ACK, this, this.updateLvUpBtnState);
         Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharmOrLove);
     },
 
     removeNotification() {
@@ -83,6 +86,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACETASK_ACK, this, this.updateGetState);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEMASTERLVUP_ACK, this, this.updateLvUpBtnState);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharmOrLove);
     },
 
     updateView() {
@@ -189,6 +193,12 @@ cc.Class({
         let sleepLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.SLEEP);
         this.button_sleep.interactable = sleepLock;
         this.label_sleepUnlock.node.active = !sleepLock;
+    },
+
+    updateCharmOrLove() {
+        if (this._data) {
+            this.label_maidPercentage.string = `${this._data.charm}%`;
+        }
     },
 
     onOpenLvUp(event) {
