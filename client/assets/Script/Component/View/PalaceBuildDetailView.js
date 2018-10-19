@@ -37,7 +37,6 @@ cc.Class({
                 Game.ResController.SetSprite(this.image_furniture, palacePartBase.PartPath);
                 this.label_title.string = palacePartBase.PartName + "详情";
                 this.label_frunitureDetail.string = palacePartBase.PartName + "Lv" + palacePartBase.Level;
-                this.label_charmNum.string = "魅力值+" + palacePartBase.Charm;
                 if (palacePartBase.Cost != null && palacePartBase.Cost.length > 0) {
                     this.label_goldnum.string = "x" + Game.Tools.UnitConvert(palacePartBase.Cost);
                     this.button_levelup.node.active = true;

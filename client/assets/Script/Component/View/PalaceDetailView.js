@@ -11,6 +11,7 @@ cc.Class({
         image_palaceCard: { default: null, type: cc.Sprite },
         image_get: { default: null, type: cc.Sprite },
         label_get: { default: null, type: cc.Label },
+        label_getnum: { default: null, type: cc.Label },
         label_getTime: { default: null, type: cc.Label },
         image_lvUp: { default: null, type: cc.Sprite },
         label_needLvItem: { default: null, type: cc.Label },
@@ -23,6 +24,9 @@ cc.Class({
         label_buildUnlock: { default: null, type: cc.Label },
         label_sleepUnlock: { default: null, type: cc.Label },
         label_maidPercentage: { default: null, type: cc.Label },
+
+        label_curEfficiency: { default: null, type: cc.Label },
+        label_maxEfficiency: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -129,6 +133,7 @@ cc.Class({
         Game._.forEach(this._palaceMaids, function (v) {
             v.updateView();
         });
+        this.updateEfficiency();
     },
 
     updateGetState() {
@@ -151,10 +156,13 @@ cc.Class({
     getItemBtnStateView() {
         if (Game.TimeController.GetCurTime() >= this._data.endtime) {
             this.label_get.node.active = true;
+            this.label_getnum.node.active = true;
             this.label_getTime.node.active = false;
+            this.label_getnum.string = `+${Game.Tools.UnitConvert(this._data.golds)}`;
             Game.ResController.SetSprite(this.image_get, "Image/GameScene/Common/button_get");
         } else {
             this.label_get.node.active = false;
+            this.label_getnum.node.active = false;
             this.label_getTime.node.active = true;
             this.leftTime = this._data.endtime - Game.TimeController.GetCurTime();
             this.label_getTime.string = '生产中\n' + Game.moment.unix(this.leftTime).format('mm:ss');
@@ -196,9 +204,25 @@ cc.Class({
     },
 
     updateCharmOrLove() {
-        if (this._data) {
-            this.label_maidPercentage.string = `${this._data.charm}%`;
-        }
+        this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
+        this.label_maidPercentage.string = `${this._data.charm}%`;
+
+        this.updateEfficiency();
+    },
+
+    updateEfficiency() {
+        let curEfficiency = Game.Tools.toBigIntMoney(["0_0"]);
+        let maxEfficiency = Game.Tools.toBigIntMoney(["0_0"]);
+        
+        Game._.forEach(this._palaceMaids, function (v) {
+            if (this._data.maids[v.getIndex()]) {
+                curEfficiency = curEfficiency.add(Game.Tools.toBigIntMoney(v.getMaidBase().GoldAddition));
+            }
+            maxEfficiency = maxEfficiency.add(Game.Tools.toBigIntMoney(v.getMaidBase().GoldAddition));
+        }.bind(this));
+
+        this.label_curEfficiency.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(curEfficiency.multiply(3600)));
+        this.label_maxEfficiency.string = "/" + Game.Tools.UnitConvert(Game.Tools.toLocalMoney(maxEfficiency.multiply(3600)));
     },
 
     onOpenLvUp(event) {
