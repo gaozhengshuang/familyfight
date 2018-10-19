@@ -15,11 +15,11 @@ cc.Class({
 
     onEnable() {
         this.initNotification();
-        this.initView();
+        this.updateView();
     },
 
     onDisable() {
-        // Game.NetWorkController.RemoveListener('msg.GW2C_AckTenSecond', this, this.onGW2C_AckTenSecond);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateView);
     },
 
     initData() {
@@ -27,10 +27,10 @@ cc.Class({
     },
 
     initNotification() {
-        // Game.NetWorkController.AddListener('msg.GW2C_AckTenSecond', this, this.onGW2C_AckTenSecond);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateView);
     },
 
-    initView() {
+    updateView() {
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
         let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this._data.id);
         if (palaceMapBase) {

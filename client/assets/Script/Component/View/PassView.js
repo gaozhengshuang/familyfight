@@ -33,6 +33,24 @@ cc.Class({
     initData() {
         this.passList = [];
         this.passBase = Game.ConfigController.GetConfig("PassLevels");
+
+        let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));     //本地判断剧情和关卡初始化
+        if (_dialoguePass == null || _dialoguePass.userid != Game.UserModel.GetUserId()) {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, 1);
+
+            let passData = {
+                userid: Game.UserModel.GetUserId(),
+                lookPass: 1,
+                pass: 1,
+            };
+            cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
+
+            Game.MaidModel.SetCurPass(1);
+            Game.MaidModel.SetCurChapter(1);
+        } else {
+            Game.MaidModel.SetCurPass(_dialoguePass.pass);
+            Game.MaidModel.SetCurChapter(Game.ConfigController.GetConfigById("PassLevels", _dialoguePass.pass).ChapterID);
+        }
     },
 
     updateView() {
