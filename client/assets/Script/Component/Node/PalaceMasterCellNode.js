@@ -76,6 +76,7 @@ cc.Class({
     },
 
     updateCharmOrLove() {
+        this._palaceData = Game.PalaceModel.GetPalaceDataById(this._data.Id);
         if (this._palaceData) {
             this.label_charmnum.string = this._palaceData.charm;
         }
