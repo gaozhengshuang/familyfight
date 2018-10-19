@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "map07",
+    "_name": "map09",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -198,7 +198,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 720,
-      "height": 464
+      "height": 384
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -207,7 +207,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 409
+      "y": 450
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -223,9 +223,9 @@
     "node": {
       "__id__": 5
     },
-    "_enabled": false,
+    "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "f11800f0-49b3-4f09-9119-63e446a3a242"
+      "__uuid__": "d0b4f038-09a7-430b-b076-904252f1422c"
     },
     "_type": 0,
     "_sizeMode": 1,
