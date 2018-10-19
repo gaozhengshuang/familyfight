@@ -1125,7 +1125,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 45
@@ -1535,6 +1535,18 @@
     },
     "label_unlockTxt": {
       "__id__": 16
+    },
+    "node_charmBg": {
+      "__id__": 22
+    },
+    "label_charmnum": {
+      "__id__": 30
+    },
+    "node_loveBg": {
+      "__id__": 35
+    },
+    "label_lovenum": {
+      "__id__": 43
     }
   },
   {
