@@ -32,9 +32,13 @@ cc.Class({
 
     updateView() {
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
-        let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this._data.id);
-        if (palaceMapBase) {
-            Game.ResController.SetSprite(this.image_palaceCard, palaceMapBase.BannerPath);
+        if (this._data) {
+            let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this._data.id);
+            if (palaceMapBase) {
+                Game.ResController.SetSprite(this.image_palaceCard, palaceMapBase.BannerPath);
+            }
+            this.label_charmnum.string = `${this._data.charm}`;
+            this.label_maidPercentage.string = `${this._data.charm}%`;
         }
     }
 });

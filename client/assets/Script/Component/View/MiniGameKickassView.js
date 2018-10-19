@@ -104,7 +104,7 @@ cc.Class({
         this.closeView(Game.UIName.UI_MINIGAMEKICKASS);
     },
     updateMiniGameCoin: function () {
-        this.coinLabel.string = '剩余次数:' + Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TENSECOND);
+        this.coinLabel.string = '剩余次数:' + Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.KICKASS);
     },
     _changeStatus: function (status) {
         if (this.status != status) {
