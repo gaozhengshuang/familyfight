@@ -1,0 +1,21 @@
+{
+	"Tool": "github.com/davyxu/tabtoy",
+	"Version": "2.8.10",
+	"LoveDialogue":[
+		{ "Id": 1, "PalaceId": 1, "Headpath": "Image/GameScene/halfbody/1", "Name": "富察容音", "Content": "嫔妾给皇上请安，天色已晚，请早些休息。" },
+		{ "Id": 2, "PalaceId": 1, "Headpath": "Image/GameScene/halfbody/1", "Name": "富察容音", "Content": "皇上你要学游泳了，因为我们马上要坠入爱河了。" },
+		{ "Id": 3, "PalaceId": 1, "Headpath": "Image/GameScene/halfbody/1", "Name": "富察容音", "Content": "你知道昨天是什么日子吗？是我爱了你一天的日子。" },
+		{ "Id": 4, "PalaceId": 1, "Headpath": "Image/GameScene/halfbody/1", "Name": "富察容音", "Content": "皇上你知道吗？你挺过分的。你过分的帅气。" },
+		{ "Id": 5, "PalaceId": 2, "Headpath": "Image/GameScene/halfbody/12", "Name": "高宁馨", "Content": "嫔妾给皇上请安，天色已晚，请早些休息。" },
+		{ "Id": 6, "PalaceId": 2, "Headpath": "Image/GameScene/halfbody/12", "Name": "高宁馨", "Content": "皇上你要学游泳了，因为我们马上要坠入爱河了。" },
+		{ "Id": 7, "PalaceId": 2, "Headpath": "Image/GameScene/halfbody/12", "Name": "高宁馨", "Content": "你知道昨天是什么日子吗？是我爱了你一天的日子。" },
+		{ "Id": 8, "PalaceId": 2, "Headpath": "Image/GameScene/halfbody/12", "Name": "高宁馨", "Content": "皇上你知道吗？你挺过分的。你过分的帅气。" },
+		{ "Id": 9, "PalaceId": 3, "Headpath": "Image/GameScene/halfbody/17", "Name": "愉贵人", "Content": "嫔妾给皇上请安，天色已晚，请早些休息。" },
+		{ "Id": 10, "PalaceId": 3, "Headpath": "Image/GameScene/halfbody/17", "Name": "愉贵人", "Content": "皇上你要学游泳了，因为我们马上要坠入爱河了。" },
+		{ "Id": 11, "PalaceId": 3, "Headpath": "Image/GameScene/halfbody/17", "Name": "愉贵人", "Content": "你知道昨天是什么日子吗？是我爱了你一天的日子。" },
+		{ "Id": 12, "PalaceId": 3, "Headpath": "Image/GameScene/halfbody/17", "Name": "愉贵人", "Content": "皇上你知道吗？你挺过分的。你过分的帅气。" },
+		{ "Id": 13, "PalaceId": 4, "Headpath": "Image/GameScene/halfbody/13", "Name": "娴妃", "Content": "嫔妾给皇上请安，天色已晚，请早些休息。" },
+		{ "Id": 14, "PalaceId": 4, "Headpath": "Image/GameScene/halfbody/13", "Name": "娴妃", "Content": "皇上你要学游泳了，因为我们马上要坠入爱河了。" },
+		{ "Id": 15, "PalaceId": 4, "Headpath": "Image/GameScene/halfbody/13", "Name": "娴妃", "Content": "你知道昨天是什么日子吗？是我爱了你一天的日子。" },
+		{ "Id": 16, "PalaceId": 4, "Headpath": "Image/GameScene/halfbody/13", "Name": "娴妃", "Content": "皇上你知道吗？你挺过分的。你过分的帅气。" }
+	]}
