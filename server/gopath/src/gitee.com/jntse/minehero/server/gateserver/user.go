@@ -421,6 +421,7 @@ func (this *GateUser) Syn() {
 	this.travel.Syn(this)
 	this.guide.Syn(this)
 	this.SynBox()
+	this.SynAttackPalaceRecords()
 	this.SendUserBase()
 }
 

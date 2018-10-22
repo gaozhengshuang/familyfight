@@ -38,7 +38,7 @@ func CopyPalaceData(data *PalaceData) *PalaceData {
 	for _, v := range data.golds {
 		newdata.golds = append(newdata.golds, v)
 	}
-	return golds
+	return newdata
 }
 
 func (this *PalaceData) PackBin() *msg.PalaceData{

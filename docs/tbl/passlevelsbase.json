@@ -6,7 +6,7 @@
 		{ "Id": 2, "Name": "步步生莲", "Path": "Image/GameScene/Pass/pass_2", "NextLevels": 3, "DialogueID": 0, "MapPrefab": "Prefab/map/map01", "ChapterID": 1, "ChapterName": "第一章", "Index": 2 },
 		{ "Id": 3, "Name": "作弊", "Path": "Image/GameScene/Pass/pass_3", "NextLevels": 4, "DialogueID": 0, "MapPrefab": "Prefab/map/map09", "ChapterID": 1, "ChapterName": "第一章", "Index": 3 },
 		{ "Id": 4, "Name": "泼水", "Path": "Image/GameScene/Pass/pass_4", "NextLevels": 5, "DialogueID": 39, "MapPrefab": "Prefab/map/map03", "ChapterID": 1, "ChapterName": "第一章", "Index": 4 },
-		{ "Id": 5, "Name": "喂药", "Path": "Image/GameScene/Pass/pass_5", "NextLevels": 6, "DialogueID": 63, "MapPrefab": "Prefab/map/map06", "ChapterID": 2, "ChapterName": "第二章", "Index": 1 },
+		{ "Id": 5, "Name": "喂药", "Path": "Image/GameScene/Pass/pass_5", "NextLevels": 6, "DialogueID": 63, "MapPrefab": "Prefab/map/map10", "ChapterID": 2, "ChapterName": "第二章", "Index": 1 },
 		{ "Id": 6, "Name": "新叶有毒", "Path": "Image/GameScene/Pass/pass_6", "NextLevels": 7, "DialogueID": 75, "MapPrefab": "Prefab/map/map04", "ChapterID": 2, "ChapterName": "第二章", "Index": 2 },
 		{ "Id": 7, "Name": "藕粉丸子", "Path": "Image/GameScene/Pass/pass_12", "NextLevels": 8, "DialogueID": 69, "MapPrefab": "Prefab/map/map02", "ChapterID": 2, "ChapterName": "第二章", "Index": 3 },
 		{ "Id": 8, "Name": "假怀孕", "Path": "Image/GameScene/Pass/pass_13", "NextLevels": 9, "DialogueID": 57, "MapPrefab": "Prefab/map/map09", "ChapterID": 2, "ChapterName": "第二章", "Index": 4 },
