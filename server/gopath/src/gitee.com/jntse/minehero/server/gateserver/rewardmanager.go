@@ -2,6 +2,7 @@ package main
 import (
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/server/tbl"
+	"gitee.com/jntse/minehero/pbmsg"
 )
 
 // --------------------------------------------------------------------------
@@ -45,12 +46,12 @@ func (this *RewardManager) Init(){
 func (this *RewardManager) DropToUser(user *Gateuser, id uint32, reason string, notify bool) (gold []string, rets []*DropData) {
 	gold = make([]string, 0)
 	rewards := make([]*DropData, 0)
-	rets := make([]*DropData, 0)
+	rets = make([]*DropData, 0)
 	dropnode, find := this.nodes[id]
 	if !find {
-		return rewards
+		return gold, rets
 	}
-	rewards = this.GetDropList(node)
+	rewards = this.GetDropList(dropnode)
 	rewards = this.MergeDropData(rewards)
 	for _, v := range rewards {
 		gold = this.AddToUser(user, v, reason, notify)
@@ -69,7 +70,7 @@ func (this* RewardManager) GetDropList(node *DropNode) []*DropData {
 			result := util.RandBetween(0, 9999)
 			if result <= int32(v.prop) {
 				newDatas := this.GenerateDropData(v)
-				datas = append(datas, newDatas)
+				datas = append(datas, newDatas...)
 			}
 		}
 	} else {
@@ -78,7 +79,7 @@ func (this* RewardManager) GetDropList(node *DropNode) []*DropData {
 		for _, v := range node.items {
 			if result < int32(v.prop) {
 				newDatas := this.GenerateDropData(v)
-				datas = append(datas, newDatas)
+				datas = append(datas, newDatas...)
 				break
 			}
 			result = result - int32(v.prop)
