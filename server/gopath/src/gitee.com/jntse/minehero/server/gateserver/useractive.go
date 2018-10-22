@@ -343,7 +343,7 @@ func (this *GateUser) ReqAttackData() *msg.GW2C_AckAttackPalaceData {
 }
 
 func (this *GateUser) AttackPalace(id uint64) []string {
-	gold = make([]string, 0)
+	gold := make([]string, 0)
 	//成功物品
 	goldObj := this.maid.CalculateRewardPerSecond(this)
 	goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.AttackPalaceReward.Gold))
@@ -358,7 +358,7 @@ func (this *GateUser) AttackPalace(id uint64) []string {
 			log.Error("创建攻击后宫记录失败 id: %d ，err: %s", id, err)
 		}
 		lenth := Redis().LLen(key).Val()
-		if int32(len) >= int32(tbl.Common.ActiveRecordCount) {
+		if int32(lenth) >= int32(tbl.Common.ActiveRecordCount) {
 			//超长了
 			err = Redis().BRPop(0, key).Err()
 			if err != nil {
@@ -381,7 +381,7 @@ func (this *GateUser) SynAttackPalaceRecords() {
 	rlist, err := Redis().LRange(key, 0, -1).Result()
 	send := &msg.GW2C_PushActiveRecord{ Records: make([]string, 0) }
 	if err != nil {
-		log.Error("加载互动记录失败 id %d ，err: %s", id, err)
+		log.Error("加载互动记录失败 id %d ，err: %s", this.Id(), err)
 	}else{
 		send.Records = rlist
 	}
