@@ -12,6 +12,7 @@ cc.Class({
         label_lvTitle: { default:null, type:cc.Label },
         label_UpTitle: { default:null, type:cc.Label },
         label_cardNum: { default:null, type:cc.Label },
+        label_lv: { default:null, type:cc.Label },
     },
 
     onLoad() {
@@ -60,6 +61,10 @@ cc.Class({
                         }
                         this.label_cardNum.string = '所需卡牌' + Game.ItemModel.GetItemNumById(item_num[0]) + "/" + item_num[1];
                     }
+                    this.label_lv.string = "升 级"
+                } else {
+                    this.label_cardNum.string = "";
+                    this.label_lv.string = "Max"
                 }
 
                 this.label_tltie.string = '(' + masterLvUpBase.levelName + ')';
@@ -75,6 +80,7 @@ cc.Class({
                     this.label_UpTitle.string = nextMasterLvUpBase.levelName;
                 } else {
                     this.label_lvTitle.string = masterLvUpBase.levelName;
+                    this.label_UpTitle.string = "Max";
                 }
             }
         }
