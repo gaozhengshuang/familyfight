@@ -19,6 +19,7 @@ var UIName = {
     UI_MINIGAMEKICKASS: 'Prefab/MiniGamekickassView',
     UI_PALACEBUILD: 'Prefab/PalaceBuildView',
     UI_PALACEBUILDDETAIL: 'Prefab/PalaceBuildDetailView',
+    UI_PALACELOVE: 'Prefab/PalaceLoveView',
 }
 
 module.exports = UIName;

@@ -64,7 +64,7 @@ cc.Class({
                     this.label_lv.string = "升 级"
                 } else {
                     this.label_cardNum.string = "";
-                    this.label_lv.string = "Max"
+                    this.label_lv.string = "Max";
                 }
 
                 this.label_tltie.string = '(' + masterLvUpBase.levelName + ')';
