@@ -45,4 +45,12 @@ enum TaskId {
     InviteeTopScore     = 1003; // 被邀请人达到目标分数
 }
 
-
+enum RewardType {
+    Gold                = 1;                //金币
+    Power               = 2;                //体力
+    Item                = 3;                //物品
+    Favor               = 4;                //亲密度
+    MiniGameCoin        = 5;                //小游戏币
+    Drop                = 6;                //另一个掉落
+    MiniGame            = 7;                //小游戏
+}

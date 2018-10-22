@@ -53,6 +53,7 @@ type GateServer struct {
 	palacemgr 		PalaceManager
 	guidemgr 		GuideManager
 	robotmgr 		RobotManager
+	rewardmgr 		RewardManager
 	msghandlers		[]network.IBaseMsgHandler
 	tblloader		*tbl.TblLoader
 	//countmgr		CountManager
@@ -99,6 +100,10 @@ func GuideMgr() *GuideManager {
 
 func RobotMgr() *RobotManager {
 	return &GateSvr().robotmgr
+}
+
+func RewardMgr() *RewardManager {
+	return &GateSvr().rewardmgr
 }
 
 //func CountMgr() *CountManager {
@@ -218,6 +223,7 @@ func (this *GateServer) Init(fileconf string) bool {
 	this.palacemgr.Init()
 	this.guidemgr.Init()
 	this.robotmgr.Init()
+	this.rewardmgr.Init()
 	//this.countmgr.Init()
 	//this.gamemgr.Init()
 	this.ticker1m = util.NewGameTicker(60 * time.Second, this.Handler1mTick)
