@@ -1,10 +1,7 @@
 package main
 import (
-	"fmt"
 	"gitee.com/jntse/gotoolkit/util"
-	"gitee.com/jntse/minehero/pbmsg"
 	"gitee.com/jntse/minehero/server/tbl"
-	pb "github.com/golang/protobuf/proto"
 )
 
 // --------------------------------------------------------------------------
@@ -26,7 +23,7 @@ func (this* RobotManager) Init(){
 	this.GenerateRobotPool(uint32(tbl.Common.RobotCount))
 }
 
-func (this *RobotManager) Tick1Minite(now uint32) {
+func (this *RobotManager) Tick1Minite(now uint64) {
 	if this.generateTime + uint64(tbl.Common.RobotGenerateInterval) < now {
 		this.GenerateRobotPool(uint32(tbl.Common.RobotCount))
 	}
@@ -44,7 +41,7 @@ func (this* RobotManager) GenerateRobotPool(count uint32){
 		id, find := UserMgr().idwithindex[uint32(v)]
 		if find {
 			user := UserMgr().FindById(id)
-			if user != null {
+			if user != nil {
 				this.robots = append(this.robots, this.GenerateRobotByUser(user))
 			}
 		}
@@ -62,7 +59,7 @@ func (this *RobotManager) GenerateRobotByUser(user *GateUser) *RobotData {
 	robotdata.face = user.Face()
 	robotdata.palaces = make(map[uint32]* PalaceData)
 	for _, palace := range user.palace.palaces {
-		robotdata.palaces = append(robotdata.palaces, CopyPalaceData(palace))
+		robotdata.palaces[palace.id], CopyPalaceData(palace))
 	}
 	return robotdata
 }
@@ -86,7 +83,7 @@ func (this *RobotManager) GenerateRandomRobot() *RobotData {
 			}
 			palace.parts = make([]uint32, 0)
 			palace.golds = make([]string, 0)
-			robotdata.palaces = append(robotdata.palaces, palace)
+			robotdata.palaces[palacetmpl.Id] = palace
 		}
 	}
 	return robotdata
