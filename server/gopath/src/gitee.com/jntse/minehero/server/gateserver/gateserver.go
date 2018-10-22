@@ -52,6 +52,7 @@ type GateServer struct {
 	waitpool		LoginWaitPool
 	palacemgr 		PalaceManager
 	guidemgr 		GuideManager
+	robotmgr 		RobotManager
 	msghandlers		[]network.IBaseMsgHandler
 	tblloader		*tbl.TblLoader
 	//countmgr		CountManager
@@ -94,6 +95,10 @@ func PalaceMgr() *PalaceManager {
 
 func GuideMgr() *GuideManager {
 	return &GateSvr().guidemgr
+}
+
+func RobotMgr() *RobotManager {
+	return &GateSvr().robotmgr
 }
 
 //func CountMgr() *CountManager {
@@ -212,6 +217,7 @@ func (this *GateServer) Init(fileconf string) bool {
 	this.waitpool.Init()
 	this.palacemgr.Init()
 	this.guidemgr.Init()
+	this.robotmgr.Init()
 	//this.countmgr.Init()
 	//this.gamemgr.Init()
 	this.ticker1m = util.NewGameTicker(60 * time.Second, this.Handler1mTick)
@@ -227,6 +233,7 @@ func (this *GateServer) Init(fileconf string) bool {
 }
 
 func (this *GateServer) Handler1mTick(now int64) {
+	this.robotmgr.Tick1Minite(uint64(now / 1000))
 	this.rcounter.BatchSave(20)
 }
 
