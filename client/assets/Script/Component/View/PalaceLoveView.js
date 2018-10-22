@@ -15,6 +15,7 @@ cc.Class({
         image_leftCurtains: { default: null, type: cc.Sprite },
         image_rightCurtains: { default: null, type: cc.Sprite },
         image_topCurtains: { default: null, type: cc.Sprite },
+        node_dialog: { default: null, type: cc.Node },
     },
 
     onLoad() {
@@ -36,6 +37,7 @@ cc.Class({
         this._topCurtainsPos = this.image_topCurtains.node.getPosition();
         this._leftCurtainsPos = this.image_leftCurtains.node.getPosition();
         this._rightCurtainsPos = this.image_rightCurtains.node.getPosition();
+        this._dialogPos = this.node_dialog.getPosition();
 
         this._moveTime = 1.0;
         this._delayTime = 2.0;
@@ -50,6 +52,7 @@ cc.Class({
         this.image_topCurtains.node.setPosition(this._topCurtainsPos);
         this.image_leftCurtains.node.setPosition(this._leftCurtainsPos);
         this.image_rightCurtains.node.setPosition(this._rightCurtainsPos);
+        this.node_dialog.setPosition(this._dialogPos);
         this.image_topCurtains.node.opacity = 0;
         this.image_leftCurtains.node.opacity = 0;
         this.image_rightCurtains.node.opacity = 0;
@@ -62,6 +65,10 @@ cc.Class({
     },
 
     onGoLove() {
+        this.playMakeLoveAction();
+    },
+
+    playMakeLoveAction() {
         this.image_topCurtains.node.runAction(cc.sequence([
             cc.spawn([
                 cc.moveTo(this._moveTime, this.image_topCurtains.node.x, this.image_topCurtains.node.y - this.image_topCurtains.node.height),
@@ -97,5 +104,17 @@ cc.Class({
                 cc.fadeOut(this._moveTime)
             ]),
         ]));
-    }
+
+        this.node_dialog.runAction(cc.sequence([
+            cc.spawn([
+                cc.moveTo(this._moveTime, this.node_dialog.x, this.node_dialog.y - this.node_dialog.height),
+                cc.fadeOut(this._moveTime)
+            ]),
+            cc.delayTime(this._delayTime),
+            cc.spawn([
+                cc.moveTo(this._moveTime, this._dialogPos.x, this._dialogPos.y),
+                cc.fadeIn(this._moveTime)
+            ]),
+        ]));
+    },
 });
