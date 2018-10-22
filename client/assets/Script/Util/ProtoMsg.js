@@ -2864,6 +2864,1238 @@ $root.msg = (function() {
         return GW2C_AckKickAss;
     })();
 
+    msg.RobotPalaceData = (function() {
+
+        /**
+         * Properties of a RobotPalaceData.
+         * @memberof msg
+         * @interface IRobotPalaceData
+         * @property {number|Long|null} [id] RobotPalaceData id
+         * @property {string|null} [name] RobotPalaceData name
+         * @property {string|null} [face] RobotPalaceData face
+         * @property {msg.IPalaceData|null} [palace] RobotPalaceData palace
+         */
+
+        /**
+         * Constructs a new RobotPalaceData.
+         * @memberof msg
+         * @classdesc Represents a RobotPalaceData.
+         * @implements IRobotPalaceData
+         * @constructor
+         * @param {msg.IRobotPalaceData=} [properties] Properties to set
+         */
+        function RobotPalaceData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * RobotPalaceData id.
+         * @member {number|Long} id
+         * @memberof msg.RobotPalaceData
+         * @instance
+         */
+        RobotPalaceData.prototype.id = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * RobotPalaceData name.
+         * @member {string} name
+         * @memberof msg.RobotPalaceData
+         * @instance
+         */
+        RobotPalaceData.prototype.name = "";
+
+        /**
+         * RobotPalaceData face.
+         * @member {string} face
+         * @memberof msg.RobotPalaceData
+         * @instance
+         */
+        RobotPalaceData.prototype.face = "";
+
+        /**
+         * RobotPalaceData palace.
+         * @member {msg.IPalaceData|null|undefined} palace
+         * @memberof msg.RobotPalaceData
+         * @instance
+         */
+        RobotPalaceData.prototype.palace = null;
+
+        /**
+         * Creates a new RobotPalaceData instance using the specified properties.
+         * @function create
+         * @memberof msg.RobotPalaceData
+         * @static
+         * @param {msg.IRobotPalaceData=} [properties] Properties to set
+         * @returns {msg.RobotPalaceData} RobotPalaceData instance
+         */
+        RobotPalaceData.create = function create(properties) {
+            return new RobotPalaceData(properties);
+        };
+
+        /**
+         * Encodes the specified RobotPalaceData message. Does not implicitly {@link msg.RobotPalaceData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.RobotPalaceData
+         * @static
+         * @param {msg.IRobotPalaceData} message RobotPalaceData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RobotPalaceData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && message.hasOwnProperty("id"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.id);
+            if (message.name != null && message.hasOwnProperty("name"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.name);
+            if (message.face != null && message.hasOwnProperty("face"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.face);
+            if (message.palace != null && message.hasOwnProperty("palace"))
+                $root.msg.PalaceData.encode(message.palace, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified RobotPalaceData message, length delimited. Does not implicitly {@link msg.RobotPalaceData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.RobotPalaceData
+         * @static
+         * @param {msg.IRobotPalaceData} message RobotPalaceData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        RobotPalaceData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a RobotPalaceData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.RobotPalaceData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.RobotPalaceData} RobotPalaceData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RobotPalaceData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.RobotPalaceData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.uint64();
+                    break;
+                case 2:
+                    message.name = reader.string();
+                    break;
+                case 3:
+                    message.face = reader.string();
+                    break;
+                case 4:
+                    message.palace = $root.msg.PalaceData.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a RobotPalaceData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.RobotPalaceData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.RobotPalaceData} RobotPalaceData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        RobotPalaceData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a RobotPalaceData message.
+         * @function verify
+         * @memberof msg.RobotPalaceData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        RobotPalaceData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isInteger(message.id) && !(message.id && $util.isInteger(message.id.low) && $util.isInteger(message.id.high)))
+                    return "id: integer|Long expected";
+            if (message.name != null && message.hasOwnProperty("name"))
+                if (!$util.isString(message.name))
+                    return "name: string expected";
+            if (message.face != null && message.hasOwnProperty("face"))
+                if (!$util.isString(message.face))
+                    return "face: string expected";
+            if (message.palace != null && message.hasOwnProperty("palace")) {
+                var error = $root.msg.PalaceData.verify(message.palace);
+                if (error)
+                    return "palace." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a RobotPalaceData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.RobotPalaceData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.RobotPalaceData} RobotPalaceData
+         */
+        RobotPalaceData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.RobotPalaceData)
+                return object;
+            var message = new $root.msg.RobotPalaceData();
+            if (object.id != null)
+                if ($util.Long)
+                    (message.id = $util.Long.fromValue(object.id)).unsigned = true;
+                else if (typeof object.id === "string")
+                    message.id = parseInt(object.id, 10);
+                else if (typeof object.id === "number")
+                    message.id = object.id;
+                else if (typeof object.id === "object")
+                    message.id = new $util.LongBits(object.id.low >>> 0, object.id.high >>> 0).toNumber(true);
+            if (object.name != null)
+                message.name = String(object.name);
+            if (object.face != null)
+                message.face = String(object.face);
+            if (object.palace != null) {
+                if (typeof object.palace !== "object")
+                    throw TypeError(".msg.RobotPalaceData.palace: object expected");
+                message.palace = $root.msg.PalaceData.fromObject(object.palace);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a RobotPalaceData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.RobotPalaceData
+         * @static
+         * @param {msg.RobotPalaceData} message RobotPalaceData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        RobotPalaceData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.id = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.id = options.longs === String ? "0" : 0;
+                object.name = "";
+                object.face = "";
+                object.palace = null;
+            }
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (typeof message.id === "number")
+                    object.id = options.longs === String ? String(message.id) : message.id;
+                else
+                    object.id = options.longs === String ? $util.Long.prototype.toString.call(message.id) : options.longs === Number ? new $util.LongBits(message.id.low >>> 0, message.id.high >>> 0).toNumber(true) : message.id;
+            if (message.name != null && message.hasOwnProperty("name"))
+                object.name = message.name;
+            if (message.face != null && message.hasOwnProperty("face"))
+                object.face = message.face;
+            if (message.palace != null && message.hasOwnProperty("palace"))
+                object.palace = $root.msg.PalaceData.toObject(message.palace, options);
+            return object;
+        };
+
+        /**
+         * Converts this RobotPalaceData to JSON.
+         * @function toJSON
+         * @memberof msg.RobotPalaceData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        RobotPalaceData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return RobotPalaceData;
+    })();
+
+    msg.C2GW_ReqAttackPalaceData = (function() {
+
+        /**
+         * Properties of a C2GW_ReqAttackPalaceData.
+         * @memberof msg
+         * @interface IC2GW_ReqAttackPalaceData
+         */
+
+        /**
+         * Constructs a new C2GW_ReqAttackPalaceData.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqAttackPalaceData.
+         * @implements IC2GW_ReqAttackPalaceData
+         * @constructor
+         * @param {msg.IC2GW_ReqAttackPalaceData=} [properties] Properties to set
+         */
+        function C2GW_ReqAttackPalaceData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new C2GW_ReqAttackPalaceData instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqAttackPalaceData
+         * @static
+         * @param {msg.IC2GW_ReqAttackPalaceData=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqAttackPalaceData} C2GW_ReqAttackPalaceData instance
+         */
+        C2GW_ReqAttackPalaceData.create = function create(properties) {
+            return new C2GW_ReqAttackPalaceData(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqAttackPalaceData message. Does not implicitly {@link msg.C2GW_ReqAttackPalaceData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqAttackPalaceData
+         * @static
+         * @param {msg.IC2GW_ReqAttackPalaceData} message C2GW_ReqAttackPalaceData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqAttackPalaceData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqAttackPalaceData message, length delimited. Does not implicitly {@link msg.C2GW_ReqAttackPalaceData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqAttackPalaceData
+         * @static
+         * @param {msg.IC2GW_ReqAttackPalaceData} message C2GW_ReqAttackPalaceData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqAttackPalaceData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqAttackPalaceData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqAttackPalaceData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqAttackPalaceData} C2GW_ReqAttackPalaceData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqAttackPalaceData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqAttackPalaceData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqAttackPalaceData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqAttackPalaceData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqAttackPalaceData} C2GW_ReqAttackPalaceData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqAttackPalaceData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqAttackPalaceData message.
+         * @function verify
+         * @memberof msg.C2GW_ReqAttackPalaceData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqAttackPalaceData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqAttackPalaceData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqAttackPalaceData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqAttackPalaceData} C2GW_ReqAttackPalaceData
+         */
+        C2GW_ReqAttackPalaceData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqAttackPalaceData)
+                return object;
+            return new $root.msg.C2GW_ReqAttackPalaceData();
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqAttackPalaceData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqAttackPalaceData
+         * @static
+         * @param {msg.C2GW_ReqAttackPalaceData} message C2GW_ReqAttackPalaceData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqAttackPalaceData.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this C2GW_ReqAttackPalaceData to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqAttackPalaceData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqAttackPalaceData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqAttackPalaceData;
+    })();
+
+    msg.GW2C_AckAttackPalaceData = (function() {
+
+        /**
+         * Properties of a GW2C_AckAttackPalaceData.
+         * @memberof msg
+         * @interface IGW2C_AckAttackPalaceData
+         * @property {msg.IRobotPalaceData|null} [data] GW2C_AckAttackPalaceData data
+         */
+
+        /**
+         * Constructs a new GW2C_AckAttackPalaceData.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckAttackPalaceData.
+         * @implements IGW2C_AckAttackPalaceData
+         * @constructor
+         * @param {msg.IGW2C_AckAttackPalaceData=} [properties] Properties to set
+         */
+        function GW2C_AckAttackPalaceData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckAttackPalaceData data.
+         * @member {msg.IRobotPalaceData|null|undefined} data
+         * @memberof msg.GW2C_AckAttackPalaceData
+         * @instance
+         */
+        GW2C_AckAttackPalaceData.prototype.data = null;
+
+        /**
+         * Creates a new GW2C_AckAttackPalaceData instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckAttackPalaceData
+         * @static
+         * @param {msg.IGW2C_AckAttackPalaceData=} [properties] Properties to set
+         * @returns {msg.GW2C_AckAttackPalaceData} GW2C_AckAttackPalaceData instance
+         */
+        GW2C_AckAttackPalaceData.create = function create(properties) {
+            return new GW2C_AckAttackPalaceData(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckAttackPalaceData message. Does not implicitly {@link msg.GW2C_AckAttackPalaceData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckAttackPalaceData
+         * @static
+         * @param {msg.IGW2C_AckAttackPalaceData} message GW2C_AckAttackPalaceData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckAttackPalaceData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.data != null && message.hasOwnProperty("data"))
+                $root.msg.RobotPalaceData.encode(message.data, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckAttackPalaceData message, length delimited. Does not implicitly {@link msg.GW2C_AckAttackPalaceData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckAttackPalaceData
+         * @static
+         * @param {msg.IGW2C_AckAttackPalaceData} message GW2C_AckAttackPalaceData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckAttackPalaceData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckAttackPalaceData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckAttackPalaceData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckAttackPalaceData} GW2C_AckAttackPalaceData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckAttackPalaceData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckAttackPalaceData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.data = $root.msg.RobotPalaceData.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckAttackPalaceData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckAttackPalaceData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckAttackPalaceData} GW2C_AckAttackPalaceData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckAttackPalaceData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckAttackPalaceData message.
+         * @function verify
+         * @memberof msg.GW2C_AckAttackPalaceData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckAttackPalaceData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.data != null && message.hasOwnProperty("data")) {
+                var error = $root.msg.RobotPalaceData.verify(message.data);
+                if (error)
+                    return "data." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckAttackPalaceData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckAttackPalaceData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckAttackPalaceData} GW2C_AckAttackPalaceData
+         */
+        GW2C_AckAttackPalaceData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckAttackPalaceData)
+                return object;
+            var message = new $root.msg.GW2C_AckAttackPalaceData();
+            if (object.data != null) {
+                if (typeof object.data !== "object")
+                    throw TypeError(".msg.GW2C_AckAttackPalaceData.data: object expected");
+                message.data = $root.msg.RobotPalaceData.fromObject(object.data);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckAttackPalaceData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckAttackPalaceData
+         * @static
+         * @param {msg.GW2C_AckAttackPalaceData} message GW2C_AckAttackPalaceData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckAttackPalaceData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.data = null;
+            if (message.data != null && message.hasOwnProperty("data"))
+                object.data = $root.msg.RobotPalaceData.toObject(message.data, options);
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckAttackPalaceData to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckAttackPalaceData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckAttackPalaceData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckAttackPalaceData;
+    })();
+
+    msg.C2GW_ReqAttackPalace = (function() {
+
+        /**
+         * Properties of a C2GW_ReqAttackPalace.
+         * @memberof msg
+         * @interface IC2GW_ReqAttackPalace
+         * @property {number|Long|null} [id] C2GW_ReqAttackPalace id
+         */
+
+        /**
+         * Constructs a new C2GW_ReqAttackPalace.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqAttackPalace.
+         * @implements IC2GW_ReqAttackPalace
+         * @constructor
+         * @param {msg.IC2GW_ReqAttackPalace=} [properties] Properties to set
+         */
+        function C2GW_ReqAttackPalace(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_ReqAttackPalace id.
+         * @member {number|Long} id
+         * @memberof msg.C2GW_ReqAttackPalace
+         * @instance
+         */
+        C2GW_ReqAttackPalace.prototype.id = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * Creates a new C2GW_ReqAttackPalace instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqAttackPalace
+         * @static
+         * @param {msg.IC2GW_ReqAttackPalace=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqAttackPalace} C2GW_ReqAttackPalace instance
+         */
+        C2GW_ReqAttackPalace.create = function create(properties) {
+            return new C2GW_ReqAttackPalace(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqAttackPalace message. Does not implicitly {@link msg.C2GW_ReqAttackPalace.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqAttackPalace
+         * @static
+         * @param {msg.IC2GW_ReqAttackPalace} message C2GW_ReqAttackPalace message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqAttackPalace.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && message.hasOwnProperty("id"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.id);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqAttackPalace message, length delimited. Does not implicitly {@link msg.C2GW_ReqAttackPalace.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqAttackPalace
+         * @static
+         * @param {msg.IC2GW_ReqAttackPalace} message C2GW_ReqAttackPalace message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqAttackPalace.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqAttackPalace message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqAttackPalace
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqAttackPalace} C2GW_ReqAttackPalace
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqAttackPalace.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqAttackPalace();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.uint64();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqAttackPalace message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqAttackPalace
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqAttackPalace} C2GW_ReqAttackPalace
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqAttackPalace.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqAttackPalace message.
+         * @function verify
+         * @memberof msg.C2GW_ReqAttackPalace
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqAttackPalace.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isInteger(message.id) && !(message.id && $util.isInteger(message.id.low) && $util.isInteger(message.id.high)))
+                    return "id: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqAttackPalace message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqAttackPalace
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqAttackPalace} C2GW_ReqAttackPalace
+         */
+        C2GW_ReqAttackPalace.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqAttackPalace)
+                return object;
+            var message = new $root.msg.C2GW_ReqAttackPalace();
+            if (object.id != null)
+                if ($util.Long)
+                    (message.id = $util.Long.fromValue(object.id)).unsigned = true;
+                else if (typeof object.id === "string")
+                    message.id = parseInt(object.id, 10);
+                else if (typeof object.id === "number")
+                    message.id = object.id;
+                else if (typeof object.id === "object")
+                    message.id = new $util.LongBits(object.id.low >>> 0, object.id.high >>> 0).toNumber(true);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqAttackPalace message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqAttackPalace
+         * @static
+         * @param {msg.C2GW_ReqAttackPalace} message C2GW_ReqAttackPalace
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqAttackPalace.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.id = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.id = options.longs === String ? "0" : 0;
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (typeof message.id === "number")
+                    object.id = options.longs === String ? String(message.id) : message.id;
+                else
+                    object.id = options.longs === String ? $util.Long.prototype.toString.call(message.id) : options.longs === Number ? new $util.LongBits(message.id.low >>> 0, message.id.high >>> 0).toNumber(true) : message.id;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_ReqAttackPalace to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqAttackPalace
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqAttackPalace.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqAttackPalace;
+    })();
+
+    msg.GW2C_AckAttackPalace = (function() {
+
+        /**
+         * Properties of a GW2C_AckAttackPalace.
+         * @memberof msg
+         * @interface IGW2C_AckAttackPalace
+         * @property {Array.<string>|null} [gold] GW2C_AckAttackPalace gold
+         */
+
+        /**
+         * Constructs a new GW2C_AckAttackPalace.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckAttackPalace.
+         * @implements IGW2C_AckAttackPalace
+         * @constructor
+         * @param {msg.IGW2C_AckAttackPalace=} [properties] Properties to set
+         */
+        function GW2C_AckAttackPalace(properties) {
+            this.gold = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckAttackPalace gold.
+         * @member {Array.<string>} gold
+         * @memberof msg.GW2C_AckAttackPalace
+         * @instance
+         */
+        GW2C_AckAttackPalace.prototype.gold = $util.emptyArray;
+
+        /**
+         * Creates a new GW2C_AckAttackPalace instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckAttackPalace
+         * @static
+         * @param {msg.IGW2C_AckAttackPalace=} [properties] Properties to set
+         * @returns {msg.GW2C_AckAttackPalace} GW2C_AckAttackPalace instance
+         */
+        GW2C_AckAttackPalace.create = function create(properties) {
+            return new GW2C_AckAttackPalace(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckAttackPalace message. Does not implicitly {@link msg.GW2C_AckAttackPalace.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckAttackPalace
+         * @static
+         * @param {msg.IGW2C_AckAttackPalace} message GW2C_AckAttackPalace message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckAttackPalace.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.gold != null && message.gold.length)
+                for (var i = 0; i < message.gold.length; ++i)
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.gold[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckAttackPalace message, length delimited. Does not implicitly {@link msg.GW2C_AckAttackPalace.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckAttackPalace
+         * @static
+         * @param {msg.IGW2C_AckAttackPalace} message GW2C_AckAttackPalace message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckAttackPalace.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckAttackPalace message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckAttackPalace
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckAttackPalace} GW2C_AckAttackPalace
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckAttackPalace.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckAttackPalace();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.gold && message.gold.length))
+                        message.gold = [];
+                    message.gold.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckAttackPalace message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckAttackPalace
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckAttackPalace} GW2C_AckAttackPalace
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckAttackPalace.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckAttackPalace message.
+         * @function verify
+         * @memberof msg.GW2C_AckAttackPalace
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckAttackPalace.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.gold != null && message.hasOwnProperty("gold")) {
+                if (!Array.isArray(message.gold))
+                    return "gold: array expected";
+                for (var i = 0; i < message.gold.length; ++i)
+                    if (!$util.isString(message.gold[i]))
+                        return "gold: string[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckAttackPalace message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckAttackPalace
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckAttackPalace} GW2C_AckAttackPalace
+         */
+        GW2C_AckAttackPalace.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckAttackPalace)
+                return object;
+            var message = new $root.msg.GW2C_AckAttackPalace();
+            if (object.gold) {
+                if (!Array.isArray(object.gold))
+                    throw TypeError(".msg.GW2C_AckAttackPalace.gold: array expected");
+                message.gold = [];
+                for (var i = 0; i < object.gold.length; ++i)
+                    message.gold[i] = String(object.gold[i]);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckAttackPalace message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckAttackPalace
+         * @static
+         * @param {msg.GW2C_AckAttackPalace} message GW2C_AckAttackPalace
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckAttackPalace.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.gold = [];
+            if (message.gold && message.gold.length) {
+                object.gold = [];
+                for (var j = 0; j < message.gold.length; ++j)
+                    object.gold[j] = message.gold[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckAttackPalace to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckAttackPalace
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckAttackPalace.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckAttackPalace;
+    })();
+
+    msg.GW2C_PushActiveRecord = (function() {
+
+        /**
+         * Properties of a GW2C_PushActiveRecord.
+         * @memberof msg
+         * @interface IGW2C_PushActiveRecord
+         * @property {Array.<string>|null} [records] GW2C_PushActiveRecord records
+         */
+
+        /**
+         * Constructs a new GW2C_PushActiveRecord.
+         * @memberof msg
+         * @classdesc Represents a GW2C_PushActiveRecord.
+         * @implements IGW2C_PushActiveRecord
+         * @constructor
+         * @param {msg.IGW2C_PushActiveRecord=} [properties] Properties to set
+         */
+        function GW2C_PushActiveRecord(properties) {
+            this.records = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_PushActiveRecord records.
+         * @member {Array.<string>} records
+         * @memberof msg.GW2C_PushActiveRecord
+         * @instance
+         */
+        GW2C_PushActiveRecord.prototype.records = $util.emptyArray;
+
+        /**
+         * Creates a new GW2C_PushActiveRecord instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_PushActiveRecord
+         * @static
+         * @param {msg.IGW2C_PushActiveRecord=} [properties] Properties to set
+         * @returns {msg.GW2C_PushActiveRecord} GW2C_PushActiveRecord instance
+         */
+        GW2C_PushActiveRecord.create = function create(properties) {
+            return new GW2C_PushActiveRecord(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_PushActiveRecord message. Does not implicitly {@link msg.GW2C_PushActiveRecord.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_PushActiveRecord
+         * @static
+         * @param {msg.IGW2C_PushActiveRecord} message GW2C_PushActiveRecord message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_PushActiveRecord.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.records != null && message.records.length)
+                for (var i = 0; i < message.records.length; ++i)
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.records[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_PushActiveRecord message, length delimited. Does not implicitly {@link msg.GW2C_PushActiveRecord.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_PushActiveRecord
+         * @static
+         * @param {msg.IGW2C_PushActiveRecord} message GW2C_PushActiveRecord message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_PushActiveRecord.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_PushActiveRecord message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_PushActiveRecord
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_PushActiveRecord} GW2C_PushActiveRecord
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_PushActiveRecord.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_PushActiveRecord();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.records && message.records.length))
+                        message.records = [];
+                    message.records.push(reader.string());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_PushActiveRecord message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_PushActiveRecord
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_PushActiveRecord} GW2C_PushActiveRecord
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_PushActiveRecord.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_PushActiveRecord message.
+         * @function verify
+         * @memberof msg.GW2C_PushActiveRecord
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_PushActiveRecord.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.records != null && message.hasOwnProperty("records")) {
+                if (!Array.isArray(message.records))
+                    return "records: array expected";
+                for (var i = 0; i < message.records.length; ++i)
+                    if (!$util.isString(message.records[i]))
+                        return "records: string[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_PushActiveRecord message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_PushActiveRecord
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_PushActiveRecord} GW2C_PushActiveRecord
+         */
+        GW2C_PushActiveRecord.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_PushActiveRecord)
+                return object;
+            var message = new $root.msg.GW2C_PushActiveRecord();
+            if (object.records) {
+                if (!Array.isArray(object.records))
+                    throw TypeError(".msg.GW2C_PushActiveRecord.records: array expected");
+                message.records = [];
+                for (var i = 0; i < object.records.length; ++i)
+                    message.records[i] = String(object.records[i]);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_PushActiveRecord message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_PushActiveRecord
+         * @static
+         * @param {msg.GW2C_PushActiveRecord} message GW2C_PushActiveRecord
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_PushActiveRecord.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.records = [];
+            if (message.records && message.records.length) {
+                object.records = [];
+                for (var j = 0; j < message.records.length; ++j)
+                    object.records[j] = message.records[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_PushActiveRecord to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_PushActiveRecord
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_PushActiveRecord.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_PushActiveRecord;
+    })();
+
     msg.EntityBase = (function() {
 
         /**
