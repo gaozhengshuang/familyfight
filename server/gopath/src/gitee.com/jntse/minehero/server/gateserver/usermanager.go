@@ -66,12 +66,16 @@ type UserManager struct {
 	accounts	map[string]*GateUser
 	ids			map[uint64]*GateUser
 	names		map[string]*GateUser
+	idwithindex map[uint32]uint64
+	indexwithid map[uint64]uint32
 }
 
 func (this *UserManager) Init() {
 	this.accounts = make(map[string]*GateUser)
 	this.names = make(map[string]*GateUser)
 	this.ids = make(map[uint64]*GateUser)
+	this.idwithindex = make(map[uint32]uint64)
+	this.indexwithid = make(map[uint64]uint32)
 }
 
 func (this *UserManager) CreateNewUser(session network.IBaseNetSession, account, key, token, face string) (*GateUser, string) {
@@ -111,6 +115,9 @@ func (this *UserManager) AddUser(user *GateUser) {
 	this.accounts[user.Account()] = user
 	this.ids[user.Id()] = user
 	this.names[user.Name()] = user
+	index := uint32(len(this.idwithindex))
+	this.idwithindex[index] = user.Id()
+	this.indexwithid[user.Id()] = index
 }
 
 func (this *UserManager) IsRegisted(acc string) bool {
@@ -137,6 +144,22 @@ func (this *UserManager) DelUser(user *GateUser) {
 	delete(this.accounts, user.Account())
 	delete(this.names, user.Name())
 	delete(this.ids, user.Id())
+	oldindex, find := this.indexwithid[user.Id()]
+	if find {
+		//要处理咯
+		newindex := uint32(len(this.indexwithid) - 1)
+		needUpdate := oldindex < newindex
+		delete(this.indexwithid, user.Id())
+		if needUpdate {
+			newid := this.idwithindex[newindex]
+			delete(this.idwithindex, newindex)
+			this.idwithindex[oldindex] = newid
+			this.indexwithid[newid] = oldindex
+		} else {
+			delete(this.idwithindex, oldindex)
+		}
+	}
+
 	log.Info("当前在线人数:%d", len(this.accounts))
 }
 
