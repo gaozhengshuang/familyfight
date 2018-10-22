@@ -39,7 +39,7 @@ type RewardManager struct {
 }
 
 func (this *RewardManager) Init(){
-	
+
 }
 
 func (this *RewardManager) DropToUser(user *Gateuser, id uint32, reason string, notify bool) (gold []string, rets []*DropData) {
@@ -54,7 +54,7 @@ func (this *RewardManager) DropToUser(user *Gateuser, id uint32, reason string, 
 	rewards = this.MergeDropData(rewards)
 	for _, v := range rewards {
 		gold = this.AddToUser(user, v, reason, notify)
-		if v.rewardtype != uint32(msg.RewardType_Gold) {
+		if v.rewardtype != uint32(msg.RewardType_BigGold) {
 			rets = append(rets, v)
 		}
 	}
@@ -121,7 +121,7 @@ func (this *RewardManager) MergeDropData(origindatas []*DropData) []*DropData {
 func (this *RewardManager) AddToUser(user *GateUser, data *DropData, reason string, notify bool) []string{
 	rets := make([]string, 0)
 	switch data.rewardtype {
-		case uint32(msg.RewardType_Gold):
+		case uint32(msg.RewardType_BigGold):
 			//金币
 			goldObj := user.maid.CalculateRewardPerSecond(user)
 			goldObj = user.TimesBigGold(goldObj, data.rewardvalue)

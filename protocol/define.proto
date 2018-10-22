@@ -46,7 +46,7 @@ enum TaskId {
 }
 
 enum RewardType {
-    Gold                = 1;                //金币
+    BigGold             = 1;                //金币
     Power               = 2;                //体力
     Item                = 3;                //物品
     Favor               = 4;                //亲密度
