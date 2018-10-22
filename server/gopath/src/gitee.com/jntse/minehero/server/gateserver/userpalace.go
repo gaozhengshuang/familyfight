@@ -20,6 +20,27 @@ type PalaceData struct {
 	golds 			[]string
 }
 
+func CopyPalaceData(data *PalaceData) *PalaceData {
+	newdata := &PalaceData{}
+	newdata.id = data.id
+	newdata.level = data.level
+	newdata.maids = make([]bool, 0)
+	for _, v := range data.maids {
+		newdata.maids = append(newdata.maids, v)
+	}
+	newdata.endtime = data.endtime
+	newdata.parts = make([]uint32, 0)
+	for _, v := range data.parts {
+		newdata.parts = append(newdata.parts, v)
+	}
+	newdata.charm = data.charm
+	newdata.golds = make([]string, 0)
+	for _, v := range data.golds {
+		newdata.golds = append(newdata.golds, v)
+	}
+	return golds
+}
+
 func (this *PalaceData) PackBin() *msg.PalaceData{
 	data := &msg.PalaceData{}
 	data.Id = pb.Uint32(this.id)
