@@ -182,10 +182,14 @@ cc.Class({
                     } else {
                         Game.ResController.SetSprite(this.image_lvUp, "Image/GameScene/Common/image_noLvUp");
                     }
-                    this.label_tltie.string = '(' + masterLvUpBase.levelName + ')';
                     this.label_needLvItem.string = Game.ItemModel.GetItemNumById(item_num[0]) + "/" + item_num[1];
                 }
+                this.image_lvUp.node.active = true;
+            } else {
+                this.label_needLvItem.string = "";
+                this.image_lvUp.node.active = false;
             }
+            this.label_tltie.string = '(' + masterLvUpBase.levelName + ')';
         }
     },
 
@@ -223,7 +227,7 @@ cc.Class({
         }.bind(this));
 
         curEfficiency = curEfficiency.multiply(100 + this._data.charm);  //加成效率
-        maxEfficiency = curEfficiency.multiply(100 + this._data.charm);  //加成效率
+        maxEfficiency = maxEfficiency.multiply(100 + this._data.charm);  //加成效率
 
         this.label_curEfficiency.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(curEfficiency.multiply(36)));
         this.label_maxEfficiency.string = "/" + Game.Tools.UnitConvert(Game.Tools.toLocalMoney(maxEfficiency.multiply(36)));

@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "map03",
+    "_name": "map08",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -93,9 +93,9 @@
     "_opacity": 210,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 247,
+      "g": 217,
+      "b": 207,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -184,9 +184,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 238,
-      "g": 238,
-      "b": 238,
+      "r": 255,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -275,9 +275,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 238,
-      "g": 238,
-      "b": 238,
+      "r": 240,
+      "g": 203,
+      "b": 190,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -367,8 +367,8 @@
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
-      "g": 255,
-      "b": 255,
+      "g": 224,
+      "b": 215,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
