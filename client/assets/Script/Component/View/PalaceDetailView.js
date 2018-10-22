@@ -253,6 +253,7 @@ cc.Class({
 
     onOpenSleep(event) {
         event.stopPropagationImmediate();
+        this.openView(Game.UIName.UI_PALACELOVE);
         Game.GuideController.NextGuide();
     },
 
