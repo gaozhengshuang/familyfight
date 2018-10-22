@@ -32,6 +32,9 @@ cc.Class({
 
     initData() {
         this._data = null;
+        this._topCurtainsPos = this.image_topCurtains.node.getPosition();
+        this._leftCurtainsPos = this.image_leftCurtains.node.getPosition();
+        this._rightCurtainsPos = this.image_rightCurtains.node.getPosition();
     },
 
     initNotification() {
@@ -39,12 +42,17 @@ cc.Class({
     },
 
     updateView() {
+        //初始化帘子位置
+        this.image_topCurtains.node.setPosition(this._topCurtainsPos);
+        this.image_leftCurtains.node.setPosition(this._leftCurtainsPos);
+        this.image_rightCurtains.node.setPosition(this._rightCurtainsPos);
+
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
         if (this._data) {
         }
     },
 
     onGoLove() {
-        
+
     }
 });
