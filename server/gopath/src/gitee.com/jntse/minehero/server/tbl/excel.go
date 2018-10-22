@@ -31,6 +31,7 @@ var ProtoMsgIndex = table.InsProtoMsgIndexTable
 var TDialogueBase = table.InsTDialogueBaseTable
 var TPalacePartBase = table.InsTPalacePartBaseTable
 var TBallGiftbase = table.InsTBallGiftbaseTable
+var TLoveDialogueBase = table.InsTLoveDialogueBaseTable
 var TPassLevelsBase = table.InsTPassLevelsBaseTable
 var TPalacePersonnel = table.InsTPalacePersonnelTable
 var SignBase = table.InsSignBaseTable

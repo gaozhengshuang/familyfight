@@ -228,6 +228,7 @@ gen.maketbl_excel('TGuide','guidebase','Guide.xlsx')
 gen.maketbl_excel('TPalacePersonnel','palacepersonnelbase','PalacePersonnel.xlsx')
 gen.maketbl_excel('TFunctionOpen','functionopenbase', 'FunctionOpen.xlsx')
 gen.maketbl_excel('TPalacePartBase', 'palacepartbase', 'PalacePart.xlsx')
+gen.maketbl_excel('TLoveDialogueBase', 'lovedialoguebase', 'LoveDialogue.xlsx')
 
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')

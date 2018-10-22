@@ -376,7 +376,6 @@ func (this *GateUser) AttackPalace(id uint64) []string {
 }
 
 func (this *GateUser) SynAttackPalaceRecords() {
-	str := make([]string, 0)
 	key := fmt.Sprintf("activerecord_%d", this.Id())
 	rlist, err := Redis().LRange(key, 0, -1).Result()
 	send := &msg.GW2C_PushActiveRecord{ Records: make([]string, 0) }
