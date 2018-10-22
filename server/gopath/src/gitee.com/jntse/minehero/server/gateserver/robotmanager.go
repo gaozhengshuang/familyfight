@@ -14,6 +14,21 @@ type RobotData struct {
 	palaces				map[uint32]* PalaceData
 }
 
+func (this *RobotData) RandomPalace() *PalaceData {
+	if len(this.palaces) == 0 {
+		return nil
+	}
+	targetindex := util.RandBetween(0, int32(len(this.palaces) - 1))
+	index := int32(0)
+	for _, v := range this.palaces {
+		if index == targetindex {
+			return v
+		}
+		index = index + 1
+	}
+	return nil
+}
+
 type RobotManager struct {
 	robots 				[]*RobotData
 	generateTime 		uint64
@@ -29,6 +44,19 @@ func (this *RobotManager) Tick1Minite(now uint64) {
 	}
 }
 
+func (this *RobotManager) RandomRobot(count int32) []*RobotData{
+	robotlen := int32(len(this.robots))
+	if count >= robotlen{
+		return this.robots
+	}
+	indexs := util.SelectRandNumbers(count, robotlen)
+	ret := make([]*RobotData, 0)
+	for _, v := range indexs {
+		ret = append(ret, this.robots[v])
+	}
+	return ret
+}
+
 func (this* RobotManager) GenerateRobotPool(count uint32){
 	this.generateTime = uint64(util.CURTIME())
 	this.robots = make([]*RobotData, 0)
@@ -41,7 +69,7 @@ func (this* RobotManager) GenerateRobotPool(count uint32){
 		id, find := UserMgr().idwithindex[uint32(v)]
 		if find {
 			user := UserMgr().FindById(id)
-			if user != nil {
+			if user != nil && len(user.palace.palaces) > 0 {
 				this.robots = append(this.robots, this.GenerateRobotByUser(user))
 			}
 		}

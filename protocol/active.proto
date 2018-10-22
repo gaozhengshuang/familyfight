@@ -59,3 +59,32 @@ message GW2C_AckKickAss
     optional uint32 result = 1;
     repeated string gold = 2;
 }
+
+message RobotPalaceData
+{
+    optional uint64 id      = 1;
+    optional string name    = 2;
+    optional string face    = 3;
+    optional msg.PalaceData palace = 4;
+}
+//攻击后宫
+message C2GW_ReqAttackPalaceData
+{
+}
+
+message GW2C_AckAttackPalaceData
+{
+    optional RobotPalaceData data = 1;
+}
+message C2GW_ReqAttackPalace
+{
+    optional uint64 id = 1;
+}
+message GW2C_AckAttackPalace
+{
+    repeated string gold = 1;
+}
+message GW2C_PushActiveRecord
+{
+    repeated string records = 1;
+}
