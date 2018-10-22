@@ -33,5 +33,11 @@
     "踢屁股失败奖励系数": "",
     "KickAssLoseReward": {
         "Gold": 600
-    }
+    },
+    "攻击后宫成功奖励系数": "",
+    "AttackPalaceReward": {
+        "Gold": 1800
+    },
+    "互动记录保留条数": "",
+    "ActiveRecordCount": 10
 }

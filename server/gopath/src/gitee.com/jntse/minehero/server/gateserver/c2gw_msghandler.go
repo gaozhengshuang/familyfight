@@ -68,6 +68,8 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqOpenBox{}, on_C2GW_ReqOpenBox)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTenSecond{}, on_C2GW_ReqTenSecond)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqKickAss{}, on_C2GW_ReqKickAss)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqAttackPalaceData{}, on_C2GW_ReqAttackPalaceData)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqAttackPalace{}, on_C2GW_ReqAttackPalace)
 	//后宫
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPalaceTakeBack{}, on_C2GW_ReqPalaceTakeBack)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMasterLevelup{}, on_C2GW_ReqMasterLevelup)
@@ -428,6 +430,43 @@ func on_C2GW_ReqKickAss(session network.IBaseNetSession, message interface{}) {
 	result, gold := user.KickAss(tmsg.GetHit())
 	send := &msg.GW2C_AckKickAss{}
 	send.Result = pb.Uint32(result)
+	send.Gold = gold
+	user.SendMsg(send)
+}
+//获得后宫目标
+func on_C2GW_ReqAttackPalaceData(session network.IBaseNetSession, message interface{}) {
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	send := user.ReqAttackData()
+	user.SendMsg(send)
+}
+//攻击后宫
+func on_C2GW_ReqAttackPalace(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqAttackPalace)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	gold := user.AttackPalace(tmsg.GetId())
+	send := &msg.GW2C_AckAttackPalace{}
 	send.Gold = gold
 	user.SendMsg(send)
 }

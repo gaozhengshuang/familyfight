@@ -322,3 +322,68 @@ func (this *GateUser) KickAss (hit bool) (result uint32, gold []string) {
 	this.currency.RemoveMiniGameCoin(MiniGameCoinType_KickAss, 1,"踢屁股消耗", true)
 	return 0, gold
 }
+
+//攻击后宫
+func (this *GateUser) ReqAttackData() *msg.GW2C_AckAttackPalaceData {
+	robots := RobotMgr().RandomRobot(1)
+	send := &msg.GW2C_AckAttackPalaceData{}
+	if len(robots) > 0 {
+		robot := robots[0]
+		send.Data = &msg.RobotPalaceData{}
+		send.Data.Id = pb.Uint64(robot.id)
+		send.Data.Name = pb.String(robot.name)
+		send.Data.Face = pb.String(robot.face)
+		//随机一个宫殿
+		palace := robot.RandomPalace()
+		if palace != nil {
+			send.Data.Palace = palace.PackBin()
+		}
+	}
+	return send
+}
+
+func (this *GateUser) AttackPalace(id uint64) []string {
+	gold := make([]string, 0)
+	//成功物品
+	goldObj := this.maid.CalculateRewardPerSecond(this)
+	goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.AttackPalaceReward.Gold))
+	goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
+	gold = this.ParseBigGoldToArr(goldObj)
+	if this.Id() != id && id != 0 {
+		//生成记录
+		key := fmt.Sprintf("activerecord_%d", id)
+		record := fmt.Sprintf("%s攻击了您的后宫", this.Name())
+		err := Redis().LPush(key, record).Err()
+		if err != nil {
+			log.Error("创建攻击后宫记录失败 id: %d ，err: %s", id, err)
+		}
+		lenth := Redis().LLen(key).Val()
+		if int32(lenth) >= int32(tbl.Common.ActiveRecordCount) {
+			//超长了
+			err = Redis().BRPop(0, key).Err()
+			if err != nil {
+				log.Error("删除多余互动操作记录失败 id: %d err: %s", id, err)
+			}
+		}
+		user := UserMgr().FindById(id)
+		if user != nil {
+			send := &msg.GW2C_PushActiveRecord{ Records: make([]string, 0) }
+			send.Records = append(send.Records, record)
+			user.SendMsg(send)
+		}
+	}
+	return gold
+}
+
+func (this *GateUser) SynAttackPalaceRecords() {
+	str := make([]string, 0)
+	key := fmt.Sprintf("activerecord_%d", this.Id())
+	rlist, err := Redis().LRange(key, 0, -1).Result()
+	send := &msg.GW2C_PushActiveRecord{ Records: make([]string, 0) }
+	if err != nil {
+		log.Error("加载互动记录失败 id %d ，err: %s", this.Id(), err)
+	}else{
+		send.Records = rlist
+	}
+	this.SendMsg(send)
+}
