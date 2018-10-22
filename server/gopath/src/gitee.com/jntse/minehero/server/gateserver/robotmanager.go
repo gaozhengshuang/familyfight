@@ -64,7 +64,6 @@ func (this* RobotManager) GenerateRobotPool(count uint32){
 	userlen := int32(len(UserMgr().ids))
 	playerCount := userlen / 5
 	indexs := util.SelectRandNumbers(playerCount, userlen)
-	generate := uint32(0)
 	for _, v := range indexs {
 		id, find := UserMgr().idwithindex[uint32(v)]
 		if find {
@@ -87,7 +86,7 @@ func (this *RobotManager) GenerateRobotByUser(user *GateUser) *RobotData {
 	robotdata.face = user.Face()
 	robotdata.palaces = make(map[uint32]* PalaceData)
 	for _, palace := range user.palace.palaces {
-		robotdata.palaces[palace.id], CopyPalaceData(palace))
+		robotdata.palaces[palace.id]= CopyPalaceData(palace)
 	}
 	return robotdata
 }
