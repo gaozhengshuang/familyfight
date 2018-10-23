@@ -508,6 +508,19 @@ func (this *GateUser) SendNotify2(text string) {
 	this.SendMsg(send)
 }
 
+func (this *GateUser) SendRewardNotify(golds []string, rewards []*DropData){
+	send := &msg.GW2C_RewardNotify{}
+	send.Rewards.Golds = golds
+	send.Rewards.Rewards = make([]*msg.RewardData, 0)
+	for _, v := range rewards {
+		rewarddata := &msg.RewardData{}
+		rewarddata.Rewardtype = pb.Uint32(v.rewardtype)
+		rewarddata.Rewardid = pb.Uint32(v.rewardid)
+		rewarddata.Rewardvalue = pb.Uint32(v.rewardvalue)
+		send.Rewards.Rewards = append(send.Rewards.Rewards, rewarddata)
+	}
+	this.SendMsg(send)
+}
 // 回复客户端
 func (this *GateUser) ReplyStartGame(err string, roomid int64) {
 	send := &msg.GW2C_RetStartGame{Errcode: pb.String(err), Roomid: pb.Int64(roomid)}
