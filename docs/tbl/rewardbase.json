@@ -1,0 +1,6 @@
+{
+	"Tool": "github.com/davyxu/tabtoy",
+	"Version": "2.8.10",
+	"Reward":[
+		{ "Id": 1, "DropId": 1, "PropType": 3, "Prop": 1, "RewardType": 1, "RewardId": 10, "RewardValue": 1 }
+	]}
