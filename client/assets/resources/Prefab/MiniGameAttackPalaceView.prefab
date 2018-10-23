@@ -37,13 +37,9 @@
     ],
     "_tag": -1,
     "_active": true,
-    "_components": [
-      {
-        "__id__": 156
-      }
-    ],
+    "_components": [],
     "_prefab": {
-      "__id__": 157
+      "__id__": 156
     },
     "_id": "",
     "_opacity": 255,
@@ -2549,9 +2545,7 @@
       "__id__": 80
     },
     "_enabled": true,
-    "_spriteFrame": {
-      "__uuid__": "997bb316-885e-444f-8830-b14b1d633365"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -2706,9 +2700,7 @@
       "__id__": 85
     },
     "_enabled": true,
-    "_spriteFrame": {
-      "__uuid__": "997bb316-885e-444f-8830-b14b1d633365"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -2863,9 +2855,7 @@
       "__id__": 90
     },
     "_enabled": true,
-    "_spriteFrame": {
-      "__uuid__": "997bb316-885e-444f-8830-b14b1d633365"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -3020,9 +3010,7 @@
       "__id__": 95
     },
     "_enabled": true,
-    "_spriteFrame": {
-      "__uuid__": "997bb316-885e-444f-8830-b14b1d633365"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -3177,9 +3165,7 @@
       "__id__": 100
     },
     "_enabled": true,
-    "_spriteFrame": {
-      "__uuid__": "997bb316-885e-444f-8830-b14b1d633365"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -3334,9 +3320,7 @@
       "__id__": 105
     },
     "_enabled": true,
-    "_spriteFrame": {
-      "__uuid__": "997bb316-885e-444f-8830-b14b1d633365"
-    },
+    "_spriteFrame": null,
     "_type": 0,
     "_sizeMode": 1,
     "_fillType": 0,
@@ -4843,23 +4827,6 @@
     },
     "fileId": "cdW98fvTdN5LJ4sMYX7yqB",
     "sync": false
-  },
-  {
-    "__type__": "328038sCoRExqHq/i+QP+VM",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "_url": "",
-    "_data": {},
-    "_oldparentNode": null,
-    "label_charmnum": null,
-    "label_maidPercentage": null,
-    "image_palaceCard": {
-      "__id__": 38
-    }
   },
   {
     "__type__": "cc.PrefabInfo",

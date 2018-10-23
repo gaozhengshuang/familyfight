@@ -34,7 +34,7 @@ func (this *UserCurrency) Init(user *GateUser) {
 
 
 func (this *UserCurrency) LoadBin(base *msg.UserBase) {
-	this.minigamecoin = make([]uint32, 0)
+	this.minigamecoin = make([]uint32, MiniGameCoinType_End)
 	for _, v := range base.GetGamecoin(){
 		this.minigamecoin = append(this.minigamecoin, v)
 	}

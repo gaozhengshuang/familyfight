@@ -1,3 +1,4 @@
+const UIName = require('./UIName');
 var Define = {
     Regex: {
         url: '((http|ftp|https)://)(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,4})*(/[a-zA-Z0-9\&%_\./-~-]*)?',
@@ -21,6 +22,7 @@ var Define = {
         TIP_TIPS: '401',
         TIP_REWARD: '402',
         TIP_PLAYGOLDFLY: '403',
+        TIP_SERIESPOP: '404',
 
         MUSIC_CHANGE: '500',
         EFFECT_CHANGE: '501',
@@ -93,12 +95,20 @@ var Define = {
         LINKUP: 4,
         END: 5,
     },
+    MINIGAMENAME: [
+        '十秒点击',
+        '踢屁股',
+        '宠幸',
+        '约会',
+        '连连看'
+    ],
     ACTIVEGAMENAME: {
         1: '攻击后宫',
         2: '猜皇帝'
     },
     ACTIVEGAMEUINAME: {
-
+        1: UIName.UI_ACTIVEGAMEATTACKPALACE,
+        2: UIName.UI_ACTIVEGAMEGUESSKING
     }
 }
 

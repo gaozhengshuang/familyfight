@@ -237,38 +237,59 @@ cc.Class({
     },
     _showReward: function () {
         let config = Game._.find(this.brandConfigs, { Id: this.rewardId });
+        let notifyIndex = 0;
         if (this.drop.golds.length != 0) {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
             Game.CurrencyModel.AddGold(this.drop.golds);
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
                 info: '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>金币+' + Game.Tools.UnitConvert(this.drop.golds) + '</c></c>',
                 alive: 0.5,
-                delay: 0.5
+                delay: 0.5,
+                timeout: 0.8 * notifyIndex
             });
+            notifyIndex++;
         }
         let minigame = -1;
+        let popinfo = [];
         for (let i = 0; i < this.drop.rewards.length; i++) {
             // Game.ProtoMsg.RewardType.BigGold
             let reward = this.drop.rewards[i];
+            let info = '';
             switch (reward.rewardtype) {
-                case Game.ProtoMsg.RewardType.Power:
+                case Game.ProtoMsg.msg.RewardType.Power:
                     Game.NetWorkController.Send('msg.C2GW_ReqPower');
+                    info = '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>体力+' + reward.rewardvalue + '</c></c>';
                     break;
-                case Game.ProtoMsg.RewardType.Item:
-                    break;
-                case Game.ProtoMsg.RewardType.Favor:
-                    break;
-                case Game.ProtoMsg.RewardType.MiniGameCoin:
+                case Game.ProtoMsg.msg.RewardType.MiniGameCoin:
                     Game.NetWorkController.Send('msg.C2GW_ReqMiniGameCoin');
+                case Game.ProtoMsg.msg.RewardType.Favor:
+                case Game.ProtoMsg.msg.RewardType.Item:
+                    popinfo.push({
+                        name: Game.RewardController.GetRewardName(reward),
+                        icon: Game.RewardController.GetRewardIcon(reward),
+                        count: reward.rewardvalue
+                    });
                     break;
-                case Game.ProtoMsg.RewardType.MiniGame:
+                case Game.ProtoMsg.msg.RewardType.MiniGame:
                     minigame = reward.rewardid;
+                    info = '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】前去-<color=#ed5b5b>' + Game.Define.ACTIVEGAMENAME[reward.rewardid] + '</c></c>';
                     break;
                 default:
                     break;
             }
+            if (info != '') {
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+                    info: info,
+                    alive: 0.5,
+                    delay: 0.5,
+                    timeout: 0.8 * notifyIndex
+                });
+                notifyIndex++;
+            }
         }
-
+        if (popinfo.length > 0) {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_SERIESPOP, popinfo);
+        }
         this.node.runAction(cc.sequence([
             cc.delayTime(0.5),
             cc.callFunc(function () {
@@ -283,30 +304,6 @@ cc.Class({
                 this._randBrandInfo()
             }, this)
         ]))
-
-        // this.openView(MiniGameId[config.RewardId]);
-
-        // Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
-        //     info: '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>体力+' + config.Value + '</c></c>',
-        //     alive: 0.5,
-        //     delay: 1
-        // });
-        // Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
-        //     info: '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】前去-<color=#ed5b5b>' + MiniGameName[config.RewardId] + '</c></c>',
-        //     alive: 0.5,
-        //     delay: 1
-        // });
-        // Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
-        //     info: '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>' + itemConfig.Name + '+' + config.Value + '</c></c>',
-        //     alive: 0.5,
-        //     delay: 1
-        // });
-        // let itemConfig = Game.ItemModel.GetItemConfig(config.RewardId)
-        // Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
-        //     info: '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>小游戏次数+' + config.Value + '</c></c>',
-        //     alive: 0.5,
-        //     delay: 1
-        // });
     },
     onOpenGameSecond() {
         this.openView(Game.UIName.UI_MINIGAMESECOND);

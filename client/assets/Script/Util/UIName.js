@@ -20,6 +20,9 @@ var UIName = {
     UI_PALACEBUILD: 'Prefab/PalaceBuildView',
     UI_PALACEBUILDDETAIL: 'Prefab/PalaceBuildDetailView',
     UI_PALACELOVE: 'Prefab/PalaceLoveView',
+
+    UI_ACTIVEGAMEATTACKPALACE: 'Prefab/MiniGameAttackPalaceView',
+    UI_ACTIVEGAMEGUESSKING: 'Prefab/MiniGameGuessView',
     UI_PALACEDATE: 'Prefab/PalaceDateView',
 }
 

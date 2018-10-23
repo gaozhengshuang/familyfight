@@ -27,6 +27,7 @@ cc.Class({
             Game.TimeController,
             Game.ViewController,
             Game.GuideController,
+            Game.RewardController,
         ];
 
         this.models = [

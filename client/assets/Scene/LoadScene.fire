@@ -975,6 +975,9 @@
     "rewardPrefab": {
       "__uuid__": "ac026e95-2708-4976-84ba-d1fe6b513937"
     },
+    "seriesPopPrefab": {
+      "__uuid__": "9db5a8c1-9d5f-4a34-8931-18958154cd6d"
+    },
     "goldFlyAnima": {
       "__id__": 24
     },
