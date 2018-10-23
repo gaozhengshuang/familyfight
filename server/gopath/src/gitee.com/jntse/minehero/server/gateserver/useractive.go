@@ -85,12 +85,11 @@ func (this *GateUser) AddReward(rtype uint32, rid uint32 ,rvalue uint32,rparam u
 }
 
 //翻牌子
-func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id uint32, gold []string) {
-	gold = make([]string, 0)
+func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id uint32, drop *msg.RewardsData) {
 	// 体力够不够 
 	if this.GetPower() < 1 {
 		this.SendNotify("体力不足")
-		return 1, 0, gold
+		return 1, 0, nil
 	}
 	totalWeight := uint32(0)
 	brands := make([]*table.TurnBrandDefine,0)
@@ -119,12 +118,13 @@ func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id ui
 	}
 	if findbrand == nil {
 		this.SendNotify("未随机到牌子")
-		return 2, 0, gold
+		return 2, 0, nil
 	}
 	//扣体力
 	this.RemovePower(1,"翻牌子消耗")
-	result, gold = this.AddReward(findbrand.Type, findbrand.RewardId, findbrand.Value,level, "翻牌子奖励", false)
-	return result, findbrand.Id, gold
+	golds, rewards := RewardMgr().DropToUser(this, findbrand.Reward, "翻牌子奖励", false)
+	drop = RewardMgr().PackMsg(golds, rewards)
+	return result, findbrand.Id, drop
 }
 
 //连连看

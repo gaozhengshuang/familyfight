@@ -12,7 +12,7 @@ message GW2C_RetTurnBrand
 {
     optional uint32 result = 1;
     optional uint32 id = 2;
-    repeated string gold = 3;
+    optional RewardsData drop = 3;
 }
 //连连看
 message C2GW_ReqLinkup

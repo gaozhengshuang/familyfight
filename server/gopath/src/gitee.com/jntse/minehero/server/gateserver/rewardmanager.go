@@ -174,3 +174,17 @@ func (this *RewardManager) AddToUser(user *GateUser, data *DropData, reason stri
 			return rets
 	}
 }
+
+func (this* RewardManager) PackMsg(golds []string ,rewards []*DropData) *msg.RewardsData{
+	ret := &msg.RewardsData{}
+	ret.Golds = golds
+	ret.Rewards = make([]*msg.RewardData, 0)
+	for _, v := range rewards {
+		rewarddata := &msg.RewardData{}
+		rewarddata.Rewardtype = pb.Uint32(v.rewardtype)
+		rewarddata.Rewardid = pb.Uint32(v.rewardid)
+		rewarddata.Rewardvalue = pb.Uint32(v.rewardvalue)
+		ret.Rewards = append(ret.Rewards, rewarddata)
+	}
+	return ret
+}
