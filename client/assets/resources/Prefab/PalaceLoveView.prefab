@@ -1785,7 +1785,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_maid",
+    "_name": "label_percentage",
     "_objFlags": 0,
     "_parent": {
       "__id__": 45
@@ -3512,6 +3512,9 @@
     },
     "label_content": {
       "__id__": 72
+    },
+    "label_percentage": {
+      "__id__": 56
     },
     "image_head": {
       "__id__": 67
