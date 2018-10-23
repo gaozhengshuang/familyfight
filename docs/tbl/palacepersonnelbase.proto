@@ -28,7 +28,10 @@ message PalacePersonnelDefine
 	optional string Path = 3; // 图片路径
 	
 	
-	optional string RoleDescribe = 4; // 角色描述
+	optional string WholeBodyPath = 4; // 图片路径
+	
+	
+	optional string RoleDescribe = 5; // 角色描述
 
 }
 

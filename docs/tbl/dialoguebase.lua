@@ -156,7 +156,20 @@ export var TDialogue : table.ITDialogueDefine[] = [
 		{ Id : 151, Index : 73, HeadSprite : [ "Image/GameScene/halfbody/9" ], HeadLocation : [ 1 ], Name : "张嬷嬷", NameLocation : 1, Content : "璎珞你在胡说什么。不知道的事情不要乱说。" 	},
 		{ Id : 152, Index : 73, HeadSprite : [ "Image/GameScene/halfbody/9", "Image/GameScene/halfbody/4" ], HeadLocation : [ 1, 2 ], Name : "璎珞", NameLocation : 2, Content : "奴才幼时很爱吃枇杷，误吃了果核，呼吸困难。后来游医告诉我，枇杷的老叶无毒，新叶跟果核有毒。" 	},
 		{ Id : 153, Index : 74, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "愉贵人", NameLocation : 1, Content : "原来是这样，你随我去见皇后。" 	},
-		{ Id : 154, Index : 74, HeadSprite : [ "Image/GameScene/halfbody/13", "Image/GameScene/halfbody/9" ], HeadLocation : [ 1, 2 ], Name : "张嬷嬷", NameLocation : 2, Content : "贵人万万不可，难道一个小小宫女的话比张院判还准。璎珞你什么话都敢说，不想要命了。" 	}
+		{ Id : 154, Index : 74, HeadSprite : [ "Image/GameScene/halfbody/13", "Image/GameScene/halfbody/9" ], HeadLocation : [ 1, 2 ], Name : "张嬷嬷", NameLocation : 2, Content : "贵人万万不可，难道一个小小宫女的话比张院判还准。璎珞你什么话都敢说，不想要命了。" 	},
+		{ Id : 155, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "张嬷嬷", NameLocation : 0, Content : "现在你就是一个小小的鸡蛋，鸡蛋怎么碰石头啊。" 	},
+		{ Id : 156, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "璎珞", NameLocation : 0, Content : "我才是那个又臭又硬的石头。" 	},
+		{ Id : 157, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "璎珞", NameLocation : 0, Content : "为什么姐姐无辜惨死，为什么怡嫔悬梁自尽。为什么世道如此不公。" 	},
+		{ Id : 158, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "李玉", NameLocation : 0, Content : "大胆奴才，谁让你伤害灵柏的。圣驾在此还不下跪。" 	},
+		{ Id : 159, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "璎珞", NameLocation : 0, Content : "奴才恭请皇上圣安。" 	},
+		{ Id : 160, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "皇帝", NameLocation : 0, Content : "谁准你伤害灵柏的，拖下去仗三十。" 	},
+		{ Id : 161, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "璎珞", NameLocation : 0, Content : "奴才斗胆，不知何为灵柏。" 	},
+		{ Id : 162, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "李玉", NameLocation : 0, Content : "混账东西，这就是灵柏。曾为圣上遮荫。这小铜牌都挂着呢。" 	},
+		{ Id : 163, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "璎珞", NameLocation : 0, Content : "奴才刚入宫不识灵柏，不过奴才所为，是有原因的。" 	},
+		{ Id : 164, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "李玉", NameLocation : 0, Content : "堵上她的嘴。" 	},
+		{ Id : 165, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "皇帝", NameLocation : 0, Content : "让她说。" 	},
+		{ Id : 166, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "璎珞", NameLocation : 0, Content : "昨天晚上有颗树给奴才托梦，身上痒痒，让奴才给它挠痒痒。皇上，奴才所言句句属实。" 	},
+		{ Id : 167, Index : 75, HeadSprite : [ "Image/GameScene/halfbody/13" ], HeadLocation : [ 1 ], Name : "皇帝", NameLocation : 0, Content : "罢了，走吧。" 	}
 	]
 
 

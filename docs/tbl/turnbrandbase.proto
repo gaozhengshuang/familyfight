@@ -28,19 +28,13 @@ message TurnBrandDefine
 	optional string Head = 3; // 图片路径
 	
 	
-	optional uint32 Type = 4; // 奖励类型(1 金币 2 体力 3 侍女 4 道具 5 小游戏事件6小游戏币)
+	optional uint32 Reward = 4; // 掉落id
 	
 	
-	optional uint32 RewardId = 5; // 道具id
+	optional uint32 Dialogue = 5; // 对话
 	
 	
-	optional uint32 Value = 6; // 奖励值
-	
-	
-	optional uint32 Dialogue = 7; // 对话
-	
-	
-	optional uint32 Weight = 8; // 权重
+	optional uint32 Weight = 6; // 权重
 
 }
 
