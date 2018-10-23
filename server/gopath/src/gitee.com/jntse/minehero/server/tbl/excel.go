@@ -37,6 +37,7 @@ var TPassLevelsBase = table.InsTPassLevelsBaseTable
 var TPalacePersonnel = table.InsTPalacePersonnelTable
 var SignBase = table.InsSignBaseTable
 var NameBase = table.InsNameBaseTable
+var TDateEventBase = table.InsTDateEventBaseTable
 var TTurnBrandBase = table.InsTTurnBrandBaseTable
 var TaskBase = table.InsTaskBaseTable
 var THeadBase = table.InsTHeadBaseTable

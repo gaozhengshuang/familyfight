@@ -411,9 +411,3 @@ func (this *GateUser) ReqGuessKingData() *msg.GW2C_AckGuessKingData {
 	}
 	return send
 }
-func (this *GateUser) GuessKing(id uint64, index uint32) {
-	result := uint32(util.RandBetween(0, 2)
-	if index == result {
-		//猜对了
-	}
-}
