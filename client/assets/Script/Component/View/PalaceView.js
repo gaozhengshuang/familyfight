@@ -35,10 +35,12 @@ cc.Class({
 
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
 
     removeNotification() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
 
     updateView() {
@@ -59,6 +61,10 @@ cc.Class({
         this.button_randomx.interactable = randomxLock;
         this.label_randomxUnlock.node.active = !randomxLock;
     },
+
+    updateMiniGameCoin() {
+        this.label_randomxNum.string = `${Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST)}次`;
+    },
     
     onOpenTravel(event) {
         event.stopPropagationImmediate();
@@ -74,10 +80,10 @@ cc.Class({
 
     onOpenRandomX(event) {
         event.stopPropagationImmediate();
-        // if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST) < 1) {
-        //     this.showTips("前去翻牌子获得游戏次数");
-        //     return;
-        // }
+        if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST) < 1) {
+            this.showTips("前去翻牌子获得游戏次数");
+            return;
+        }
         this.openView(Game.UIName.UI_PALACEDATE);
         Game.GuideController.NextGuide();
     }
