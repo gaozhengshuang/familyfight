@@ -1,14 +1,14 @@
 {
   "ver": "2.0.0",
-  "uuid": "61ec4af6-3411-4699-8c25-b3dd440415b2",
+  "uuid": "91231b8c-5701-4189-b663-4e5c239fb6d7",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "临幸": {
+    "image_kickasscoin": {
       "ver": "1.0.3",
-      "uuid": "08e2746b-6d02-456f-a225-07d2a5bda41b",
-      "rawTextureUuid": "61ec4af6-3411-4699-8c25-b3dd440415b2",
+      "uuid": "a7ffc0d6-02b8-4293-b3dc-74ff35fc62b5",
+      "rawTextureUuid": "91231b8c-5701-4189-b663-4e5c239fb6d7",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

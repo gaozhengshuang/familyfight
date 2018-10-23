@@ -1,14 +1,14 @@
 {
   "ver": "2.0.0",
-  "uuid": "b9861dc6-7dd0-41c7-9131-73612d1b098f",
+  "uuid": "26a8908a-e8d4-4e08-a8bb-b313e5643e24",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "角标": {
+    "image_secondcoin": {
       "ver": "1.0.3",
-      "uuid": "332258fc-eb71-485f-96ff-acbc44c620e0",
-      "rawTextureUuid": "b9861dc6-7dd0-41c7-9131-73612d1b098f",
+      "uuid": "428a0b8e-4821-4f82-80e4-36c28b94adea",
+      "rawTextureUuid": "26a8908a-e8d4-4e08-a8bb-b313e5643e24",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -16,10 +16,10 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 26,
-      "height": 26,
-      "rawWidth": 26,
-      "rawHeight": 26,
+      "width": 104,
+      "height": 105,
+      "rawWidth": 104,
+      "rawHeight": 105,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,
