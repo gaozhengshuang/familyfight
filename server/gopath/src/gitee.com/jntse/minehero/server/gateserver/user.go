@@ -510,15 +510,7 @@ func (this *GateUser) SendNotify2(text string) {
 
 func (this *GateUser) SendRewardNotify(golds []string, rewards []*DropData){
 	send := &msg.GW2C_RewardNotify{}
-	send.Rewards.Golds = golds
-	send.Rewards.Rewards = make([]*msg.RewardData, 0)
-	for _, v := range rewards {
-		rewarddata := &msg.RewardData{}
-		rewarddata.Rewardtype = pb.Uint32(v.rewardtype)
-		rewarddata.Rewardid = pb.Uint32(v.rewardid)
-		rewarddata.Rewardvalue = pb.Uint32(v.rewardvalue)
-		send.Rewards.Rewards = append(send.Rewards.Rewards, rewarddata)
-	}
+	send.Rewards = RewardMgr().PackMsg(golds, rewards)
 	this.SendMsg(send)
 }
 // 回复客户端

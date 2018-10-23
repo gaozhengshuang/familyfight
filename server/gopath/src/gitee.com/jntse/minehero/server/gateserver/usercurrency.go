@@ -14,9 +14,12 @@ import (
 
 const (
 	MiniGameCoinType_Start 					uint32 = 0
-	MiniGameCoinType_TenSecond 				uint32 = 0
-	MiniGameCoinType_KickAss 				uint32 = 1
-	MiniGameCoinType_End 					uint32 = 2
+	MiniGameCoinType_TenSecond 				uint32 = 0					//十秒
+	MiniGameCoinType_KickAss 				uint32 = 1					//踢屁股
+	MiniGameCoinType_Luckily 				uint32 = 2					//临幸
+	MiniGameCoinType_Tryst					uint32 = 3					//约会
+	MiniGameCoinType_Linkup					uint32 = 4					//记忆翻牌
+	MiniGameCoinType_End 					uint32 = 5
 )
 
 type UserCurrency struct {

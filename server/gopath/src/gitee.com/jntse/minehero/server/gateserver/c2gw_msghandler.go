@@ -343,11 +343,11 @@ func on_C2GW_ReqTurnBrand(session network.IBaseNetSession, message interface{}) 
 		session.Close()
 		return
 	}
-	result, id, gold := user.TurnBrand(tmsg.GetIds(), tmsg.GetLevel())
+	result, id, drop := user.TurnBrand(tmsg.GetIds(), tmsg.GetLevel())
 	send := &msg.GW2C_RetTurnBrand{}
 	send.Result = pb.Uint32(result)
 	send.Id = pb.Uint32(id)
-	send.Gold = gold
+	send.Drop = drop
 	user.SendMsg(send)
 }
 //连连看
