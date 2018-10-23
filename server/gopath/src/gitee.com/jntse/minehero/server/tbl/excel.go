@@ -20,6 +20,7 @@ var TGoldRewardRatioBase = table.InsTGoldRewardRatioBaseTable
 var TPalaceMapMasterLevelsBase = table.InsTPalaceMapMasterLevelsBaseTable
 var TFunctionOpen = table.InsTFunctionOpenTable
 var TMaidShopBase = table.InsTMaidShopBaseTable
+var TRewardBase = table.InsTRewardBaseTable
 var GiftProBase = table.InsGiftProBaseTable
 var TTravelBase = table.InsTTravelBaseTable
 var TBoxBase = table.InsTBoxBaseTable

@@ -3,24 +3,30 @@
 
 module table {
 export var PalaceMapMasterLevels : table.IPalaceMapMasterLevelsDefine[] = [
-		{ Id : 1, MasterId : 3, Level : 1, LevelupCost : [ "10001_1" ], WaitTime : 300, levelName : "娴贵人" 	},
-		{ Id : 2, MasterId : 3, Level : 2, LevelupCost : [ "10001_2" ], WaitTime : 600, levelName : "娴嫔" 	},
-		{ Id : 3, MasterId : 3, Level : 3, LevelupCost : [ "10001_7" ], WaitTime : 1200, levelName : "娴妃" 	},
-		{ Id : 4, MasterId : 3, Level : 4, LevelupCost : [ "10001_15" ], WaitTime : 1800, levelName : "娴贵妃" 	},
-		{ Id : 5, MasterId : 3, Level : 5, LevelupCost : [ "10001_25" ], WaitTime : 3600, levelName : "娴皇贵妃" 	},
-		{ Id : 6, MasterId : 3, Level : 6, LevelupCost : [  ], WaitTime : 3600, levelName : "娴皇后" 	},
+		{ Id : 1, MasterId : 1, Level : 1, LevelupCost : [ "10001_1" ], WaitTime : 300, levelName : "愉贵人" 	},
+		{ Id : 2, MasterId : 1, Level : 2, LevelupCost : [ "10001_2" ], WaitTime : 600, levelName : "愉嫔" 	},
+		{ Id : 3, MasterId : 1, Level : 3, LevelupCost : [ "10001_7" ], WaitTime : 1200, levelName : "愉妃" 	},
+		{ Id : 4, MasterId : 1, Level : 4, LevelupCost : [ "10001_15" ], WaitTime : 1800, levelName : "愉贵妃" 	},
+		{ Id : 5, MasterId : 1, Level : 5, LevelupCost : [ "10001_25" ], WaitTime : 3600, levelName : "愉皇贵妃" 	},
+		{ Id : 6, MasterId : 1, Level : 6, LevelupCost : [  ], WaitTime : 3600, levelName : "愉皇后" 	},
 		{ Id : 7, MasterId : 2, Level : 1, LevelupCost : [ "10001_5" ], WaitTime : 450, levelName : "高贵人" 	},
 		{ Id : 8, MasterId : 2, Level : 2, LevelupCost : [ "10001_10" ], WaitTime : 900, levelName : "高嫔" 	},
 		{ Id : 9, MasterId : 2, Level : 3, LevelupCost : [ "10001_20" ], WaitTime : 1800, levelName : "高妃" 	},
 		{ Id : 10, MasterId : 2, Level : 4, LevelupCost : [ "10001_45" ], WaitTime : 2700, levelName : "高贵妃" 	},
 		{ Id : 11, MasterId : 2, Level : 5, LevelupCost : [ "10001_80" ], WaitTime : 5400, levelName : "高皇贵妃" 	},
 		{ Id : 12, MasterId : 2, Level : 6, LevelupCost : [  ], WaitTime : 10800, levelName : "高皇后" 	},
-		{ Id : 13, MasterId : 1, Level : 1, LevelupCost : [ "10001_5" ], WaitTime : 600, levelName : "贵人" 	},
-		{ Id : 14, MasterId : 1, Level : 2, LevelupCost : [ "10001_10" ], WaitTime : 1200, levelName : "嫔" 	},
-		{ Id : 15, MasterId : 1, Level : 3, LevelupCost : [ "10001_20" ], WaitTime : 2400, levelName : "妃" 	},
-		{ Id : 16, MasterId : 1, Level : 4, LevelupCost : [ "10001_45" ], WaitTime : 3600, levelName : "贵妃" 	},
-		{ Id : 17, MasterId : 1, Level : 5, LevelupCost : [ "10001_80" ], WaitTime : 7200, levelName : "皇贵妃" 	},
-		{ Id : 18, MasterId : 1, Level : 6, LevelupCost : [  ], WaitTime : 14400, levelName : "皇后" 	}
+		{ Id : 13, MasterId : 3, Level : 1, LevelupCost : [ "10001_5" ], WaitTime : 600, levelName : "贵人" 	},
+		{ Id : 14, MasterId : 3, Level : 2, LevelupCost : [ "10001_10" ], WaitTime : 1200, levelName : "嫔" 	},
+		{ Id : 15, MasterId : 3, Level : 3, LevelupCost : [ "10001_20" ], WaitTime : 2400, levelName : "妃" 	},
+		{ Id : 16, MasterId : 3, Level : 4, LevelupCost : [ "10001_45" ], WaitTime : 3600, levelName : "贵妃" 	},
+		{ Id : 17, MasterId : 3, Level : 5, LevelupCost : [ "10001_80" ], WaitTime : 7200, levelName : "皇贵妃" 	},
+		{ Id : 18, MasterId : 3, Level : 6, LevelupCost : [  ], WaitTime : 14400, levelName : "皇后" 	},
+		{ Id : 19, MasterId : 4, Level : 1, LevelupCost : [ "10001_5" ], WaitTime : 600, levelName : "娴贵人" 	},
+		{ Id : 20, MasterId : 4, Level : 2, LevelupCost : [ "10001_10" ], WaitTime : 1200, levelName : "娴嫔" 	},
+		{ Id : 21, MasterId : 4, Level : 3, LevelupCost : [ "10001_20" ], WaitTime : 2400, levelName : "娴妃" 	},
+		{ Id : 22, MasterId : 4, Level : 4, LevelupCost : [ "10001_45" ], WaitTime : 3600, levelName : "娴贵妃" 	},
+		{ Id : 23, MasterId : 4, Level : 5, LevelupCost : [ "10001_80" ], WaitTime : 7200, levelName : "娴皇贵妃" 	},
+		{ Id : 24, MasterId : 4, Level : 6, LevelupCost : [  ], WaitTime : 14400, levelName : "娴皇后" 	}
 	]
 
 
