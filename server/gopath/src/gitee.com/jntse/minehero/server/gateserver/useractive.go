@@ -128,7 +128,7 @@ func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id ui
 }
 
 //连连看
-func (this *GateUser) Linkup(score uint32) (gold []string){
+func (this *GateUser) Linkup(score uint32) (result uint32, gold []string){
 	gold = make([]string, 0)
 	// 体力够不够 
 	if this.currency.GetMiniGameCoin(MiniGameCoinType_Linkup) < 1 {
@@ -138,7 +138,7 @@ func (this *GateUser) Linkup(score uint32) (gold []string){
 	goldrewardratio, find := tbl.TGoldRewardRatioBase.GoldRewardRatioById[uint32(tbl.Common.LinkupGoldRewardRatio)]
 	if !find {
 		this.SendNotify("没有奖励金币的模板哟")
-		return gold
+		return 2, gold
 	}
 	maxlevel := this.maid.GetMaxLevel()
 	ratio := float64(0.0)
@@ -158,7 +158,7 @@ func (this *GateUser) Linkup(score uint32) (gold []string){
 	goldObj = this.TimesBigGold(goldObj, uint32(score))
 	goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
 	this.currency.RemoveMiniGameCoin(MiniGameCoinType_Linkup, 1,"十秒游戏消耗", true)
-	return this.ParseBigGoldToArr(goldObj)
+	return 0, this.ParseBigGoldToArr(goldObj)
 }
 
 //箱子数据
