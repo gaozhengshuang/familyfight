@@ -25,6 +25,7 @@ cc.Class({
         this.initNotification();
         this.resetData();
         this.updateView();
+        this.updateDialog();
     },
 
     onDisable() {
@@ -37,7 +38,8 @@ cc.Class({
     },
 
     resetData() {
-        this._selIndexs = [];
+        this._selIds = [];
+        this._selContent = [];
         this._curStep = 1;
         this._maxStep = 3;
         this._eventNum = 3;
@@ -78,6 +80,23 @@ cc.Class({
         }
     },
 
+    updateDialog() {
+        let contentLength = this._selContent.length;
+        if (contentLength == 0) {
+            this.label_content.string = "<color=#58210A>嫔妾给皇上请安，现在是...</c><color=#FF8C8C>";
+            this.label_select.string = "请选择时间...";
+        } else if (contentLength == 1) {
+            this.label_content.string = "<color=#58210A>嫔妾给皇上请安，现在是</c><color=#FF8C8C>" + this._selContent[0] + "</c><color=#58210A>的...</c>";
+            this.label_select.string = "请选择地点...";
+        } else if (contentLength == 2) {
+            this.label_content.string = "<color=#58210A>嫔妾给皇上请安，现在是</c><color=#FF8C8C>" + this._selContent[0] + "</c><color=#58210A>的</c><color=#FF8C8C>" + this._selContent[1] + "</c><color=#58210A>，我们一起...</c>";
+            this.label_select.string = "请选择事件...";
+        } else if (contentLength == 3) {
+            this.label_content.string = "<color=#58210A>嫔妾给皇上请安，现在是</c><color=#FF8C8C>" + this._selContent[0] + "</c><color=#58210A>的</c><color=#FF8C8C>" + this._selContent[1] + "</c><color=#58210A>，我们一起</c><color=#FF8C8C>" + this._selContent[2] + ".</c>";
+            this.label_select.string = "";
+        }
+    },
+
     playAni() {
         this.image_event0.node.runAction(cc.sequence([
             cc.fadeOut(this._aniTime),
@@ -110,21 +129,23 @@ cc.Class({
     },
 
     onSeleceX(event,data) {
-        if (this._selIndexs.length > this._maxStep) {
+        if (this._selIds.length >= this._maxStep) {
             return;
         } else {
-            this._selIndexs.push(this.eventList[data].DateId);
-            if (this._selIndexs.length < this._maxStep) {
+            this._selIds.push(this.eventList[data].DateId);
+            this._selContent.push(this.eventList[data].DateName);
+            if (this._selIds.length < this._maxStep) {
                 this._curStep += 1;
                 this.playAni();
             }
-            if (this._selIndexs.length == this._maxStep) {
+            if (this._selIds.length == this._maxStep) {
                 this.node_back.active = true;
                 Game.NetWorkController.Send('msg.C2GW_ReqLuckily', {
                     palaceid: Game.PalaceModel.GetCurPalaceId(),
-                    story: this._selIndexs
+                    story: this._selIds
                 });
             }
+            this.updateDialog();
         } 
     },
 });
