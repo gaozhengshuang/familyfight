@@ -10,6 +10,7 @@ let Game = {
     Tools: require('./Util/Tools'),
     HttpUtil: require('./Util/HttpUtil'),
     Crypto: require('./Util/Crypto'),
+    ProtoMsg: require('./Util/ProtoMsg'),
 
     Platform: require('./Platform/CommonGame'),
 

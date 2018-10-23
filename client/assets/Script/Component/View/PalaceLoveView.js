@@ -66,7 +66,7 @@ cc.Class({
             if (palaceMapBase) {
                 let maidBase = Game.ConfigController.GetConfigById("PalacePersonnel", palaceMapBase.Master);
                 if (maidBase) {
-                    
+                    Game.ResController.SetSprite(this.image_queen, maidBase.WholeBodyPath);
                 }
             }
 
@@ -100,6 +100,10 @@ cc.Class({
     },
 
     onGoLove() {
+        if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.LUCKILY) < 1) {
+            this.showTips("前去翻牌子获得游戏次数");
+            return;
+        }
         this.playMakeLoveAction();
     },
 
@@ -147,14 +151,9 @@ cc.Class({
             ]),
             cc.delayTime(this._delayTime),
             cc.callFunc(function () {
-                if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.LUCKILY) < 1) {
-                    this.showTips("前去翻牌子获得游戏次数");
-                    return;
-                } else {
-                    Game.NetWorkController.Send('msg.C2GW_ReqLuckily', {
-                        palaceid: Game.PalaceModel.GetCurPalaceId(),
-                    });
-                }
+                Game.NetWorkController.Send('msg.C2GW_ReqLuckily', {
+                    palaceid: Game.PalaceModel.GetCurPalaceId(),
+                });
             }, this),
             cc.spawn([
                 cc.moveTo(this._moveTime, this._dialogPos.x, this._dialogPos.y),
