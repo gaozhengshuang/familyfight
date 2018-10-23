@@ -37,8 +37,14 @@ func GenerateDropData(item *DropItem) *DropData {
 	return data
 }
 
+type TrystReward struct {
+	palaceid 		uint32
+	rewardbyevent 	map[uint32]uint32	
+}
+
 type RewardManager struct {
 	nodes 			map[uint32]*DropNode
+	trystrewards 	map[uint32]*TrystReward
 }
 
 func (this *RewardManager) Init(){
@@ -66,6 +72,31 @@ func (this *RewardManager) Init(){
 			//权重
 			node.totalprop = node.totalprop + item.prop
 		}
+	}
+
+	this.trystrewards = make(map[uint32]*TrystReward)
+	for _, v := range tbl.TDateRewardBase.DateReward {
+		trystreward, find := this.trystrewards[v.Level]
+		key := trystreward.Time << 20 | trystreward.Place << 10 | trystreward
+		if find {
+			trystreward.rewardbyevent[key] = v.Reward
+		} else {
+			trystreward := &TrystReward{}
+			trystreward.palaceid = v.Level
+			trystreward.rewardbyevent = make(map[uint32]uint32)
+			trystreward.rewardbyevent[key] = v.Reward
+			this.trystrewards[v.Level] = trystreward
+		}
+	}
+}
+
+func (this *RewardManager) GetTrystReward(level uint32, key uint32) uint32{
+	trystreward, find := this.trystrewards[level]
+	if find {
+		result, _ := trystreward.rewardbyevent[key]
+		return result
+	} else {
+		return 0
 	}
 }
 

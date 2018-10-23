@@ -347,13 +347,10 @@ func (this *GateUser) ReqAttackData() *msg.GW2C_AckAttackPalaceData {
 	}
 	return send
 }
-func (this *GateUser) AttackPalace(id uint64) []string {
-	gold := make([]string, 0)
+func (this *GateUser) AttackPalace(id uint64) uint32 {
 	//成功物品
-	goldObj := this.maid.CalculateRewardPerSecond(this)
-	goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.AttackPalaceReward.Gold))
-	goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
-	gold = this.ParseBigGoldToArr(goldObj)
+	golds, rewards := RewardMgr().DropToUser(this, uint32(tbl.common.AttackPalaceReward), "攻击后宫奖励", true, 0)
+	this.SendRewardNotify(golds, rewards)
 	if this.Id() != id && id != 0 {
 		//生成记录
 		key := fmt.Sprintf("activerecord_%d", id)
@@ -377,7 +374,7 @@ func (this *GateUser) AttackPalace(id uint64) []string {
 			user.SendMsg(send)
 		}
 	}
-	return gold
+	return 0
 }
 
 func (this *GateUser) SynAttackPalaceRecords() {
@@ -411,6 +408,42 @@ func (this *GateUser) ReqGuessKingData() *msg.GW2C_AckGuessKingData {
 	return send
 }
 
+func (this *GateUser) GuessKing(id uint64, index uint32)(result uint32, hit bool){
+	rewardid := uint32(0)
+	randkey := uint32(util.RandBetween(0, int32(tbl.Common.GuessKingCount)))
+	hit = (index == randkey)
+	if hit {
+		rewardid = uint32(tbl.Common.GuessKingWinReward)
+	} else {
+		rewardid = uint32(tbl.Common.GuessKingLoseReward)
+	}
+	golds, rewards := RewardMgr().DropToUser(this, rewardid, "猜皇帝奖励", true, 0)
+	this.SendRewardNotify(golds, rewards)
+	if this.Id() != id && id != 0 {
+		//生成记录
+		key := fmt.Sprintf("activerecord_%d", id)
+		record := fmt.Sprintf("%s骚扰了你的后宫", this.Name())
+		err := Redis().LPush(key, record).Err()
+		if err != nil {
+			log.Error("创建攻击后宫记录失败 id: %d ，err: %s", id, err)
+		}
+		lenth := Redis().LLen(key).Val()
+		if int32(lenth) >= int32(tbl.Common.ActiveRecordCount) {
+			//超长了
+			err = Redis().BRPop(0, key).Err()
+			if err != nil {
+				log.Error("删除多余互动操作记录失败 id: %d err: %s", id, err)
+			}
+		}
+		user := UserMgr().FindById(id)
+		if user != nil {
+			send := &msg.GW2C_PushActiveRecord{ Records: make([]string, 0) }
+			send.Records = append(send.Records, record)
+			user.SendMsg(send)
+		}
+	}
+	return 0, hit
+}
 //临幸
 func (this *GateUser) ReqLuckily(palaceid uint32) uint32 {
 	// 体力够不够 
@@ -422,19 +455,20 @@ func (this *GateUser) ReqLuckily(palaceid uint32) uint32 {
 	this.SendRewardNotify(golds, rewards)
 	//扣体力
 	this.currency.RemoveMiniGameCoin(MiniGameCoinType_Luckily, 1,"临幸消耗", true)
-	return 0, gold
+	return 0
 }
 
 //约会
-func (this *GateUser) ReqTryst(palaceid uint32) uint32 {
+func (this *GateUser) ReqTryst(palaceid uint32, key uint32) uint32 {
 	// 体力够不够 
 	if this.currency.GetMiniGameCoin(MiniGameCoinType_Tryst) < 1 {
 		this.SendNotify("游戏币不足")
 		return 1
 	}
-	golds, rewards := RewardMgr().DropToUser(this, uint32(tbl.Common.LuckilyReward), "临幸奖励", true, palaceid)
+	rewardid := RewardMgr().GetTrystReward(palaceid, key)
+	golds, rewards := RewardMgr().DropToUser(this, rewardid, "约会奖励", true, palaceid)
 	this.SendRewardNotify(golds, rewards)
 	//扣体力
 	this.currency.RemoveMiniGameCoin(MiniGameCoinType_Tryst, 1,"约会消耗", true)
-	return 0, gold
+	return 0
 }

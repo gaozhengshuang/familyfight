@@ -70,6 +70,10 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqKickAss{}, on_C2GW_ReqKickAss)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqAttackPalaceData{}, on_C2GW_ReqAttackPalaceData)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqAttackPalace{}, on_C2GW_ReqAttackPalace)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqGuessKingData{}, on_C2GW_ReqGuessKingData)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqGuessKing{}, on_C2GW_ReqGuessKing)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqLuckily{}, on_C2GW_ReqLuckily)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTryst{}, on_C2GW_ReqTryst)
 	//后宫
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPalaceTakeBack{}, on_C2GW_ReqPalaceTakeBack)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMasterLevelup{}, on_C2GW_ReqMasterLevelup)
@@ -468,6 +472,84 @@ func on_C2GW_ReqAttackPalace(session network.IBaseNetSession, message interface{
 	user.AttackPalace(tmsg.GetId())
 	send := &msg.GW2C_AckAttackPalace{}
 	send.Result = pb.Uint32(0)
+	user.SendMsg(send)
+}
+//获取猜皇帝数据
+func on_C2GW_ReqGuessKingData(session network.IBaseNetSession, message interface{}) {
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	send := user.ReqGuessKingData()
+	user.SendMsg(send)
+}
+//猜皇帝
+func on_C2GW_ReqGuessKing(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqGuessKing)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result, hit := user.GuessKing(tmsg.GetId(), tmsg.GetIndex())
+	send := &msg.GW2C_AckGuessKing{}
+	send.Result = pb.Uint32(result)
+	send.Hit = pb.Bool(hit)
+	user.SendMsg(send)
+}
+//临幸
+func on_C2GW_ReqLuckily(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqLuckily)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result := user.ReqLuckily(tmsg.GetPalaceid())
+	send := &msg.GW2C_AckLuckily{}
+	send.Result = pb.Uint32(result)
+	user.SendMsg(send)
+}
+//约会
+func on_C2GW_ReqTryst(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqTryst)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result := user.ReqTryst(tmsg.GetPalaceid(), tmsg.GetKey())
+	send := &msg.GW2C_AckTryst{}
+	send.Result = pb.Uint32(result)
 	user.SendMsg(send)
 }
 //收取

@@ -35,9 +35,15 @@
         "Gold": 600
     },
     "攻击后宫成功奖励系数": "",
-    "AttackPalaceReward": {
-        "Gold": 1800
-    },
+    "AttackPalaceReward": 1002,
+
+    "猜皇帝数量": "",
+    "GuessKingCount": 3,
+    "猜皇帝成功奖励": "",
+    "GuessKingWinReward": 1003,
+    "猜皇帝失败奖励": "",
+    "GuessKingLoseReward": 1004,
+    
     "互动记录保留条数": "",
     "ActiveRecordCount": 10,
     "临幸奖励": "",

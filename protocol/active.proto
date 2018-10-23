@@ -98,11 +98,13 @@ message GW2C_AckGuessKingData
 }
 message C2GW_ReqGuessKing
 {
-    optional uint64 id = 1;
+    optional uint64 id          = 1;
+    optional uint32 index       = 2;
 }
 message GW2C_AckGuessKing
 {
-    optional uint32 result = 1;
+    optional uint32 result      = 1;
+    optional bool hit           = 2;
 }
 //临幸
 message C2GW_ReqLuckily
@@ -118,7 +120,7 @@ message GW2C_AckLuckily
 message C2GW_ReqTryst
 {
     optional uint32 palaceid    = 1;
-    repeated uint32 story       = 2;
+    optional uint32 key         = 2;
 }
 message GW2C_AckTryst
 {
