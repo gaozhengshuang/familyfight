@@ -365,7 +365,7 @@ func on_C2GW_ReqLinkup(session network.IBaseNetSession, message interface{}) {
 		session.Close()
 		return
 	}
-	gold := user.Linkup(tmsg.GetScore())
+	_, gold := user.Linkup(tmsg.GetScore())
 	send := &msg.GW2C_RetLinkup{}
 	send.Gold = gold
 	user.SendMsg(send)
