@@ -122,7 +122,7 @@ func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id ui
 	}
 	//扣体力
 	this.RemovePower(1,"翻牌子消耗")
-	golds, rewards := RewardMgr().DropToUser(this, findbrand.Reward, "翻牌子奖励", false)
+	golds, rewards := RewardMgr().DropToUser(this, findbrand.Reward, "翻牌子奖励", false, 0)
 	drop = RewardMgr().PackMsg(golds, rewards)
 	return 0, findbrand.Id, drop
 }
@@ -347,7 +347,6 @@ func (this *GateUser) ReqAttackData() *msg.GW2C_AckAttackPalaceData {
 	}
 	return send
 }
-
 func (this *GateUser) AttackPalace(id uint64) []string {
 	gold := make([]string, 0)
 	//成功物品
@@ -410,4 +409,32 @@ func (this *GateUser) ReqGuessKingData() *msg.GW2C_AckGuessKingData {
 		send.Data = append(send.Data, data)
 	}
 	return send
+}
+
+//临幸
+func (this *GateUser) ReqLuckily(palaceid uint32) uint32 {
+	// 体力够不够 
+	if this.currency.GetMiniGameCoin(MiniGameCoinType_Luckily) < 1 {
+		this.SendNotify("游戏币不足")
+		return 1
+	}
+	golds, rewards := RewardMgr().DropToUser(this, uint32(tbl.Common.LuckilyReward), "临幸奖励", true, palaceid)
+	this.SendRewardNotify(golds, rewards)
+	//扣体力
+	this.currency.RemoveMiniGameCoin(MiniGameCoinType_Luckily, 1,"临幸消耗", true)
+	return 0, gold
+}
+
+//约会
+func (this *GateUser) ReqTryst(palaceid uint32) uint32 {
+	// 体力够不够 
+	if this.currency.GetMiniGameCoin(MiniGameCoinType_Tryst) < 1 {
+		this.SendNotify("游戏币不足")
+		return 1
+	}
+	golds, rewards := RewardMgr().DropToUser(this, uint32(tbl.Common.LuckilyReward), "临幸奖励", true, palaceid)
+	this.SendRewardNotify(golds, rewards)
+	//扣体力
+	this.currency.RemoveMiniGameCoin(MiniGameCoinType_Tryst, 1,"约会消耗", true)
+	return 0, gold
 }

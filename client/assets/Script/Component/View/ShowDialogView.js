@@ -45,7 +45,7 @@ cc.Class({
             node.position = cc.v2(0, 0);
             this.tipParentNode.addChild(node);
             let view = node.getComponent('TipRewardView');
-            view.flap(data.info, data.alive, data.delay);
+            view.flap(data.info, data.alive, data.delay, data.timeout);
         }
     },
     //奖励提示代码--------------------------------------end-------------------------------------

@@ -5,6 +5,7 @@ const Tools = require('../Util/Tools');
 const ProtoMsg = require('../Util/ProtoMsg');
 
 const ItemModel = require('../Model/Item');
+const CurrencyModel = require('../Model/Currency');
 const NetWorkController = require('./NetWorkController');
 const NotificationController = require('./NotificationController');
 
@@ -15,6 +16,7 @@ let RewardController = function () {
  * @param {Function} cb 
  */
 RewardController.prototype.Init = function (cb) {
+    NetWorkController.AddListener('msg.GW2C_RewardNotify', this, this.onRewardNotify);
     Tools.InvokeCallback(cb, null);
 };
 
@@ -72,6 +74,46 @@ RewardController.prototype.GetRewardIcon = function (data) {
             return '';
         default:
             return '';
+    }
+}
+
+RewardController.prototype.onRewardNotify = function (msgid, data) {
+    let golds = data.golds || [];
+    let rewards = data.rewards || {};
+    if (golds.length != 0) {
+        NotificationController.Emit(Define.EVENT_KEY.TIP_PLAYGOLDFLY);
+        CurrencyModel.AddGold(golds);
+        NotificationController.Emit(Define.EVENT_KEY.TIP_REWARD, {
+            info: '<color=#ed5b5b>金币+' + Tools.UnitConvert(this.drop.golds) + '</c>',
+            alive: 0.5,
+            delay: 0.5,
+        });
+    }
+    let popinfo = [];
+    for (let i = 0; i < rewards.length; i++) {
+        let reward = rewards[i];
+        switch (reward.rewardtype) {
+            case ProtoMsg.msg.RewardType.Power:
+                NetWorkController.Send('msg.C2GW_ReqPower');
+                break;
+            case ProtoMsg.msg.RewardType.MiniGameCoin:
+                NetWorkController.Send('msg.C2GW_ReqMiniGameCoin');
+                break;
+                break;
+            default:
+                break;
+        }
+        let icon = this.GetRewardIcon(reward);
+        if (icon != '') {
+            popinfo.push({
+                name: this.GetRewardName(reward),
+                icon: icon,
+                count: reward.rewardvalue
+            });
+        }
+    }
+    if (popinfo.length > 0) {
+        NotificationController.Emit(Define.EVENT_KEY.TIP_SERIESPOP, popinfo);
     }
 }
 

@@ -69,7 +69,7 @@ func (this *RewardManager) Init(){
 	}
 }
 
-func (this *RewardManager) DropToUser(user *GateUser, id uint32, reason string, notify bool) (gold []string, rets []*DropData) {
+func (this *RewardManager) DropToUser(user *GateUser, id uint32, reason string, notify bool, param uint32) (gold []string, rets []*DropData) {
 	gold = make([]string, 0)
 	rewards := make([]*DropData, 0)
 	rets = make([]*DropData, 0)
@@ -80,7 +80,7 @@ func (this *RewardManager) DropToUser(user *GateUser, id uint32, reason string, 
 	rewards = this.GetDropList(dropnode)
 	rewards = this.MergeDropData(rewards)
 	for _, v := range rewards {
-		result := this.AddToUser(user, v, reason, notify)
+		result := this.AddToUser(user, v, reason, notify, param)
 		if v.rewardtype != uint32(msg.RewardType_BigGold) {
 			rets = append(rets, v)
 		} else {
@@ -147,7 +147,7 @@ func (this *RewardManager) MergeDropData(origindatas []*DropData) []*DropData {
 	return rets
 }
 
-func (this *RewardManager) AddToUser(user *GateUser, data *DropData, reason string, notify bool) []string{
+func (this *RewardManager) AddToUser(user *GateUser, data *DropData, reason string, notify bool, param uint32) []string{
 	rets := make([]string, 0)
 	switch data.rewardtype {
 		case uint32(msg.RewardType_BigGold):
@@ -170,6 +170,7 @@ func (this *RewardManager) AddToUser(user *GateUser, data *DropData, reason stri
 			return rets
 		case uint32(msg.RewardType_Favor):
 			//好感度 TODO
+			user.palace.AddLuckily(user, param, data.rewardvalue)
 			return rets
 		case uint32(msg.RewardType_MiniGameCoin):
 			//小游戏的游戏币

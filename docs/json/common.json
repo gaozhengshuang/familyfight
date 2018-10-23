@@ -39,5 +39,7 @@
         "Gold": 1800
     },
     "互动记录保留条数": "",
-    "ActiveRecordCount": 10
+    "ActiveRecordCount": 10,
+    "临幸奖励": "",
+    "LuckilyReward": 1001
 }

@@ -6576,8 +6576,12 @@
       "__id__": 156
     },
     "miniGameCoinLabel": [
-      null,
-      null
+      {
+        "__id__": 171
+      },
+      {
+        "__id__": 187
+      }
     ],
     "status": 1,
     "brandInfos": [],

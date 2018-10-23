@@ -104,7 +104,7 @@ message GW2C_AckGuessKing
 {
     optional uint32 result = 1;
 }
-//临幸GuessKingData
+//临幸
 message C2GW_ReqLuckily
 {
     optional uint32 palaceid = 1;

@@ -18,6 +18,7 @@ type PalaceData struct {
 	parts 			[]uint32
 	charm 			uint32
 	golds 			[]string
+	luckily 		uint32
 }
 
 func CopyPalaceData(data *PalaceData) *PalaceData {
@@ -38,6 +39,7 @@ func CopyPalaceData(data *PalaceData) *PalaceData {
 	for _, v := range data.golds {
 		newdata.golds = append(newdata.golds, v)
 	}
+	newdata.luckily = data.luckily
 	return newdata
 }
 
@@ -59,6 +61,7 @@ func (this *PalaceData) PackBin() *msg.PalaceData{
 	for _, v := range this.golds {
 		data.Golds = append(data.Golds, v)
 	}
+	data.Luckily = pb.Uint32(this.luckily)
 	return data
 }
 
@@ -89,6 +92,7 @@ func (this *UserPalace) LoadBin(user *GateUser,bin *msg.Serialize) {
 		for _, v := range data.GetGolds() {
 			palace.golds = append(palace.golds, v)
 		}
+		palace.luckily = data.GetLuckily()
 	}
 }
 
@@ -117,6 +121,14 @@ func (this *UserPalace) ChangeMaxLevel(user* GateUser,level uint32) {
 			return
 		}
 	}
+}
+func (this *UserPalace) AddLuckily(user *GateUser, id uint32, addition uint32){
+	palace, find := this.palaces[id]
+	if !find {
+		return
+	}
+	palace.luckily = palace.luckily + addition
+	this.Syn(user)
 }
 // ========================= 消息接口 =========================
 //收取
