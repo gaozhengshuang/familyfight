@@ -11,12 +11,17 @@ export var Reward : table.IRewardDefine[] = [
 		{ Id : 6, DropId : 15001, PropType : 1, Prop : 10000, RewardType : 1, RewardId : 0, RewardValue : 600 	},
 		{ Id : 7, DropId : 15001, PropType : 1, Prop : 5000, RewardType : 6, RewardId : 60001, RewardValue : 0 	},
 		{ Id : 8, DropId : 16001, PropType : 1, Prop : 10000, RewardType : 1, RewardId : 0, RewardValue : 1800 	},
-		{ Id : 9, DropId : 16001, PropType : 0, Prop : 5000, RewardType : 6, RewardId : 60001, RewardValue : 0 	},
+		{ Id : 9, DropId : 16001, PropType : 1, Prop : 5000, RewardType : 6, RewardId : 60001, RewardValue : 0 	},
 		{ Id : 10, DropId : 60001, PropType : 2, Prop : 20, RewardType : 5, RewardId : 0, RewardValue : 1 	},
 		{ Id : 11, DropId : 60001, PropType : 2, Prop : 20, RewardType : 5, RewardId : 1, RewardValue : 1 	},
 		{ Id : 12, DropId : 60001, PropType : 2, Prop : 5, RewardType : 5, RewardId : 2, RewardValue : 1 	},
 		{ Id : 13, DropId : 60001, PropType : 2, Prop : 10, RewardType : 5, RewardId : 3, RewardValue : 1 	},
-		{ Id : 14, DropId : 60001, PropType : 2, Prop : 20, RewardType : 5, RewardId : 4, RewardValue : 1 	}
+		{ Id : 14, DropId : 60001, PropType : 2, Prop : 20, RewardType : 5, RewardId : 4, RewardValue : 1 	},
+		{ Id : 15, DropId : 20001, PropType : 2, Prop : 10, RewardType : 1, RewardId : 0, RewardValue : 1 	},
+		{ Id : 16, DropId : 20001, PropType : 2, Prop : 10, RewardType : 2, RewardId : 0, RewardValue : 1 	},
+		{ Id : 17, DropId : 20001, PropType : 2, Prop : 10, RewardType : 4, RewardId : 0, RewardValue : 1 	},
+		{ Id : 18, DropId : 20001, PropType : 2, Prop : 10, RewardType : 5, RewardId : 2, RewardValue : 1 	},
+		{ Id : 19, DropId : 20001, PropType : 2, Prop : 10, RewardType : 3, RewardId : 20001, RewardValue : 1 	}
 	]
 
 
