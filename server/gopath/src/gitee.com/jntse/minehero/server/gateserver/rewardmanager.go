@@ -40,6 +40,7 @@ type RewardManager struct {
 }
 
 func (this *RewardManager) Init(){
+	this.nodes = make(map[uint32]*DropNode)
 	for _, v := tbl.TRewardBase.Reward {
 		item := &DropItem{}
 		item.rewardtype = v.RewardType
