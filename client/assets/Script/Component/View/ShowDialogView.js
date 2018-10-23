@@ -47,7 +47,6 @@ cc.Class({
         }
     },
     //奖励提示代码--------------------------------------end-------------------------------------
-
     onPlayGoldFly(position) {
         this.goldFlyAnima.node.active = true;
         this.goldFlyAnima.node.position = (position || cc.v2(0, 400));

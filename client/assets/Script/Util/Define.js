@@ -92,6 +92,13 @@ var Define = {
         TRYST: 3,
         LINKUP: 4,
         END: 5,
+    },
+    ACTIVEGAMENAME: {
+        1: '攻击后宫',
+        2: '猜皇帝'
+    },
+    ACTIVEGAMEUINAME: {
+
     }
 }
 

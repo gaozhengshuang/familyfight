@@ -124,12 +124,17 @@ func (this *GateUser) TurnBrand(ids []uint32,level uint32) (result uint32, id ui
 	this.RemovePower(1,"翻牌子消耗")
 	golds, rewards := RewardMgr().DropToUser(this, findbrand.Reward, "翻牌子奖励", false)
 	drop = RewardMgr().PackMsg(golds, rewards)
-	return result, findbrand.Id, drop
+	return 0, findbrand.Id, drop
 }
 
 //连连看
 func (this *GateUser) Linkup(score uint32) (gold []string){
 	gold = make([]string, 0)
+	// 体力够不够 
+	if this.currency.GetMiniGameCoin(MiniGameCoinType_Linkup) < 1 {
+		this.SendNotify("游戏币不足")
+		return 1, gold
+	}
 	goldrewardratio, find := tbl.TGoldRewardRatioBase.GoldRewardRatioById[uint32(tbl.Common.LinkupGoldRewardRatio)]
 	if !find {
 		this.SendNotify("没有奖励金币的模板哟")
@@ -152,6 +157,7 @@ func (this *GateUser) Linkup(score uint32) (gold []string){
 	goldObj = this.TimesBigGold(goldObj, uint32(ratio))
 	goldObj = this.TimesBigGold(goldObj, uint32(score))
 	goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
+	this.currency.RemoveMiniGameCoin(MiniGameCoinType_Linkup, 1,"十秒游戏消耗", true)
 	return this.ParseBigGoldToArr(goldObj)
 }
 
@@ -385,4 +391,29 @@ func (this *GateUser) SynAttackPalaceRecords() {
 		send.Records = rlist
 	}
 	this.SendMsg(send)
+}
+
+//猜皇帝
+func (this *GateUser) ReqGuessKingData() *msg.GW2C_AckGuessKingData {
+	robots := RobotMgr().RandomRobot(3)
+	send := &msg.GW2C_AckGuessKingData{ Data: make([]*msg.RobotPalaceData, 0) }
+	for _, robot := range robots {
+		data := &msg.RobotPalaceData{}
+		data.Id = pb.Uint64(robot.id)
+		data.Name = pb.String(robot.name)
+		data.Face = pb.String(robot.face)
+		//随机一个宫殿
+		palace := robot.RandomPalace()
+		if palace != nil {
+			data.Palace = palace.PackBin()
+		}
+		send.Data = append(send.Data, data)
+	}
+	return send
+}
+func (this *GateUser) GuessKing(id uint64, index uint32) {
+	result := uint32(util.RandBetween(0, 2)
+	if index == result {
+		//猜对了
+	}
 }
