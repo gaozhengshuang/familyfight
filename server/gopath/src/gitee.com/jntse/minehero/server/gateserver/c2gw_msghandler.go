@@ -467,7 +467,7 @@ func on_C2GW_ReqAttackPalace(session network.IBaseNetSession, message interface{
 	}
 	gold := user.AttackPalace(tmsg.GetId())
 	send := &msg.GW2C_AckAttackPalace{}
-	send.Gold = gold
+	send.Result = 0
 	user.SendMsg(send)
 }
 //收取

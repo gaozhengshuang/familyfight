@@ -40,7 +40,30 @@ type RewardManager struct {
 }
 
 func (this *RewardManager) Init(){
-
+	for _, v := tbl.TRewardBase.Reward {
+		item := &DropItem{}
+		item.rewardtype = v.RewardType
+		item.rewardid = v.RewardId
+		item.rewardvalue = v.RewardValue
+		item.prop = v.Prop
+		dropid := v.DropId
+		node, find := this.nodes[dropid]
+		if find {
+			node.items = append(node.items, item)
+		} else {
+			node = &DropNode{}
+			node.id = dropid
+			node.proptype = v.PropType
+			node.totalprop = 0
+			node.items = make([]*DropItem, 0)
+			node.items = append(node.items, item)
+			this.nodes[dropid] = node
+		}
+		if node.proptype == 2 {
+			//权重
+			node.totalprop = node.totalprop + item.prop
+		}
+	}
 }
 
 func (this *RewardManager) DropToUser(user *GateUser, id uint32, reason string, notify bool) (gold []string, rets []*DropData) {

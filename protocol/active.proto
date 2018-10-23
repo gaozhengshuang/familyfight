@@ -82,7 +82,7 @@ message C2GW_ReqAttackPalace
 }
 message GW2C_AckAttackPalace
 {
-    optional RewardsData rewards = 1;
+    optional uint32 result = 1;
 }
 message GW2C_PushActiveRecord
 {
