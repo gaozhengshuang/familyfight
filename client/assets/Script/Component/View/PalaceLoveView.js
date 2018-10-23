@@ -9,6 +9,7 @@ cc.Class({
         label_canLovenum: { default: null, type: cc.Label },
         label_name: { default: null, type: cc.Label },
         label_content: { default: null, type: cc.Label },
+        label_percentage: { default: null, type: cc.Label },
         image_head: { default: null, type: cc.Sprite },
         image_queen: { default: null, type: cc.Sprite },
         image_king: { default: null, type: cc.Sprite },
@@ -29,7 +30,7 @@ cc.Class({
     },
 
     onDisable() {
-        // Game.NotificationController.Off(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateView);
+        Game.NetWorkController.RemoveListener('msg.GW2C_AckLuckily', this, this.onGW2C_AckLuckily);
     },
 
     initData() {
@@ -44,7 +45,7 @@ cc.Class({
     },
 
     initNotification() {
-        // Game.NotificationController.On(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateView);
+        Game.NetWorkController.AddListener('msg.GW2C_AckLuckily', this, this.onGW2C_AckLuckily);
     },
 
     initView() {
@@ -61,6 +62,37 @@ cc.Class({
     updateView() {
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
         if (this._data) {
+            let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this._data.id);
+            if (palaceMapBase) {
+                let maidBase = Game.ConfigController.GetConfigById("PalacePersonnel", palaceMapBase.Master);
+                if (maidBase) {
+                    
+                }
+            }
+
+            let dialogList = [];
+            let loveDialogueList = Game.ConfigController.GetConfig("LoveDialogue");
+            for (let i = 0; i < loveDialogueList.length; i ++) {
+                if (loveDialogueList[i].PalaceId == this._data.id) {
+                    dialogList.push(loveDialogueList[i]);
+                }
+            }
+            let dialogueBase = dialogList[Math.floor(Math.random() * dialogList.length)];
+            if (dialogueBase) {
+                this.label_name.string = dialogueBase.Name;
+                this.label_content.string = dialogueBase.Content;
+                Game.ResController.SetSprite(this.image_head, dialogueBase.Headpath);
+            }
+
+            this.label_percentage.string = `第${this._data.id}章节效率提升`;
+        }
+    },
+
+    onGW2C_AckLuckily(msgid, data) {
+        if (data.result == 0) {
+            this.updateView();
+        } else {
+            this.showTips("侍寝失败...");
         }
     },
 
@@ -111,6 +143,11 @@ cc.Class({
                 cc.fadeOut(this._moveTime)
             ]),
             cc.delayTime(this._delayTime),
+            cc.callFunc(function () {
+                Game.NetWorkController.Send('msg.C2GW_ReqLuckily', {
+                    palaceid: Game.PalaceModel.GetCurPalaceId(),
+                });
+            }, this),
             cc.spawn([
                 cc.moveTo(this._moveTime, this._dialogPos.x, this._dialogPos.y),
                 cc.fadeIn(this._moveTime)
