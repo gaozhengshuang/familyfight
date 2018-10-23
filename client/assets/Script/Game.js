@@ -24,6 +24,7 @@ let Game = {
     TimeController: require('./Controller/TimeController'),
     ViewController: require('./Controller/ViewController'),
     GuideController: require('./Controller/GuideController'),
+    RewardController: require('./Controller/RewardController'),
 
     UserModel: require('./Model/User'),
     MaidModel: require('./Model/Maid'),

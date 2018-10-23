@@ -7,6 +7,7 @@ cc.Class({
         tipParentNode: { default: null, type: cc.Node },
         notifyPrefab: { default: null, type: cc.Prefab },
         rewardPrefab: { default: null, type: cc.Prefab },
+        seriesPopPrefab: { default: null, type: cc.Prefab },
         goldFlyAnima: { default: null, type: dragonBones.ArmatureDisplay },
         barragePositionIndex: { default: 0, type: cc.Integer },
     },
@@ -19,6 +20,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.TIP_TIPS, this, this.onShowTips);
         Game.NotificationController.On(Game.Define.EVENT_KEY.TIP_REWARD, this, this.onShowReward);
         Game.NotificationController.On(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY, this, this.onPlayGoldFly);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.TIP_SERIESPOP, this, this.onSeriesPop);
     },
 
     update(dt) {
@@ -51,5 +53,12 @@ cc.Class({
         this.goldFlyAnima.node.active = true;
         this.goldFlyAnima.node.position = (position || cc.v2(0, 400));
         this.goldFlyAnima.playAnimation('newAnimation', 1);
+    },
+
+    onSeriesPop(infos, completeFunc) {
+        let node = cc.instantiate(this.seriesPopPrefab);
+        let view = node.getComponent('TipSeriesPopView');
+        view.Pop(infos, completeFunc);
+        this.tipParentNode.addChild(node);
     }
 });

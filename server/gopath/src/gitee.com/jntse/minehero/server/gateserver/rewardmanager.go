@@ -1,5 +1,6 @@
 package main
 import (
+	"gitee.com/jntse/gotoolkit/log"
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/server/tbl"
 	"gitee.com/jntse/minehero/pbmsg"
@@ -79,9 +80,11 @@ func (this *RewardManager) DropToUser(user *GateUser, id uint32, reason string, 
 	rewards = this.GetDropList(dropnode)
 	rewards = this.MergeDropData(rewards)
 	for _, v := range rewards {
-		gold = this.AddToUser(user, v, reason, notify)
+		result := this.AddToUser(user, v, reason, notify)
 		if v.rewardtype != uint32(msg.RewardType_BigGold) {
 			rets = append(rets, v)
+		} else {
+			gold = result
 		}
 	}
 	return gold, rets
@@ -149,6 +152,7 @@ func (this *RewardManager) AddToUser(user *GateUser, data *DropData, reason stri
 	switch data.rewardtype {
 		case uint32(msg.RewardType_BigGold):
 			//金币
+			log.Info("玩家[%d] 掉落金币 原因[%s]", user.Id(), reason)
 			goldObj := user.maid.CalculateRewardPerSecond(user)
 			goldObj = user.TimesBigGold(goldObj, data.rewardvalue)
 			goldObj = user.CarryBigGold(goldObj, user.MaxIndexBigGold(goldObj))
@@ -156,10 +160,12 @@ func (this *RewardManager) AddToUser(user *GateUser, data *DropData, reason stri
 			return rets
 		case uint32(msg.RewardType_Power):
 			//体力
+			log.Info("玩家[%d] 掉落体力 数量[%d] 原因[%s]", user.Id(),data.rewardvalue, reason)
 			user.AddPower(data.rewardvalue, reason, true,notify)
 			return rets 
 		case uint32(msg.RewardType_Item):
 			//道具
+			log.Info("玩家[%d] 掉落道具 id[%d] 数量[%d] 原因[%s]", user.Id(),data.rewardid, data.rewardvalue, reason)
 			user.AddItem(data.rewardid, data.rewardvalue, reason)
 			return rets
 		case uint32(msg.RewardType_Favor):
@@ -167,9 +173,11 @@ func (this *RewardManager) AddToUser(user *GateUser, data *DropData, reason stri
 			return rets
 		case uint32(msg.RewardType_MiniGameCoin):
 			//小游戏的游戏币
+			log.Info("玩家[%d] 掉落小游戏币 id[%d] 数量[%d] 原因[%s]", user.Id(),data.rewardid, data.rewardvalue, reason)
 			user.currency.AddMiniGameCoin(data.rewardtype, data.rewardvalue, reason, notify)
 			return rets
 		case uint32(msg.RewardType_MiniGame):
+			log.Info("玩家[%d] 掉落小游戏币 id[%d] 原因[%s]", user.Id(),data.rewardid,reason)
 			return rets
 		default:
 			return rets
