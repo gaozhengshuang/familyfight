@@ -36,4 +36,9 @@ message MS2GW_MsgNotice {
     optional GW2C_MsgNotice notice = 1;
 }
 
+//通用奖励提示
+messag GW2C_RewardNotify 
+{
+    optional RewardsData rewards = 1;
+}
 
