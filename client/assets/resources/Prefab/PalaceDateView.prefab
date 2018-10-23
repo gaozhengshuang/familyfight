@@ -147,7 +147,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "BackButton",
+    "_name": "button_back",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -1180,7 +1180,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "image_event1",
+    "_name": "image_event0",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -1241,7 +1241,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_event1",
+    "_name": "label_event0",
     "_objFlags": 0,
     "_parent": {
       "__id__": 36
@@ -1437,7 +1437,7 @@
     },
     "component": "PalaceDateView",
     "handler": "onSeleceX",
-    "customEventData": "1"
+    "customEventData": "0"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -1452,7 +1452,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "image_event2",
+    "_name": "image_event1",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -1513,7 +1513,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_event2",
+    "_name": "label_event1",
     "_objFlags": 0,
     "_parent": {
       "__id__": 45
@@ -1709,7 +1709,7 @@
     },
     "component": "PalaceDateView",
     "handler": "onSeleceX",
-    "customEventData": "2"
+    "customEventData": "1"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -1724,7 +1724,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "image_event3",
+    "_name": "image_event2",
     "_objFlags": 0,
     "_parent": {
       "__id__": 2
@@ -1785,7 +1785,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_event3",
+    "_name": "label_event2",
     "_objFlags": 0,
     "_parent": {
       "__id__": 54
@@ -1981,7 +1981,7 @@
     },
     "component": "PalaceDateView",
     "handler": "onSeleceX",
-    "customEventData": "3"
+    "customEventData": "2"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -2054,22 +2054,22 @@
     "image_head": {
       "__id__": 11
     },
-    "image_event1": {
+    "image_event0": {
       "__id__": 41
     },
-    "image_event2": {
+    "image_event1": {
       "__id__": 50
     },
-    "image_event3": {
+    "image_event2": {
       "__id__": 59
     },
-    "label_event1": {
+    "label_event0": {
       "__id__": 38
     },
-    "label_event2": {
+    "label_event1": {
       "__id__": 47
     },
-    "label_event3": {
+    "label_event2": {
       "__id__": 56
     },
     "label_select": {
@@ -2080,6 +2080,9 @@
     },
     "label_content": {
       "__id__": 19
+    },
+    "node_back": {
+      "__id__": 3
     }
   },
   {

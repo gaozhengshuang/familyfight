@@ -74,10 +74,10 @@ cc.Class({
 
     onOpenRandomX(event) {
         event.stopPropagationImmediate();
-        if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST) < 1) {
-            this.showTips("前去翻牌子获得游戏次数");
-            return;
-        }
+        // if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST) < 1) {
+        //     this.showTips("前去翻牌子获得游戏次数");
+        //     return;
+        // }
         this.openView(Game.UIName.UI_PALACEDATE);
         Game.GuideController.NextGuide();
     }
