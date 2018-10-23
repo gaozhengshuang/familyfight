@@ -66,7 +66,7 @@ cc.Class({
             if (palaceMapBase) {
                 let maidBase = Game.ConfigController.GetConfigById("PalacePersonnel", palaceMapBase.Master);
                 if (maidBase) {
-                    
+                    Game.ResController.SetSprite(this.image_queen, maidBase.WholeBodyPath);
                 }
             }
 
