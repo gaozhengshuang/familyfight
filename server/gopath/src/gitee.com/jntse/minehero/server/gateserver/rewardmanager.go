@@ -174,10 +174,10 @@ func (this *RewardManager) AddToUser(user *GateUser, data *DropData, reason stri
 		case uint32(msg.RewardType_MiniGameCoin):
 			//小游戏的游戏币
 			log.Info("玩家[%d] 掉落小游戏币 id[%d] 数量[%d] 原因[%s]", user.Id(),data.rewardid, data.rewardvalue, reason)
-			user.currency.AddMiniGameCoin(data.rewardtype, data.rewardvalue, reason, notify)
+			user.currency.AddMiniGameCoin(data.rewardid, data.rewardvalue, reason, notify)
 			return rets
 		case uint32(msg.RewardType_MiniGame):
-			log.Info("玩家[%d] 掉落小游戏币 id[%d] 原因[%s]", user.Id(),data.rewardid,reason)
+			log.Info("玩家[%d] 掉落小游戏 id[%d] 原因[%s]", user.Id(),data.rewardid,reason)
 			return rets
 		default:
 			return rets
