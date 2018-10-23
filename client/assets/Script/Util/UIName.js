@@ -20,6 +20,7 @@ var UIName = {
     UI_PALACEBUILD: 'Prefab/PalaceBuildView',
     UI_PALACEBUILDDETAIL: 'Prefab/PalaceBuildDetailView',
     UI_PALACELOVE: 'Prefab/PalaceLoveView',
+    UI_PALACEDATE: 'Prefab/PalaceDateView',
 }
 
 module.exports = UIName;

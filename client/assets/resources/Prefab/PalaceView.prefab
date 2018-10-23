@@ -2244,7 +2244,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_timenum",
+    "_name": "label_randomxNum",
     "_objFlags": 0,
     "_parent": {
       "__id__": 67
@@ -2478,6 +2478,9 @@
     },
     "label_randomxUnlock": {
       "__id__": 69
+    },
+    "label_randomxNum": {
+      "__id__": 73
     }
   },
   {
