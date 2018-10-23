@@ -42,6 +42,7 @@ cc.Class({
                 this.label_masterName.string = Game.MaidModel.GetPersonNameById(this._data.Master) + '(' + this._masterLvUpBase.levelName + ')';
             }
             this.label_charmnum.string = this._palaceData.charm;
+            this.label_lovenum.string = this._palaceData.luckily;
         } else {
             this.label_masterName.string = Game.MaidModel.GetPersonNameById(this._data.Master) + "(娴贵人)";
         }
@@ -52,6 +53,7 @@ cc.Class({
 
             this.label_unlockTxt.string = '';
             this.node_charmBg.active = true;
+            this.node_loveBg.active = true;
         } else {
             this.label_palaceName.node.color = cc.color(120, 120, 120);
             this.label_masterName.node.color = cc.color(120, 120, 120);
@@ -61,6 +63,7 @@ cc.Class({
                 this.label_unlockTxt.string = `第${passBase.ChapterID}章第${passBase.Index}关解锁`;
             }
             this.node_charmBg.active = false;
+            this.node_loveBg.active = false;
         }
     },
 
