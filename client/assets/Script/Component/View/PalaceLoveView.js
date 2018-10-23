@@ -9,6 +9,7 @@ cc.Class({
         label_canLovenum: { default: null, type: cc.Label },
         label_name: { default: null, type: cc.Label },
         label_content: { default: null, type: cc.Label },
+        label_percentage: { default: null, type: cc.Label },
         image_head: { default: null, type: cc.Sprite },
         image_queen: { default: null, type: cc.Sprite },
         image_king: { default: null, type: cc.Sprite },
@@ -65,10 +66,25 @@ cc.Class({
             if (palaceMapBase) {
                 let maidBase = Game.ConfigController.GetConfigById("PalacePersonnel", palaceMapBase.Master);
                 if (maidBase) {
-                    this.label_name.string = maidBase.Name;
-                    Game.ResController.SetSprite(this.image_head, maidBase.Path);
+                    
                 }
             }
+
+            let dialogList = [];
+            let loveDialogueList = Game.ConfigController.GetConfig("LoveDialogue");
+            for (let i = 0; i < loveDialogueList.length; i ++) {
+                if (loveDialogueList[i].PalaceId == this._data.id) {
+                    dialogList.push(loveDialogueList[i]);
+                }
+            }
+            let dialogueBase = dialogList[Math.floor(Math.random() * dialogList.length)];
+            if (dialogueBase) {
+                this.label_name.string = dialogueBase.Name;
+                this.label_content.string = dialogueBase.Content;
+                Game.ResController.SetSprite(this.image_head, dialogueBase.Headpath);
+            }
+
+            this.label_percentage.string = `第${this._data.id}章节效率提升`;
         }
     },
 
