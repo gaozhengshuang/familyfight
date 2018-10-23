@@ -1,14 +1,14 @@
 {
   "ver": "2.0.0",
-  "uuid": "77de9daf-90b3-478c-8341-a35116153ade",
+  "uuid": "91231b8c-5701-4189-b663-4e5c239fb6d7",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "button_kickass": {
+    "image_kickasscoin": {
       "ver": "1.0.3",
-      "uuid": "a12731f8-834a-49d8-aeef-b6c047bdb992",
-      "rawTextureUuid": "77de9daf-90b3-478c-8341-a35116153ade",
+      "uuid": "a7ffc0d6-02b8-4293-b3dc-74ff35fc62b5",
+      "rawTextureUuid": "91231b8c-5701-4189-b663-4e5c239fb6d7",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

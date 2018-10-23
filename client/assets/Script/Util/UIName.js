@@ -22,7 +22,8 @@ var UIName = {
     UI_PALACELOVE: 'Prefab/PalaceLoveView',
 
     UI_ACTIVEGAMEATTACKPALACE: 'Prefab/MiniGameAttackPalaceView',
-    UI_ACTIVEGAMEGUESSKING: 'Prefab/MiniGameGuessView'
+    UI_ACTIVEGAMEGUESSKING: 'Prefab/MiniGameGuessView',
+    UI_PALACEDATE: 'Prefab/PalaceDateView',
 }
 
 module.exports = UIName;

@@ -9,6 +9,7 @@ cc.Class({
         button_randomx: { default: null, type: cc.Button },
         label_handbookUnlock: { default: null, type: cc.Label },
         label_randomxUnlock: { default: null, type: cc.Label },
+        label_randomxNum: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -46,6 +47,7 @@ cc.Class({
         });
         
         this.tableViewComponent.initTableView(this.palaceList.length, {array: this.palaceList, target: this});
+        this.label_randomxNum.string = `${Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST)}次`;
     },
 
     updateBottomButton() {
@@ -72,6 +74,11 @@ cc.Class({
 
     onOpenRandomX(event) {
         event.stopPropagationImmediate();
+        if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST) < 1) {
+            this.showTips("前去翻牌子获得游戏次数");
+            return;
+        }
+        this.openView(Game.UIName.UI_PALACEDATE);
         Game.GuideController.NextGuide();
     }
 });

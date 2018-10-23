@@ -1,14 +1,14 @@
 {
   "ver": "2.0.0",
-  "uuid": "77de9daf-90b3-478c-8341-a35116153ade",
+  "uuid": "6f670a5c-06fd-43bf-8aeb-57eb108df13d",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
   "subMetas": {
-    "button_kickass": {
+    "image_minigamebg": {
       "ver": "1.0.3",
-      "uuid": "a12731f8-834a-49d8-aeef-b6c047bdb992",
-      "rawTextureUuid": "77de9daf-90b3-478c-8341-a35116153ade",
+      "uuid": "bae5becd-8499-4c6f-9262-a933ab06866f",
+      "rawTextureUuid": "6f670a5c-06fd-43bf-8aeb-57eb108df13d",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,
@@ -16,12 +16,12 @@
       "offsetY": 0,
       "trimX": 0,
       "trimY": 0,
-      "width": 104,
-      "height": 105,
-      "rawWidth": 104,
-      "rawHeight": 105,
-      "borderTop": 0,
-      "borderBottom": 0,
+      "width": 138,
+      "height": 374,
+      "rawWidth": 138,
+      "rawHeight": 374,
+      "borderTop": 158,
+      "borderBottom": 169,
       "borderLeft": 0,
       "borderRight": 0,
       "subMetas": {}
