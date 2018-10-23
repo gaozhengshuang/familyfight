@@ -36,7 +36,8 @@ module.exports = {
                 'palacepersonnelbase',
                 'functionopenbase',
                 'palacepartbase',
-                'lovedialoguebase'
+                'lovedialoguebase',
+                'dateeventbase'
             ];
             Editor.log('开始生成JSON');
 

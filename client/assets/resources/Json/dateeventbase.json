@@ -1,0 +1,20 @@
+{
+	"Tool": "github.com/davyxu/tabtoy",
+	"Version": "2.8.10",
+	"DateEvent":[
+		{ "Id": 1, "Datetype": 1, "DateId": 1001, "Datepath": "Image/GameScene/Palace/image_time01", "DateName": "清晨" },
+		{ "Id": 2, "Datetype": 1, "DateId": 1002, "Datepath": "Image/GameScene/Palace/image_time02", "DateName": "上午" },
+		{ "Id": 3, "Datetype": 1, "DateId": 1003, "Datepath": "Image/GameScene/Palace/image_time03", "DateName": "中午" },
+		{ "Id": 4, "Datetype": 1, "DateId": 1004, "Datepath": "Image/GameScene/Palace/image_time01", "DateName": "下午" },
+		{ "Id": 5, "Datetype": 1, "DateId": 1005, "Datepath": "Image/GameScene/Palace/image_time02", "DateName": "晚上" },
+		{ "Id": 6, "Datetype": 2, "DateId": 2001, "Datepath": "Image/GameScene/Palace/image_time01", "DateName": "御花园" },
+		{ "Id": 7, "Datetype": 2, "DateId": 2002, "Datepath": "Image/GameScene/Palace/image_time02", "DateName": "亭子里" },
+		{ "Id": 8, "Datetype": 2, "DateId": 2003, "Datepath": "Image/GameScene/Palace/image_time03", "DateName": "延晖阁" },
+		{ "Id": 9, "Datetype": 2, "DateId": 2004, "Datepath": "Image/GameScene/Palace/image_time01", "DateName": "狩猎场" },
+		{ "Id": 10, "Datetype": 2, "DateId": 2005, "Datepath": "Image/GameScene/Palace/image_time02", "DateName": "房间内" },
+		{ "Id": 11, "Datetype": 3, "DateId": 3001, "Datepath": "Image/GameScene/Palace/image_time01", "DateName": "赏花" },
+		{ "Id": 12, "Datetype": 3, "DateId": 3002, "Datepath": "Image/GameScene/Palace/image_time02", "DateName": "赏月" },
+		{ "Id": 13, "Datetype": 3, "DateId": 3003, "Datepath": "Image/GameScene/Palace/image_time03", "DateName": "赏画" },
+		{ "Id": 14, "Datetype": 3, "DateId": 3004, "Datepath": "Image/GameScene/Palace/image_time01", "DateName": "骑马" },
+		{ "Id": 15, "Datetype": 3, "DateId": 3005, "Datepath": "Image/GameScene/Palace/image_time02", "DateName": "弹琴" }
+	]}

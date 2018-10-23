@@ -35,10 +35,12 @@ cc.Class({
 
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
 
     removeNotification() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
 
     updateView() {
@@ -58,6 +60,10 @@ cc.Class({
         let randomxLock = Game.MaidModel.IsOpenFunction(Game.Define.FUNCTION_UNLOCK.RANDOMX);
         this.button_randomx.interactable = randomxLock;
         this.label_randomxUnlock.node.active = !randomxLock;
+    },
+
+    updateMiniGameCoin() {
+        this.label_randomxNum.string = `${Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST)}次`;
     },
     
     onOpenTravel(event) {
