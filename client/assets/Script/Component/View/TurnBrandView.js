@@ -37,7 +37,7 @@ cc.Class({
         showTargetWorldPos: { default: cc.v2(0, 0) },
         clickIndex: { default: 0 },
         rewardId: { default: 0 },
-        rewardGold: { default: 0 }
+        drop: { default: null }
     },
     onLoad: function () {
         this.brandConfigs = Game.ConfigController.GetConfig('TurnBrand');
@@ -93,7 +93,9 @@ cc.Class({
         }
         else {
             this.rewardId = data.id;
-            this.rewardGold = data.gold;
+            this.drop = data.drop || {};
+            this.drop.golds = this.drop.golds || [];
+            this.drop.rewards = this.drop.rewards || [];
             let config = Game._.find(this.brandConfigs, { Id: this.rewardId });
             let view = this.brandViews[this.clickIndex];
             view.Init(this.clickIndex, config.Head, config.Name, this.onBrandClick.bind(this));
@@ -238,8 +240,46 @@ cc.Class({
         // if (config.Dialogue != 0) {
         //     Game.GameController.ShowDialogue(this.dialogueNode, config.Dialogue)
         // }
-        let node = null;
-        let view = null;
+        //
+        if (this.drop.golds.length != 0) {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
+            Game.CurrencyModel.AddGold(this.drop.golds);
+        }
+        for (let i = 0; i < this.drop.rewards.length; i++) {
+            // Game.ProtoMsg.RewardType.BigGold
+            let reward = this.drop.rewards[i];
+            switch (reward.rewardtype) {
+                case Game.ProtoMsg.RewardType.BigGold:
+                    break;
+                case Game.ProtoMsg.RewardType.Power:
+                    break;
+                case Game.ProtoMsg.RewardType.Item:
+                    break;
+                case Game.ProtoMsg.RewardType.Favor:
+                    break;
+                case Game.ProtoMsg.RewardType.MiniGameCoin:
+                    break;
+                case Game.ProtoMsg.RewardType.Drop:
+                    break;
+                case Game.ProtoMsg.RewardType.MiniGame:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        this.node.runAction(cc.sequence([
+            cc.delayTime(0.5),
+            cc.callFunc(function () {
+                this._hideBrands();
+            }, this),
+            cc.delayTime(1.2),
+            cc.callFunc(function () {
+                Game.GuideController.NextGuide();
+                this._randBrandInfo()
+            }, this)
+        ]))
+
         switch (config.Type) {
             case Game.TurnGameDefine.REWARD_TYPE.TYPE_GOLD:
                 //金币
@@ -249,7 +289,7 @@ cc.Class({
                     alive: 0.5,
                     delay: 1
                 });
-                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
+
                 Game.CurrencyModel.AddGold(value);
                 this.node.runAction(cc.sequence([
                     cc.delayTime(0.5),

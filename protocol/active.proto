@@ -88,8 +88,23 @@ message GW2C_PushActiveRecord
 {
     repeated string records = 1;
 }
-
-//临幸
+//猜皇帝
+message C2GW_ReqGuessKingData
+{
+}
+message GW2C_AckGuessKingData
+{
+    repeated RobotPalaceData data = 1;
+}
+message C2GW_ReqGuessKing
+{
+    optional uint64 id = 1;
+}
+message GW2C_AckGuessKing
+{
+    optional uint32 result = 1;
+}
+//临幸GuessKingData
 message C2GW_ReqLuckily
 {
     optional uint32 palaceid = 1;
@@ -97,4 +112,15 @@ message C2GW_ReqLuckily
 message GW2C_AckLuckily
 {
     optional uint32 result = 1;
+}
+
+//约会
+message C2GW_ReqTryst
+{
+    optional uint32 palaceid    = 1;
+    repeated uint32 story       = 2;
+}
+message GW2C_AckTryst
+{
+    optional uint32 result      = 1;
 }
