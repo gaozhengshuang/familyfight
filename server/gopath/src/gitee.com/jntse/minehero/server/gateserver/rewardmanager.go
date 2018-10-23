@@ -43,7 +43,7 @@ func (this *RewardManager) Init(){
 
 }
 
-func (this *RewardManager) DropToUser(user *Gateuser, id uint32, reason string, notify bool) (gold []string, rets []*DropData) {
+func (this *RewardManager) DropToUser(user *GateUser, id uint32, reason string, notify bool) (gold []string, rets []*DropData) {
 	gold = make([]string, 0)
 	rewards := make([]*DropData, 0)
 	rets = make([]*DropData, 0)

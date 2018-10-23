@@ -124,6 +124,7 @@ message PalaceData
     repeated uint32 partslevel = 5;
     optional uint32 charm = 6;   
     repeated string golds = 7;
+    optional uint32 luckily = 8;
 }
 //御赐数据
 message TravelData
@@ -156,4 +157,16 @@ message Serialize {
     repeated uint32 eventids    = 7;            //开启的事件
     repeated BoxData boxs       = 8;            //掉落的箱子数量
     optional GuideData guide    = 9;
+}
+
+message RewardData
+{
+    optional uint32 rewardtype  = 1;
+    optional uint32 rewardid    = 2;
+    optional uint32 rewardvalue = 3;
+}
+message RewardsData
+{
+    repeated string golds       = 1;
+    repeated RewardData rewards = 2;
 }
