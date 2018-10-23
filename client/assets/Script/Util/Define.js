@@ -88,7 +88,10 @@ var Define = {
         START: 0,
         TENSECOND: 0,
         KICKASS: 1,
-        END: 2,
+        LUCKILY: 2,
+        TRYST: 3,
+        LINKUP: 4,
+        END: 5,
     }
 }
 

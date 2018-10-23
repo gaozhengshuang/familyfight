@@ -84,7 +84,10 @@ cc.Class({
                 Game.ResController.SetSprite(this.image_head, dialogueBase.Headpath);
             }
 
+            this.label_lovenum.string = `${this._data.luckily}`;
+            this.label_lovePercentage.string = `${this._data.luckily}%`;
             this.label_percentage.string = `第${this._data.id}章节效率提升`;
+            this.label_canLovenum.string = `临幸x${Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.LUCKILY)}`;
         }
     },
 
@@ -144,9 +147,14 @@ cc.Class({
             ]),
             cc.delayTime(this._delayTime),
             cc.callFunc(function () {
-                Game.NetWorkController.Send('msg.C2GW_ReqLuckily', {
-                    palaceid: Game.PalaceModel.GetCurPalaceId(),
-                });
+                if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.LUCKILY) < 1) {
+                    this.showTips("前去翻牌子获得游戏次数");
+                    return;
+                } else {
+                    Game.NetWorkController.Send('msg.C2GW_ReqLuckily', {
+                        palaceid: Game.PalaceModel.GetCurPalaceId(),
+                    });
+                }
             }, this),
             cc.spawn([
                 cc.moveTo(this._moveTime, this._dialogPos.x, this._dialogPos.y),
