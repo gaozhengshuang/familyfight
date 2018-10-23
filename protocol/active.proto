@@ -97,5 +97,4 @@ message C2GW_ReqLuckily
 message GW2C_AckLuckily
 {
     optional uint32 result = 1;
-    optional RewardsData rewards = 2;
 }
