@@ -28,7 +28,7 @@ type UserCurrency struct {
 }
 
 func (this *UserCurrency) Init(user *GateUser) {
-	this.minigamecoin = make([]uint32, const name = value)
+	this.minigamecoin = make([]uint32, MiniGameCoinType_End)
 	this.user = user
 }
 
