@@ -40,7 +40,7 @@ type RewardManager struct {
 }
 
 func (this *RewardManager) Init(){
-	for _, v := tbl.TRewardBase.Reward {
+	for _, v := range tbl.TRewardBase.Reward {
 		item := &DropItem{}
 		item.rewardtype = v.RewardType
 		item.rewardid = v.RewardId
