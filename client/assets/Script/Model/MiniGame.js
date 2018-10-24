@@ -2,6 +2,8 @@ let NetWorkController = require('../Controller/NetWorkController');
 let NotificationController = require('../Controller/NotificationController');
 let Tools = require('../Util/Tools');
 let Define = require('../Util/Define');
+let UIName = require('../Util/UIName');
+let ViewController = require('../Controller/ViewController');
 let ConfigController = require('../Controller/ConfigController');
 let _ = require('lodash');
 
@@ -24,6 +26,7 @@ MiniGameModel.prototype.GetGuessKingData = function () {
  */
 MiniGameModel.prototype.onGW2C_AckGuessKingData = function (msgid, data) {
     this.guessKingData = data.data;
+    ViewController.openView(UIName.UI_ACTIVEGAMEGUESSKING);
 }
 
 MiniGameModel.prototype.onGW2C_AckGuessKing = function (msgid, data) {

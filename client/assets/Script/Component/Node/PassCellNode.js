@@ -12,7 +12,7 @@ cc.Class({
     // use this for initialization
     onLoad() {
         this.animation_light.node.active = false;
-        this.animation_light.on('stop', this.onStop, this);
+        this.animation_light.on('finished', this.onFinished, this);
     },
 
     init(index, data, reload, group) {
@@ -82,7 +82,7 @@ cc.Class({
         }
     },
 
-    onStop(event) {
+    onFinished(event) {
         var state = event.detail;    // state instanceof cc.AnimationState
         var type = event.type;       // type === 'strop';
         this.animation_light.node.active = false;

@@ -28,6 +28,7 @@ cc.Class({
         shuffleTargetNode: { default: null, type: cc.Node },
         showTargetNode: { default: null, type: cc.Node },
         dialogueNode: { default: null, type: cc.Node },
+        miniGameRedSprite: { default: [], type: [cc.Sprite] },
         miniGameCoinLabel: { default: [], type: [cc.Label] },
 
         status: { default: BrandStatus.Status_Idle },
@@ -108,14 +109,31 @@ cc.Class({
     },
     onShakeEnd: function () {
         if (this.status == BrandStatus.Status_Shaking) {
-            this._changeStatus(BrandStatus.Status_ShakeEnd)
+            this._changeStatus(BrandStatus.Status_ShakeEnd);
         }
     },
     updateMiniGameCoin: function () {
-        for (let i = 0; i < this.miniGameCoinLabel.length; i++) {
+        for (let i = 0; i < this.miniGameRedSprite.length; i++) {       //临时写法，后面功能确定改成单独的脚本处理 走creator配置
+            let red = this.miniGameRedSprite[i];
             let label = this.miniGameCoinLabel[i];
-            let times = Game.CurrencyModel.GetMiniGameCoin(i);
-            label.string = (times == 0 ? '' : (times + '次'));
+            let isRed = true;
+            let coin = 0;
+            switch (i) {
+                case 0:
+                    isRed = Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TENSECOND) > 0;
+                    coin = Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TENSECOND);
+                    break;
+                case 1:
+                    isRed = Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.KICKASS) > 0;
+                    coin = Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.KICKASS);
+                    break;
+                case 2:
+                    isRed = Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.LINKUP) > 0;
+                    coin = Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.LINKUP);
+                    break;
+            }
+            red.node.active = isRed;
+            label.string = `${coin}次`;
         }
     },
     _changeStatus: function (status) {
@@ -299,7 +317,11 @@ cc.Class({
             cc.callFunc(function () {
                 Game.GuideController.NextGuide();
                 if (minigame != -1) {
-                    this.openView(Game.Define.ACTIVEGAMEUINAME[minigame]);
+                    if (minigame == 2) {
+                        Game.NetWorkController.Send('msg.C2GW_ReqGuessKingData', {});
+                    } else {
+                        this.openView(Game.Define.ACTIVEGAMEUINAME[minigame]);
+                    }
                 }
                 this._randBrandInfo()
             }, this)

@@ -11,6 +11,7 @@ cc.Class({
         label_guessName: { default: null, type: cc.Label },
         label_guessGold: { default: null, type: cc.Label },
         label_noguessGold: { default: null, type: cc.Label },
+        label_dailogue: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -34,10 +35,29 @@ cc.Class({
     },
 
     updateView() {
-        
+        this.label_dailogue.string = "猜猜朕藏在哪个宫？";
+        this.tip_show.active = true;
+        this.tip_guess.active = false;
+        this.tip_noguess.active = false;
     },
 
     ackGuessKing(data) {
+        if (data.result == 0) {
+            let guessData = Game.MiniGameModel.GetGuessKingData()[data.index];
+            if (data.hit) {
+                this.label_dailogue.string = "恭喜你，猜中了！";
+                this.label_guessName.string = guessData.name;
+                this.label_guessGold.string = Game.Tools.UnitConvert(Game.RewardController.GetLastReward().golds);
+            } else {
+                this.label_dailogue.string = "很遗憾，没有猜中！";
+                this.label_noguessGold.string = Game.Tools.UnitConvert(Game.RewardController.GetLastReward().golds);
+            }
+            this.tip_guess.active = data.hit;
+            this.tip_noguess.active = !data.hit;
+        }
 
+        setTimeout(function () {
+            this.onClose();
+        }.bind(this), 2000);
     }
 });

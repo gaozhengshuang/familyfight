@@ -10,6 +10,12 @@ cc.Class({
         button_levelup: { default: null, type: cc.Button },
         label_goldnum: { default: null, type: cc.Label },
         label_charmNum: { default: null, type: cc.Label },
+        animation_levelup: { default: null, type: cc.Animation }
+    },
+
+    onLoad() {
+        this.animation_levelup.node.active = false;
+        this.animation_levelup.on('finished', this.onFinished, this);
     },
 
     onEnable() {
@@ -57,8 +63,17 @@ cc.Class({
             });
 
             Game.CurrencyModel.SubtractGold(this.palacePartBase.Cost);
+            
+            this.animation_levelup.node.active = true;
+            this.animation_levelup.play("levelup");
         } else {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, "金币不足哟!");
         }
     },
+
+    onFinished(event) {
+        var state = event.detail;    // state instanceof cc.AnimationState
+        var type = event.type;       // type === 'strop';
+        this.animation_levelup.node.active = false;
+    }
 });

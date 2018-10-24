@@ -10,6 +10,7 @@ cc.Class({
         label_handbookUnlock: { default: null, type: cc.Label },
         label_randomxUnlock: { default: null, type: cc.Label },
         label_randomxNum: { default: null, type: cc.Label },
+        image_reddi: { default: null, type: cc.Sprite },
     },
 
     onLoad() {
@@ -49,7 +50,8 @@ cc.Class({
         });
         
         this.tableViewComponent.initTableView(this.palaceList.length, {array: this.palaceList, target: this});
-        this.label_randomxNum.string = `${Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST)}次`;
+
+        this.updateMiniGameCoin();
     },
 
     updateBottomButton() {
@@ -62,7 +64,8 @@ cc.Class({
         this.label_randomxUnlock.node.active = !randomxLock;
     },
 
-    updateMiniGameCoin() {
+    updateMiniGameCoin() {  
+        this.image_reddi.node.active = Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST) > 0;
         this.label_randomxNum.string = `${Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST)}次`;
     },
     
