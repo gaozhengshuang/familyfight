@@ -2,8 +2,9 @@ const Game = require('../../Game');
 const AttackStatus = {
     Status_Idle: 1,
     Status_Prepared: 2,
-    Status_Fight: 3,
-    Status_End: 4,
+    Status_WaitAttack: 3,
+    Status_Attack: 4,
+    Status_End: 5,
 };
 const PreAttackDialogues = [
     '居然敢动朕的人',
@@ -14,7 +15,7 @@ const AttackedDialogues = [
     '爱是一道光，绿的朕发慌'
 ];
 cc.Class({
-    extends: cc.Component,
+    extends: cc.GameComponent,
     properties: {
         image_master: { default: null, type: cc.Sprite },
         label_master: { default: null, type: cc.Label },
@@ -27,21 +28,46 @@ cc.Class({
         node_gettips: { default: null, type: cc.Node },
         label_targetname: { default: null, type: cc.Label },
         label_golds: { default: null, type: cc.Label },
+        node_aim: { default: null, type: cc.Node },
+        anima_attack: { default: null, type: cc.Animation },
 
         status: { default: 0 },
-        palacedata: { default: null }
+        palacedata: { default: null },
+        clickIndex: { default: 0 }
     },
     onEnable: function () {
         Game.NetWorkController.AddListener('msg.GW2C_AckAttackPalaceData', this, this.onAckAttackPalaceData);
+        Game.NetWorkController.AddListener('msg.GW2C_AckAttackPalace', this, this.onAckAttackPalace);
+        this.anima_attack.on('stop', this.onAttackPlayEnd, this);
         this._changeStatus(AttackStatus.Status_Idle);
     },
     onDisable: function () {
         Game.NetWorkController.RemoveListener('msg.GW2C_AckAttackPalaceData', this, this.onAckAttackPalaceData);
+        Game.NetWorkController.RemoveListener('msg.GW2C_AckAttackPalace', this, this.onAckAttackPalace);
+        this.anima_attack.off('stop', this.onAttackPlayEnd, this);
     },
     onAckAttackPalaceData: function (msgid, data) {
         if (this.status == AttackStatus.Status_Idle) {
             this.palacedata = data.data;
+            console.log(this.palacedata);
             this._changeStatus(AttackStatus.Status_Prepared);
+        }
+    },
+    onAckAttackPalace: function (msgid, data) {
+        if (data.result == 0 && this.status == AttackStatus.Status_WaitAttack) {
+            this._changeStatus(AttackStatus.Status_Attack);
+        }
+    },
+    onAttackPlayEnd: function () {
+        Game.RewardController.PlayLastReward(function () {
+            this._changeStatus(AttackStatus.Status_End);
+        }.bind(this));
+    },
+    onMaidClick: function (event, index) {
+        if (this.status == AttackStatus.Status_Prepared) {
+            this.clickIndex = index;
+            Game.NetWorkController.Send('msg.C2GW_ReqAttackPalace', { id: this.palacedata.id });
+            this._changeStatus(AttackStatus.Status_WaitAttack);
         }
     },
     _changeStatus: function (status) {
@@ -59,26 +85,75 @@ cc.Class({
                     }
                     this.node_ruletip.active = true;
                     this.node_gettips.active = false;
+                    this.node_aim.opacity = 0
                     Game.NetWorkController.Send('msg.C2GW_ReqAttackPalaceData', {});
                     break;
                 }
                 case AttackStatus.Status_Prepared: {
                     this.image_master.node.active = true;
-                    let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this.palacedata.id);
-                    this.image_player.spriteFrame = null;
-                    this.label_playername.string = '';
-                    for (let i = 0; i < this.images_maid.length; i++) {
-                        let maid = this.images_maid[i];
-                        maid.spriteFrame = null;
+                    let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this.palacedata.palace.id);
+                    if (palaceMapBase) {
+                        let maidBase = Game.ConfigController.GetConfigById("PalacePersonnel", palaceMapBase.Master);
+                        if (maidBase) {
+                            this.label_master.string = maidBase.Name;
+                            Game.ResController.SetSprite(this.image_master, maidBase.Path);
+                        }
+                        let masterLvUpBase = Game.PalaceModel.GetPalaceMasterLvUpBase(palaceMapBase.Master, this.palacedata.palace.level);  //主人升级相关
+                        this.label_title.string = '(' + masterLvUpBase.levelName + ')';
+                        for (let i = 0; i < palaceMapBase.Maids.length; i++) {
+                            let open = this.palacedata.palace.maids[i] || false;
+                            let maidSprite = this.images_maid[i];
+                            if (open && maidSprite != null) {
+                                let maidId = palaceMapBase.Maids[i];
+                                let curMaidBase = Game.ConfigController.GetConfigById("PalacePersonnel", maidId);
+                                Game.ResController.SetSprite(maidSprite, curMaidBase.Path);
+                            }
+                        }
+
                     }
-                    this.node_ruletip.active = true;
-                    this.node_gettips.active = false;
+                    if (this.palacedata.face != '') {
+                        Game.ResController.SetSprite(this.image_player, this.palacedata.face);
+                    }
+                    this.label_playername.string = this.palacedata.name;
+                    this.label_targetname.string = this.palacedata.name;
                     break;
                 }
-                case AttackStatus.Status_Fight: {
+                case AttackStatus.Status_WaitAttack: {
+                    //等待回消息
+                    break;
+                }
+                case AttackStatus.Status_Attack: {
+                    //播动画
+                    //
+                    this.label_dialogue.string = AttackedDialogues[Game.Tools.GetRandomInt(0, AttackedDialogues.length)];
+                    this.node_ruletip.active = false;
+                    this.node_gettips.active = true;
+                    let golds = Game._.get(Game.RewardController.GetLastReward(), 'rewards.golds', []);
+                    this.label_golds.string = Game.Tools.UnitConvert(golds);
+                    let maid = this.images_maid[this.clickIndex];
+                    let worldPos = maid.node.parent.convertToWorldSpaceAR(maid.node.position);
+                    let aimtargetPos = this.node_aim.parent.convertToNodeSpaceAR(worldPos);
+                    let animaPos = this.anima_attack.node.parent.convertToNodeSpaceAR(worldPos);
+                    this.node_aim.position = aimtargetPos;
+                    this.anima_attack.node.position = animaPos;
+                    this.node_aim.scaleX = 1.2;
+                    this.node_aim.scaleY = 1.2;
+                    this.node_aim.runAction(cc.sequence([
+                        cc.spawn([
+                            cc.fadeTo(0.5, 255),
+                            cc.scaleTo(0.5, 0.9),
+                        ]),
+                        cc.scaleTo(0.3, 1.1),
+                        cc.scaleTo(0.1, 1),
+                        cc.callFunc(function () {
+                            this.node_aim.opacity = 0;
+                            this.anima_attack.play('AttackPalace');
+                        }, this)
+                    ]));
                     break;
                 }
                 case AttackStatus.Status_End: {
+                    this.onClose();
                     break;
                 }
                 default:

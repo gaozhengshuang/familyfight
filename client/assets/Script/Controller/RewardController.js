@@ -80,16 +80,23 @@ RewardController.prototype.GetRewardIcon = function (data) {
 
 RewardController.prototype.onRewardNotify = function (msgid, data) {
     this._lastReward = data;
-    let golds = data.golds || [];
-    let rewards = data.rewards || {};
+}
+RewardController.prototype.GetLastReward = function () {
+    return this._lastReward;
+}
+RewardController.prototype.PlayLastReward = function (cb) {
+    let golds = _.get(this._lastReward, 'rewards.golds', []);
+    let rewards = _.get(this._lastReward, 'rewards.rewards', []);
+    let delay = 1;
     if (golds.length != 0) {
         NotificationController.Emit(Define.EVENT_KEY.TIP_PLAYGOLDFLY);
         CurrencyModel.AddGold(golds);
         NotificationController.Emit(Define.EVENT_KEY.TIP_REWARD, {
-            info: '<color=#ed5b5b>金币+' + Tools.UnitConvert(this.drop.golds) + '</c>',
+            info: '<color=#ed5b5b>金币+' + Tools.UnitConvert(golds) + '</c>',
             alive: 0.5,
             delay: 0.5,
         });
+        delay = 1500;
     }
     let popinfo = [];
     for (let i = 0; i < rewards.length; i++) {
@@ -100,7 +107,6 @@ RewardController.prototype.onRewardNotify = function (msgid, data) {
                 break;
             case ProtoMsg.msg.RewardType.MiniGameCoin:
                 NetWorkController.Send('msg.C2GW_ReqMiniGameCoin');
-                break;
                 break;
             default:
                 break;
@@ -114,14 +120,14 @@ RewardController.prototype.onRewardNotify = function (msgid, data) {
             });
         }
     }
-    if (popinfo.length > 0) {
-        setTimeout(function () {
-            NotificationController.Emit(Define.EVENT_KEY.TIP_SERIESPOP, popinfo);
-        }, 1000);
-    }
-}
-RewardController.prototype.GetLastReward = function () {
-    return this._lastReward
+
+    setTimeout(function () {
+        if (popinfo.length > 0) {
+            NotificationController.Emit(Define.EVENT_KEY.TIP_SERIESPOP, popinfo, cb);
+        } else {
+            Tools.InvokeCallback(cb);
+        }
+    }, delay);
 }
 
 module.exports = new RewardController();

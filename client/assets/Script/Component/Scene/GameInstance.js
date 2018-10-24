@@ -38,7 +38,7 @@ cc.Class({
             Game.ItemModel,
             Game.TravelModel,
             Game.BoxModel,
-            Game.MiniGame,
+            Game.MiniGameModel,
         ];
         this.totalCount = this.ctls.length + this.models.length;
         Game.async.waterfall([
