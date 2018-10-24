@@ -39,6 +39,7 @@ var SignBase = table.InsSignBaseTable
 var NameBase = table.InsNameBaseTable
 var TDateEventBase = table.InsTDateEventBaseTable
 var TTurnBrandBase = table.InsTTurnBrandBaseTable
+var TDateRewardBase = table.InsTDateRewardBaseTable
 var TaskBase = table.InsTaskBaseTable
 var THeadBase = table.InsTHeadBaseTable
 var ShopBase = table.InsShopBaseTable

@@ -231,6 +231,7 @@ gen.maketbl_excel('TPalacePartBase', 'palacepartbase', 'PalacePart.xlsx')
 gen.maketbl_excel('TLoveDialogueBase', 'lovedialoguebase', 'LoveDialogue.xlsx')
 gen.maketbl_excel('TRewardBase', 'rewardbase', 'Reward.xlsx')
 gen.maketbl_excel('TDateEventBase', 'dateeventbase', 'DateEvent.xlsx')
+gen.maketbl_excel('TDateRewardBase', 'daterewardbase', 'DateReward.xlsx')
 
 gen.maketbl_json('table', 'Global', 'global.json')
 gen.maketbl_json('table', 'Room', 'room.json')
