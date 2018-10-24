@@ -15,7 +15,7 @@ cc.Class({
 
     onLoad() {
         this.animation_levelup.node.active = false;
-        this.animation_levelup.on('stop', this.onStop, this);
+        this.animation_levelup.on('finished', this.onFinished, this);
     },
 
     onEnable() {
@@ -71,7 +71,7 @@ cc.Class({
         }
     },
 
-    onStop(event) {
+    onFinished(event) {
         var state = event.detail;    // state instanceof cc.AnimationState
         var type = event.type;       // type === 'strop';
         this.animation_levelup.node.active = false;
