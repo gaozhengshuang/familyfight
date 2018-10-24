@@ -1,0 +1,77 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "AttackPalace",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.7166666666666667,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "d6ea35a7-1193-4f64-abda-7ac218dab5c6"
+            }
+          },
+          {
+            "frame": 0.08333333333333333,
+            "value": {
+              "__uuid__": "f63da6ca-3f32-41a2-97e1-016e25640451"
+            }
+          },
+          {
+            "frame": 0.16666666666666666,
+            "value": {
+              "__uuid__": "caf24616-96a5-4c53-ad4f-e593d31c1487"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "4fc8d4ec-514f-4d5e-b069-b31949e73e08"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "0e1cee58-9ea8-4153-9dd7-87c5319d0b20"
+            }
+          },
+          {
+            "frame": 0.4166666666666667,
+            "value": {
+              "__uuid__": "06adde77-6753-4f34-b358-99aaaff040cb"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "f46e2e90-ea1c-40f7-ada1-8b34cdeee6b3"
+            }
+          },
+          {
+            "frame": 0.5833333333333334,
+            "value": {
+              "__uuid__": "a89abadf-fd49-41b0-a10b-4759109b600a"
+            }
+          },
+          {
+            "frame": 0.6666666666666666,
+            "value": {
+              "__uuid__": "fc8813d5-995c-4b2f-9db6-f7768ac43528"
+            }
+          },
+          {
+            "frame": 0.7,
+            "value": null
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}
