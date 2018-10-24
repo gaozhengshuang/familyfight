@@ -299,7 +299,11 @@ cc.Class({
             cc.callFunc(function () {
                 Game.GuideController.NextGuide();
                 if (minigame != -1) {
-                    this.openView(Game.Define.ACTIVEGAMEUINAME[minigame]);
+                    if (minigame == 2) {
+                        Game.NetWorkController.Send('msg.C2GW_ReqGuessKingData', {});
+                    } else {
+                        this.openView(Game.Define.ACTIVEGAMEUINAME[minigame]);
+                    }
                 }
                 this._randBrandInfo()
             }, this)

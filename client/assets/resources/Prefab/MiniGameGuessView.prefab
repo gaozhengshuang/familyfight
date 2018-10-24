@@ -1833,9 +1833,6 @@
       },
       {
         "__id__": 89
-      },
-      {
-        "__id__": 94
       }
     ],
     "_tag": -1,
@@ -2186,9 +2183,11 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceDetailView",
-    "handler": "onOpenLvUp",
+    "target": {
+      "__id__": 58
+    },
+    "component": "MiniGameGuessNode",
+    "handler": "onGuess",
     "customEventData": ""
   },
   {
@@ -2840,19 +2839,23 @@
     "_parent": {
       "__id__": 58
     },
-    "_children": [],
+    "_children": [
+      {
+        "__id__": 90
+      }
+    ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 90
+        "__id__": 93
       },
       {
-        "__id__": 91
+        "__id__": 94
       }
     ],
     "_prefab": {
-      "__id__": 93
+      "__id__": 96
     },
     "_id": "",
     "_opacity": 255,
@@ -2889,6 +2892,95 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "label_dailogue",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 89
+    },
+    "_children": [],
+    "_tag": -1,
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 91
+      }
+    ],
+    "_prefab": {
+      "__id__": 92
+    },
+    "_id": "",
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 88,
+      "g": 33,
+      "b": 10,
+      "a": 255
+    },
+    "_cascadeOpacityEnabled": true,
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 230,
+      "height": 70
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_scaleX": 1,
+    "_scaleY": 1,
+    "_position": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_localZOrder": 0,
+    "_globalZOrder": 0,
+    "_opacityModifyRGB": false,
+    "groupIndex": 0
+  },
+  {
+    "__type__": "cc.Label",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 90
+    },
+    "_enabled": true,
+    "_useOriginalSize": false,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
+    "_lineHeight": 40,
+    "_enableWrapText": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
+    "_spacingX": 0,
+    "_N$string": "总有人想勾引朕",
+    "_N$horizontalAlign": 1,
+    "_N$verticalAlign": 1,
+    "_N$fontFamily": "Arial",
+    "_N$overflow": 2
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__uuid__": "960a5d67-6448-4220-a340-c604f36113a4"
+    },
+    "fileId": "39Q3fTs+9Ds6SJdW4f5BfY",
+    "sync": false
   },
   {
     "__type__": "cc.Sprite",
@@ -2943,7 +3035,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 92
+        "__id__": 95
       }
     ],
     "_N$interactable": true,
@@ -2991,95 +3083,6 @@
     "sync": false
   },
   {
-    "__type__": "cc.Node",
-    "_name": "label_dailogue",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 58
-    },
-    "_children": [],
-    "_tag": -1,
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 95
-      }
-    ],
-    "_prefab": {
-      "__id__": 96
-    },
-    "_id": "",
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 88,
-      "g": 33,
-      "b": 10,
-      "a": 255
-    },
-    "_cascadeOpacityEnabled": true,
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 230,
-      "height": 70
-    },
-    "_rotationX": 0,
-    "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
-    "_position": {
-      "__type__": "cc.Vec2",
-      "x": 164,
-      "y": 210
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_localZOrder": 0,
-    "_globalZOrder": 0,
-    "_opacityModifyRGB": false,
-    "groupIndex": 0
-  },
-  {
-    "__type__": "cc.Label",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 94
-    },
-    "_enabled": true,
-    "_useOriginalSize": false,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
-    "_lineHeight": 40,
-    "_enableWrapText": true,
-    "_N$file": {
-      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
-    },
-    "_isSystemFontUsed": false,
-    "_spacingX": 0,
-    "_N$string": "总有人想勾引朕",
-    "_N$horizontalAlign": 1,
-    "_N$verticalAlign": 1,
-    "_N$fontFamily": "Arial",
-    "_N$overflow": 2
-  },
-  {
-    "__type__": "cc.PrefabInfo",
-    "root": {
-      "__id__": 1
-    },
-    "asset": {
-      "__uuid__": "960a5d67-6448-4220-a340-c604f36113a4"
-    },
-    "fileId": "a9EzjdFshJ9bTB+BGIbe5L",
-    "sync": false
-  },
-  {
     "__type__": "1237b3OXXhD27OFlSYrxHsW",
     "_name": "",
     "_objFlags": 0,
@@ -3099,11 +3102,14 @@
     "image_playerhead": {
       "__id__": 81
     },
+    "image_dailogue": {
+      "__id__": 93
+    },
     "label_playername": {
       "__id__": 86
     },
     "label_dailogue": {
-      "__id__": 95
+      "__id__": 91
     },
     "guessIndex": 0
   },
@@ -3137,9 +3143,6 @@
       },
       {
         "__id__": 130
-      },
-      {
-        "__id__": 135
       }
     ],
     "_tag": -1,
@@ -3490,9 +3493,11 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceDetailView",
-    "handler": "onOpenLvUp",
+    "target": {
+      "__id__": 99
+    },
+    "component": "MiniGameGuessNode",
+    "handler": "onGuess",
     "customEventData": ""
   },
   {
@@ -4144,19 +4149,23 @@
     "_parent": {
       "__id__": 99
     },
-    "_children": [],
+    "_children": [
+      {
+        "__id__": 131
+      }
+    ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 131
+        "__id__": 134
       },
       {
-        "__id__": 132
+        "__id__": 135
       }
     ],
     "_prefab": {
-      "__id__": 134
+      "__id__": 137
     },
     "_id": "",
     "_opacity": 255,
@@ -4193,6 +4202,95 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "label_dailogue",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 130
+    },
+    "_children": [],
+    "_tag": -1,
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 132
+      }
+    ],
+    "_prefab": {
+      "__id__": 133
+    },
+    "_id": "",
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 88,
+      "g": 33,
+      "b": 10,
+      "a": 255
+    },
+    "_cascadeOpacityEnabled": true,
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 230,
+      "height": 70
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_scaleX": 1,
+    "_scaleY": 1,
+    "_position": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_localZOrder": 0,
+    "_globalZOrder": 0,
+    "_opacityModifyRGB": false,
+    "groupIndex": 0
+  },
+  {
+    "__type__": "cc.Label",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 131
+    },
+    "_enabled": true,
+    "_useOriginalSize": false,
+    "_actualFontSize": 30,
+    "_fontSize": 30,
+    "_lineHeight": 40,
+    "_enableWrapText": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
+    "_spacingX": 0,
+    "_N$string": "总有人想勾引朕",
+    "_N$horizontalAlign": 1,
+    "_N$verticalAlign": 1,
+    "_N$fontFamily": "Arial",
+    "_N$overflow": 2
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__uuid__": "960a5d67-6448-4220-a340-c604f36113a4"
+    },
+    "fileId": "bdvqTgC0FBzazl7mc6jEyi",
+    "sync": false
   },
   {
     "__type__": "cc.Sprite",
@@ -4247,7 +4345,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 133
+        "__id__": 136
       }
     ],
     "_N$interactable": true,
@@ -4295,95 +4393,6 @@
     "sync": false
   },
   {
-    "__type__": "cc.Node",
-    "_name": "label_dailogue",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 99
-    },
-    "_children": [],
-    "_tag": -1,
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 136
-      }
-    ],
-    "_prefab": {
-      "__id__": 137
-    },
-    "_id": "",
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 88,
-      "g": 33,
-      "b": 10,
-      "a": 255
-    },
-    "_cascadeOpacityEnabled": true,
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 230,
-      "height": 70
-    },
-    "_rotationX": 0,
-    "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
-    "_position": {
-      "__type__": "cc.Vec2",
-      "x": 164,
-      "y": 210
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_localZOrder": 0,
-    "_globalZOrder": 0,
-    "_opacityModifyRGB": false,
-    "groupIndex": 0
-  },
-  {
-    "__type__": "cc.Label",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 135
-    },
-    "_enabled": true,
-    "_useOriginalSize": false,
-    "_actualFontSize": 30,
-    "_fontSize": 30,
-    "_lineHeight": 40,
-    "_enableWrapText": true,
-    "_N$file": {
-      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
-    },
-    "_isSystemFontUsed": false,
-    "_spacingX": 0,
-    "_N$string": "总有人想勾引朕",
-    "_N$horizontalAlign": 1,
-    "_N$verticalAlign": 1,
-    "_N$fontFamily": "Arial",
-    "_N$overflow": 2
-  },
-  {
-    "__type__": "cc.PrefabInfo",
-    "root": {
-      "__id__": 1
-    },
-    "asset": {
-      "__uuid__": "960a5d67-6448-4220-a340-c604f36113a4"
-    },
-    "fileId": "46lGqA6dxEJpdf9DQAlst2",
-    "sync": false
-  },
-  {
     "__type__": "1237b3OXXhD27OFlSYrxHsW",
     "_name": "",
     "_objFlags": 0,
@@ -4403,11 +4412,14 @@
     "image_playerhead": {
       "__id__": 122
     },
+    "image_dailogue": {
+      "__id__": 134
+    },
     "label_playername": {
       "__id__": 127
     },
     "label_dailogue": {
-      "__id__": 136
+      "__id__": 132
     },
     "guessIndex": 1
   },
@@ -4441,9 +4453,6 @@
       },
       {
         "__id__": 171
-      },
-      {
-        "__id__": 176
       }
     ],
     "_tag": -1,
@@ -4794,9 +4803,11 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceDetailView",
-    "handler": "onOpenLvUp",
+    "target": {
+      "__id__": 140
+    },
+    "component": "MiniGameGuessNode",
+    "handler": "onGuess",
     "customEventData": ""
   },
   {
@@ -5448,19 +5459,23 @@
     "_parent": {
       "__id__": 140
     },
-    "_children": [],
+    "_children": [
+      {
+        "__id__": 172
+      }
+    ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 172
+        "__id__": 175
       },
       {
-        "__id__": 173
+        "__id__": 176
       }
     ],
     "_prefab": {
-      "__id__": 175
+      "__id__": 178
     },
     "_id": "",
     "_opacity": 255,
@@ -5497,6 +5512,95 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "label_dailogue",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 171
+    },
+    "_children": [],
+    "_tag": -1,
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 173
+      }
+    ],
+    "_prefab": {
+      "__id__": 174
+    },
+    "_id": "",
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 88,
+      "g": 33,
+      "b": 10,
+      "a": 255
+    },
+    "_cascadeOpacityEnabled": true,
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 230,
+      "height": 70
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_scaleX": -1,
+    "_scaleY": -1,
+    "_position": {
+      "__type__": "cc.Vec2",
+      "x": 10.000000000000114,
+      "y": 1.0000000000000284
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_localZOrder": 0,
+    "_globalZOrder": 0,
+    "_opacityModifyRGB": false,
+    "groupIndex": 0
+  },
+  {
+    "__type__": "cc.Label",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 172
+    },
+    "_enabled": true,
+    "_useOriginalSize": false,
+    "_actualFontSize": 28,
+    "_fontSize": 30,
+    "_lineHeight": 40,
+    "_enableWrapText": true,
+    "_N$file": {
+      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
+    },
+    "_isSystemFontUsed": false,
+    "_spacingX": 0,
+    "_N$string": "哼！算你运气好。",
+    "_N$horizontalAlign": 1,
+    "_N$verticalAlign": 1,
+    "_N$fontFamily": "Arial",
+    "_N$overflow": 2
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__uuid__": "960a5d67-6448-4220-a340-c604f36113a4"
+    },
+    "fileId": "6cVDG2jNhH07zbLAwA33J6",
+    "sync": false
   },
   {
     "__type__": "cc.Sprite",
@@ -5551,7 +5655,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 174
+        "__id__": 177
       }
     ],
     "_N$interactable": true,
@@ -5599,95 +5703,6 @@
     "sync": false
   },
   {
-    "__type__": "cc.Node",
-    "_name": "label_dailogue",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 140
-    },
-    "_children": [],
-    "_tag": -1,
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 177
-      }
-    ],
-    "_prefab": {
-      "__id__": 178
-    },
-    "_id": "",
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 88,
-      "g": 33,
-      "b": 10,
-      "a": 255
-    },
-    "_cascadeOpacityEnabled": true,
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 230,
-      "height": 70
-    },
-    "_rotationX": 0,
-    "_rotationY": 0,
-    "_scaleX": 1,
-    "_scaleY": 1,
-    "_position": {
-      "__type__": "cc.Vec2",
-      "x": -167,
-      "y": 210
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_localZOrder": 0,
-    "_globalZOrder": 0,
-    "_opacityModifyRGB": false,
-    "groupIndex": 0
-  },
-  {
-    "__type__": "cc.Label",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 176
-    },
-    "_enabled": true,
-    "_useOriginalSize": false,
-    "_actualFontSize": 28,
-    "_fontSize": 30,
-    "_lineHeight": 40,
-    "_enableWrapText": true,
-    "_N$file": {
-      "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
-    },
-    "_isSystemFontUsed": false,
-    "_spacingX": 0,
-    "_N$string": "哼！算你运气好。",
-    "_N$horizontalAlign": 1,
-    "_N$verticalAlign": 1,
-    "_N$fontFamily": "Arial",
-    "_N$overflow": 2
-  },
-  {
-    "__type__": "cc.PrefabInfo",
-    "root": {
-      "__id__": 1
-    },
-    "asset": {
-      "__uuid__": "960a5d67-6448-4220-a340-c604f36113a4"
-    },
-    "fileId": "c5+Pi3TlBDL6if4Ut+g21q",
-    "sync": false
-  },
-  {
     "__type__": "1237b3OXXhD27OFlSYrxHsW",
     "_name": "",
     "_objFlags": 0,
@@ -5707,11 +5722,14 @@
     "image_playerhead": {
       "__id__": 163
     },
+    "image_dailogue": {
+      "__id__": 175
+    },
     "label_playername": {
       "__id__": 168
     },
     "label_dailogue": {
-      "__id__": 177
+      "__id__": 173
     },
     "guessIndex": 2
   },
@@ -5863,6 +5881,9 @@
     },
     "label_noguessGold": {
       "__id__": 49
+    },
+    "label_dailogue": {
+      "__id__": 182
     }
   },
   {
