@@ -47,13 +47,17 @@ cc.Class({
             if (data.hit) {
                 this.label_dailogue.string = "恭喜你，猜中了！";
                 this.label_guessName.string = guessData.name;
-                this.label_guessGold.string = `${111}`;
+                this.label_guessGold.string = Game.Tools.UnitConvert(Game.RewardController.GetLastReward().golds);
             } else {
                 this.label_dailogue.string = "很遗憾，没有猜中！";
-                this.label_noguessGold.string = `${111}`;
+                this.label_noguessGold.string = Game.Tools.UnitConvert(Game.RewardController.GetLastReward().golds);
             }
             this.tip_guess.active = data.hit;
             this.tip_noguess.active = !data.hit;
         }
+
+        setTimeout(function () {
+            this.onClose();
+        }.bind(this), 2000);
     }
 });
