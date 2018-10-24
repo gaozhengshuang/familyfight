@@ -140,9 +140,9 @@ cc.Class({
             }
             if (this._selIds.length == this._maxStep) {
                 this.node_back.active = true;
-                Game.NetWorkController.Send('msg.C2GW_ReqLuckily', {
+                Game.NetWorkController.Send('msg.C2GW_ReqTryst', {
                     palaceid: Game.PalaceModel.GetCurPalaceId(),
-                    story: this._selIds
+                    key: this._selIds[0] << 20 | this._selIds[1] << 10 | this._selIds[2]
                 });
             }
             this.updateDialog();
