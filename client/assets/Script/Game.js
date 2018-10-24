@@ -33,6 +33,7 @@ let Game = {
     ItemModel: require('./Model/Item'),
     TravelModel: require('./Model/Travel'),
     BoxModel: require('./Model/Box'),
+    MiniGameModel: require('./Model/MiniGame'),
 
     GameInstance: null
 };
