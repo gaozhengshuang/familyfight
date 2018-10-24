@@ -54,6 +54,7 @@ var Define = {
         TRAVELDATA_UPDATE: '1100',
         EVENTDATA_UPDATE: '1101',
         SUPPLYPREPARE_ACK: '1102',
+        GUESSKING_ACK: '1103',
     },
     DATA_KEY: {
         HISTORY_PHONE: '1',

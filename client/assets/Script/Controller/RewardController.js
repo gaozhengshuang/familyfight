@@ -10,6 +10,7 @@ const NetWorkController = require('./NetWorkController');
 const NotificationController = require('./NotificationController');
 
 let RewardController = function () {
+    this._lastReward = null;
 };
 /**
  * 
@@ -78,6 +79,7 @@ RewardController.prototype.GetRewardIcon = function (data) {
 }
 
 RewardController.prototype.onRewardNotify = function (msgid, data) {
+    this._lastReward = data;
     let golds = data.golds || [];
     let rewards = data.rewards || {};
     if (golds.length != 0) {
@@ -113,8 +115,13 @@ RewardController.prototype.onRewardNotify = function (msgid, data) {
         }
     }
     if (popinfo.length > 0) {
-        NotificationController.Emit(Define.EVENT_KEY.TIP_SERIESPOP, popinfo);
+        setTimeout(function () {
+            NotificationController.Emit(Define.EVENT_KEY.TIP_SERIESPOP, popinfo);
+        }, 1000);
     }
+}
+RewardController.prototype.GetLastReward = function () {
+    return this._lastReward
 }
 
 module.exports = new RewardController();
