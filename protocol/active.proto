@@ -100,6 +100,7 @@ message C2GW_ReqGuessKing
 {
     optional uint64 id          = 1;
     optional uint32 index       = 2;
+    optional bool hit           = 3;
 }
 message GW2C_AckGuessKing
 {
