@@ -49,7 +49,7 @@ func (this *RobotManager) RandomRobot(count int32) []*RobotData{
 	if count >= robotlen{
 		return this.robots
 	}
-	indexs := util.SelectRandNumbers(count, robotlen)
+	indexs := util.SelectRandNumbers(robotlen, count)
 	ret := make([]*RobotData, 0)
 	for _, v := range indexs {
 		ret = append(ret, this.robots[v])
@@ -63,7 +63,7 @@ func (this* RobotManager) GenerateRobotPool(count uint32){
 	//在线玩家中选 1/5 其他的是机器人
 	userlen := int32(len(UserMgr().ids))
 	playerCount := userlen / 5
-	indexs := util.SelectRandNumbers(playerCount, userlen)
+	indexs := util.SelectRandNumbers(userlen, playerCount)
 	for _, v := range indexs {
 		id, find := UserMgr().idwithindex[uint32(v)]
 		if find {
