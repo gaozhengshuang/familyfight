@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -4443,6 +4443,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IC2GW_ReqGuessKing
          * @property {number|Long|null} [id] C2GW_ReqGuessKing id
+         * @property {number|null} [index] C2GW_ReqGuessKing index
          */
 
         /**
@@ -4467,6 +4468,14 @@ $root.msg = (function() {
          * @instance
          */
         C2GW_ReqGuessKing.prototype.id = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * C2GW_ReqGuessKing index.
+         * @member {number} index
+         * @memberof msg.C2GW_ReqGuessKing
+         * @instance
+         */
+        C2GW_ReqGuessKing.prototype.index = 0;
 
         /**
          * Creates a new C2GW_ReqGuessKing instance using the specified properties.
@@ -4494,6 +4503,8 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.id != null && message.hasOwnProperty("id"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint64(message.id);
+            if (message.index != null && message.hasOwnProperty("index"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.index);
             return writer;
         };
 
@@ -4530,6 +4541,9 @@ $root.msg = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.id = reader.uint64();
+                    break;
+                case 2:
+                    message.index = reader.uint32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -4569,6 +4583,9 @@ $root.msg = (function() {
             if (message.id != null && message.hasOwnProperty("id"))
                 if (!$util.isInteger(message.id) && !(message.id && $util.isInteger(message.id.low) && $util.isInteger(message.id.high)))
                     return "id: integer|Long expected";
+            if (message.index != null && message.hasOwnProperty("index"))
+                if (!$util.isInteger(message.index))
+                    return "index: integer expected";
             return null;
         };
 
@@ -4593,6 +4610,8 @@ $root.msg = (function() {
                     message.id = object.id;
                 else if (typeof object.id === "object")
                     message.id = new $util.LongBits(object.id.low >>> 0, object.id.high >>> 0).toNumber(true);
+            if (object.index != null)
+                message.index = object.index >>> 0;
             return message;
         };
 
@@ -4609,17 +4628,21 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
+            if (options.defaults) {
                 if ($util.Long) {
                     var long = new $util.Long(0, 0, true);
                     object.id = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
                 } else
                     object.id = options.longs === String ? "0" : 0;
+                object.index = 0;
+            }
             if (message.id != null && message.hasOwnProperty("id"))
                 if (typeof message.id === "number")
                     object.id = options.longs === String ? String(message.id) : message.id;
                 else
                     object.id = options.longs === String ? $util.Long.prototype.toString.call(message.id) : options.longs === Number ? new $util.LongBits(message.id.low >>> 0, message.id.high >>> 0).toNumber(true) : message.id;
+            if (message.index != null && message.hasOwnProperty("index"))
+                object.index = message.index;
             return object;
         };
 
@@ -4644,6 +4667,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IGW2C_AckGuessKing
          * @property {number|null} [result] GW2C_AckGuessKing result
+         * @property {boolean|null} [hit] GW2C_AckGuessKing hit
          */
 
         /**
@@ -4668,6 +4692,14 @@ $root.msg = (function() {
          * @instance
          */
         GW2C_AckGuessKing.prototype.result = 0;
+
+        /**
+         * GW2C_AckGuessKing hit.
+         * @member {boolean} hit
+         * @memberof msg.GW2C_AckGuessKing
+         * @instance
+         */
+        GW2C_AckGuessKing.prototype.hit = false;
 
         /**
          * Creates a new GW2C_AckGuessKing instance using the specified properties.
@@ -4695,6 +4727,8 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.result != null && message.hasOwnProperty("result"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
+            if (message.hit != null && message.hasOwnProperty("hit"))
+                writer.uint32(/* id 2, wireType 0 =*/16).bool(message.hit);
             return writer;
         };
 
@@ -4731,6 +4765,9 @@ $root.msg = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.result = reader.uint32();
+                    break;
+                case 2:
+                    message.hit = reader.bool();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -4770,6 +4807,9 @@ $root.msg = (function() {
             if (message.result != null && message.hasOwnProperty("result"))
                 if (!$util.isInteger(message.result))
                     return "result: integer expected";
+            if (message.hit != null && message.hasOwnProperty("hit"))
+                if (typeof message.hit !== "boolean")
+                    return "hit: boolean expected";
             return null;
         };
 
@@ -4787,6 +4827,8 @@ $root.msg = (function() {
             var message = new $root.msg.GW2C_AckGuessKing();
             if (object.result != null)
                 message.result = object.result >>> 0;
+            if (object.hit != null)
+                message.hit = Boolean(object.hit);
             return message;
         };
 
@@ -4803,10 +4845,14 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.defaults)
+            if (options.defaults) {
                 object.result = 0;
+                object.hit = false;
+            }
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
+            if (message.hit != null && message.hasOwnProperty("hit"))
+                object.hit = message.hit;
             return object;
         };
 
@@ -5205,7 +5251,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IC2GW_ReqTryst
          * @property {number|null} [palaceid] C2GW_ReqTryst palaceid
-         * @property {Array.<number>|null} [story] C2GW_ReqTryst story
+         * @property {number|null} [key] C2GW_ReqTryst key
          */
 
         /**
@@ -5217,7 +5263,6 @@ $root.msg = (function() {
          * @param {msg.IC2GW_ReqTryst=} [properties] Properties to set
          */
         function C2GW_ReqTryst(properties) {
-            this.story = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -5233,12 +5278,12 @@ $root.msg = (function() {
         C2GW_ReqTryst.prototype.palaceid = 0;
 
         /**
-         * C2GW_ReqTryst story.
-         * @member {Array.<number>} story
+         * C2GW_ReqTryst key.
+         * @member {number} key
          * @memberof msg.C2GW_ReqTryst
          * @instance
          */
-        C2GW_ReqTryst.prototype.story = $util.emptyArray;
+        C2GW_ReqTryst.prototype.key = 0;
 
         /**
          * Creates a new C2GW_ReqTryst instance using the specified properties.
@@ -5266,9 +5311,8 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.palaceid != null && message.hasOwnProperty("palaceid"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.palaceid);
-            if (message.story != null && message.story.length)
-                for (var i = 0; i < message.story.length; ++i)
-                    writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.story[i]);
+            if (message.key != null && message.hasOwnProperty("key"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.key);
             return writer;
         };
 
@@ -5307,14 +5351,7 @@ $root.msg = (function() {
                     message.palaceid = reader.uint32();
                     break;
                 case 2:
-                    if (!(message.story && message.story.length))
-                        message.story = [];
-                    if ((tag & 7) === 2) {
-                        var end2 = reader.uint32() + reader.pos;
-                        while (reader.pos < end2)
-                            message.story.push(reader.uint32());
-                    } else
-                        message.story.push(reader.uint32());
+                    message.key = reader.uint32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -5354,13 +5391,9 @@ $root.msg = (function() {
             if (message.palaceid != null && message.hasOwnProperty("palaceid"))
                 if (!$util.isInteger(message.palaceid))
                     return "palaceid: integer expected";
-            if (message.story != null && message.hasOwnProperty("story")) {
-                if (!Array.isArray(message.story))
-                    return "story: array expected";
-                for (var i = 0; i < message.story.length; ++i)
-                    if (!$util.isInteger(message.story[i]))
-                        return "story: integer[] expected";
-            }
+            if (message.key != null && message.hasOwnProperty("key"))
+                if (!$util.isInteger(message.key))
+                    return "key: integer expected";
             return null;
         };
 
@@ -5378,13 +5411,8 @@ $root.msg = (function() {
             var message = new $root.msg.C2GW_ReqTryst();
             if (object.palaceid != null)
                 message.palaceid = object.palaceid >>> 0;
-            if (object.story) {
-                if (!Array.isArray(object.story))
-                    throw TypeError(".msg.C2GW_ReqTryst.story: array expected");
-                message.story = [];
-                for (var i = 0; i < object.story.length; ++i)
-                    message.story[i] = object.story[i] >>> 0;
-            }
+            if (object.key != null)
+                message.key = object.key >>> 0;
             return message;
         };
 
@@ -5401,17 +5429,14 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.story = [];
-            if (options.defaults)
+            if (options.defaults) {
                 object.palaceid = 0;
+                object.key = 0;
+            }
             if (message.palaceid != null && message.hasOwnProperty("palaceid"))
                 object.palaceid = message.palaceid;
-            if (message.story && message.story.length) {
-                object.story = [];
-                for (var j = 0; j < message.story.length; ++j)
-                    object.story[j] = message.story[j];
-            }
+            if (message.key != null && message.hasOwnProperty("key"))
+                object.key = message.key;
             return object;
         };
 
@@ -24726,13 +24751,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -24981,13 +25000,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
