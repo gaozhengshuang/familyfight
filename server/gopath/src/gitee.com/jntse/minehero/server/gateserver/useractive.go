@@ -408,10 +408,10 @@ func (this *GateUser) ReqGuessKingData() *msg.GW2C_AckGuessKingData {
 	return send
 }
 
-func (this *GateUser) GuessKing(id uint64, index uint32)(result uint32, hit bool){
+func (this *GateUser) GuessKing(id uint64, index uint32)(result uint32, randkey uint32){
 	rewardid := uint32(0)
-	randkey := uint32(util.RandBetween(0, int32(tbl.Common.GuessKingCount)))
-	hit = (index == randkey)
+	randkey = uint32(util.RandBetween(0, int32(tbl.Common.GuessKingCount)))
+	hit := (index == randkey)
 	if hit {
 		rewardid = uint32(tbl.Common.GuessKingWinReward)
 	} else {
@@ -442,7 +442,7 @@ func (this *GateUser) GuessKing(id uint64, index uint32)(result uint32, hit bool
 			user.SendMsg(send)
 		}
 	}
-	return 0, hit
+	return 0, randkey
 }
 //临幸
 func (this *GateUser) ReqLuckily(palaceid uint32) uint32 {

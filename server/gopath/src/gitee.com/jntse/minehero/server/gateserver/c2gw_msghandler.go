@@ -506,10 +506,10 @@ func on_C2GW_ReqGuessKing(session network.IBaseNetSession, message interface{}) 
 		session.Close()
 		return
 	}
-	result, hit := user.GuessKing(tmsg.GetId(), tmsg.GetIndex())
+	result, index := user.GuessKing(tmsg.GetId(), tmsg.GetIndex())
 	send := &msg.GW2C_AckGuessKing{}
 	send.Result = pb.Uint32(result)
-	send.Hit = pb.Bool(hit)
+	send.Index = pb.Uint32(index)
 	user.SendMsg(send)
 }
 //临幸
