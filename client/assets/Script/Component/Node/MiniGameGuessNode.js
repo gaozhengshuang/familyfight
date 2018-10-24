@@ -28,6 +28,7 @@ cc.Class({
 
     updateView() {
         Game.ResController.SetSprite(this.image_question, "Image/GameScene/Minigame/image_question");
+        this.image_dailogue.node.active = false;
 
         this._data = Game.MiniGameModel.GetGuessKingData()[this.guessIndex];
         if (this._data) {
