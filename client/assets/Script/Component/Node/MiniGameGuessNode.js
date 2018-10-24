@@ -53,7 +53,6 @@ cc.Class({
                 this.image_dailogue.node.active = false;
                 Game.ResController.SetSprite(this.image_question, "Image/GameScene/Minigame/image_noking");
             }
-            
         }
     },
 
