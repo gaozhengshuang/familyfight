@@ -53,7 +53,7 @@ cc.Class({
             this.tip_guess.active = data.hit;
             this.tip_noguess.active = !data.hit;
 
-            if (Game.RewardController.GetLastReward().golds && Game.RewardController.GetLastReward().golds > 0) {
+            if (Game.RewardController.GetLastReward().golds && Game.RewardController.GetLastReward().golds.length > 0) {
                 this.label_guessGold.string = Game.Tools.UnitConvert(Game.RewardController.GetLastReward().golds);
             }
         }
