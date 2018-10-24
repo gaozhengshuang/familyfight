@@ -31,6 +31,7 @@ cc.Class({
 
         this._data = Game.MiniGameModel.GetGuessKingData()[this.guessIndex];
         if (this._data) {
+            this.label_playername.string = this._data.name;
             let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this._data.palace.id);
             if (palaceMapBase) {
                 Game.ResController.SetSprite(this.image_card, palaceMapBase.BannerPath);
