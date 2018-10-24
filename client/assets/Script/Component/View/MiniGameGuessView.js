@@ -44,18 +44,18 @@ cc.Class({
     ackGuessKing(data) {
         if (data.result == 0) {
             let guessData = Game.MiniGameModel.GetGuessKingData()[data.index];
+            let golds = Game._.get(Game.RewardController.GetLastReward(), 'rewards.golds', []);
             if (data.hit) {
                 this.label_dailogue.string = "恭喜你，猜中了！";
                 this.label_guessName.string = guessData.name;
+                this.label_guessGold.string = Game.Tools.UnitConvert(golds);
             } else {
                 this.label_dailogue.string = "很遗憾，没有猜中！";
+                this.label_noguessGold.string = Game.Tools.UnitConvert(golds);
             }
             this.tip_guess.active = data.hit;
             this.tip_noguess.active = !data.hit;
-
-            if (Game.RewardController.GetLastReward().golds && Game.RewardController.GetLastReward().golds.length > 0) {
-                this.label_guessGold.string = Game.Tools.UnitConvert(Game.RewardController.GetLastReward().golds);
-            }
+            this.tip_show.active = false;
         }
 
         setTimeout(function () {
