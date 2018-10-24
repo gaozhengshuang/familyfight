@@ -410,7 +410,7 @@ func (this *GateUser) ReqGuessKingData() *msg.GW2C_AckGuessKingData {
 
 func (this *GateUser) GuessKing(id uint64, index uint32)(result uint32, randkey uint32){
 	rewardid := uint32(0)
-	randkey = uint32(util.RandBetween(0, int32(tbl.Common.GuessKingCount)))
+	randkey = uint32(util.RandBetween(0, int32(tbl.Common.GuessKingCount) - 1))
 	hit := (index == randkey)
 	if hit {
 		rewardid = uint32(tbl.Common.GuessKingWinReward)

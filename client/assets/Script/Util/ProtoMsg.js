@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -4667,6 +4667,7 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IGW2C_AckGuessKing
          * @property {number|null} [result] GW2C_AckGuessKing result
+         * @property {number|null} [index] GW2C_AckGuessKing index
          * @property {boolean|null} [hit] GW2C_AckGuessKing hit
          */
 
@@ -4692,6 +4693,14 @@ $root.msg = (function() {
          * @instance
          */
         GW2C_AckGuessKing.prototype.result = 0;
+
+        /**
+         * GW2C_AckGuessKing index.
+         * @member {number} index
+         * @memberof msg.GW2C_AckGuessKing
+         * @instance
+         */
+        GW2C_AckGuessKing.prototype.index = 0;
 
         /**
          * GW2C_AckGuessKing hit.
@@ -4727,8 +4736,10 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.result != null && message.hasOwnProperty("result"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
+            if (message.index != null && message.hasOwnProperty("index"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.index);
             if (message.hit != null && message.hasOwnProperty("hit"))
-                writer.uint32(/* id 2, wireType 0 =*/16).bool(message.hit);
+                writer.uint32(/* id 3, wireType 0 =*/24).bool(message.hit);
             return writer;
         };
 
@@ -4767,6 +4778,9 @@ $root.msg = (function() {
                     message.result = reader.uint32();
                     break;
                 case 2:
+                    message.index = reader.uint32();
+                    break;
+                case 3:
                     message.hit = reader.bool();
                     break;
                 default:
@@ -4807,6 +4821,9 @@ $root.msg = (function() {
             if (message.result != null && message.hasOwnProperty("result"))
                 if (!$util.isInteger(message.result))
                     return "result: integer expected";
+            if (message.index != null && message.hasOwnProperty("index"))
+                if (!$util.isInteger(message.index))
+                    return "index: integer expected";
             if (message.hit != null && message.hasOwnProperty("hit"))
                 if (typeof message.hit !== "boolean")
                     return "hit: boolean expected";
@@ -4827,6 +4844,8 @@ $root.msg = (function() {
             var message = new $root.msg.GW2C_AckGuessKing();
             if (object.result != null)
                 message.result = object.result >>> 0;
+            if (object.index != null)
+                message.index = object.index >>> 0;
             if (object.hit != null)
                 message.hit = Boolean(object.hit);
             return message;
@@ -4847,10 +4866,13 @@ $root.msg = (function() {
             var object = {};
             if (options.defaults) {
                 object.result = 0;
+                object.index = 0;
                 object.hit = false;
             }
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
+            if (message.index != null && message.hasOwnProperty("index"))
+                object.index = message.index;
             if (message.hit != null && message.hasOwnProperty("hit"))
                 object.hit = message.hit;
             return object;
@@ -24751,13 +24773,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -25006,13 +25022,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
