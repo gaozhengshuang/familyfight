@@ -349,7 +349,7 @@ func (this *GateUser) ReqAttackData() *msg.GW2C_AckAttackPalaceData {
 }
 func (this *GateUser) AttackPalace(id uint64) uint32 {
 	//成功物品
-	golds, rewards := RewardMgr().DropToUser(this, uint32(tbl.common.AttackPalaceReward), "攻击后宫奖励", true, 0)
+	golds, rewards := RewardMgr().DropToUser(this, uint32(tbl.Common.AttackPalaceReward), "攻击后宫奖励", true, 0)
 	this.SendRewardNotify(golds, rewards)
 	if this.Id() != id && id != 0 {
 		//生成记录

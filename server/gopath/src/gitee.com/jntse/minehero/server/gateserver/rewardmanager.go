@@ -77,7 +77,7 @@ func (this *RewardManager) Init(){
 	this.trystrewards = make(map[uint32]*TrystReward)
 	for _, v := range tbl.TDateRewardBase.DateReward {
 		trystreward, find := this.trystrewards[v.Level]
-		key := trystreward.Time << 20 | trystreward.Place << 10 | trystreward
+		key := v.Time << 20 | v.Place << 10 | v.Event
 		if find {
 			trystreward.rewardbyevent[key] = v.Reward
 		} else {
