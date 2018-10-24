@@ -98,20 +98,18 @@ func (this *RobotManager) GenerateRandomRobot() *RobotData {
 	robotdata.face = ""
 	robotdata.palaces = make(map[uint32]* PalaceData)
 	for _, palacetmpl := range PalaceMgr().palacetmpls {
-		if util.RandBetween(1,2) == 1 {
-			//开启了
-			palace := &PalaceData{}
-			palace.id = palacetmpl.Id
-			palace.level = 1
-			palace.maids = make([]bool, 0)
-			maidopencount := util.RandBetween(1, int32(len(palacetmpl.Maids)))
-			for i := int32(0); i < int32(len(palacetmpl.Maids)); i++ {
-				palace.maids = append(palace.maids,i < maidopencount)
-			}
-			palace.parts = make([]uint32, 0)
-			palace.golds = make([]string, 0)
-			robotdata.palaces[palacetmpl.Id] = palace
+		//开启了
+		palace := &PalaceData{}
+		palace.id = palacetmpl.Id
+		palace.level = 1
+		palace.maids = make([]bool, 0)
+		maidopencount := util.RandBetween(1, int32(len(palacetmpl.Maids)))
+		for i := int32(0); i < int32(len(palacetmpl.Maids)); i++ {
+			palace.maids = append(palace.maids,i < maidopencount)
 		}
+		palace.parts = make([]uint32, 0)
+		palace.golds = make([]string, 0)
+		robotdata.palaces[palacetmpl.Id] = palace
 	}
 	return robotdata
 }
