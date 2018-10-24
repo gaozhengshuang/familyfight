@@ -66,6 +66,10 @@ RewardController.prototype.GetRewardIcon = function (data) {
                     return 'Image/GameScene/Minigame/button_tensecond';
                 case Define.MINIGAMETYPE.KICKASS:
                     return 'Image/GameScene/Minigame/button_kickass';
+                case Define.MINIGAMETYPE.LINKUP: 
+                    return 'Image/GameScene/Minigame/button_memorycoin';
+                case Define.MINIGAMETYPE.LUCKILY:
+                    return 'Image/GameScene/Palace/button_sleep';
                 case Define.MINIGAMETYPE.TRYST:
                     return 'Image/GameScene/Palace/button_date';
                 default:
