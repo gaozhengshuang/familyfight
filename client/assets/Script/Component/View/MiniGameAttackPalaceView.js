@@ -111,9 +111,16 @@ cc.Class({
                         }
 
                     }
-                    if (this.palacedata.face != '') {
-                        Game.ResController.SetSprite(this.image_player, this.palacedata.face);
-                    }
+                    // if (this.palacedata.face != '') {
+                    //     Game.ResController.SetSprite(this.image_player, this.palacedata.face);
+                    // }
+                    Game.ResController.RandomHead(function (err, res) {
+                        if (err) {
+                            console.error('[严重错误] 加载资源失败 ' + err);
+                        } else {
+                            this.image_player.spriteFrame = res;
+                        }
+                    }.bind(this));
                     this.label_playername.string = this.palacedata.name;
                     this.label_targetname.string = this.palacedata.name;
                     break;

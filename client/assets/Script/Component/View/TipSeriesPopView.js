@@ -42,7 +42,7 @@ cc.Class({
         } else {
             let info = this.infos[this.index];
             this.nameLabel.string = info.name;
-            this.countLabel.string = info.count;
+            this.countLabel.string = '+' + info.count;
             if (info.icon == '') {
                 this.iconSprite.spriteFrame = null;
             } else {
