@@ -4,6 +4,19 @@ var ResController = function () {
     this.spriteFrames = {};
 }
 
+const HeadSprites = [
+    'Image/GameScene/headicon/901',
+    'Image/GameScene/headicon/902',
+    'Image/GameScene/headicon/903',
+    'Image/GameScene/headicon/904',
+    'Image/GameScene/headicon/905',
+    'Image/GameScene/headicon/906',
+    'Image/GameScene/headicon/907',
+    'Image/GameScene/headicon/908',
+    'Image/GameScene/headicon/909',
+    'Image/GameScene/headicon/910',
+]
+
 ResController.prototype.Init = function (cb) {
     Tools.InvokeCallback(cb);
 };
@@ -37,7 +50,7 @@ ResController.prototype.DestoryAllChildren = function (node) {
     }
 }
 
-ResController.prototype.SetSprite = function(sprite, path) {
+ResController.prototype.SetSprite = function (sprite, path) {
     this.GetSpriteFrameByName(path, function (err, res) {
         if (err) {
             console.log('[严重错误] 奖励资源加载错误 ' + err);
@@ -46,5 +59,9 @@ ResController.prototype.SetSprite = function(sprite, path) {
         }
     });
 }
+
+ResController.prototype.RandomHead = function (cb) {
+    this.GetSpriteFrameByName(HeadSprites[Tools.GetRandomInt(0, HeadSprites.length)], cb);
+};
 
 module.exports = new ResController();
