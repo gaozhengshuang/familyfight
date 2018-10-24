@@ -218,12 +218,6 @@ func (this *GateServer) Init(fileconf string) bool {
 	this.hourmonitor = hourmonitor
 
 	//
-	this.usermgr.Init()
-	this.waitpool.Init()
-	this.palacemgr.Init()
-	this.guidemgr.Init()
-	this.robotmgr.Init()
-	this.rewardmgr.Init()
 	//this.countmgr.Init()
 	//this.gamemgr.Init()
 	this.ticker1m = util.NewGameTicker(60 * time.Second, this.Handler1mTick)
@@ -234,7 +228,13 @@ func (this *GateServer) Init(fileconf string) bool {
 	this.ticker100ms.Start()
     this.runtimestamp = 0
     this.namebase = make([]*table.TNameDefine,0)
-    for _, v := range tbl.NameBase.TNameById { this.namebase = append(this.namebase, v) }
+	for _, v := range tbl.NameBase.TNameById { this.namebase = append(this.namebase, v) }
+	this.usermgr.Init()
+	this.waitpool.Init()
+	this.palacemgr.Init()
+	this.guidemgr.Init()
+	this.robotmgr.Init()
+	this.rewardmgr.Init()
 	return true
 }
 
