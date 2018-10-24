@@ -104,7 +104,7 @@ message C2GW_ReqGuessKing
 message GW2C_AckGuessKing
 {
     optional uint32 result      = 1;
-    optional bool hit           = 2;
+    optional uint32 index       = 2;
 }
 //临幸
 message C2GW_ReqLuckily
