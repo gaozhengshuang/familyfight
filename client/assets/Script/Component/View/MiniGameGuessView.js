@@ -12,6 +12,7 @@ cc.Class({
         label_guessGold: { default: null, type: cc.Label },
         label_noguessGold: { default: null, type: cc.Label },
         label_dailogue: { default: null, type: cc.Label },
+        anima_show: { default: null, type: cc.Animation }
     },
 
     onLoad() {
@@ -39,6 +40,7 @@ cc.Class({
         this.tip_show.active = true;
         this.tip_guess.active = false;
         this.tip_noguess.active = false;
+        this.anima_show.play();
     },
 
     ackGuessKing(data) {
