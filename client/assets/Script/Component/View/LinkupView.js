@@ -57,7 +57,7 @@ cc.Class({
     onStartClick: function () {
         if (this.status == LinkStatus.Status_Idle) {
             if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.LINKUP) < 1) {
-                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, '小游戏币不足');
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, '前去翻牌子获得游戏次数');
                 return;
             }
             this.maskNode.active = false;
