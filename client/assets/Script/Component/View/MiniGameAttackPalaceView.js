@@ -38,10 +38,17 @@ cc.Class({
         palacedata: { default: null },
         clickIndex: { default: 0 }
     },
+    onLoad: function(){
+        this.tipNodeY = this.anima_tip.node.y;
+    },
     onEnable: function () {
         Game.NetWorkController.AddListener('msg.GW2C_AckAttackPalaceData', this, this.onAckAttackPalaceData);
         Game.NetWorkController.AddListener('msg.GW2C_AckAttackPalace', this, this.onAckAttackPalace);
         this.anima_attack.on('stop', this.onAttackPlayEnd, this);
+        this.anima_show.on('stop', this.onShowPlayEnd, this);
+        this.anima_dialogue.node.scaleX = 0;
+        this.anima_dialogue.node.scaleY = 0;
+        this.anima_tip.node.y = this.tipNodeY;
         this._changeStatus(AttackStatus.Status_Idle);
         this.anima_show.play();
     },
@@ -49,6 +56,7 @@ cc.Class({
         Game.NetWorkController.RemoveListener('msg.GW2C_AckAttackPalaceData', this, this.onAckAttackPalaceData);
         Game.NetWorkController.RemoveListener('msg.GW2C_AckAttackPalace', this, this.onAckAttackPalace);
         this.anima_attack.off('stop', this.onAttackPlayEnd, this);
+        this.anima_show.off('stop', this.onShowPlayEnd, this);
     },
     onAckAttackPalaceData: function (msgid, data) {
         if (this.status == AttackStatus.Status_Idle) {
@@ -71,6 +79,10 @@ cc.Class({
             this._changeStatus(AttackStatus.Status_End);
         }.bind(this));
     },
+    onShowPlayEnd: function () {
+        this.anima_dialogue.play();
+        this.anima_tip.play();
+    },
     onMaidClick: function (event, index) {
         if (this.status == AttackStatus.Status_Prepared) {
             this.clickIndex = index;
@@ -87,8 +99,6 @@ cc.Class({
                     this.image_player.spriteFrame = null;
                     this.label_playername.string = '';
                     this.label_dialogue.string = PreAttackDialogues[Game.Tools.GetRandomInt(0, PreAttackDialogues.length)];
-                    this.anima_dialogue.play();
-                    this.anima_tip.play();
                     for (let i = 0; i < this.images_maid.length; i++) {
                         let maid = this.images_maid[i];
                         maid.spriteFrame = null;

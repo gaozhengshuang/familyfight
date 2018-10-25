@@ -10,6 +10,9 @@ cc.Class({
         label_reward: { default: null, type: cc.Label },
         label_name: { default: null, type: cc.Label },
         label_getnum: { default: null, type: cc.Label },
+
+        maid: { default: null },
+        shop: { default: null }
     },
 
     onLoad() {
@@ -27,31 +30,38 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEGOLD, this, this.updateBtnGold);
     },
 
-    init(index, data, reload, group) {
-        if (index >= data.array.length) {
-            this.node.active = false;
-            return;
+    init(maid, shopinfo) {
+        this.maid = maid;
+        this.shopinfo = shopinfo;
+        Game.ResController.SetSprite(this.image_maid, maid.Path);
+        this.label_name.string = maid.Name;
+        this.label_reward.string = `${Game.Tools.UnitConvert(maid.Reward)}金币/秒`;
+        if (maid.Id > Game.MaidModel.GetTopMaid()) {
+            this.image_maid.node.color = cc.Color.BLACK;
+            this.image_maid.node.opacity = 150;
+        } else {
+            this.image_maid.node.color = cc.Color.WHITE;
+            this.image_maid.node.opacity = 255;
         }
-        this.node.active = true;
-        this._target = data.target;
-        this._data = data.array[index];
-        this._index = index;
-        this.price = this._data.price;
-        this.label_getnum.string = `(已购买${this._data.times}个)`;
+        if (shopinfo == null) {
+            this.label_getnum.string = '';
+            let config = Game.ConfigController.GetConfigById('TMaidShop', maid.Id);
+            this.price = Game._.get(config, 'Price', ['0_0']);
+        } else {
 
-        let maidBase = Game.ConfigController.GetConfigById("TMaidLevel", this._data.id);
-        if (maidBase) {
-            Game.ResController.SetSprite(this.image_maid, maidBase.Path);
-            this.label_name.string = maidBase.Name;
-            this.label_reward.string = `${Game.Tools.UnitConvert(maidBase.Reward)}金币/秒`;
+            this.label_getnum.string = `(已购买${shopinfo.times}个)`;
+            this.price = shopinfo.price;
         }
         this.updateBtnGold();
     },
 
     buyShop() {
-        if (Game.CurrencyModel.CompareGold(this.price) >= 0) {
+        if (this.shopinfo == null) {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, "尚未解锁商品!");
+        }
+        else if (Game.CurrencyModel.CompareGold(this.price) >= 0) {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_SUBTRACTGOLD, this.price);
-            Game.NetWorkController.Send('msg.C2GW_ReqBuyMaid', { maidid: this._data.id });
+            Game.NetWorkController.Send('msg.C2GW_ReqBuyMaid', { maidid: this.shopinfo.id });
             Game.GuideController.NextGuide();
         } else {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, "金币不足哟!");
@@ -60,7 +70,7 @@ cc.Class({
 
     updateBtnGold() {
         this.label_gold.string = `${Game.Tools.UnitConvert(this.price)}`;
-        if (Game.CurrencyModel.CompareGold(this.price) >= 0) {
+        if (this.shopinfo != null && Game.CurrencyModel.CompareGold(this.price) >= 0) {
             Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common");
         } else {
             Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common2");

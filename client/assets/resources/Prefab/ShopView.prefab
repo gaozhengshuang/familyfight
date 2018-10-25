@@ -1614,7 +1614,9 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
+    "target": {
+      "__id__": 24
+    },
     "component": "ShopCellNode",
     "handler": "buyShop",
     "customEventData": ""
@@ -1856,7 +1858,9 @@
     },
     "label_getnum": {
       "__id__": 52
-    }
+    },
+    "maid": null,
+    "shop": null
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -2648,7 +2652,9 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
+    "target": {
+      "__id__": 57
+    },
     "component": "ShopCellNode",
     "handler": "buyShop",
     "customEventData": ""
@@ -2981,7 +2987,9 @@
     },
     "label_getnum": {
       "__id__": 85
-    }
+    },
+    "maid": null,
+    "shop": null
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -3773,7 +3781,9 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
+    "target": {
+      "__id__": 93
+    },
     "component": "ShopCellNode",
     "handler": "buyShop",
     "customEventData": ""
@@ -4106,7 +4116,9 @@
     },
     "label_getnum": {
       "__id__": 121
-    }
+    },
+    "maid": null,
+    "shop": null
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -4898,7 +4910,9 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
+    "target": {
+      "__id__": 129
+    },
     "component": "ShopCellNode",
     "handler": "buyShop",
     "customEventData": ""
@@ -5231,7 +5245,9 @@
     },
     "label_getnum": {
       "__id__": 157
-    }
+    },
+    "maid": null,
+    "shop": null
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -6023,7 +6039,9 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
+    "target": {
+      "__id__": 165
+    },
     "component": "ShopCellNode",
     "handler": "buyShop",
     "customEventData": ""
@@ -6356,7 +6374,9 @@
     },
     "label_getnum": {
       "__id__": 193
-    }
+    },
+    "maid": null,
+    "shop": null
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -7148,7 +7168,9 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
+    "target": {
+      "__id__": 201
+    },
     "component": "ShopCellNode",
     "handler": "buyShop",
     "customEventData": ""
@@ -7481,7 +7503,9 @@
     },
     "label_getnum": {
       "__id__": 229
-    }
+    },
+    "maid": null,
+    "shop": null
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -8273,7 +8297,9 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
+    "target": {
+      "__id__": 237
+    },
     "component": "ShopCellNode",
     "handler": "buyShop",
     "customEventData": ""
@@ -8606,7 +8632,9 @@
     },
     "label_getnum": {
       "__id__": 265
-    }
+    },
+    "maid": null,
+    "shop": null
   },
   {
     "__type__": "cc.PrefabInfo",
