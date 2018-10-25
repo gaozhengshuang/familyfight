@@ -321,8 +321,7 @@ cc.Class({
 
     onOpenTurnBrand(event) {
         event.stopPropagationImmediate();
-        // this.openView(Game.UIName.UI_TURNBRAND);
-        Game.NetWorkController.Send('msg.C2GW_ReqGuessKingData', {});
+        this.openView(Game.UIName.UI_TURNBRAND);
         Game.GuideController.NextGuide();
     },
 
