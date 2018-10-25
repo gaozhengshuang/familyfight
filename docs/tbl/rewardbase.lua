@@ -7,7 +7,7 @@ export var Reward : table.IRewardDefine[] = [
 		{ Id : 2, DropId : 12001, PropType : 1, Prop : 10000, RewardType : 2, RewardId : 0, RewardValue : 5 	},
 		{ Id : 3, DropId : 13001, PropType : 1, Prop : 10000, RewardType : 1, RewardId : 0, RewardValue : 2500 	},
 		{ Id : 4, DropId : 13001, PropType : 1, Prop : 5000, RewardType : 6, RewardId : 60001, RewardValue : 0 	},
-		{ Id : 5, DropId : 14001, PropType : 1, Prop : 10000, RewardType : 7, RewardId : 2, RewardValue : 0 	},
+		{ Id : 5, DropId : 14001, PropType : 1, Prop : 10000, RewardType : 7, RewardId : 2, RewardValue : 20 	},
 		{ Id : 6, DropId : 15001, PropType : 1, Prop : 10000, RewardType : 1, RewardId : 0, RewardValue : 600 	},
 		{ Id : 7, DropId : 15001, PropType : 1, Prop : 5000, RewardType : 6, RewardId : 60001, RewardValue : 0 	},
 		{ Id : 8, DropId : 16001, PropType : 1, Prop : 10000, RewardType : 1, RewardId : 0, RewardValue : 1800 	},
