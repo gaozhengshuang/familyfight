@@ -315,13 +315,15 @@ cc.Class({
 
     onOpenShopView(event) {
         event.stopPropagationImmediate();
-        this.openView(Game.UIName.UI_SHOP);
+        // this.openView(Game.UIName.UI_SHOP);
+        this.openView(Game.UIName.UI_ACTIVEGAMEATTACKPALACE);
         Game.GuideController.NextGuide();
     },
 
     onOpenTurnBrand(event) {
         event.stopPropagationImmediate();
-        this.openView(Game.UIName.UI_TURNBRAND);
+        // this.openView(Game.UIName.UI_TURNBRAND);
+        this.openView(Game.UIName.UI_ACTIVEGAMEGUESSKING);
         Game.GuideController.NextGuide();
     },
 
