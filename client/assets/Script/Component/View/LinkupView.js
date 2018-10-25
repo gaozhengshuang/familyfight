@@ -29,17 +29,6 @@ cc.Class({
         Game.NetWorkController.AddListener('msg.GW2C_RetLinkup', this, this.onRetLinkup);
     },
     onEnable: function () {
-        for (let i = 0; i < this.linkItemNodes.length; i++) {
-            let view = this.linkItemNodes[i];
-            view.StopAllAction();
-            view.SetOpacity(255);
-            view.TurnBackWithAnima(0, 0.0);
-        }
-        this.maskNode.active = true;
-        this.firstItem = null;
-        this.secondItem = null;
-        this.matchInfos = [];
-        this.status = 0;
         this._changeStatus(LinkStatus.Status_Idle);
     },
     update(dt) {
@@ -63,6 +52,10 @@ cc.Class({
     },
     onStartClick: function () {
         if (this.status == LinkStatus.Status_Idle) {
+            if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.LINKUP) < 1) {
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, '小游戏币不足');
+                return;
+            }
             this.maskNode.active = false;
             this.startTime = Game.TimeController.GetCurTime();
             this._changeStatus(LinkStatus.Status_Wait);
@@ -123,17 +116,19 @@ cc.Class({
         }
     },
     onRetLinkup: function (msgid, data) {
-        Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
-            info: '<color=#6d282d>获得金币+<color=#ed5b5b>' + Game.Tools.UnitConvert(data.gold) + '</c></c>',
-            alive: 0.5,
-            delay: 1
-        });
-        Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
-        Game.CurrencyModel.AddGold(data.gold);
+        if (data.result == 0) {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+                info: '<color=#6d282d>获得金币+<color=#ed5b5b>' + Game.Tools.UnitConvert(data.gold) + '</c></c>',
+                alive: 0.5,
+                delay: 1
+            });
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
+            Game.CurrencyModel.AddGold(data.gold);
+        }
         this.node.runAction(cc.sequence([
             cc.delayTime(2),
             cc.callFunc(function () {
-                this.onClose()
+                this._changeStatus(LinkStatus.Status_Idle);
             }, this)
         ]))
     },
@@ -142,6 +137,16 @@ cc.Class({
             this.status = status;
             switch (status) {
                 case LinkStatus.Status_Idle:
+                    for (let i = 0; i < this.linkItemNodes.length; i++) {
+                        let view = this.linkItemNodes[i];
+                        view.StopAllAction();
+                        view.SetOpacity(255);
+                        view.TurnBackWithAnima(0, 0.0);
+                    }
+                    this.maskNode.active = true;
+                    this.firstItem = null;
+                    this.secondItem = null;
+                    this.matchInfos = [];
                     this._randomItem();
                     this.countDownLabel.string = '';
                     break;

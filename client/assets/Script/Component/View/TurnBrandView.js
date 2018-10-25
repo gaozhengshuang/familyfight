@@ -332,5 +332,8 @@ cc.Class({
     },
     onOpenKickAss() {
         this.openView(Game.UIName.UI_MINIGAMEKICKASS);
+    },
+    onOpenLinkup() {
+        this.openView(Game.UIName.UI_LINKUP);
     }
 });

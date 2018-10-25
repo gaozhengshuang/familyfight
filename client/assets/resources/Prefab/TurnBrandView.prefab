@@ -6513,7 +6513,7 @@
       "__id__": 1
     },
     "component": "TurnBrandView",
-    "handler": "onOpenKickAss",
+    "handler": "onOpenLinkup",
     "customEventData": ""
   },
   {

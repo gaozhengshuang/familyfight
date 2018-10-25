@@ -542,7 +542,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 221,
+      "width": 219,
       "height": 30
     },
     "_rotationX": 0,
@@ -743,7 +743,7 @@
         "__id__": 22
       },
       {
-        "__id__": 23
+        "__id__": 24
       }
     ],
     "_tag": -1,
@@ -798,6 +798,80 @@
   },
   {
     "__type__": "cc.Node",
+    "_name": "gold_ske",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 21
+    },
+    "_children": [],
+    "_tag": -1,
+    "_active": false,
+    "_components": [
+      {
+        "__id__": 23
+      }
+    ],
+    "_prefab": null,
+    "_id": "12v9TfHSpOz4vj6dWtnl4M",
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_cascadeOpacityEnabled": true,
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 0,
+      "height": 0
+    },
+    "_rotationX": 0,
+    "_rotationY": 0,
+    "_scaleX": 0.5,
+    "_scaleY": 0.5,
+    "_position": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_localZOrder": 0,
+    "_globalZOrder": 0,
+    "_opacityModifyRGB": false,
+    "groupIndex": 0
+  },
+  {
+    "__type__": "dragonBones.ArmatureDisplay",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 22
+    },
+    "_enabled": true,
+    "_armatureName": "gold",
+    "_animationName": "",
+    "playTimes": -1,
+    "_N$dragonAsset": {
+      "__uuid__": "a3973e44-ea54-4aba-8d78-5524aef4a143"
+    },
+    "_N$dragonAtlasAsset": {
+      "__uuid__": "7195198e-42cc-48ba-9568-790d59fb3a71"
+    },
+    "_N$_defaultArmatureIndex": 0,
+    "_N$_animationIndex": 0,
+    "_N$timeScale": 1,
+    "_N$debugBones": false
+  },
+  {
+    "__type__": "cc.Node",
     "_name": "TipParentNode",
     "_objFlags": 0,
     "_parent": {
@@ -843,80 +917,6 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0
-  },
-  {
-    "__type__": "cc.Node",
-    "_name": "gold_ske",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 21
-    },
-    "_children": [],
-    "_tag": -1,
-    "_active": false,
-    "_components": [
-      {
-        "__id__": 24
-      }
-    ],
-    "_prefab": null,
-    "_id": "12v9TfHSpOz4vj6dWtnl4M",
-    "_opacity": 255,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "_cascadeOpacityEnabled": true,
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 0,
-      "height": 0
-    },
-    "_rotationX": 0,
-    "_rotationY": 0,
-    "_scaleX": 0.5,
-    "_scaleY": 0.5,
-    "_position": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_localZOrder": 0,
-    "_globalZOrder": 0,
-    "_opacityModifyRGB": false,
-    "groupIndex": 0
-  },
-  {
-    "__type__": "dragonBones.ArmatureDisplay",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 23
-    },
-    "_enabled": true,
-    "_armatureName": "gold",
-    "_animationName": "",
-    "playTimes": -1,
-    "_N$dragonAsset": {
-      "__uuid__": "a3973e44-ea54-4aba-8d78-5524aef4a143"
-    },
-    "_N$dragonAtlasAsset": {
-      "__uuid__": "7195198e-42cc-48ba-9568-790d59fb3a71"
-    },
-    "_N$_defaultArmatureIndex": 0,
-    "_N$_animationIndex": 0,
-    "_N$timeScale": 1,
-    "_N$debugBones": false
   },
   {
     "__type__": "cc.Mask",
@@ -967,7 +967,7 @@
     },
     "_enabled": true,
     "tipParentNode": {
-      "__id__": 22
+      "__id__": 24
     },
     "notifyPrefab": {
       "__uuid__": "15bf0e6a-304c-4836-9d97-b4e2049a71f5"
@@ -979,7 +979,7 @@
       "__uuid__": "9db5a8c1-9d5f-4a34-8931-18958154cd6d"
     },
     "goldFlyAnima": {
-      "__id__": 24
+      "__id__": 23
     },
     "barragePositionIndex": 0
   }
