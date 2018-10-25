@@ -249,7 +249,7 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 		return
 	}
 	for _, v := range maidconfig.UnlockShop {
-		oldshop, find := this.shop[uint32(v)]
+		_, find := this.shop[uint32(v)]
 		if !find {
 			//找不到初始化价格
 			shop := &MaidShop{}

@@ -40,7 +40,7 @@ message TMaidLevelDefine
 	optional int32 NextID = 7; // 合成后的ID
 	
 	
-	repeated int32 ShopShow = 8; // 商店显示
+	repeated int32 UnlockShop = 8; // 商店显示
 	
 	
 	optional string RoleDescribe = 9; // 角色描述
