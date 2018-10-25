@@ -62,6 +62,11 @@ cc.Class({
         }
     },
     onAttackPlayEnd: function () {
+        let golds = Game._.get(Game.RewardController.GetLastReward(), 'rewards.golds', []);
+        this.node_ruletip.active = false;
+        this.node_gettips.active = true;
+        this.label_golds.string = Game.Tools.UnitConvert(golds);
+        this.anima_tip.play();
         Game.RewardController.PlayLastReward(function () {
             this._changeStatus(AttackStatus.Status_End);
         }.bind(this));
@@ -139,11 +144,6 @@ cc.Class({
                     //
                     this.label_dialogue.string = AttackedDialogues[Game.Tools.GetRandomInt(0, AttackedDialogues.length)];
                     this.anima_dialogue.play();
-                    this.anima_tip.play();
-                    this.node_ruletip.active = false;
-                    this.node_gettips.active = true;
-                    let golds = Game._.get(Game.RewardController.GetLastReward(), 'rewards.golds', []);
-                    this.label_golds.string = Game.Tools.UnitConvert(golds);
                     let maid = this.images_maid[this.clickIndex];
                     let worldPos = maid.node.parent.convertToWorldSpaceAR(maid.node.position);
                     let aimtargetPos = this.node_aim.parent.convertToNodeSpaceAR(worldPos);
@@ -162,6 +162,7 @@ cc.Class({
                         cc.callFunc(function () {
                             this.node_aim.opacity = 0;
                             this.anima_attack.play('AttackPalace');
+
                         }, this)
                     ]));
                     break;
