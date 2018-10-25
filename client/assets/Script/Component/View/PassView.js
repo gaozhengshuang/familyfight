@@ -4,7 +4,7 @@ cc.Class({
     extends: cc.GameComponent,
 
     properties: {
-        tableView: { default: null, type: cc.Node },
+        tableView: { default: null, type: cc.tableView },
         label_chapter: { default: null, type: cc.Label },
         image_lastBtn: { default: null, type: cc.Sprite },
         image_nextBtn: { default: null, type: cc.Sprite },
@@ -83,7 +83,7 @@ cc.Class({
                     this.passList.push(info);
                 }
             }
-            this.tableView.getComponent(cc.tableView).initTableView(this.passList.length, { array: this.passList, target: this });
+            this.tableView.initTableView(this.passList.length, { array: this.passList, target: this });
         }
     },
 

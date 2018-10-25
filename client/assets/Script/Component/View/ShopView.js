@@ -4,11 +4,10 @@ cc.Class({
     extends: cc.GameComponent,
 
     properties: {
-        tableView: { default: null, type: cc.Node }
+        shopCells: { default: [], type: [require('../Node/ShopCellNode')] }
     },
 
     onLoad() {
-        this.initData();
     },
 
     update(dt) {
@@ -28,29 +27,15 @@ cc.Class({
         Game.GuideController.NextGuide();
     },
 
-    initData() {
-        this.tableViewComponent = this.tableView.getComponent(cc.tableView);
-    },
-
     initNotification() {
         Game.NotificationController.On(Game.Define.EVENT_KEY.MAID_UPDATESHOP, this, this.updateTableView);
     },
 
     initView() {
-        this._tableList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
-            return maid.id;
-        });
-        
-        this.tableViewComponent.initTableView(this._tableList.length, {array: this._tableList, target: this});
-        if (this._tableList.length > 4) {
-            this.tableViewComponent.scrollToBottom();
-        }
     },
 
     updateTableView() {
-        this._tableList = Game._.sortBy(Game.MaidModel.GetShopMaids(), function(maid) {
-            return maid.id;
-        });
-        this.tableViewComponent.reloadTableView(this._tableList.length, {array: this._tableList, target: this});
+        let pass = Game.MaidModel.curPass;
+        let maidList = Game.MaidModel.GetMaidsByPass(pass);
     },
 });

@@ -323,7 +323,7 @@ cc.Class({
     onOpenTurnBrand(event) {
         event.stopPropagationImmediate();
         // this.openView(Game.UIName.UI_TURNBRAND);
-        this.openView(Game.UIName.UI_ACTIVEGAMEGUESSKING);
+        Game.NetWorkController.Send('msg.C2GW_ReqGuessKingData', {});
         Game.GuideController.NextGuide();
     },
 
