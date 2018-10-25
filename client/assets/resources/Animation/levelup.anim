@@ -3,7 +3,7 @@
   "_name": "levelup",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 1.2666666666666666,
+  "_duration": 0.6833333333333333,
   "sample": 60,
   "speed": 1,
   "wrapMode": "1",
@@ -24,49 +24,65 @@
             }
           },
           {
-            "frame": 0.25,
+            "frame": 0.16666666666666666,
             "value": {
               "__uuid__": "1475bb22-4a96-41d4-a9aa-95996cd6a5a1"
             }
           },
           {
-            "frame": 0.4166666666666667,
+            "frame": 0.25,
             "value": {
               "__uuid__": "63af882f-7ea6-4de9-8f37-f629f6c9de48"
             }
           },
           {
-            "frame": 0.5833333333333334,
+            "frame": 0.3333333333333333,
             "value": {
               "__uuid__": "46492c6a-c4db-4255-b2ff-4def1c1b1f62"
             }
           },
           {
-            "frame": 0.75,
+            "frame": 0.4166666666666667,
             "value": {
               "__uuid__": "34df9528-18fc-4120-8e29-294cc54dac83"
             }
           },
           {
-            "frame": 0.9166666666666666,
+            "frame": 0.5,
             "value": {
               "__uuid__": "75f33cd2-312c-4fab-b323-048aba74b557"
             }
           },
           {
-            "frame": 1.0833333333333333,
+            "frame": 0.5833333333333334,
             "value": {
               "__uuid__": "845e9fa1-6fe3-4012-b041-3c3a6dde1f3d"
             }
           },
           {
-            "frame": 1.25,
+            "frame": 0.6666666666666666,
             "value": {
               "__uuid__": "991dea82-b6eb-44d6-a696-14ff9f6df3f4"
             }
           }
         ]
       }
+    },
+    "props": {
+      "opacity": [
+        {
+          "frame": 0,
+          "value": 0
+        },
+        {
+          "frame": 0.23333333333333334,
+          "value": 255
+        },
+        {
+          "frame": 0.6666666666666666,
+          "value": 200
+        }
+      ]
     }
   },
   "events": []

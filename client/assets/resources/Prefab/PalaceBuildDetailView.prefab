@@ -1643,7 +1643,7 @@
       "__id__": 54
     },
     "_id": "",
-    "_opacity": 255,
+    "_opacity": 0,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -1659,8 +1659,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 450,
-      "height": 400
+      "width": 400,
+      "height": 300
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -1669,7 +1669,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -7,
-      "y": 56
+      "y": 45
     },
     "_skewX": 0,
     "_skewY": 0,
