@@ -315,8 +315,7 @@ cc.Class({
 
     onOpenShopView(event) {
         event.stopPropagationImmediate();
-        // this.openView(Game.UIName.UI_SHOP);
-        this.openView(Game.UIName.UI_ACTIVEGAMEATTACKPALACE);
+        this.openView(Game.UIName.UI_SHOP);
         Game.GuideController.NextGuide();
     },
 
