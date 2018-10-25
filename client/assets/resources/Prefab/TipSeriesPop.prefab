@@ -252,7 +252,7 @@
       "__id__": 8
     },
     "_id": "",
-    "_opacity": 100,
+    "_opacity": 51,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -343,7 +343,7 @@
       "__id__": 11
     },
     "_id": "",
-    "_opacity": 150,
+    "_opacity": 32.385,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -434,7 +434,7 @@
       "__id__": 14
     },
     "_id": "",
-    "_opacity": 255,
+    "_opacity": 100,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -605,7 +605,9 @@
       "__id__": 5
     },
     "_enabled": true,
-    "_defaultClip": null,
+    "_defaultClip": {
+      "__uuid__": "fad257cc-262d-405f-91d2-2998637f6e8f"
+    },
     "_clips": [
       {
         "__uuid__": "fad257cc-262d-405f-91d2-2998637f6e8f"
