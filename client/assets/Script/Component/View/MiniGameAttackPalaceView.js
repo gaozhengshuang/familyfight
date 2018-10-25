@@ -30,6 +30,9 @@ cc.Class({
         label_golds: { default: null, type: cc.Label },
         node_aim: { default: null, type: cc.Node },
         anima_attack: { default: null, type: cc.Animation },
+        anima_show: { default: null, type: cc.Animation },
+        anima_dialogue: { default: null, type: cc.Animation },
+        anima_tip: { default: null, type: cc.Animation },
 
         status: { default: 0 },
         palacedata: { default: null },
@@ -40,6 +43,7 @@ cc.Class({
         Game.NetWorkController.AddListener('msg.GW2C_AckAttackPalace', this, this.onAckAttackPalace);
         this.anima_attack.on('stop', this.onAttackPlayEnd, this);
         this._changeStatus(AttackStatus.Status_Idle);
+        this.anima_show.play();
     },
     onDisable: function () {
         Game.NetWorkController.RemoveListener('msg.GW2C_AckAttackPalaceData', this, this.onAckAttackPalaceData);
@@ -78,6 +82,8 @@ cc.Class({
                     this.image_player.spriteFrame = null;
                     this.label_playername.string = '';
                     this.label_dialogue.string = PreAttackDialogues[Game.Tools.GetRandomInt(0, PreAttackDialogues.length)];
+                    this.anima_dialogue.play();
+                    this.anima_tip.play();
                     for (let i = 0; i < this.images_maid.length; i++) {
                         let maid = this.images_maid[i];
                         maid.spriteFrame = null;
@@ -132,6 +138,8 @@ cc.Class({
                     //播动画
                     //
                     this.label_dialogue.string = AttackedDialogues[Game.Tools.GetRandomInt(0, AttackedDialogues.length)];
+                    this.anima_dialogue.play();
+                    this.anima_tip.play();
                     this.node_ruletip.active = false;
                     this.node_gettips.active = true;
                     let golds = Game._.get(Game.RewardController.GetLastReward(), 'rewards.golds', []);
