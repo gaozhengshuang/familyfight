@@ -1180,6 +1180,7 @@ $root.msg = (function() {
          * Properties of a GW2C_RetLinkup.
          * @memberof msg
          * @interface IGW2C_RetLinkup
+         * @property {number|null} [result] GW2C_RetLinkup result
          * @property {Array.<string>|null} [gold] GW2C_RetLinkup gold
          */
 
@@ -1198,6 +1199,14 @@ $root.msg = (function() {
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
+
+        /**
+         * GW2C_RetLinkup result.
+         * @member {number} result
+         * @memberof msg.GW2C_RetLinkup
+         * @instance
+         */
+        GW2C_RetLinkup.prototype.result = 0;
 
         /**
          * GW2C_RetLinkup gold.
@@ -1231,9 +1240,11 @@ $root.msg = (function() {
         GW2C_RetLinkup.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
+            if (message.result != null && message.hasOwnProperty("result"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
             if (message.gold != null && message.gold.length)
                 for (var i = 0; i < message.gold.length; ++i)
-                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.gold[i]);
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.gold[i]);
             return writer;
         };
 
@@ -1269,6 +1280,9 @@ $root.msg = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
+                    message.result = reader.uint32();
+                    break;
+                case 2:
                     if (!(message.gold && message.gold.length))
                         message.gold = [];
                     message.gold.push(reader.string());
@@ -1308,6 +1322,9 @@ $root.msg = (function() {
         GW2C_RetLinkup.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
+            if (message.result != null && message.hasOwnProperty("result"))
+                if (!$util.isInteger(message.result))
+                    return "result: integer expected";
             if (message.gold != null && message.hasOwnProperty("gold")) {
                 if (!Array.isArray(message.gold))
                     return "gold: array expected";
@@ -1330,6 +1347,8 @@ $root.msg = (function() {
             if (object instanceof $root.msg.GW2C_RetLinkup)
                 return object;
             var message = new $root.msg.GW2C_RetLinkup();
+            if (object.result != null)
+                message.result = object.result >>> 0;
             if (object.gold) {
                 if (!Array.isArray(object.gold))
                     throw TypeError(".msg.GW2C_RetLinkup.gold: array expected");
@@ -1355,6 +1374,10 @@ $root.msg = (function() {
             var object = {};
             if (options.arrays || options.defaults)
                 object.gold = [];
+            if (options.defaults)
+                object.result = 0;
+            if (message.result != null && message.hasOwnProperty("result"))
+                object.result = message.result;
             if (message.gold && message.gold.length) {
                 object.gold = [];
                 for (var j = 0; j < message.gold.length; ++j)
