@@ -49,7 +49,6 @@ cc.Class({
     onAckAttackPalaceData: function (msgid, data) {
         if (this.status == AttackStatus.Status_Idle) {
             this.palacedata = data.data;
-            console.log(this.palacedata);
             this._changeStatus(AttackStatus.Status_Prepared);
         }
     },
