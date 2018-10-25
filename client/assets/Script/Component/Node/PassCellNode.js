@@ -52,7 +52,6 @@ cc.Class({
             if (this._data.Id != Game.MaidModel.GetCurPass()) {
                 Game.MaidModel.SetCurPass(this._data.Id);
     
-                Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
                 Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW);
 
                 if (this._data.Id == Game.MaidModel.GetCurPass() && this._data.Id == Game.MaidModel.GetTopPass()) {     //最高关卡给服务器发送引导需要的数据

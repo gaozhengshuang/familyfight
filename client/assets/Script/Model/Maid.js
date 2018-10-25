@@ -45,6 +45,7 @@ MaidModel.prototype.GetShopMaids = function () {
 
 MaidModel.prototype.SetCurPass = function (pass) {
     this.curPass = pass;
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEPASS);
 }
 
 MaidModel.prototype.GetCurPass = function () {
