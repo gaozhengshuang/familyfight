@@ -17,6 +17,7 @@ cc.Class({
         maskNode: { default: null, type: cc.Node },
         countDownLabel: { default: null, type: cc.Label },
         rewardTimesLabel: { default: null, type: cc.Label },
+        lastLabel: { default: null, type: cc.Label },
 
         linkInfos: { default: [] },
         status: { default: 0 },
@@ -26,10 +27,16 @@ cc.Class({
         matchInfos: { default: [] }
     },
     onLoad() {
-        Game.NetWorkController.AddListener('msg.GW2C_RetLinkup', this, this.onRetLinkup);
     },
     onEnable: function () {
+        Game.NetWorkController.AddListener('msg.GW2C_RetLinkup', this, this.onRetLinkup);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.onMiniGameCoinUpdate);
+        this.onMiniGameCoinUpdate();
         this._changeStatus(LinkStatus.Status_Idle);
+    },
+    onDisable: function () {
+        Game.NetWorkController.RemoveListener('msg.GW2C_RetLinkup', this, this.onRetLinkup);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.onMiniGameCoinUpdate);
     },
     update(dt) {
         if (this.status != LinkStatus.Status_Idle && this.status != LinkStatus.Status_End) {
@@ -46,9 +53,6 @@ cc.Class({
             //     this._changeStatus(LinkStatus.Status_End);
             // }
         }
-    },
-    onDestroy: function () {
-        Game.NetWorkController.RemoveListener('msg.GW2C_RetLinkup', this, this.onRetLinkup);
     },
     onStartClick: function () {
         if (this.status == LinkStatus.Status_Idle) {
@@ -131,6 +135,9 @@ cc.Class({
                 this._changeStatus(LinkStatus.Status_Idle);
             }, this)
         ]))
+    },
+    onMiniGameCoinUpdate: function () {
+        this.lastLabel.string = '剩余次数:' + Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.LINKUP);
     },
     _changeStatus: function (status) {
         if (this.status != status) {
