@@ -248,25 +248,19 @@ func (this *UserMaid) ChangeMaxId(user *GateUser,id uint32) {
 	if !find {
 		return
 	}
-	newShop := make(map[uint32]*MaidShop)
-	for _, v := range maidconfig.ShopShow {
+	for _, v := range maidconfig.UnlockShop {
 		oldshop, find := this.shop[uint32(v)]
 		if !find {
 			//找不到初始化价格
 			shop := &MaidShop{}
 			shop.id = uint32(v)
 			shop.times = 0
-			newShop[shop.id] = shop
-		} else {
-			// 继承老的价格
-			newShop[oldshop.id] = oldshop
+			this.shop[shop.id] = shop
 		}
 	}
 	//修改吧
 	this.maxid = id
-	this.shop = newShop
 	user.ChangeMaxLevel(uint32(maidconfig.Passlevels))
-
 	this.SynMaidShop(user)
 }
 
