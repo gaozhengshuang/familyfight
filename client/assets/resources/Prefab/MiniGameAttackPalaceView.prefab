@@ -52,7 +52,7 @@
       "__id__": 116
     },
     "_id": "",
-    "_opacity": 255,
+    "_opacity": 76.5,
     "_color": {
       "__type__": "cc.Color",
       "r": 255,
@@ -73,7 +73,7 @@
     },
     "_rotationX": 0,
     "_rotationY": 0,
-    "_scaleX": 1,
+    "_scaleX": 0.5,
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
