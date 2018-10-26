@@ -130,79 +130,57 @@ cc.Class({
     },
 
     playGoingAni(idx) {
-        if (idx < (this._maxStep - 1)) {
-            this["image_event" + idx].node.runAction(cc.sequence([
-                cc.fadeOut(this._aniTime),
+        this["image_event" + idx].node.runAction(cc.sequence([
+            cc.fadeOut(this._aniTime),
+            cc.spawn([
                 cc.delayTime(this._delayTime),
-                cc.fadeIn(this._aniTime)
-            ]));
-        } else {
-            this["image_event" + idx].node.runAction(cc.sequence([
-                cc.fadeOut(this._aniTime),
-                cc.spawn([
-                    cc.delayTime(this._delayTime),
-                    cc.callFunc(function () {
+                cc.callFunc(function () {
+                    if (idx == (this._maxStep - 1)) {
                         this.updateView();
-                    }, this),
-                ]),
-                cc.fadeIn(this._aniTime),
-                cc.callFunc(function() {
+                    }
+                }, this),
+            ]),
+            cc.fadeIn(this._aniTime),
+            cc.callFunc(function() {
+                if (idx == (this._maxStep - 1)) {
                     this.button_event0.interactable = true;
                     this.button_event1.interactable = true;
                     this.button_event2.interactable = true;
-                }, this)
-            ]));
-        }
+                }
+            }, this)
+        ]));
     },
 
     playEndAni(idx) {
-        // let _fadeOut = cc.fadeOut(this._aniTime),
-        if (idx < (this._maxStep - 1)) {
-            this["image_event" + idx].node.runAction(cc.sequence([
-                cc.fadeOut(this._aniTime),
-                cc.spawn([
-                    cc.delayTime(this._delayTime),
-                    cc.callFunc(function () {
-                        this["image_event" + idx].node.scale = 1.3;
-                        let eventInfo = Game._.find(this.dateEventList, {DateId: this._selIds[idx]});
-                        if (eventInfo) {
-                            Game.ResController.SetSprite(this["image_event" + idx], eventInfo.Datepath);
-                        }
-                    }, this),
-                ]),
-                cc.spawn([
-                    cc.scaleTo(this._aniTime, 1, 1),
-                    cc.fadeIn(this._aniTime),
-                ]),
-                cc.fadeIn(this._aniTime)
-            ]));
-        } else {
-            this["image_event" + idx].node.runAction(cc.sequence([
-                cc.fadeOut(this._aniTime),
-                cc.spawn([
-                    cc.delayTime(this._delayTime),
-                    cc.callFunc(function () {
-                        this["image_event" + idx].node.scale = 1.3;
-                        let eventInfo = Game._.find(this.dateEventList, {DateId: this._selIds[idx]});
-                        if (eventInfo) {
-                            Game.ResController.SetSprite(this["image_event" + idx], eventInfo.Datepath);
-                        }
-                    }, this),
-                ]),
-                cc.spawn([
-                    cc.scaleTo(this._aniTime, 1, 1),
-                    cc.fadeIn(this._aniTime),
-                ]),
-                cc.fadeIn(this._aniTime),
-                cc.callFunc(function () {
-                    this.node_back.active = true;
-                    Game.NetWorkController.Send('msg.C2GW_ReqTryst', {
-                        palaceid: Game.PalaceModel.GetCurPalaceId(),
-                        key: this._selIds[0] << 20 | this._selIds[1] << 10 | this._selIds[2]
-                    });
-                }, this)
-            ]));
-        }
+        let _fadeOut = cc.fadeOut(this._aniTime);
+        let _spawn1 = cc.spawn([
+            cc.delayTime(this._delayTime),
+            cc.callFunc(function () {
+                this["image_event" + idx].node.scale = 1.3;
+                let eventBase = Game._.find(this.dateEventList, {DateId: this._selIds[idx]});
+                if (eventBase) {
+                    Game.ResController.SetSprite(this["image_event" + idx], eventBase.Datepath);
+                    this["label_event" + idx].string = eventBase.DateName;
+                }
+            }, this),
+        ]);
+        let _spawn2 = cc.spawn([
+            cc.scaleTo(this._aniTime, 1, 1),
+            cc.fadeIn(this._aniTime),
+        ]);
+        let _fadeIn = cc.fadeIn(this._aniTime);
+        let _callFunc = cc.callFunc(function () {
+            if (idx == (this._maxStep - 1)) {
+                this.node_back.active = true;
+                Game.NetWorkController.Send('msg.C2GW_ReqTryst', {
+                    palaceid: Game.PalaceModel.GetCurPalaceId(),
+                    key: this._selIds[0] << 20 | this._selIds[1] << 10 | this._selIds[2]
+                });
+            }
+            
+        }, this);
+
+        this["image_event" + idx].node.runAction(cc.sequence([_fadeOut, _spawn1, _spawn2, _fadeIn, _callFunc]));
     },
 
     onGW2C_AckTryst(msgid, data) {
