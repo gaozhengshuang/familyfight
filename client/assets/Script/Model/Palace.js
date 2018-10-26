@@ -8,7 +8,7 @@ let _ = require('lodash');
 var PalaceModel = function () {
     this.curPalaceId = 0;
     this.curPalaceMaidIndex = 0;
-    this.palaceDatas = null;
+    this.palaceDatas = [];
     this.palaceTakeBack = null;
 }
 
@@ -54,7 +54,7 @@ PalaceModel.prototype.GetPalaceTakeBack = function () {
  * 消息处理接口
  */
 PalaceModel.prototype.onGW2C_AckPalaceData = function (msgid, data) {
-    this.palaceDatas = data.datas;
+    this.palaceDatas = data.datas || [];
 
     NotificationController.Emit(Define.EVENT_KEY.PALACEDATA_ACK);
 }
