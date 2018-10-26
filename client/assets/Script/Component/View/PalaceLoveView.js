@@ -93,7 +93,9 @@ cc.Class({
 
     onGW2C_AckLuckily(msgid, data) {
         if (data.result == 0) {
-            this.updateView();
+            Game.RewardController.PlayLastReward(function () {
+                this.updateView();
+            }.bind(this));
         } else {
             this.showTips("侍寝失败...");
         }
