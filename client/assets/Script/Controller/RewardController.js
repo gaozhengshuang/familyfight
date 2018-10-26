@@ -66,7 +66,7 @@ RewardController.prototype.GetRewardIcon = function (data) {
                     return 'Image/GameScene/Minigame/button_tensecond';
                 case Define.MINIGAMETYPE.KICKASS:
                     return 'Image/GameScene/Minigame/button_kickass';
-                case Define.MINIGAMETYPE.LINKUP: 
+                case Define.MINIGAMETYPE.LINKUP:
                     return 'Image/GameScene/Minigame/button_memorycoin';
                 case Define.MINIGAMETYPE.LUCKILY:
                     return 'Image/GameScene/Palace/button_sleep';
@@ -124,7 +124,9 @@ RewardController.prototype.PlayLastReward = function (cb) {
             });
         }
     }
-
+    if (golds.length == 0 && popinfo.length == 0) {
+        NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, '未获得任何奖励');
+    }
     setTimeout(function () {
         if (popinfo.length > 0) {
             NotificationController.Emit(Define.EVENT_KEY.TIP_SERIESPOP, popinfo, cb);
