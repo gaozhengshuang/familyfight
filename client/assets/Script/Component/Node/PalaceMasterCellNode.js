@@ -82,6 +82,7 @@ cc.Class({
         this._palaceData = Game.PalaceModel.GetPalaceDataById(this._data.Id);
         if (this._palaceData) {
             this.label_charmnum.string = this._palaceData.charm;
+            this.label_lovenum.string = this._palaceData.luckily;
         }
     }
 });
