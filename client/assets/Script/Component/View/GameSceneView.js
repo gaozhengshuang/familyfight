@@ -332,14 +332,22 @@ cc.Class({
     },
 
     updateEfficiency() {     //更新效率和仆人个数
-        let allincomenum = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids()).multiply(3600);
-        this.label_allincomenum.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(allincomenum));
+        let palceData = Game.PalaceModel.GetPalaceDataById(Game.MaidModel.GetCurChapter());
+        let allLuckily = 0;
+        for (let i = 0; i < Game.PalaceModel.palaceDatas.length; i ++) {
+            allLuckily += Game.PalaceModel.palaceDatas[i].luckily;
+        }
+        let allincomenum = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids());
+        allincomenum = allincomenum.multiply(100 + allLuckily);  //加成效率
+        this.label_allincomenum.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(allincomenum.multiply(36)));
 
-        let curEfficiency = Game.Tools.toBigIntMoney(Game.MaidModel.GetPassCurEfficiency(Game.MaidModel.GetCurPass())).multiply(3600);
-        this.label_curEfficiency.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(curEfficiency));
+        let curEfficiency = Game.Tools.toBigIntMoney(Game.MaidModel.GetPassCurEfficiency(Game.MaidModel.GetCurPass()));
+        curEfficiency = curEfficiency.multiply(100 + palceData.luckily);  //加成效率
+        this.label_curEfficiency.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(curEfficiency.multiply(36)));
 
-        let maxEfficiency = Game.Tools.toBigIntMoney(Game.MaidModel.GetPassMaxEfficiency(Game.MaidModel.GetCurPass())).multiply(3600);
-        this.label_maxEfficiency.string = "/" + Game.Tools.UnitConvert(Game.Tools.toLocalMoney(maxEfficiency));
+        let maxEfficiency = Game.Tools.toBigIntMoney(Game.MaidModel.GetPassMaxEfficiency(Game.MaidModel.GetCurPass()));
+        maxEfficiency = maxEfficiency.multiply(100 + palceData.luckily);  //加成效率
+        this.label_maxEfficiency.string = "/" + Game.Tools.UnitConvert(Game.Tools.toLocalMoney(maxEfficiency.multiply(36)));
 
         this.label_curMaidNum.string = `${this._playerList.length}`;
         this.label_maxMaidNum.string = '/20';
