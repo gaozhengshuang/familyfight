@@ -37,7 +37,7 @@ cc.Class({
         this.initNotification();
         this.updateView();
         this.updateBottomButton();
-        this.updateCharmOrLove();
+        this.updateCharm();
     },
 
     onDisable() {
@@ -81,7 +81,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.PALACETASK_ACK, this, this.updateGetState);
         Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEMASTERLVUP_ACK, this, this.updateLvUpBtnState);
         Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
-        Game.NotificationController.On(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharmOrLove);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharm);
     },
 
     removeNotification() {
@@ -90,7 +90,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACETASK_ACK, this, this.updateGetState);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEMASTERLVUP_ACK, this, this.updateLvUpBtnState);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
-        Game.NotificationController.Off(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharmOrLove);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharm);
     },
 
     updateView() {
@@ -207,7 +207,7 @@ cc.Class({
         this.label_sleepUnlock.node.active = !sleepLock;
     },
 
-    updateCharmOrLove() {
+    updateCharm() {
         this._data = Game.PalaceModel.GetPalaceDataById(Game.PalaceModel.GetCurPalaceId());
         this.label_maidPercentage.string = `${this._data.charm}%`;
 

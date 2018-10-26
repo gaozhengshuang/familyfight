@@ -20,11 +20,13 @@ cc.Class({
     },
 
     onDisable() {
-        Game.NotificationController.Off(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharmOrLove);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharm);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.MAKELOVE_ACK, this, this.updateLove);
     },
 
     initNotification() {
-        Game.NotificationController.On(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharmOrLove);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharm);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.MAKELOVE_ACK, this, this.updateLove);
     },
 
     init(index, data, reload, group) {
@@ -78,10 +80,16 @@ cc.Class({
         }
     },
 
-    updateCharmOrLove() {
+    updateCharm() {
         this._palaceData = Game.PalaceModel.GetPalaceDataById(this._data.Id);
         if (this._palaceData) {
             this.label_charmnum.string = this._palaceData.charm;
+        }
+    },
+
+    updateLove() {
+        this._palaceData = Game.PalaceModel.GetPalaceDataById(this._data.Id);
+        if (this._palaceData) {
             this.label_lovenum.string = this._palaceData.luckily;
         }
     }
