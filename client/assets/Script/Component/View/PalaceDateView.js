@@ -26,6 +26,7 @@ cc.Class({
         this.resetData();
         this.updateView();
         this.updateDialog();
+        this.initAni();
     },
 
     onDisable() {
@@ -51,6 +52,16 @@ cc.Class({
 
     initNotification() {
         Game.NetWorkController.AddListener('msg.GW2C_AckTryst', this, this.onGW2C_AckTryst);
+    },
+
+    initAni() {
+        this.image_event0.node.opacity = 0;
+        this.image_event1.node.opacity = 0;
+        this.image_event2.node.opacity = 0;
+
+        this.image_event0.node.runAction(cc.fadeIn(this._aniTime));
+        this.image_event1.node.runAction(cc.fadeIn(this._aniTime));
+        this.image_event2.node.runAction(cc.fadeIn(this._aniTime));
     },
 
     updateView() {
