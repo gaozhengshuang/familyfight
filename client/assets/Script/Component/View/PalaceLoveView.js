@@ -93,6 +93,8 @@ cc.Class({
 
     onGW2C_AckLuckily(msgid, data) {
         if (data.result == 0) {
+            Game.NotificationController.Emit(Game.Define.EVENT_KEY.MAKELOVE_ACK);
+
             Game.RewardController.PlayLastReward(function () {
                 this.updateView();
             }.bind(this));

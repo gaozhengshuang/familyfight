@@ -50,6 +50,7 @@ var Define = {
         GUIDE_OVER: '1016',
         UPDATE_PLAYER: '1017',
         PARTLVUP_ACK: '1018',
+        MAKELOVE_ACK: '1019',
 
         TRAVELDATA_UPDATE: '1100',
         EVENTDATA_UPDATE: '1101',
