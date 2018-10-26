@@ -10,58 +10,62 @@ cc.Class({
         image_dailogue: { default: null, type: cc.Sprite },
         label_playername: { default: null, type: cc.Label },
         label_dailogue: { default: null, type: cc.Label },
-        guessIndex: { default: 0 }
+
+        anima_dialogue: { default: null, type: cc.Animation },
+        guessIndex: { default: 0 },
+        clickFunc: { default: null }
     },
 
     onEnable() {
-        this.initNotification();
-        this.updateView();
     },
-
-    onDisable() {
-        Game.NotificationController.Off(Game.Define.EVENT_KEY.GUESSKING_ACK, this, this.ackGuessKing);
-    },
-
-    initNotification() {
-        Game.NotificationController.On(Game.Define.EVENT_KEY.GUESSKING_ACK, this, this.ackGuessKing);
-    },
-
-    updateView() {
-        Game.ResController.SetSprite(this.image_question, "Image/GameScene/Minigame/image_question");
-        this.image_dailogue.node.active = false;
-
-        this._data = Game.MiniGameModel.GetGuessKingData()[this.guessIndex];
-        if (this._data) {
-            this.label_playername.string = this._data.name;
-            let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", this._data.palace.id);
+    init(data, clickFunc) {
+        this.clickFunc = clickFunc;
+        if (data) {
+            this.node.active = true;
+            this.label_playername.string = data.name;
+            let palaceMapBase = Game.ConfigController.GetConfigById("PalaceMap", data.palace.id);
             if (palaceMapBase) {
                 Game.ResController.SetSprite(this.image_card, palaceMapBase.BannerPath);
             }
+        } else {
+            this.node.active = false;
         }
     },
-
-    ackGuessKing(data) {
-        if (data.result == 0) {
-            if (data.index == this.guessIndex) {
-                if (data.hit) {
-                    this.label_dailogue.string = "哼!算你运气好!";
-                } else {
-                    this.label_dailogue.string = "总有人想勾引朕!";
-                }
-                this.image_dailogue.node.active = true;
-                Game.ResController.SetSprite(this.image_question, "Image/GameScene/Minigame/image_king");
-            } else {
-                this.image_dailogue.node.active = false;
-                Game.ResController.SetSprite(this.image_question, "Image/GameScene/Minigame/image_noking");
-            }
-        }
-    },
-
     onGuess() {
-        Game.NetWorkController.Send("msg.C2GW_ReqGuessKing",
-        {
-            id: this._data.id,
-            index: this.guessIndex
-        })
+        Game.Tools.InvokeCallback(this.clickFunc, this.guessIndex);
     },
+
+    SetDialogue: function (dialogue, withanima) {
+        this.anima_dialogue.setCurrentTime(0, this.anima_dialogue.defaultClip.name);
+        this.label_dailogue.string = dialogue;
+        if (withanima) {
+            this.anima_dialogue.play();
+        }
+    },
+    SetQuestion: function (imgname, withanima) {
+        let duration = 0;
+        if (withanima) {
+            let scaleX = this.image_question.node.scaleX;
+            let scaleY = this.image_question.node.scaleY;
+            let action = cc.sequence([
+                cc.repeat(
+                    cc.sequence([
+                        cc.scaleTo(0.3, -scaleX, scaleY),
+                        cc.scaleTo(0.3, scaleX, scaleY),
+                    ]),
+                    4
+                ),
+                cc.fadeOut(0.05),
+                cc.callFunc(function () {
+                    Game.ResController.SetSprite(this.image_question, imgname);
+                }, this),
+                cc.fadeIn(0.05)
+            ]);
+            duration = action.getDuration();
+            this.image_question.node.runAction(action);
+        } else {
+            Game.ResController.SetSprite(this.image_question, imgname);
+        }
+        return duration;
+    }
 });
