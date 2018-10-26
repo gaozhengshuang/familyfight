@@ -154,7 +154,7 @@ cc.Class({
     playEndAni(idx) {
         let _fadeOut = cc.fadeOut(this._aniTime);
         let _spawn1 = cc.spawn([
-            cc.delayTime(this._delayTime),
+            cc.delayTime(this._delayTime + idx * 0.3),
             cc.callFunc(function () {
                 this["image_event" + idx].node.scale = 1.3;
                 let eventBase = Game._.find(this.dateEventList, {DateId: this._selIds[idx]});
