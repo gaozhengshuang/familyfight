@@ -173,7 +173,7 @@ cc.Class({
             if (idx == (this._maxStep - 1)) {
                 this.node_back.active = true;
                 Game.NetWorkController.Send('msg.C2GW_ReqTryst', {
-                    palaceid: Game.PalaceModel.GetCurPalaceId(),
+                    palaceid: this._data.id,
                     key: this._selIds[0] << 20 | this._selIds[1] << 10 | this._selIds[2]
                 });
             }
