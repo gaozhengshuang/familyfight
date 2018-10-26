@@ -8,6 +8,9 @@ cc.Class({
         image_event0: { default: null, type: cc.Sprite },
         image_event1: { default: null, type: cc.Sprite },
         image_event2: { default: null, type: cc.Sprite },
+        button_event0: { default: null, type: cc.Button },
+        button_event1: { default: null, type: cc.Button },
+        button_event2: { default: null, type: cc.Button },
         label_event0: { default: null, type: cc.Label },
         label_event1: { default: null, type: cc.Label },
         label_event2: { default: null, type: cc.Label },
@@ -46,7 +49,7 @@ cc.Class({
         this._eventNum = 3;
 
         this._data = Game.PalaceModel.palaceDatas[Math.floor(Math.random() * Game.PalaceModel.palaceDatas.length)]; //随机出一个宫殿
-
+        this.dateEventList = Game.ConfigController.GetConfig("DateEvent");
         this.node_back.active = false;
     },
 
@@ -58,6 +61,10 @@ cc.Class({
         this.image_event0.node.opacity = 0;
         this.image_event1.node.opacity = 0;
         this.image_event2.node.opacity = 0;
+
+        this.button_event0.interactable = true;
+        this.button_event1.interactable = true;
+        this.button_event2.interactable = true;
 
         this.image_event0.node.runAction(cc.fadeIn(this._aniTime));
         this.image_event1.node.runAction(cc.fadeIn(this._aniTime));
@@ -76,10 +83,10 @@ cc.Class({
             }
 
             this.eventList = [];
-            let dateEventList = Game.ConfigController.GetConfig("DateEvent");
-            for (let i = 0; i < dateEventList.length; i ++) {
-                if (dateEventList[i].Datetype == this._curStep) {
-                    this.eventList.push(dateEventList[i]);
+            
+            for (let i = 0; i < this.dateEventList.length; i ++) {
+                if (this.dateEventList[i].Datetype == this._curStep) {
+                    this.eventList.push(this.dateEventList[i]);
                 }
             }
             this.eventList = Game._.sampleSize(this.eventList, this._eventNum);
@@ -109,32 +116,99 @@ cc.Class({
     },
 
     playAni() {
-        this.image_event0.node.runAction(cc.sequence([
-            cc.fadeOut(this._aniTime),
-            cc.delayTime(this._delayTime),
-            cc.fadeIn(this._aniTime)
-        ]));
+        this.button_event0.interactable = false;
+        this.button_event1.interactable = false;
+        this.button_event2.interactable = false;
 
-        this.image_event1.node.runAction(cc.sequence([
-            cc.fadeOut(this._aniTime),
-            cc.delayTime(this._delayTime),
-            cc.fadeIn(this._aniTime)
-        ]));
+        for (let i = 0; i < this._maxStep; i ++) {
+            if (this._selIds.length < this._maxStep) {
+                this.playGoingAni(i);
+            } else {
+                this.playEndAni(i);
+            }
+        }
+    },
 
-        this.image_event2.node.runAction(cc.sequence([
-            cc.fadeOut(this._aniTime),
-            cc.spawn([
+    playGoingAni(idx) {
+        if (idx < (this._maxStep - 1)) {
+            this["image_event" + idx].node.runAction(cc.sequence([
+                cc.fadeOut(this._aniTime),
                 cc.delayTime(this._delayTime),
+                cc.fadeIn(this._aniTime)
+            ]));
+        } else {
+            this["image_event" + idx].node.runAction(cc.sequence([
+                cc.fadeOut(this._aniTime),
+                cc.spawn([
+                    cc.delayTime(this._delayTime),
+                    cc.callFunc(function () {
+                        this.updateView();
+                    }, this),
+                ]),
+                cc.fadeIn(this._aniTime),
+                cc.callFunc(function() {
+                    this.button_event0.interactable = true;
+                    this.button_event1.interactable = true;
+                    this.button_event2.interactable = true;
+                }, this)
+            ]));
+        }
+    },
+
+    playEndAni(idx) {
+        // let _fadeOut = cc.fadeOut(this._aniTime),
+        if (idx < (this._maxStep - 1)) {
+            this["image_event" + idx].node.runAction(cc.sequence([
+                cc.fadeOut(this._aniTime),
+                cc.spawn([
+                    cc.delayTime(this._delayTime),
+                    cc.callFunc(function () {
+                        this["image_event" + idx].node.scale = 1.3;
+                        let eventInfo = Game._.find(this.dateEventList, {DateId: this._selIds[idx]});
+                        if (eventInfo) {
+                            Game.ResController.SetSprite(this["image_event" + idx], eventInfo.Datepath);
+                        }
+                    }, this),
+                ]),
+                cc.spawn([
+                    cc.scaleTo(this._aniTime, 1, 1),
+                    cc.fadeIn(this._aniTime),
+                ]),
+                cc.fadeIn(this._aniTime)
+            ]));
+        } else {
+            this["image_event" + idx].node.runAction(cc.sequence([
+                cc.fadeOut(this._aniTime),
+                cc.spawn([
+                    cc.delayTime(this._delayTime),
+                    cc.callFunc(function () {
+                        this["image_event" + idx].node.scale = 1.3;
+                        let eventInfo = Game._.find(this.dateEventList, {DateId: this._selIds[idx]});
+                        if (eventInfo) {
+                            Game.ResController.SetSprite(this["image_event" + idx], eventInfo.Datepath);
+                        }
+                    }, this),
+                ]),
+                cc.spawn([
+                    cc.scaleTo(this._aniTime, 1, 1),
+                    cc.fadeIn(this._aniTime),
+                ]),
+                cc.fadeIn(this._aniTime),
                 cc.callFunc(function () {
-                    this.updateView();
-                }, this),
-            ]),
-            cc.fadeIn(this._aniTime)
-        ]));
+                    this.node_back.active = true;
+                    Game.NetWorkController.Send('msg.C2GW_ReqTryst', {
+                        palaceid: Game.PalaceModel.GetCurPalaceId(),
+                        key: this._selIds[0] << 20 | this._selIds[1] << 10 | this._selIds[2]
+                    });
+                }, this)
+            ]));
+        }
     },
 
     onGW2C_AckTryst(msgid, data) {
-        if (data.result != 0) {
+        if (data.result == 0) {
+            Game.RewardController.PlayLastReward();
+        } else {
             this.showTips("约会失败...");
         }
     },
@@ -143,19 +217,10 @@ cc.Class({
         if (this._selIds.length >= this._maxStep) {
             return;
         } else {
+            this._curStep += 1;
             this._selIds.push(this.eventList[data].DateId);
             this._selContent.push(this.eventList[data].DateName);
-            if (this._selIds.length < this._maxStep) {
-                this._curStep += 1;
-                this.playAni();
-            }
-            if (this._selIds.length == this._maxStep) {
-                this.node_back.active = true;
-                Game.NetWorkController.Send('msg.C2GW_ReqTryst', {
-                    palaceid: Game.PalaceModel.GetCurPalaceId(),
-                    key: this._selIds[0] << 20 | this._selIds[1] << 10 | this._selIds[2]
-                });
-            }
+            this.playAni();
             this.updateDialog();
         } 
     },

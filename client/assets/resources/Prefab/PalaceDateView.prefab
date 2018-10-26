@@ -2063,6 +2063,15 @@
     "image_event2": {
       "__id__": 59
     },
+    "button_event0": {
+      "__id__": 42
+    },
+    "button_event1": {
+      "__id__": 51
+    },
+    "button_event2": {
+      "__id__": 60
+    },
     "label_event0": {
       "__id__": 38
     },
