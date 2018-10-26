@@ -5474,8 +5474,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 366,
-      "height": 45
+      "width": 546,
+      "height": 80
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -5502,9 +5502,9 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 40,
-    "_fontSize": 40,
-    "_lineHeight": 45,
+    "_actualFontSize": 60,
+    "_fontSize": 60,
+    "_lineHeight": 80,
     "_enableWrapText": true,
     "_N$file": {
       "__uuid__": "3d52a373-7360-4243-92d4-4fe0f843ebb9"
