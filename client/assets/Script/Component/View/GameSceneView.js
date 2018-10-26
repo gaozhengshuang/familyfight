@@ -44,7 +44,14 @@ cc.Class({
         this.curInterval += dt;
         if (this.curInterval >= this.intervalTime) {
             this.curInterval = 0;
-            Game.CurrencyModel.AddGold(Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids()).multiply(Game.bigInteger(this.intervalTime))));
+
+            let curPassMoney = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids());
+            if (this._palceData != null) {
+                if (this._palceData.luckily != 0) {
+                    curPassMoney = curMoney.multiply(100 + this._palceData.luckily).divide(100);
+                }
+            }
+            Game.CurrencyModel.AddGold(Game.Tools.toLocalMoney(curPassMoney.multiply(Game.bigInteger(this.intervalTime))));
         }
     },
 
@@ -122,6 +129,8 @@ cc.Class({
     },
 
     updatePassBg() {
+        this._palceData = Game.PalaceModel.GetPalaceDataById(Game.MaidModel.GetCurChapter());    //当前关卡信息
+
         let passBase = Game.ConfigController.GetConfigById("PassLevels", Game.MaidModel.GetCurPass());
         if (passBase) {
             cc.loader.loadRes(passBase.MapPrefab, function (err, prefab) {
@@ -332,14 +341,26 @@ cc.Class({
     },
 
     updateEfficiency() {     //更新效率和仆人个数
-        let allincomenum = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids()).multiply(3600);
-        this.label_allincomenum.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(allincomenum));
+        let luckily = 0;
+        if (this._palceData != null) {
+            luckily = this._palceData.luckily;
+        }
 
-        let curEfficiency = Game.Tools.toBigIntMoney(Game.MaidModel.GetPassCurEfficiency(Game.MaidModel.GetCurPass())).multiply(3600);
-        this.label_curEfficiency.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(curEfficiency));
+        let allLuckily = 0;
+        for (let i = 0; i < Game.PalaceModel.palaceDatas.length; i ++) {
+            allLuckily += Game.PalaceModel.palaceDatas[i].luckily;
+        }
+        let allincomenum = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids());
+        allincomenum = allincomenum.multiply(100 + allLuckily);  //加成效率
+        this.label_allincomenum.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(allincomenum.multiply(36)));
 
-        let maxEfficiency = Game.Tools.toBigIntMoney(Game.MaidModel.GetPassMaxEfficiency(Game.MaidModel.GetCurPass())).multiply(3600);
-        this.label_maxEfficiency.string = "/" + Game.Tools.UnitConvert(Game.Tools.toLocalMoney(maxEfficiency));
+        let curEfficiency = Game.Tools.toBigIntMoney(Game.MaidModel.GetPassCurEfficiency(Game.MaidModel.GetCurPass()));
+        curEfficiency = curEfficiency.multiply(100 + luckily);  //加成效率
+        this.label_curEfficiency.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(curEfficiency.multiply(36)));
+
+        let maxEfficiency = Game.Tools.toBigIntMoney(Game.MaidModel.GetPassMaxEfficiency(Game.MaidModel.GetCurPass()));
+        maxEfficiency = maxEfficiency.multiply(100 + luckily);  //加成效率
+        this.label_maxEfficiency.string = "/" + Game.Tools.UnitConvert(Game.Tools.toLocalMoney(maxEfficiency.multiply(36)));
 
         this.label_curMaidNum.string = `${this._playerList.length}`;
         this.label_maxMaidNum.string = '/20';
