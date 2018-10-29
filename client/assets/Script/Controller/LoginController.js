@@ -26,6 +26,7 @@ LoginController.prototype.Init = function (cb) {
     NotificationController.On(Define.EVENT_KEY.CONNECT_TO_GATESERVER, this, this.onLoginedToGate);
     NotificationController.On(Define.EVENT_KEY.NET_OPEN, this, this.onNetOpen);
     NotificationController.On(Define.EVENT_KEY.NET_CLOSE, this, this.onNetClose);
+
     Tools.InvokeCallback(cb, null);
 }
 
@@ -132,9 +133,13 @@ LoginController.prototype.Update = function (dt) {
     }
 }
 
+LoginController.prototype.isOnLine = function() {
+    return this.loginedToGate;
+}
+
 LoginController.prototype._showNetFailed = function (reason) {
     console.log(new Date() + ' [断线重连] 原因 ' + reason);
-    ViewController.openView(UIName.UI_NETFAILED);
+    // ViewController.openView(UIName.UI_NETFAILED);
 }
 
 module.exports = new LoginController();
