@@ -13,6 +13,9 @@
         },
         "打包上传/外网红包正式": {
             "message": "打包上传:uploadOutTVPacketRelease"
+        },
+        "打包上传/微信分包": {
+            "message": "打包上传:uploadWechatRelease"
         }
     }
 }
