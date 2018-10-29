@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
+/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -18105,6 +18105,260 @@ $root.msg = (function() {
         return C2L_ReqLogin;
     })();
 
+    msg.C2L_ReqLoginWechat = (function() {
+
+        /**
+         * Properties of a C2L_ReqLoginWechat.
+         * @memberof msg
+         * @interface IC2L_ReqLoginWechat
+         * @property {string|null} [openid] C2L_ReqLoginWechat openid
+         * @property {string|null} [face] C2L_ReqLoginWechat face
+         * @property {string|null} [nickname] C2L_ReqLoginWechat nickname
+         * @property {string|null} [invitationcode] C2L_ReqLoginWechat invitationcode
+         */
+
+        /**
+         * Constructs a new C2L_ReqLoginWechat.
+         * @memberof msg
+         * @classdesc Represents a C2L_ReqLoginWechat.
+         * @implements IC2L_ReqLoginWechat
+         * @constructor
+         * @param {msg.IC2L_ReqLoginWechat=} [properties] Properties to set
+         */
+        function C2L_ReqLoginWechat(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2L_ReqLoginWechat openid.
+         * @member {string} openid
+         * @memberof msg.C2L_ReqLoginWechat
+         * @instance
+         */
+        C2L_ReqLoginWechat.prototype.openid = "";
+
+        /**
+         * C2L_ReqLoginWechat face.
+         * @member {string} face
+         * @memberof msg.C2L_ReqLoginWechat
+         * @instance
+         */
+        C2L_ReqLoginWechat.prototype.face = "";
+
+        /**
+         * C2L_ReqLoginWechat nickname.
+         * @member {string} nickname
+         * @memberof msg.C2L_ReqLoginWechat
+         * @instance
+         */
+        C2L_ReqLoginWechat.prototype.nickname = "";
+
+        /**
+         * C2L_ReqLoginWechat invitationcode.
+         * @member {string} invitationcode
+         * @memberof msg.C2L_ReqLoginWechat
+         * @instance
+         */
+        C2L_ReqLoginWechat.prototype.invitationcode = "";
+
+        /**
+         * Creates a new C2L_ReqLoginWechat instance using the specified properties.
+         * @function create
+         * @memberof msg.C2L_ReqLoginWechat
+         * @static
+         * @param {msg.IC2L_ReqLoginWechat=} [properties] Properties to set
+         * @returns {msg.C2L_ReqLoginWechat} C2L_ReqLoginWechat instance
+         */
+        C2L_ReqLoginWechat.create = function create(properties) {
+            return new C2L_ReqLoginWechat(properties);
+        };
+
+        /**
+         * Encodes the specified C2L_ReqLoginWechat message. Does not implicitly {@link msg.C2L_ReqLoginWechat.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2L_ReqLoginWechat
+         * @static
+         * @param {msg.IC2L_ReqLoginWechat} message C2L_ReqLoginWechat message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2L_ReqLoginWechat.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.openid != null && message.hasOwnProperty("openid"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.openid);
+            if (message.face != null && message.hasOwnProperty("face"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.face);
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.nickname);
+            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.invitationcode);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2L_ReqLoginWechat message, length delimited. Does not implicitly {@link msg.C2L_ReqLoginWechat.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2L_ReqLoginWechat
+         * @static
+         * @param {msg.IC2L_ReqLoginWechat} message C2L_ReqLoginWechat message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2L_ReqLoginWechat.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2L_ReqLoginWechat message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2L_ReqLoginWechat
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2L_ReqLoginWechat} C2L_ReqLoginWechat
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2L_ReqLoginWechat.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2L_ReqLoginWechat();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.openid = reader.string();
+                    break;
+                case 2:
+                    message.face = reader.string();
+                    break;
+                case 3:
+                    message.nickname = reader.string();
+                    break;
+                case 4:
+                    message.invitationcode = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2L_ReqLoginWechat message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2L_ReqLoginWechat
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2L_ReqLoginWechat} C2L_ReqLoginWechat
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2L_ReqLoginWechat.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2L_ReqLoginWechat message.
+         * @function verify
+         * @memberof msg.C2L_ReqLoginWechat
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2L_ReqLoginWechat.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.openid != null && message.hasOwnProperty("openid"))
+                if (!$util.isString(message.openid))
+                    return "openid: string expected";
+            if (message.face != null && message.hasOwnProperty("face"))
+                if (!$util.isString(message.face))
+                    return "face: string expected";
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                if (!$util.isString(message.nickname))
+                    return "nickname: string expected";
+            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
+                if (!$util.isString(message.invitationcode))
+                    return "invitationcode: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2L_ReqLoginWechat message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2L_ReqLoginWechat
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2L_ReqLoginWechat} C2L_ReqLoginWechat
+         */
+        C2L_ReqLoginWechat.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2L_ReqLoginWechat)
+                return object;
+            var message = new $root.msg.C2L_ReqLoginWechat();
+            if (object.openid != null)
+                message.openid = String(object.openid);
+            if (object.face != null)
+                message.face = String(object.face);
+            if (object.nickname != null)
+                message.nickname = String(object.nickname);
+            if (object.invitationcode != null)
+                message.invitationcode = String(object.invitationcode);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2L_ReqLoginWechat message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2L_ReqLoginWechat
+         * @static
+         * @param {msg.C2L_ReqLoginWechat} message C2L_ReqLoginWechat
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2L_ReqLoginWechat.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.openid = "";
+                object.face = "";
+                object.nickname = "";
+                object.invitationcode = "";
+            }
+            if (message.openid != null && message.hasOwnProperty("openid"))
+                object.openid = message.openid;
+            if (message.face != null && message.hasOwnProperty("face"))
+                object.face = message.face;
+            if (message.nickname != null && message.hasOwnProperty("nickname"))
+                object.nickname = message.nickname;
+            if (message.invitationcode != null && message.hasOwnProperty("invitationcode"))
+                object.invitationcode = message.invitationcode;
+            return object;
+        };
+
+        /**
+         * Converts this C2L_ReqLoginWechat to JSON.
+         * @function toJSON
+         * @memberof msg.C2L_ReqLoginWechat
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2L_ReqLoginWechat.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2L_ReqLoginWechat;
+    })();
+
     msg.L2C_RetLogin = (function() {
 
         /**
@@ -24796,7 +25050,13 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                object.buf = options.bytes === String ? "" : [];
+                if (options.bytes === String)
+                    object.buf = "";
+                else {
+                    object.buf = [];
+                    if (options.bytes !== Array)
+                        object.buf = $util.newBuffer(object.buf);
+                }
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -25045,7 +25305,13 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                object.buf = options.bytes === String ? "" : [];
+                if (options.bytes === String)
+                    object.buf = "";
+                else {
+                    object.buf = [];
+                    if (options.bytes !== Array)
+                        object.buf = $util.newBuffer(object.buf);
+                }
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
