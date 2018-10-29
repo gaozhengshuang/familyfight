@@ -12,6 +12,8 @@
     "RobotGenerateInterval": 900,
     "连连看金币奖励系数id": "",
     "LinkupGoldRewardRatio": 4,
+    "LinkupWinReward": 10000,
+    "LinkupLoseReward": 100001,
     "十秒小游戏失败奖励": "",
     "TenSeceondLoseRatio": {
         "Gold": 600
