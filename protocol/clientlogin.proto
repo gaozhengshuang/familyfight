@@ -14,6 +14,15 @@ message C2L_ReqLogin {
 }
 
 
+// 微信小游戏登陆
+message C2L_ReqLoginWechat {
+    optional string openid = 1;
+    optional string face = 2;
+    optional string nickname = 3;
+    optional string invitationcode = 4;
+}
+
+
 // 返回登陆验证结果
 message L2C_RetLogin {
     optional int32  result = 1;     // 0失败，1成功

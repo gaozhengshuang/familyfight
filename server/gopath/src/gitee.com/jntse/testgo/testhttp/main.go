@@ -12,8 +12,8 @@ import (
 	_"gitee.com/jntse/minehero/server/def"
 )
 
-func HttpServerResponseCallBack(w http.ResponseWriter, urlpath string, rawquery string, body []byte) {
-	fmt.Println("HttpServerResponseCallBack")
+func HTTPServerResponseCallBack(w http.ResponseWriter, urlpath string, rawquery string, body []byte) {
+	fmt.Println("HTTPServerResponseCallBack")
 
 	//
 	fmt.Printf("urlpath: %s\n", urlpath)
@@ -39,7 +39,7 @@ func main() {
 
 	//
 	httpsvr := NewHttpServer()
-	httpsvr.Init("127.0.0.1", 27010, HttpServerResponseCallBack)
+	httpsvr.Init("127.0.0.1", 27010, HTTPServerResponseCallBack)
 	if httpsvr.Start() == false {
 		return 
 	}
