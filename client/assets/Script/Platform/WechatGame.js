@@ -42,7 +42,7 @@ let WechatPlatform = _.merge(_.cloneDeep(CommonPlatform), {
                 })
             },
             function (res, anext) {
-                console.log(res.code)
+                console.log("code:", res.code)
                 wx.request({
                     url: Platform.RegisteHost,
                     data: {
@@ -54,6 +54,7 @@ let WechatPlatform = _.merge(_.cloneDeep(CommonPlatform), {
                     },
                     method: 'POST',
                     success: function (res) {
+                        console.log("wx_login: ", res.data);
                         if (res.data.status == 0) {
                             anext(null, res.data.msg);
                         } else {
