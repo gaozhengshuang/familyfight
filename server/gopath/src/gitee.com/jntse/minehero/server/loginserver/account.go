@@ -11,6 +11,7 @@ import (
 	"gitee.com/jntse/minehero/server/def"
 	"gitee.com/jntse/minehero/server/tbl"
 	"github.com/go-redis/redis"
+	"gitee.com/jntse/gotoolkit/eventqueue"
 	pb "github.com/golang/protobuf/proto"
 )
 

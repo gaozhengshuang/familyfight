@@ -120,7 +120,7 @@ func on_C2L_ReqLoginWechat(session network.IBaseNetSession, message interface{})
 			Verifykey: pb.String(md5string),
 		}
 		agent.SendMsg(sendmsg)
-		Login().CheckInSetAdd(account, session) // 避免同时登陆
+		Login().AddAuthenAccount(account, session) // 避免同时登陆
 		tm5 := util.CURTIMEUS()
 
 		log.Info("登陆验证通过，请求注册玩家到Gate sid[%d] account[%s] host[%s] 登陆耗时%dus", session.Id(), account, agent.Host(), tm5-tm1)

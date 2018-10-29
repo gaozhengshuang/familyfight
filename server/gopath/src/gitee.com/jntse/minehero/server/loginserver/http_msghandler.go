@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"gitee.com/jntse/gotoolkit/log"
+	"gitee.com/jntse/gotoolkit/net"
 	"gitee.com/jntse/gotoolkit/util"
 	"gitee.com/jntse/minehero/server/tbl"
 )
@@ -40,7 +41,7 @@ func HTTPServerResponseCallBack(w http.ResponseWriter, urlpath string, rawquery 
 	switch {
 	default:
 		// 基础解析
-		objcmd := &HttpArguBaseCmd{}
+		objcmd := &HTTPArguBaseCmd{}
 		objerror := json.Unmarshal(body, objcmd)
 		if objerror != nil {
 			log.Error("HttpServerResponseCallBack json.Unmarshal to HttpArguBaseCmd err[%s]", objerror)
@@ -69,8 +70,8 @@ func HTTPServerResponseCallBack(w http.ResponseWriter, urlpath string, rawquery 
 			for k, v := range cmdmap {
 				gmcommands[k] = v.(string)
 			}
-			errcode, errmsg := DoGMCmd(gmcommands)
-			respjson = PackHTTPResponse(errcode, errmsg)
+			DoGMCmd(gmcommands)
+			respjson = PackHTTPResponse(0, "")
 			break
 		}
 	}
