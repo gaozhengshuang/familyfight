@@ -305,9 +305,11 @@ cc.Class({
                 notifyIndex++;
             }
         }
-        if (popinfo.length > 0) {
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_SERIESPOP, popinfo);
-        }
+        setTimeout(function () {
+            if (popinfo.length > 0) {
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_SERIESPOP, popinfo);
+            }
+        }, 500 + 800 * notifyIndex);
         this.node.runAction(cc.sequence([
             cc.delayTime(0.5),
             cc.callFunc(function () {

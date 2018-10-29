@@ -70,11 +70,17 @@ cc.Class({
 
     updateBtnGold() {
         this.label_gold.string = `${Game.Tools.UnitConvert(this.price)}`;
-        if (this.shopinfo != null && Game.CurrencyModel.CompareGold(this.price) >= 0) {
-            Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common");
+        if (this.shopinfo == null) {
+            this.image_button.node.active = false;
         } else {
-            Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common2");
+            this.image_button.node.active = true;
+            if (Game.CurrencyModel.CompareGold(this.price) >= 0) {
+                Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common");
+            } else {
+                Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common2");
+            }
         }
+
     },
 
     clicked() {
