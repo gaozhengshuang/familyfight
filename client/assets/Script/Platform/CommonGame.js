@@ -7,7 +7,7 @@ let CommonPlatform = {
     WSPrefix : 'ws://',
     LoginHost : '192.168.30.206:7020',   //'210.73.214.72:7020' '192.168.30.206:7020'  LoginPort: 17002
     LoginSuffix : 'ws_handler',
-    RegisteHost : 'https://dati-service17003.giantfun.cn/',     //'http://192.168.30.202:7003/'
+    RegisteHost : 'http://192.168.30.206:18000/',     //'http://192.168.30.206:18000/'
 
     CopyToClipboard: function (obj) {
         console.log('CopyToClipboard');

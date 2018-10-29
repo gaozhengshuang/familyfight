@@ -42,6 +42,7 @@ LoginController.prototype.onGW2C_HeartBeat = function (msgid, data) {
 }
 
 LoginController.prototype.onL2C_RetLogin = function (msgid, data) {
+    console.log("onL2C_RetLogin: ", data);
     //连接gate server
     let UserModel = require('../Model/User');
     let url = Platform.WSPrefix + data.host + '/ws_handler';
