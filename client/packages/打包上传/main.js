@@ -197,6 +197,75 @@ module.exports = {
                 }
                 Editor.log('上传成功 ' + moment().format('YYYY-MM-DD hh:mm:ss'));
             });
+        },
+        'uploadWechatRelease'() {
+            async.waterfall([
+                function (anext) {
+                    Editor.log('开始删除旧版本 ' + moment().format('YYYY-MM-DD hh:mm:ss'));
+                    let conn = new Client();
+                    conn.on('ready', function () {
+                        Editor.log('ssh 连接成功');
+
+                        conn.exec('rm -rf /var/www/html/gongdou/*', function (err, stream) {
+                            if (err) {
+                                anext(err);
+                            }
+                            stream.on('close', function (code, signal) {
+                                Editor.log('Stream :: close :: code: ' + code + ', signal: ' + signal);
+                                conn.end();
+                                anext();
+                            }).on('data', function (data) {
+                                Editor.log('STDOUT: ' + data);
+                            }).stderr.on('data', function (data) {
+                                Editor.log('STDERR: ' + data);
+                            });
+                        });
+
+
+                    }).connect({
+                        host: '210.73.214.75',
+                        port: 22,
+                        username: 'liuk',
+                        password: 'UcxxAoxpnLGUj8hW'
+                    });
+                },
+                function (anext) {
+                    Editor.log('开始上传 ' + moment().format('YYYY-MM-DD hh:mm:ss'));
+                    let sourcePath = path.join(__dirname, '../../build/wechatgame/res/raw-assets');
+                    client.scp(sourcePath, {
+                        host: '210.73.214.75',
+                        username: 'liuk',
+                        password: 'UcxxAoxpnLGUj8hW',
+                        path: '/var/www/html/gongdou/res/raw-assets'
+                    }, function (err) {
+                        anext(err);
+                    });
+                },
+                function (anext) {
+                    Editor.log('开始上传 ' + moment().format('YYYY-MM-DD hh:mm:ss'));
+                    let sourcePath = path.join(__dirname, '../../build/wechatgame/res/raw-internal');
+                    client.scp(sourcePath, {
+                        host: '210.73.214.75',
+                        username: 'liuk',
+                        password: 'UcxxAoxpnLGUj8hW',
+                        path: '/var/www/html/gongdou/res/raw-internal'
+                    }, function (err) {
+                        anext(err);
+                    });
+                },
+                function (anext) {
+                    Editor.log('删除本地res ' + moment().format('YYYY-MM-DD hh:mm:ss'));
+                    rimraf(path.join(__dirname, '../../build/wechatgame/res/raw*'), function (err) {
+                        anext(err);
+                    });
+                },
+            ], function (err) {
+                if (err) {
+                    Editor.log('上传错误 ' + err);
+                    return;
+                }
+                Editor.log('上传成功 ' + moment().format('YYYY-MM-DD hh:mm:ss'));
+            });
         }
     },
 };
