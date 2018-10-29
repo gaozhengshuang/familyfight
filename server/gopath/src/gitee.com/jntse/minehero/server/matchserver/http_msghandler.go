@@ -14,8 +14,8 @@ import (
 	"encoding/json"
 )
 
-func HttpServerResponseCallBack(w http.ResponseWriter, urlpath string, rawquery string, body []byte) {
-	log.Info("HttpServerResponseCallBack")
+func HTTPServerResponseCallBack(w http.ResponseWriter, urlpath string, rawquery string, body []byte) {
+	log.Info("HTTPServerResponseCallBack")
 
 	//
 	log.Info("urlpath: %s", urlpath)
@@ -27,7 +27,7 @@ func HttpServerResponseCallBack(w http.ResponseWriter, urlpath string, rawquery 
 		cmdmap := make(map[string]interface{})
 		unerr := json.Unmarshal(body, &cmdmap)
 		if unerr != nil {
-			log.Error("HttpServerResponseCallBack json.Unmarshal err[%s]", unerr)
+			log.Error("HTTPServerResponseCallBack json.Unmarshal err[%s]", unerr)
 			break
 		}
 

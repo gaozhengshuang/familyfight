@@ -15,8 +15,8 @@ import (
 	pb "github.com/golang/protobuf/proto"
 )
 
-func HttpServerResponseCallBack(w http.ResponseWriter, urlpath string, rawquery string, body []byte) {
-	log.Info("HttpServerResponseCallBack")
+func HTTPServerResponseCallBack(w http.ResponseWriter, urlpath string, rawquery string, body []byte) {
+	log.Info("HTTPServerResponseCallBack")
 
 	//
 	log.Info("urlpath: %s", urlpath)
