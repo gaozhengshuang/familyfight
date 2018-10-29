@@ -68,8 +68,8 @@ UserModel.prototype.onGW2C_SendUserInfo = function (msgid, data) {
     NotificationController.Emit(Define.EVENT_KEY.CONNECT_TO_GATESERVER);
 
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEGOLD, Tools.GetValueInObj(this.userInfo, 'base.biggold') || ["0_0"]);
-    let Game = require('../Game');
-    Game.Platform.SendUserInfo();
+    // let Game = require('../Game');
+    // Game.Platform.SendUserInfo();
 }
 
 UserModel.prototype.onGW2C_UpdateGold = function (msgid, data) {
