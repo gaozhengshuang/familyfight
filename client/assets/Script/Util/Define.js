@@ -85,8 +85,8 @@ var Define = {
         BESTOWED: 4,
         HANDBOOK: 5,
         BUILD: 6,
-        RANDOMX: 7,
-        SLEEP: 8
+        SLEEP: 7,
+        RANDOMX: 8, 
     },
     MINIGAMETYPE: {
         START: 0,
