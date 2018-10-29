@@ -14,11 +14,11 @@
     "LinkupGoldRewardRatio": 4,
     "十秒小游戏失败奖励": "",
     "TenSeceondLoseRatio": {
-        "Gold": 660
+        "Gold": 600
     },
     "十秒小游戏成功奖励": "",
     "TenSecondWinReward": {
-        "Gold": 1260,
+        "Gold": 3600,
         "Item": [
             [
                 10001,
