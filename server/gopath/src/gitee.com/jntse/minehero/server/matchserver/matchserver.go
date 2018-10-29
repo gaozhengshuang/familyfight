@@ -232,7 +232,7 @@ func (this* MatchServer) StartNetWork() bool {
 		return false
 	}
 	this.net.Init(this.netconf, this)
-	this.net.SetHttpResponseHandler(HttpServerResponseCallBack)	// Http监听,需要设置处理回调
+	this.net.SetHttpResponseHandler(HTTPServerResponseCallBack)	// Http监听,需要设置处理回调
 	if this.net.Start() == false {
 		log.Info("初始化网络error...")
 		return false
