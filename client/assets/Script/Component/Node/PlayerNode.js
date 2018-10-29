@@ -83,9 +83,19 @@ cc.Class({
     updateView(id) {
         this.id = id;
         this.maidBase = Game.ConfigController.GetConfigById("TMaidLevel", id);
-        if (this.maidBase) {
-            this.node_addgold.updateGold(this.maidBase.Reward);
+        this.passBase = Game.ConfigController.GetConfigById("PassLevels", this.maidBase.Passlevels);
+        if (this.maidBase && this.passBase) {
             Game.ResController.SetSprite(this.image_maid, this.maidBase.Path);
+
+            //加成效率代码
+            let luckily = 0;
+            let palceData = Game.PalaceModel.GetPalaceDataById(this.passBase.ChapterID);
+            if (palceData) {
+                luckily = palceData.luckily;
+            }
+            let rewardGold = Game.Tools.toBigIntMoney(this.maidBase.Reward);
+            rewardGold = rewardGold.multiply(100 + luckily).divide(100);    //不能对小数进行运算只能先乘再除
+            this.node_addgold.updateGold(Game.Tools.toLocalMoney(rewardGold));
         }
     },
 
@@ -95,6 +105,7 @@ cc.Class({
         this.intervalTime = 2.0;
         this.isLongclick = false;
         this.maidBase = {};
+        this.passBase = {};
 
         this.parentNode = parentNode;
         this.moveMaxX = (parentNode.width / 2) - (this.node.width / 2);
