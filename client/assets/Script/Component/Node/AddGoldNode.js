@@ -53,7 +53,7 @@ cc.Class({
 
         if (Math.ceil(Math.random() * 10) <= 2) {
             _scale = 1.4;
-            _gold = Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(gold).multiply(100));
+            _gold = Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(gold).multiply(300));
             this.label_gold.string = `暴击+${Game.Tools.UnitConvert(_gold)}`;
         } else {
             _scale = 1;
