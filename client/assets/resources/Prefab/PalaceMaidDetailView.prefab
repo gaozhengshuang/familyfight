@@ -820,7 +820,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 162,
+      "width": 168,
       "height": 50
     },
     "_rotationX": 0,
@@ -874,7 +874,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 127,
+      "width": 133,
       "height": 40
     },
     "_rotationX": 0,
@@ -911,7 +911,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "每秒产1000",
+    "_N$string": "1000/每小时",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -972,7 +972,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 147,
+      "x": 153,
       "y": 0
     },
     "_skewX": 0,
@@ -1029,7 +1029,7 @@
     "_enabled": true,
     "_layoutSize": {
       "__type__": "cc.Size",
-      "width": 162,
+      "width": 168,
       "height": 50
     },
     "_resize": 1,
