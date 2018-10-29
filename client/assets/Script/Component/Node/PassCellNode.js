@@ -32,18 +32,23 @@ cc.Class({
         } else {
             this.node.setScale(1);
         }
-
-        let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));    //判断关卡第一次开放
-        if ((this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.lookPass < this._data.Id)) {
-            let passData = {
-                userid: _dialoguePass.userid,
-                lookPass: this._data.Id,
-                pass: _dialoguePass.pass,
-            };
-            cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
-
-            this.animation_light.node.active = true;
-            this.animation_light.play("FlashNewPass");
+        
+        let _dialoguePass = null;    //判断关卡第一次开放
+        if (cc.sys.localStorage.getItem('dialoguePass') == 'true') {
+            _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));  
+        }
+        if (_dialoguePass) {
+            if ((this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.lookPass < this._data.Id)) {
+                let passData = {
+                    userid: _dialoguePass.userid,
+                    lookPass: this._data.Id,
+                    pass: _dialoguePass.pass,
+                };
+                cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
+    
+                this.animation_light.node.active = true;
+                this.animation_light.play("FlashNewPass");
+            }
         }
     },
 
@@ -62,17 +67,22 @@ cc.Class({
             
                 Game.GuideController.NextGuide();
         
-                let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));
-                if (this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.pass < this._data.Id) {
-                    let passData = {
-                        userid: Game.UserModel.GetUserId(),
-                        lookPass: _dialoguePass.lookPass,
-                        pass: this._data.Id,
-                    };
-                    cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
-                    
-                    if (this._data.DialogueID != 0) {                    
-                        Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);
+                let _dialoguePass = null;
+                if (cc.sys.localStorage.getItem('dialoguePass') == 'true') {
+                    _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));  
+                }
+                if (_dialoguePass) {
+                    if (this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.pass < this._data.Id) {
+                        let passData = {
+                            userid: Game.UserModel.GetUserId(),
+                            lookPass: _dialoguePass.lookPass,
+                            pass: this._data.Id,
+                        };
+                        cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
+                        
+                        if (this._data.DialogueID != 0) {                    
+                            Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);
+                        }
                     }
                 }
             }
