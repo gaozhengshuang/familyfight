@@ -32,6 +32,7 @@
   "title": "FamilyFight",
   "webOrientation": "auto",
   "wechatgame": {
+    "REMOTE_SERVER_ROOT": "https://gongdou.giantfun.cn/",
     "appid": "wx26ddebd3defbe6e3",
     "orientation": "portrait"
   },

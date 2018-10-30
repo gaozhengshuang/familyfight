@@ -5,6 +5,7 @@ var path = require('path');
 var process = require('child_process');
 var async = require('async');
 var Client = require('ssh2').Client;
+var rimraf = require('rimraf');
 
 module.exports = {
     load() {
@@ -241,18 +242,18 @@ module.exports = {
                         anext(err);
                     });
                 },
-                function (anext) {
-                    Editor.log('开始上传 ' + moment().format('YYYY-MM-DD hh:mm:ss'));
-                    let sourcePath = path.join(__dirname, '../../build/wechatgame/res/raw-internal');
-                    client.scp(sourcePath, {
-                        host: '210.73.214.75',
-                        username: 'liuk',
-                        password: 'UcxxAoxpnLGUj8hW',
-                        path: '/var/www/html/gongdou/res/raw-internal'
-                    }, function (err) {
-                        anext(err);
-                    });
-                },
+                // function (anext) {
+                //     Editor.log('开始上传 ' + moment().format('YYYY-MM-DD hh:mm:ss'));
+                //     let sourcePath = path.join(__dirname, '../../build/wechatgame/res/raw-internal');
+                //     client.scp(sourcePath, {
+                //         host: '210.73.214.75',
+                //         username: 'liuk',
+                //         password: 'UcxxAoxpnLGUj8hW',
+                //         path: '/var/www/html/gongdou/res/raw-internal'
+                //     }, function (err) {
+                //         anext(err);
+                //     });
+                // },
                 function (anext) {
                     Editor.log('删除本地res ' + moment().format('YYYY-MM-DD hh:mm:ss'));
                     rimraf(path.join(__dirname, '../../build/wechatgame/res/raw*'), function (err) {
