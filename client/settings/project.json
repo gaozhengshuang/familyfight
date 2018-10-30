@@ -13,7 +13,12 @@
   ],
   "design-resolution-height": 720,
   "design-resolution-width": 1280,
-  "excluded-modules": [],
+  "excluded-modules": [
+    "TiledMap",
+    "Physics",
+    "StudioComponent",
+    "Camera"
+  ],
   "fit-height": true,
   "fit-width": false,
   "group-list": [
