@@ -1,0 +1,20 @@
+package msg;
+
+message ShareData
+{
+    optional uint32 id                  = 1;
+    repeated uint64 times               = 2; 
+}
+
+message C2GW_ReqShareMessage
+{
+    optional uint32 sharetype           = 1;
+    optional uint32 id                  = 2;
+    optional uint64 time                = 3;
+}
+
+message GW2C_AckShareMessage
+{
+    optional uint32 result              = 1;
+    optional bool reward                = 2;
+}
