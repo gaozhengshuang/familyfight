@@ -1,5 +1,6 @@
 package msg;
 import "define.proto";
+import "share.proto";
 
 message EntityBase {
     optional uint64 id      = 1;
@@ -157,6 +158,7 @@ message Serialize {
     repeated uint32 eventids    = 7;            //开启的事件
     repeated BoxData boxs       = 8;            //掉落的箱子数量
     optional GuideData guide    = 9;
+    repeated ShareData shares   = 10;
 }
 
 message RewardData

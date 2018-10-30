@@ -110,13 +110,12 @@ func (this *RewardManager) DropToUser(user *GateUser, id uint32, reason string, 
 	}
 	rewards = this.GetDropList(dropnode)
 	rewards = this.MergeDropData(rewards)
-	for _, v := range rewards {
-		result := this.AddToUser(user, v, reason, notify, param)
-		if v.rewardtype != uint32(msg.RewardType_BigGold) {
-			rets = append(rets, v)
-		} else {
-			gold = result
-		}
+	gold, rets = this.CalculateReward(user, rewards)
+	if len(gold) > 0 {
+		user.lastgolds = gold
+	}
+	for _, v := range rets {
+		this.AddToUser(user, v, reason, notify, param)
 	}
 	return gold, rets
 }
@@ -178,41 +177,51 @@ func (this *RewardManager) MergeDropData(origindatas []*DropData) []*DropData {
 	return rets
 }
 
-func (this *RewardManager) AddToUser(user *GateUser, data *DropData, reason string, notify bool, param uint32) []string{
-	rets := make([]string, 0)
+func (this *RewardManager) CalculateReward(user *GateUser, rewards []*DropData)(gold []string, other []*DropData){
+	gold = make([]string, 0)
+	other = make([]*DropData, 0)
+	for _, v := range rewards {
+		if v.rewardtype != uint32(msg.RewardType_BigGold) {
+			other = append(rets, v)
+		} else {
+			goldObj := user.maid.CalculateRewardPerSecond(user)
+			goldObj = user.TimesBigGold(goldObj, v.rewardvalue)
+			goldObj = user.CarryBigGold(goldObj, user.MaxIndexBigGold(goldObj))
+			gold = user.ParseBigGoldToArr(goldObj)
+		}
+	}
+	return gold, other
+}
+
+func (this *RewardManager) AddToUser(user *GateUser, data *DropData, reason string, notify bool, param uint32){
 	switch data.rewardtype {
 		case uint32(msg.RewardType_BigGold):
 			//金币
-			log.Info("玩家[%d] 掉落金币 原因[%s]", user.Id(), reason)
-			goldObj := user.maid.CalculateRewardPerSecond(user)
-			goldObj = user.TimesBigGold(goldObj, data.rewardvalue)
-			goldObj = user.CarryBigGold(goldObj, user.MaxIndexBigGold(goldObj))
-			rets = user.ParseBigGoldToArr(goldObj)
-			return rets
+			break
 		case uint32(msg.RewardType_Power):
 			//体力
 			log.Info("玩家[%d] 掉落体力 数量[%d] 原因[%s]", user.Id(),data.rewardvalue, reason)
 			user.AddPower(data.rewardvalue, reason, true,notify)
-			return rets 
+			break
 		case uint32(msg.RewardType_Item):
 			//道具
 			log.Info("玩家[%d] 掉落道具 id[%d] 数量[%d] 原因[%s]", user.Id(),data.rewardid, data.rewardvalue, reason)
 			user.AddItem(data.rewardid, data.rewardvalue, reason)
-			return rets
+			break
 		case uint32(msg.RewardType_Favor):
 			//好感度 TODO
 			user.palace.AddLuckily(user, param, data.rewardvalue)
-			return rets
+			break
 		case uint32(msg.RewardType_MiniGameCoin):
 			//小游戏的游戏币
 			log.Info("玩家[%d] 掉落小游戏币 id[%d] 数量[%d] 原因[%s]", user.Id(),data.rewardid, data.rewardvalue, reason)
 			user.currency.AddMiniGameCoin(data.rewardid, data.rewardvalue, reason, notify)
-			return rets
+			break
 		case uint32(msg.RewardType_MiniGame):
 			log.Info("玩家[%d] 掉落小游戏 id[%d] 原因[%s]", user.Id(),data.rewardid,reason)
-			return rets
+			break
 		default:
-			return rets
+			break
 	}
 }
 

@@ -85,6 +85,7 @@ type GateUser struct {
 	deliverystate bool   // 发货状态
     roomid        int64
 	gameflag      bool
+	lastgolds 	  []string
 }
 
 func NewGateUser(account, key, token string) *GateUser {
@@ -103,6 +104,7 @@ func NewGateUser(account, key, token string) *GateUser {
 	u.token = token
     u.roomid = 0
 	u.gameflag = false
+	u.lastgolds = make([]string, 0)
 	return u
 }
 

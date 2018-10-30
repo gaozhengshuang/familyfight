@@ -74,6 +74,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqGuessKing{}, on_C2GW_ReqGuessKing)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqLuckily{}, on_C2GW_ReqLuckily)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTryst{}, on_C2GW_ReqTryst)
+	// this.msgparser.RegistProtoMsg(msg.)
 	//后宫
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPalaceTakeBack{}, on_C2GW_ReqPalaceTakeBack)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMasterLevelup{}, on_C2GW_ReqMasterLevelup)
