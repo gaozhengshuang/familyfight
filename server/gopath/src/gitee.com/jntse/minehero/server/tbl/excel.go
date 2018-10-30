@@ -34,6 +34,7 @@ var TPalacePartBase = table.InsTPalacePartBaseTable
 var TBallGiftbase = table.InsTBallGiftbaseTable
 var TLoveDialogueBase = table.InsTLoveDialogueBaseTable
 var TPassLevelsBase = table.InsTPassLevelsBaseTable
+var TShareBase = table.InsTShareBaseTable
 var TPalacePersonnel = table.InsTPalacePersonnelTable
 var SignBase = table.InsSignBaseTable
 var NameBase = table.InsNameBaseTable

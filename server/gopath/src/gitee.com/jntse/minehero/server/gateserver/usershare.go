@@ -213,7 +213,7 @@ func (this *UserShare) Share(sharetype uint32, id uint32, time uint64) (result u
 
 // ========================= 数据处理 ========================= 
 func (this *UserShare) GetShareDefine(sharetype uint32, id uint32) *table.ShareDefine {
-	for _, v := tbl.TShareBase.Share {
+	for _, v := range tbl.TShareBase.Share {
 		if v.ShareType == sharetype && v.ShareId == id {
 			return v
 		}
