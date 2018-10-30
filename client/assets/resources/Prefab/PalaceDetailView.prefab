@@ -2493,7 +2493,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 93,
+      "width": 135,
       "height": 40
     },
     "_rotationX": 0,
@@ -2530,7 +2530,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "收  获",
+    "_N$string": "收  获x3",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -3791,7 +3791,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 138,
+      "width": 137,
       "height": 138
     },
     "_rotationX": 0,

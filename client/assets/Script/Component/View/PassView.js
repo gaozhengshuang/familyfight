@@ -34,8 +34,7 @@ cc.Class({
         this.passList = [];
         this.passBase = Game.ConfigController.GetConfig("PassLevels");
 
-        let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));     //本地判断剧情和关卡初始化
-        if (_dialoguePass == null || _dialoguePass.userid != Game.UserModel.GetUserId()) {
+        let initDialoguePass = function() {     //初始化剧情关卡
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, 1);
 
             let passData = {
@@ -47,9 +46,25 @@ cc.Class({
 
             Game.MaidModel.SetCurPass(1);
             Game.MaidModel.SetCurChapter(1);
-        } else {
+        }
+
+        let updateDialoguePass = function() {   //更新剧情关卡
             Game.MaidModel.SetCurPass(_dialoguePass.pass);
             Game.MaidModel.SetCurChapter(Game.ConfigController.GetConfigById("PassLevels", _dialoguePass.pass).ChapterID);
+        }
+
+        let _dialoguePass = null;   //本地判断剧情和关卡初始化
+        if (cc.sys.localStorage.getItem('dialoguePass') == 'true') {
+            _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));  
+        }
+        if (_dialoguePass == null) {
+            initDialoguePass();
+        } else {
+            if (_dialoguePass.userid != Game.UserModel.GetUserId()) {
+                initDialoguePass();
+            } else {
+                updateDialoguePass();
+            }
         }
     },
 
@@ -102,7 +117,10 @@ cc.Class({
         Game.NotificationController.Emit(Game.Define.EVENT_KEY.UPDATE_GAMEVIEW);
 
         if (isNext) {   //切换新章节弹对话
-            let _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));
+            let _dialoguePass = null;
+            if (cc.sys.localStorage.getItem('dialoguePass') == 'true') {
+                _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));  
+            }
             let passBase = Game.ConfigController.GetConfigById("PassLevels", passId);
             
             if (_dialoguePass && passBase) {
