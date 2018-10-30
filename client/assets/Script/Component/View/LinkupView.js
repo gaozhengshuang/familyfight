@@ -164,7 +164,7 @@ cc.Class({
                 case LinkStatus.Status_End:
                     //计算奖励金币
                     let lastTime = GameTime - (Game.TimeController.GetCurTime() - this.startTime);
-                    Game.NetWorkController.Send('msg.C2GW_ReqLinkup', { score: this.matchInfos.length * (lastTime > 0 ? 2 : 1) })
+                    Game.NetWorkController.Send('msg.C2GW_ReqLinkup', { score: lastTime > 0 ? 2 : 1 })
                     // this.closeView(Game.UIName.UI_LINKUP);
                     break;
                 default:
