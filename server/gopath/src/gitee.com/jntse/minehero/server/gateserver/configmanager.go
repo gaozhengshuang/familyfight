@@ -126,19 +126,19 @@ func (this *ConfigManager) Init() {
 	}
 	// 侍女配置
 	for _, v := range tbl.TMaidLevelBase.TMaidLevel {
-		maidgroup, find := this.levelmaidttmpls[v.Passlevels]
+		maidgroup, find := this.levelmaidttmpls[uint32(v.Passlevels)]
 		if !find {
 			maidgroup = make([]*table.TMaidLevelDefine, 0)
-			this.levelmaidttmpls[v.Passlevels] = maidgroup
+			this.levelmaidttmpls[uint32(v.Passlevels)] = maidgroup
 		}
 		maidgroup = append(maidgroup, v)
 	}
 	//关卡配置
 	for _, v := range tbl.TPassLevelsBase.PassLevels {
-		levelgroup, find := this.chapterlevels[v.ChapterID]
+		levelgroup, find := this.chapterlevels[uint32(v.ChapterID)]
 		if !find {
 			levelgroup = make([]uint32, 0)
-			this.chapterlevels[v.ChapterID] = levelgroup
+			this.chapterlevels[uint32(v.ChapterID)] = levelgroup
 		}
 		levelgroup = append(levelgroup, v.Id)
 	}

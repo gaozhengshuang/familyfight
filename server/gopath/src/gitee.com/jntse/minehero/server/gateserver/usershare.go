@@ -38,7 +38,7 @@ func (this *ShareData) PackBin() *msg.ShareData {
 	bin.Id = pb.Uint32(this.id)
 	bin.Times = make([]uint64, 0)
 	for _, v := range this.times {
-		bin.Times = append(this.Times, v)
+		bin.Times = append(this.times, v)
 	}
 	return bin
 }
@@ -145,7 +145,7 @@ func (this *UserShare) Share(sharetype uint32, id uint32, time uint64) (result u
 				for _, v := range levels {
 					curMaidDefine := ConfigMgr().GetLastMaidByLevel(v)
 					if curMaidDefine != nil {
-						curgold, _ = this.user.ParseBigGoldToObj(curMaidDefine.Reward)
+						curgold, _ := this.user.ParseBigGoldToObj(curMaidDefine.Reward)
 						goldbase = this.user.MergeBigGold(curgold, goldbase)
 					}
 				}

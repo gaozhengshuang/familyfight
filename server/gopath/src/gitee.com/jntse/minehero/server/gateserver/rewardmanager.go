@@ -182,7 +182,7 @@ func (this *RewardManager) CalculateReward(user *GateUser, rewards []*DropData)(
 	other = make([]*DropData, 0)
 	for _, v := range rewards {
 		if v.rewardtype != uint32(msg.RewardType_BigGold) {
-			other = append(rets, v)
+			other = append(other, v)
 		} else {
 			goldObj := user.maid.CalculateRewardPerSecond(user)
 			goldObj = user.TimesBigGold(goldObj, v.rewardvalue)
