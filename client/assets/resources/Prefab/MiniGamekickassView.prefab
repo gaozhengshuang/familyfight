@@ -1270,7 +1270,7 @@
     "node": {
       "__id__": 37
     },
-    "_enabled": true,
+    "_enabled": false,
     "_useOriginalSize": false,
     "_actualFontSize": 24,
     "_fontSize": 24,
@@ -3190,8 +3190,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 294,
-      "y": -397
+      "x": 303.8,
+      "y": -381.7
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -3577,8 +3577,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 231,
-      "y": -441
+      "x": 225.4,
+      "y": -446.7
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -3594,7 +3594,7 @@
     "node": {
       "__id__": 114
     },
-    "_enabled": false,
+    "_enabled": true,
     "_useOriginalSize": false,
     "_actualFontSize": 24,
     "_fontSize": 24,
