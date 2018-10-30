@@ -1501,7 +1501,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 530,
+      "width": 535,
       "height": 53
     },
     "_rotationX": 0,
@@ -1564,7 +1564,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -240,
+      "x": -242.5,
       "y": 1.3
     },
     "_skewX": 0,
@@ -1655,7 +1655,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -162.5,
+      "x": -160,
       "y": 0
     },
     "_skewX": 0,
@@ -1744,7 +1744,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -84.5,
+      "x": -77,
       "y": 0
     },
     "_skewX": 0,
@@ -1833,7 +1833,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 55,
+      "x": 67.5,
       "y": 0
     },
     "_skewX": 0,
@@ -1922,7 +1922,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 205.5,
+      "x": 223,
       "y": 0
     },
     "_skewX": 0,
@@ -2003,7 +2003,7 @@
     "_enabled": true,
     "_layoutSize": {
       "__type__": "cc.Size",
-      "width": 530,
+      "width": 535,
       "height": 53
     },
     "_resize": 0,
@@ -2019,7 +2019,7 @@
     "_N$paddingRight": 0,
     "_N$paddingTop": 0,
     "_N$paddingBottom": 0,
-    "_N$spacingX": 0,
+    "_N$spacingX": 5,
     "_N$spacingY": 0,
     "_N$verticalDirection": 1,
     "_N$horizontalDirection": 0
