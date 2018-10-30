@@ -44,18 +44,23 @@ type PalacePartConf struct {
 	Charm			uint32
 }
 //后宫管理器
-type PalaceManager struct {
+type ConfigManager struct {
 	palacetmpls     	map[uint32]*table.PalaceMapDefine
 	mastertmpls 		map[uint32]map[uint32]*PalaceMasterConf
 	maidtmpls			map[uint32][]*PalaceMaidConf
 	parttmpls  			map[uint32]map[uint32]*PalacePartConf
+
+	levelmaidttmpls 	map[uint32][]*table.TMaidLevelDefine
+	chapterlevels 		map[uint32][]uint32
 }
 
-func (this *PalaceManager) Init() {
+func (this *ConfigManager) Init() {
 	this.palacetmpls = make(map[uint32]*table.PalaceMapDefine)
 	this.mastertmpls = make(map[uint32]map[uint32]*PalaceMasterConf)
 	this.maidtmpls = make(map[uint32][]*PalaceMaidConf)
 	this.parttmpls = make(map[uint32]map[uint32]*PalacePartConf)
+	this.levelmaidttmpls = make(map[uint32][]*table.TMaidLevelDefine)
+	this.chapterlevels = make(map[uint32][]uint32)
 	for _, v := range tbl.TPalaceMapBase.PalaceMap {
 		this.palacetmpls[v.Id] = v
 		//处理主子配置
@@ -119,15 +124,33 @@ func (this *PalaceManager) Init() {
 		}
 		partgroup[partconf.Level] = partconf
 	}
+	// 侍女配置
+	for _, v := range tbl.TMaidLevelBase.TMaidLevel {
+		maidgroup, find := this.levelmaidttmpls[uint32(v.Passlevels)]
+		if !find {
+			maidgroup = make([]*table.TMaidLevelDefine, 0)
+			this.levelmaidttmpls[uint32(v.Passlevels)] = maidgroup
+		}
+		maidgroup = append(maidgroup, v)
+	}
+	//关卡配置
+	for _, v := range tbl.TPassLevelsBase.PassLevels {
+		levelgroup, find := this.chapterlevels[uint32(v.ChapterID)]
+		if !find {
+			levelgroup = make([]uint32, 0)
+			this.chapterlevels[uint32(v.ChapterID)] = levelgroup
+		}
+		levelgroup = append(levelgroup, v.Id)
+	}
 }
 
 // 获得后宫的配置
-func (this *PalaceManager) GetPalaceConfig(pid uint32) *table.PalaceMapDefine{
+func (this *ConfigManager) GetPalaceConfig(pid uint32) *table.PalaceMapDefine{
 	tmpl, _ := this.palacetmpls[pid]
 	return tmpl
 }
 // 获得后宫主子的配置
-func (this *PalaceManager) GetMasterConfig(pid uint32, level uint32) *PalaceMasterConf {
+func (this *ConfigManager) GetMasterConfig(pid uint32, level uint32) *PalaceMasterConf {
 	masters, find := this.mastertmpls[pid]
 	if !find {
 		return nil
@@ -136,16 +159,38 @@ func (this *PalaceManager) GetMasterConfig(pid uint32, level uint32) *PalaceMast
 	return tmpl
 }
 //获得后宫宫女的配置
-func (this *PalaceManager) GetMaidConfig(pid uint32 ) []*PalaceMaidConf {
+func (this *ConfigManager) GetMaidConfig(pid uint32 ) []*PalaceMaidConf {
 	maids, _ := this.maidtmpls[pid]
 	return maids
 }
 //获得后宫部件配置
-func (this *PalaceManager) GetPartConfig(pid uint32, level uint32) *PalacePartConf {
+func (this *ConfigManager) GetPartConfig(pid uint32, level uint32) *PalacePartConf {
 	parts, find := this.parttmpls[pid]
 	if !find {
 		return nil
 	}
 	tmpl, _ := parts[level]
 	return tmpl
+}
+
+//获得一个关卡最后一个侍女
+func (this *ConfigManager) GetLastMaidByLevel(level uint32) *table.TMaidLevelDefine {
+	maidgroup, find := this.levelmaidttmpls[level]
+	if !find {
+		return nil
+	}
+	if len(maidgroup) > 0 {
+		return maidgroup[len(maidgroup) - 1]
+	} else {
+		return nil
+	}
+}
+//获得一个章节的所有关卡
+func (this *ConfigManager) GetLevelsByChapter(chapter uint32) []uint32 {
+	levelgroup, find := this.chapterlevels[chapter]
+	if find {
+		return levelgroup
+	} else {
+		return make([]uint32, 0)
+	}
 }

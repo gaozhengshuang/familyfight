@@ -9,8 +9,6 @@ server/gateserver/gateserver
 server/loginserver/loginserver
 server/matchserver/matchserver
 server/roomserver/roomserver
-server/tbl/excel
-server/tbl/json
 server/pack
 server/release
 server/version.txt

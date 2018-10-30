@@ -1,0 +1,26 @@
+{
+	"Tool": "github.com/davyxu/tabtoy",
+	"Version": "2.8.10",
+	"ItemBaseData":[
+		{ "Id": 10001, "Name": "后宫卡牌", "Desc": "用于后宫主位卡牌升级。", "Sort": 0, "Type": 1, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item10001" },
+		{ "Id": 20001, "Name": "姜汤", "Desc": "御膳可以去除体内寒气。", "Sort": 1, "Type": 2, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item20001" },
+		{ "Id": 20002, "Name": "荔枝", "Desc": "御膳非常珍贵福建贡品。", "Sort": 2, "Type": 2, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item20002" },
+		{ "Id": 20003, "Name": "月饼", "Desc": "御膳中秋节宫里点心。", "Sort": 3, "Type": 2, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item20003" },
+		{ "Id": 20004, "Name": "西瓜", "Desc": "御膳夏天吃清凉解渴。", "Sort": 4, "Type": 2, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item20004" },
+		{ "Id": 20005, "Name": "红烧猪蹄", "Desc": "御膳味道很好。", "Sort": 5, "Type": 2, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item20005" },
+		{ "Id": 20006, "Name": "珍珠粉", "Desc": "御膳可以美容养颜。", "Sort": 6, "Type": 2, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item20006" },
+		{ "Id": 30001, "Name": "油布", "Desc": "御品用于防雨。", "Sort": 1, "Type": 3, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item30001" },
+		{ "Id": 30002, "Name": "剪刀", "Desc": "御品用于修剪衣物。", "Sort": 2, "Type": 3, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item30002" },
+		{ "Id": 30003, "Name": "银针", "Desc": "御品用于缝制衣物。", "Sort": 3, "Type": 3, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item30003" },
+		{ "Id": 30004, "Name": "簪子", "Desc": "御品用于头饰。", "Sort": 4, "Type": 3, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item30004" },
+		{ "Id": 30005, "Name": "报时妆奁", "Desc": "御品用于化妆或礼物。", "Sort": 5, "Type": 3, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item30005" },
+		{ "Id": 30006, "Name": "送子观音", "Desc": "御品用于装饰或礼物。", "Sort": 6, "Type": 3, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item30006" },
+		{ "Id": 30007, "Name": "红绸子", "Desc": "御品品质一般的绸缎。", "Sort": 7, "Type": 3, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item30007" },
+		{ "Id": 30008, "Name": "貂毛", "Desc": "御品品质一班的动物皮毛", "Sort": 8, "Type": 3, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item30008" },
+		{ "Id": 40001, "Name": "雨衣", "Desc": "宫里衣服用于下雨天穿", "Sort": 1, "Type": 4, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item40001" },
+		{ "Id": 40002, "Name": "凤袍", "Desc": "宫里衣服用于参加大型典礼", "Sort": 2, "Type": 4, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item40002" },
+		{ "Id": 40003, "Name": "洛神服", "Desc": "宫里衣服用于cosplay洛神女。", "Sort": 3, "Type": 4, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item40003" },
+		{ "Id": 40004, "Name": "常服", "Desc": "宫里衣服用于平常在室内穿着。", "Sort": 4, "Type": 4, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item40004" },
+		{ "Id": 40005, "Name": "礼服", "Desc": "宫里衣服用于参加一般典礼", "Sort": 5, "Type": 4, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Item/image_item40005" },
+		{ "Id": 50001, "Name": "金币", "Sort": 1, "Type": 5, "Sold": 0, "RealPrice": 0, "Itempath": "Image/GameScene/Common/image_gold" }
+	]}

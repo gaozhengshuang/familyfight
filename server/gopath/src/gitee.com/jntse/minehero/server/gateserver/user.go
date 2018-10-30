@@ -73,6 +73,7 @@ type GateUser struct {
 	palace 		  UserPalace
 	travel 		  UserTravel
 	guide 		  UserGuide
+	share 		  UserShare
 	boxs 		  map[uint32]*BoxData
 	tm_disconnect int64
 	tm_heartbeat  int64                   // 心跳时间
@@ -85,6 +86,7 @@ type GateUser struct {
 	deliverystate bool   // 发货状态
     roomid        int64
 	gameflag      bool
+	lastgolds 	  []string
 }
 
 func NewGateUser(account, key, token string) *GateUser {
@@ -103,6 +105,7 @@ func NewGateUser(account, key, token string) *GateUser {
 	u.token = token
     u.roomid = 0
 	u.gameflag = false
+	u.lastgolds = make([]string, 0)
 	return u
 }
 
@@ -305,6 +308,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	this.palace.PackBin(bin)
 	this.travel.PackBin(bin)
 	this.guide.PackBin(bin)
+	this.share.PackBin(bin)
 	this.currency.PackBin(userbase)
 	this.PackBox(bin)
 	//
@@ -345,6 +349,7 @@ func (this *GateUser) LoadBin() {
 	this.travel.Init()
 	this.travel.LoadBin(this, this.bin)
 	this.guide.LoadBin(this, this.bin)
+	this.share.LoadBin(this, this.bin)
 	this.currency.LoadBin(userbase)
 	this.LoadBox(this.bin)
 }

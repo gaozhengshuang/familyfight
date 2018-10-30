@@ -9,6 +9,7 @@ export var Travel : table.ITravelDefine[] = [
 		{ Id : "30003_20006_40004", Event : 4 	},
 		{ Id : "30008_20003_40004", Event : 7 	},
 		{ Id : "30003_20006_40001", Event : 12 	},
+		{ Id : "30003_20006_40002", Event : 14 	},
 		{ Id : "30001_0_0", Event : 3 	},
 		{ Id : "30002_0_0", Event : 2 	},
 		{ Id : "30003_0_0", Event : 3 	},

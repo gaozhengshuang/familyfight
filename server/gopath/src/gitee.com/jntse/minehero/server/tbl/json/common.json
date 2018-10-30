@@ -1,0 +1,53 @@
+{
+    "PowerInit": 20,
+    "PowerMax": 20,
+    "PowerAddInterval": 1800,
+    "PowerAddition": 5,
+    "PriceAdditionPerBuy": 1.3,
+    "GoldItemId": 50001,
+    "TravelMinTime": 3600,
+    "TravelMaxTime": 7200,
+    "EventBarrageCount": 50,
+    "RobotCount": 100,
+    "RobotGenerateInterval": 900,
+    "连连看金币奖励系数id": "",
+    "LinkupGoldRewardRatio": 4,
+    "LinkupWinReward": 30004,
+    "LinkupLoseReward": 30005,
+    "十秒小游戏失败奖励": "",
+    "TenSeceondLoseRatio": {
+        "Gold": 600
+    },
+    "十秒小游戏成功奖励": "",
+    "TenSecondWinReward": {
+        "Gold": 3600,
+        "Item": [
+            [
+                10001,
+                1
+            ]
+        ]
+    },
+    "踢屁股成功奖励金币系数": "",
+    "KickAssWinReward": {
+        "Gold": 1800
+    },
+    "踢屁股失败奖励系数": "",
+    "KickAssLoseReward": {
+        "Gold": 600
+    },
+    "攻击后宫成功奖励系数": "",
+    "AttackPalaceReward": 30001,
+
+    "猜皇帝数量": "",
+    "GuessKingCount": 3,
+    "猜皇帝成功奖励": "",
+    "GuessKingWinReward": 30002,
+    "猜皇帝失败奖励": "",
+    "GuessKingLoseReward": 30003,
+    
+    "互动记录保留条数": "",
+    "ActiveRecordCount": 10,
+    "临幸奖励": "",
+    "LuckilyReward": 40001
+}

@@ -140,17 +140,17 @@ func (this *UserPalace) TakeBack(user* GateUser, id uint32) (result uint32,items
 		user.SendNotify("后宫尚未开启")
 		return 1,items,nil,gold
 	}
-	palacetmpl := PalaceMgr().GetPalaceConfig(id)
+	palacetmpl := ConfigMgr().GetPalaceConfig(id)
 	if palacetmpl == nil {
 		user.SendNotify("没有后宫配置")
 		return 1,items,nil,gold
 	}
-	mastertmpl := PalaceMgr().GetMasterConfig(id, palace.level)
+	mastertmpl := ConfigMgr().GetMasterConfig(id, palace.level)
 	if mastertmpl == nil {
 		user.SendNotify("没有主子配置")
 		return 2,items,nil,gold
 	}
-	maidsconfig := PalaceMgr().GetMaidConfig(id)
+	maidsconfig := ConfigMgr().GetMaidConfig(id)
 	if len(maidsconfig) == 0 {
 		user.SendNotify("没有女仆配置")
 		return 3,items,nil,gold
@@ -212,17 +212,17 @@ func (this *UserPalace) Levelup(user* GateUser, id uint32) (result uint32, data 
 		user.SendNotify("后宫尚未开启")
 		return 1,nil
 	}
-	palacetmpl := PalaceMgr().GetPalaceConfig(id)
+	palacetmpl := ConfigMgr().GetPalaceConfig(id)
 	if palacetmpl == nil {
 		user.SendNotify("没有后宫配置")
 		return 2,nil
 	}
-	mastertmpl := PalaceMgr().GetMasterConfig(id, palace.level)
+	mastertmpl := ConfigMgr().GetMasterConfig(id, palace.level)
 	if mastertmpl == nil {
 		user.SendNotify("没有主子配置")
 		return 3,nil
 	}
-	nextmastertmpl := PalaceMgr().GetMasterConfig(id, palace.level + 1)
+	nextmastertmpl := ConfigMgr().GetMasterConfig(id, palace.level + 1)
 	if nextmastertmpl == nil {
 		user.SendNotify("已经最高级了")
 		return 4,nil
@@ -254,12 +254,12 @@ func (this *UserPalace) UnlockMaid(user* GateUser, id uint32, index uint32) (res
 		user.SendNotify("后宫尚未开启")
 		return 1,nil
 	}
-	palacetmpl := PalaceMgr().GetPalaceConfig(id)
+	palacetmpl := ConfigMgr().GetPalaceConfig(id)
 	if palacetmpl == nil {
 		user.SendNotify("没有后宫配置")
 		return 2,nil
 	}
-	palacemaidstmpls := PalaceMgr().GetMaidConfig(id)
+	palacemaidstmpls := ConfigMgr().GetMaidConfig(id)
 	if palacemaidstmpls == nil {
 		user.SendNotify("没有宫女配置")
 		return 3,nil
@@ -305,7 +305,7 @@ func (this *UserPalace) PartLevelup(user *GateUser,id uint32, index uint32) (res
 	}
 	level := palace.parts[index]
 
-	curtmpl := PalaceMgr().GetPartConfig(partid, level)
+	curtmpl := ConfigMgr().GetPartConfig(partid, level)
 	if curtmpl == nil {
 		user.SendNotify(fmt.Sprintf("未找到配件配置 id : %d level : %d", palace.id, level))
 		return 3, nil
@@ -314,7 +314,7 @@ func (this *UserPalace) PartLevelup(user *GateUser,id uint32, index uint32) (res
 		user.SendNotify("该配件已满级")
 		return 4, nil
 	}
-	nexttmpl := PalaceMgr().GetPartConfig(partid, level + 1)
+	nexttmpl := ConfigMgr().GetPartConfig(partid, level + 1)
 	if nexttmpl == nil {
 		user.SendNotify("该配件已满级")
 		return 4, nil
@@ -328,7 +328,7 @@ func (this *UserPalace) PartLevelup(user *GateUser,id uint32, index uint32) (res
 // ========================= 数据处理 ========================= 
 // 添加后宫
 func (this *UserPalace) AddPalace(user *GateUser, id uint32) (palace *PalaceData, add bool) {
-	tmpl := PalaceMgr().GetPalaceConfig(id)
+	tmpl := ConfigMgr().GetPalaceConfig(id)
 	if tmpl == nil {
 		return nil,false
 	}
@@ -360,7 +360,7 @@ func (this *UserPalace) GetPalacePartId(id uint32, index uint32) uint32 {
 	if palace == nil {
 		return 0
 	}
-	tmpl := PalaceMgr().GetPalaceConfig(palace.id)
+	tmpl := ConfigMgr().GetPalaceConfig(palace.id)
 	if tmpl == nil {
 		return 0
 	}
@@ -379,7 +379,7 @@ func (this *UserPalace) CalculateCharm(user *GateUser, id uint32) uint32{
 	for i, v := range palace.parts {
 		partid := this.GetPalacePartId(id, uint32(i))
 		if partid != 0 {
-			partconf := PalaceMgr().GetPartConfig(partid, v)
+			partconf := ConfigMgr().GetPartConfig(partid, v)
 			if partconf != nil {
 				charm = charm + partconf.Charm
 			}
@@ -394,11 +394,11 @@ func (this *UserPalace) CalculateTakeBackGolds(user *GateUser, id uint32) []stri
 	if !find {
 		return golds
 	}
-	maidsconfig := PalaceMgr().GetMaidConfig(id)
+	maidsconfig := ConfigMgr().GetMaidConfig(id)
 	if maidsconfig == nil || len(maidsconfig) == 0 {
 		return golds
 	}
-	mastertmpl := PalaceMgr().GetMasterConfig(id, palace.level)
+	mastertmpl := ConfigMgr().GetMasterConfig(id, palace.level)
 	if mastertmpl == nil {
 		return golds
 	}

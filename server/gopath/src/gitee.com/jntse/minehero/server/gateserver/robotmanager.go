@@ -97,7 +97,7 @@ func (this *RobotManager) GenerateRandomRobot() *RobotData {
 	robotdata.name = GateSvr().GetRandNickName()
 	robotdata.face = ""
 	robotdata.palaces = make(map[uint32]* PalaceData)
-	for _, palacetmpl := range PalaceMgr().palacetmpls {
+	for _, palacetmpl := range ConfigMgr().palacetmpls {
 		//开启了
 		palace := &PalaceData{}
 		palace.id = palacetmpl.Id

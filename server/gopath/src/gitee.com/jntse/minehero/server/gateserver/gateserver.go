@@ -50,7 +50,7 @@ type GateServer struct {
 	hredis			*redis.Client
 	usermgr			UserManager
 	waitpool		LoginWaitPool
-	palacemgr 		PalaceManager
+	configmgr 		ConfigManager
 	guidemgr 		GuideManager
 	robotmgr 		RobotManager
 	rewardmgr 		RewardManager
@@ -90,8 +90,8 @@ func WaitPool() *LoginWaitPool {
 }
 
 
-func PalaceMgr() *PalaceManager {
-	return &GateSvr().palacemgr
+func ConfigMgr() *ConfigManager {
+	return &GateSvr().configmgr
 }
 
 func GuideMgr() *GuideManager {
@@ -231,7 +231,7 @@ func (this *GateServer) Init(fileconf string) bool {
 	for _, v := range tbl.NameBase.TNameById { this.namebase = append(this.namebase, v) }
 	this.usermgr.Init()
 	this.waitpool.Init()
-	this.palacemgr.Init()
+	this.configmgr.Init()
 	this.guidemgr.Init()
 	this.robotmgr.Init()
 	this.rewardmgr.Init()
