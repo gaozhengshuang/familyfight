@@ -50,7 +50,7 @@ type ConfigManager struct {
 	maidtmpls			map[uint32][]*PalaceMaidConf
 	parttmpls  			map[uint32]map[uint32]*PalacePartConf
 
-	levelmaidttmpls 	map[uint32][]*tabel.TMaidLevelDefine
+	levelmaidttmpls 	map[uint32][]*table.TMaidLevelDefine
 	chapterlevels 		map[uint32][]uint32
 }
 
@@ -59,7 +59,7 @@ func (this *ConfigManager) Init() {
 	this.mastertmpls = make(map[uint32]map[uint32]*PalaceMasterConf)
 	this.maidtmpls = make(map[uint32][]*PalaceMaidConf)
 	this.parttmpls = make(map[uint32]map[uint32]*PalacePartConf)
-	this.levelmaidttmpls = make(map[uint32][]*tabel.TMaidLevelDefine)
+	this.levelmaidttmpls = make(map[uint32][]*table.TMaidLevelDefine)
 	this.chapterlevels = make(map[uint32][]uint32)
 	for _, v := range tbl.TPalaceMapBase.PalaceMap {
 		this.palacetmpls[v.Id] = v
@@ -128,7 +128,7 @@ func (this *ConfigManager) Init() {
 	for _, v := range tbl.TMaidLevelBase.TMaidLevel {
 		maidgroup, find := this.levelmaidttmpls[v.Passlevels]
 		if !find {
-			maidgroup = make([]*tabel.TMaidLevelDefine, 0)
+			maidgroup = make([]*table.TMaidLevelDefine, 0)
 			this.levelmaidttmpls[v.Passlevels] = maidgroup
 		}
 		maidgroup = append(maidgroup, v)
