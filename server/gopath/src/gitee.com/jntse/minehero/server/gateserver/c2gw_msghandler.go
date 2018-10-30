@@ -74,7 +74,7 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqGuessKing{}, on_C2GW_ReqGuessKing)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqLuckily{}, on_C2GW_ReqLuckily)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTryst{}, on_C2GW_ReqTryst)
-	// this.msgparser.RegistProtoMsg(msg.)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqShareMessage{}, on_C2GW_ReqShareMessage)
 	//后宫
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPalaceTakeBack{}, on_C2GW_ReqPalaceTakeBack)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMasterLevelup{}, on_C2GW_ReqMasterLevelup)
@@ -553,6 +553,27 @@ func on_C2GW_ReqTryst(session network.IBaseNetSession, message interface{}) {
 	result := user.ReqTryst(tmsg.GetPalaceid(), tmsg.GetKey())
 	send := &msg.GW2C_AckTryst{}
 	send.Result = pb.Uint32(result)
+	user.SendMsg(send)
+}
+//分享
+func on_C2GW_ReqShareMessage(session network.IBaseNetSession, message interface{}) {
+	tmsg := message.(*msg.C2GW_ReqShareMessage)
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result, reward := user.share.Share(tmsg.GetSharetype(), tmsg.GetId(), tmsg.GetTime())
+	send := &msg.GW2C_AckShareMessage{}
+	send.Result = pb.Uint32(result)
+	send.Reward = pb.Bool(reward)
 	user.SendMsg(send)
 }
 //收取
