@@ -74,6 +74,7 @@ type GateUser struct {
 	travel 		  UserTravel
 	guide 		  UserGuide
 	share 		  UserShare
+	active 		  UserActive
 	boxs 		  map[uint32]*BoxData
 	tm_disconnect int64
 	tm_heartbeat  int64                   // 心跳时间
@@ -309,6 +310,7 @@ func (this *GateUser) PackBin() *msg.Serialize {
 	this.travel.PackBin(bin)
 	this.guide.PackBin(bin)
 	this.share.PackBin(bin)
+	this.active.PackActive(bin)
 	this.currency.PackBin(userbase)
 	this.PackBox(bin)
 	//
@@ -350,6 +352,7 @@ func (this *GateUser) LoadBin() {
 	this.travel.LoadBin(this, this.bin)
 	this.guide.LoadBin(this, this.bin)
 	this.share.LoadBin(this, this.bin)
+	this.active.LoadBin(this, this.bin)
 	this.currency.LoadBin(userbase)
 	this.LoadBox(this.bin)
 }
@@ -425,6 +428,7 @@ func (this *GateUser) Syn() {
 	this.palace.Syn(this)
 	this.travel.Syn(this)
 	this.guide.Syn(this)
+	this.active.Syn()
 	this.SynBox()
 	this.SynAttackPalaceRecords()
 	this.SendUserBase()
