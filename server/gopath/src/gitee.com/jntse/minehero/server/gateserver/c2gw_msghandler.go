@@ -594,6 +594,7 @@ func on_C2GW_ReqSignin(session network.IBaseNetSession, message interface{}) {
 	}
 	result := user.active.Signin()
 	send := &msg.GW2C_AckSignin{}
+	send.Result = pb.Uint32(result)
 	user.SendMsg(send)
 }
 //每日体力
@@ -612,6 +613,7 @@ func on_C2GW_ReqDailyPower(session network.IBaseNetSession, message interface{})
 	}
 	result := user.active.DailyPower()
 	send := &msg.GW2C_AckDailyPower{}
+	send.Result = pb.Uint32(result)
 	user.SendMsg(send)
 }
 //收取
