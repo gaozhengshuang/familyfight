@@ -49,5 +49,32 @@
     "互动记录保留条数": "",
     "ActiveRecordCount": 10,
     "临幸奖励": "",
-    "LuckilyReward": 40001
+    "LuckilyReward": 40001,
+    "签到":"",
+    "Signin": [
+        {
+            "Reward": 10001,
+            "Icon": "",
+            "Desc": ""
+        },
+        {
+            "Reward": 10001,
+            "Icon": "",
+            "Desc": ""
+        }
+    ],
+    "每日体力": "",
+    "DailyPower": {
+        "Reward": 10002,
+        "Time":[
+            {
+                "MinTime": 39600,
+                "MaxTime": 61199
+            },
+            {
+                "MinTime": 61200,
+                "MaxTime": 79200
+            }
+        ]
+    }
 }

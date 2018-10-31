@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
+/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -5686,6 +5686,892 @@ $root.msg = (function() {
         return GW2C_AckTryst;
     })();
 
+    msg.GW2C_PushActiveData = (function() {
+
+        /**
+         * Properties of a GW2C_PushActiveData.
+         * @memberof msg
+         * @interface IGW2C_PushActiveData
+         * @property {msg.IActiveData|null} [active] GW2C_PushActiveData active
+         */
+
+        /**
+         * Constructs a new GW2C_PushActiveData.
+         * @memberof msg
+         * @classdesc Represents a GW2C_PushActiveData.
+         * @implements IGW2C_PushActiveData
+         * @constructor
+         * @param {msg.IGW2C_PushActiveData=} [properties] Properties to set
+         */
+        function GW2C_PushActiveData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_PushActiveData active.
+         * @member {msg.IActiveData|null|undefined} active
+         * @memberof msg.GW2C_PushActiveData
+         * @instance
+         */
+        GW2C_PushActiveData.prototype.active = null;
+
+        /**
+         * Creates a new GW2C_PushActiveData instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_PushActiveData
+         * @static
+         * @param {msg.IGW2C_PushActiveData=} [properties] Properties to set
+         * @returns {msg.GW2C_PushActiveData} GW2C_PushActiveData instance
+         */
+        GW2C_PushActiveData.create = function create(properties) {
+            return new GW2C_PushActiveData(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_PushActiveData message. Does not implicitly {@link msg.GW2C_PushActiveData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_PushActiveData
+         * @static
+         * @param {msg.IGW2C_PushActiveData} message GW2C_PushActiveData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_PushActiveData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.active != null && message.hasOwnProperty("active"))
+                $root.msg.ActiveData.encode(message.active, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_PushActiveData message, length delimited. Does not implicitly {@link msg.GW2C_PushActiveData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_PushActiveData
+         * @static
+         * @param {msg.IGW2C_PushActiveData} message GW2C_PushActiveData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_PushActiveData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_PushActiveData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_PushActiveData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_PushActiveData} GW2C_PushActiveData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_PushActiveData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_PushActiveData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.active = $root.msg.ActiveData.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_PushActiveData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_PushActiveData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_PushActiveData} GW2C_PushActiveData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_PushActiveData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_PushActiveData message.
+         * @function verify
+         * @memberof msg.GW2C_PushActiveData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_PushActiveData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.active != null && message.hasOwnProperty("active")) {
+                var error = $root.msg.ActiveData.verify(message.active);
+                if (error)
+                    return "active." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_PushActiveData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_PushActiveData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_PushActiveData} GW2C_PushActiveData
+         */
+        GW2C_PushActiveData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_PushActiveData)
+                return object;
+            var message = new $root.msg.GW2C_PushActiveData();
+            if (object.active != null) {
+                if (typeof object.active !== "object")
+                    throw TypeError(".msg.GW2C_PushActiveData.active: object expected");
+                message.active = $root.msg.ActiveData.fromObject(object.active);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_PushActiveData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_PushActiveData
+         * @static
+         * @param {msg.GW2C_PushActiveData} message GW2C_PushActiveData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_PushActiveData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.active = null;
+            if (message.active != null && message.hasOwnProperty("active"))
+                object.active = $root.msg.ActiveData.toObject(message.active, options);
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_PushActiveData to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_PushActiveData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_PushActiveData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_PushActiveData;
+    })();
+
+    msg.C2GW_ReqSignin = (function() {
+
+        /**
+         * Properties of a C2GW_ReqSignin.
+         * @memberof msg
+         * @interface IC2GW_ReqSignin
+         */
+
+        /**
+         * Constructs a new C2GW_ReqSignin.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqSignin.
+         * @implements IC2GW_ReqSignin
+         * @constructor
+         * @param {msg.IC2GW_ReqSignin=} [properties] Properties to set
+         */
+        function C2GW_ReqSignin(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new C2GW_ReqSignin instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqSignin
+         * @static
+         * @param {msg.IC2GW_ReqSignin=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqSignin} C2GW_ReqSignin instance
+         */
+        C2GW_ReqSignin.create = function create(properties) {
+            return new C2GW_ReqSignin(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqSignin message. Does not implicitly {@link msg.C2GW_ReqSignin.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqSignin
+         * @static
+         * @param {msg.IC2GW_ReqSignin} message C2GW_ReqSignin message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqSignin.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqSignin message, length delimited. Does not implicitly {@link msg.C2GW_ReqSignin.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqSignin
+         * @static
+         * @param {msg.IC2GW_ReqSignin} message C2GW_ReqSignin message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqSignin.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqSignin message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqSignin
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqSignin} C2GW_ReqSignin
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqSignin.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqSignin();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqSignin message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqSignin
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqSignin} C2GW_ReqSignin
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqSignin.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqSignin message.
+         * @function verify
+         * @memberof msg.C2GW_ReqSignin
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqSignin.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqSignin message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqSignin
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqSignin} C2GW_ReqSignin
+         */
+        C2GW_ReqSignin.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqSignin)
+                return object;
+            return new $root.msg.C2GW_ReqSignin();
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqSignin message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqSignin
+         * @static
+         * @param {msg.C2GW_ReqSignin} message C2GW_ReqSignin
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqSignin.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this C2GW_ReqSignin to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqSignin
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqSignin.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqSignin;
+    })();
+
+    msg.GW2C_AckSignin = (function() {
+
+        /**
+         * Properties of a GW2C_AckSignin.
+         * @memberof msg
+         * @interface IGW2C_AckSignin
+         * @property {number|null} [result] GW2C_AckSignin result
+         */
+
+        /**
+         * Constructs a new GW2C_AckSignin.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckSignin.
+         * @implements IGW2C_AckSignin
+         * @constructor
+         * @param {msg.IGW2C_AckSignin=} [properties] Properties to set
+         */
+        function GW2C_AckSignin(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckSignin result.
+         * @member {number} result
+         * @memberof msg.GW2C_AckSignin
+         * @instance
+         */
+        GW2C_AckSignin.prototype.result = 0;
+
+        /**
+         * Creates a new GW2C_AckSignin instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckSignin
+         * @static
+         * @param {msg.IGW2C_AckSignin=} [properties] Properties to set
+         * @returns {msg.GW2C_AckSignin} GW2C_AckSignin instance
+         */
+        GW2C_AckSignin.create = function create(properties) {
+            return new GW2C_AckSignin(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckSignin message. Does not implicitly {@link msg.GW2C_AckSignin.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckSignin
+         * @static
+         * @param {msg.IGW2C_AckSignin} message GW2C_AckSignin message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckSignin.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.result != null && message.hasOwnProperty("result"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckSignin message, length delimited. Does not implicitly {@link msg.GW2C_AckSignin.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckSignin
+         * @static
+         * @param {msg.IGW2C_AckSignin} message GW2C_AckSignin message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckSignin.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckSignin message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckSignin
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckSignin} GW2C_AckSignin
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckSignin.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckSignin();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.result = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckSignin message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckSignin
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckSignin} GW2C_AckSignin
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckSignin.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckSignin message.
+         * @function verify
+         * @memberof msg.GW2C_AckSignin
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckSignin.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.result != null && message.hasOwnProperty("result"))
+                if (!$util.isInteger(message.result))
+                    return "result: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckSignin message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckSignin
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckSignin} GW2C_AckSignin
+         */
+        GW2C_AckSignin.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckSignin)
+                return object;
+            var message = new $root.msg.GW2C_AckSignin();
+            if (object.result != null)
+                message.result = object.result >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckSignin message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckSignin
+         * @static
+         * @param {msg.GW2C_AckSignin} message GW2C_AckSignin
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckSignin.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.result = 0;
+            if (message.result != null && message.hasOwnProperty("result"))
+                object.result = message.result;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckSignin to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckSignin
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckSignin.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckSignin;
+    })();
+
+    msg.C2GW_ReqDailyPower = (function() {
+
+        /**
+         * Properties of a C2GW_ReqDailyPower.
+         * @memberof msg
+         * @interface IC2GW_ReqDailyPower
+         */
+
+        /**
+         * Constructs a new C2GW_ReqDailyPower.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqDailyPower.
+         * @implements IC2GW_ReqDailyPower
+         * @constructor
+         * @param {msg.IC2GW_ReqDailyPower=} [properties] Properties to set
+         */
+        function C2GW_ReqDailyPower(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new C2GW_ReqDailyPower instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqDailyPower
+         * @static
+         * @param {msg.IC2GW_ReqDailyPower=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqDailyPower} C2GW_ReqDailyPower instance
+         */
+        C2GW_ReqDailyPower.create = function create(properties) {
+            return new C2GW_ReqDailyPower(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqDailyPower message. Does not implicitly {@link msg.C2GW_ReqDailyPower.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqDailyPower
+         * @static
+         * @param {msg.IC2GW_ReqDailyPower} message C2GW_ReqDailyPower message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqDailyPower.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqDailyPower message, length delimited. Does not implicitly {@link msg.C2GW_ReqDailyPower.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqDailyPower
+         * @static
+         * @param {msg.IC2GW_ReqDailyPower} message C2GW_ReqDailyPower message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqDailyPower.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqDailyPower message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqDailyPower
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqDailyPower} C2GW_ReqDailyPower
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqDailyPower.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqDailyPower();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqDailyPower message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqDailyPower
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqDailyPower} C2GW_ReqDailyPower
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqDailyPower.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqDailyPower message.
+         * @function verify
+         * @memberof msg.C2GW_ReqDailyPower
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqDailyPower.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqDailyPower message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqDailyPower
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqDailyPower} C2GW_ReqDailyPower
+         */
+        C2GW_ReqDailyPower.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqDailyPower)
+                return object;
+            return new $root.msg.C2GW_ReqDailyPower();
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqDailyPower message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqDailyPower
+         * @static
+         * @param {msg.C2GW_ReqDailyPower} message C2GW_ReqDailyPower
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqDailyPower.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this C2GW_ReqDailyPower to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqDailyPower
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqDailyPower.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqDailyPower;
+    })();
+
+    msg.GW2C_AckDailyPower = (function() {
+
+        /**
+         * Properties of a GW2C_AckDailyPower.
+         * @memberof msg
+         * @interface IGW2C_AckDailyPower
+         * @property {number|null} [result] GW2C_AckDailyPower result
+         */
+
+        /**
+         * Constructs a new GW2C_AckDailyPower.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckDailyPower.
+         * @implements IGW2C_AckDailyPower
+         * @constructor
+         * @param {msg.IGW2C_AckDailyPower=} [properties] Properties to set
+         */
+        function GW2C_AckDailyPower(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckDailyPower result.
+         * @member {number} result
+         * @memberof msg.GW2C_AckDailyPower
+         * @instance
+         */
+        GW2C_AckDailyPower.prototype.result = 0;
+
+        /**
+         * Creates a new GW2C_AckDailyPower instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckDailyPower
+         * @static
+         * @param {msg.IGW2C_AckDailyPower=} [properties] Properties to set
+         * @returns {msg.GW2C_AckDailyPower} GW2C_AckDailyPower instance
+         */
+        GW2C_AckDailyPower.create = function create(properties) {
+            return new GW2C_AckDailyPower(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckDailyPower message. Does not implicitly {@link msg.GW2C_AckDailyPower.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckDailyPower
+         * @static
+         * @param {msg.IGW2C_AckDailyPower} message GW2C_AckDailyPower message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckDailyPower.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.result != null && message.hasOwnProperty("result"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckDailyPower message, length delimited. Does not implicitly {@link msg.GW2C_AckDailyPower.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckDailyPower
+         * @static
+         * @param {msg.IGW2C_AckDailyPower} message GW2C_AckDailyPower message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckDailyPower.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckDailyPower message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckDailyPower
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckDailyPower} GW2C_AckDailyPower
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckDailyPower.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckDailyPower();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.result = reader.uint32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckDailyPower message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckDailyPower
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckDailyPower} GW2C_AckDailyPower
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckDailyPower.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckDailyPower message.
+         * @function verify
+         * @memberof msg.GW2C_AckDailyPower
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckDailyPower.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.result != null && message.hasOwnProperty("result"))
+                if (!$util.isInteger(message.result))
+                    return "result: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckDailyPower message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckDailyPower
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckDailyPower} GW2C_AckDailyPower
+         */
+        GW2C_AckDailyPower.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckDailyPower)
+                return object;
+            var message = new $root.msg.GW2C_AckDailyPower();
+            if (object.result != null)
+                message.result = object.result >>> 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckDailyPower message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckDailyPower
+         * @static
+         * @param {msg.GW2C_AckDailyPower} message GW2C_AckDailyPower
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckDailyPower.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults)
+                object.result = 0;
+            if (message.result != null && message.hasOwnProperty("result"))
+                object.result = message.result;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckDailyPower to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckDailyPower
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckDailyPower.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckDailyPower;
+    })();
+
     msg.EntityBase = (function() {
 
         /**
@@ -10963,6 +11849,266 @@ $root.msg = (function() {
         return GuideData;
     })();
 
+    msg.ActiveData = (function() {
+
+        /**
+         * Properties of an ActiveData.
+         * @memberof msg
+         * @interface IActiveData
+         * @property {number|null} [signinindex] ActiveData signinindex
+         * @property {number|Long|null} [signintime] ActiveData signintime
+         * @property {number|Long|null} [dailypowertime] ActiveData dailypowertime
+         */
+
+        /**
+         * Constructs a new ActiveData.
+         * @memberof msg
+         * @classdesc Represents an ActiveData.
+         * @implements IActiveData
+         * @constructor
+         * @param {msg.IActiveData=} [properties] Properties to set
+         */
+        function ActiveData(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ActiveData signinindex.
+         * @member {number} signinindex
+         * @memberof msg.ActiveData
+         * @instance
+         */
+        ActiveData.prototype.signinindex = 0;
+
+        /**
+         * ActiveData signintime.
+         * @member {number|Long} signintime
+         * @memberof msg.ActiveData
+         * @instance
+         */
+        ActiveData.prototype.signintime = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * ActiveData dailypowertime.
+         * @member {number|Long} dailypowertime
+         * @memberof msg.ActiveData
+         * @instance
+         */
+        ActiveData.prototype.dailypowertime = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * Creates a new ActiveData instance using the specified properties.
+         * @function create
+         * @memberof msg.ActiveData
+         * @static
+         * @param {msg.IActiveData=} [properties] Properties to set
+         * @returns {msg.ActiveData} ActiveData instance
+         */
+        ActiveData.create = function create(properties) {
+            return new ActiveData(properties);
+        };
+
+        /**
+         * Encodes the specified ActiveData message. Does not implicitly {@link msg.ActiveData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.ActiveData
+         * @static
+         * @param {msg.IActiveData} message ActiveData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ActiveData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.signinindex != null && message.hasOwnProperty("signinindex"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.signinindex);
+            if (message.signintime != null && message.hasOwnProperty("signintime"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.signintime);
+            if (message.dailypowertime != null && message.hasOwnProperty("dailypowertime"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.dailypowertime);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ActiveData message, length delimited. Does not implicitly {@link msg.ActiveData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.ActiveData
+         * @static
+         * @param {msg.IActiveData} message ActiveData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ActiveData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an ActiveData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.ActiveData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.ActiveData} ActiveData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ActiveData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.ActiveData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.signinindex = reader.uint32();
+                    break;
+                case 2:
+                    message.signintime = reader.uint64();
+                    break;
+                case 3:
+                    message.dailypowertime = reader.uint64();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an ActiveData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.ActiveData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.ActiveData} ActiveData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ActiveData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an ActiveData message.
+         * @function verify
+         * @memberof msg.ActiveData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ActiveData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.signinindex != null && message.hasOwnProperty("signinindex"))
+                if (!$util.isInteger(message.signinindex))
+                    return "signinindex: integer expected";
+            if (message.signintime != null && message.hasOwnProperty("signintime"))
+                if (!$util.isInteger(message.signintime) && !(message.signintime && $util.isInteger(message.signintime.low) && $util.isInteger(message.signintime.high)))
+                    return "signintime: integer|Long expected";
+            if (message.dailypowertime != null && message.hasOwnProperty("dailypowertime"))
+                if (!$util.isInteger(message.dailypowertime) && !(message.dailypowertime && $util.isInteger(message.dailypowertime.low) && $util.isInteger(message.dailypowertime.high)))
+                    return "dailypowertime: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates an ActiveData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.ActiveData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.ActiveData} ActiveData
+         */
+        ActiveData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.ActiveData)
+                return object;
+            var message = new $root.msg.ActiveData();
+            if (object.signinindex != null)
+                message.signinindex = object.signinindex >>> 0;
+            if (object.signintime != null)
+                if ($util.Long)
+                    (message.signintime = $util.Long.fromValue(object.signintime)).unsigned = true;
+                else if (typeof object.signintime === "string")
+                    message.signintime = parseInt(object.signintime, 10);
+                else if (typeof object.signintime === "number")
+                    message.signintime = object.signintime;
+                else if (typeof object.signintime === "object")
+                    message.signintime = new $util.LongBits(object.signintime.low >>> 0, object.signintime.high >>> 0).toNumber(true);
+            if (object.dailypowertime != null)
+                if ($util.Long)
+                    (message.dailypowertime = $util.Long.fromValue(object.dailypowertime)).unsigned = true;
+                else if (typeof object.dailypowertime === "string")
+                    message.dailypowertime = parseInt(object.dailypowertime, 10);
+                else if (typeof object.dailypowertime === "number")
+                    message.dailypowertime = object.dailypowertime;
+                else if (typeof object.dailypowertime === "object")
+                    message.dailypowertime = new $util.LongBits(object.dailypowertime.low >>> 0, object.dailypowertime.high >>> 0).toNumber(true);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an ActiveData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.ActiveData
+         * @static
+         * @param {msg.ActiveData} message ActiveData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ActiveData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.signinindex = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.signintime = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.signintime = options.longs === String ? "0" : 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.dailypowertime = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.dailypowertime = options.longs === String ? "0" : 0;
+            }
+            if (message.signinindex != null && message.hasOwnProperty("signinindex"))
+                object.signinindex = message.signinindex;
+            if (message.signintime != null && message.hasOwnProperty("signintime"))
+                if (typeof message.signintime === "number")
+                    object.signintime = options.longs === String ? String(message.signintime) : message.signintime;
+                else
+                    object.signintime = options.longs === String ? $util.Long.prototype.toString.call(message.signintime) : options.longs === Number ? new $util.LongBits(message.signintime.low >>> 0, message.signintime.high >>> 0).toNumber(true) : message.signintime;
+            if (message.dailypowertime != null && message.hasOwnProperty("dailypowertime"))
+                if (typeof message.dailypowertime === "number")
+                    object.dailypowertime = options.longs === String ? String(message.dailypowertime) : message.dailypowertime;
+                else
+                    object.dailypowertime = options.longs === String ? $util.Long.prototype.toString.call(message.dailypowertime) : options.longs === Number ? new $util.LongBits(message.dailypowertime.low >>> 0, message.dailypowertime.high >>> 0).toNumber(true) : message.dailypowertime;
+            return object;
+        };
+
+        /**
+         * Converts this ActiveData to JSON.
+         * @function toJSON
+         * @memberof msg.ActiveData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ActiveData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ActiveData;
+    })();
+
     msg.Serialize = (function() {
 
         /**
@@ -10978,6 +12124,8 @@ $root.msg = (function() {
          * @property {Array.<number>|null} [eventids] Serialize eventids
          * @property {Array.<msg.IBoxData>|null} [boxs] Serialize boxs
          * @property {msg.IGuideData|null} [guide] Serialize guide
+         * @property {Array.<msg.IShareData>|null} [shares] Serialize shares
+         * @property {msg.IActiveData|null} [active] Serialize active
          */
 
         /**
@@ -10992,6 +12140,7 @@ $root.msg = (function() {
             this.palaces = [];
             this.eventids = [];
             this.boxs = [];
+            this.shares = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -11071,6 +12220,22 @@ $root.msg = (function() {
         Serialize.prototype.guide = null;
 
         /**
+         * Serialize shares.
+         * @member {Array.<msg.IShareData>} shares
+         * @memberof msg.Serialize
+         * @instance
+         */
+        Serialize.prototype.shares = $util.emptyArray;
+
+        /**
+         * Serialize active.
+         * @member {msg.IActiveData|null|undefined} active
+         * @memberof msg.Serialize
+         * @instance
+         */
+        Serialize.prototype.active = null;
+
+        /**
          * Creates a new Serialize instance using the specified properties.
          * @function create
          * @memberof msg.Serialize
@@ -11115,6 +12280,11 @@ $root.msg = (function() {
                     $root.msg.BoxData.encode(message.boxs[i], writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
             if (message.guide != null && message.hasOwnProperty("guide"))
                 $root.msg.GuideData.encode(message.guide, writer.uint32(/* id 9, wireType 2 =*/74).fork()).ldelim();
+            if (message.shares != null && message.shares.length)
+                for (var i = 0; i < message.shares.length; ++i)
+                    $root.msg.ShareData.encode(message.shares[i], writer.uint32(/* id 10, wireType 2 =*/82).fork()).ldelim();
+            if (message.active != null && message.hasOwnProperty("active"))
+                $root.msg.ActiveData.encode(message.active, writer.uint32(/* id 11, wireType 2 =*/90).fork()).ldelim();
             return writer;
         };
 
@@ -11186,6 +12356,14 @@ $root.msg = (function() {
                     break;
                 case 9:
                     message.guide = $root.msg.GuideData.decode(reader, reader.uint32());
+                    break;
+                case 10:
+                    if (!(message.shares && message.shares.length))
+                        message.shares = [];
+                    message.shares.push($root.msg.ShareData.decode(reader, reader.uint32()));
+                    break;
+                case 11:
+                    message.active = $root.msg.ActiveData.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -11277,6 +12455,20 @@ $root.msg = (function() {
                 if (error)
                     return "guide." + error;
             }
+            if (message.shares != null && message.hasOwnProperty("shares")) {
+                if (!Array.isArray(message.shares))
+                    return "shares: array expected";
+                for (var i = 0; i < message.shares.length; ++i) {
+                    var error = $root.msg.ShareData.verify(message.shares[i]);
+                    if (error)
+                        return "shares." + error;
+                }
+            }
+            if (message.active != null && message.hasOwnProperty("active")) {
+                var error = $root.msg.ActiveData.verify(message.active);
+                if (error)
+                    return "active." + error;
+            }
             return null;
         };
 
@@ -11349,6 +12541,21 @@ $root.msg = (function() {
                     throw TypeError(".msg.Serialize.guide: object expected");
                 message.guide = $root.msg.GuideData.fromObject(object.guide);
             }
+            if (object.shares) {
+                if (!Array.isArray(object.shares))
+                    throw TypeError(".msg.Serialize.shares: array expected");
+                message.shares = [];
+                for (var i = 0; i < object.shares.length; ++i) {
+                    if (typeof object.shares[i] !== "object")
+                        throw TypeError(".msg.Serialize.shares: object expected");
+                    message.shares[i] = $root.msg.ShareData.fromObject(object.shares[i]);
+                }
+            }
+            if (object.active != null) {
+                if (typeof object.active !== "object")
+                    throw TypeError(".msg.Serialize.active: object expected");
+                message.active = $root.msg.ActiveData.fromObject(object.active);
+            }
             return message;
         };
 
@@ -11369,6 +12576,7 @@ $root.msg = (function() {
                 object.palaces = [];
                 object.eventids = [];
                 object.boxs = [];
+                object.shares = [];
             }
             if (options.defaults) {
                 object.entity = null;
@@ -11377,6 +12585,7 @@ $root.msg = (function() {
                 object.maid = null;
                 object.travel = null;
                 object.guide = null;
+                object.active = null;
             }
             if (message.entity != null && message.hasOwnProperty("entity"))
                 object.entity = $root.msg.EntityBase.toObject(message.entity, options);
@@ -11405,6 +12614,13 @@ $root.msg = (function() {
             }
             if (message.guide != null && message.hasOwnProperty("guide"))
                 object.guide = $root.msg.GuideData.toObject(message.guide, options);
+            if (message.shares && message.shares.length) {
+                object.shares = [];
+                for (var j = 0; j < message.shares.length; ++j)
+                    object.shares[j] = $root.msg.ShareData.toObject(message.shares[j], options);
+            }
+            if (message.active != null && message.hasOwnProperty("active"))
+                object.active = $root.msg.ActiveData.toObject(message.active, options);
             return object;
         };
 
@@ -12425,6 +13641,911 @@ $root.msg = (function() {
         values[valuesById[6] = "Drop"] = 6;
         values[valuesById[7] = "MiniGame"] = 7;
         return values;
+    })();
+
+    msg.ShareData = (function() {
+
+        /**
+         * Properties of a ShareData.
+         * @memberof msg
+         * @interface IShareData
+         * @property {number|null} [id] ShareData id
+         * @property {Array.<number|Long>|null} [times] ShareData times
+         */
+
+        /**
+         * Constructs a new ShareData.
+         * @memberof msg
+         * @classdesc Represents a ShareData.
+         * @implements IShareData
+         * @constructor
+         * @param {msg.IShareData=} [properties] Properties to set
+         */
+        function ShareData(properties) {
+            this.times = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ShareData id.
+         * @member {number} id
+         * @memberof msg.ShareData
+         * @instance
+         */
+        ShareData.prototype.id = 0;
+
+        /**
+         * ShareData times.
+         * @member {Array.<number|Long>} times
+         * @memberof msg.ShareData
+         * @instance
+         */
+        ShareData.prototype.times = $util.emptyArray;
+
+        /**
+         * Creates a new ShareData instance using the specified properties.
+         * @function create
+         * @memberof msg.ShareData
+         * @static
+         * @param {msg.IShareData=} [properties] Properties to set
+         * @returns {msg.ShareData} ShareData instance
+         */
+        ShareData.create = function create(properties) {
+            return new ShareData(properties);
+        };
+
+        /**
+         * Encodes the specified ShareData message. Does not implicitly {@link msg.ShareData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.ShareData
+         * @static
+         * @param {msg.IShareData} message ShareData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ShareData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.id != null && message.hasOwnProperty("id"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.id);
+            if (message.times != null && message.times.length)
+                for (var i = 0; i < message.times.length; ++i)
+                    writer.uint32(/* id 2, wireType 0 =*/16).uint64(message.times[i]);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ShareData message, length delimited. Does not implicitly {@link msg.ShareData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.ShareData
+         * @static
+         * @param {msg.IShareData} message ShareData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ShareData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ShareData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.ShareData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.ShareData} ShareData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ShareData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.ShareData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.id = reader.uint32();
+                    break;
+                case 2:
+                    if (!(message.times && message.times.length))
+                        message.times = [];
+                    if ((tag & 7) === 2) {
+                        var end2 = reader.uint32() + reader.pos;
+                        while (reader.pos < end2)
+                            message.times.push(reader.uint64());
+                    } else
+                        message.times.push(reader.uint64());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ShareData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.ShareData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.ShareData} ShareData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ShareData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ShareData message.
+         * @function verify
+         * @memberof msg.ShareData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ShareData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isInteger(message.id))
+                    return "id: integer expected";
+            if (message.times != null && message.hasOwnProperty("times")) {
+                if (!Array.isArray(message.times))
+                    return "times: array expected";
+                for (var i = 0; i < message.times.length; ++i)
+                    if (!$util.isInteger(message.times[i]) && !(message.times[i] && $util.isInteger(message.times[i].low) && $util.isInteger(message.times[i].high)))
+                        return "times: integer|Long[] expected";
+            }
+            return null;
+        };
+
+        /**
+         * Creates a ShareData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.ShareData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.ShareData} ShareData
+         */
+        ShareData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.ShareData)
+                return object;
+            var message = new $root.msg.ShareData();
+            if (object.id != null)
+                message.id = object.id >>> 0;
+            if (object.times) {
+                if (!Array.isArray(object.times))
+                    throw TypeError(".msg.ShareData.times: array expected");
+                message.times = [];
+                for (var i = 0; i < object.times.length; ++i)
+                    if ($util.Long)
+                        (message.times[i] = $util.Long.fromValue(object.times[i])).unsigned = true;
+                    else if (typeof object.times[i] === "string")
+                        message.times[i] = parseInt(object.times[i], 10);
+                    else if (typeof object.times[i] === "number")
+                        message.times[i] = object.times[i];
+                    else if (typeof object.times[i] === "object")
+                        message.times[i] = new $util.LongBits(object.times[i].low >>> 0, object.times[i].high >>> 0).toNumber(true);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ShareData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.ShareData
+         * @static
+         * @param {msg.ShareData} message ShareData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ShareData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.times = [];
+            if (options.defaults)
+                object.id = 0;
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.times && message.times.length) {
+                object.times = [];
+                for (var j = 0; j < message.times.length; ++j)
+                    if (typeof message.times[j] === "number")
+                        object.times[j] = options.longs === String ? String(message.times[j]) : message.times[j];
+                    else
+                        object.times[j] = options.longs === String ? $util.Long.prototype.toString.call(message.times[j]) : options.longs === Number ? new $util.LongBits(message.times[j].low >>> 0, message.times[j].high >>> 0).toNumber(true) : message.times[j];
+            }
+            return object;
+        };
+
+        /**
+         * Converts this ShareData to JSON.
+         * @function toJSON
+         * @memberof msg.ShareData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ShareData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ShareData;
+    })();
+
+    msg.GW2C_PushShareData = (function() {
+
+        /**
+         * Properties of a GW2C_PushShareData.
+         * @memberof msg
+         * @interface IGW2C_PushShareData
+         * @property {Array.<msg.IShareData>|null} [shares] GW2C_PushShareData shares
+         */
+
+        /**
+         * Constructs a new GW2C_PushShareData.
+         * @memberof msg
+         * @classdesc Represents a GW2C_PushShareData.
+         * @implements IGW2C_PushShareData
+         * @constructor
+         * @param {msg.IGW2C_PushShareData=} [properties] Properties to set
+         */
+        function GW2C_PushShareData(properties) {
+            this.shares = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_PushShareData shares.
+         * @member {Array.<msg.IShareData>} shares
+         * @memberof msg.GW2C_PushShareData
+         * @instance
+         */
+        GW2C_PushShareData.prototype.shares = $util.emptyArray;
+
+        /**
+         * Creates a new GW2C_PushShareData instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_PushShareData
+         * @static
+         * @param {msg.IGW2C_PushShareData=} [properties] Properties to set
+         * @returns {msg.GW2C_PushShareData} GW2C_PushShareData instance
+         */
+        GW2C_PushShareData.create = function create(properties) {
+            return new GW2C_PushShareData(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_PushShareData message. Does not implicitly {@link msg.GW2C_PushShareData.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_PushShareData
+         * @static
+         * @param {msg.IGW2C_PushShareData} message GW2C_PushShareData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_PushShareData.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.shares != null && message.shares.length)
+                for (var i = 0; i < message.shares.length; ++i)
+                    $root.msg.ShareData.encode(message.shares[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_PushShareData message, length delimited. Does not implicitly {@link msg.GW2C_PushShareData.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_PushShareData
+         * @static
+         * @param {msg.IGW2C_PushShareData} message GW2C_PushShareData message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_PushShareData.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_PushShareData message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_PushShareData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_PushShareData} GW2C_PushShareData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_PushShareData.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_PushShareData();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.shares && message.shares.length))
+                        message.shares = [];
+                    message.shares.push($root.msg.ShareData.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_PushShareData message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_PushShareData
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_PushShareData} GW2C_PushShareData
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_PushShareData.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_PushShareData message.
+         * @function verify
+         * @memberof msg.GW2C_PushShareData
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_PushShareData.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.shares != null && message.hasOwnProperty("shares")) {
+                if (!Array.isArray(message.shares))
+                    return "shares: array expected";
+                for (var i = 0; i < message.shares.length; ++i) {
+                    var error = $root.msg.ShareData.verify(message.shares[i]);
+                    if (error)
+                        return "shares." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_PushShareData message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_PushShareData
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_PushShareData} GW2C_PushShareData
+         */
+        GW2C_PushShareData.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_PushShareData)
+                return object;
+            var message = new $root.msg.GW2C_PushShareData();
+            if (object.shares) {
+                if (!Array.isArray(object.shares))
+                    throw TypeError(".msg.GW2C_PushShareData.shares: array expected");
+                message.shares = [];
+                for (var i = 0; i < object.shares.length; ++i) {
+                    if (typeof object.shares[i] !== "object")
+                        throw TypeError(".msg.GW2C_PushShareData.shares: object expected");
+                    message.shares[i] = $root.msg.ShareData.fromObject(object.shares[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_PushShareData message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_PushShareData
+         * @static
+         * @param {msg.GW2C_PushShareData} message GW2C_PushShareData
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_PushShareData.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.shares = [];
+            if (message.shares && message.shares.length) {
+                object.shares = [];
+                for (var j = 0; j < message.shares.length; ++j)
+                    object.shares[j] = $root.msg.ShareData.toObject(message.shares[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_PushShareData to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_PushShareData
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_PushShareData.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_PushShareData;
+    })();
+
+    msg.C2GW_ReqShareMessage = (function() {
+
+        /**
+         * Properties of a C2GW_ReqShareMessage.
+         * @memberof msg
+         * @interface IC2GW_ReqShareMessage
+         * @property {number|null} [sharetype] C2GW_ReqShareMessage sharetype
+         * @property {number|null} [id] C2GW_ReqShareMessage id
+         * @property {number|Long|null} [time] C2GW_ReqShareMessage time
+         */
+
+        /**
+         * Constructs a new C2GW_ReqShareMessage.
+         * @memberof msg
+         * @classdesc Represents a C2GW_ReqShareMessage.
+         * @implements IC2GW_ReqShareMessage
+         * @constructor
+         * @param {msg.IC2GW_ReqShareMessage=} [properties] Properties to set
+         */
+        function C2GW_ReqShareMessage(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * C2GW_ReqShareMessage sharetype.
+         * @member {number} sharetype
+         * @memberof msg.C2GW_ReqShareMessage
+         * @instance
+         */
+        C2GW_ReqShareMessage.prototype.sharetype = 0;
+
+        /**
+         * C2GW_ReqShareMessage id.
+         * @member {number} id
+         * @memberof msg.C2GW_ReqShareMessage
+         * @instance
+         */
+        C2GW_ReqShareMessage.prototype.id = 0;
+
+        /**
+         * C2GW_ReqShareMessage time.
+         * @member {number|Long} time
+         * @memberof msg.C2GW_ReqShareMessage
+         * @instance
+         */
+        C2GW_ReqShareMessage.prototype.time = $util.Long ? $util.Long.fromBits(0,0,true) : 0;
+
+        /**
+         * Creates a new C2GW_ReqShareMessage instance using the specified properties.
+         * @function create
+         * @memberof msg.C2GW_ReqShareMessage
+         * @static
+         * @param {msg.IC2GW_ReqShareMessage=} [properties] Properties to set
+         * @returns {msg.C2GW_ReqShareMessage} C2GW_ReqShareMessage instance
+         */
+        C2GW_ReqShareMessage.create = function create(properties) {
+            return new C2GW_ReqShareMessage(properties);
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqShareMessage message. Does not implicitly {@link msg.C2GW_ReqShareMessage.verify|verify} messages.
+         * @function encode
+         * @memberof msg.C2GW_ReqShareMessage
+         * @static
+         * @param {msg.IC2GW_ReqShareMessage} message C2GW_ReqShareMessage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqShareMessage.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.sharetype != null && message.hasOwnProperty("sharetype"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.sharetype);
+            if (message.id != null && message.hasOwnProperty("id"))
+                writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.id);
+            if (message.time != null && message.hasOwnProperty("time"))
+                writer.uint32(/* id 3, wireType 0 =*/24).uint64(message.time);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified C2GW_ReqShareMessage message, length delimited. Does not implicitly {@link msg.C2GW_ReqShareMessage.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.C2GW_ReqShareMessage
+         * @static
+         * @param {msg.IC2GW_ReqShareMessage} message C2GW_ReqShareMessage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        C2GW_ReqShareMessage.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a C2GW_ReqShareMessage message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.C2GW_ReqShareMessage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.C2GW_ReqShareMessage} C2GW_ReqShareMessage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqShareMessage.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.C2GW_ReqShareMessage();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.sharetype = reader.uint32();
+                    break;
+                case 2:
+                    message.id = reader.uint32();
+                    break;
+                case 3:
+                    message.time = reader.uint64();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a C2GW_ReqShareMessage message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.C2GW_ReqShareMessage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.C2GW_ReqShareMessage} C2GW_ReqShareMessage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        C2GW_ReqShareMessage.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a C2GW_ReqShareMessage message.
+         * @function verify
+         * @memberof msg.C2GW_ReqShareMessage
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        C2GW_ReqShareMessage.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.sharetype != null && message.hasOwnProperty("sharetype"))
+                if (!$util.isInteger(message.sharetype))
+                    return "sharetype: integer expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isInteger(message.id))
+                    return "id: integer expected";
+            if (message.time != null && message.hasOwnProperty("time"))
+                if (!$util.isInteger(message.time) && !(message.time && $util.isInteger(message.time.low) && $util.isInteger(message.time.high)))
+                    return "time: integer|Long expected";
+            return null;
+        };
+
+        /**
+         * Creates a C2GW_ReqShareMessage message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.C2GW_ReqShareMessage
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.C2GW_ReqShareMessage} C2GW_ReqShareMessage
+         */
+        C2GW_ReqShareMessage.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.C2GW_ReqShareMessage)
+                return object;
+            var message = new $root.msg.C2GW_ReqShareMessage();
+            if (object.sharetype != null)
+                message.sharetype = object.sharetype >>> 0;
+            if (object.id != null)
+                message.id = object.id >>> 0;
+            if (object.time != null)
+                if ($util.Long)
+                    (message.time = $util.Long.fromValue(object.time)).unsigned = true;
+                else if (typeof object.time === "string")
+                    message.time = parseInt(object.time, 10);
+                else if (typeof object.time === "number")
+                    message.time = object.time;
+                else if (typeof object.time === "object")
+                    message.time = new $util.LongBits(object.time.low >>> 0, object.time.high >>> 0).toNumber(true);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a C2GW_ReqShareMessage message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.C2GW_ReqShareMessage
+         * @static
+         * @param {msg.C2GW_ReqShareMessage} message C2GW_ReqShareMessage
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        C2GW_ReqShareMessage.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.sharetype = 0;
+                object.id = 0;
+                if ($util.Long) {
+                    var long = new $util.Long(0, 0, true);
+                    object.time = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                } else
+                    object.time = options.longs === String ? "0" : 0;
+            }
+            if (message.sharetype != null && message.hasOwnProperty("sharetype"))
+                object.sharetype = message.sharetype;
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
+            if (message.time != null && message.hasOwnProperty("time"))
+                if (typeof message.time === "number")
+                    object.time = options.longs === String ? String(message.time) : message.time;
+                else
+                    object.time = options.longs === String ? $util.Long.prototype.toString.call(message.time) : options.longs === Number ? new $util.LongBits(message.time.low >>> 0, message.time.high >>> 0).toNumber(true) : message.time;
+            return object;
+        };
+
+        /**
+         * Converts this C2GW_ReqShareMessage to JSON.
+         * @function toJSON
+         * @memberof msg.C2GW_ReqShareMessage
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        C2GW_ReqShareMessage.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return C2GW_ReqShareMessage;
+    })();
+
+    msg.GW2C_AckShareMessage = (function() {
+
+        /**
+         * Properties of a GW2C_AckShareMessage.
+         * @memberof msg
+         * @interface IGW2C_AckShareMessage
+         * @property {number|null} [result] GW2C_AckShareMessage result
+         * @property {boolean|null} [reward] GW2C_AckShareMessage reward
+         */
+
+        /**
+         * Constructs a new GW2C_AckShareMessage.
+         * @memberof msg
+         * @classdesc Represents a GW2C_AckShareMessage.
+         * @implements IGW2C_AckShareMessage
+         * @constructor
+         * @param {msg.IGW2C_AckShareMessage=} [properties] Properties to set
+         */
+        function GW2C_AckShareMessage(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GW2C_AckShareMessage result.
+         * @member {number} result
+         * @memberof msg.GW2C_AckShareMessage
+         * @instance
+         */
+        GW2C_AckShareMessage.prototype.result = 0;
+
+        /**
+         * GW2C_AckShareMessage reward.
+         * @member {boolean} reward
+         * @memberof msg.GW2C_AckShareMessage
+         * @instance
+         */
+        GW2C_AckShareMessage.prototype.reward = false;
+
+        /**
+         * Creates a new GW2C_AckShareMessage instance using the specified properties.
+         * @function create
+         * @memberof msg.GW2C_AckShareMessage
+         * @static
+         * @param {msg.IGW2C_AckShareMessage=} [properties] Properties to set
+         * @returns {msg.GW2C_AckShareMessage} GW2C_AckShareMessage instance
+         */
+        GW2C_AckShareMessage.create = function create(properties) {
+            return new GW2C_AckShareMessage(properties);
+        };
+
+        /**
+         * Encodes the specified GW2C_AckShareMessage message. Does not implicitly {@link msg.GW2C_AckShareMessage.verify|verify} messages.
+         * @function encode
+         * @memberof msg.GW2C_AckShareMessage
+         * @static
+         * @param {msg.IGW2C_AckShareMessage} message GW2C_AckShareMessage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckShareMessage.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.result != null && message.hasOwnProperty("result"))
+                writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
+            if (message.reward != null && message.hasOwnProperty("reward"))
+                writer.uint32(/* id 2, wireType 0 =*/16).bool(message.reward);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GW2C_AckShareMessage message, length delimited. Does not implicitly {@link msg.GW2C_AckShareMessage.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof msg.GW2C_AckShareMessage
+         * @static
+         * @param {msg.IGW2C_AckShareMessage} message GW2C_AckShareMessage message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GW2C_AckShareMessage.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GW2C_AckShareMessage message from the specified reader or buffer.
+         * @function decode
+         * @memberof msg.GW2C_AckShareMessage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {msg.GW2C_AckShareMessage} GW2C_AckShareMessage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckShareMessage.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.msg.GW2C_AckShareMessage();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.result = reader.uint32();
+                    break;
+                case 2:
+                    message.reward = reader.bool();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GW2C_AckShareMessage message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof msg.GW2C_AckShareMessage
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {msg.GW2C_AckShareMessage} GW2C_AckShareMessage
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GW2C_AckShareMessage.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GW2C_AckShareMessage message.
+         * @function verify
+         * @memberof msg.GW2C_AckShareMessage
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GW2C_AckShareMessage.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.result != null && message.hasOwnProperty("result"))
+                if (!$util.isInteger(message.result))
+                    return "result: integer expected";
+            if (message.reward != null && message.hasOwnProperty("reward"))
+                if (typeof message.reward !== "boolean")
+                    return "reward: boolean expected";
+            return null;
+        };
+
+        /**
+         * Creates a GW2C_AckShareMessage message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof msg.GW2C_AckShareMessage
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {msg.GW2C_AckShareMessage} GW2C_AckShareMessage
+         */
+        GW2C_AckShareMessage.fromObject = function fromObject(object) {
+            if (object instanceof $root.msg.GW2C_AckShareMessage)
+                return object;
+            var message = new $root.msg.GW2C_AckShareMessage();
+            if (object.result != null)
+                message.result = object.result >>> 0;
+            if (object.reward != null)
+                message.reward = Boolean(object.reward);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GW2C_AckShareMessage message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof msg.GW2C_AckShareMessage
+         * @static
+         * @param {msg.GW2C_AckShareMessage} message GW2C_AckShareMessage
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GW2C_AckShareMessage.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.result = 0;
+                object.reward = false;
+            }
+            if (message.result != null && message.hasOwnProperty("result"))
+                object.result = message.result;
+            if (message.reward != null && message.hasOwnProperty("reward"))
+                object.reward = message.reward;
+            return object;
+        };
+
+        /**
+         * Converts this GW2C_AckShareMessage to JSON.
+         * @function toJSON
+         * @memberof msg.GW2C_AckShareMessage
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GW2C_AckShareMessage.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GW2C_AckShareMessage;
     })();
 
     msg.BattleUser = (function() {
@@ -25050,13 +27171,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
@@ -25305,13 +27420,7 @@ $root.msg = (function() {
                 } else
                     object.uid = options.longs === String ? "0" : 0;
                 object.name = "";
-                if (options.bytes === String)
-                    object.buf = "";
-                else {
-                    object.buf = [];
-                    if (options.bytes !== Array)
-                        object.buf = $util.newBuffer(object.buf);
-                }
+                object.buf = options.bytes === String ? "" : [];
             }
             if (message.uid != null && message.hasOwnProperty("uid"))
                 if (typeof message.uid === "number")
