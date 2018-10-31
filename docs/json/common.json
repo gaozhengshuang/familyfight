@@ -54,7 +54,7 @@
     "Signin": [
         {
             "Reward": 30006,
-            "Icon": "Image/GameScene/Common/image_powerIcon",
+            "Icon": "Image/GameScene/Common/image_item60001",
             "Desc": "双倍金币卡+15"
         },
         {
@@ -64,7 +64,7 @@
         },
 		 {
             "Reward": 30008,
-            "Icon": "Image/GameScene/Common/image_powerIcon",
+            "Icon": "Image/GameScene/Common/image_item60001",
             "Desc": "双倍金币卡+25"
         }, 
 		 {
@@ -79,12 +79,12 @@
         },
 		{
             "Reward": 30011,
-            "Icon": "Image/GameScene/Common/image_powerIcon",
+            "Icon": "Image/GameScene/Common/image_item60001",
             "Desc": "小游戏次数+5"
         },
 		{
             "Reward": 30012,
-            "Icon": "Image/GameScene/Common/image_powerIcon",
+            "Icon": "Image/GameScene/Common/image_box",
             "Desc": "神秘礼包\n连续登陆7天"
 		}
     ],
