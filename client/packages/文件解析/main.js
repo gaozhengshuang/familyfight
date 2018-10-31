@@ -37,7 +37,8 @@ module.exports = {
                 'functionopenbase',
                 'palacepartbase',
                 'lovedialoguebase',
-                'dateeventbase'
+                'dateeventbase',
+                'sharebase'
             ];
             Editor.log('开始生成JSON');
 

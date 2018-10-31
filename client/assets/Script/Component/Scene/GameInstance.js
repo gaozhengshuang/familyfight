@@ -28,6 +28,7 @@ cc.Class({
             Game.ViewController,
             Game.GuideController,
             Game.RewardController,
+            Game.ActiveController,
         ];
 
         this.models = [
