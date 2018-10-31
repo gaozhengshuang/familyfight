@@ -1860,7 +1860,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "button_screen",
+    "_name": "button_gomemory",
     "_objFlags": 0,
     "_parent": {
       "__id__": 6
@@ -1871,7 +1871,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 63
@@ -1921,7 +1921,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_canLovenum",
+    "_name": "label_gomemeroy",
     "_objFlags": 0,
     "_parent": {
       "__id__": 58
@@ -2142,7 +2142,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "button_screen",
+    "_name": "button_share",
     "_objFlags": 0,
     "_parent": {
       "__id__": 6
@@ -2156,7 +2156,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 76
@@ -2206,7 +2206,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_canLovenum",
+    "_name": "label_share",
     "_objFlags": 0,
     "_parent": {
       "__id__": 67
@@ -2242,7 +2242,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 88,
+      "width": 82,
       "height": 40
     },
     "_rotationX": 0,
@@ -2315,7 +2315,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_canLovenum",
+    "_name": "label_sharetime",
     "_objFlags": 0,
     "_parent": {
       "__id__": 67
@@ -2351,7 +2351,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 41,
+      "width": 35,
       "height": 40
     },
     "_rotationX": 0,
