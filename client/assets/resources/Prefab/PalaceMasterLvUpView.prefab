@@ -1253,7 +1253,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 38
@@ -1335,14 +1335,14 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_lvTime1",
+    "_name": "label_lvTime2",
     "_objFlags": 0,
     "_parent": {
       "__id__": 36
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 41
@@ -1451,7 +1451,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 45
@@ -1540,7 +1540,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 48
@@ -1622,14 +1622,14 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_lvnum1",
+    "_name": "label_lvnum2",
     "_objFlags": 0,
     "_parent": {
       "__id__": 36
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 51
@@ -1738,7 +1738,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 55
