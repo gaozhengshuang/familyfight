@@ -53,19 +53,44 @@
     "签到":"",
     "Signin": [
         {
-            "Reward": 10001,
-            "Icon": "",
-            "Desc": ""
+            "Reward": 30006,
+            "Icon": "Image/GameScene/Common/image_powerIcon",
+            "Desc": "双倍金币卡+15"
         },
         {
-            "Reward": 10001,
-            "Icon": "",
-            "Desc": ""
-        }
+            "Reward": 30007,
+            "Icon": "Image/GameScene/Common/image_powerIcon",
+            "Desc": "体力+20"
+        },
+		 {
+            "Reward": 30008,
+            "Icon": "Image/GameScene/Common/image_powerIcon",
+            "Desc": "双倍金币卡+25"
+        }, 
+		 {
+            "Reward": 30009,
+            "Icon": "Image/GameScene/Item/image_item10001",
+            "Desc": "后宫卡牌+2"
+        },
+		{
+            "Reward": 30010,
+            "Icon": "Image/GameScene/Common/image_powerIcon",
+            "Desc": "体力+30"
+        },
+		{
+            "Reward": 30011,
+            "Icon": "Image/GameScene/Common/image_powerIcon",
+            "Desc": "小游戏次数+5"
+        },
+		{
+            "Reward": 30012,
+            "Icon": "Image/GameScene/Common/image_powerIcon",
+            "Desc": "神秘礼包\n连续登陆7天"
+		}
     ],
     "每日体力": "",
     "DailyPower": {
-        "Reward": 10002,
+        "Reward": 30013,
         "Time":[
             {
                 "MinTime": 39600,
