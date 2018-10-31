@@ -524,20 +524,21 @@ func (this *UserActive) Signin() uint32 {
 func (this *UserActive) DailyPower() uint32 {
 	cursecond := util.CURTIME()
 	curtime := time.Unix(cursecond, 0)
-	findTimeRange := interface{} 
+	findIndex := -1 
 	for _, v := range tbl.Common.DailyPower.Time {
 		if curtime.Second() >= v.MinTime && curtime.Second() <= v.MaxTime {
-			findTimeRange = v
+			findIndex = v
 			break
 		}
 	}
-	if findTimeRange == nil {
+	if findIndex == -1 {
 		this.user.SendNotify("当前不在每日体力活动时间内")
 		return 1
 	}
 	pretime := time.Unix(int64(this.dailyPowerTime), 0)
-	if util.IsSameDay(curtime, int64(this.dailyPowerTime)){
-		if pretime.Second() >= findTimeRange.MinTime && pretime.Second() <= findTimeRange.MaxTime {
+	if util.IsSameDay(cursecond, int64(this.dailyPowerTime)){
+		timeDefine = tbl.Common.DailyPower.Time[findIndex]
+		if pretime.Second() >= int64(timeDefine.MinTime) && pretime.Second() <= int64(timeDefine.MaxTime) {
 			this.user.SendNotify("该时间段体力已领取")
 			return 2
 		}
