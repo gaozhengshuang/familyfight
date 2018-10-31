@@ -1,8 +1,6 @@
 package main
 
 import (
-	"internal/syscall/unix"
-	"os/user"
 	"fmt"
 	"strconv"
 	"strings"
@@ -512,8 +510,8 @@ func (this *UserActive) Signin() uint32 {
 		this.signinIndex = 0
 	}
 	conf := tbl.Common.Signin[this.signinIndex]
-	golds, rewards := RewardMgr().DropToUser(this.user, conf.Reward, "签到奖励", true)
-	this.SendRewardNotify(golds, rewards)
+	golds, rewards := RewardMgr().DropToUser(this.user, uint32(conf.Reward), "签到奖励", true, 0)
+	this.user.SendRewardNotify(golds, rewards)
 	this.signinIndex = this.signinIndex + 1
 	if this.signinIndex >= uint32(len(tbl.Common.Signin)) {
 		this.signinIndex = 0
@@ -525,8 +523,8 @@ func (this *UserActive) Signin() uint32 {
 
 func (this *UserActive) DailyPower() uint32 {
 	cursecond := util.CURTIME()
-	curtime := time.Uinx(cursecond, 0)
-	findTimeRange := nil
+	curtime := time.Unix(cursecond, 0)
+	findTimeRange := interface{} 
 	for _, v := range tbl.Common.DailyPower.Time {
 		if curtime.Second() >= v.MinTime && curtime.Second() <= v.MaxTime {
 			findTimeRange = v
@@ -544,8 +542,8 @@ func (this *UserActive) DailyPower() uint32 {
 			return 2
 		}
 	}
-	golds, rewards := RewardMgr().DropToUser(this.user, uint32(tbl.Common.DailyPower.Reward), "每日体力", true)
-	this.SendRewardNotify(golds, rewards)
+	golds, rewards := RewardMgr().DropToUser(this.user, uint32(tbl.Common.DailyPower.Reward), "每日体力", true, 0)
+	this.user.SendRewardNotify(golds, rewards)
 	this.dailyPowerTime = uint64(cursecond)
 	this.Syn()
 	return 0
