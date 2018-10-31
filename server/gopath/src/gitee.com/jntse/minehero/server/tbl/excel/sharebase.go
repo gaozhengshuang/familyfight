@@ -36,6 +36,12 @@ type ShareDefine struct {
 
 	//在时间范围内的次数限制
 	Times uint32
+
+	//分享标题
+	Title string
+
+	//分享图片路径
+	Image string
 }
 
 // 添加init初始实例 "Add By Tse"
