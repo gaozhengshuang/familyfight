@@ -75,6 +75,8 @@ func (this* C2GWMsgHandler) Init() {
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqLuckily{}, on_C2GW_ReqLuckily)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqTryst{}, on_C2GW_ReqTryst)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqShareMessage{}, on_C2GW_ReqShareMessage)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqSignin{}, on_C2GW_ReqSignin)
+	this.msgparser.RegistProtoMsg(msg.C2GW_ReqDailyPower{}, on_C2GW_ReqDailyPower)
 	//后宫
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqPalaceTakeBack{}, on_C2GW_ReqPalaceTakeBack)
 	this.msgparser.RegistProtoMsg(msg.C2GW_ReqMasterLevelup{}, on_C2GW_ReqMasterLevelup)
@@ -574,6 +576,42 @@ func on_C2GW_ReqShareMessage(session network.IBaseNetSession, message interface{
 	send := &msg.GW2C_AckShareMessage{}
 	send.Result = pb.Uint32(result)
 	send.Reward = pb.Bool(reward)
+	user.SendMsg(send)
+}
+//签到 
+func on_C2GW_ReqSignin(session network.IBaseNetSession, message interface{}) {
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result := user.active.Signin()
+	send := &msg.GW2C_AckSignin{}
+	user.SendMsg(send)
+}
+//每日体力
+func on_C2GW_ReqDailyPower(session network.IBaseNetSession, message interface{}) {
+	user := ExtractSessionUser(session)
+	if user == nil {
+		log.Fatal(fmt.Sprintf("sid:%d 没有绑定用户", session.Id()))
+		session.Close()
+		return
+	}
+
+	if user.IsOnline() == false {
+		log.Error("玩家[%s %d] 没有登陆Gate成功", user.Name(), user.Id())
+		session.Close()
+		return
+	}
+	result := user.active.DailyPower()
+	send := &msg.GW2C_AckDailyPower{}
 	user.SendMsg(send)
 }
 //收取

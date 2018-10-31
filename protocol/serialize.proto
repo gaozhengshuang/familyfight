@@ -148,6 +148,13 @@ message GuideData
     optional uint32 curguide    = 2;            //最近完成的引导
     optional uint32 maxlevel    = 3;            //点击过的最大关卡
 }
+
+message ActiveData
+{
+    optional uint32 signinindex = 1;            //签到到第几天了
+    optional uint64 signintime  = 2;            //签到时间
+    optional uint64 dailypowertime = 3;         //每日体力领取时间
+}
 message Serialize {
     optional EntityBase entity  = 1;
     optional UserBase   base    = 2;
@@ -159,6 +166,7 @@ message Serialize {
     repeated BoxData boxs       = 8;            //掉落的箱子数量
     optional GuideData guide    = 9;
     repeated ShareData shares   = 10;
+    optional ActiveData active  = 11;
 }
 
 message RewardData

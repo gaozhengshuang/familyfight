@@ -1,9 +1,12 @@
 package main
 
 import (
+	"internal/syscall/unix"
+	"os/user"
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 
 	_ "gitee.com/jntse/gotoolkit/eventqueue"
 	"gitee.com/jntse/gotoolkit/log"
@@ -462,5 +465,88 @@ func (this *GateUser) ReqTryst(palaceid uint32, key uint32) uint32 {
 	this.SendRewardNotify(golds, rewards)
 	//扣体力
 	this.currency.RemoveMiniGameCoin(MiniGameCoinType_Tryst, 1, "约会消耗", true)
+	return 0
+}
+
+// --------------------------------------------------------------------------
+/// @brief 活动数据
+// --------------------------------------------------------------------------
+type UserActive struct {
+	signinIndex 				uint32
+	signinTime					uint64
+	dailyPowerTime				uint64
+
+	user						*GateUser
+}
+
+func (this *UserActive) LoadBin(user *GateUser,bin *msg.Serialize) {
+	this.user = user
+	active := bin.GetActive()
+	this.signinIndex = active.GetSigninindex()
+	this.signinTime = active.GetSignintime()
+	this.dailyPowerTime = active.GetDailypowertime()
+}
+func (this *UserActive) PackBin() *msg.ActiveData {
+	send := &msg.ActiveData{}
+	send.Signinindex = pb.Uint32(this.signinIndex)
+	send.Signintime = pb.Uint64(this.signinTime)
+	send.Dailypowertime = pb.Uint64(this.dailyPowerTime)
+	return send
+}
+func (this *UserActive) PackActive(bin *msg.Serialize) {
+	bin.Active = this.PackBin()
+}
+func (this *UserActive) Syn() {
+	send := &msg.GW2C_PushActiveData{}
+	send.Active = this.PackBin()
+	this.user.SendMsg(send)
+}
+// ========================= 消息接口 =========================
+func (this *UserActive) Signin() uint32 {
+	curtime := util.CURTIME()
+	if util.IsSameDay(curtime, int64(this.signinTime)){
+		this.user.SendNotify("今天已签到")
+		return 1
+	}
+	if this.signinIndex >= uint32(len(tbl.Common.Signin)) {
+		this.signinIndex = 0
+	}
+	conf := tbl.Common.Signin[this.signinIndex]
+	golds, rewards := RewardMgr().DropToUser(this.user, conf.Reward, "签到奖励", true)
+	this.SendRewardNotify(golds, rewards)
+	this.signinIndex = this.signinIndex + 1
+	if this.signinIndex >= uint32(len(tbl.Common.Signin)) {
+		this.signinIndex = 0
+	}
+	this.signinTime = uint64(curtime)
+	this.Syn()
+	return 0
+}
+
+func (this *UserActive) DailyPower() uint32 {
+	cursecond := util.CURTIME()
+	curtime := time.Uinx(cursecond, 0)
+	findTimeRange := nil
+	for _, v := range tbl.Common.DailyPower.Time {
+		if curtime.Second() >= v.MinTime && curtime.Second() <= v.MaxTime {
+			findTimeRange = v
+			break
+		}
+	}
+	if findTimeRange == nil {
+		this.user.SendNotify("当前不在每日体力活动时间内")
+		return 1
+	}
+	pretime := time.Unix(int64(this.dailyPowerTime), 0)
+	if util.IsSameDay(curtime, int64(this.dailyPowerTime)){
+		if pretime.Second() >= findTimeRange.MinTime && pretime.Second() <= findTimeRange.MaxTime {
+			this.user.SendNotify("该时间段体力已领取")
+			return 2
+		}
+	}
+	golds, rewards := RewardMgr().DropToUser(this.user, uint32(tbl.Common.DailyPower.Reward), "每日体力", true)
+	this.SendRewardNotify(golds, rewards)
+	this.dailyPowerTime = uint64(cursecond)
+	this.Syn()
 	return 0
 }
