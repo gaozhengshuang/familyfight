@@ -428,6 +428,7 @@ func (this *GateUser) Syn() {
 	this.palace.Syn(this)
 	this.travel.Syn(this)
 	this.guide.Syn(this)
+	this.share.Syn()
 	this.active.Syn()
 	this.SynBox()
 	this.SynAttackPalaceRecords()

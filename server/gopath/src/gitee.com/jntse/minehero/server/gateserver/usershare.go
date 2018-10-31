@@ -68,6 +68,14 @@ func (this *UserShare) PackBin(bin *msg.Serialize) {
 	}
 }
 
+func (this *UserShare) Syn(){
+	send := &msg.GW2C_PushShareData{ Shares: make([]*msg.ShareData, 0)}
+	for _, v := range this.shares {
+		send.Shares = append(send.Shares, v.PackBin())
+	}
+	this.user.SendMsg(send)
+}
+
 // ========================= 消息接口 =========================
 func (this *UserShare) Share(sharetype uint32, id uint32, time uint64) (result uint32, reward bool){
 	define := this.GetShareDefine(sharetype, id)
@@ -206,6 +214,9 @@ func (this *UserShare) Share(sharetype uint32, id uint32, time uint64) (result u
 			default:
 				break
 		}
+		send := &msg.GW2C_PushShareData{ Shares: make([]*msg.ShareData, 0)}
+		send.Shares = append(send.Shares, data.PackBin())
+		this.user.SendMsg(send)
 		this.user.SendRewardNotify(this.user.ParseBigGoldToArr(goldbase), reward)
 	}
 	return 0, reward

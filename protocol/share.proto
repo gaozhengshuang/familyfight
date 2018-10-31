@@ -6,6 +6,11 @@ message ShareData
     repeated uint64 times               = 2; 
 }
 
+message GW2C_PushShareData 
+{
+    repeated ShareData shares           = 1;
+}
+
 message C2GW_ReqShareMessage
 {
     optional uint32 sharetype           = 1;
