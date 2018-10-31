@@ -1871,7 +1871,7 @@
       }
     ],
     "_tag": -1,
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 63
@@ -2156,7 +2156,7 @@
       }
     ],
     "_tag": -1,
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 76
@@ -2242,7 +2242,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 82,
+      "width": 88,
       "height": 40
     },
     "_rotationX": 0,
@@ -2351,7 +2351,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 35,
+      "width": 41,
       "height": 40
     },
     "_rotationX": 0,
