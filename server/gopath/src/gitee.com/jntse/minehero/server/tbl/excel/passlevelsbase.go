@@ -40,6 +40,9 @@ type PassLevelsDefine struct {
 	//章节ID
 	ChapterID int32
 
+	//图片路径
+	Chapterimage string
+
 	//章节名称
 	ChapterName string
 
