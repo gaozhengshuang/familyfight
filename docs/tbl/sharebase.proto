@@ -35,6 +35,12 @@ message ShareDefine
 	
 	
 	optional uint32 Times = 6; // 在时间范围内的次数限制
+	
+	
+	optional string Title = 7; // 分享标题
+	
+	
+	optional string Image = 8; // 分享图片路径
 
 }
 

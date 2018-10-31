@@ -23,7 +23,8 @@ export var ItemBaseData : table.IItemBaseDataDefine[] = [
 		{ Id : 40003, Name : "洛神服", Desc : "宫里衣服用于cosplay洛神女。", Sort : 3, Type : 4, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Item/image_item40003" 	},
 		{ Id : 40004, Name : "常服", Desc : "宫里衣服用于平常在室内穿着。", Sort : 4, Type : 4, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Item/image_item40004" 	},
 		{ Id : 40005, Name : "礼服", Desc : "宫里衣服用于参加一般典礼", Sort : 5, Type : 4, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Item/image_item40005" 	},
-		{ Id : 50001, Name : "金币", Desc : "", Sort : 1, Type : 5, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Common/image_gold" 	}
+		{ Id : 50001, Name : "金币", Desc : "", Sort : 1, Type : 5, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Common/image_gold" 	},
+		{ Id : 60001, Name : "双倍金币卡", Desc : "", Sort : 1, Type : 6, Sold : 0, RealPrice : 0, Itempath : "Image/GameScene/Common/image_item60001" 	}
 	]
 
 
