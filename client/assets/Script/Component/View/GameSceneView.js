@@ -341,6 +341,12 @@ cc.Class({
         Game.GuideController.NextGuide();
     },
 
+    onOpenDailyReward(event) {
+        event.stopPropagationImmediate();
+        this.openView(Game.UIName.UI_DAILYREWARD);
+        Game.GuideController.NextGuide();
+    },
+
     updateEfficiency() {     //更新效率和仆人个数
         let luckily = 0;
         if (this._palceData != null) {

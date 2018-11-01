@@ -61,7 +61,7 @@ ActiveController.prototype.onAckShareMessage = function (msgid, data) {
 ActiveController.prototype.CanSignin = function () {
     let preTime = _.get(this._activeData, 'signintime', 0);
     let curTime = TimeController.GetCurTime();
-    return moment.unix(curtime).isAfter(moment.unix(preTime), 'day');
+    return moment.unix(curTime).isAfter(moment.unix(preTime), 'day');
 }
 //获得这次签到的序号
 ActiveController.prototype.GetSigninIndex = function () {

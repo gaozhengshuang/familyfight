@@ -32,9 +32,7 @@ ViewController.prototype.openView = function (ui, data = null) {
         if (_view) {
             _gameComponet = _view.getComponent('GameComponent');
             if (_gameComponet) {
-                if (data != null) {
-                    _gameComponet.setData(data);        //设置界面数据
-                }
+                _gameComponet.setData(data);        //设置界面数据
             }
 
             _.forEach(this._viewList, function (v) {
@@ -130,14 +128,14 @@ ViewController.prototype.seekChildByName = function (children, name) {
         if (node.name == name) {
             return node;
         }
-    
-        for (let i = 0; i < node.children.length; i ++) {
+
+        for (let i = 0; i < node.children.length; i++) {
             let res = _find(node.children[i], name);
             if (res != null) {
                 return res;
             }
         }
-    
+
         return null;
     }
 
@@ -151,7 +149,7 @@ ViewController.prototype.seekChildByName = function (children, name) {
 /**
  *  是否已经打开传入的界面
  */
-ViewController.prototype.isOpen = function(ui) {
+ViewController.prototype.isOpen = function (ui) {
     let isActive = false;
     if (ui != null) {
         let _view = _.find(this._viewList, function (v) {

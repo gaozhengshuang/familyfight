@@ -6,6 +6,7 @@ cc.Class({
         selectedNode: { default: null, type: cc.Node },
         iconSprite: { default: null, type: cc.Sprite },
         countLabel: { default: null, type: cc.Label },
+        infoNode: { default: null, type: cc.Node },
 
         target: { default: null },
         data: { default: null },
@@ -18,7 +19,7 @@ cc.Class({
     update(dt) {
     },
     init(index, data, reload, group) {
-        this.node.name = 'SupplyItemNode_' + (index + 1);
+        this.infoNode.name = 'SupplyItemNode_' + (index + 1);
         this.target = data.target;
         this.index = index;
         if (index >= data.array.length) {

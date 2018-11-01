@@ -4534,7 +4534,7 @@
       "__id__": 1
     },
     "component": "GameSceneView",
-    "handler": "onOpenShopView",
+    "handler": "onOpenDailyReward",
     "customEventData": ""
   },
   {

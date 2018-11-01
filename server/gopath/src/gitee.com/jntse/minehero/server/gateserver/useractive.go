@@ -525,8 +525,9 @@ func (this *UserActive) DailyPower() uint32 {
 	cursecond := util.CURTIME()
 	curtime := time.Unix(cursecond, 0)
 	findIndex := -1 
+	curpasssecond = curtime.Hour() * 3600 + curtime.Minute() * 60 + curtime.Second()
 	for i, v := range tbl.Common.DailyPower.Time {
-		if curtime.Second() >= int(v.MinTime) && curtime.Second() <= int(v.MaxTime) {
+		if curpasssecond >= int(v.MinTime) && curpasssecond <= int(v.MaxTime) {
 			findIndex = i
 			break
 		}
@@ -536,9 +537,10 @@ func (this *UserActive) DailyPower() uint32 {
 		return 1
 	}
 	pretime := time.Unix(int64(this.dailyPowerTime), 0)
+	prepasssecond = pretime.Hour() * 3600 + pretime.Minute() * 60 + pretime.Second()
 	if util.IsSameDay(cursecond, int64(this.dailyPowerTime)){
 		timeDefine := tbl.Common.DailyPower.Time[findIndex]
-		if pretime.Second() >= int(timeDefine.MinTime) && pretime.Second() <= int(timeDefine.MaxTime) {
+		if prepasssecond >= int(timeDefine.MinTime) && prepasssecond <= int(timeDefine.MaxTime) {
 			this.user.SendNotify("该时间段体力已领取")
 			return 2
 		}
