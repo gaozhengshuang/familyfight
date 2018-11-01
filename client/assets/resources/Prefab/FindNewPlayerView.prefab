@@ -1129,7 +1129,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "分 享",
+    "_N$string": "炫 耀",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1319,7 +1319,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 300,
+      "width": 240,
       "height": 50
     },
     "_rotationX": 0,
@@ -1373,7 +1373,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 180,
+      "width": 120,
       "height": 40
     },
     "_rotationX": 0,
@@ -1410,7 +1410,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "分享即刻获得",
+    "_N$string": "即刻获得",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1471,7 +1471,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 90,
+      "x": 60,
       "y": 0
     },
     "_skewX": 0,
@@ -1526,7 +1526,7 @@
     "_enabled": true,
     "_layoutSize": {
       "__type__": "cc.Size",
-      "width": 300,
+      "width": 240,
       "height": 50
     },
     "_resize": 1,
