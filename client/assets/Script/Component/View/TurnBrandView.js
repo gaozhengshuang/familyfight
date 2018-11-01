@@ -309,7 +309,7 @@ cc.Class({
         setTimeout(function () {
             if (popinfo.length > 0) {
                 Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_SERIESPOP, popinfo, function () {
-                    if (Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_TurnBrand, 0, Game.TimeController.GetCurTime())) {
+                    if (this.drop.golds.length != 0 && Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_TurnBrand, 0, Game.TimeController.GetCurTime())) {
                         this.openView(Game.UIName.UI_SHAREAWARD, {
                             sharetype: Game.Define.SHARETYPE.ShareType_TurnBrand,
                             shareid: 0
@@ -317,7 +317,7 @@ cc.Class({
                     }
                 }.bind(this));
             } else {
-                if (Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_TurnBrand, 0, Game.TimeController.GetCurTime())) {
+                if (this.drop.golds.length != 0 && Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_TurnBrand, 0, Game.TimeController.GetCurTime())) {
                     this.openView(Game.UIName.UI_SHAREAWARD, {
                         sharetype: Game.Define.SHARETYPE.ShareType_TurnBrand,
                         shareid: 0
