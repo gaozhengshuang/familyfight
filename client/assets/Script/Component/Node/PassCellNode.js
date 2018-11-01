@@ -34,8 +34,8 @@ cc.Class({
         }
         
         let _dialoguePass = null;    //判断关卡第一次开放
-        if (cc.sys.localStorage.getItem('dialoguePass') == 'true') {
-            _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));  
+        if (Game.Platform.GetStorage('dialoguePass') != null) {
+            _dialoguePass = JSON.parse(Game.Platform.GetStorage('dialoguePass'));  
         }
         if (_dialoguePass) {
             if ((this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.lookPass < this._data.Id)) {
@@ -44,7 +44,7 @@ cc.Class({
                     lookPass: this._data.Id,
                     pass: _dialoguePass.pass,
                 };
-                cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
+                Game.Platform.SetStorage('dialoguePass', JSON.stringify(passData));
     
                 this.animation_light.node.active = true;
                 this.animation_light.play("FlashNewPass");
@@ -68,8 +68,8 @@ cc.Class({
                 Game.GuideController.NextGuide();
         
                 let _dialoguePass = null;
-                if (cc.sys.localStorage.getItem('dialoguePass') == 'true') {
-                    _dialoguePass = JSON.parse(cc.sys.localStorage.getItem('dialoguePass'));  
+                if (Game.Platform.GetStorage('dialoguePass') != null) {
+                    _dialoguePass = JSON.parse(Game.Platform.GetStorage('dialoguePass'));  
                 }
                 if (_dialoguePass) {
                     if (this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.pass < this._data.Id) {
@@ -78,7 +78,7 @@ cc.Class({
                             lookPass: _dialoguePass.lookPass,
                             pass: this._data.Id,
                         };
-                        cc.sys.localStorage.setItem('dialoguePass', JSON.stringify(passData));
+                        Game.Platform.SetStorage('dialoguePass', JSON.stringify(passData));
                         
                         if (this._data.DialogueID != 0) {                    
                             Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this._data.DialogueID);

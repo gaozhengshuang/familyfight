@@ -28,6 +28,12 @@ let CommonPlatform = {
     },
     RequestPay: function (payment) {
         console.log('RequestPay ' + payment);
+    },
+    SetStorage: function (key, value) {
+        cc.sys.localStorage.setItem(key, value);
+    },
+    GetStorage: function (key) {
+        return cc.sys.localStorage.getItem(key);
     }
 }
 
