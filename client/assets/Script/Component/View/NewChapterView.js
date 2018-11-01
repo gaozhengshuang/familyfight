@@ -41,6 +41,7 @@ cc.Class({
     onClose() {
         this.closeView(Game.UIName.UI_NEWCHAPTERVIEW);
         Game.Tools.InvokeCallback(this.closefunc);
+        Game.GuideController.NextGuide();
     },
     onShare() {
         Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_NewChapter, this.leveldefine.ChapterID, this.sharetime);

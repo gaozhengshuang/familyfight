@@ -752,7 +752,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 123,
+      "width": 127,
       "height": 48
     },
     "_rotationX": 0,
@@ -3032,7 +3032,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 72,
+      "width": 78,
       "height": 40
     },
     "_rotationX": 0,
@@ -3308,9 +3308,11 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceLoveView",
-    "handler": "onGoLove",
+    "target": {
+      "__id__": 1
+    },
+    "component": "MiniGameSecondView",
+    "handler": "onShare",
     "customEventData": ""
   },
   {
@@ -3362,7 +3364,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 264,
+      "width": 266,
       "height": 40
     },
     "_rotationX": 0,
@@ -3532,7 +3534,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 110,
+      "width": 114,
       "height": 48
     },
     "_rotationX": 0,

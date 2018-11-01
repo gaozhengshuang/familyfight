@@ -141,7 +141,7 @@ cc.Class({
         this.refreshStatus();
     },
     onShare() {
-
+        Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_MiniGame, Game.Define.MINIGAMETYPE.TENSECOND, Game.TimeController.GetCurTime());
     },
 
     sendGameData() {

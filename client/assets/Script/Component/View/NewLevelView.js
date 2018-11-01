@@ -43,6 +43,7 @@ cc.Class({
     onClose() {
         this.closeView(Game.UIName.UI_NEWLEVELVIEW);
         Game.Tools.InvokeCallback(this.closefunc);
+        Game.GuideController.NextGuide();
     },
     onShare() {
         Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_NewLevel, this.levelid, this.sharetime);
