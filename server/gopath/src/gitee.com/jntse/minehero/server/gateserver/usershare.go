@@ -38,7 +38,7 @@ func (this *ShareData) PackBin() *msg.ShareData {
 	bin.Id = pb.Uint32(this.id)
 	bin.Times = make([]uint64, 0)
 	for _, v := range this.times {
-		bin.Times = append(this.times, v)
+		bin.Times = append(bin.Times, v)
 	}
 	return bin
 }
