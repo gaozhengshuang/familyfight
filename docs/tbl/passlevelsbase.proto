@@ -40,10 +40,13 @@ message PassLevelsDefine
 	optional int32 ChapterID = 7; // 章节ID
 	
 	
-	optional string ChapterName = 8; // 章节名称
+	optional string Chapterimage = 8; // 图片路径
 	
 	
-	optional int32 Index = 9; // 关卡索引
+	optional string ChapterName = 9; // 章节名称
+	
+	
+	optional int32 Index = 10; // 关卡索引
 
 }
 
