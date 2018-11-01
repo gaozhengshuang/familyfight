@@ -141,6 +141,12 @@ let WechatPlatform = _.merge(_.cloneDeep(CommonPlatform), {
                 NotificationController.Emit(Define.EVENT_KEY.TIP_TIPS, info.errCode);
             }
         });
+    },
+    SetStorage: function (key, value) {
+        wx.setStorageSync(key, value);
+    },
+    GetStorage: function (key) {
+        return wx.getStorageSync(key);
     }
 })
 
