@@ -73,6 +73,7 @@ ActiveController.prototype.GetSigninIndex = function () {
 }
 //是否可以领取每日体力
 ActiveController.prototype.CanDailyPower = function () {
+    let curTime = TimeController.GetCurTime();
     let curPassSeconds = curTime - moment.unix(curTime).startOf('day').unix();
     let timeRange = null;
     for (let i = 0; i < this._dailyPowerDefine.Time.length; i++) {
@@ -88,7 +89,6 @@ ActiveController.prototype.CanDailyPower = function () {
     if (preTime == 0) {
         return true;
     }
-    let curTime = TimeController.GetCurTime();
     if (moment.unix(curTime).isAfter(moment.unix(preTime), 'day')) {
         return true;
     }

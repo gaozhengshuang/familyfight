@@ -5784,7 +5784,7 @@
       }
     ],
     "_tag": -1,
-    "_active": false,
+    "_active": true,
     "_components": [],
     "_prefab": {
       "__id__": 219
@@ -6624,7 +6624,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 192,
+      "width": 196,
       "height": 40
     },
     "_rotationX": 0,
@@ -6733,7 +6733,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 192,
+      "width": 196,
       "height": 40
     },
     "_rotationX": 0,
@@ -6840,7 +6840,7 @@
       }
     ],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [],
     "_prefab": {
       "__id__": 249
@@ -7859,7 +7859,7 @@
       }
     ],
     "dailypowerButton": {
-      "__id__": 181
+      "__id__": 199
     },
     "lastShareTimes": {
       "__id__": 247
