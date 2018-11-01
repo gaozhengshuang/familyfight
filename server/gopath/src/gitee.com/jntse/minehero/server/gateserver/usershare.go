@@ -110,6 +110,7 @@ func (this *UserShare) Share(sharetype uint32, id uint32, time uint64) (result u
 					if !util.IsSameDay(int64(v), curtime) {
 						reward = true
 						data.times[i] = uint64(curtime)
+						break
 					}
 				}
 				break
@@ -119,6 +120,7 @@ func (this *UserShare) Share(sharetype uint32, id uint32, time uint64) (result u
 					if v != time {
 						reward = true
 						data.times[i] = time
+						break
 					}
 				}
 				break
@@ -184,6 +186,7 @@ func (this *UserShare) Share(sharetype uint32, id uint32, time uint64) (result u
 				drop.rewardtype = uint32(msg.RewardType_MiniGameCoin)
 				drop.rewardid = id
 				drop.rewardvalue = define.Reward
+				reward = append(reward, drop)
 				break
 			}
 			case ShareType_Event: {

@@ -119,6 +119,9 @@ cc.Class({
             }
         }
     },
+    onShare: function () {
+        Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_MiniGame, Game.Define.MINIGAMETYPE.LINKUP, Game.TimeController.GetCurTime());
+    },
     onRetLinkup: function (msgid, data) {
         if (data.result == 0) {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {

@@ -25,6 +25,7 @@ cc.Class({
         reddotNode: { default: null, type: cc.Node },
         rewardLabel: { default: null, type: cc.Label },
         coinLabel: { default: null, type: cc.Label },
+        shareNode: { default: null, type: cc.Node },
 
         status: { default: KickAssStatus.Status_Idle },
         speed: { default: EunuchSpeed }
@@ -103,6 +104,9 @@ cc.Class({
     onGoBackClick: function () {
         this.closeView(Game.UIName.UI_MINIGAMEKICKASS);
     },
+    onShare: function() {
+        Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_MiniGame, Game.Define.MINIGAMETYPE.KICKASS, Game.TimeController.GetCurTime());
+    },
     updateMiniGameCoin: function () {
         this.coinLabel.string = '剩余次数:' + Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.KICKASS);
     },
@@ -117,6 +121,7 @@ cc.Class({
                     this.eunuchNode.x = 0;
                     this.shoeNode.y = ShoeInitY;
                     this.actionButtonNode.active = true;
+                    this.shareNode.active = true;
                     break;
                 case KickAssStatus.Status_Moving:
                     this.tipNode.active = false;
@@ -124,11 +129,13 @@ cc.Class({
                     this.backButtonNode.active = false;
                     this.shoeNode.y = ShoeInitY;
                     this.actionButtonNode.active = true;
+                    this.shareNode.active = false;
                     break;
                 case KickAssStatus.Status_Kick:
                     this.tipNode.active = false;
                     this.actionButtonNode.active = false;
                     this.backButtonNode.active = false;
+                    this.shareNode.active = false;
                     this.shoeNode.runAction(cc.sequence([
                         cc.moveTo(KickInterval, this.aimNode.position),
                         cc.callFunc(function () {
@@ -140,6 +147,7 @@ cc.Class({
                     this.tipNode.active = false;
                     this.actionButtonNode.active = false;
                     this.backButtonNode.active = false;
+                    this.shareNode.active = false;
                     //发消息
                     let box = this.reddotNode.getBoundingBoxToWorld();
                     let pos = this.aimNode.parent.convertToWorldSpaceAR(this.aimNode.position);
@@ -152,6 +160,7 @@ cc.Class({
                     this.actionButtonLabel.string = '再来一次';
                     this.shoeNode.y = ShoeInitY;
                     this.backButtonNode.active = true;
+                    this.shareNode.active = true;
                 default:
                     break;
             }

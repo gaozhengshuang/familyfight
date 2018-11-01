@@ -18,6 +18,7 @@ cc.Class({
         label_name: { default: null, type: cc.Label },
         label_content: { default: null, type: cc.RichText },
         node_back: { default: null, type: cc.Node },
+        node_share: { default: null, type: cc.Node }
     },
 
     onLoad() {
@@ -51,6 +52,7 @@ cc.Class({
         this._data = Game.PalaceModel.palaceDatas[Math.floor(Math.random() * Game.PalaceModel.palaceDatas.length)]; //随机出一个宫殿
         this.dateEventList = Game.ConfigController.GetConfig("DateEvent");
         this.node_back.active = false;
+        this.node_share.active = true;
     },
 
     initNotification() {
@@ -83,18 +85,18 @@ cc.Class({
             }
 
             this.eventList = [];
-            
-            for (let i = 0; i < this.dateEventList.length; i ++) {
+
+            for (let i = 0; i < this.dateEventList.length; i++) {
                 if (this.dateEventList[i].Datetype == this._curStep) {
                     this.eventList.push(this.dateEventList[i]);
                 }
             }
             this.eventList = Game._.sampleSize(this.eventList, this._eventNum);
-            for(let n = 0; n < this.eventList.length; n ++) {
+            for (let n = 0; n < this.eventList.length; n++) {
                 let eventBase = this.eventList[n];
-                Game.ResController.SetSprite(this["image_event"+n], eventBase.Datepath);
-                this["label_event"+n].string = eventBase.DateName;
-            }   
+                Game.ResController.SetSprite(this["image_event" + n], eventBase.Datepath);
+                this["label_event" + n].string = eventBase.DateName;
+            }
         }
     },
 
@@ -119,8 +121,8 @@ cc.Class({
         this.button_event0.interactable = false;
         this.button_event1.interactable = false;
         this.button_event2.interactable = false;
-
-        for (let i = 0; i < this._maxStep; i ++) {
+        this.node_share.active = this._selIds.length >= this._maxStep;
+        for (let i = 0; i < this._maxStep; i++) {
             if (this._selIds.length < this._maxStep) {
                 this.playGoingAni(i);
             } else {
@@ -141,7 +143,7 @@ cc.Class({
                 }, this),
             ]),
             cc.fadeIn(this._aniTime),
-            cc.callFunc(function() {
+            cc.callFunc(function () {
                 if (idx == (this._maxStep - 1)) {
                     this.button_event0.interactable = true;
                     this.button_event1.interactable = true;
@@ -157,7 +159,7 @@ cc.Class({
             cc.delayTime(this._delayTime + idx * 0.3),
             cc.callFunc(function () {
                 this["image_event" + idx].node.scale = 1.3;
-                let eventBase = Game._.find(this.dateEventList, {DateId: this._selIds[idx]});
+                let eventBase = Game._.find(this.dateEventList, { DateId: this._selIds[idx] });
                 if (eventBase) {
                     Game.ResController.SetSprite(this["image_event" + idx], eventBase.Datepath);
                     this["label_event" + idx].string = eventBase.DateName;
@@ -172,12 +174,13 @@ cc.Class({
         let _callFunc = cc.callFunc(function () {
             if (idx == (this._maxStep - 1)) {
                 this.node_back.active = true;
+                this.node_share.active = true;
                 Game.NetWorkController.Send('msg.C2GW_ReqTryst', {
                     palaceid: this._data.id,
                     key: this._selIds[0] << 20 | this._selIds[1] << 10 | this._selIds[2]
                 });
             }
-            
+
         }, this);
 
         this["image_event" + idx].node.runAction(cc.sequence([_fadeOut, _spawn1, _spawn2, _fadeIn, _callFunc]));
@@ -191,7 +194,7 @@ cc.Class({
         }
     },
 
-    onSeleceX(event,data) {
+    onSeleceX(event, data) {
         if (this._selIds.length >= this._maxStep) {
             return;
         } else {
@@ -200,6 +203,10 @@ cc.Class({
             this._selContent.push(this.eventList[data].DateName);
             this.playAni();
             this.updateDialog();
-        } 
+        }
     },
+    onShare() {
+        Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_MiniGame, Game.Define.MINIGAMETYPE.TRYST, Game.TimeController.GetCurTime());
+    },
+
 });

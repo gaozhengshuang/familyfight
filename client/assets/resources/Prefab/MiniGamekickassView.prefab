@@ -3248,7 +3248,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 9.1
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -3318,7 +3318,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 107
@@ -3347,7 +3347,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 41,
+      "width": 35,
       "height": 40
     },
     "_rotationX": 0,
@@ -3514,9 +3514,11 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceLoveView",
-    "handler": "onGoLove",
+    "target": {
+      "__id__": 1
+    },
+    "component": "MiniGameKickassView",
+    "handler": "onShare",
     "customEventData": ""
   },
   {
@@ -4166,6 +4168,9 @@
     },
     "coinLabel": {
       "__id__": 130
+    },
+    "shareNode": {
+      "__id__": 101
     },
     "status": 1,
     "speed": 600

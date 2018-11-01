@@ -2486,7 +2486,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 9.1
+      "y": 0
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -2556,7 +2556,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 81
@@ -2585,7 +2585,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 41,
+      "width": 35,
       "height": 40
     },
     "_rotationX": 0,
@@ -2752,9 +2752,11 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceLoveView",
-    "handler": "onGoLove",
+    "target": {
+      "__id__": 1
+    },
+    "component": "PalaceDateView",
+    "handler": "onShare",
     "customEventData": ""
   },
   {
@@ -2866,6 +2868,9 @@
     },
     "node_back": {
       "__id__": 3
+    },
+    "node_share": {
+      "__id__": 75
     }
   },
   {

@@ -119,7 +119,7 @@ ActiveController.prototype.GetLastShareRewardTimes = function (sharetype, id, ti
             return define.Times - (data.times || []).length;
         case 1:
             //每天
-            for (let i = 0; i < data.times; i++) {
+            for (let i = 0; i < data.times.length; i++) {
                 if (moment.unix(time).isSame(moment.unix(data.times[i]), 'day')) {
                     count++;
                 }
@@ -127,7 +127,7 @@ ActiveController.prototype.GetLastShareRewardTimes = function (sharetype, id, ti
             return define.Times - count;
         case 2:
             //和上次不一样就行
-            for (let i = 0; i < data.times; i++) {
+            for (let i = 0; i < data.times.length; i++) {
                 if (data.times[i] == time) {
                     count++;
                 }
