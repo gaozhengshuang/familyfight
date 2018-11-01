@@ -255,6 +255,18 @@ module.exports = {
                 //     });
                 // },
                 function (anext) {
+                    Editor.log('上传通用素材 ' + moment().format('YYYY-MM-DD hh:mm:ss'));
+                    let sourcePath = path.join(__dirname, '../../images');
+                    client.scp(sourcePath, {
+                        host: '210.73.214.75',
+                        username: 'liuk',
+                        password: 'UcxxAoxpnLGUj8hW',
+                        path: '/var/www/html/gongdou/images'
+                    }, function (err) {
+                        anext(err);
+                    });
+                },
+                function (anext) {
                     Editor.log('删除本地res ' + moment().format('YYYY-MM-DD hh:mm:ss'));
                     rimraf(path.join(__dirname, '../../build/wechatgame/res/raw*'), function (err) {
                         anext(err);

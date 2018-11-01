@@ -6,7 +6,7 @@ cc.Class({
     properties: {
         image_maid: { default: null, type: cc.Sprite },
         label_name: { default: null, type: cc.Label },
-        label_sharenum: { default: null, type: cc.Label},
+        label_sharenum: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -14,6 +14,7 @@ cc.Class({
     },
 
     onEnable() {
+        this.sharetime = Game.TimeController.GetCurTime();
         this.updateView();
     },
 
@@ -45,8 +46,11 @@ cc.Class({
                 Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, this.maidBase.DialogueID);
             }
         }
-        
+
         this.closeView(Game.UIName.UI_FINDNEWPLAYER);
         Game.GuideController.NextGuide();
+    },
+    onShare() {
+        Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_NewMaid, this.maidBase.Id, this.sharetime);
     }
 });

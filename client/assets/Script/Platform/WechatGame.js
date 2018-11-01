@@ -9,25 +9,26 @@ let UserModel = require('../Model/User');
 let LoginController = require('../Controller/LoginController');
 let NetWorkController = require('../Controller/NetWorkController');
 let NotificationController = require('../Controller/NotificationController');
+let ActiveController = require('../Controller/ActiveController');
 let WechatPlatform = _.merge(_.cloneDeep(CommonPlatform), {
     CopyToClipboard: function (obj) {
         wx.setClipboardData(obj)
     },
     InitPlatform: function () {
-        wx.showShareMenu();
+        // wx.showShareMenu();
         wx.onShow(function (res) {
             console.log(res);
-            NotificationController.Emit(Define.EVENT_KEY.ON_SHOWGAME);
+            NotificationController.Emit(Define.EVENT_KEY.ON_SHOWGAME, res);
         });
-        wx.onShareAppMessage(function (res) {
-            console.log(res);
-            NotificationController.Emit(Define.EVENT_KEY.ON_SHARE);
-            return {
-                //TODO 
-                title: '炮炮大作战答题',
-                imageUrl: 'https://dati-cdn.giantfun.cn/sharebg.png',
-            }
-        })
+        // wx.onShareAppMessage(function (res) {
+        //     console.log(res);
+        //     NotificationController.Emit(Define.EVENT_KEY.ON_SHARE);
+        //     return {
+        //         //TODO 
+        //         title: '炮炮大作战答题',
+        //         imageUrl: 'https://dati-cdn.giantfun.cn/sharebg.png',
+        //     }
+        // })
     },
     AutoLogin: function () {
         async.waterfall([
@@ -111,14 +112,17 @@ let WechatPlatform = _.merge(_.cloneDeep(CommonPlatform), {
             }
         });
     },
-    ShareMessage: function () {
-        console.log('ShareMessage');
+    ShareMessage: function (sharetype, shareid, time) {
+        let sharedefine = ActiveController.GetShareDefine(sharetype, shareid);
+        let image = _.get(sharedefine, 'Image', 'images/share/image_share.png');
+        ActiveController._sharetype = sharetype;
+        ActiveController._shareid = shareid;
+        ActiveController._sharetime = time;
+        ActiveController._sharing = true;
         wx.shareAppMessage({
-            //TODO 
-            title: '炮炮大作战答题',
-            imageUrl: 'https://dati-cdn.giantfun.cn/sharebg.png',
+            title: _.get(sharedefine, 'Title', '后宫纪，给你不一样的后宫'),
+            imageUrl: 'https://gongdou.giantfun.cn/' + image,
         });
-        NotificationController.Emit(Define.EVENT_KEY.ON_SHARE);
     },
     RequestPay: function (payment) {
         wx.requestMidasPayment({

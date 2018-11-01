@@ -5,6 +5,7 @@ const moment = require('moment');
 const ConfigController = require('./ConfigController');
 const NetWorkController = require('./NetWorkController');
 const TimeController = require('./TimeController');
+const RewardController = require('./RewardController');
 
 let ActiveController = function () {
     this._shareDefines = {};
@@ -13,6 +14,11 @@ let ActiveController = function () {
 
     this._shareData = [];
     this._activeData = {};
+
+    this._sharetype = 0;
+    this._shareid = 0;
+    this._sharetime = 0;
+    this._sharing = false;
 };
 /**
  * 
@@ -29,6 +35,7 @@ ActiveController.prototype.Init = function (cb) {
 
     NetWorkController.AddListener('msg.GW2C_PushActiveData', this, this.onPushActiveData);
     NetWorkController.AddListener('msg.GW2C_PushShareData', this, this.onPushShareData);
+    NetWorkController.AddListener('msg.GW2C_AckShareMessage', this, this.onAckShareMessage);
     Tools.InvokeCallback(cb, null);
 };
 
@@ -39,6 +46,14 @@ ActiveController.prototype.onPushActiveData = function (msgid, data) {
 
 ActiveController.prototype.onPushShareData = function (msgid, data) {
     this._shareData = _.cloneDeep(data.shares) || [];
+}
+
+ActiveController.prototype.onAckShareMessage = function (msgid, data) {
+    if (data.result == 0) {
+        if (data.reward) {
+            RewardController.PlayLastReward();
+        }
+    }
 }
 
 // ========================= 对外接口 =========================
@@ -88,7 +103,7 @@ ActiveController.prototype.GetShareDefine = function (sharetype, id) {
     return _.find(this._shareDefines, { ShareType: sharetype, ShareId: id });
 }
 //分享奖励还剩多少次 
-ActiveController.prototype.GetLastShareRewardTimes = function (sharetype, id) {
+ActiveController.prototype.GetLastShareRewardTimes = function (sharetype, id, time) {
     let define = this.GetShareDefine(sharetype, id);
     if (define == null) {
         return 0;
@@ -97,23 +112,27 @@ ActiveController.prototype.GetLastShareRewardTimes = function (sharetype, id) {
     if (data == null) {
         return define.Times;
     }
-    let curTime = TimeController.GetCurTime();
+    let count = 0;
     switch (define.FreshType) {
         case 0:
             //没有时间限制
             return define.Times - (data.times || []).length;
         case 1:
             //每天
-            let count = 0;
             for (let i = 0; i < data.times; i++) {
-                if (moment.unix(curTime).isSame(moment.unix(data.times[i]), 'day')) {
+                if (moment.unix(time).isSame(moment.unix(data.times[i]), 'day')) {
                     count++;
                 }
             }
             return define.Times - count;
         case 2:
             //和上次不一样就行
-            return define.Times;
+            for (let i = 0; i < data.times; i++) {
+                if (data.times[i] == time) {
+                    count++;
+                }
+            }
+            return define.Times - count;
         default:
             return 0;
     }

@@ -7,6 +7,7 @@ var Define = {
     EVENT_KEY: {
         CHANGE_GAMESTATE: '0',
         LOADED_COMPLETE: '5',
+        ON_SHOWGAME: '6',
 
         CONNECT_TO_GATESERVER: '100',
 
@@ -86,7 +87,7 @@ var Define = {
         HANDBOOK: 5,
         BUILD: 6,
         SLEEP: 7,
-        RANDOMX: 8, 
+        RANDOMX: 8,
     },
     MINIGAMETYPE: {
         START: 0,
@@ -111,6 +112,17 @@ var Define = {
     ACTIVEGAMEUINAME: {
         1: UIName.UI_ACTIVEGAMEATTACKPALACE,
         2: UIName.UI_ACTIVEGAMEGUESSKING
+    },
+    SHARETYPE: {
+        ShareType_NewMaid: 1,
+        ShareType_NewLevel: 2,
+        ShareType_NewChapter: 3,
+        ShareType_Shop: 4,
+        ShareType_Power: 5,
+        ShareType_MiniGame: 6,
+        ShareType_Event: 7,
+        ShareType_Tryst: 8,
+        ShareType_TurnBrand: 9
     }
 }
 
