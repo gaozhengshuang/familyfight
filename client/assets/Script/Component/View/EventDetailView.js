@@ -13,12 +13,14 @@ cc.Class({
         headListNode: { default: null, type: cc.Node },
         tableView: { default: null, type: cc.tableView },
         bottomNode: { default: null, type: cc.Node },
+        shareNode: { default: null, type: cc.Node },
 
         headInfo: { default: {} },
         barragesInfo: { default: [] },
         eventid: { default: 0 },
         eventConfig: { default: null },
-        showBarrage: { default: true }
+        showBarrage: { default: true },
+        enableTime: { default: 0 }
     },
     update: function (dt) {
         if (!this.showBarrage) {
@@ -53,9 +55,11 @@ cc.Class({
     onEnable: function () {
         Game.NetWorkController.AddListener('msg.GW2C_AckEventBarrage', this, this.onAckEventBarrage);
         Game.NetWorkController.AddListener('msg.GW2C_AckSendEventBarrage', this, this.onAckSendEventBarrage);
+        Game.NetWorkController.AddListener('msg.GW2C_AckShareMessage', this, this._updateShareButton);
         this.showBarrage = Game._.get(this, '_data.showBarrage', true);
         this.bottomNode.active = this.showBarrage;
         this.eventid = Game.TravelModel.openEvent;
+        this.enableTime = Game.TimeController.GetCurTime();
         //事件数据
         this.eventConfig = Game.TravelModel.GetEventConfig(this.eventid);
         Game.ResController.GetSpriteFrameByName(this.eventConfig.EventPath, function (err, res) {
@@ -75,10 +79,12 @@ cc.Class({
         this.barragesInfo = [];
         Game.NetWorkController.Send('msg.C2GW_ReqEventBarrage', { eventid: this.eventid });
         Game.ResController.DestoryAllChildren(this.barrageNode);
+        this._updateShareButton();
     },
     onDisable: function () {
         Game.NetWorkController.RemoveListener('msg.GW2C_AckEventBarrage', this, this.onAckEventBarrage);
         Game.NetWorkController.RemoveListener('msg.GW2C_AckSendEventBarrage', this, this.onAckSendEventBarrage);
+        Game.NetWorkController.RemoveListener('msg.GW2C_AckShareMessage', this, this._updateShareButton);
     },
 
     //按钮回调
@@ -97,6 +103,9 @@ cc.Class({
     onHeadItemClick: function (info) {
         this._changeHeadInfo(info);
         this.headListNode.active = false;
+    },
+    onShareClick: function () {
+        Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_Event, this.eventid, this.enableTime);
     },
     onClose: function () {
         Game.GuideController.NextGuide();
@@ -136,5 +145,8 @@ cc.Class({
             return this.barragesInfo.shift();
         }
         return null;
+    },
+    _updateShareButton: function () {
+        this.shareNode.active = Game.ActiveController.GetLastShareRewardTimes(Game.Define.SHARETYPE.ShareType_Event, this.eventid, this.enableTime) > 0;
     }
 });
