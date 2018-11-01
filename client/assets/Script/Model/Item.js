@@ -66,6 +66,7 @@ ItemModel.prototype.onGW2C_AddPackageItem = function (msgid, data) {
     }
     console.log(data);
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEITEMS);
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_ADDITEMS);
 }
 
 ItemModel.prototype.onGW2C_RemovePackageItem = function (msgid, data) {
@@ -81,6 +82,7 @@ ItemModel.prototype.onGW2C_RemovePackageItem = function (msgid, data) {
     }
 
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEITEMS);
+    NotificationController.Emit(Define.EVENT_KEY.USERINFO_REMOVEITEMS);
 }
 
 module.exports = new ItemModel();

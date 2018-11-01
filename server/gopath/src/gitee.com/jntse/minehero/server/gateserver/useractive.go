@@ -126,6 +126,17 @@ func (this *GateUser) TurnBrand(ids []uint32, level uint32) (result uint32, id u
 	//扣体力
 	this.RemovePower(1, "翻牌子消耗")
 	golds, rewards := RewardMgr().DropToUser(this, findbrand.Reward, "翻牌子奖励", false, 0)
+	if len(golds) > 0 {
+		//获得金币了
+		if this.bag.GetItemNum(60001) > 0 {
+			//有双倍经验卡 那就用一张
+			this.UseItem(60001, 1)
+			goldbase, maxindex := this.ParseBigGoldToObj(golds)
+			goldbase = this.TimesBigGold(goldbase, 2)
+			goldbase = this.CarryBigGold(goldbase, maxindex)
+			golds = this.ParseBigGoldToArr(goldbase)
+		}
+	}
 	drop = RewardMgr().PackMsg(golds, rewards)
 	return 0, findbrand.Id, drop
 }

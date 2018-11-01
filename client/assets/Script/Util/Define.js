@@ -16,6 +16,8 @@ var Define = {
         USERINFO_ADDGOLD: '202',
         USERINFO_SUBTRACTGOLD: '203',
         USERINFO_UPDATEMINIGAMECOIN: '204',
+        USERINFO_ADDITEMS: '205',
+        USERINFO_REMOVEITEMS: '206',
 
         NET_OPEN: '300',
         NET_CLOSE: '301',

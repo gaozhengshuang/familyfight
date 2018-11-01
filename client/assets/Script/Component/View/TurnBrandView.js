@@ -30,6 +30,8 @@ cc.Class({
         dialogueNode: { default: null, type: cc.Node },
         miniGameRedSprite: { default: [], type: [cc.Sprite] },
         miniGameCoinLabel: { default: [], type: [cc.Label] },
+        doubleGOldItemNode: { default: null, type: cc.Node },
+        doubleGoldItemCountLabel: { default: null, type: cc.Label },
 
         status: { default: BrandStatus.Status_Idle },
         brandInfos: { default: [] },
@@ -38,7 +40,8 @@ cc.Class({
         showTargetWorldPos: { default: cc.v2(0, 0) },
         clickIndex: { default: 0 },
         rewardId: { default: 0 },
-        drop: { default: null }
+        drop: { default: null },
+        oldCount: { default: 0 },
     },
     onLoad: function () {
         this.brandConfigs = Game.ConfigController.GetConfig('TurnBrand');
@@ -57,8 +60,10 @@ cc.Class({
             view.StopAllAction();
         }
         this.status = 0;
+        this.oldCount = 0;
         this._randBrandInfo();
         this.updateMiniGameCoin();
+        this.updateDoubleGoldsItemCount(false);
     },
     update: function (dt) {
     },
@@ -135,6 +140,24 @@ cc.Class({
             }
             red.node.active = isRed;
             label.string = `${coin}次`;
+        }
+    },
+    updateDoubleGoldsItemCount: function (withAnima) {
+        let count = Game.ItemModel.GetItemNumById(60001);
+        if (count <= 0) {
+            this.doubleGOldItemNode.active = false;
+        } else {
+            this.doubleGOldItemNode.active = true;
+            if (this.oldCount != count) {
+                this.oldCount = count;
+                this.doubleGoldItemCountLabel.string = 'x' + count;
+                if (withAnima) {
+                    this.doubleGoldItemCountLabel.node.runAction(cc.sequence([
+                        cc.scaleTo(0.2, 1.2, 1.2),
+                        cc.scaleTo(0.2, 1, 1)
+                    ]))
+                }
+            }
         }
     },
     _changeStatus: function (status) {
@@ -307,6 +330,7 @@ cc.Class({
             }
         }
         setTimeout(function () {
+            this.updateDoubleGoldsItemCount(true);
             if (popinfo.length > 0) {
                 Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_SERIESPOP, popinfo, function () {
                     if (this.drop.golds.length != 0 && Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_TurnBrand, 0, Game.TimeController.GetCurTime())) {
