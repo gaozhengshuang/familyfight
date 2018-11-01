@@ -17,8 +17,8 @@ cc.Class({
 
     onEnable() {
         this.sharetime = Game.TimeController.GetCurTime();
-        this.levelid = _.get(this._data, 'levelid', 0);
-        this.closefunc = _.get(this._data, 'closefunc', null);
+        this.levelid = Game._.get(this._data, 'levelid', 0);
+        this.closefunc = Game._.get(this._data, 'closefunc', null);
         this.leveldefine = Game.ConfigController.GetConfigById('PassLevels', this.levelid);
         this.updateView();
     },

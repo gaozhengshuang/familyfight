@@ -36,7 +36,7 @@ cc.Class({
         if (this.maidBase) {
             Game.ResController.SetSprite(this.image_maid, this.maidBase.Path);
             this.label_name.string = this.maidBase.Name;
-            this.label_sharenum.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(this.maidBase.Reward).multiply(3600 * 6)));
+            // this.label_sharenum.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(this.maidBase.Reward).multiply(3600 * 6)));
         }
     },
 

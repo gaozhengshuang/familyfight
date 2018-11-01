@@ -310,8 +310,9 @@ cc.Class({
         }
     },
 
-    findNewPlayer() {
-        this.openView(Game.UIName.UI_FINDNEWPLAYER);
+    findNewPlayer(oldid, newid) {
+        //看看有没有解锁新章节
+        this._showChapter(oldid, newid);
         this.updateBottomButton();
         Game.NotificationController.Emit(Game.Define.EVENT_KEY.USERINFO_UPDATEPASS);
     },
@@ -347,7 +348,7 @@ cc.Class({
         }
 
         let allLuckily = 0;
-        for (let i = 0; i < Game.PalaceModel.palaceDatas.length; i ++) {
+        for (let i = 0; i < Game.PalaceModel.palaceDatas.length; i++) {
             allLuckily += Game.PalaceModel.palaceDatas[i].luckily;
         }
         let allincomenum = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids());
@@ -386,5 +387,34 @@ cc.Class({
     getBox: function (count) {
         let ret = Game._.slice(this._boxList, 0, count);
         return ret;
+    },
+    _showChapter: function (oldid, newid) {
+        let newLevel = Game.MaidModel.GetLevelBaseByMaid(newid);
+        let oldLevel = Game.MaidModel.GetLevelBaseByMaid(oldid);
+        if (newLevel != null && oldLevel != null && newLevel.ChapterID != oldLevel.ChapterID) {
+            //新章节了
+            this.openView(Game.UIName.UI_NEWCHAPTERVIEW, {
+                levelid: newLevel.Id,
+                closefunc: this._showLevel.bind(this, oldid, newid)
+            });
+        } else {
+            this._showLevel(oldid, newid);
+        }
+    },
+    _showLevel: function (oldid, newid) {
+        let newLevel = Game.MaidModel.GetLevelBaseByMaid(newid);
+        let oldLevel = Game.MaidModel.GetLevelBaseByMaid(oldid);
+        if (newLevel != null && oldLevel != null && newLevel.Id != oldLevel.Id) {
+            //新关卡了
+            this.openView(Game.UIName.UI_NEWLEVELVIEW, {
+                levelid: newLevel.Id,
+                closefunc: this._showMaid.bind(this, oldid, newid)
+            });
+        } else {
+            this._showMaid(oldid, newid);
+        }
+    },
+    _showMaid: function (oldid, newid) {
+        this.openView(Game.UIName.UI_FINDNEWPLAYER);
     }
 });

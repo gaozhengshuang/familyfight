@@ -43,6 +43,14 @@ MaidModel.prototype.GetShopMaids = function () {
     return this._shopMaids;
 }
 
+MaidModel.prototype.GetLevelBaseByMaid = function (id) {
+    let maidBase = ConfigController.GetConfigById("TMaidLevel", id);
+    if (maidBase) {
+        return ConfigController.GetConfigById('PassLevels', maidBase.Passlevels);
+    }
+    return null;
+}
+
 MaidModel.prototype.SetCurPass = function (pass) {
     this.curPass = pass;
     NotificationController.Emit(Define.EVENT_KEY.USERINFO_UPDATEPASS);
@@ -217,8 +225,9 @@ MaidModel.prototype.onGW2C_AckMaids = function (msgid, data) {
     }
 
     if (this.topMaid != data.maxid) {
+        let oldid = this.topMaid;
         this.topMaid = data.maxid;
-        NotificationController.Emit(Define.EVENT_KEY.FINDNEW_PLAYER);
+        NotificationController.Emit(Define.EVENT_KEY.FINDNEW_PLAYER, oldid, this.topMaid);
     }
 
     this.RefreshMoneyMaids();
