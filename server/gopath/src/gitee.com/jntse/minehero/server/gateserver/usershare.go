@@ -128,7 +128,7 @@ func (this *UserShare) Share(sharetype uint32, id uint32, time uint64) (result u
 				break
 		}
 	}
-	for i, v := range data.times {
+	for _, v := range data.times {
 		if v == time {
 			reward = false
 			break
