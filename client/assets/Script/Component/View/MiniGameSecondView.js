@@ -13,7 +13,8 @@ cc.Class({
         label_second: { default: null, type: cc.Label },
         label_btnStart: { default: null, type: cc.Label },
         button_back: { default: null, type: cc.Button },
-        label_coin: { default: null, type: cc.Label }
+        label_coin: { default: null, type: cc.Label },
+        node_sharebutton: { default: null, type: cc.Node }
     },
 
     update(dt) {
@@ -69,6 +70,7 @@ cc.Class({
                 break;
         }
         this.button_back.node.active = this._gameType != GameSecondStatus.Status_Stop;
+        this.node_sharebutton.active = this._gameType != GameSecondStatus.Status_Stop;
     },
 
     refreshTime() {
@@ -137,6 +139,9 @@ cc.Class({
         }
 
         this.refreshStatus();
+    },
+    onShare() {
+
     },
 
     sendGameData() {

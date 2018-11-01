@@ -36,7 +36,7 @@ cc.Class({
     updateView() {
         if (this.leveldefine) {
             Game.ResController.SetSprite(this.image_maid, this.leveldefine.Path);
-            this.label_name.string = '开启第' + this.levelid + '章';
+            this.label_name.string = '开启第' + this.levelid + '关';
         }
     },
 
