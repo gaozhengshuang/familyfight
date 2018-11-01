@@ -4363,7 +4363,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 148,
+      "width": 150,
       "height": 40
     },
     "_rotationX": 0,
@@ -4421,7 +4421,7 @@
       "b": 58,
       "a": 255
     },
-    "_width": 2
+    "_width": 3
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -4443,7 +4443,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "1eb0a363-a35b-4281-b651-551ef7cb0faf"
+      "__uuid__": "71647bac-5fa7-497d-818f-3eb93faff54e"
     },
     "_type": 1,
     "_sizeMode": 0,
