@@ -188,7 +188,14 @@ cc.Class({
 
     onGW2C_AckTryst(msgid, data) {
         if (data.result == 0) {
-            Game.RewardController.PlayLastReward();
+            Game.RewardController.PlayLastReward(function () {
+                if (Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_Tryst, 0, Game.TimeController.GetCurTime())) {
+                    this.openView(Game.UIName.UI_SHAREAWARD, {
+                        sharetype: Game.Define.SHARETYPE.ShareType_Tryst,
+                        shareid: 0
+                    });
+                }
+            }.bind(this));
         } else {
             this.showTips("约会失败...");
         }

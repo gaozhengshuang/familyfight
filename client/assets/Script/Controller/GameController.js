@@ -39,7 +39,7 @@ GameController.prototype.onShowGame = function (res) {
     if (ActiveController._sharing) {
         //分享回来了
         ActiveController._sharing = false;
-        if (ActiveController.GetLastShareRewardTimes(ActiveController._sharetype, ActiveController._shareid, ActiveController._sharetime) > 0) {
+        if (ActiveController.CanGetReward(ActiveController._sharetype, ActiveController._shareid, ActiveController._sharetime)) {
             //有奖励领取哦 才发送
             NetWorkController.Send('msg.C2GW_ReqShareMessage', {
                 sharetype: ActiveController._sharetype,

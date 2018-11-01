@@ -73,6 +73,7 @@ cc.Class({
         if (this.status == BrandStatus.Status_Wait) {
             if (Game.CurrencyModel.GetPower() < 1) {
                 this.showTips("体力不足");
+                this.openView(Game.UIName.UI_DAILYREWARD, { tabindex: 2 });
                 return;
             }
             this.clickIndex = index;
@@ -307,9 +308,23 @@ cc.Class({
         }
         setTimeout(function () {
             if (popinfo.length > 0) {
-                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_SERIESPOP, popinfo);
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_SERIESPOP, popinfo, function () {
+                    if (Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_TurnBrand, 0, Game.TimeController.GetCurTime())) {
+                        this.openView(Game.UIName.UI_SHAREAWARD, {
+                            sharetype: Game.Define.SHARETYPE.ShareType_TurnBrand,
+                            shareid: 0
+                        });
+                    }
+                }.bind(this));
+            } else {
+                if (Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_TurnBrand, 0, Game.TimeController.GetCurTime())) {
+                    this.openView(Game.UIName.UI_SHAREAWARD, {
+                        sharetype: Game.Define.SHARETYPE.ShareType_TurnBrand,
+                        shareid: 0
+                    });
+                }
             }
-        }, 500 + 800 * notifyIndex);
+        }.bind(this), 500 + 800 * notifyIndex);
         this.node.runAction(cc.sequence([
             cc.delayTime(0.5),
             cc.callFunc(function () {

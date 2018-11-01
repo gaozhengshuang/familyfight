@@ -102,6 +102,22 @@ ActiveController.prototype.CanDailyPower = function () {
 ActiveController.prototype.GetShareDefine = function (sharetype, id) {
     return _.find(this._shareDefines, { ShareType: sharetype, ShareId: id });
 }
+ActiveController.prototype.CanGetReward = function (sharetype, id, time) {
+    let define = this.GetShareDefine(sharetype, id);
+    if (define == null) {
+        return false;
+    }
+    let data = _.find(this._shareData, { id: define.Id });
+    if (data == null) {
+        return true;
+    }
+    for (let i = 0; i < data.times.length; i++) {
+        if (time == data.times[i]) {
+            return false;
+        }
+    }
+    return this.GetLastShareRewardTimes(sharetype, id, time) > 0;
+}
 //分享奖励还剩多少次 
 ActiveController.prototype.GetLastShareRewardTimes = function (sharetype, id, time) {
     let define = this.GetShareDefine(sharetype, id);

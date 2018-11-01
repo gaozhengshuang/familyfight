@@ -65,6 +65,12 @@ cc.Class({
             Game.GuideController.NextGuide();
         } else {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_TIPS, "金币不足哟!");
+            if (Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_Shop, 0, Game.TimeController.GetCurTime())) {
+                Game.ViewController.openView(Game.UIName.UI_SHAREAWARD, {
+                    sharetype: Game.Define.SHARETYPE.ShareType_Shop,
+                    shareid: 0
+                });
+            }
         }
     },
 

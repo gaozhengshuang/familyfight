@@ -26,7 +26,8 @@ var UIName = {
     UI_ACTIVEGAMEATTACKPALACE: 'Prefab/MiniGameAttackPalaceView',
     UI_ACTIVEGAMEGUESSKING: 'Prefab/MiniGameGuessView',
     UI_PALACEDATE: 'Prefab/PalaceDateView',
-    UI_DAILYREWARD: 'Prefab/DailyRewardView'
+    UI_DAILYREWARD: 'Prefab/DailyRewardView',
+    UI_SHAREAWARD: 'Prefab/ShareAward'
 }
 
 module.exports = UIName;
