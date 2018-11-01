@@ -3275,7 +3275,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "分享",
+    "_N$string": "求助",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -3570,7 +3570,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 266,
+      "width": 170,
       "height": 40
     },
     "_rotationX": 0,
@@ -3579,8 +3579,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 225.4,
-      "y": -446.7
+      "x": 272,
+      "y": -447
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -3607,7 +3607,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "分享到群可获得游戏次数",
+    "_N$string": "可获得游戏次数",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
