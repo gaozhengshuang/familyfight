@@ -17,6 +17,7 @@ cc.Class({
         image_rightCurtains: { default: null, type: cc.Sprite },
         image_topCurtains: { default: null, type: cc.Sprite },
         node_dialog: { default: null, type: cc.Node },
+        node_share: { default: null, type: cc.Node }
     },
 
     onLoad() {
@@ -72,7 +73,7 @@ cc.Class({
 
             let dialogList = [];
             let loveDialogueList = Game.ConfigController.GetConfig("LoveDialogue");
-            for (let i = 0; i < loveDialogueList.length; i ++) {
+            for (let i = 0; i < loveDialogueList.length; i++) {
                 if (loveDialogueList[i].PalaceId == this._data.id) {
                     dialogList.push(loveDialogueList[i]);
                 }
@@ -109,6 +110,9 @@ cc.Class({
             return;
         }
         this.playMakeLoveAction();
+    },
+    onShare() {
+        Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_MiniGame, Game.Define.MINIGAMETYPE.LUCKILY, Game.TimeController.GetCurTime());
     },
 
     playMakeLoveAction() {
