@@ -207,6 +207,9 @@ func (this *GateUser) ParseBigGoldToObj(arr []string)(retObj map[uint32]uint32, 
 }
 func (this *GateUser) ParseBigGoldToArr(obj map[uint32]uint32) []string{
 	retArr := make([]string, 0)
+	if len(obj) == 0 {
+		return retArr
+	}
 	maxIndex := uint32(0)
 	for i, _ := range obj{
 		if i > maxIndex {
