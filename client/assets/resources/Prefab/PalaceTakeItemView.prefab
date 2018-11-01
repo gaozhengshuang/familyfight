@@ -287,7 +287,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": 0,
-      "y": 279.6
+      "y": 280
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -469,8 +469,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 200.2,
-      "y": 260.4
+      "x": 200,
+      "y": 260
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -907,6 +907,7 @@
     "_enabled": true,
     "_url": "",
     "_data": {},
+    "_oldparentNode": null,
     "tableView": {
       "__id__": 18
     }
