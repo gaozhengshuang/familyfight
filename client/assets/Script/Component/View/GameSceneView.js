@@ -48,7 +48,7 @@ cc.Class({
             let curPassMoney = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids());
             if (this._palceData != null) {
                 if (this._palceData.luckily != 0) {
-                    curPassMoney = curMoney.multiply(100 + this._palceData.luckily).divide(100);
+                    curPassMoney = curPassMoney.multiply(100 + this._palceData.luckily).divide(100);
                 }
             }
             Game.CurrencyModel.AddGold(Game.Tools.toLocalMoney(curPassMoney.multiply(Game.bigInteger(this.intervalTime))));
