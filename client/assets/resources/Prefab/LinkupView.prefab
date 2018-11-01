@@ -4667,7 +4667,7 @@
       "__id__": 152
     },
     "_id": "",
-    "_opacity": 150,
+    "_opacity": 20,
     "_color": {
       "__type__": "cc.Color",
       "r": 0,
@@ -4965,8 +4965,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 200,
-      "height": 70
+      "width": 350,
+      "height": 100
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -5082,9 +5082,9 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "6e0665df-8e34-4edd-9e7a-8393ecfb04fb"
+      "__uuid__": "27ccc062-7412-428c-89c1-7dec156bdef7"
     },
-    "_type": 1,
+    "_type": 0,
     "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
@@ -6790,7 +6790,7 @@
     "node": {
       "__id__": 1
     },
-    "_enabled": true,
+    "_enabled": false,
     "node_playDlg": {
       "__id__": 2
     }
