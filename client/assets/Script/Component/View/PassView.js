@@ -34,6 +34,11 @@ cc.Class({
         this.passList = [];
         this.passBase = Game.ConfigController.GetConfig("PassLevels");
 
+        let _dialoguePass = null;   //本地判断剧情和关卡初始化
+        if (Game.Platform.GetStorage('dialoguePass') != null) {
+            _dialoguePass = JSON.parse(Game.Platform.GetStorage('dialoguePass'));  
+        }
+
         let initDialoguePass = function() {     //初始化剧情关卡
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, 1);
 
@@ -51,11 +56,6 @@ cc.Class({
         let updateDialoguePass = function() {   //更新剧情关卡
             Game.MaidModel.SetCurPass(_dialoguePass.pass);
             Game.MaidModel.SetCurChapter(Game.ConfigController.GetConfigById("PassLevels", _dialoguePass.pass).ChapterID);
-        }
-
-        let _dialoguePass = null;   //本地判断剧情和关卡初始化
-        if (Game.Platform.GetStorage('dialoguePass') != null) {
-            _dialoguePass = JSON.parse(Game.Platform.GetStorage('dialoguePass'));  
         }
         
         if (_dialoguePass == null) {
