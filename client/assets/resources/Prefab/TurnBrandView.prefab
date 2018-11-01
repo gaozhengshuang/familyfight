@@ -6759,7 +6759,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Sprite",
+    "_name": "image_DoubleCoin",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -6801,8 +6801,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 131.1,
-      "y": 595.3
+      "x": 130,
+      "y": 600
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -6850,7 +6850,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Label",
+    "_name": "Label_DoubleCoinNum",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -6895,8 +6895,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 133.5,
-      "y": 578
+      "x": 133,
+      "y": 580
     },
     "_skewX": 0,
     "_skewY": 0,
