@@ -64,7 +64,7 @@ cc.Class({
         this._randBrandInfo();
         this.updateMiniGameCoin();
         this.updateDoubleGoldsItemCount(false);
-        Game.AudioController.PlayMusic('Audio/bg2');
+        Game.AudioController.PlayMusic('Audio/bg1');
     },
     update: function (dt) {
     },

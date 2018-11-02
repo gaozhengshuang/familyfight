@@ -51,7 +51,7 @@ cc.Class({
         this.anima_tip.node.y = this.tipNodeY;
         this._changeStatus(AttackStatus.Status_Idle);
         this.anima_show.play();
-        Game.AudioController.PlayMusic('Audio/bg2');
+        Game.AudioController.PlayMusic('Audio/bg1');
     },
     onDisable: function () {
         Game.NetWorkController.RemoveListener('msg.GW2C_AckAttackPalaceData', this, this.onAckAttackPalaceData);

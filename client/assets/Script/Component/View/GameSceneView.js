@@ -101,8 +101,9 @@ cc.Class({
 
     initPassData() {
         let _dialoguePass = null;   //本地判断剧情和关卡初始化
-        if (Game.Platform.GetStorage('dialoguePass') != null) {
-            _dialoguePass = JSON.parse(Game.Platform.GetStorage('dialoguePass'));  
+        let value = Game.Platform.GetStorage('dialoguePass')
+        if (value) {
+            _dialoguePass = JSON.parse(value);  
         }
 
         let initDialoguePass = function() {     //初始化剧情关卡

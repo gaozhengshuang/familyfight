@@ -34,7 +34,7 @@ cc.Class({
     onEnable() {
         this.initNotification();
         this._changeStatus(GuessStatus.Status_Show);
-        Game.AudioController.PlayMusic('Audio/bg2');
+        Game.AudioController.PlayMusic('Audio/bg1');
     },
 
     onDisable() {

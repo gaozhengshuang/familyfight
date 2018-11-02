@@ -85,8 +85,9 @@ cc.Class({
 
         if (isNext) {   //切换新章节弹对话
             let _dialoguePass = null;
-            if (Game.Platform.GetStorage('dialoguePass') != null) {
-                _dialoguePass = JSON.parse(Game.Platform.GetStorage('dialoguePass'));  
+            let value = Game.Platform.GetStorage('dialoguePass');
+            if (value) {
+                _dialoguePass = JSON.parse(value);  
             }
             let passBase = Game.ConfigController.GetConfigById("PassLevels", passId);
             
