@@ -52,8 +52,8 @@ cc.Class({
     },
     onEnable: function () {
         this._changeStatus(KickAssStatus.Status_Idle);
-        let allincomenum = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids()).multiply(Game.ConfigController.GetConfig('KickAssWinReward').Gold);
-        this.rewardLabel.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(allincomenum));
+        // let allincomenum = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids()).multiply(Game.ConfigController.GetConfig('KickAssWinReward').Gold);
+        // this.rewardLabel.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(allincomenum));
         this.updateMiniGameCoin();
     },
     onDestroy: function () {
