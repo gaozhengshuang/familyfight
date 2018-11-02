@@ -172,7 +172,7 @@ cc.Class({
         let targetY = 0;
 
         let ranNum = Math.random();
-        let distance = Math.floor(ranNum * this.moveDistance + 10);
+        let distance = Math.floor(Math.abs(ranNum - 0.5) * this.moveDistance + 10);
 
         if (ranNum > 0.5) {
             targetX = this.node.x + distance;
