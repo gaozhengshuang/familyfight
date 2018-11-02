@@ -70,14 +70,15 @@ cc.Class({
             ]));
         }
         if (data.result == 0) {
-            //加金币
-            Game.CurrencyModel.AddGold(data.gold);
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
-                info: '<color=#6d282d>获得金币+<color=#ed5b5b>' + Game.Tools.UnitConvert(data.gold) + '</c></c>',
-                alive: 0.5,
-                delay: 1
-            });
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
+            // //加金币
+            // Game.CurrencyModel.AddGold(data.gold);
+            // Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
+            //     info: '<color=#6d282d>获得金币+<color=#ed5b5b>' + Game.Tools.UnitConvert(data.gold) + '</c></c>',
+            //     alive: 0.5,
+            //     delay: 1
+            // });
+            // Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
+            Game.RewardController.PlayLastReward();
         }
     },
     onActionClick: function () {

@@ -84,37 +84,7 @@ cc.Class({
 
     onGW2C_AckTenSecond(msgid, data) {
         if (data.result == 0) {
-            let _rewardType = 0;
-            if (data.gold != null) {
-                _rewardType = Game.TurnGameDefine.REWARD_TYPE.TYPE_GOLD;
-            } else if (data.items != null) {
-                _rewardType = Game.TurnGameDefine.REWARD_TYPE.TYPE_ITEM;
-            }
-
-            switch (_rewardType) {
-                case Game.TurnGameDefine.REWARD_TYPE.TYPE_GOLD:
-                    //金币
-                    let value = data.gold;
-                    Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
-                        info: '<color=#ed5b5b>获得金币+' + Game.Tools.UnitConvert(value) + '</c></c>',
-                        alive: 0.5,
-                        delay: 1
-                    });
-                    Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
-                    Game.CurrencyModel.AddGold(value);
-                    break;
-                case Game.TurnGameDefine.REWARD_TYPE.TYPE_ITEM:
-                    //物品
-                    let itemConfig = Game.ItemModel.GetItemConfig(data.items[0].itemid);
-                    if (itemConfig) {
-                        Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
-                            info: '<color=#ed5b5b>获得' + itemConfig.Name + '+' + data.items[0].num + '</c></c>',
-                            alive: 0.5,
-                            delay: 1
-                        });
-                    }
-                    break;
-            }
+            Game.RewardController.PlayLastReward();
         }
     },
 
