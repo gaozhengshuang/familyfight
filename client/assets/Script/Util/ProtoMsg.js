@@ -2199,8 +2199,6 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IGW2C_AckTenSecond
          * @property {number|null} [result] GW2C_AckTenSecond result
-         * @property {Array.<msg.IPairNumItem>|null} [items] GW2C_AckTenSecond items
-         * @property {Array.<string>|null} [gold] GW2C_AckTenSecond gold
          */
 
         /**
@@ -2212,8 +2210,6 @@ $root.msg = (function() {
          * @param {msg.IGW2C_AckTenSecond=} [properties] Properties to set
          */
         function GW2C_AckTenSecond(properties) {
-            this.items = [];
-            this.gold = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -2227,22 +2223,6 @@ $root.msg = (function() {
          * @instance
          */
         GW2C_AckTenSecond.prototype.result = 0;
-
-        /**
-         * GW2C_AckTenSecond items.
-         * @member {Array.<msg.IPairNumItem>} items
-         * @memberof msg.GW2C_AckTenSecond
-         * @instance
-         */
-        GW2C_AckTenSecond.prototype.items = $util.emptyArray;
-
-        /**
-         * GW2C_AckTenSecond gold.
-         * @member {Array.<string>} gold
-         * @memberof msg.GW2C_AckTenSecond
-         * @instance
-         */
-        GW2C_AckTenSecond.prototype.gold = $util.emptyArray;
 
         /**
          * Creates a new GW2C_AckTenSecond instance using the specified properties.
@@ -2270,12 +2250,6 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.result != null && message.hasOwnProperty("result"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
-            if (message.items != null && message.items.length)
-                for (var i = 0; i < message.items.length; ++i)
-                    $root.msg.PairNumItem.encode(message.items[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-            if (message.gold != null && message.gold.length)
-                for (var i = 0; i < message.gold.length; ++i)
-                    writer.uint32(/* id 3, wireType 2 =*/26).string(message.gold[i]);
             return writer;
         };
 
@@ -2312,16 +2286,6 @@ $root.msg = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.result = reader.uint32();
-                    break;
-                case 2:
-                    if (!(message.items && message.items.length))
-                        message.items = [];
-                    message.items.push($root.msg.PairNumItem.decode(reader, reader.uint32()));
-                    break;
-                case 3:
-                    if (!(message.gold && message.gold.length))
-                        message.gold = [];
-                    message.gold.push(reader.string());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -2361,22 +2325,6 @@ $root.msg = (function() {
             if (message.result != null && message.hasOwnProperty("result"))
                 if (!$util.isInteger(message.result))
                     return "result: integer expected";
-            if (message.items != null && message.hasOwnProperty("items")) {
-                if (!Array.isArray(message.items))
-                    return "items: array expected";
-                for (var i = 0; i < message.items.length; ++i) {
-                    var error = $root.msg.PairNumItem.verify(message.items[i]);
-                    if (error)
-                        return "items." + error;
-                }
-            }
-            if (message.gold != null && message.hasOwnProperty("gold")) {
-                if (!Array.isArray(message.gold))
-                    return "gold: array expected";
-                for (var i = 0; i < message.gold.length; ++i)
-                    if (!$util.isString(message.gold[i]))
-                        return "gold: string[] expected";
-            }
             return null;
         };
 
@@ -2394,23 +2342,6 @@ $root.msg = (function() {
             var message = new $root.msg.GW2C_AckTenSecond();
             if (object.result != null)
                 message.result = object.result >>> 0;
-            if (object.items) {
-                if (!Array.isArray(object.items))
-                    throw TypeError(".msg.GW2C_AckTenSecond.items: array expected");
-                message.items = [];
-                for (var i = 0; i < object.items.length; ++i) {
-                    if (typeof object.items[i] !== "object")
-                        throw TypeError(".msg.GW2C_AckTenSecond.items: object expected");
-                    message.items[i] = $root.msg.PairNumItem.fromObject(object.items[i]);
-                }
-            }
-            if (object.gold) {
-                if (!Array.isArray(object.gold))
-                    throw TypeError(".msg.GW2C_AckTenSecond.gold: array expected");
-                message.gold = [];
-                for (var i = 0; i < object.gold.length; ++i)
-                    message.gold[i] = String(object.gold[i]);
-            }
             return message;
         };
 
@@ -2427,24 +2358,10 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults) {
-                object.items = [];
-                object.gold = [];
-            }
             if (options.defaults)
                 object.result = 0;
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
-            if (message.items && message.items.length) {
-                object.items = [];
-                for (var j = 0; j < message.items.length; ++j)
-                    object.items[j] = $root.msg.PairNumItem.toObject(message.items[j], options);
-            }
-            if (message.gold && message.gold.length) {
-                object.gold = [];
-                for (var j = 0; j < message.gold.length; ++j)
-                    object.gold[j] = message.gold[j];
-            }
             return object;
         };
 
@@ -2656,7 +2573,6 @@ $root.msg = (function() {
          * @memberof msg
          * @interface IGW2C_AckKickAss
          * @property {number|null} [result] GW2C_AckKickAss result
-         * @property {Array.<string>|null} [gold] GW2C_AckKickAss gold
          */
 
         /**
@@ -2668,7 +2584,6 @@ $root.msg = (function() {
          * @param {msg.IGW2C_AckKickAss=} [properties] Properties to set
          */
         function GW2C_AckKickAss(properties) {
-            this.gold = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -2682,14 +2597,6 @@ $root.msg = (function() {
          * @instance
          */
         GW2C_AckKickAss.prototype.result = 0;
-
-        /**
-         * GW2C_AckKickAss gold.
-         * @member {Array.<string>} gold
-         * @memberof msg.GW2C_AckKickAss
-         * @instance
-         */
-        GW2C_AckKickAss.prototype.gold = $util.emptyArray;
 
         /**
          * Creates a new GW2C_AckKickAss instance using the specified properties.
@@ -2717,9 +2624,6 @@ $root.msg = (function() {
                 writer = $Writer.create();
             if (message.result != null && message.hasOwnProperty("result"))
                 writer.uint32(/* id 1, wireType 0 =*/8).uint32(message.result);
-            if (message.gold != null && message.gold.length)
-                for (var i = 0; i < message.gold.length; ++i)
-                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.gold[i]);
             return writer;
         };
 
@@ -2756,11 +2660,6 @@ $root.msg = (function() {
                 switch (tag >>> 3) {
                 case 1:
                     message.result = reader.uint32();
-                    break;
-                case 2:
-                    if (!(message.gold && message.gold.length))
-                        message.gold = [];
-                    message.gold.push(reader.string());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -2800,13 +2699,6 @@ $root.msg = (function() {
             if (message.result != null && message.hasOwnProperty("result"))
                 if (!$util.isInteger(message.result))
                     return "result: integer expected";
-            if (message.gold != null && message.hasOwnProperty("gold")) {
-                if (!Array.isArray(message.gold))
-                    return "gold: array expected";
-                for (var i = 0; i < message.gold.length; ++i)
-                    if (!$util.isString(message.gold[i]))
-                        return "gold: string[] expected";
-            }
             return null;
         };
 
@@ -2824,13 +2716,6 @@ $root.msg = (function() {
             var message = new $root.msg.GW2C_AckKickAss();
             if (object.result != null)
                 message.result = object.result >>> 0;
-            if (object.gold) {
-                if (!Array.isArray(object.gold))
-                    throw TypeError(".msg.GW2C_AckKickAss.gold: array expected");
-                message.gold = [];
-                for (var i = 0; i < object.gold.length; ++i)
-                    message.gold[i] = String(object.gold[i]);
-            }
             return message;
         };
 
@@ -2847,17 +2732,10 @@ $root.msg = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.gold = [];
             if (options.defaults)
                 object.result = 0;
             if (message.result != null && message.hasOwnProperty("result"))
                 object.result = message.result;
-            if (message.gold && message.gold.length) {
-                object.gold = [];
-                for (var j = 0; j < message.gold.length; ++j)
-                    object.gold[j] = message.gold[j];
-            }
             return object;
         };
 
