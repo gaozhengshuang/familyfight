@@ -2124,9 +2124,11 @@
   },
   {
     "__type__": "cc.ClickEvent",
-    "target": null,
-    "component": "PalaceLoveView",
-    "handler": "onGoLove",
+    "target": {
+      "__id__": 1
+    },
+    "component": "EventDetailView",
+    "handler": "onGotoClick",
     "customEventData": ""
   },
   {
@@ -2587,6 +2589,9 @@
     },
     "shareNode": {
       "__id__": 67
+    },
+    "gotoNode": {
+      "__id__": 58
     },
     "headInfo": null,
     "barragesInfo": [],
