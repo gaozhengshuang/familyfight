@@ -272,64 +272,45 @@ func (this *GateUser) Linkup(score uint32) (result uint32, gold []string) {
 }
 
 //十秒小游戏
-func (this *GateUser) TenSecond(hit bool) (result uint32, gold []string, items []*msg.PairNumItem) {
-	gold = make([]string, 0)
-	items = make([]*msg.PairNumItem, 0)
+func (this *GateUser) TenSecond(hit bool) uint32 {
 	// 体力够不够
 	if this.currency.GetMiniGameCoin(MiniGameCoinType_TenSecond) < 1 {
 		this.SendNotify("游戏币不足")
-		return 1, gold, items
+		return 1
 	}
 	//可以了
+	rewardid := uint32(0)
 	if hit {
-		//成功物品
-		for _, v := range tbl.Common.TenSecondWinReward.Item {
-			if len(v) >= 2 {
-				this.AddReward(4, uint32(v[0]), uint32(v[1]), 0, "十秒游戏奖励", true)
-				items = append(items, &msg.PairNumItem{Itemid: pb.Uint32(uint32(v[0])), Num: pb.Uint64(uint64(v[1]))})
-			}
-		}
-		goldObj := this.maid.CalculateRewardPerSecond(this)
-		goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.TenSecondWinReward.Gold))
-		goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
-		gold = this.ParseBigGoldToArr(goldObj)
+		rewardid = uint32(tbl.Common.TenSecondWinReward)
 	} else {
-		//奖励金币
-		goldObj := this.maid.CalculateRewardPerSecond(this)
-		goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.TenSeceondLoseRatio.Gold))
-		goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
-		gold = this.ParseBigGoldToArr(goldObj)
+		rewardid = uint32(tbl.Common.TenSeceondLoseRatio)
 	}
+	golds, rewards := RewardMgr().DropToUser(this, rewardid, "十秒点奖励", true, 0)
+	this.SendRewardNotify(golds, rewards)
 	//扣体力
 	this.currency.RemoveMiniGameCoin(MiniGameCoinType_TenSecond, 1, "十秒游戏消耗", true)
-	return 0, gold, items
+	return 0
 }
 
 //踢屁股
-func (this *GateUser) KickAss(hit bool) (result uint32, gold []string) {
-	gold = make([]string, 0)
+func (this *GateUser) KickAss(hit bool)  uint32 {
 	// 体力够不够
 	if this.currency.GetMiniGameCoin(MiniGameCoinType_KickAss) < 1 {
 		this.SendNotify("游戏币不足")
-		return 1, gold
+		return 1
 	}
 	//可以了
+	rewardid := uint32(0)
 	if hit {
-		//成功物品
-		goldObj := this.maid.CalculateRewardPerSecond(this)
-		goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.KickAssWinReward.Gold))
-		goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
-		gold = this.ParseBigGoldToArr(goldObj)
+		rewardid = uint32(tbl.Common.KickAssWinReward)
 	} else {
-		//奖励金币
-		goldObj := this.maid.CalculateRewardPerSecond(this)
-		goldObj = this.TimesBigGold(goldObj, uint32(tbl.Common.KickAssLoseReward.Gold))
-		goldObj = this.CarryBigGold(goldObj, this.MaxIndexBigGold(goldObj))
-		gold = this.ParseBigGoldToArr(goldObj)
+		rewardid = uint32(tbl.Common.KickAssLoseReward)
 	}
+	golds, rewards := RewardMgr().DropToUser(this, rewardid, "踢屁股奖励", true, 0)
+	this.SendRewardNotify(golds, rewards)
 	//扣体力
 	this.currency.RemoveMiniGameCoin(MiniGameCoinType_KickAss, 1, "踢屁股消耗", true)
-	return 0, gold
+	return 0
 }
 
 //攻击后宫

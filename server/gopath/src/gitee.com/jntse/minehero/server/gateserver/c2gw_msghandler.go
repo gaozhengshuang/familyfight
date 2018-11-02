@@ -413,11 +413,9 @@ func on_C2GW_ReqTenSecond(session network.IBaseNetSession, message interface{}) 
 		session.Close()
 		return
 	}
-	result, gold, items := user.TenSecond(tmsg.GetHit())
+	result := user.TenSecond(tmsg.GetHit())
 	send := &msg.GW2C_AckTenSecond{}
 	send.Result = pb.Uint32(result)
-	send.Items = items
-	send.Gold = gold
 	user.SendMsg(send)
 }
 //踢屁股
@@ -435,10 +433,9 @@ func on_C2GW_ReqKickAss(session network.IBaseNetSession, message interface{}) {
 		session.Close()
 		return
 	}
-	result, gold := user.KickAss(tmsg.GetHit())
+	result := user.KickAss(tmsg.GetHit())
 	send := &msg.GW2C_AckKickAss{}
 	send.Result = pb.Uint32(result)
-	send.Gold = gold
 	user.SendMsg(send)
 }
 //获得后宫目标
