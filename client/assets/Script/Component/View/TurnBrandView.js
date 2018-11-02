@@ -282,6 +282,7 @@ cc.Class({
         let notifyIndex = 0;
         if (this.drop.golds.length != 0) {
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_PLAYGOLDFLY);
+            this.updateDoubleGoldsItemCount(true);
             Game.CurrencyModel.AddGold(this.drop.golds);
             Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_REWARD, {
                 info: '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>金币+' + Game.Tools.UnitConvert(this.drop.golds) + '</c></c>',
@@ -330,7 +331,6 @@ cc.Class({
             }
         }
         setTimeout(function () {
-            this.updateDoubleGoldsItemCount(true);
             if (popinfo.length > 0) {
                 Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_SERIESPOP, popinfo, function () {
                     if (this.drop.golds.length != 0 && Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_TurnBrand, 0, Game.TimeController.GetCurTime())) {
