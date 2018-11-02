@@ -70,7 +70,7 @@ cc.Class({
                 Game.ResController.SetSprite(this.image_buy, "Image/GameScene/Common/button_common2");
             }
 
-            this.label_findNum.string = `每秒产${Game.Tools.UnitConvert(palaceMaidBase.GoldAddition)}`;
+            this.label_findNum.string = `每小时产${Game.Tools.UnitConvert(Game.Tools.toLocalMoney(Game.Tools.toBigIntMoney(palaceMaidBase.GoldAddition).multiply(3600)))}`;
             this.label_findDetail.string = palaceMaidBase.Describe;
             this.label_name.string = maidBase.Name + '详情';
             this.label_gold.string = `${Game.Tools.UnitConvert(palaceMaidBase.UnlockPrice)}`;
