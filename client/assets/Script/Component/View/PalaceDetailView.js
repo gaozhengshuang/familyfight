@@ -27,6 +27,9 @@ cc.Class({
 
         label_curEfficiency: { default: null, type: cc.Label },
         label_maxEfficiency: { default: null, type: cc.Label },
+
+        label_sleepNum: { default: null, type: cc.Label },
+        image_reddi: { default: null, type: cc.Sprite },
     },
 
     onLoad() {
@@ -38,6 +41,7 @@ cc.Class({
         this.updateView();
         this.updateBottomButton();
         this.updateCharm();
+        this.updateLove();
     },
 
     onDisable() {
@@ -82,6 +86,7 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.PALACEMASTERLVUP_ACK, this, this.updateLvUpBtnState);
         Game.NotificationController.On(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
         Game.NotificationController.On(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharm);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.MAKELOVE_ACK, this, this.updateLove);
     },
 
     removeNotification() {
@@ -91,6 +96,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PALACEMASTERLVUP_ACK, this, this.updateLvUpBtnState);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.PARTLVUP_ACK, this, this.updateCharm);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.MAKELOVE_ACK, this, this.updateLove);
     },
 
     updateView() {
@@ -231,6 +237,11 @@ cc.Class({
 
         this.label_curEfficiency.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(curEfficiency.multiply(36)));
         this.label_maxEfficiency.string = "/" + Game.Tools.UnitConvert(Game.Tools.toLocalMoney(maxEfficiency.multiply(36)));
+    },
+
+    updateLove() {
+        this.image_reddi.node.active = Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.LUCKILY) > 0;
+        this.label_sleepNum.string = `${Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.LUCKILY)}`;
     },
 
     onOpenLvUp(event) {
