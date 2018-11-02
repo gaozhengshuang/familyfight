@@ -133,7 +133,7 @@ func (this* RewardManager) GetDropList(node *DropNode) []*DropData {
 		}
 	} else {
 		//权重
-		result := util.RandBetween(0, int32(node.totalprop))
+		result := util.RandBetween(0, int32(node.totalprop - 1))
 		for _, v := range node.items {
 			if result < int32(v.prop) {
 				newDatas := this.GenerateDropData(v)
