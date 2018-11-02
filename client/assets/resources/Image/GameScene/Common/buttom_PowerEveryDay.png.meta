@@ -1,0 +1,30 @@
+{
+  "ver": "2.0.0",
+  "uuid": "87705100-c610-4416-8a76-d7bf4c69d489",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "buttom_PowerEveryDay": {
+      "ver": "1.0.3",
+      "uuid": "19fc3e17-fbf1-4929-8de5-6701ad043d42",
+      "rawTextureUuid": "87705100-c610-4416-8a76-d7bf4c69d489",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -1,
+      "offsetY": 1.5,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 138,
+      "height": 138,
+      "rawWidth": 140,
+      "rawHeight": 141,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
