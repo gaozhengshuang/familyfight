@@ -846,7 +846,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 150,
-      "height": 150
+      "height": 170
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -873,7 +873,7 @@
     },
     "_enabled": true,
     "_spriteFrame": {
-      "__uuid__": "e0fdac66-97fa-437c-b631-3008c3ff7d78"
+      "__uuid__": "b4b29e7d-fbe6-4802-8a0a-b2a202b18e98"
     },
     "_type": 0,
     "_sizeMode": 0,
@@ -936,7 +936,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 90,
+      "width": 94,
       "height": 40
     },
     "_rotationX": 0,
@@ -973,7 +973,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "胖秀女",
+    "_N$string": "第99关",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
