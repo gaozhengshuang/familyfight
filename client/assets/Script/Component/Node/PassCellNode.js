@@ -34,8 +34,9 @@ cc.Class({
         }
         
         let _dialoguePass = null;    //判断关卡第一次开放
-        if (Game.Platform.GetStorage('dialoguePass') != null) {
-            _dialoguePass = JSON.parse(Game.Platform.GetStorage('dialoguePass'));  
+        let value = Game.Platform.GetStorage('dialoguePass');
+        if (value) {
+            _dialoguePass = JSON.parse(value);  
         }
         if (_dialoguePass) {
             if ((this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.lookPass < this._data.Id)) {
@@ -68,8 +69,9 @@ cc.Class({
                 Game.GuideController.NextGuide();
         
                 let _dialoguePass = null;
-                if (Game.Platform.GetStorage('dialoguePass') != null) {
-                    _dialoguePass = JSON.parse(Game.Platform.GetStorage('dialoguePass'));  
+                let value = Game.Platform.GetStorage('dialoguePass')
+                if (value) {
+                    _dialoguePass = JSON.parse(value);  
                 }
                 if (_dialoguePass) {
                     if (this._data.Id == Game.MaidModel.GetTopPass() && _dialoguePass.pass < this._data.Id) {
