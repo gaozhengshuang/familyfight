@@ -5,6 +5,9 @@ cc.Class({
 
     properties: {
         image_head: { default: null, type: cc.Sprite },
+        node_event0: { default: null, type: cc.Node },
+        node_event1: { default: null, type: cc.Node },
+        node_event2: { default: null, type: cc.Node },
         image_event0: { default: null, type: cc.Sprite },
         image_event1: { default: null, type: cc.Sprite },
         image_event2: { default: null, type: cc.Sprite },
@@ -60,17 +63,17 @@ cc.Class({
     },
 
     initAni() {
-        this.image_event0.node.opacity = 0;
-        this.image_event1.node.opacity = 0;
-        this.image_event2.node.opacity = 0;
+        this.node_event0.opacity = 0;
+        this.node_event1.opacity = 0;
+        this.node_event2.opacity = 0;
 
         this.button_event0.interactable = true;
         this.button_event1.interactable = true;
         this.button_event2.interactable = true;
 
-        this.image_event0.node.runAction(cc.fadeIn(this._aniTime));
-        this.image_event1.node.runAction(cc.fadeIn(this._aniTime));
-        this.image_event2.node.runAction(cc.fadeIn(this._aniTime));
+        this.node_event0.runAction(cc.fadeIn(this._aniTime));
+        this.node_event1.runAction(cc.fadeIn(this._aniTime));
+        this.node_event2.runAction(cc.fadeIn(this._aniTime));
     },
 
     updateView() {
@@ -132,7 +135,7 @@ cc.Class({
     },
 
     playGoingAni(idx) {
-        this["image_event" + idx].node.runAction(cc.sequence([
+        this["node_event" + idx].runAction(cc.sequence([
             cc.fadeOut(this._aniTime),
             cc.spawn([
                 cc.delayTime(this._delayTime),
@@ -158,7 +161,7 @@ cc.Class({
         let _spawn1 = cc.spawn([
             cc.delayTime(this._delayTime + idx * 0.3),
             cc.callFunc(function () {
-                this["image_event" + idx].node.scale = 1.3;
+                this["node_event" + idx].scale = 1.3;
                 let eventBase = Game._.find(this.dateEventList, { DateId: this._selIds[idx] });
                 if (eventBase) {
                     Game.ResController.SetSprite(this["image_event" + idx], eventBase.Datepath);
@@ -183,7 +186,7 @@ cc.Class({
 
         }, this);
 
-        this["image_event" + idx].node.runAction(cc.sequence([_fadeOut, _spawn1, _spawn2, _fadeIn, _callFunc]));
+        this["node_event" + idx].runAction(cc.sequence([_fadeOut, _spawn1, _spawn2, _fadeIn, _callFunc]));
     },
 
     onGW2C_AckTryst(msgid, data) {
