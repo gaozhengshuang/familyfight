@@ -33,40 +33,6 @@ cc.Class({
     initData() {
         this.passList = [];
         this.passBase = Game.ConfigController.GetConfig("PassLevels");
-
-        let _dialoguePass = null;   //本地判断剧情和关卡初始化
-        if (Game.Platform.GetStorage('dialoguePass') != null) {
-            _dialoguePass = JSON.parse(Game.Platform.GetStorage('dialoguePass'));  
-        }
-
-        let initDialoguePass = function() {     //初始化剧情关卡
-            Game.NotificationController.Emit(Game.Define.EVENT_KEY.SHOWDIALOGUE_PLAYER, 1);
-
-            let passData = {
-                userid: Game.UserModel.GetUserId(),
-                lookPass: 1,
-                pass: 1,
-            };
-            Game.Platform.SetStorage('dialoguePass', JSON.stringify(passData));
-
-            Game.MaidModel.SetCurPass(1);
-            Game.MaidModel.SetCurChapter(1);
-        }
-
-        let updateDialoguePass = function() {   //更新剧情关卡
-            Game.MaidModel.SetCurPass(_dialoguePass.pass);
-            Game.MaidModel.SetCurChapter(Game.ConfigController.GetConfigById("PassLevels", _dialoguePass.pass).ChapterID);
-        }
-        
-        if (_dialoguePass == null) {
-            initDialoguePass();
-        } else {
-            if (_dialoguePass.userid != Game.UserModel.GetUserId()) {
-                initDialoguePass();
-            } else {
-                updateDialoguePass();
-            }
-        }
     },
 
     updateView() {

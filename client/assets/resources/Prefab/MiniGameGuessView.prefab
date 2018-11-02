@@ -612,7 +612,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 3,
+      "x": 0,
       "y": -510
     },
     "_skewX": 0,
@@ -640,8 +640,8 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "玩家名字七个字很多规范化第三方",
-    "_N$horizontalAlign": 0,
+    "_N$string": "玩家名字七个字",
+    "_N$horizontalAlign": 1,
     "_N$verticalAlign": 0,
     "_N$fontFamily": "Arial",
     "_N$overflow": 1
@@ -701,7 +701,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 156,
+      "x": 145,
       "y": -513
     },
     "_skewX": 0,
