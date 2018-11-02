@@ -47,8 +47,6 @@ message C2GW_ReqTenSecond
 message GW2C_AckTenSecond
 {
     optional uint32 result = 1;
-    repeated PairNumItem items = 2;
-    repeated string gold = 3;
 }
 //踢屁股
 message C2GW_ReqKickAss
@@ -58,7 +56,6 @@ message C2GW_ReqKickAss
 message GW2C_AckKickAss
 {
     optional uint32 result = 1;
-    repeated string gold = 2;
 }
 
 message RobotPalaceData
