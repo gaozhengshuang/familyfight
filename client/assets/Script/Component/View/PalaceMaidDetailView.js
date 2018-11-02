@@ -74,7 +74,7 @@ cc.Class({
             this.label_findDetail.string = palaceMaidBase.Describe;
             this.label_name.string = maidBase.Name + '详情';
             this.label_gold.string = `${Game.Tools.UnitConvert(palaceMaidBase.UnlockPrice)}`;
-            this.label_lockLv.string = `主位${palaceMaidBase.OpenLevel}级解锁`
+            this.label_lockLv.string = `主位${palaceMaidBase.OpenLevel}级解锁`;
 
             this._lockGold = palaceMaidBase.UnlockPrice;
         }

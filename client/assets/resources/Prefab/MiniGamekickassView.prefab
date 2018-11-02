@@ -857,7 +857,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 26
@@ -946,7 +946,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 29
@@ -1061,7 +1061,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 396,
+      "width": 468,
       "height": 36
     },
     "_rotationX": 0,
@@ -1070,8 +1070,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -23,
-      "y": -519
+      "x": 0,
+      "y": -550
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -1098,7 +1098,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "踢中屁股即可获得奖励。",
+    "_N$string": "踢中屁股即可获得双倍奖励。",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -1124,7 +1124,7 @@
     },
     "_children": [],
     "_tag": -1,
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 35
@@ -3694,8 +3694,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 350,
-      "height": 100
+      "width": 400,
+      "height": 120
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -3751,7 +3751,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 114,
       "height": 48
     },
     "_rotationX": 0,
@@ -3788,7 +3788,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "开始",
+    "_N$string": "开 始",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",

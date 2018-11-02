@@ -17,7 +17,8 @@ cc.Class({
         image_rightCurtains: { default: null, type: cc.Sprite },
         image_topCurtains: { default: null, type: cc.Sprite },
         node_dialog: { default: null, type: cc.Node },
-        node_share: { default: null, type: cc.Node }
+        node_share: { default: null, type: cc.Node },
+        node_mask: { default: null, type: cc.Node },
     },
 
     onLoad() {
@@ -58,6 +59,7 @@ cc.Class({
         this.image_topCurtains.node.opacity = 0;
         this.image_leftCurtains.node.opacity = 0;
         this.image_rightCurtains.node.opacity = 0;
+        this.node_mask.active = false;
     },
 
     updateView() {
@@ -109,6 +111,7 @@ cc.Class({
             this.showTips("前去翻牌子获得游戏次数");
             return;
         }
+        this.node_mask.active = true;
         this.playMakeLoveAction();
     },
     onShare() {
@@ -159,6 +162,7 @@ cc.Class({
             ]),
             cc.delayTime(this._delayTime),
             cc.callFunc(function () {
+                this.node_mask.active = false;
                 Game.NetWorkController.Send('msg.C2GW_ReqLuckily', {
                     palaceid: Game.PalaceModel.GetCurPalaceId(),
                 });
