@@ -3694,8 +3694,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 350,
-      "height": 100
+      "width": 400,
+      "height": 120
     },
     "_rotationX": 0,
     "_rotationY": 0,
@@ -3751,7 +3751,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
+      "width": 114,
       "height": 48
     },
     "_rotationX": 0,
@@ -3788,7 +3788,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "开始",
+    "_N$string": "开 始",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
