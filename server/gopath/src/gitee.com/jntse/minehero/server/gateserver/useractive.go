@@ -273,7 +273,6 @@ func (this *GateUser) Linkup(score uint32) (result uint32, gold []string) {
 
 //十秒小游戏
 func (this *GateUser) TenSecond(hit bool) uint32 {
-	items = make([]*msg.PairNumItem, 0)
 	// 体力够不够
 	if this.currency.GetMiniGameCoin(MiniGameCoinType_TenSecond) < 1 {
 		this.SendNotify("游戏币不足")
