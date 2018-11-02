@@ -2493,7 +2493,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 135,
+      "width": 93,
       "height": 40
     },
     "_rotationX": 0,
@@ -2530,7 +2530,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "收  获x3",
+    "_N$string": "收  获",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$fontFamily": "Arial",
@@ -3870,7 +3870,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "label_randomxNum",
+    "_name": "label_sleepNum",
     "_objFlags": 0,
     "_parent": {
       "__id__": 121
@@ -4760,6 +4760,12 @@
     },
     "label_maxEfficiency": {
       "__id__": 68
+    },
+    "label_sleepNum": {
+      "__id__": 123
+    },
+    "image_reddi": {
+      "__id__": 126
     }
   },
   {
