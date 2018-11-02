@@ -92,14 +92,21 @@ func (this *UserShare) Share(sharetype uint32, id uint32, time uint64) (result u
 		data.times = append(data.times, time)
 		this.shares[define.Id] = data
 	}
-	if !reward {
+	pass := false
+	for _, v := range data.times {
+		if v == time {
+			pass = true
+			break
+		}
+	}
+	if !reward && !pass {
 		if uint32(len(data.times)) < define.Times {
 			reward = true
 			data.times = append(data.times, time)
 		}
 	}
 	curtime := int64(time)
-	if !reward {
+	if !reward && !pass{
 		switch (define.FreshType){
 			case 0:
 				//没有时间限制 
@@ -128,12 +135,7 @@ func (this *UserShare) Share(sharetype uint32, id uint32, time uint64) (result u
 				break
 		}
 	}
-	for _, v := range data.times {
-		if v == time {
-			reward = false
-			break
-		}
-	}
+	
 	if reward {
 		goldbase := make(map[uint32]uint32)
 		reward := make([]*DropData, 0)
