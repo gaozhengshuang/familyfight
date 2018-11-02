@@ -53,6 +53,7 @@ cc.Class({
         this.goldFlyAnima.node.active = true;
         this.goldFlyAnima.node.position = (position || cc.v2(0, 400));
         this.goldFlyAnima.playAnimation('newAnimation', 1);
+        Game.AudioController.PlayEffect('Audio/getcoin');
     },
 
     onSeriesPop(infos, completeFunc) {

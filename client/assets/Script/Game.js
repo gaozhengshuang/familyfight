@@ -1,3 +1,4 @@
+require('./Component/Common/ComponentExtend');
 let Game = {
     async: require('async'),
     moment: require('moment'),

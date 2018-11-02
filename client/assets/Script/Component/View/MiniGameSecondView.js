@@ -33,11 +33,13 @@ cc.Class({
     onEnable() {
         this.initNotification();
         this.resetGame();
+        Game.AudioController.PlayMusic('Audio/bg2');
     },
 
     onDisable() {
         Game.NetWorkController.RemoveListener('msg.GW2C_AckTenSecond', this, this.onGW2C_AckTenSecond);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
+        Game.AudioController.StopMusic();
     },
 
     initData() {

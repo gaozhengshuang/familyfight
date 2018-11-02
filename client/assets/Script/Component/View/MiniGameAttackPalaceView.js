@@ -51,12 +51,14 @@ cc.Class({
         this.anima_tip.node.y = this.tipNodeY;
         this._changeStatus(AttackStatus.Status_Idle);
         this.anima_show.play();
+        Game.AudioController.PlayMusic('Audio/bg2');
     },
     onDisable: function () {
         Game.NetWorkController.RemoveListener('msg.GW2C_AckAttackPalaceData', this, this.onAckAttackPalaceData);
         Game.NetWorkController.RemoveListener('msg.GW2C_AckAttackPalace', this, this.onAckAttackPalace);
         this.anima_attack.off('stop', this.onAttackPlayEnd, this);
         this.anima_show.off('stop', this.onShowPlayEnd, this);
+        Game.AudioController.StopMusic();
     },
     onAckAttackPalaceData: function (msgid, data) {
         if (this.status == AttackStatus.Status_Idle) {

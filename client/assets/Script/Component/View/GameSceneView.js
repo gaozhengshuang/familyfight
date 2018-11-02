@@ -32,6 +32,7 @@ cc.Class({
     start() {
         this.updateView();
         this.offLineOpen();
+        Game.AudioController.PlayMusic('Audio/bg1');
     },
 
     update(dt) {
@@ -67,6 +68,7 @@ cc.Class({
         Game.NotificationController.Off(Game.Define.EVENT_KEY.OPENBOX_ACK, this, this.ackOpenBox);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.BOXDATA_UPDATE, this, this.updateBoxData);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.GUIDE_ACK, this, this.updateBottomButton);
+        Game.AudioController.StopMusic();
     },
 
     initData() {

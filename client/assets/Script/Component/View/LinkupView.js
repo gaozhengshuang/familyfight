@@ -33,10 +33,12 @@ cc.Class({
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.onMiniGameCoinUpdate);
         this.onMiniGameCoinUpdate();
         this._changeStatus(LinkStatus.Status_Idle);
+        Game.AudioController.PlayMusic('Audio/bg2');
     },
     onDisable: function () {
         Game.NetWorkController.RemoveListener('msg.GW2C_RetLinkup', this, this.onRetLinkup);
         Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.onMiniGameCoinUpdate);
+        Game.AudioController.StopMusic();
     },
     update(dt) {
         if (this.status != LinkStatus.Status_Idle && this.status != LinkStatus.Status_End) {

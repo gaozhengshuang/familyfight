@@ -55,6 +55,10 @@ cc.Class({
         // let allincomenum = Game.Tools.toBigIntMoney(Game.MaidModel.GetMoneyMaids()).multiply(Game.ConfigController.GetConfig('KickAssWinReward').Gold);
         // this.rewardLabel.string = Game.Tools.UnitConvert(Game.Tools.toLocalMoney(allincomenum));
         this.updateMiniGameCoin();
+        Game.AudioController.PlayMusic('Audio/bg2');
+    },
+    onDisable: function () {
+        Game.AudioController.StopMusic();
     },
     onDestroy: function () {
         Game.NetWorkController.RemoveListener('msg.GW2C_AckKickAss', this, this.onAckKickAss);
@@ -105,7 +109,7 @@ cc.Class({
     onGoBackClick: function () {
         this.closeView(Game.UIName.UI_MINIGAMEKICKASS);
     },
-    onShare: function() {
+    onShare: function () {
         Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_MiniGame, Game.Define.MINIGAMETYPE.KICKASS, Game.TimeController.GetCurTime());
     },
     updateMiniGameCoin: function () {

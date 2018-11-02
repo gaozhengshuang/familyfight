@@ -1862,6 +1862,9 @@
     "label_getnum": {
       "__id__": 52
     },
+    "button_buy": {
+      "__id__": 45
+    },
     "maid": null,
     "shop": null
   },
@@ -2990,6 +2993,9 @@
     },
     "label_getnum": {
       "__id__": 85
+    },
+    "button_buy": {
+      "__id__": 78
     },
     "maid": null,
     "shop": null
@@ -4120,6 +4126,9 @@
     "label_getnum": {
       "__id__": 121
     },
+    "button_buy": {
+      "__id__": 114
+    },
     "maid": null,
     "shop": null
   },
@@ -5248,6 +5257,9 @@
     },
     "label_getnum": {
       "__id__": 157
+    },
+    "button_buy": {
+      "__id__": 150
     },
     "maid": null,
     "shop": null
@@ -6378,6 +6390,9 @@
     "label_getnum": {
       "__id__": 193
     },
+    "button_buy": {
+      "__id__": 186
+    },
     "maid": null,
     "shop": null
   },
@@ -7507,6 +7522,9 @@
     "label_getnum": {
       "__id__": 229
     },
+    "button_buy": {
+      "__id__": 222
+    },
     "maid": null,
     "shop": null
   },
@@ -8635,6 +8653,9 @@
     },
     "label_getnum": {
       "__id__": 265
+    },
+    "button_buy": {
+      "__id__": 258
     },
     "maid": null,
     "shop": null

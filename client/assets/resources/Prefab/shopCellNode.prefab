@@ -937,6 +937,9 @@
     "label_getnum": {
       "__id__": 26
     },
+    "button_buy": {
+      "__id__": 22
+    },
     "maid": null,
     "shop": null
   },

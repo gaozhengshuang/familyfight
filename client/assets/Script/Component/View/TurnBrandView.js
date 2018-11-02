@@ -64,6 +64,7 @@ cc.Class({
         this._randBrandInfo();
         this.updateMiniGameCoin();
         this.updateDoubleGoldsItemCount(false);
+        Game.AudioController.PlayMusic('Audio/bg2');
     },
     update: function (dt) {
     },
@@ -73,6 +74,7 @@ cc.Class({
     },
     onDisable: function () {
         this.node.stopAllActions();
+        Game.AudioController.StopMusic();
     },
     onBrandClick: function (index) {
         if (this.status == BrandStatus.Status_Wait) {

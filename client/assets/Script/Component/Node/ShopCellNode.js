@@ -10,6 +10,7 @@ cc.Class({
         label_reward: { default: null, type: cc.Label },
         label_name: { default: null, type: cc.Label },
         label_getnum: { default: null, type: cc.Label },
+        button_buy: { default: null, type: cc.Button },
 
         maid: { default: null },
         shop: { default: null }
@@ -81,8 +82,10 @@ cc.Class({
         } else {
             this.image_button.node.active = true;
             if (Game.CurrencyModel.CompareGold(this.price) >= 0) {
+                this.button_buy.setEffectName('Audio/shopping')
                 Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common");
             } else {
+                this.button_buy.setEffectName('Audio/click')
                 Game.ResController.SetSprite(this.image_button, "Image/GameScene/Common/button_common2");
             }
         }

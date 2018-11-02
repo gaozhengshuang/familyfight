@@ -21,10 +21,12 @@ cc.Class({
         this.initNotification();
         this.updateView();
         this.updateBottomButton();
+        Game.AudioController.PlayMusic('Audio/bg3');
     },
 
     onDisable() {
         this.removeNotification();
+        Game.AudioController.StopMusic();
     },
 
     initData() {

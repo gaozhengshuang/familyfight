@@ -34,12 +34,14 @@ cc.Class({
     onEnable() {
         this.initNotification();
         this._changeStatus(GuessStatus.Status_Show);
+        Game.AudioController.PlayMusic('Audio/bg2');
     },
 
     onDisable() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.GUESSKING_ACK, this, this.onAckGuessKing);
         this.anima_show.off('stop', this.onShowPlayEnd, this);
         this.anima_tip.off('stop', this.onTipPlayEnd, this);
+        Game.AudioController.StopMusic();
     },
 
     onShowPlayEnd() {
