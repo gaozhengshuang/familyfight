@@ -21,7 +21,9 @@ cc.Class({
         label_name: { default: null, type: cc.Label },
         label_content: { default: null, type: cc.RichText },
         node_back: { default: null, type: cc.Node },
-        node_share: { default: null, type: cc.Node }
+        node_share: { default: null, type: cc.Node },
+        button_date: { default: null, type: cc.Button },
+        label_canDateNum: { default: null, type: cc.Label },
     },
 
     onLoad() {
@@ -30,50 +32,73 @@ cc.Class({
 
     onEnable() {
         this.initNotification();
-        this.resetData();
-        this.updateView();
-        this.updateDialog();
-        this.initAni();
+        this.initView();
+        this.updateMiniGameCoin();
     },
 
     onDisable() {
         Game.NetWorkController.RemoveListener('msg.GW2C_AckTryst', this, this.onGW2C_AckTryst);
+        Game.NotificationController.Off(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
 
     initData() {
         this._aniTime = 1.0;
         this._delayTime = 1.0;
-    },
-
-    resetData() {
-        this._selIds = [];
-        this._selContent = [];
-        this._curStep = 1;
         this._maxStep = 3;
         this._eventNum = 3;
-
-        this._data = Game.PalaceModel.palaceDatas[Math.floor(Math.random() * Game.PalaceModel.palaceDatas.length)]; //随机出一个宫殿
         this.dateEventList = Game.ConfigController.GetConfig("DateEvent");
-        this.node_back.active = false;
-        this.node_share.active = true;
     },
 
-    initNotification() {
-        Game.NetWorkController.AddListener('msg.GW2C_AckTryst', this, this.onGW2C_AckTryst);
-    },
-
-    initAni() {
+    initView() {
         this.node_event0.opacity = 0;
         this.node_event1.opacity = 0;
         this.node_event2.opacity = 0;
 
-        this.button_event0.interactable = true;
-        this.button_event1.interactable = true;
-        this.button_event2.interactable = true;
+        this.button_event0.interactable = false;
+        this.button_event1.interactable = false;
+        this.button_event2.interactable = false;
 
-        this.node_event0.runAction(cc.fadeIn(this._aniTime));
-        this.node_event1.runAction(cc.fadeIn(this._aniTime));
-        this.node_event2.runAction(cc.fadeIn(this._aniTime));
+        this.node_back.active = true;
+        this.node_share.active = true;
+        this.button_date.node.active = true;
+        
+        this.image_head.node.color = cc.Color.BLACK;
+        this.label_name.string = "";
+        this.label_content.string = "<color=#58210A>点击即可随机跟后宫佳丽约会...</c><color=#FF8C8C>";
+    },
+
+    gameAgainView() {
+        this.node_event0.opacity = 0;
+        this.node_event1.opacity = 0;
+        this.node_event2.opacity = 0;
+
+        this.node_event0.runAction(cc.sequence([
+            cc.fadeIn(this._aniTime),
+            cc.callFunc(function () {
+                this.button_event0.interactable = true;
+            }, this)
+        ]));
+        this.node_event1.runAction(cc.sequence([
+            cc.fadeIn(this._aniTime),
+            cc.callFunc(function () {
+                this.button_event1.interactable = true;
+            }, this)
+        ]));
+        this.node_event2.runAction(cc.sequence([
+            cc.fadeIn(this._aniTime),
+            cc.callFunc(function () {
+                this.button_event2.interactable = true;
+            }, this)
+        ]));
+
+        this.node_back.active = false;
+        this.button_date.node.active = false;
+        this.node_share.active = false;
+    },
+
+    initNotification() {
+        Game.NetWorkController.AddListener('msg.GW2C_AckTryst', this, this.onGW2C_AckTryst);
+        Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
 
     updateView() {
@@ -84,6 +109,7 @@ cc.Class({
                 if (maidBase) {
                     this.label_name.string = maidBase.Name;
                     Game.ResController.SetSprite(this.image_head, maidBase.Path);
+                    this.image_head.node.color = cc.Color.WHITE;
                 }
             }
 
@@ -178,6 +204,7 @@ cc.Class({
             if (idx == (this._maxStep - 1)) {
                 this.node_back.active = true;
                 this.node_share.active = true;
+                this.button_date.node.active = true;
                 Game.NetWorkController.Send('msg.C2GW_ReqTryst', {
                     palaceid: this._data.id,
                     key: this._selIds[0] << 20 | this._selIds[1] << 10 | this._selIds[2]
@@ -204,6 +231,19 @@ cc.Class({
         }
     },
 
+    onStartGame() {
+        this._selIds = [];
+        this._selContent = [];
+        this._curStep = 1;
+        
+        this._data = Game.PalaceModel.palaceDatas[Math.floor(Math.random() * Game.PalaceModel.palaceDatas.length)]; //随机出一个宫殿
+
+        this.gameAgainView();
+        this.updateView();
+        this.updateDialog();
+    },
+
+
     onSeleceX(event, data) {
         if (this._selIds.length >= this._maxStep) {
             return;
@@ -215,8 +255,12 @@ cc.Class({
             this.updateDialog();
         }
     },
+
     onShare() {
         Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_MiniGame, Game.Define.MINIGAMETYPE.TRYST, Game.TimeController.GetCurTime());
     },
 
+    updateMiniGameCoin() {  
+        this.label_canDateNum.string = `随机约会x${Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST)}`;
+    },
 });
