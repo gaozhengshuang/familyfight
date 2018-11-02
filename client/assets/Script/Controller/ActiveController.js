@@ -45,8 +45,9 @@ ActiveController.prototype.onPushActiveData = function (msgid, data) {
 }
 
 ActiveController.prototype.onPushShareData = function (msgid, data) {
-    for (let i = 0; i < data.shares.length; i++) {
-        let share = data.shares[i];
+    let shares = data.shares || [];
+    for (let i = 0; i < shares.length; i++) {
+        let share = shares[i];
         let index = _.findIndex(this._shareData, { id: share.id });
         if (index != -1) {
             this._shareData[index] = _.cloneDeep(share);

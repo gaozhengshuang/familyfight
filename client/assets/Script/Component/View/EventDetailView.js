@@ -14,6 +14,7 @@ cc.Class({
         tableView: { default: null, type: cc.tableView },
         bottomNode: { default: null, type: cc.Node },
         shareNode: { default: null, type: cc.Node },
+        gotoNode: { default: null, type: cc.Node },
 
         headInfo: { default: {} },
         barragesInfo: { default: [] },
@@ -58,6 +59,7 @@ cc.Class({
         Game.NetWorkController.AddListener('msg.GW2C_AckShareMessage', this, this._updateShareButton);
         this.showBarrage = Game._.get(this, '_data.showBarrage', true);
         this.bottomNode.active = this.showBarrage;
+        this.gotoNode.active = !this.showBarrage;
         this.eventid = Game.TravelModel.openEvent;
         this.enableTime = Game.TimeController.GetCurTime();
         //事件数据
@@ -106,6 +108,10 @@ cc.Class({
     },
     onShareClick: function () {
         Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_Event, this.eventid, this.enableTime);
+    },
+    onGotoClick: function () {
+        this.openView(Game.UIName.UI_EVENTVIEW);
+        this.onClose();
     },
     onClose: function () {
         Game.GuideController.NextGuide();
