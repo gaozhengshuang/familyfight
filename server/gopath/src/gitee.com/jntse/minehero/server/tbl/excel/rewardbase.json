@@ -113,5 +113,10 @@
 		{ "Id": 108, "DropId": 30012, "PropType": 1, "Prop": 10000, "RewardType": 2, "RewardId": 0, "RewardValue": 20 },
 		{ "Id": 109, "DropId": 30012, "PropType": 1, "Prop": 10000, "RewardType": 3, "RewardId": 60001, "RewardValue": 25 },
 		{ "Id": 110, "DropId": 30012, "PropType": 1, "Prop": 10000, "RewardType": 3, "RewardId": 10001, "RewardValue": 2 },
-		{ "Id": 111, "DropId": 30013, "PropType": 1, "Prop": 10000, "RewardType": 2, "RewardId": 0, "RewardValue": 20 }
+		{ "Id": 111, "DropId": 30013, "PropType": 1, "Prop": 10000, "RewardType": 2, "RewardId": 0, "RewardValue": 20 },
+		{ "Id": 112, "DropId": 30014, "PropType": 1, "Prop": 10000, "RewardType": 1, "RewardId": 0, "RewardValue": 3600 },
+		{ "Id": 113, "DropId": 30014, "PropType": 1, "Prop": 10000, "RewardType": 3, "RewardId": 10001, "RewardValue": 1 },
+		{ "Id": 114, "DropId": 30015, "PropType": 1, "Prop": 10000, "RewardType": 1, "RewardId": 0, "RewardValue": 600 },
+		{ "Id": 115, "DropId": 30016, "PropType": 1, "Prop": 10000, "RewardType": 1, "RewardId": 0, "RewardValue": 1800 },
+		{ "Id": 116, "DropId": 30017, "PropType": 1, "Prop": 10000, "RewardType": 1, "RewardId": 0, "RewardValue": 600 }
 	]}

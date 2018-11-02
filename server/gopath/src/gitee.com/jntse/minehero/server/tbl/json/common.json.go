@@ -9,8 +9,8 @@ type Common struct {
 	GuessKingCount        int64         `json:"GuessKingCount"`
 	GuessKingLoseReward   int64         `json:"GuessKingLoseReward"`
 	GuessKingWinReward    int64         `json:"GuessKingWinReward"`
-	KickAssLoseReward     Common_sub3   `json:"KickAssLoseReward"`
-	KickAssWinReward      Common_sub3   `json:"KickAssWinReward"`
+	KickAssLoseReward     int64         `json:"KickAssLoseReward"`
+	KickAssWinReward      int64         `json:"KickAssWinReward"`
 	LinkupGoldRewardRatio int64         `json:"LinkupGoldRewardRatio"`
 	LinkupLoseReward      int64         `json:"LinkupLoseReward"`
 	LinkupWinReward       int64         `json:"LinkupWinReward"`
@@ -22,9 +22,9 @@ type Common struct {
 	PriceAdditionPerBuy   float64       `json:"PriceAdditionPerBuy"`
 	RobotCount            int64         `json:"RobotCount"`
 	RobotGenerateInterval int64         `json:"RobotGenerateInterval"`
-	Signin                []Common_sub4 `json:"Signin"`
-	TenSeceondLoseRatio   Common_sub3   `json:"TenSeceondLoseRatio"`
-	TenSecondWinReward    Common_sub5   `json:"TenSecondWinReward"`
+	Signin                []Common_sub3 `json:"Signin"`
+	TenSeceondLoseRatio   int64         `json:"TenSeceondLoseRatio"`
+	TenSecondWinReward    int64         `json:"TenSecondWinReward"`
 	TravelMaxTime         int64         `json:"TravelMaxTime"`
 	TravelMinTime         int64         `json:"TravelMinTime"`
 	临幸奖励                  string        `json:"临幸奖励"`
@@ -42,19 +42,10 @@ type Common struct {
 	连连看金币奖励系数id           string        `json:"连连看金币奖励系数id"`
 }
 
-type Common_sub4 struct {
+type Common_sub3 struct {
 	Desc   string `json:"Desc"`
 	Icon   string `json:"Icon"`
 	Reward int64  `json:"Reward"`
-}
-
-type Common_sub5 struct {
-	Gold int64     `json:"Gold"`
-	Item [][]int64 `json:"Item"`
-}
-
-type Common_sub3 struct {
-	Gold int64 `json:"Gold"`
 }
 
 type Common_sub1 struct {
