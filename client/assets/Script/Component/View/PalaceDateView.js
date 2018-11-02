@@ -150,7 +150,6 @@ cc.Class({
         this.button_event0.interactable = false;
         this.button_event1.interactable = false;
         this.button_event2.interactable = false;
-        this.node_share.active = this._selIds.length >= this._maxStep;
         for (let i = 0; i < this._maxStep; i++) {
             if (this._selIds.length < this._maxStep) {
                 this.playGoingAni(i);
@@ -185,7 +184,7 @@ cc.Class({
     playEndAni(idx) {
         let _fadeOut = cc.fadeOut(this._aniTime);
         let _spawn1 = cc.spawn([
-            cc.delayTime(this._delayTime + idx * 0.3),
+            cc.delayTime(this._delayTime),
             cc.callFunc(function () {
                 this["node_event" + idx].scale = 1.3;
                 let eventBase = Game._.find(this.dateEventList, { DateId: this._selIds[idx] });
@@ -232,6 +231,11 @@ cc.Class({
     },
 
     onStartGame() {
+        if (Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST) < 1) {
+            this.showTips("前去翻牌子获得游戏次数");
+            return;
+        }
+
         this._selIds = [];
         this._selContent = [];
         this._curStep = 1;
