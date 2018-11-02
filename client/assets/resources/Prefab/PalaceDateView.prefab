@@ -1946,7 +1946,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Sprite",
+    "_name": "image_bg",
     "_objFlags": 0,
     "_parent": {
       "__id__": 58
@@ -2377,7 +2377,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Sprite",
+    "_name": "image_bg",
     "_objFlags": 0,
     "_parent": {
       "__id__": 72
@@ -3307,9 +3307,24 @@
     "image_head": {
       "__id__": 11
     },
-    "image_event0": null,
-    "image_event1": null,
-    "image_event2": null,
+    "node_event0": {
+      "__id__": 44
+    },
+    "node_event1": {
+      "__id__": 58
+    },
+    "node_event2": {
+      "__id__": 72
+    },
+    "image_event0": {
+      "__id__": 46
+    },
+    "image_event1": {
+      "__id__": 60
+    },
+    "image_event2": {
+      "__id__": 74
+    },
     "button_event0": {
       "__id__": 55
     },
