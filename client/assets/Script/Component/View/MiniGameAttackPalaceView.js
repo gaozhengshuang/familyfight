@@ -38,7 +38,7 @@ cc.Class({
         palacedata: { default: null },
         clickIndex: { default: 0 }
     },
-    onLoad: function(){
+    onLoad: function () {
         this.tipNodeY = this.anima_tip.node.y;
     },
     onEnable: function () {
@@ -123,10 +123,15 @@ cc.Class({
                         for (let i = 0; i < palaceMapBase.Maids.length; i++) {
                             let open = this.palacedata.palace.maids[i] || false;
                             let maidSprite = this.images_maid[i];
-                            if (open && maidSprite != null) {
-                                let maidId = palaceMapBase.Maids[i];
-                                let curMaidBase = Game.ConfigController.GetConfigById("PalacePersonnel", maidId);
-                                Game.ResController.SetSprite(maidSprite, curMaidBase.Path);
+                            if (maidSprite != null) {
+                                if (open) {
+                                    let maidId = palaceMapBase.Maids[i];
+                                    let curMaidBase = Game.ConfigController.GetConfigById("PalacePersonnel", maidId);
+                                    Game.ResController.SetSprite(maidSprite, curMaidBase.Path);
+                                    maidSprite.node.active = true;
+                                } else {
+                                    maidSprite.node.active = false;
+                                }
                             }
                         }
 

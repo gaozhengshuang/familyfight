@@ -13,7 +13,6 @@ cc.Class({
         shareButton: { default: null, type: cc.Button },
 
         index: { default: 0 },
-        updateTime: { default: 0 },
         loading: { default: false }
     },
 
@@ -22,7 +21,6 @@ cc.Class({
         Game.NetWorkController.AddListener('msg.GW2C_AckDailyPower', this, this.onAckDailyPower);
         Game.NetWorkController.AddListener('msg.GW2C_AckShareMessage', this, this._updateTab);
         this.index = Game._.get(this._data, 'tabindex', 0);
-        this.updateTime = Game.TimeController.GetCurTime();
         this._updateTab();
     },
     onDisable: function () {
@@ -49,7 +47,7 @@ cc.Class({
         Game.NetWorkController.Send('msg.C2GW_ReqDailyPower', {});
     },
     onSharePowerClick: function () {
-        Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_Power, 0, this.updateTime);
+        Game.Platform.ShareMessage(Game.Define.SHARETYPE.ShareType_Power, 0, Game.TimeController.GetCurTime());
     },
     onAckSignin: function (msgid, data) {
         this.loading = false;
@@ -89,7 +87,7 @@ cc.Class({
                 break;
             case 2:
                 //分享体力
-                let lasttime = Game.ActiveController.GetLastShareRewardTimes(Game.Define.SHARETYPE.ShareType_Power, 0, this.updateTime);
+                let lasttime = Game.ActiveController.GetLastShareRewardTimes(Game.Define.SHARETYPE.ShareType_Power, 0, Game.TimeController.GetCurTime());
                 this.lastShareTimes.string = '剩余次数:' + lasttime;
                 this.shareButton.interactable = (lasttime > 0);
                 break;
