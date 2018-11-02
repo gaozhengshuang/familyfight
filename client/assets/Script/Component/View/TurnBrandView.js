@@ -304,7 +304,6 @@ cc.Class({
                     info = '<color=#6d282d>抽到【<color=#ed5b5b>' + config.Name + '</c>】获得<color=#ed5b5b>体力+' + reward.rewardvalue + '</c></c>';
                     break;
                 case Game.ProtoMsg.msg.RewardType.MiniGameCoin:
-                    Game.NetWorkController.Send('msg.C2GW_ReqMiniGameCoin');
                 case Game.ProtoMsg.msg.RewardType.Favor:
                 case Game.ProtoMsg.msg.RewardType.Item:
                     popinfo.push({
@@ -332,21 +331,10 @@ cc.Class({
         }
         setTimeout(function () {
             if (popinfo.length > 0) {
-                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_SERIESPOP, popinfo, function () {
-                    if (this.drop.golds.length != 0 && Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_TurnBrand, 0, Game.TimeController.GetCurTime())) {
-                        this.openView(Game.UIName.UI_SHAREAWARD, {
-                            sharetype: Game.Define.SHARETYPE.ShareType_TurnBrand,
-                            shareid: 0
-                        });
-                    }
-                }.bind(this));
+                Game.NotificationController.Emit(Game.Define.EVENT_KEY.TIP_SERIESPOP, popinfo, this._showShareView.bind(this));
+                Game.NetWorkController.Send('msg.C2GW_ReqMiniGameCoin');
             } else {
-                if (this.drop.golds.length != 0 && Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_TurnBrand, 0, Game.TimeController.GetCurTime())) {
-                    this.openView(Game.UIName.UI_SHAREAWARD, {
-                        sharetype: Game.Define.SHARETYPE.ShareType_TurnBrand,
-                        shareid: 0
-                    });
-                }
+                this._showShareView();
             }
         }.bind(this), 500 + 800 * notifyIndex);
         this.node.runAction(cc.sequence([
@@ -367,6 +355,16 @@ cc.Class({
                 this._randBrandInfo()
             }, this)
         ]))
+    },
+    _showShareView() {
+        if (this.drop.golds.length != 0 &&
+            Game.ActiveController.CanGetReward(Game.Define.SHARETYPE.ShareType_TurnBrand, 0, Game.TimeController.GetCurTime()) &&
+            !Game.GuideController.IsGuide()) {
+            this.openView(Game.UIName.UI_SHAREAWARD, {
+                sharetype: Game.Define.SHARETYPE.ShareType_TurnBrand,
+                shareid: 0
+            });
+        }
     },
     onOpenGameSecond() {
         this.openView(Game.UIName.UI_MINIGAMESECOND);
