@@ -5093,7 +5093,7 @@
         "__id__": 166
       },
       {
-        "__id__": 167
+        "__id__": 168
       }
     ],
     "_prefab": {
@@ -5116,7 +5116,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 104,
+      "width": 121,
       "height": 72
     },
     "_rotationX": 0,
@@ -5125,7 +5125,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -308,
+      "x": -310,
       "y": 524
     },
     "_skewX": 0,
@@ -5134,32 +5134,6 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0
-  },
-  {
-    "__type__": "cc.Sprite",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 165
-    },
-    "_enabled": true,
-    "_spriteFrame": {
-      "__uuid__": "94f00962-fc46-4b31-b2c1-7073eb46aa0a"
-    },
-    "_type": 1,
-    "_sizeMode": 1,
-    "_fillType": 0,
-    "_fillCenter": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_fillStart": 0,
-    "_fillRange": 0,
-    "_isTrimmedMode": true,
-    "_srcBlendFactor": 770,
-    "_dstBlendFactor": 771,
-    "_atlas": null
   },
   {
     "__type__": "cc.Button",
@@ -5188,7 +5162,7 @@
     "zoomScale": 1.2,
     "clickEvents": [
       {
-        "__id__": 168
+        "__id__": 167
       }
     ],
     "_N$interactable": true,
@@ -5237,6 +5211,32 @@
     "component": "TurnBrandView",
     "handler": "onGoBackClick",
     "customEventData": ""
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 165
+    },
+    "_enabled": true,
+    "_spriteFrame": {
+      "__uuid__": "94f00962-fc46-4b31-b2c1-7073eb46aa0a"
+    },
+    "_type": 0,
+    "_sizeMode": 1,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_atlas": null
   },
   {
     "__type__": "cc.PrefabInfo",
