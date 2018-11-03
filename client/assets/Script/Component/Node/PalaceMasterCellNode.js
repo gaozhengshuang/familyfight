@@ -46,7 +46,7 @@ cc.Class({
             this.label_charmnum.string = this._palaceData.charm;
             this.label_lovenum.string = this._palaceData.luckily;
         } else {
-            this.label_masterName.string = Game.MaidModel.GetPersonNameById(this._data.Master) + "(娴贵人)";
+            this.label_masterName.string = Game.MaidModel.GetPersonNameById(this._data.Master);
         }
 
         if (Game.MaidModel.GetTopPass() >= this._data.UlockPassId) {
