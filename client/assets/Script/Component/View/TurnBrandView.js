@@ -36,8 +36,6 @@ cc.Class({
         status: { default: BrandStatus.Status_Idle },
         brandInfos: { default: [] },
         brandConfigs: { default: [] },
-        shuffleTargetWorldPos: { default: cc.v2(0, 0) },
-        showTargetWorldPos: { default: cc.v2(0, 0) },
         clickIndex: { default: 0 },
         rewardId: { default: 0 },
         drop: { default: null },
@@ -52,10 +50,6 @@ cc.Class({
         Game.NetWorkController.AddListener('msg.GW2C_RetTurnBrand', this, this.onRetTurnBrand);
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
-	start: function(){
-		this.shuffleTargetWorldPos = this.shuffleTargetNode.parent.convertToWorldSpaceAR(this.shuffleTargetNode.position);
-        this.showTargetWorldPos = this.showTargetNode.parent.convertToWorldSpaceAR(this.showTargetNode.position);
-	},
     onEnable: function () {
         for (let i = 0; i < this.brandViews.length; i++) {
             let view = this.brandViews[i];
@@ -190,7 +184,8 @@ cc.Class({
                     break;
                 case BrandStatus.Status_Show:
                     let showBrand = this.brandViews[this.clickIndex];
-                    let targetPos = showBrand.node.parent.convertToNodeSpaceAR(this.showTargetWorldPos);
+                    let showTargetWorldPos = this.showTargetNode.parent.convertToWorldSpaceAR(this.showTargetNode.position);
+                    let targetPos = showBrand.node.parent.convertToNodeSpaceAR(showTargetWorldPos);
                     showBrand.node.runAction(cc.sequence([
                         cc.spawn([
                             cc.moveTo(0.5, targetPos),
