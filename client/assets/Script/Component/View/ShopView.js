@@ -4,10 +4,14 @@ cc.Class({
     extends: cc.GameComponent,
 
     properties: {
-        shopCells: { default: [], type: [require('../Node/ShopCellNode')] }
+        shopCells: { default: [], type: [require('../Node/ShopCellNode')] },
+        widgetNode: { default: null, type: cc.Node },
     },
 
     onLoad() {
+        let viewSize = cc.view.getVisibleSize();
+        this.widgetNode.width = viewSize.width;
+        this.widgetNode.height = viewSize.height;
     },
 
     update(dt) {

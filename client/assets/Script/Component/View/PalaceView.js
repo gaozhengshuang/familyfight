@@ -11,9 +11,13 @@ cc.Class({
         label_randomxUnlock: { default: null, type: cc.Label },
         label_randomxNum: { default: null, type: cc.Label },
         image_reddi: { default: null, type: cc.Sprite },
+        node_widget: { default: null, type: cc.Node },
     },
 
     onLoad() {
+        let viewSize = cc.view.getVisibleSize();
+        this.node_widget.width = viewSize.width;
+        this.node_widget.height = viewSize.height;
         this.initData();
     },
 
@@ -47,11 +51,11 @@ cc.Class({
     },
 
     updateView() {
-        this.palaceList = Game._.sortBy(this.palaceMapBase, function(palaceMap) {
+        this.palaceList = Game._.sortBy(this.palaceMapBase, function (palaceMap) {
             return palaceMap.Id;
         });
-        
-        this.tableViewComponent.initTableView(this.palaceList.length, {array: this.palaceList, target: this});
+
+        this.tableViewComponent.initTableView(this.palaceList.length, { array: this.palaceList, target: this });
 
         this.updateMiniGameCoin();
     },
@@ -66,11 +70,11 @@ cc.Class({
         this.label_randomxUnlock.node.active = !randomxLock;
     },
 
-    updateMiniGameCoin() {  
+    updateMiniGameCoin() {
         this.image_reddi.node.active = Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST) > 0;
         this.label_randomxNum.string = `${Game.CurrencyModel.GetMiniGameCoin(Game.Define.MINIGAMETYPE.TRYST)}次`;
     },
-    
+
     onOpenTravel(event) {
         event.stopPropagationImmediate();
         this.openView(Game.UIName.UI_TRAVELVIEW);

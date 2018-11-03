@@ -29,26 +29,25 @@ cc.Class({
         label_targetname: { default: null, type: cc.Label },
         label_golds: { default: null, type: cc.Label },
         node_aim: { default: null, type: cc.Node },
+        node_tip: { default: null, type: cc.Node },
         anima_attack: { default: null, type: cc.Animation },
         anima_show: { default: null, type: cc.Animation },
         anima_dialogue: { default: null, type: cc.Animation },
-        anima_tip: { default: null, type: cc.Animation },
 
         status: { default: 0 },
         palacedata: { default: null },
         clickIndex: { default: 0 }
     },
-    onLoad: function () {
-        this.tipNodeY = this.anima_tip.node.y;
-    },
     onEnable: function () {
+        let viewSize = cc.view.getVisibleSize()
+        let height = this.node_tip.height;
+        this.node_tip.y = -(viewSize.height / 2) - (height / 2);
         Game.NetWorkController.AddListener('msg.GW2C_AckAttackPalaceData', this, this.onAckAttackPalaceData);
         Game.NetWorkController.AddListener('msg.GW2C_AckAttackPalace', this, this.onAckAttackPalace);
         this.anima_attack.on('stop', this.onAttackPlayEnd, this);
         this.anima_show.on('stop', this.onShowPlayEnd, this);
         this.anima_dialogue.node.scaleX = 0;
         this.anima_dialogue.node.scaleY = 0;
-        this.anima_tip.node.y = this.tipNodeY;
         this._changeStatus(AttackStatus.Status_Idle);
         this.anima_show.play();
         Game.AudioController.PlayMusic('Audio/bg1');
@@ -76,14 +75,14 @@ cc.Class({
         this.node_ruletip.active = false;
         this.node_gettips.active = true;
         this.label_golds.string = Game.Tools.UnitConvert(golds);
-        this.anima_tip.play();
+        this._playTipAnima();
         Game.RewardController.PlayLastReward(function () {
             this._changeStatus(AttackStatus.Status_End);
         }.bind(this));
     },
     onShowPlayEnd: function () {
         this.anima_dialogue.play();
-        this.anima_tip.play();
+        this._playTipAnima();
     },
     onMaidClick: function (event, index) {
         if (this.status == AttackStatus.Status_Prepared) {
@@ -193,4 +192,10 @@ cc.Class({
             }
         }
     },
+    _playTipAnima: function () {
+        let viewSize = cc.view.getVisibleSize()
+        let height = this.node_tip.height;
+        this.node_tip.y = -(viewSize.height / 2) - (height / 2);
+        this.node_tip.runAction(cc.moveBy(0.5, 0, height));
+    }
 });

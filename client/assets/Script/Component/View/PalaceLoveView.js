@@ -15,7 +15,7 @@ cc.Class({
         image_king: { default: null, type: cc.Sprite },
         image_leftCurtains: { default: null, type: cc.Sprite },
         image_rightCurtains: { default: null, type: cc.Sprite },
-        image_topCurtains: { default: null, type: cc.Sprite },
+        node_topCurtains: { default: null, type: cc.Node },
         node_dialog: { default: null, type: cc.Node },
         node_share: { default: null, type: cc.Node },
         node_mask: { default: null, type: cc.Node },
@@ -37,10 +37,8 @@ cc.Class({
 
     initData() {
         this._data = null;
-        this._topCurtainsPos = this.image_topCurtains.node.getPosition();
         this._leftCurtainsPos = this.image_leftCurtains.node.getPosition();
         this._rightCurtainsPos = this.image_rightCurtains.node.getPosition();
-        this._dialogPos = this.node_dialog.getPosition();
 
         this._moveTime = 1.0;
         this._delayTime = 2.0;
@@ -52,11 +50,12 @@ cc.Class({
 
     initView() {
         //初始化帘子
-        this.image_topCurtains.node.setPosition(this._topCurtainsPos);
+        let viewSize = cc.view.getVisibleSize()
+        this.node_dialog.y = -(viewSize.height / 2);
+        this.node_topCurtains.y = viewSize.height / 2;
         this.image_leftCurtains.node.setPosition(this._leftCurtainsPos);
         this.image_rightCurtains.node.setPosition(this._rightCurtainsPos);
-        this.node_dialog.setPosition(this._dialogPos);
-        this.image_topCurtains.node.opacity = 0;
+        this.node_topCurtains.opacity = 0;
         this.image_leftCurtains.node.opacity = 0;
         this.image_rightCurtains.node.opacity = 0;
         this.node_mask.active = false;
@@ -119,21 +118,21 @@ cc.Class({
     },
 
     playMakeLoveAction() {
-        this.image_topCurtains.node.runAction(cc.sequence([
+        this.node_topCurtains.runAction(cc.sequence([
             cc.spawn([
-                cc.moveTo(this._moveTime, this.image_topCurtains.node.x, this.image_topCurtains.node.y - this.image_topCurtains.node.height),
+                cc.moveBy(this._moveTime, 0, -this.node_topCurtains.height),
                 cc.fadeIn(this._moveTime)
             ]),
             cc.delayTime(this._delayTime),
             cc.spawn([
-                cc.moveTo(this._moveTime, this._topCurtainsPos.x, this._topCurtainsPos.y),
+                cc.moveBy(this._moveTime, 0, this.node_topCurtains.height),
                 cc.fadeOut(this._moveTime)
             ]),
         ]));
-
+        let viewSize = cc.view.getVisibleSize();
         this.image_leftCurtains.node.runAction(cc.sequence([
             cc.spawn([
-                cc.moveTo(this._moveTime, this.image_leftCurtains.node.x + this.image_leftCurtains.node.width, this.image_leftCurtains.node.y),
+                cc.moveTo(this._moveTime, this.image_leftCurtains.node.x + viewSize.width / 2, this.image_leftCurtains.node.y),
                 cc.fadeIn(this._moveTime)
             ]),
             cc.delayTime(this._delayTime),
@@ -145,7 +144,7 @@ cc.Class({
 
         this.image_rightCurtains.node.runAction(cc.sequence([
             cc.spawn([
-                cc.moveTo(this._moveTime, this.image_rightCurtains.node.x - this.image_rightCurtains.node.width, this.image_rightCurtains.node.y),
+                cc.moveTo(this._moveTime, this.image_rightCurtains.node.x - viewSize.width / 2, this.image_rightCurtains.node.y),
                 cc.fadeIn(this._moveTime)
             ]),
             cc.delayTime(this._delayTime),
@@ -157,7 +156,7 @@ cc.Class({
 
         this.node_dialog.runAction(cc.sequence([
             cc.spawn([
-                cc.moveTo(this._moveTime, this.node_dialog.x, this.node_dialog.y - this.node_dialog.height),
+                cc.moveBy(this._moveTime, 0, -this.node_dialog.height),
                 cc.fadeOut(this._moveTime)
             ]),
             cc.delayTime(this._delayTime),
@@ -168,7 +167,7 @@ cc.Class({
                 });
             }, this),
             cc.spawn([
-                cc.moveTo(this._moveTime, this._dialogPos.x, this._dialogPos.y),
+                cc.moveBy(this._moveTime, 0, this.node_dialog.height),
                 cc.fadeIn(this._moveTime)
             ]),
         ]));

@@ -30,9 +30,13 @@ cc.Class({
 
         label_sleepNum: { default: null, type: cc.Label },
         image_reddi: { default: null, type: cc.Sprite },
+        node_widget: { default: null, type: cc.Node }
     },
 
     onLoad() {
+        let viewSize = cc.view.getVisibleSize();
+        this.node_widget.width = viewSize.width;
+        this.node_widget.height = viewSize.height;
         this.initData();
     },
 
@@ -114,8 +118,8 @@ cc.Class({
                 let maidId = palaceMapBase.Maids[i];
                 let _maidPrefab = cc.instantiate(this.prefab_maid);
                 if (_maidPrefab) {
-                    _maidPrefab.name = `PalaceMaidNode${i+1}`;
-                    
+                    _maidPrefab.name = `PalaceMaidNode${i + 1}`;
+
                     let _maid = _maidPrefab.getComponent('PalaceMaidNode');
                     if (_maid) {
                         _maid.setData(maidId, i);
@@ -224,7 +228,7 @@ cc.Class({
     updateEfficiency() {
         let curEfficiency = Game.Tools.toBigIntMoney(["0_0"]);
         let maxEfficiency = Game.Tools.toBigIntMoney(["0_0"]);
-        
+
         Game._.forEach(this._palaceMaids, function (v) {
             if (this._data.maids[v.getIndex()]) {
                 curEfficiency = curEfficiency.add(Game.Tools.toBigIntMoney(v.getMaidBase().GoldAddition));
@@ -276,7 +280,7 @@ cc.Class({
 
     onReqPalaceTakeBack() {
         let isUnlockMaid = false;
-        for (let i = 0; i < this._data.maids.length; i ++) {
+        for (let i = 0; i < this._data.maids.length; i++) {
             let maidInfo = this._data.maids[i];
             if (maidInfo) {
                 isUnlockMaid = true;
@@ -285,9 +289,9 @@ cc.Class({
         }
         if (isUnlockMaid) {
             Game.NetWorkController.Send('msg.C2GW_ReqPalaceTakeBack',
-            {
-                id: Game.PalaceModel.GetCurPalaceId(),
-            });
+                {
+                    id: Game.PalaceModel.GetCurPalaceId(),
+                });
             Game.GuideController.NextGuide();
         } else {
             this.showTips("请先解锁宫女!");

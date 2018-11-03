@@ -10,7 +10,7 @@ cc.Class({
     },
 
     onLoad() {
-        // cc.director.setDisplayStats(false);
+        cc.director.setDisplayStats(false);
         cc.game.addPersistRootNode(this.node);
         Game.GameInstance = this;
         Game.Platform.InitPlatform()

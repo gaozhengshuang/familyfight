@@ -32,6 +32,8 @@ cc.Class({
         miniGameCoinLabel: { default: [], type: [cc.Label] },
         doubleGOldItemNode: { default: null, type: cc.Node },
         doubleGoldItemCountLabel: { default: null, type: cc.Label },
+        bottomNode: { default: null, type: cc.Node },
+        widgetNode: { default: null, type: cc.Node },
 
         status: { default: BrandStatus.Status_Idle },
         brandInfos: { default: [] },
@@ -42,6 +44,10 @@ cc.Class({
         oldCount: { default: 0 },
     },
     onLoad: function () {
+        let viewSize = cc.view.getVisibleSize();
+        this.bottomNode.y = -viewSize.height / 2 + this.bottomNode.height / 2;
+        this.widgetNode.width = viewSize.width;
+        this.widgetNode.height = viewSize.height;
         this.brandConfigs = Game.ConfigController.GetConfig('TurnBrand');
         for (let i = 0; i < this.brandViews.length; i++) {
             let view = this.brandViews[i];

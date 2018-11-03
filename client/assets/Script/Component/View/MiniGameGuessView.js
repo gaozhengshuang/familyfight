@@ -20,8 +20,8 @@ cc.Class({
         label_noguessGold: { default: null, type: cc.Label },
         label_dailogue: { default: null, type: cc.Label },
         anima_show: { default: null, type: cc.Animation },
-        anima_tip: { default: null, type: cc.Animation },
         nodes_guess: { default: [], type: [require('../Node/MiniGameGuessNode')] },
+        node_tip: { default: null, type: cc.Node },
 
         status: { default: 0 },
         result: { default: null },
@@ -32,6 +32,9 @@ cc.Class({
     },
 
     onEnable() {
+        let viewSize = cc.view.getVisibleSize()
+        let height = this.node_tip.height;
+        this.node_tip.y = -(viewSize.height / 2) - (height / 2);
         this.initNotification();
         this._changeStatus(GuessStatus.Status_Show);
         Game.AudioController.PlayMusic('Audio/bg1');
@@ -40,7 +43,6 @@ cc.Class({
     onDisable() {
         Game.NotificationController.Off(Game.Define.EVENT_KEY.GUESSKING_ACK, this, this.onAckGuessKing);
         this.anima_show.off('stop', this.onShowPlayEnd, this);
-        this.anima_tip.off('stop', this.onTipPlayEnd, this);
         Game.AudioController.StopMusic();
     },
 
@@ -75,7 +77,6 @@ cc.Class({
     },
     initNotification() {
         this.anima_show.on('stop', this.onShowPlayEnd, this);
-        this.anima_tip.on('stop', this.onTipPlayEnd, this);
         Game.NotificationController.On(Game.Define.EVENT_KEY.GUESSKING_ACK, this, this.onAckGuessKing);
     },
 
@@ -104,7 +105,7 @@ cc.Class({
                     break;
                 }
                 case GuessStatus.Status_Idle: {
-                    this.anima_tip.play();
+                    this._playTipAnima();
                     this.label_dailogue.node.runAction(cc.spawn([
                         cc.fadeTo(0.2, 255),
                         cc.scaleTo(0.2, 1, 1)
@@ -149,7 +150,7 @@ cc.Class({
                                 cc.fadeTo(0.2, 255),
                                 cc.scaleTo(0.2, 1, 1)
                             ]));
-                            this.anima_tip.play();
+                            this._playTipAnima();
                             let node = this.nodes_guess[this.clickIndex];
                             if (node) {
                                 node.SetDialogue(this.result.hit ? '哼!算你运气好!' : '总有人想勾引朕!', true);
@@ -175,4 +176,13 @@ cc.Class({
             }
         }
     },
+    _playTipAnima: function () {
+        let viewSize = cc.view.getVisibleSize()
+        let height = this.node_tip.height;
+        this.node_tip.y = -(viewSize.height / 2) - (height / 2);
+        this.node_tip.runAction(cc.sequence([
+            cc.moveBy(0.5, 0, height),
+            cc.callFunc(this.onTipPlayEnd, this)
+        ]))
+    }
 });
