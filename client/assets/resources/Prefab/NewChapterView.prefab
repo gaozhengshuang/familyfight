@@ -771,24 +771,12 @@
       "b": 255,
       "a": 255
     },
-    "_N$normalSprite": {
-      "__uuid__": "afca8c66-899c-46c5-9fb6-a1d52c634675"
-    },
-    "_N$pressedSprite": {
-      "__uuid__": "afca8c66-899c-46c5-9fb6-a1d52c634675"
-    },
-    "pressedSprite": {
-      "__uuid__": "afca8c66-899c-46c5-9fb6-a1d52c634675"
-    },
-    "_N$hoverSprite": {
-      "__uuid__": "afca8c66-899c-46c5-9fb6-a1d52c634675"
-    },
-    "hoverSprite": {
-      "__uuid__": "afca8c66-899c-46c5-9fb6-a1d52c634675"
-    },
-    "_N$disabledSprite": {
-      "__uuid__": "afca8c66-899c-46c5-9fb6-a1d52c634675"
-    },
+    "_N$normalSprite": null,
+    "_N$pressedSprite": null,
+    "pressedSprite": null,
+    "_N$hoverSprite": null,
+    "hoverSprite": null,
+    "_N$disabledSprite": null,
     "_N$target": {
       "__id__": 20
     }
