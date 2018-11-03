@@ -884,9 +884,6 @@
       },
       {
         "__id__": 30
-      },
-      {
-        "__id__": 31
       }
     ],
     "_prefab": null,
@@ -1047,20 +1044,6 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0
-  },
-  {
-    "__type__": "cc.Mask",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 25
-    },
-    "_enabled": true,
-    "_type": 0,
-    "_segements": 64,
-    "_N$spriteFrame": null,
-    "_N$alphaThreshold": 1,
-    "_N$inverted": false
   },
   {
     "__type__": "cc.Widget",
