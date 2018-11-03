@@ -45,8 +45,6 @@ cc.Class({
     },
     onLoad: function () {
         this.brandConfigs = Game.ConfigController.GetConfig('TurnBrand');
-        this.shuffleTargetWorldPos = this.shuffleTargetNode.parent.convertToWorldSpaceAR(this.shuffleTargetNode.position);
-        this.showTargetWorldPos = this.showTargetNode.parent.convertToWorldSpaceAR(this.showTargetNode.position);
         for (let i = 0; i < this.brandViews.length; i++) {
             let view = this.brandViews[i];
             view.TurnBackWithAnima(0.0);
@@ -54,6 +52,10 @@ cc.Class({
         Game.NetWorkController.AddListener('msg.GW2C_RetTurnBrand', this, this.onRetTurnBrand);
         Game.NotificationController.On(Game.Define.EVENT_KEY.USERINFO_UPDATEMINIGAMECOIN, this, this.updateMiniGameCoin);
     },
+	start: function(){
+		this.shuffleTargetWorldPos = this.shuffleTargetNode.parent.convertToWorldSpaceAR(this.shuffleTargetNode.position);
+        this.showTargetWorldPos = this.showTargetNode.parent.convertToWorldSpaceAR(this.showTargetNode.position);
+	},
     onEnable: function () {
         for (let i = 0; i < this.brandViews.length; i++) {
             let view = this.brandViews[i];

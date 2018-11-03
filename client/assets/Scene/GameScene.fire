@@ -62,17 +62,17 @@
         "__id__": 154
       },
       {
-        "__id__": 155
+        "__id__": 156
       }
     ],
     "_tag": -1,
     "_active": true,
     "_components": [
       {
-        "__id__": 156
+        "__id__": 157
       },
       {
-        "__id__": 157
+        "__id__": 158
       }
     ],
     "_prefab": null,
@@ -4847,7 +4847,11 @@
     "_children": [],
     "_tag": -1,
     "_active": true,
-    "_components": [],
+    "_components": [
+      {
+        "__id__": 155
+      }
+    ],
     "_prefab": null,
     "_id": "90QMnbYfxP/7kNAZY17ejs",
     "_opacity": 255,
@@ -4884,6 +4888,32 @@
     "_globalZOrder": 0,
     "_opacityModifyRGB": false,
     "groupIndex": 0
+  },
+  {
+    "__type__": "cc.Widget",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 154
+    },
+    "_enabled": true,
+    "alignMode": 1,
+    "_target": null,
+    "_alignFlags": 45,
+    "_left": 0,
+    "_right": 0,
+    "_top": 0,
+    "_bottom": 0,
+    "_verticalCenter": 0,
+    "_horizontalCenter": 0,
+    "_isAbsLeft": true,
+    "_isAbsRight": true,
+    "_isAbsTop": true,
+    "_isAbsBottom": true,
+    "_isAbsHorizontalCenter": true,
+    "_isAbsVerticalCenter": true,
+    "_originalWidth": 720,
+    "_originalHeight": 1280
   },
   {
     "__type__": "cc.Node",
@@ -4958,10 +4988,10 @@
     },
     "_enabled": true,
     "targetCanvas": {
-      "__id__": 156
+      "__id__": 157
     },
     "GuideLayer": {
-      "__id__": 155
+      "__id__": 156
     }
   }
 ]
