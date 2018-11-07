@@ -33,10 +33,16 @@ cc.Class({
         anima_attack: { default: null, type: cc.Animation },
         anima_show: { default: null, type: cc.Animation },
         anima_dialogue: { default: null, type: cc.Animation },
+        widgetNode: { default: null, type: cc.Node },
 
         status: { default: 0 },
         palacedata: { default: null },
         clickIndex: { default: 0 }
+    },
+    onLoad: function () {
+        let viewSize = cc.view.getVisibleSize();
+        this.widgetNode.width = viewSize.width;
+        this.widgetNode.height = viewSize.height;
     },
     onEnable: function () {
         let viewSize = cc.view.getVisibleSize()

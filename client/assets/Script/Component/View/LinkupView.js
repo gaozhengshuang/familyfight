@@ -18,6 +18,7 @@ cc.Class({
         countDownLabel: { default: null, type: cc.Label },
         rewardTimesLabel: { default: null, type: cc.Label },
         lastLabel: { default: null, type: cc.Label },
+        widgetNode: { default: null, type: cc.Node },
 
         linkInfos: { default: [] },
         status: { default: 0 },
@@ -27,6 +28,9 @@ cc.Class({
         matchInfos: { default: [] }
     },
     onLoad() {
+        let viewSize = cc.view.getVisibleSize();
+        this.widgetNode.width = viewSize.width;
+        this.widgetNode.height = viewSize.height;
     },
     onEnable: function () {
         Game.NetWorkController.AddListener('msg.GW2C_RetLinkup', this, this.onRetLinkup);

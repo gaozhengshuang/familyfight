@@ -22,6 +22,7 @@ cc.Class({
         anima_show: { default: null, type: cc.Animation },
         nodes_guess: { default: [], type: [require('../Node/MiniGameGuessNode')] },
         node_tip: { default: null, type: cc.Node },
+        widgetNode: { default: null, type: cc.Node },
 
         status: { default: 0 },
         result: { default: null },
@@ -35,6 +36,8 @@ cc.Class({
         let viewSize = cc.view.getVisibleSize()
         let height = this.node_tip.height;
         this.node_tip.y = -(viewSize.height / 2) - (height / 2);
+        this.widgetNode.width = viewSize.width;
+        this.widgetNode.height = viewSize.height;
         this.initNotification();
         this._changeStatus(GuessStatus.Status_Show);
         Game.AudioController.PlayMusic('Audio/bg1');
