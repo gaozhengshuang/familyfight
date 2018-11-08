@@ -9335,7 +9335,7 @@
       "__id__": 267
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": null,
     "_alignFlags": 1,
     "_left": 0,
@@ -9568,7 +9568,7 @@
       "__id__": 297
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": null,
     "_alignFlags": 1,
     "_left": 0,
@@ -9959,7 +9959,7 @@
       "__id__": 305
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": null,
     "_alignFlags": 9,
     "_left": 0,
@@ -10298,7 +10298,7 @@
       "__id__": 325
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": null,
     "_alignFlags": 4,
     "_left": 0,

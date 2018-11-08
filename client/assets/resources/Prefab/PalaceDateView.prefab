@@ -1777,7 +1777,7 @@
       "__id__": 52
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": null,
     "_alignFlags": 1,
     "_left": 0,
@@ -2985,7 +2985,7 @@
       "__id__": 65
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": null,
     "_alignFlags": 44,
     "_left": 0,
@@ -3522,7 +3522,7 @@
       "__id__": 97
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": null,
     "_alignFlags": 36,
     "_left": 0,
@@ -3631,7 +3631,7 @@
       "__id__": 1
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": null,
     "_alignFlags": 45,
     "_left": 0,

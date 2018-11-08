@@ -5277,7 +5277,7 @@
       "__id__": 132
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": {
       "__id__": 131
     },
@@ -5510,7 +5510,7 @@
       "__id__": 173
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": null,
     "_alignFlags": 9,
     "_left": -10.5,
@@ -7203,7 +7203,7 @@
       "__id__": 181
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": null,
     "_alignFlags": 32,
     "_left": 0,
