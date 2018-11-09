@@ -184,7 +184,7 @@ func (this *RewardManager) CalculateReward(user *GateUser, rewards []*DropData)(
 		if v.rewardtype != uint32(msg.RewardType_BigGold) {
 			other = append(other, v)
 		} else {
-			goldObj := user.maid.CalculateRewardPerSecond(user)
+			goldObj := user.maid.CalculateMaxMaidReward20Seconds(user)
 			goldObj = user.TimesBigGold(goldObj, v.rewardvalue)
 			goldObj = user.CarryBigGold(goldObj, user.MaxIndexBigGold(goldObj))
 			gold = user.ParseBigGoldToArr(goldObj)

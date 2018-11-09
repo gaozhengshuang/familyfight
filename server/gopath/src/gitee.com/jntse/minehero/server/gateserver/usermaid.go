@@ -283,6 +283,16 @@ func (this *UserMaid) CalculateRewardPerSecond(user *GateUser) map[uint32]uint32
 	}
 	return retObj
 }
+
+func (this *UserMaid) CalculateMaxMaidReward20Seconds(user *GateUser) map[uint32]uint32 {
+	retObj := make(map[uint32]uint32, 0)
+	maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[this.maxid]
+	if find {
+		retObj, _ = user.ParseBigGoldToObj(maidconfg.Reward)
+		retObj = user.TimesBigGold(retObj, 20)
+	}
+	return retObj
+}
 //重新计算关卡中的侍女数量
 func (this *UserMaid) CalculateMaidCountByLevel(level uint32) {
 	count := uint32(0)
