@@ -284,13 +284,17 @@ func (this *UserMaid) CalculateRewardPerSecond(user *GateUser) map[uint32]uint32
 	return retObj
 }
 
-func (this *UserMaid) CalculateMaxMaidReward20Seconds(user *GateUser) map[uint32]uint32 {
+func (this *UserMaid) CalculateMaxReward20Seconds(user *GateUser) map[uint32]uint32 {
 	retObj := make(map[uint32]uint32, 0)
-	maidconfg, find := tbl.TMaidLevelBase.TMaidLevelById[this.maxid]
-	if find {
-		retObj, _ = user.ParseBigGoldToObj(maidconfg.Reward)
-		retObj = user.TimesBigGold(retObj, 20)
+	level := this.GetMaxLevel()
+	for i := uint32(1); i <= level; i++ {
+		maidconfig := ConfigMgr().GetLastMaidByLevel(i)
+		if maidconfig != nil {
+			rewardObj, _ := user.ParseBigGoldToObj(maidconfig.Reward)
+			retObj = user.MergeBigGold(retObj, rewardObj)
+		}
 	}
+	retObj = user.TimesBigGold(retObj, 20)
 	return retObj
 }
 //重新计算关卡中的侍女数量
