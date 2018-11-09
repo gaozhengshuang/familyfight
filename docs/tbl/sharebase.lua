@@ -116,11 +116,11 @@ export var Share : table.IShareDefine[] = [
 		{ Id : 30004, ShareType : 3, ShareId : 4, FreshType : 0, Reward : 3600, Times : 1, Title : "后宫开启了新章节，赶紧跟我一起来玩!", Image : "images/share/3.jpg" 	},
 		{ Id : 40001, ShareType : 4, ShareId : 0, FreshType : 1, Reward : 7200, Times : 3, Title : "后宫纪，给你不一样的后宫。", Image : "images/share/4.jpg" 	},
 		{ Id : 50001, ShareType : 5, ShareId : 0, FreshType : 1, Reward : 5, Times : 99, Title : "皇上日理万机，需要多补充能量。", Image : "images/share/5.jpg" 	},
-		{ Id : 60001, ShareType : 6, ShareId : 0, FreshType : 1, Reward : 1, Times : 99, Title : "皇上快点啊，还在等什么。", Image : "images/share/6.jpg" 	},
-		{ Id : 60002, ShareType : 6, ShareId : 1, FreshType : 1, Reward : 1, Times : 99, Title : "给朕转过去，屁股撅起来。", Image : "images/share/7.jpg" 	},
-		{ Id : 60003, ShareType : 6, ShareId : 2, FreshType : 1, Reward : 1, Times : 99, Title : "朕今天有点累了，要好好休息休息。", Image : "images/share/8.jpg" 	},
-		{ Id : 60004, ShareType : 6, ShareId : 3, FreshType : 1, Reward : 1, Times : 99, Title : "朕的心好痛，你卡在朕心上了。", Image : "images/share/9.jpg" 	},
-		{ Id : 60005, ShareType : 6, ShareId : 4, FreshType : 1, Reward : 1, Times : 99, Title : "朕今天翻谁的什么牌子呢？", Image : "images/share/10.jpg" 	},
+		{ Id : 60001, ShareType : 6, ShareId : 0, FreshType : 1, Reward : 1, Times : 3, Title : "皇上快点啊，还在等什么。", Image : "images/share/6.jpg" 	},
+		{ Id : 60002, ShareType : 6, ShareId : 1, FreshType : 1, Reward : 1, Times : 3, Title : "给朕转过去，屁股撅起来。", Image : "images/share/7.jpg" 	},
+		{ Id : 60003, ShareType : 6, ShareId : 2, FreshType : 1, Reward : 1, Times : 3, Title : "朕今天有点累了，要好好休息休息。", Image : "images/share/8.jpg" 	},
+		{ Id : 60004, ShareType : 6, ShareId : 3, FreshType : 1, Reward : 1, Times : 3, Title : "朕的心好痛，你卡在朕心上了。", Image : "images/share/9.jpg" 	},
+		{ Id : 60005, ShareType : 6, ShareId : 4, FreshType : 1, Reward : 1, Times : 3, Title : "朕今天翻谁的什么牌子呢？", Image : "images/share/10.jpg" 	},
 		{ Id : 70001, ShareType : 7, ShareId : 1, FreshType : 1, Reward : 7200, Times : 1, Title : "朕又解锁了新事件，好开心。", Image : "images/share/11.jpg" 	},
 		{ Id : 70002, ShareType : 7, ShareId : 2, FreshType : 1, Reward : 7200, Times : 1, Title : "朕又解锁了新事件，好开心。", Image : "images/share/11.jpg" 	},
 		{ Id : 70003, ShareType : 7, ShareId : 3, FreshType : 1, Reward : 7200, Times : 1, Title : "朕又解锁了新事件，好开心。", Image : "images/share/11.jpg" 	},
@@ -135,8 +135,8 @@ export var Share : table.IShareDefine[] = [
 		{ Id : 70012, ShareType : 7, ShareId : 12, FreshType : 1, Reward : 7200, Times : 1, Title : "朕又解锁了新事件，好开心。", Image : "images/share/11.jpg" 	},
 		{ Id : 70013, ShareType : 7, ShareId : 13, FreshType : 1, Reward : 7200, Times : 1, Title : "朕又解锁了新事件，好开心。", Image : "images/share/11.jpg" 	},
 		{ Id : 70014, ShareType : 7, ShareId : 14, FreshType : 1, Reward : 7200, Times : 1, Title : "朕又解锁了新事件，好开心。", Image : "images/share/11.jpg" 	},
-		{ Id : 80001, ShareType : 8, ShareId : 0, FreshType : 1, Reward : 10, Times : 99, Title : "居然敢动朕的东西，你动了朕的心啊。", Image : "images/share/12.jpg" 	},
-		{ Id : 90001, ShareType : 9, ShareId : 0, FreshType : 1, Reward : 10, Times : 99, Title : "朕今天吃点什么好呢？", Image : "images/share/13.jpg" 	}
+		{ Id : 80001, ShareType : 8, ShareId : 0, FreshType : 1, Reward : 5, Times : 3, Title : "居然敢动朕的东西，你动了朕的心啊。", Image : "images/share/12.jpg" 	},
+		{ Id : 90001, ShareType : 9, ShareId : 0, FreshType : 1, Reward : 5, Times : 3, Title : "朕今天吃点什么好呢？", Image : "images/share/13.jpg" 	}
 	]
 
 
