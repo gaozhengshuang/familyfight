@@ -173,9 +173,9 @@ MaidModel.prototype.GetPassCurEfficiency = function (pass) {
 MaidModel.prototype.GetPassMaxEfficiency = function (pass) {
     let efficiency = ["0_0"];
     let passList = [];
-    for (let i = 0; i < this._maids.length; i++) {
-        let maid = this._maids[i];
-        let maidBase = ConfigController.GetConfigById("TMaidLevel", maid.id);
+    let maidBaseList = ConfigController.GetConfig("TMaidLevel");
+    for (let i = 0; i < maidBaseList.length; i++) {
+        let maidBase = maidBaseList[i];
         if (maidBase) {
             if (maidBase.Passlevels == pass) {
                 passList.push(maidBase);
