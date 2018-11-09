@@ -2135,7 +2135,7 @@
       "__id__": 12
     },
     "_enabled": true,
-    "alignMode": 1,
+    "alignMode": 0,
     "_target": null,
     "_alignFlags": 40,
     "_left": 0,
