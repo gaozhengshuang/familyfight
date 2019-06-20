@@ -266,7 +266,7 @@ func (this* MatchServer) Run() {
 	// TODO:每帧处理2000条
 	now := util.CURTIMEMS()
 	lastrun := now - this.runtimestamp
-	this.net.Dispatch(network.KFrameDispatchNum * 2)
+	this.net.Dispatch(network.KFrameDispatchNum * 2, 1000)
 	tm_dispath := util.CURTIMEMS()
 
 	//
